@@ -204,7 +204,7 @@ each phase also reruns the earlier procedures for any screen it changed.
 |-------|------------|
 | 1 | TP-01, TP-02, TP-03, TP-04 (steps 1 to 4), TP-05, TP-10 (steps 1 to 3), TP-12 (step 1), TP-13 (steps 1, 13, 14), TP-14 (baseline), TP-16 |
 | 2 | TP-06, TP-08 (steps 1 to 4), TP-10 (step 4), TP-13 (steps 2 and 3) |
-| 3 | TP-08, TP-14 (must meet NFR-2), TP-15 |
+| 3 | TP-08 (steps 5 and 6), TP-14 (must meet NFR-2), TP-15, and the week of daily Refreshes in section 7 |
 | 4 | TP-10 (step 6), TP-12 (steps 3 and 4), TP-17 |
 | 5 | TP-09, TP-11, and the steps marked Phase 5 in the others |
 
@@ -438,7 +438,7 @@ target. Record times only, never the token or assignment names.
 ### TP-15 Canvas changes over time
 
 **Checks:** FR-15, FR-22, FR-23, FR-34, FR-35, FR-38, FR-39, FR-45, NFR-20,
-NFR-22, Q-7 · **Phase:** 3
+NFR-22, C-2, Q-7 · **Phase:** 3
 **Needs:** the Canvas teacher sandbox, with its test student connected to
 the portal; a second device; Q-7 answered.
 
@@ -461,6 +461,7 @@ changed on its own (FR-15).
 | 11 | Give the student their own due date for A (an override) | The student's board shows the student's date |
 | 12 | During a Refresh, cut the backend's network for a few seconds | Nothing is archived or changed; the warning banner shows; the next Refresh catches up |
 | 13 | Conclude the course | Result matches the Q-7 decision |
+| 14 | (No teacher change.) Select Refresh on the first device, then on the second device while it runs | The second device joins the running Refresh: one run, the same progress on both, and no rate-limit errors (C-2) |
 
 After each step, check the second device too: it shows the same thing within
 the NFR-22 time.
@@ -520,6 +521,13 @@ Copy this table for each phase sign-off, with one row for each procedure in
 |-----------|-----------|------|--------|-------------------------|--------|-------|
 | TP-01 | All | | | | Pass / Fail | |
 
+For Phase 3, the Team Lead selects Refresh once a day for a week on the
+real account and records each day:
+
+| Date | Result (complete or incomplete) | Rate-limit errors | Cards lost, duplicated, or wrongly archived | Notes |
+|------|---------------------------------|-------------------|--------------------------------------------|-------|
+| | | | | |
+
 TP-14 timings go in their own table, one row per run:
 
 | Date and time of day | Phase | Courses | Assignments | Requests | Slowest request | Total time | Notes |
@@ -566,4 +574,4 @@ TP-14 timings go in their own table, one row per run:
 | 2026-10-25 | Whole-set review: TP-04 renamed to match its Phase 1 steps, TP-10 starts in Phase 1 with NFR-12, and the unit test example says status mapping. |
 | 2026-10-25 | TP-07 (keyboard only), the NFR-31 and FR-73 automated tests, and the TP-13 shortcut step removed; TP-13 steps renumbered. From the Team Lead's review: keyboard actions are not a requirement. |
 | 2026-10-25 | FR-16 progress test; TP-05 step 2a checks the progress panel on failure; TP-14 reads times from the panel and uses the NFR-2 target. |
-| 2026-10-25 | In-depth QA review after PR #3: added *Procedures by phase* with entry and test exit criteria, a Phase column in the coverage table, and failure severity; added Phase 1 tests for FR-1 address checks, FR-4, FR-5, FR-13, FR-20, FR-22 (time zone, override, points and status on cards), FR-26, FR-50, FR-60, FR-66, NFR-10, NFR-11, NFR-14, and NFR-41, Phase 2 tests for NFR-3 and FR-80 drops, and an NFR-2 row of its own; FR-16 test covers rate-limit waits, joining a running Refresh, retry limits, and stuck runs; concurrency tests also run on Postgres; new fixtures; TP-01 signs in, disconnects, and reconnects; the FR-65 test checks that red wins over green; TP-03 checks points and the override open check, and clicks the card instead of a missing ↗; TP-04 puts Phase 1 steps first and checks reload; TP-05 uses Retry refresh and a rate-limit step; TP-08 no longer needs Phase 5 notes or the Archived view; TP-09 drops Ctrl+Enter; TP-10, TP-12, and TP-13 mark their phases correctly (NFR-30 is Phase 1); TP-14 uses Refresh and a timing table; added TP-16 (read-only board, Phase 1) and TP-17 (deployed app, Phase 4); accessibility tests start in Phase 4 and check only screens that exist; tests for board messages, S-2 messages, and an empty account (TP-16 step 10); manual checks for NFR-11 (TP-02), NFR-14 (TP-03), and NFR-41 (TP-05); fixture path matches the repo; "column" now "list". |
+| 2026-10-25 | In-depth QA review after PR #3: added *Procedures by phase* with entry and test exit criteria, a Phase column in the coverage table, and failure severity; added Phase 1 tests for FR-1 address checks, FR-4, FR-5, FR-13, FR-20, FR-22 (time zone, override, points and status on cards), FR-26, FR-50, FR-60, FR-66, NFR-10, NFR-11, NFR-14, and NFR-41, Phase 2 tests for NFR-3 and FR-80 drops, and an NFR-2 row of its own; FR-16 test covers rate-limit waits, joining a running Refresh, retry limits, and stuck runs; concurrency tests also run on Postgres; new fixtures; TP-01 signs in, disconnects, and reconnects; the FR-65 test checks that red wins over green; TP-03 checks points and the override open check, and clicks the card instead of a missing ↗; TP-04 puts Phase 1 steps first and checks reload; TP-05 uses Retry refresh and a rate-limit step; TP-08 no longer needs Phase 5 notes or the Archived view; TP-09 drops Ctrl+Enter; TP-10, TP-12, and TP-13 mark their phases correctly (NFR-30 is Phase 1); TP-14 uses Refresh and a timing table; TP-15 step 14 checks joining a running Refresh from a second device, and section 7 logs the Phase 3 week of daily Refreshes; added TP-16 (read-only board, Phase 1) and TP-17 (deployed app, Phase 4); accessibility tests start in Phase 4 and check only screens that exist; tests for board messages, S-2 messages, and an empty account (TP-16 step 10); manual checks for NFR-11 (TP-02), NFR-14 (TP-03), and NFR-41 (TP-05); fixture path matches the repo; "column" now "list". |

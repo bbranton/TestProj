@@ -1,12 +1,24 @@
 # TestProj
 a project to test github features
 
+## Site layout
+
+The GitHub Pages site is assembled by `.github/workflows/pages.yml`:
+
+- `/` is the landing page in `site/index.html`, with a link to each project.
+- `/qml-hello/` is the QML WebAssembly app, copied from `qml-hello-wasm/site/`.
+- `/canvas-portal/` is a "coming soon" placeholder in `site/canvas-portal/`.
+
+To add a project, give it a folder under `site/` (or a copy step in the
+workflow for built output) and add a card to `site/index.html`.
+
 ## QML hello world for WebAssembly
 
 `qml-hello-wasm/` holds a Qt 6.8 Quick app with a "Hello, World!" label and a
 button that counts clicks, built to WebAssembly. `qml-hello-wasm/site/` holds
 the built files and the `index.html` page that runs them; the
-`Deploy QML hello world to GitHub Pages` workflow publishes that folder.
+`Deploy TestProj site to GitHub Pages` workflow publishes that folder at
+`/qml-hello/`.
 
 To rebuild, use Qt 6.8 for WebAssembly (single-threaded) with Emscripten
 3.1.56:

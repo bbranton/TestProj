@@ -105,7 +105,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-31 | The board has four lists, in this order: *Backlog*, *To do*, *In progress*, *Done*. *Backlog* holds Canvas assignments the student hasn't sorted yet. | Must | 2 |
 | FR-32 | The user can drag a card to another list. Cards cannot be reordered by hand within a list (FR-38). | Must | 2 |
 | FR-33 | The board layout (which list each card is in) is saved and restored on the next visit. | Must | 2 |
-| FR-34 | Assignments that are new since the last visit appear in *Backlog*, in their due date place (FR-38), with a NEW badge. When the board is first created, every assignment starts in *Backlog*. | Must | 2 |
+| FR-34 | Assignments that are new since the last visit appear in *Backlog*, in their due date place (FR-38). When the board is first created, every assignment starts in *Backlog*. | Must | 2 |
 | FR-38 | Within every list, and in the table view, assignments are always sorted by due date, earliest at the top. Assignments with no due date come last, then by name. A card dropped into a list slots into its due date place, and a changed due date in Canvas moves the card to its new place. | Must | 1 (table), 2 (board) |
 | FR-35 | Cards are matched to assignments by Canvas assignment ID, so a renamed or rescheduled assignment keeps its place. | Must | 2 |
 | FR-36 | The user can archive a list, as in Trello. Its cards go with it and can be restored together. | Could | 5 |
@@ -134,6 +134,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-76 | The user can have more than one board. | Could | 5 |
 | FR-77 | Dragging feels like Trello: the card tilts slightly and lifts while dragged, the list under it is highlighted and a gray gap shows the due date spot where it will land, and the board scrolls when the card nears an edge. | Should | 2 |
 | FR-78 | Between the header and the board, a row of show/hide buttons has one button per active course, in the course's label color. Tapping a button hides or shows that course's cards; "Show all" and "Hide all" buttons show or hide every course at once. When every course is hidden, the board says so and offers Show all. Hidden cards keep their list. The same choice applies to the table view, and it is saved with the user's account so it follows them between devices. | Must | 2 (1 for the table view) |
+| FR-79 | Help the student see which assignments are new or have changed in Canvas (for example a new due date or new instructions) since they last looked, such as with a badge on the card and a way to clear it. | Could | 5 |
 
 ### 4.6 Private notes
 
@@ -227,3 +228,4 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | 2026-10-25 | Added FR-38: cards are always sorted by due date, earliest first, in every list and the table. FR-32, FR-33, FR-34, and FR-77 changed to match: no hand reordering within a list. From the Team Lead's review. |
 | 2026-10-25 | Quick edit menu (FR-69) and its `e` shortcut moved to Phase 5, from the Team Lead's review. |
 | 2026-10-25 | Added a *Backlog* list before *To do* for new, unsorted Canvas assignments (FR-31, FR-34), from the Team Lead's review. |
+| 2026-10-25 | NEW badge removed from FR-34; added FR-79 (show new and updated assignments) as a Phase 5 future feature, from the Team Lead's review. |

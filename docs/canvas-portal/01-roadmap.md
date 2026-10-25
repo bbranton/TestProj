@@ -144,6 +144,8 @@ accessibility checks pass.
   Canvas assignment, and "+ Add another list" adds lists; lists can also be
   archived (FR-71, FR-64, FR-36).
 - Quick edit menu on each card: pencil button or right-click (FR-69).
+- Show which assignments are new or were updated in Canvas since the
+  student last looked, such as with a badge (FR-79).
 - Checklists inside a card, with progress such as 2/5 on the card front
   (FR-70).
 - More than one board, such as one per course or term, as in Trello (FR-76).
@@ -203,3 +205,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | Phase 2 adds FR-38: cards always sorted by due date within each list. |
 | 2026-10-25 | Quick edit menu (FR-69) moved from Phase 3 to Phase 5. |
 | 2026-10-25 | Phase 2 board gains a Backlog list before To do for new Canvas assignments. |
+| 2026-10-25 | Added FR-79 (new and updated assignment indicators) to Phase 5. |

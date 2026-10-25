@@ -143,8 +143,8 @@ NFR-3, NFR-31, NFR-34.
 |  | Backlog        […] | | To do          […] | | In progress    […] |    |
 |  | +----------------+ | | +----------------+ | | +----------------+ |    |
 |  | | ▬▬ HIST 210    | | | | ▬▬ MATH 152    | | | | ▬▬ BIO 101     | |    |
-|  | | NEW            | | | | Problem set 7  | | | | Lab report 3   | |    |
-|  | | Chapter 5 qs   | | | | (◷ Wed 9:00)   | | | | (◷ Tue 11:59)  | |    |
+|  | | Chapter 5      | | | | Problem set 7  | | | | Lab report 3   | |    |
+|  | | questions      | | | | (◷ Wed 9:00)   | | | | (◷ Tue 11:59)  | |    |
 |  | | (◷ Nov 8)      | | | +----------------+ | | | ≡              | |    |
 |  | +----------------+ | | +----------------+ | | +----------------+ |    |
 |  | +----------------+ | | | ▬▬ HIST 210    | | | ┌ ─ ─ ─ ─ ─ ─ ─ ┐  |    |
@@ -415,7 +415,7 @@ flowchart TD
 flowchart TD
     A([Refresh from Canvas]) --> B{For each Canvas assignment}
     B -- has a card --> C[Keep its list; update name and due date,<br/>re-sort the list by due date]
-    B -- no card yet --> D[Add card to Backlog in its due date place,<br/>with NEW badge]
+    B -- no card yet --> D[Add card to Backlog<br/>in its due date place]
     A --> E{For each card}
     E -- assignment gone from Canvas --> F[Mark card archived;<br/>keep its note]
     E -- submitted in Canvas --> G[Due badge turns green;<br/>card stays where the student put it]
@@ -473,3 +473,4 @@ flowchart TD
 | 2026-10-25 | Cards always sorted by due date within each list (FR-38): S-4 notes, S-9 restore, W-3, and W-5 updated. |
 | 2026-10-25 | Quick edit menu (S-7, FR-69) moved to Phase 5; removed the ✎ hover button from S-4. |
 | 2026-10-25 | Added a Backlog list before To do for new, unsorted Canvas assignments: S-4 redrawn, S-3, W-1, W-5, and W-7 updated. |
+| 2026-10-25 | Removed the NEW badge from S-4 and W-5; marking new and updated assignments is now a Phase 5 idea (FR-79). |

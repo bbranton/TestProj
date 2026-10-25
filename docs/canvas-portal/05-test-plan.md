@@ -82,7 +82,7 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | FR-23 | Each status from the status flowchart, including the 48-hour edge | Unit |
 | FR-24 | Course, status, and search filters | E2E |
 | FR-32, FR-33, FR-38 | Drag a card to another list; it lands in its due date place; reload, it is still there | E2E |
-| FR-31, FR-34 | First board load puts every assignment in Backlog; a new fixture assignment appears in Backlog in its due date place, with NEW | API |
+| FR-31, FR-34 | First board load puts every assignment in Backlog; a new fixture assignment appears in Backlog in its due date place | API |
 | FR-38 | Changing a fixture assignment's due date moves its card to the new place in the same list | API |
 | FR-35 | Renamed assignment keeps its column and note | API |
 | FR-34, FR-65 | Card marked submitted in Canvas gets a green badge and is not moved | API, E2E |
@@ -212,7 +212,7 @@ steps, and the expected result. Screen IDs refer to the
 | Step | Action | Expected |
 |------|--------|----------|
 | 1 | Load the board; put a note on assignment X; move it to In progress | Saved |
-| 2 | Edit the fixture: rename X, add a new assignment Y; refresh | X keeps its list and note, with the new name; Y appears in Backlog in its due date place, with NEW |
+| 2 | Edit the fixture: rename X, add a new assignment Y; refresh | X keeps its list and note, with the new name; Y appears in Backlog in its due date place |
 | 3 | Edit the fixture: mark X submitted; refresh | X's due badge turns green and X stays in In progress |
 | 4 | Edit the fixture: remove X; refresh | X is under Archived with its note |
 
@@ -319,3 +319,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | FR-38 (always sorted by due date): sort tests, TP-06 step 2, TP-08 step 2, and TP-13 step 2 updated. |
 | 2026-10-25 | Quick edit tests marked Phase 5. |
 | 2026-10-25 | Backlog list: FR-31/FR-34 test, TP-06 step 1, and TP-08 step 2 updated. |
+| 2026-10-25 | NEW badge removed from the FR-34 test and TP-08 step 2. |

@@ -197,8 +197,8 @@ Design notes:
 - **Every row has `user_id`**, and every query filters by the signed-in user,
   so one user can never read another's data (NFR-12).
 
-Open check for Phase 1: what happens when a student who already has a board
-connects a different school or Canvas user? Recommended: the connect screen
+Open check for Phase 1 (requirements Q-8): what happens when a student who
+already has a board connects a different school or Canvas user? Recommended: the connect screen
 warns that the board will start over, and on confirming, the old cards,
 labels, and cache are deleted with the old connection row. Until more than
 one school is supported (FR-55), this keeps one board from mixing two
@@ -498,8 +498,11 @@ database transaction:
 3. Give each new course a `COURSE_LABEL` color (FR-66).
 4. Mark the run *complete*. The header's "Synced" time comes from it (FR-13).
 
-Loading the board never adds or changes cards; it only reads. Phase 3 adds
-comparing and archiving to this same step (below).
+Loading the board never adds or changes cards; it only reads. Until Phase 3,
+a card whose assignment is missing from the last complete copy is left out
+of `GET /api/board` but kept in the database, so it comes back if the
+assignment does (FR-45). Phase 3 adds comparing and archiving to this same
+step (below).
 
 ### Bringing the backend in step with Canvas (Phase 3)
 
@@ -679,7 +682,7 @@ UI uses:
 | Board background | One solid color, a deep blue |
 | List | Expanded lists share the board's width equally, at least 240 px each; minimized lists are a 40 px strip with the title written vertically and the card count. Light gray, 12 px rounded corners, 8 px gap between lists |
 | Card | White, 8 px rounded corners, soft shadow, 8 px padding; label strip at the top in the course color |
-| Due badge | Small pill with a clock icon: green (Canvas says Submitted or Graded), red (Canvas flags Missing), plain otherwise |
+| Due badge | Small pill with a clock icon: green (Canvas says Submitted or Graded), red (Canvas flags Missing, even when also Graded), plain otherwise |
 | Text | System font, 14 px on cards, bold list titles |
 
 ### Interaction details
@@ -788,4 +791,4 @@ possible without reworking what Phases 1 to 4 build:
 | 2026-10-25 | D-1 decided: React with TypeScript and Vite; section 10 now explains the choice. |
 | 2026-10-25 | The Google OAuth client is a Phase 1 prerequisite. |
 | 2026-10-25 | In-depth review after PR #3: cards are added when a complete Refresh is saved (new *Saving a complete Refresh*, Phase 1), so loading the board only reads; the unique card rule moves to Phase 1; one Refresh at a time, token problems, and rate-limit retries are Phase 1 (*Bringing the backend in step* keeps only Phase 3 work); the board changes once per complete Refresh while S-10 shows progress (FR-14, NFR-2); a restart marks a stuck Refresh incomplete; disconnecting keeps the connection row so the board survives (FR-4, FR-6), with an open check for connecting a different account; a Refresh on another device reaches open devices through the changes endpoint; GraphQL needs a call on NFR-13 (it uses `POST`); nearest-due-first dropped; description changes have nothing to show before Phase 5; keys on `COURSE_LABEL`, `CANVAS_CACHE`, `REFRESH_RUN`, `user_id` on `LIST`, `canvas_user_id` on the connection; health endpoint and fuller requirement IDs in the API table; cookie and token-in-URL rows in security; repository layout matches the skeleton; refresh panel and warning banner in the component diagram; traceability lists only Phase 0 to 4 IDs. |
-| 2026-10-25 | Architecture review: server-side sessions (new `SESSION` table), Fernet token encryption, and the in-process Refresh task in the technology table; one error shape with codes for each screen; dates sent in UTC; security rows for Canvas addresses that point elsewhere and for never sending the token to another host; Phase 1 settings listed. |
+| 2026-10-25 | Architecture review: server-side sessions (new `SESSION` table), Fernet token encryption, and the in-process Refresh task in the technology table; one error shape with codes for each screen; dates sent in UTC; security rows for Canvas addresses that point elsewhere and for never sending the token to another host; Phase 1 settings listed. Matched to requirements PR #6: until Phase 3 a card with no Canvas data is hidden, not deleted (FR-45); the different-account check is Q-8; a Missing badge stays red when also Graded (FR-65). |

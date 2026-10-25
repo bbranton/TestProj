@@ -17,8 +17,9 @@ design documents and transition plans, not code: Developers implement them.
   phases are planned, split, or consolidated.
 - The security design: how tokens, external calls, and user data are
   handled.
-- Raising technical and security risks, and owning their mitigation once Management
-  adds them to the risk list.
+- Raising technical risks, and owning their mitigation once Management
+  adds them to the risk list. Security risks are raised and tracked by
+  Security; Architecture makes the design fixes for them.
 
 ## Cares about
 
@@ -64,6 +65,9 @@ When reviewing others' work:
   it.
 - How the code is built, installed, deployed, and hosted, and how a chosen
   dependency is integrated → DevOps.
+- Whether a weakness in the design is a vulnerability, how severe it is,
+  and whether it is a potential data breach → Security. Architecture
+  decides how the design fixes it.
 
 **Needs the Team Lead:**
 

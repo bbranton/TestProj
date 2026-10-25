@@ -12,6 +12,7 @@ reviews someone else's work, and which decisions it can and cannot make.
 | UI/UX | UI specification, screens, accessibility | [ui-ux.md](personas/ui-ux.md) |
 | Developer | Code, coding standards, bug fixes | [developer.md](personas/developer.md) |
 | DevOps | CI, build and install scripts, dependencies, deploys, hosting, top-level README | [devops.md](personas/devops.md) |
+| Security | Security reviews, potential data breach ratings, client security document | [security.md](personas/security.md) |
 
 How personas review each other's work is in the
 [review protocol](review-protocol.md). How they share notes, scripts, and

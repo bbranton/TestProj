@@ -23,6 +23,9 @@ minimum viable solution.
   list in the roadmap. Management rates each risk, makes sure each one has
   an owner persona and a mitigation, reviews the list at every phase
   boundary, and brings risks to the Team Lead.
+- Making potential data breaches the top priority. Every finding or issue
+  that [Security](security.md#potential-data-breach) marks as a potential
+  data breach is critical and must-fix, as *Decisions* below says.
 
 ## Cares about
 
@@ -31,6 +34,7 @@ minimum viable solution.
 - Every phase delivers something a user can see or use.
 - Scope stays inside the current phase.
 - Risks and open questions have an owner and a date.
+- No student's token or data is left exposed while other work goes ahead.
 
 ## Review checklist
 
@@ -46,6 +50,8 @@ When reviewing others' work:
 - [ ] Are open questions listed with who will answer them?
 - [ ] Does it add, remove, or change a risk? Is the risk list updated, with
       an owner for each risk?
+- [ ] Does it touch tokens, sign-in, or student data? Then Security is a
+      recommended reviewer.
 - [ ] Given the topic or the changes proposed, does another persona need to
       join the review? If so, add them as a reviewer and say why.
 
@@ -73,6 +79,11 @@ cost log's notes, so the next estimate is better.
 - Priorities and the order of work, within the approved roadmap.
 - Whether a request is in scope for the current phase.
 - How each risk is rated, and which persona owns its mitigation.
+- That every potential data breach is critical and must-fix. In a PR, it
+  is fixed before merge. As an issue, it goes first in the current phase,
+  ahead of all other work, and is fixed before the next deploy. It is
+  never moved to the backlog or a later phase. Security, not Management,
+  says whether a finding is a potential data breach.
 - Cost estimates for features, as ranges from the cost log.
 - Which extra personas to recommend for a review. The Team Lead confirms
   the reviewers for every PR.
@@ -101,6 +112,7 @@ what each option costs to build.
   UI/UX.
 - Whether something passes its tests → Product and QA.
 - How CI, deploys, and hosting work → DevOps.
+- Whether a weakness is a vulnerability, and how severe → Security.
 
 **Needs the Team Lead:**
 
@@ -109,3 +121,4 @@ what each option costs to build.
 - Adding or dropping a project goal.
 - Accepting a risk instead of reducing it, or a mitigation that changes
   scope or timeline.
+- Delaying the fix of a potential data breach for any reason.

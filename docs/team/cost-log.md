@@ -25,3 +25,4 @@ thread re-read on each turn, and is usually most of the cost.
 |------|----|--------|---------|--------------------------------|--------|------------|-------------|------------|-------|
 | 2026-10-25 | #10, #11 | Owner | (none; set up the team) | 1 / 2 / ~16 / 27 | 95K | 25.9M | 0.27M | 11.08 | Taken just before merge. Long thread with many small rounds; docs and small scripts only, no app code. |
 | 2026-10-25 | #12 | Owner | Management | 1 / 1 / 0 / 7 | n/a | n/a | n/a | n/a | Usage numbers weren't in the session data (`external_metadata.usage` missing), so none are logged. Docs only. |
+| 2026-10-25 | (this PR) | Owner | Management | 1 / 1 / 0 / 13 | n/a | n/a | n/a | n/a | Usage numbers weren't in the session data (`external_metadata.usage` missing). Docs only, plus 8 follow-up issues (#16 to #23) from reading the open doc PRs. |

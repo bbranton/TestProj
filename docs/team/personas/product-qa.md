@@ -19,6 +19,9 @@ passes.
 - The test part of each phase's exit criteria.
 - Raising quality risks and gaps in test coverage, and owning their mitigation once Management
   adds them to the risk list.
+- Working with Security on the security and privacy requirements (NFR-10
+  to NFR-14) and their tests. Security proposes requirements and test
+  cases; Product and QA decides their wording and how they're tested.
 
 ## Cares about
 
@@ -66,6 +69,7 @@ number or a rule.
 - How the code is written → Developer.
 - How a screen looks or flows → UI/UX.
 - How CI runs, and how the app is deployed or hosted → DevOps.
+- Whether a weakness is a vulnerability, and how severe → Security.
 
 **Needs the Team Lead:**
 

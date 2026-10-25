@@ -16,7 +16,7 @@
 ## Team personas
 
 - When asked to act as a persona (Management, Product and QA, Architecture,
-  Developer, UI/UX, or DevOps), read its file in [docs/team/personas/](docs/team/personas/)
+  Developer, UI/UX, DevOps, or Security), read its file in [docs/team/personas/](docs/team/personas/)
   and the [team README](docs/team/README.md) first, and stay inside what it
   owns.
 - Before persona work, read that persona's notes in `docs/team/notes/`.

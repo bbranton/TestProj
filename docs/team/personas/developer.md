@@ -63,6 +63,8 @@ When reviewing others' work:
 - How a screen looks or flows → UI/UX.
 - How CI, builds, install scripts, deploys, and hosting work, and how
   dependencies are installed → DevOps.
+- Whether a weakness in the code is a vulnerability, and whether it is a
+  potential data breach → Security. The Developer decides how to fix it.
 
 **Needs the Team Lead:**
 

@@ -134,6 +134,7 @@ erDiagram
         int canvas_course_id
         string color
         string name
+        bool hidden
     }
     CANVAS_CACHE {
         uuid user_id FK
@@ -161,7 +162,9 @@ Design notes:
 - **Personal cards** (FR-71) are cards with no `canvas_assignment_id`; their
   title and due date are stored on the card itself.
 - **Course label colors** (FR-66) are stored per user and course, picked
-  automatically from a fixed palette the first time a course appears.
+  automatically from a fixed palette the first time a course appears. The
+  same row stores whether the course is hidden by the show/hide buttons
+  (FR-78), so that choice follows the user between devices.
 - **Archived, not deleted:** if an assignment disappears from Canvas, its card
   is marked `archived` and its note stays (FR-45).
 - **Every row has `user_id`**, and every query filters by the signed-in user,
@@ -191,7 +194,7 @@ and require a signed-in session except where noted.
 | `PATCH /api/board/cards/{id}` | Move (new list and position), archive, or restore a card | FR-32, FR-33, FR-74 |
 | `GET /api/board/archived` | Archived lists and cards | FR-74 |
 | `POST`, `PATCH`, `DELETE /api/cards/{id}/checklists/...` | Add, rename, check off, reorder, and remove checklists and items | FR-70 |
-| `PATCH /api/labels/{course_id}` | Change a course label's color or name | FR-66 |
+| `PATCH /api/labels/{course_id}` | Change a course label's color or name, or hide or show the course | FR-66, FR-78 |
 | `GET /api/notes/{assignment_id}` | Read a note | FR-43 |
 | `PUT /api/notes/{assignment_id}` | Create or replace a note | FR-40 to FR-42 |
 | `DELETE /api/notes/{assignment_id}` | Delete a note | FR-41 |
@@ -387,6 +390,7 @@ is built from these:
 ```mermaid
 flowchart TD
     App --> Header["BoardHeader<br/>board name, view switch, Filter, Refresh, menu"]
+    App --> Toggles["CourseToggleBar<br/>one show/hide button per course"]
     App --> Board
     App --> CardBack["CardBackDialog<br/>opens on /c/{cardId}"]
     App --> BoardMenu["BoardMenu<br/>right-side panel, archived items"]
@@ -428,6 +432,7 @@ UI uses:
 | Add a card or list | Composer opens in place with the text box focused; Enter adds and keeps the composer open for the next one, as Trello does | FR-64, FR-71 |
 | Open a card | Click, or focus it and press Enter; address changes to `/c/{cardId}` | FR-67 |
 | Quick edit | Pencil on hover, right-click, or `e` | FR-69 |
+| Show or hide a course | Tap its button in the row under the header; the board updates at once and the choice is saved in the background (optimistic update) | FR-78 |
 | Filter | `f` or the Filter button; non-matching cards are hidden and the header shows the filter is active | FR-72 |
 | Keyboard map | Kept in one file and shown by `?`; checked against Trello's shortcut page | FR-73, NFR-31 |
 
@@ -453,7 +458,7 @@ works without a framework, but there are fewer worked examples to copy from.
 | FR-20 to FR-26 (view) | Section 4 (status), wireframes |
 | FR-30 to FR-37 (board) | Sections 3, 4, 6 (loading sequence), 9 |
 | FR-40 to FR-46 (notes) | Sections 3, 4, 9 |
-| FR-60 to FR-77 (Trello-style) | Sections 3, 4, 9 |
+| FR-60 to FR-78 (Trello-style, course buttons) | Sections 3, 4, 9 |
 | FR-50 to FR-54 (accounts, data) | Sections 4, 5 |
 | NFR-1 to NFR-3 (performance) | Sections 3 (positions), 6 (caching, parallel fetch) |
 | NFR-10 to NFR-14 (security) | Section 7 |
@@ -473,3 +478,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | First draft. |
 | 2026-10-25 | D-7 decided: Sign in with Google. Added auth endpoints and sign-in sequence. |
 | 2026-10-25 | Trello goal (G-3): data model now board, lists, cards, checklists, course labels; new list, card, checklist, and label endpoints; new section 9 on Trello-style UI; D-1 section updated. |
+| 2026-10-25 | Course show/hide buttons (FR-78): `hidden` on course labels, toggle bar component, label endpoint. |

@@ -101,6 +101,7 @@ first.
   NFR-31).
 - Rename lists by clicking their title; add a list at the end of the board
   (FR-63, FR-64).
+- A row of show/hide buttons under the header, one per course (FR-78).
 - Trello-style filter menu and keyboard shortcuts (FR-72, FR-73).
 - New assignments from Canvas land in *To do*; assignments Canvas reports as
   submitted can be suggested for *Done*; cards are matched by Canvas ID (FR-34, FR-35, FR-37).
@@ -191,3 +192,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | D-1 postponed; D-2 decided (server storage), so accounts move into Phase 2 and Phase 4 becomes polish and deploy. R-1 cleared with student and parent test tokens. Parent view added to Phase 5. |
 | 2026-10-25 | D-7 decided: Sign in with Google for the MVP. Added Google setup to Phase 0 and risk R-6. |
 | 2026-10-25 | Section 1 becomes Project goals, adding G-3 (feels like Trello). Phases 2 and 3 take on Trello-style board, card back, quick edit, checklists, and personal cards. Added risk R-7. |
+| 2026-10-25 | Phase 2 adds course show/hide buttons (FR-78), from the Team Lead's review. |

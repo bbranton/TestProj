@@ -100,13 +100,15 @@ On success the portal shows "Connected as *Name*" (FR-2) and opens S-3.
 
 ### S-3 Table view
 
-Requirements: FR-13, FR-20 to FR-26, FR-30, FR-65, NFR-20. In Phase 1 this
+Requirements: FR-13, FR-20 to FR-26, FR-30, FR-65, FR-78, NFR-20. In Phase 1 this
 is the only view. From Phase 2 it is the secondary view behind the board.
 Each row uses the same label colors and due badges as the cards.
 
 ```text
 +--------------------------------------------------------------------------+
 | Canvas Portal  My assignments  [ Board |*Table*]   [Filter] [⟳] [⋯] (A)  |
++--------------------------------------------------------------------------+
+| Courses: [● BIO 101] [● HIST 210] [● MATH 152] [○ ART 120]  [Show all]   |
 +--------------------------------------------------------------------------+
 | [!] Canvas isn't responding. Showing data from 10:42 AM.  <- NFR-20 only |
 +--------------------------------------------------------------------------+
@@ -121,16 +123,20 @@ Each row uses the same label colors and due badges as the cards.
 +--------------------------------------------------------------------------+
   ≡ = has a description (note), FR-43. ■ = course label color, FR-66.
   Clicking a row opens S-5. The List column appears from Phase 2.
+  The course buttons are the same as on the board, and hiding a course on one
+  view hides it on the other (FR-78).
 ```
 
 ### S-4 Board (home screen)
 
-Requirements: FR-31 to FR-37, FR-60 to FR-66, FR-72 to FR-74, FR-77,
+Requirements: FR-31 to FR-37, FR-60 to FR-66, FR-72 to FR-74, FR-77, FR-78,
 NFR-3, NFR-31, NFR-34.
 
 ```text
 +--------------------------------------------------------------------------+
 | Canvas Portal  My assignments  [*Board*| Table ]   [Filter] [⟳] [⋯] (A)  |
++--------------------------------------------------------------------------+
+| Courses: [● BIO 101] [● HIST 210] [● MATH 152] [○ ART 120]  [Show all]   |
 +--------------------------------------------------------------------------+
 |  board background color                                                  |
 |  +--------------------+ +--------------------+ +--------------------+    |
@@ -156,6 +162,9 @@ NFR-3, NFR-31, NFR-34.
 |  | + Add a card       | <- FR-71: personal card (Phase 3)                |
 |  +--------------------+                                                  |
 +--------------------------------------------------------------------------+
+  Course buttons (FR-78): one per active course, in its label color. ● shown,
+  ○ hidden; tapping one hides or shows that course's cards. [Show all] brings
+  every course back. Hidden cards keep their list and position.
   ▬▬ label strip in the course color (FR-66). (◷ ...) due badge: yellow due
   soon, red overdue, green with ✓ when complete (FR-65). ≡ has a description.
   ✎ is shown here on the card the mouse is over.
@@ -307,6 +316,8 @@ The user swipes sideways between lists, and dots show which list is shown.
 +----------------------------+
 | ‹  My assignments  [⚲] [⋯] |
 +----------------------------+
+| [● BIO] [● HIST] [○ MATH] ›|
++----------------------------+
 | In progress            […] |
 | +------------------------+ |
 | | ▬▬ BIO 101             | |
@@ -322,6 +333,7 @@ The user swipes sideways between lists, and dots show which list is shown.
 |                            |
 |          ○ ● ○ ○           |
 +----------------------------+
+  The course buttons scroll sideways when they don't fit (FR-78).
   To move a card, press and hold it, then drag it to a screen edge to go
   to the next list, or use Move on the card back.
 ```
@@ -459,3 +471,4 @@ flowchart TD
 |------|--------|
 | 2026-10-25 | First draft. |
 | 2026-10-25 | Trello goal (G-3): board is home; S-3 becomes Table view; S-4 and S-5 redrawn as Trello board and card back; added S-7 quick edit, S-8 filter, S-9 board menu; Trello-style phone layout; W-7 and W-8 added. |
+| 2026-10-25 | Added the course show/hide button row under the header on S-3, S-4, and the phone layout (FR-78), from the Team Lead's review. |

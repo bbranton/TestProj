@@ -79,7 +79,7 @@ outside its area is advice, never sign-off.
 | Writing code, coding standards, bug fixes | Developer | Approving and merging every PR; design changes go to Architecture |
 | Screens, layout, wording, accessibility | UI/UX | A new screen or a change to the main flow |
 | CI, build and install scripts, dependency integration, deploys, hosting, secrets | DevOps | Changes to the live app or hosting; a paid service; a new secret store; new access |
-| Whether a weakness is a vulnerability, its severity, and whether it is a potential data breach; the wording of the client security document | Security | Accepting a vulnerability instead of fixing it; publishing or changing the client security document; telling anyone outside the team about a suspected leak |
+| Whether a weakness is a vulnerability, its severity, and whether it is a potential data breach (any persona can raise one, and Security's view counts most); the wording of the client security document | Security | Accepting a vulnerability instead of fixing it; publishing or changing the client security document; telling anyone outside the team about a suspected leak |
 | Approving and merging a PR | Team Lead | Always |
 
 Only the persona in **Decided by** makes that decision. Every other persona
@@ -133,7 +133,8 @@ Use the same shape as the canvas portal docs review:
 - **Status** is one of Open, Fixed in #PR, Moved to #issue, Won't fix
   (with the reason), or Waiting on the Team Lead.
 - A finding that could expose a token, a session, or a student's data to
-  anyone else starts with **Potential data breach:**, as the
+  anyone else starts with **Potential data breach:**, whichever persona
+  finds it, as the
   [Security persona](personas/security.md#potential-data-breach) says. It
   is never Won't fix without the Team Lead.
 
@@ -184,8 +185,10 @@ issue.
 When an owner and a reviewer disagree, each states its case in one or two
 sentences in the findings table, and the finding is marked **Waiting on the
 Team Lead**. Personas do not overrule each other. Inside its own area the
-owning persona's view counts most, but a disagreement still goes to the
-Team Lead. The Team Lead's decision is recorded in the doc's change
+owning persona's view counts most, except on security, where Security's
+view counts most, as
+[Security is everyone's job](README.md#security-is-everyones-job) says. A
+disagreement still goes to the Team Lead. The Team Lead's decision is recorded in the doc's change
 log or decision list.
 
 ## Running reviews with agents

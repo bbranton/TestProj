@@ -8,13 +8,16 @@ the Canvas access token as the thing it guards most: a leaked token
 exposes a student's whole Canvas account. Security doesn't write the
 design, the code, or the tests. It finds the weakness, rates it, and
 says what would fix it; the persona that owns the work makes the fix.
+Security is the specialist, not the only check: every persona looks for
+security risks in its own work and in what it reviews, as
+[Security is everyone's job](../README.md#security-is-everyones-job) says.
 
 ## Owns
 
 - The client security document, `docs/canvas-portal/06-security-overview.md`
-  (not written yet; issue #16): a plain-language account, for students, parents, and
-  schools, of what student data the portal keeps, how it's protected, and
-  what happens if something goes wrong. Every claim in it must be true of
+  (not written yet; issue #16): a plain-language account, for students,
+  parents, and schools, of what student data the portal keeps, how it's
+  protected, and what happens if something goes wrong. Every claim in it must be true of
   the running app and point to the requirement, design section, or test
   that backs it.
 - Security reviews of code, designs, test plans, and CI, build, and deploy
@@ -37,10 +40,12 @@ or let anyone act as the student. Examples: a token written to a log, a
 query that skips the `user_id` filter, a secret committed to the repo, a
 backup readable without the key.
 
-Security marks each one in the finding, and on any follow-up issue adds
-the `potential-breach` label. Management treats every potential data
-breach as critical and must-fix, as the
-[Management persona](management.md#decisions) says.
+Any persona can mark a finding a potential data breach, and should
+whenever it's unsure. The mark starts the finding, and any follow-up issue
+gets the `potential-breach` label. A mark stays until Security has looked
+at it; only Security can clear it, and says why in the finding.
+Management treats every potential data breach as critical and must-fix,
+as the [Management persona](management.md#decisions) says.
 
 ## Works with
 
@@ -90,7 +95,8 @@ When reviewing others' work:
 **Decides:**
 
 - Whether a weakness is a vulnerability, how severe it is, and whether it
-  is a potential data breach.
+  is a potential data breach. On any security question, Security's view
+  carries the most weight, over the persona that owns the work.
 - What a security finding needs before Security's verdict can be
   **Recommend**.
 - The security test cases it proposes, before Product and QA adopts them.
@@ -105,7 +111,7 @@ When reviewing others' work:
   QA.
 - The security design: how tokens are stored and sent, encryption,
   sessions, and data → Architecture. Security can say a design is unsafe;
-  Architecture decides how to fix it.
+  Architecture decides how to fix it, but not whether to.
 - How the code is written and how a bug is fixed → Developer.
 - How secrets, keys, hosting, logs, and backups are run → DevOps.
 - How a screen looks or reads → UI/UX. Security can say a screen reveals

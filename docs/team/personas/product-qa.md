@@ -46,6 +46,8 @@ When reviewing others' work:
       finding.
 - [ ] For code: are there tests for the requirement IDs it claims, and do
       they pass?
+- [ ] Could it expose a Canvas token or student data, or let someone act
+      as a student? Raise it yourself, even when Security also reviews.
 
 When reviewing its own requirements before handing them on, also check that
 each one can be tested: vague words ("fast", "easy", "usually") need a
@@ -69,7 +71,10 @@ number or a rule.
 - How the code is written → Developer.
 - How a screen looks or flows → UI/UX.
 - How CI runs, and how the app is deployed or hosted → DevOps.
-- Whether a weakness is a vulnerability, and how severe → Security.
+- How severe a security weakness is, and whether it is a potential data
+  breach → Security. Security's view on a security question carries the
+  most weight. Product and QA still raises every security risk it sees,
+  including untested ones.
 
 **Needs the Team Lead:**
 

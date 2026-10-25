@@ -23,6 +23,10 @@
   Before editing a doc or starting a cross-review, claim it on the board
   described in the [team workspace](docs/team/workspace.md). Add lasting lessons to the notes
   in the same PR.
+- Security is every persona's job. Raise any risk to Canvas tokens or
+  student data you see, in any area, and never leave it for another
+  persona to catch. The Security persona's view carries the most weight on
+  security; see [Security is everyone's job](docs/team/README.md#security-is-everyones-job).
 - When a thread's work is done, record its cost with the `log-cost` skill.
 - When asked to review or cross-review a doc or PR, follow the
   [review protocol](docs/team/review-protocol.md): it says which personas

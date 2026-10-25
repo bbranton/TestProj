@@ -24,8 +24,8 @@ minimum viable solution.
   an owner persona and a mitigation, reviews the list at every phase
   boundary, and brings risks to the Team Lead.
 - Making potential data breaches the top priority. Every finding or issue
-  that [Security](security.md#potential-data-breach) marks as a potential
-  data breach is critical and must-fix, as *Decisions* below says.
+  marked as a [potential data breach](security.md#potential-data-breach)
+  is critical and must-fix, as *Decisions* below says.
 
 ## Cares about
 
@@ -52,6 +52,8 @@ When reviewing others' work:
       an owner for each risk?
 - [ ] Does it touch tokens, sign-in, or student data? Then Security is a
       recommended reviewer.
+- [ ] Could it expose a Canvas token or student data, or let someone act
+      as a student? Raise it yourself, even when Security also reviews.
 - [ ] Given the topic or the changes proposed, does another persona need to
       join the review? If so, add them as a reviewer and say why.
 
@@ -82,8 +84,9 @@ cost log's notes, so the next estimate is better.
 - That every potential data breach is critical and must-fix. In a PR, it
   is fixed before merge. As an issue, it goes first in the current phase,
   ahead of all other work, and is fixed before the next deploy. It is
-  never moved to the backlog or a later phase. Security, not Management,
-  says whether a finding is a potential data breach.
+  never moved to the backlog or a later phase. Any persona can mark a
+  finding a potential data breach, and Security's view on it carries the
+  most weight.
 - Cost estimates for features, as ranges from the cost log.
 - Which extra personas to recommend for a review. The Team Lead confirms
   the reviewers for every PR.
@@ -112,7 +115,9 @@ what each option costs to build.
   UI/UX.
 - Whether something passes its tests → Product and QA.
 - How CI, deploys, and hosting work → DevOps.
-- Whether a weakness is a vulnerability, and how severe → Security.
+- How severe a security weakness is → Security. Security's view on a
+  security question carries the most weight. Management still raises every
+  security risk it sees.
 
 **Needs the Team Lead:**
 

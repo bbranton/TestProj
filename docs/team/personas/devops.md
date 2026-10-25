@@ -45,6 +45,8 @@ When reviewing others' work:
       top-level README updated to match?
 - [ ] For a design: does it say how the part is hosted, configured, and
       backed up?
+- [ ] Could it expose a Canvas token or student data, or let someone act
+      as a student? Raise it yourself, even when Security also reviews.
 
 ## Decisions
 
@@ -66,9 +68,10 @@ When reviewing others' work:
   data store, or dependency; DevOps decides how it's installed and run.
 - How the code is written → Developer.
 - How a screen looks or flows → UI/UX.
-- Whether a secret, key, log, or backup setup is safe enough, and whether
-  a weakness is a potential data breach → Security. DevOps decides how to
-  fix it.
+- Whether a secret, key, log, or backup setup is safe enough, and whether a
+  weakness is a potential data breach → Security. Security's view on a
+  security question carries the most weight. DevOps still raises every
+  security risk it sees, and decides how to fix it.
 
 **Needs the Team Lead:**
 

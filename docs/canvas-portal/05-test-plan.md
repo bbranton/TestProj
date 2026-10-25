@@ -114,7 +114,7 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | NFR-36 | At phone width with touch emulation (no hover), every control and the sync time are visible and work by tap | E2E |
 | FR-60 | Signed-in, connected user lands on the board | E2E |
 | FR-61 | The four lists are always Backlog, To do, In progress, Done; expanded lists fill the width; the board scrolls sideways only below 240 px per list | E2E |
-| FR-80 | Minimizing a list widens the others to fill the board, expanding narrows them; on load, empty lists are minimized and other lists keep their last state; a minimized list shows its card count | E2E |
+| FR-80 | Minimizing a list widens the others to fill the board, expanding narrows them; on each load or refresh, empty lists are minimized and the rest expanded, even if the student changed them before reloading; a minimized list shows its card count | E2E |
 | FR-62 (Phase 5) | Dragging a list header reorders lists and the order survives reload | E2E |
 | FR-63 (Phase 5) | Click a list title, type, Enter saves; Escape cancels | E2E |
 | FR-64, FR-71 (Phase 5) | Composer adds a list or a personal card and stays open for the next | E2E |
@@ -222,6 +222,7 @@ steps, and the expected result. Screen IDs refer to the
 | 11 | Add an assignment to the fixture; open the board on A and B at the same moment | The new card appears once, in Backlog, on both |
 | 12 | Open the board in two tabs of the same browser and repeat step 6 | Same as with two devices |
 | 13 | Minimize In progress, then drag a card onto its strip | The card goes into In progress; the strip's count goes up and it stays minimized |
+| 14 | Reload so an empty Done list starts minimized, then drag a card onto its strip | The card goes into Done and the Done list expands; the other lists narrow to make room |
 
 ### TP-07 Board with keyboard only
 
@@ -416,3 +417,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | Added an FR-80 test (minimize, expand, and width fitting) and TP-06 step 13 (dropping on a minimized list). |
 | 2026-10-25 | Refresh is manual (FR-15): tests check that loading never fetches and that Refresh is highlighted after an hour; TP-15 uses Refresh instead of waiting for background sync; NFR-4 test is Phase 5. |
 | 2026-10-25 | TP-05 checks the sync date and time; added an NFR-36 touch test (no hover). |
+| 2026-10-25 | FR-80 test now checks list state is set fresh on reload; TP-06 step 14 checks that dropping on an empty minimized list expands it. |

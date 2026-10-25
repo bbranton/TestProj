@@ -608,7 +608,7 @@ UI uses:
 |----------|--------------|--------------|
 | Drag a card | Card lifts and tilts about 4°, the list under it is highlighted and a gray gap shows its due date spot in that list, the board auto-scrolls near the edges; the move is saved with an optimistic update (W-3) | FR-32, FR-77 |
 | Drag a list (Phase 5) | Grab the list header; other lists slide aside | FR-62 |
-| Minimize or expand a list | [−] or [+] in the list header; the other expanded lists widen or narrow to fill the board, with a short animation. On load, empty lists start minimized; the choice for other lists is kept in this browser. From Phase 2, dropping a card on a minimized list puts it in that list, which stays minimized and shows the new count | FR-80 |
+| Minimize or expand a list | [−] or [+] in the list header; the other expanded lists widen or narrow to fill the board, with a short animation. On each load or refresh, empty lists start minimized and the rest expanded; nothing is saved, in the browser or the backend. From Phase 2, dropping a card on an empty minimized list puts it there and expands the list; dropping on a minimized list that already has cards keeps it minimized and shows the new count | FR-80 |
 | Scroll the board | Only when the window is too narrow for the expanded lists (240 px minimum each): horizontal scrollbar, or drag on empty background | FR-61 |
 | Rename a list (Phase 5) | Click the title, it becomes a text box; Enter saves, Escape cancels | FR-63 |
 | Open a card | Click, or focus it and press Enter. Until Phase 5 this opens the assignment in Canvas in a new tab (FR-26); from Phase 5 it opens the card back and the address changes to `/c/{cardId}` | FR-26, FR-67 |
@@ -686,3 +686,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | Lists fill the board width and can be minimized (FR-80): visual style, list header component, and interaction table updated. |
 | 2026-10-25 | Refresh is manual (FR-15): caching and *Never wait on Canvas* no longer fetch on their own; the background job section is now *Bringing the backend in step with Canvas*, run by each Refresh; background sync is Phase 5 (NFR-4), with what leaving it out saves. |
 | 2026-10-25 | Header shows the last sync date and time (FR-13); quick edit and a new interaction row follow NFR-36 (no hover-only actions). |
+| 2026-10-25 | Minimize interaction: list state is no longer saved; dropping a card on an empty minimized list expands it. |

@@ -140,8 +140,9 @@ a later day, with Done empty and minimized.
   [−] in a list header minimizes it to a narrow strip with its title and
   card count; [+] expands it again (FR-80). Expanded lists share the
   board's whole width and resize whenever a list is minimized or expanded.
-  When the board loads, any empty list starts minimized; other lists keep
-  the student's last choice on this device.
+  Each time the board loads or is refreshed, empty lists start minimized
+  and the rest start expanded; this state is not saved. From Phase 2,
+  dropping a card on an empty minimized list expands it.
   [Filter] at the start of the course row opens S-8 (FR-72, Phase 5).
   Until the card back arrives in Phase 5, clicking a card opens the
   assignment in Canvas in a new tab (FR-26).
@@ -519,3 +520,4 @@ flowchart TD
 | 2026-10-25 | Lists can be minimized and expanded (FR-80): S-4 redrawn with Done minimized and the other lists sharing the width; empty lists start minimized; phone layout skips minimized lists. From the Team Lead's review. |
 | 2026-10-25 | Header legend and W-2 now show manual Refresh: no automatic fetch, Refresh highlighted when data is over an hour old (FR-15), from the Team Lead's review. |
 | 2026-10-25 | Header always shows the last sync date and time instead of a hover tooltip, from the Team Lead's review; quick edit (S-7) no longer depends on hover (NFR-36). |
+| 2026-10-25 | S-4 notes: list state is set fresh on each load, not saved; dropping a card on an empty minimized list expands it. |

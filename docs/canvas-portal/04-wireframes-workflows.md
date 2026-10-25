@@ -119,7 +119,7 @@ Each row uses the same label colors and due badges as the cards.
 | Problem set 7      | To do        | ■ MATH 152 | (◷ Wed 9:00) | 10       |
 |                    |              |            |   yellow     |          |
 | Essay draft      ≡ | To do        | ■ HIST 210 | (◷ Nov 3)    | 50       |
-| Reading reflection | To do        | ■ HIST 210 | none         | 5        |
+| Reading reflection | Backlog      | ■ HIST 210 | none         | 5        |
 +--------------------------------------------------------------------------+
   ≡ = has a description (note), FR-43. ■ = course label color, FR-66.
   Clicking a row opens S-5. The List column appears from Phase 2.
@@ -138,28 +138,21 @@ NFR-3, NFR-31, NFR-34.
 +--------------------------------------------------------------------------+
 | [● BIO 101] [● HIST 210] [● MATH 152] [○ ART 120]  [Show all] [Hide all] |
 +--------------------------------------------------------------------------+
-|  board background color                                                  |
+|  board background color                                       Done ──>   |
 |  +--------------------+ +--------------------+ +--------------------+    |
-|  | To do          […] | | In progress    […] | | Done           […] |    |
+|  | Backlog        […] | | To do          […] | | In progress    […] |    |
 |  | +----------------+ | | +----------------+ | | +----------------+ |    |
-|  | | ▬▬ MATH 152    | | | | ▬▬ BIO 101     | | | | ▬▬ BIO 101     | |    |
-|  | | Problem set 7  | | | | Lab report 3   | | | | Quiz 4         | |    |
-|  | | (◷ Wed 9:00)   | | | | (◷ Tue 11:59)  | | | | (◷ Oct 20 ✓)   | |    |
-|  | +----------------+ | | | ≡              | | | +----------------+ |    |
-|  | +----------------+ | | +----------------+ | |                    |    |
-|  | | ▬▬ HIST 210    | | | ┌ ─ ─ ─ ─ ─ ─ ─ ┐  | +--------------------+    |
-|  | | Essay draft:   | | | │   drop gap    │  |                           |
-|  | | causes of WWI  | | | │   (FR-77)     │  |                           |
-|  | | (◷ Nov 3) ≡    | | | └ ─ ─ ─ ─ ─ ─ ─ ┘  |                           |
-|  | |                | | |                    |                           |
-|  | |                | | +--------------------+                           |
-|  | +----------------+ |                                                  |
-|  | +----------------+ |                                                  |
-|  | | ▬▬ HIST 210    | | <- FR-34: new Canvas assignments land in To do   |
-|  | | NEW            | |    in their due date place, with a NEW badge     |
-|  | | Chapter 5 qs   | |                                                  |
-|  | +----------------+ |                           ──scrolls──>           |
-|  |                    |                                                  |
+|  | | ▬▬ HIST 210    | | | | ▬▬ MATH 152    | | | | ▬▬ BIO 101     | |    |
+|  | | NEW            | | | | Problem set 7  | | | | Lab report 3   | |    |
+|  | | Chapter 5 qs   | | | | (◷ Wed 9:00)   | | | | (◷ Tue 11:59)  | |    |
+|  | | (◷ Nov 8)      | | | +----------------+ | | | ≡              | |    |
+|  | +----------------+ | | +----------------+ | | +----------------+ |    |
+|  | +----------------+ | | | ▬▬ HIST 210    | | | ┌ ─ ─ ─ ─ ─ ─ ─ ┐  |    |
+|  | | ▬▬ HIST 210    | | | | Essay draft:   | | | │   drop gap    │  |    |
+|  | | Reading        | | | | causes of WWI  | | | │   (FR-77)     │  |    |
+|  | | reflection     | | | | (◷ Nov 3) ≡    | | | └ ─ ─ ─ ─ ─ ─ ─ ┘  |    |
+|  | | (no due date)  | | | +----------------+ | +--------------------+    |
+|  | +----------------+ | +--------------------+                           |
 |  +--------------------+                                                  |
 +--------------------------------------------------------------------------+
   Course buttons (FR-78): one per active course, in its label color. ● shown,
@@ -169,10 +162,13 @@ NFR-3, NFR-31, NFR-34.
   their list.
   ▬▬ label strip in the course color (FR-66). (◷ ...) due badge: yellow due
   soon, red overdue, green with ✓ when complete (FR-65). ≡ has a description.
-  The three lists are fixed. List title: click to rename (FR-63). Drag a list
+  The lists are fixed. List title: click to rename (FR-63). Drag a list
   by its header to reorder (FR-62). […] list menu: Move list.
   Adding cards and lists (FR-64, FR-71) and archiving lists (FR-36) are
   Phase 5 ideas.
+  The four lists are Backlog, To do, In progress, and Done; Done is off to
+  the right, and the board scrolls sideways. New assignments from Canvas land
+  in Backlog until the student sorts them (FR-31, FR-34).
   Cards in every list are always sorted by due date, earliest at the top
   (FR-38). Dragging only chooses the list; the card slots into its due date
   place, which the gray gap shows. Cards move between lists only when the
@@ -352,7 +348,7 @@ flowchart TD
     G --> D
     E -- accepted --> H[Show 'Connected as Name']
     H --> I[Fetch courses and assignments]
-    I --> J[Board created: To do, In progress, Done;<br/>every assignment in To do]
+    I --> J[Board created: Backlog, To do, In progress, Done;<br/>every assignment in Backlog]
     J --> K[S-4 Board]
 ```
 
@@ -419,7 +415,7 @@ flowchart TD
 flowchart TD
     A([Refresh from Canvas]) --> B{For each Canvas assignment}
     B -- has a card --> C[Keep its list; update name and due date,<br/>re-sort the list by due date]
-    B -- no card yet --> D[Add card to To do in its due date place,<br/>with NEW badge]
+    B -- no card yet --> D[Add card to Backlog in its due date place,<br/>with NEW badge]
     A --> E{For each card}
     E -- assignment gone from Canvas --> F[Mark card archived;<br/>keep its note]
     E -- submitted in Canvas --> G[Due badge turns green;<br/>card stays where the student put it]
@@ -438,7 +434,8 @@ flowchart TD
 
 ### W-7 Arrange the lists
 
-The board always has the same three lists. Students can rename and reorder
+The board always has the same four lists: Backlog, To do, In progress, and
+Done. Students can rename and reorder
 them; adding and archiving lists are Phase 5 ideas.
 
 ```mermaid
@@ -475,3 +472,4 @@ flowchart TD
 | 2026-10-25 | Adding cards and lists moved to Phase 5: removed "+ Add a card" and "+ Add another list" from S-4 and the phone layout; W-7 now covers rename and reorder only; W-8 marked Phase 5. |
 | 2026-10-25 | Cards always sorted by due date within each list (FR-38): S-4 notes, S-9 restore, W-3, and W-5 updated. |
 | 2026-10-25 | Quick edit menu (S-7, FR-69) moved to Phase 5; removed the ✎ hover button from S-4. |
+| 2026-10-25 | Added a Backlog list before To do for new, unsorted Canvas assignments: S-4 redrawn, S-3, W-1, W-5, and W-7 updated. |

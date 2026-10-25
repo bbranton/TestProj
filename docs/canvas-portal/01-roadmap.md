@@ -89,8 +89,8 @@ first.
 - The user's Canvas connection is saved on the server with their account, so
   signing in on a new device doesn't require pasting the token again (FR-5,
   NFR-11).
-- Trello-style board: lists side by side that scroll sideways, default lists
-  *To do*, *In progress*, *Done*; the board becomes the home screen (FR-30,
+- Trello-style board: lists side by side that scroll sideways, lists
+  *Backlog*, *To do*, *In progress*, *Done*; the board becomes the home screen (FR-30,
   FR-31, FR-60, FR-61).
 - Trello-style cards: course label colors, colored due date badges, note icon
   (FR-65, FR-66).
@@ -100,11 +100,12 @@ first.
   them; keyboard alternative for dragging (FR-32, FR-62, FR-77, NFR-31).
 - Cards in every list are always sorted by due date, earliest at the top
   (FR-38).
-- The board has three fixed lists (To do, In progress, Done) that can be
-  renamed by clicking their title (FR-31, FR-63).
+- The board has four fixed lists (Backlog, To do, In progress, Done) that can
+  be renamed by clicking their title (FR-31, FR-63).
 - A row of show/hide buttons under the header, one per course (FR-78).
 - Trello-style filter menu and keyboard shortcuts (FR-72, FR-73).
-- New assignments from Canvas land in *To do*; cards are matched by Canvas ID
+- New assignments from Canvas land in *Backlog* until the student sorts them;
+  cards are matched by Canvas ID
   and only move when the student drags them (FR-34, FR-35).
 - Board layout is saved on the server and restored on any device (FR-33,
   FR-51).
@@ -201,3 +202,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | Adding cards and lists, and archiving lists, moved to Phase 5 as future features (Q-6 answered). |
 | 2026-10-25 | Phase 2 adds FR-38: cards always sorted by due date within each list. |
 | 2026-10-25 | Quick edit menu (FR-69) moved from Phase 3 to Phase 5. |
+| 2026-10-25 | Phase 2 board gains a Backlog list before To do for new Canvas assignments. |

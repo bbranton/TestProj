@@ -102,10 +102,10 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | ID | Requirement | Priority | Phase |
 |----|-------------|----------|-------|
 | FR-30 | The user can switch between the board and a table view of all assignments (the Phase 1 list). | Must | 2 |
-| FR-31 | The board starts with columns *To do*, *In progress*, *Done*. | Must | 2 |
+| FR-31 | The board has four lists, in this order: *Backlog*, *To do*, *In progress*, *Done*. *Backlog* holds Canvas assignments the student hasn't sorted yet. | Must | 2 |
 | FR-32 | The user can drag a card to another list. Cards cannot be reordered by hand within a list (FR-38). | Must | 2 |
 | FR-33 | The board layout (which list each card is in) is saved and restored on the next visit. | Must | 2 |
-| FR-34 | Assignments that are new since the last visit appear in *To do*, in their due date place (FR-38), with a NEW badge. | Must | 2 |
+| FR-34 | Assignments that are new since the last visit appear in *Backlog*, in their due date place (FR-38), with a NEW badge. When the board is first created, every assignment starts in *Backlog*. | Must | 2 |
 | FR-38 | Within every list, and in the table view, assignments are always sorted by due date, earliest at the top. Assignments with no due date come last, then by name. A card dropped into a list slots into its due date place, and a changed due date in Canvas moves the card to its new place. | Must | 1 (table), 2 (board) |
 | FR-35 | Cards are matched to assignments by Canvas assignment ID, so a renamed or rescheduled assignment keeps its place. | Must | 2 |
 | FR-36 | The user can archive a list, as in Trello. Its cards go with it and can be restored together. | Could | 5 |
@@ -226,3 +226,4 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | 2026-10-25 | FR-36, FR-64, and FR-71 (archive lists, add lists, add personal cards) moved to Phase 5; `n` shortcut dropped; Q-6 answered. From the Team Lead's review. |
 | 2026-10-25 | Added FR-38: cards are always sorted by due date, earliest first, in every list and the table. FR-32, FR-33, FR-34, and FR-77 changed to match: no hand reordering within a list. From the Team Lead's review. |
 | 2026-10-25 | Quick edit menu (FR-69) and its `e` shortcut moved to Phase 5, from the Team Lead's review. |
+| 2026-10-25 | Added a *Backlog* list before *To do* for new, unsorted Canvas assignments (FR-31, FR-34), from the Team Lead's review. |

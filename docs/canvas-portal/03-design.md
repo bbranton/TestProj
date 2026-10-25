@@ -339,7 +339,7 @@ sequenceDiagram
     A-->>B: assignments with computed status
     B->>A: GET /api/board
     A->>D: Load lists and cards
-    A->>A: Add cards for new assignments to To do,<br/>archive cards for removed ones
+    A->>A: Add cards for new assignments to Backlog,<br/>archive cards for removed ones
     A-->>B: board
 ```
 
@@ -483,3 +483,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | Adding cards and lists moved to Phase 5: endpoints marked, composers removed from the component diagram. |
 | 2026-10-25 | FR-38: cards always sorted by due date. Removed the card `position` column; only lists keep positions. |
 | 2026-10-25 | Quick edit menu (FR-69) marked Phase 5. |
+| 2026-10-25 | New assignments go to the Backlog list. |

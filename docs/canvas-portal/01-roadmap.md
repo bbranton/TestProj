@@ -29,11 +29,12 @@ gantt
     Phase 1 Read-only viewer         :p1, after p0, 28d
     section Organize
     Phase 2 Accounts, drag, and sync :p2, after p1, 28d
+    section Keep current
     Phase 3 Performance and Canvas sync :p3, after p2, 28d
     section Harden
     Phase 4 Polish and deploy        :p4, after p3, 21d
     section Later
-    Phase 5 OAuth and extras         :p5, after p4, 28d
+    Phase 5 Future features          :p5, after p4, 28d
 ```
 
 The bars show order and rough size. There are no fixed dates; a phase is done
@@ -57,6 +58,10 @@ phases only add features.
   suites on every pull request.
 - Confirm the Team Lead's school allows personal access tokens (risk R-1). Done:
   the Team Lead has a student token and a parent (observer) token for testing.
+- Set up a Canvas course where the Team Lead can act as teacher (a free
+  Canvas account from Instructure works), with a test student enrolled. The
+  Phase 3 change tests (TP-15) need it, and it is the safe place to record
+  Canvas responses for the test fixtures.
 
 **Exit criteria:** design and Phase 1 wireframes reviewed; decisions D-1, D-4,
 D-5, and D-6 recorded; CI is green on an empty app;
@@ -70,8 +75,9 @@ The smallest thing that is useful: connect, then see everything that's due.
 - Backend calls Canvas for active courses and their assignments (FR-10 to
   FR-14), handling Canvas's paging and rate limits.
 - A read-only board: every assignment is a Trello-style card in the Backlog
-  list, sorted by due date, with the course show/hide buttons and filters by
-  course and status (FR-20 to FR-24, FR-26, FR-60, FR-65, FR-78). Moving
+  list, sorted by due date, with the course show/hide buttons (FR-20 to
+  FR-23, FR-26, FR-60, FR-65, FR-66, FR-78). Clicking a card opens it in
+  Canvas. Moving
   cards between lists comes in Phase 2, once accounts can save it.
 - Each assignment links back to its Canvas page (FR-26).
 - Clear error messages for a bad token, an expired token, or Canvas being
@@ -218,7 +224,7 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 |----|----------|---------|----------------|-----------|
 | D-1 | Frontend framework | **React** (largest ecosystem, most tutorials, mature drag-and-drop libraries such as dnd-kit) or **Svelte** (less code, closer to QML's declarative feel, smaller community) | **Postponed** by the Team Lead (2026-10-25) until requirements and design are further along, since the features may change which fits best. Leaning React for learning resources and drag-and-drop support. | End of Phase 0 design |
 | D-2 | Where notes and board layout are stored | **Browser local storage** (no accounts, works offline, but tied to one browser and lost if site data is cleared) or **server database** (follows the user between devices, but needs portal sign-in and more security work) | **Decided** (Team Lead, 2026-10-25): server database. The user should be able to sign in from anywhere and see their saved state. | Done |
-| D-3 | Hosting | Frontend on **GitHub Pages**. Backend on **Render**, **Fly.io**, or **Vercel** serverless functions. All have free or cheap tiers with limits. | Decide in Phase 4; run locally until then. | Phase 4 |
+| D-3 | Hosting | Frontend on **GitHub Pages**. Backend on **Render**, **Fly.io**, or **Vercel** serverless functions. All have free or cheap tiers with limits. | Decide in Phase 4; run locally until then. Two needs narrow the choice: the Phase 3 background job needs a host that can run scheduled or always-on jobs (which rules out serverless-only hosting), and the sign-in cookie works best when the frontend and backend share one site, so the backend can also serve the built frontend instead of GitHub Pages. | Phase 4 |
 | D-4 | How users connect to Canvas | **Personal access token** (works today, no school involvement, user must create and paste it) or **OAuth** (smooth sign-in, needs a developer key from the school's Canvas admin) | Token first; OAuth in Phase 5 if a school will issue a key. | Phase 0 |
 | D-5 | Who the app is for | Just the Team Lead, a few friends, or any student at any school | Design for any school (the Canvas URL is a setting), test with one. | Phase 0 |
 | D-6 | Backend language | **Python + FastAPI** (readable, quick to write, good for learning) or **Node.js** (same language as the frontend) | Python + FastAPI. | Phase 0 |
@@ -232,7 +238,7 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | R-1 | The school has turned off personal access tokens | Phase 1 can't connect | Check early (Phase 0). Fallback: a free Canvas account from Instructure for testing; OAuth with the school later. |
 | R-2 | Canvas tokens are powerful; a leak exposes a student's whole account | Privacy harm | Backend never logs tokens, stores them encrypted or not at all, and only uses read endpoints (NFR-10, NFR-11). |
 | R-3 | Canvas is slow: in the Team Lead's experience a full load of courses, each with 100+ assignments, can take several minutes, and rate limits slow it further | Students wait or give up | Never make the student wait on Canvas: show cached data and refresh in the background. Measure early with a real account (TP-14 baseline in Phase 1), then in Phase 3 fetch less, in fewer requests, and switch to Canvas GraphQL if needed (see design, *Making Canvas loads fast*). |
-| R-4 | Assignments change in Canvas (renamed, deleted, new due date) | Board shows stale or orphaned cards | Match cards by Canvas assignment ID, not name; keep notes on deleted assignments in an "Archived" area (FR-35, FR-45). |
+| R-4 | Assignments change in Canvas (renamed, deleted, new due date) | Board shows stale or orphaned cards | Merged into R-9. |
 | R-5 | Learning web development alongside building | Slower progress | Small phases, one new technology at a time, docs explain terms. |
 | R-6 | A school-managed Google account blocks sign-in to outside apps | Student can't sign in | Allow any Google account, so a personal one works; explain this on the sign-in screen. |
 | R-7 | Matching Trello too closely in look (logo, artwork, exact styling) | Trademark or copyright complaint | Copy behavior and layout patterns only; our own name, colors, and icons (C-4). |
@@ -267,3 +273,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | Phase 3 is now performance and Canvas sync, from the Team Lead; the card back, notes, label colors, saved course toggles, filter menu, shortcuts, and archiving move to Phase 5. Phase 1 records a TP-14 baseline instead of meeting NFR-2. |
 | 2026-10-25 | Backend-to-Canvas sync named the hardest part of the project, from the Team Lead's review: Phase 3 lists the change cases (FR-39, FR-45, Q-7) and TP-15 in its exit criteria; added R-9. |
 | 2026-10-25 | Export (FR-53) moved from Phase 4 to Phase 5. |
+| 2026-10-25 | Whole-plan review: Gantt sections renamed, Phase 1 no longer lists Phase 5 filters (FR-24), Phase 0 adds a Canvas teacher sandbox, D-3 notes the background job and same-site cookie needs, R-4 merged into R-9. |

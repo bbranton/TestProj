@@ -52,8 +52,8 @@ Requirements: FR-50, D-7. Shown when no one is signed in.
 |                 Canvas Portal                    |
 |                                                  |
 |   All your Canvas assignments in one place,      |
-|   on a board you can arrange, with your own      |
-|   private notes.                                 |
+|   on a board you can arrange.                    |
+|                                                  |
 |                                                  |
 |          [  G  Sign in with Google  ]            |
 |                                                  |
@@ -143,9 +143,10 @@ Backlog, and dragging between lists arrives in Phase 2 (FR-60).
   [Hide all] show or hide every course at once. With every course hidden, the
   board says "All courses are hidden" with a Show all link. Hidden cards keep
   their list.
-  ▬▬ label strip in the course color (FR-66). (◷ ...) due badge: red
+  ▬▬ label strip in the course's automatic color (FR-66). (◷ ...) due badge: red
   when Canvas flags Missing, green with ✓ when Submitted or Graded, plain
-  otherwise (FR-65). ✎ 2 is the number of notes (FR-43).
+  otherwise (FR-65). ✎ 2 is the number of notes (FR-43), shown once notes
+  arrive in Phase 5.
   The lists are fixed: they can't be renamed or reordered. Renaming
   (FR-63) and dragging lists (FR-62) are Phase 5 ideas.
   Adding cards and lists (FR-64, FR-71) and archiving lists (FR-36) are
@@ -330,11 +331,11 @@ The user swipes sideways between lists, and dots show which list is shown.
 |                            |
 |          ○ ● ○ ○           |
 +----------------------------+
-  [⚲] opens the filter menu. The course buttons scroll sideways when they
+  [⚲] opens the filter menu (Phase 5). The course buttons scroll sideways when they
   don't fit; Show all and Hide
   all are at the end of the row (FR-78).
   To move a card, press and hold it, then drag it to a screen edge to go
-  to the next list, or use Move on the card back.
+  to the next list, or (from Phase 5) use Move on the card back.
 ```
 
 ## 3. Workflows
@@ -497,3 +498,4 @@ flowchart TD
 | 2026-10-25 | Card back (S-5), filter menu (S-8), board menu and archive (S-9), and notes (W-4) marked Phase 5; until then clicking a card opens it in Canvas. From the Team Lead. |
 | 2026-10-25 | W-5 now covers partial fetches, fields added or cleared, and republished assignments, from the Team Lead's review. |
 | 2026-10-25 | Export marked Phase 5 on S-6 and W-6. |
+| 2026-10-25 | Whole-plan review: S-1 no longer promises notes, S-4 and the phone layout mark notes, the filter menu, and the card back as Phase 5. |

@@ -11,8 +11,8 @@ documents refer back to.
 
 **In scope:** reading a student's courses and assignments from Canvas,
 showing them, arranging them on a kanban board that looks and behaves like
-Trello (goal G-3 in the [roadmap](01-roadmap.md#1-project-goals)), and keeping
-private notes.
+Trello (goal G-3 in the [roadmap](01-roadmap.md#1-project-goals)), keeping
+it current with Canvas, and, as a future feature, keeping private notes.
 
 This document uses Trello's words where they apply: a **board** holds
 **lists** (the columns), lists hold **cards**, and opening a card shows its
@@ -89,15 +89,15 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 
 | ID | Requirement | Priority | Phase |
 |----|-------------|----------|-------|
-| FR-20 | The dashboard lists the user's active courses by name and course code. | Must | 1 |
-| FR-21 | The dashboard lists assignments across all courses, sorted by due date, soonest first; assignments with no due date come last. | Must | 1 |
+| FR-20 | The board lists the user's active courses by name and course code. | Must | 1 |
+| FR-21 | The board lists assignments across all courses, sorted by due date, soonest first; assignments with no due date come last. | Must | 1 |
 | FR-22 | Each assignment shows: name, course, due date and time in the user's time zone, points possible, and status. | Must | 1 |
 | FR-23 | Status is shown exactly as Canvas reports it, with nothing worked out by the portal. The submission state (Canvas field `workflow_state`) is one of *Not submitted*, *Submitted*, *Graded*, or *Pending review*. Canvas's own *Late*, *Missing*, and *Excused* flags (fields `late`, `missing`, `excused`) show as separate tags, because they can apply at the same time as a state, such as Graded and Late. | Must | 1 |
-| FR-27 | Statuses the portal works out by combining Canvas fields or comparing with the clock, such as *Upcoming*, *Due soon* (for example within 48 hours, with a yellow badge), and *Overdue*. They need clear rules for cases that overlap. | Could | 5 |
-| FR-28 | The card back shows the assignment's description (its instructions) exactly as Canvas has it, with Canvas's formatting. It is read only: the portal never edits it, and it is not a note. | Must | 5 |
 | FR-24 | The user can filter by course, by Canvas submission state and flags (FR-23), and search by assignment name. | Should | 5 |
 | FR-25 | The user can hide assignments, for example those Canvas reports as *Graded* or *Excused*. | Could | 5 |
 | FR-26 | Each assignment links to its page in Canvas, opening in a new tab. | Must | 1 |
+| FR-27 | Statuses the portal works out by combining Canvas fields or comparing with the clock, such as *Upcoming*, *Due soon* (for example within 48 hours, with a yellow badge), and *Overdue*. They need clear rules for cases that overlap. | Could | 5 |
+| FR-28 | The card back shows the assignment's description (its instructions) exactly as Canvas has it, with Canvas's formatting. It is read only: the portal never edits it, and it is not a note. | Must | 5 |
 
 ### 4.4 Kanban board
 
@@ -108,11 +108,12 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-32 | The user can drag a card to another list. Cards cannot be reordered by hand within a list (FR-38). | Must | 2 |
 | FR-33 | The board layout (which list each card is in) is saved and restored on the next visit. | Must | 2 |
 | FR-34 | Assignments that are new since the last visit appear in *Backlog*, in their due date place (FR-38). When the board is first created, every assignment starts in *Backlog*. | Must | 2 |
-| FR-39 | When a field changes in Canvas, the card shows the new value after the next refresh, and never changes list because of it. This covers a field being added later (such as a due date set after the assignment was created), changed, or cleared (such as a due date removed: the card moves to the end of its list with no due date). It applies to the name, due date, points, description, submission state, and the late, missing, and excused flags, including a state going backward (for example graded back to submitted after a resubmission). | Must | 3 |
-| FR-38 | Within every list, assignments are always sorted by due date, earliest at the top. Assignments with no due date come last, then by name. A card dropped into a list slots into its due date place, and a changed due date in Canvas moves the card to its new place. | Must | 1 |
 | FR-35 | Cards are matched to assignments by Canvas assignment ID, so a renamed or rescheduled assignment keeps its place. | Must | 2 |
 | FR-36 | The user can archive a list, as in Trello. Its cards go with it and can be restored together. | Could | 5 |
 | FR-37 | *(Removed: no "Move to Done?" hint. The student drags cards to Done; the due badge turning green already shows the assignment is submitted, FR-65.)* | n/a | n/a |
+| FR-38 | Within every list, assignments are always sorted by due date, earliest at the top. Assignments with no due date come last, then by name. A card dropped into a list slots into its due date place, and a changed due date in Canvas moves the card to its new place. | Must | 1 |
+| FR-39 | When a field changes in Canvas, the card shows the new value after the next refresh, and never changes list because of it. This covers a field being added later (such as a due date set after the assignment was created), changed, or cleared (such as a due date removed: the card moves to the end of its list with no due date). It applies to the name, due date, points, description, submission state, and the late, missing, and excused flags, including a state going backward (for example graded back to submitted after a resubmission). | Must | 3 |
+| FR-45 | If an assignment disappears from Canvas (deleted or unpublished by the teacher), its card (and any notes) is marked archived rather than deleted, and leaves the board. Only a complete, successful refresh can archive a card; a failed or partial fetch changes nothing. If the assignment comes back (republished), the card returns to its old list. Viewing and restoring archived cards by hand comes with FR-74. | Must | 3 |
 
 ### 4.5 Trello-style look and behavior (goal G-3)
 
@@ -124,7 +125,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-63 | Clicking a list title edits it in place. Enter or clicking away saves, and Escape cancels. | Could | 5 |
 | FR-64 | An "+ Add another list" control after the last list adds a list. | Could | 5 |
 | FR-65 | Card fronts show: the course as a colored label strip, the title, and badges for the due date, the number of notes (FR-43), and, from Phase 5, checklist progress (FR-70). The due date badge is green when Canvas reports *Submitted* or *Graded*, red when Canvas flags it *Missing*, and plain otherwise. Yellow for *Due soon* comes with FR-27 in Phase 5. | Must | 1 |
-| FR-66 | Each course gets a label color automatically. The user can change a course's color and name its label. | Should | 5 |
+| FR-66 | Each course gets a label color automatically, used on its cards and its course button. From Phase 5 the user can change a course's color and name its label. | Should | 1 (5 for changing) |
 | FR-67 | Clicking a card opens its card back in a dialog over the board, which stays visible behind it. The browser address changes to the card's own link, so reloading or sharing the link reopens the card, and Back closes it. | Must | 5 |
 | FR-68 | The card back shows: the title; "in list *name*" (clicking it moves the card); labels; due date; points and status; an "Open in Canvas" button; *Description*, from Canvas and read only (FR-28); *Notes*, private (FR-40); and *Archive*. Checklists are added in Phase 5 (FR-70). | Must | 5 |
 | FR-69 | Hovering a card shows an edit (pencil) button; it and right-click open a quick edit menu: Open card, Move, Change label color, Open in Canvas, Archive. | Could | 5 |
@@ -132,7 +133,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-71 | "+ Add a card" at the bottom of each list creates a personal card that isn't a Canvas assignment. It supports everything a card back has except the Canvas details. | Could | 5 |
 | FR-72 | A Filter button at the start of the course button row (FR-78), under the header, opens a menu that filters cards by course, by due date (due date passed, due in the next day, next week, next month, no due date), by Canvas submission state and flags (FR-23), and by keyword. When a filter is on, the course row says so and offers "Clear". | Must | 5 |
 | FR-73 | Keyboard shortcuts follow Trello's where the action exists, including: arrow keys move between cards, Enter opens a card, Escape closes, `f` filter, `x` clear filters, `?` shows the shortcut list. The final list is checked against Trello's own shortcut page during design. | Should | 5 |
-| FR-74 | Archived cards (and, from Phase 5, lists) are found under "Archived items" in the board menu, where they can be restored. | Must | 5 |
+| FR-74 | Archived cards and lists are found under "Archived items" in the board menu, where they can be restored. | Must | 5 |
 | FR-75 | A board menu opens as a panel from the right edge with: board background color, labels, archived items. | Could | 5 |
 | FR-76 | The user can have more than one board. | Could | 5 |
 | FR-77 | Dragging feels like Trello: the card tilts slightly and lifts while dragged, the list under it is highlighted and a gray gap shows the due date spot where it will land, and the board scrolls when the card nears an edge. | Should | 2 |
@@ -148,7 +149,6 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-42 | A note is saved when the user presses Save or Ctrl+Enter. If saving fails, the text stays in the box; closing the card with unsaved text warns first. | Must | 5 |
 | FR-43 | A card with notes shows a badge with the number of notes; opening the card shows them all. | Must | 5 |
 | FR-44 | Notes are never sent to Canvas. | Must | 5 |
-| FR-45 | If an assignment disappears from Canvas (deleted or unpublished by the teacher), its card (and any notes) is marked archived rather than deleted, and leaves the board. Only a complete, successful refresh can archive a card; a failed or partial fetch changes nothing. If the assignment comes back (republished), the card returns to its old list. Viewing and restoring archived cards by hand comes with FR-74. | Must | 3 |
 | FR-46 | Notes support simple formatting (bold, lists, links). | Could | 5 |
 
 ### 4.7 Accounts, sync, and data control
@@ -168,7 +168,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 
 | ID | Requirement | Phase |
 |----|-------------|-------|
-| NFR-1 | With cached data, the dashboard is usable within 2 seconds of opening. | 1 |
+| NFR-1 | With cached data, the board is usable within 2 seconds of opening. | 1 |
 | NFR-2 | For an account with 8 courses and 200 assignments, a full refresh from Canvas completes within 15 seconds, with courses appearing as they arrive. | 3 |
 | NFR-3 | Dragging a card responds within 100 ms. | 2 |
 | NFR-4 | Changes made in Canvas (a new or removed assignment, a new due date, a new submission state) show on the board within 15 minutes, without the student pressing Refresh. | 3 |
@@ -212,7 +212,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 
 ## 6. Open questions
 
-- **Q-1** Does the Team Lead's school allow personal access tokens? (Blocks Phase 1; see R-1.)
+- ~~**Q-1** Does the Team Lead's school allow personal access tokens?~~ Answered: yes; the Team Lead has a student token and a parent token (A-1).
 - **Q-2** When *Due soon* is added (FR-27, Phase 5), should it be 48 hours, or configurable?
 - **Q-3** Should discussion posts and quizzes appear alongside assignments? Canvas exposes them as assignments in most cases, so the default is yes.
 - ~~**Q-4** Is multi-device sync wanted, or is one browser enough?~~ Answered: yes, the user signs in from anywhere and sees their saved state (D-2).
@@ -249,3 +249,4 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | 2026-10-25 | Phase 3 is now performance and Canvas sync, from the Team Lead: FR-24, FR-28, FR-40 to FR-44, FR-46, FR-66 to FR-68, FR-72 to FR-74, FR-78 saving, NFR-21, NFR-34, and NFR-35 move to Phase 5; NFR-2 moves to Phase 3 and NFR-12 to Phase 2; FR-45 reworded; added NFR-4 (Canvas changes appear within 15 minutes). Fixed broken table cells in FR-66, FR-67, FR-72 to FR-74, NFR-34, and NFR-35. |
 | 2026-10-25 | Added FR-39 (fields added, changed, or cleared in Canvas, including states going backward); FR-45 now Must, archives only after a complete refresh, and restores republished assignments; added Q-7 (cards of ended or dropped courses). From the Team Lead's review. |
 | 2026-10-25 | Export (FR-53) moved to Phase 5, from the Team Lead's review. |
+| 2026-10-25 | Whole-plan review: rows in each table put in ID order, FR-45 moved to the board section (it is Canvas sync, not notes), scope mentions Canvas sync and notes as a future feature, "dashboard" now "board", FR-66 automatic colors in Phase 1 with custom colors in Phase 5, Q-1 answered. |

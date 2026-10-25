@@ -327,7 +327,7 @@ sequenceDiagram
     A->>G: Exchange code for ID token
     G-->>A: ID token (Google user ID, email, name)
     A->>A: Find or create USER by Google user ID
-    A-->>B: Set session cookie, redirect to dashboard
+    A-->>B: Set session cookie, redirect to the board
 ```
 
 - The backend asks Google only for the `openid email profile` scopes: who the
@@ -371,9 +371,11 @@ only), and `SameSite=Lax` (other sites can't trigger requests with it).
   `X-Rate-Limit-Remaining` header and answers `403` with "Rate Limit Exceeded"
   when it runs out. The client fetches at most 4 courses at once and waits and
   retries with increasing delays when limited.
-- **Caching (FR-14):** results are stored in `CANVAS_CACHE` for 5 minutes. A
-  page load uses the cache if fresh; *Refresh* skips it. If Canvas fails, the
-  last cached data is returned with a warning flag (NFR-20).
+- **Caching (FR-14):** results are stored in `CANVAS_CACHE`. A page load
+  always gets the cached copy at once; if it is older than 5 minutes, a
+  refresh starts in the background (see *Never wait on Canvas* below).
+  *Refresh* starts one regardless of age. If Canvas fails, the last cached
+  data stays, with a warning flag (NFR-20).
 
 ### Making Canvas loads fast (NFR-1, NFR-2, R-3)
 
@@ -413,7 +415,7 @@ the start, and Phase 3 tuning that starts from the Phase 1 timings
 2. **Leave descriptions out of the list.** Descriptions are often the
    largest part of each assignment. With GraphQL they can be skipped in the
    main load and fetched for one assignment when its card back opens (FR-28).
-3. **Refresh on a schedule.** A backend job refreshes each user's data every
+3. **Refresh on a schedule** (part of the Phase 3 background job below). A backend job refreshes each user's data every
    15 minutes or so, so a visit almost always finds fresh data and the slow
    fetch happens while nobody is watching.
 4. **Refresh by urgency.** Assignments due in the next two weeks refresh
@@ -496,9 +498,10 @@ sequenceDiagram
 
     B->>A: GET /api/assignments (session cookie)
     A->>D: Look up user, cache
-    alt cache is fresh
-        D-->>A: cached assignments
-    else cache is old or missing
+    alt any cached copy exists
+        D-->>A: cached assignments, returned at once
+        Note over A: If older than 5 minutes, the steps below run in the background
+    else first ever load
         A->>D: Load and decrypt Canvas token
         A->>C: GET courses (follow pages)
         C-->>A: courses
@@ -556,7 +559,7 @@ and the Back button behave the way they do in Trello.
 | Address | Shows | Requirements |
 |---------|-------|--------------|
 | `/` | The board (or S-1 / S-2 if not signed in or connected) | FR-60 |
-| `/c/{cardId}` | The board with that card's card back open as a dialog | FR-67 |
+| `/c/{cardId}` | Phase 5: the board with that card's card back open as a dialog | FR-67 |
 | `/settings` | Settings | FR-4, FR-53, FR-54 |
 
 ### Component structure
@@ -567,10 +570,10 @@ is built from these:
 ```mermaid
 flowchart TD
     App --> Header["BoardHeader<br/>board name, Refresh, menu"]
-    App --> Toggles["CourseToggleBar<br/>Filter button, one show/hide button per course"]
+    App --> Toggles["CourseToggleBar<br/>one show/hide button per course;<br/>Filter button in Phase 5"]
     App --> Board
-    App --> CardBack["CardBackDialog<br/>opens on /c/{cardId}"]
-    App --> BoardMenu["BoardMenu<br/>right-side panel, archived items"]
+    App --> CardBack["CardBackDialog, Phase 5<br/>opens on /c/{cardId}"]
+    App --> BoardMenu["BoardMenu, Phase 5<br/>right-side panel, archived items"]
     Board --> List["List (one per list)"]
     List --> ListHeader["ListHeader<br/>list title; rename and drag in Phase 5"]
     List --> Card["CardFront (one per card)"]
@@ -594,7 +597,7 @@ UI uses:
 | Card | White, 8 px rounded corners, soft shadow, 8 px padding; label strip at the top in the course color |
 | Due badge | Small pill with a clock icon: green (Canvas says Submitted or Graded), red (Canvas flags Missing), plain otherwise; yellow (due soon) comes with FR-27 in Phase 5 |
 | Text | System font, 14 px on cards, bold list titles |
-| Card back | Centered dialog about 768 px wide over a dimmed board; main column on the left, action buttons on the right |
+| Card back (Phase 5) | Centered dialog about 768 px wide over a dimmed board; main column on the left, action buttons on the right |
 
 ### Interaction details
 
@@ -604,18 +607,20 @@ UI uses:
 | Drag a list (Phase 5) | Grab the list header; other lists slide aside | FR-62 |
 | Scroll the board | Horizontal scrollbar, or drag on empty background | FR-61 |
 | Rename a list (Phase 5) | Click the title, it becomes a text box; Enter saves, Escape cancels | FR-63 |
-| Open a card | Click, or focus it and press Enter; address changes to `/c/{cardId}` | FR-67 |
+| Open a card | Click, or focus it and press Enter. Until Phase 5 this opens the assignment in Canvas in a new tab (FR-26); from Phase 5 it opens the card back and the address changes to `/c/{cardId}` | FR-26, FR-67 |
 | Quick edit (Phase 5) | Pencil on hover or right-click | FR-69 |
-| Show or hide a course | Tap its button in the row under the header, or Show all / Hide all; the board updates at once and the choice is saved in the background (optimistic update) | FR-78 |
-| Filter | `f` or the Filter button in the course row; non-matching cards are hidden and the course row shows the filter is active | FR-72 |
-| Keyboard map | Kept in one file and shown by `?`; checked against Trello's shortcut page | FR-73, NFR-31 |
+| Show or hide a course | Tap its button in the row under the header, or Show all / Hide all; the board updates at once. Until Phase 5 the choice is kept in this browser; from Phase 5 it is saved with the account in the background (optimistic update) | FR-78 |
+| Filter (Phase 5) | `f` or the Filter button in the course row; non-matching cards are hidden and the course row shows the filter is active | FR-72 |
+| Keyboard map (Phase 5) | Kept in one file and shown by `?`; checked against Trello's shortcut page | FR-73, NFR-31 |
 
 ## 10. What this means for D-1 (React or Svelte)
 
 Nothing above depends on the framework; the backend and data model are the
-same either way. The frontend's hardest parts are the Trello-style board
-(smooth, accessible drag and drop of cards and lists, FR-77 and NFR-31), the
-card back dialog with its own address (FR-67), and the notes list (FR-40 to FR-42).
+same either way. Through Phase 4, the frontend's hardest parts are the Trello-style board
+(smooth, accessible drag and drop of cards, FR-77 and NFR-31) and keeping
+open devices in step without cards jumping (NFR-22). From Phase 5 come the
+card back dialog with its own address (FR-67) and the notes list (FR-40 to
+FR-42).
 
 The Trello goal (G-3) leans toward React. React has the most examples of
 Trello-style boards to learn from, and Pragmatic drag and drop ships extra
@@ -672,3 +677,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | Phase 3 is performance and Canvas sync: tuning list renamed *Phase 3 tuning*, added *Keeping the backend in step with Canvas* (NFR-4); card back, notes, label, and archive endpoints marked Phase 5. |
 | 2026-10-25 | Added *What can change in Canvas* (FR-39, FR-45): one planned result per change case, the two rules behind them, and complete-fetch-only archiving. |
 | 2026-10-25 | Export endpoint marked Phase 5. |
+| 2026-10-25 | Whole-plan review: caching and the loading sequence now match *Never wait on Canvas*; card back, board menu, filter, and shortcuts marked Phase 5 in routes, components, style, and interactions; until Phase 5 a click opens the assignment in Canvas; section 10 updated. |

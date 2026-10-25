@@ -2,7 +2,8 @@
 
 A personal dashboard where a student connects their Canvas account, sees their
 current courses and assignments in one place, arranges assignments on a
-Trello-style board, and keeps private notes on each one. The full list of
+Trello-style board that stays current with Canvas. Private notes on each
+assignment are planned as a future feature. The full list of
 project goals is in the [roadmap](01-roadmap.md#1-project-goals).
 
 This folder is the project's formal documentation. Each document has a status

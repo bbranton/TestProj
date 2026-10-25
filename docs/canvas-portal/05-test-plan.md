@@ -123,10 +123,10 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | FR-69 (Phase 5) | Pencil and right-click open the quick edit menu | E2E |
 | FR-70 (Phase 5) | Add, check, reorder, and delete checklist items; card front shows progress | API, E2E |
 | FR-72 (Phase 5) | Each filter option, combined filters, and Clear | E2E |
-| FR-78 | Tapping a course button hides and shows its cards on the board; Show all and Hide all; hidden cards keep their place; choice survives reload and a second session | API, E2E |
+| FR-78 | Tapping a course button hides and shows its cards on the board; Show all and Hide all; hidden cards keep their place; choice survives a reload (and, from Phase 5, a second session) | API, E2E |
 | FR-73 (Phase 5) | Every shortcut in the keyboard map does its action, and `?` lists them all | E2E |
 | FR-74 (Phase 5) | Archive and restore a card or a list | API, E2E |
-| NFR-34 | Visual comparison: screenshots of S-4 and S-5 match approved reference images (Playwright `toHaveScreenshot`) | E2E |
+| NFR-34 | Visual comparison: screenshots of S-4 (and S-5 from Phase 5) match approved reference images (Playwright `toHaveScreenshot`) | E2E |
 | NFR-32 | axe-core finds no serious issues on S-1 to S-9 | Accessibility |
 
 ## 5. Manual procedures
@@ -155,9 +155,9 @@ steps, and the expected result. Screen IDs refer to the
 | Step | Action | Expected |
 |------|--------|----------|
 | 1 | On S-2, enter a made-up token | "Canvas did not accept this token"; form keeps the address |
-| 2 | Connect with a real token; move one card and write one note | Saved |
+| 2 | Connect with a real token; from Phase 2, move one card (from Phase 5, also write a note) | Saved |
 | 3 | In Canvas, delete that token; in the portal select Refresh | S-2 with the expired-token message |
-| 4 | Reconnect with a new token | The moved card and the note are still there |
+| 4 | Reconnect with a new token | The moved card (and note) are still there |
 | 5 | Check backend logs | The token text does not appear anywhere |
 
 ### TP-03 Assignments match Canvas
@@ -283,7 +283,7 @@ steps, and the expected result. Screen IDs refer to the
 | Step | Action | Expected |
 |------|--------|----------|
 | 1 | Run TP-01, TP-03, and TP-06 in Chrome, Firefox, Safari, and Edge | Same results in each |
-| 2 | On a phone, open S-4 and S-5 | Phone layout from the wireframes: one list fills the screen and swiping moves between lists |
+| 2 | On a phone, open S-4 (and S-5 from Phase 5) | Phone layout from the wireframes: one list fills the screen and swiping moves between lists |
 | 3 | Zoom the browser to 200% | All text readable; nothing cut off |
 | 4 | Turn on a screen reader (VoiceOver or NVDA) and go through S-4 | Every control is announced with a name |
 
@@ -305,13 +305,13 @@ how it looks, what it takes (clicks or keys), or how it responds.
 | 4 | *(Phase 5)* Drag a list by its header | Lists reorder the same way |
 | 5 | *(Phase 5)* Click a list title and rename it | Edits in place; Enter saves, Escape cancels |
 | 6 | *(Phase 5)* Add a list, then add three cards in a row | Composer stays open after each, as in Trello |
-| 7 | Open a card | Dialog over the dimmed board, same section order; address changes |
-| 8 | Reload, then press Back | Reload reopens the card; Back closes it |
+| 7 | *(Phase 5)* Open a card | Dialog over the dimmed board, same section order; address changes |
+| 8 | *(Phase 5)* Reload, then press Back | Reload reopens the card; Back closes it |
 | 9 | *(Phase 5)* Use the pencil and right-click on a card | Quick edit menu next to the raised card |
-| 10 | Press `f`, filter by a course and by "Due date passed", then `x` | Same behavior; the course row shows the filter is active (deliberate difference: Trello puts Filter in the board header) |
-| 11 | Try each shortcut in Trello's shortcut list that the portal supports | Same key does the same thing |
-| 12 | Archive a card and restore it from the board menu | Same steps |
-| 13 | Count clicks to open a card and filter by a course | No more than Trello (NFR-35) |
+| 10 | *(Phase 5)* Press `f`, filter by a course and by "Due date passed", then `x` | Same behavior; the course row shows the filter is active (deliberate difference: Trello puts Filter in the board header) |
+| 11 | *(Phase 5)* Try each shortcut in Trello's shortcut list that the portal supports | Same key does the same thing |
+| 12 | *(Phase 5)* Archive a card and restore it from the board menu | Same steps |
+| 13 | *(Phase 5)* Count clicks to open a card and filter by a course | No more than Trello (NFR-35) |
 | 14 | Check for Trello's name, logo, icons, or artwork anywhere | None (C-4) |
 
 Record the result of each step as *Same*, *Close* (small, acceptable
@@ -405,3 +405,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | Phase 3 is performance and Canvas sync: TP-09 and the card back, notes, filter, label, shortcut, and archive tests move to Phase 5; TP-14 is a Phase 1 baseline and must pass in Phase 3; added an NFR-4 background refresh test. |
 | 2026-10-25 | Added TP-15 (Canvas changes over time, run as teacher), change sequence fixtures, and an automated replay test for FR-39 and FR-45, from the Team Lead's review. |
 | 2026-10-25 | Export tests (FR-53, TP-10 step 3) marked Phase 5. |
+| 2026-10-25 | Whole-plan review: TP-02, TP-12, TP-13, and the FR-78 and NFR-34 tests now mark Phase 5 steps. |

@@ -76,9 +76,14 @@ The smallest thing that is useful: connect, then see everything that's due.
 - Each assignment links back to its Canvas page (FR-26).
 - Clear error messages for a bad token, an expired token, or Canvas being
   unreachable (FR-6, NFR-20).
+- Measure how long a full Canvas load takes with the Team Lead's real
+  student account (TP-14). If it misses NFR-2, apply the fixes in the
+  design's [Making Canvas loads fast](03-design.md#making-canvas-loads-fast-nfr-1-nfr-2-r-3)
+  before Phase 2, so sync work isn't built on a slow foundation.
 
 **Exit criteria:** the Team Lead can connect a real account and see the same
-assignments Canvas shows, verified by the Phase 1 test procedures.
+assignments Canvas shows, verified by the Phase 1 test procedures, and the
+TP-14 timings meet NFR-1 and NFR-2.
 
 ### Phase 2: Accounts, dragging, and sync
 
@@ -199,7 +204,7 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 |----|------|--------|------------|
 | R-1 | The school has turned off personal access tokens | Phase 1 can't connect | Check early (Phase 0). Fallback: a free Canvas account from Instructure for testing; OAuth with the school later. |
 | R-2 | Canvas tokens are powerful; a leak exposes a student's whole account | Privacy harm | Backend never logs tokens, stores them encrypted or not at all, and only uses read endpoints (NFR-10, NFR-11). |
-| R-3 | Canvas rate limits slow down large accounts | Slow loading | Cache results, fetch courses in parallel within limits, show partial results (NFR-2). |
+| R-3 | Canvas is slow: in the Team Lead's experience a full load of courses, each with 100+ assignments, can take several minutes, and rate limits slow it further | Students wait or give up | Never make the student wait on Canvas: show cached data and refresh in the background. Measure early with a real account (TP-14, Phase 1), then fetch less, in fewer requests, and switch to Canvas GraphQL if needed (see design, *Making Canvas loads fast*). |
 | R-4 | Assignments change in Canvas (renamed, deleted, new due date) | Board shows stale or orphaned cards | Match cards by Canvas assignment ID, not name; keep notes on deleted assignments in an "Archived" area (FR-35, FR-45). |
 | R-5 | Learning web development alongside building | Slower progress | Small phases, one new technology at a time, docs explain terms. |
 | R-6 | A school-managed Google account blocks sign-in to outside apps | Student can't sign in | Allow any Google account, so a personal one works; explain this on the sign-in screen. |
@@ -230,3 +235,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | Added more than one school per student (FR-55) to Phase 5. |
 | 2026-10-25 | Table view removed; Phase 1 shows a read-only board with every card in Backlog, from the Team Lead's review. |
 | 2026-10-25 | Phase 2 narrowed to accounts, dragging between lists, and sync, from the Team Lead's review; everything else moved to Phase 3. Added D-8 (how devices learn about changes) and R-8 (sync bugs). |
+| 2026-10-25 | R-3 widened to slow Canvas loads, from the Team Lead's experience; Phase 1 now measures load times (TP-14) and fixes them before Phase 2. |

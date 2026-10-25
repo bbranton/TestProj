@@ -375,6 +375,53 @@ only), and `SameSite=Lax` (other sites can't trigger requests with it).
   page load uses the cache if fresh; *Refresh* skips it. If Canvas fails, the
   last cached data is returned with a warning flag (NFR-20).
 
+### Making Canvas loads fast (NFR-1, NFR-2, R-3)
+
+In the Team Lead's experience, loading every course with 100+ assignments
+each can take several minutes. The plan has two layers: things built from
+the start, and things to add if the Phase 1 timings (TP-14) are still too
+slow.
+
+**Built from the start**
+
+- **Never wait on Canvas.** If there is any cached data, `GET /api/assignments`
+  returns it at once, even if it is old, and starts a refresh in the
+  background. The response says a refresh is running, the page shows
+  "Updating...", and it checks back until the refresh finishes. Only the
+  first ever load waits for Canvas. (This pattern is called
+  *stale-while-revalidate*.)
+- **Show results as they arrive.** Courses fill in one by one instead of
+  the page staying empty (NFR-2).
+- **Fewer, larger requests.** `per_page=100` on every list, and up to 4
+  courses fetched at once, raised or lowered by watching
+  `X-Rate-Limit-Remaining`.
+- **Skip what can't change.** Only active courses are fetched; concluded
+  courses are never refetched.
+- **Measure every call.** The backend logs each Canvas request's endpoint
+  (without the token, NFR-10), page count, and time taken, so slow spots show
+  up in numbers, not guesses.
+
+**If TP-14 is still too slow**, in this order:
+
+1. **Canvas GraphQL.** Canvas also has a GraphQL API (`POST /api/graphql`),
+   where one request names exactly the fields wanted. A single query can
+   return every active course's assignments with only name, due date,
+   points, and submission state, which replaces dozens of REST calls. *GraphQL*
+   is a query language for APIs: the caller describes the shape of the data
+   it wants, a little like a QML property binding listing only the
+   properties it uses.
+2. **Leave descriptions out of the list.** Descriptions are often the
+   largest part of each assignment. With GraphQL they can be skipped in the
+   main load and fetched for one assignment when its card back opens (FR-28).
+3. **Refresh on a schedule.** A backend job refreshes each user's data every
+   15 minutes or so, so a visit almost always finds fresh data and the slow
+   fetch happens while nobody is watching.
+4. **Refresh by urgency.** Assignments due in the next two weeks refresh
+   often; ones far in the future, or already graded, refresh less often.
+5. **Planner API** (`/api/v1/planner/items`), which lists due items across
+   all courses in one paged list. It has fewer fields, so it's a fallback if
+   GraphQL is not available at the school.
+
 ### Loading sequence
 
 ```mermaid
@@ -523,7 +570,7 @@ works without a framework, but there are fewer worked examples to copy from.
 | FR-40 to FR-46 (notes) | Sections 3, 4, 9 |
 | FR-60 to FR-78 (Trello-style, course buttons) | Sections 3, 4, 9 |
 | FR-50 to FR-54 (accounts, data) | Sections 4, 5 |
-| NFR-1 to NFR-3 (performance) | Sections 3 (sorting, list positions), 6 (caching, parallel fetch) |
+| NFR-1 to NFR-3 (performance) | Sections 3 (sorting, list positions), 6 (caching, parallel fetch, making Canvas loads fast) |
 | NFR-10 to NFR-14 (security) | Section 7 |
 | NFR-20 to NFR-22 (reliability, sync) | Sections 3, 4 (keeping devices in sync), 6 |
 | NFR-30 to NFR-35 (usability, Trello style) | Sections 2, 9, wireframes |
@@ -558,3 +605,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | Data model note on supporting more than one school per user later (FR-55). |
 | 2026-10-25 | Removed the `/table` route and the header's view switch; the board is the only view. |
 | 2026-10-25 | Added *Keeping devices in sync* (NFR-22, D-8): `change_seq` on boards and cards, a changes endpoint, last-save-wins, and a unique card rule per assignment. |
+| 2026-10-25 | Added *Making Canvas loads fast*: show cached data and refresh in the background, per-call timing logs, and a fallback order (GraphQL, descriptions on demand, scheduled and tiered refresh, Planner API). |

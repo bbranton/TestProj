@@ -98,6 +98,7 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | FR-53, FR-54 | Export contains board and notes; delete removes every row for the user | API |
 | NFR-10 | Logs captured during a full test run contain no token string | API |
 | NFR-12 | User B gets `404` for every one of user A's cards and notes | API |
+| NFR-1, NFR-2 | Fixture server adds 1 second to every Canvas response: with a warm cache the board answers in under 2 seconds and refreshes in the background; a cold load of 8 courses and 200 assignments finishes in 15 seconds, with courses appearing one at a time | API, E2E |
 | NFR-20 | Canvas down: cached data plus warning banner | API, E2E |
 | NFR-22 | Concurrency: 20 parallel moves of one card leave it in exactly one list; `changes?since=` returns every change once; two parallel board loads with a new assignment create one card; two browser sessions converge within one poll | API, E2E |
 | NFR-31 | Move a card using only the keyboard | E2E |
@@ -308,6 +309,23 @@ Record the result of each step as *Same*, *Close* (small, acceptable
 difference, noted), or *Different* (opens an issue unless it is a
 deliberate, documented difference such as Canvas-only fields).
 
+### TP-14 Canvas load timing
+
+**Checks:** NFR-1, NFR-2, R-3 · **Phase:** 1 (repeat after any change to
+fetching)
+**Needs:** the Team Lead's real student token in the git-ignored `.env`, and
+the backend's Canvas timing log.
+
+| Step | Action | Expected |
+|------|--------|----------|
+| 1 | Clear the portal's cache; open the board | Courses appear one at a time; record the total time until the last one |
+| 2 | From the timing log, record the number of courses, assignments, requests, and the slowest request | Written in the results log |
+| 3 | Reload the board | Shows within 2 seconds from the cache (NFR-1) |
+| 4 | Wait past 5 minutes; reload | Old data shows at once with "Updating..."; the board stays usable while it refreshes |
+| 5 | Repeat step 1 on a weekday evening, when Canvas is busiest | Record the time; if any run misses 15 seconds (NFR-2), apply the next fix in the design's *Making Canvas loads fast* list and rerun |
+
+Record times only, never the token or assignment names, in the results log.
+
 ## 6. Reporting a problem
 
 A failed step becomes a GitHub issue that includes the procedure and step
@@ -345,3 +363,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | List rename and reorder tests (FR-62, FR-63, TP-13 steps 4 and 5) marked Phase 5. |
 | 2026-10-25 | Table view removed: TP-01, TP-03, TP-04, TP-05, TP-11, and coverage rows now use the board. |
 | 2026-10-25 | TP-06 gains sync steps 6 to 12 and an NFR-22 concurrency test row, for the Phase 2 focus on dragging and sync. |
+| 2026-10-25 | Added TP-14 (Canvas load timing with the real student account) and a slow-Canvas automated test for NFR-1 and NFR-2. |

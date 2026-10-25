@@ -51,7 +51,7 @@ both.
 | Canvas client | `httpx` (Python HTTP library) | Proposed | Async requests, so courses can be fetched in parallel (NFR-2) |
 | Database | Postgres in production, SQLite for local dev and tests | Proposed | Postgres is what hosts offer; SQLite needs no setup |
 | Database access | SQLAlchemy + Alembic | Proposed | Python models for tables; Alembic tracks schema changes over time ("migrations") |
-| Portal sign-in | See section 5 | **Open (D-7)** | |
+| Portal sign-in | Sign in with Google (OAuth 2 / OpenID Connect) via the Authlib Python library | **Decided for MVP (D-7)** | No passwords to store; see section 5 |
 | Hosting | See roadmap D-3 | Open | |
 
 ## 3. Data model
@@ -70,6 +70,7 @@ erDiagram
 
     USER {
         uuid id PK
+        string google_sub
         string email
         datetime created_at
     }
@@ -131,7 +132,9 @@ and require a signed-in session except where noted.
 
 | Method and path | Purpose | Requirements |
 |-----------------|---------|--------------|
-| `POST /api/auth/...` | Sign in, sign out (shape depends on D-7) | FR-50 |
+| `GET /api/auth/google/login` | Send the browser to Google's sign-in page (no session needed) | FR-50 |
+| `GET /api/auth/google/callback` | Google sends the user back here; backend checks the result, finds or creates the user, sets the session cookie (no session needed) | FR-50 |
+| `POST /api/auth/logout` | Sign out and clear the session | FR-50 |
 | `GET /api/me` | Current user and whether Canvas is connected | FR-2, FR-5 |
 | `PUT /api/canvas/connection` | Save Canvas URL and token; backend verifies with Canvas first | FR-1, FR-2 |
 | `DELETE /api/canvas/connection` | Disconnect and delete the stored token | FR-4 |
@@ -171,10 +174,13 @@ flowchart TD
     H -- no --> Upcoming
 ```
 
-## 5. Signing in to the portal (D-7, open)
+## 5. Signing in to the portal (D-7)
+
+**Decision (Team Lead, 2026-10-25):** Sign in with Google for the MVP. The
+other options stay listed for later.
 
 Because data follows the user between devices, the portal needs its own
-accounts, separate from Canvas. Options:
+accounts, separate from Canvas. Options considered:
 
 | Option | How it works | Pros | Cons |
 |--------|--------------|------|------|
@@ -183,8 +189,44 @@ accounts, separate from Canvas. Options:
 | **Username and password** | Classic form | No outside services | We must store passwords safely and build reset flows |
 | **Hosted auth service** (Auth0, Clerk, Supabase Auth) | A service handles all of the above | Least code, several options at once | Another account and dependency; free tiers have limits |
 
-**Recommendation:** Sign in with Google to start, through a hosted auth service
-if it fits the chosen host. *Log in with Canvas* (OAuth, D-4) would be the
+### How Sign in with Google works
+
+```mermaid
+sequenceDiagram
+    actor U as User
+    participant B as Browser
+    participant A as Backend
+    participant G as Google
+
+    U->>B: Select "Sign in with Google"
+    B->>A: GET /api/auth/google/login
+    A-->>B: Redirect to Google, with a one-time "state" value
+    B->>G: Google sign-in page
+    U->>G: Choose account, approve
+    G-->>B: Redirect to /api/auth/google/callback?code=...&state=...
+    B->>A: GET /api/auth/google/callback
+    A->>A: Check state matches
+    A->>G: Exchange code for ID token
+    G-->>A: ID token (Google user ID, email, name)
+    A->>A: Find or create USER by Google user ID
+    A-->>B: Set session cookie, redirect to dashboard
+```
+
+- The backend asks Google only for the `openid email profile` scopes: who the
+  user is, nothing from their Google Drive or Gmail.
+- Users are matched by Google's stable user ID (the `sub` value), not by
+  email, since an email address can change. The `USER` table gains a
+  `google_sub` column.
+- The Google *client ID* and *client secret* come from a free Google Cloud
+  project. The secret lives only in the server's environment settings, never
+  in the repo. Setting this up is a Phase 0 task.
+- While the Google app is in "testing" mode, only Google accounts added as
+  test users can sign in. That suits development; publishing it later is a
+  short Google review.
+- Some school-managed Google accounts block sign-in to outside apps. Students
+  can use a personal Google account instead; risk R-6 in the roadmap.
+
+*Log in with Canvas* (OAuth, D-4) would be the
 nicest option, since it signs the user in and connects Canvas in one step,
 but it needs the school to issue a developer key.
 
@@ -301,11 +343,12 @@ shrink, Svelte's simpler style becomes more attractive.
 
 ## Open decisions raised here
 
-- **D-7** How users sign in to the portal (section 5). Recommendation: Sign in
-  with Google.
+- **D-7** How users sign in to the portal (section 5). Decided: Sign in with
+  Google for the MVP.
 
 ## Change log
 
 | Date | Change |
 |------|--------|
 | 2026-10-25 | First draft. |
+| 2026-10-25 | D-7 decided: Sign in with Google. Added auth endpoints and sign-in sequence. |

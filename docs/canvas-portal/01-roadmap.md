@@ -44,6 +44,8 @@ phases only add features.
   features we focus on may change which framework fits best.
 - Create a `canvas-portal/` folder in this repo with a `frontend/` and a
   `backend/` part, each with a "hello" page or endpoint.
+- Create a Google Cloud project and OAuth client for Sign in with Google
+  (D-7), with the Team Lead's Google account as a test user.
 - Add GitHub Actions CI that builds both parts and runs their (empty) test
   suites on every pull request.
 - Confirm the Team Lead's school allows personal access tokens (risk R-1). Done:
@@ -145,7 +147,7 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | D-4 | How users connect to Canvas | **Personal access token** (works today, no school involvement, user must create and paste it) or **OAuth** (smooth sign-in, needs a developer key from the school's Canvas admin) | Token first; OAuth in Phase 5 if a school will issue a key. | Phase 0 |
 | D-5 | Who the app is for | Just the Team Lead, a few friends, or any student at any school | Design for any school (the Canvas URL is a setting), test with one. | Phase 0 |
 | D-6 | Backend language | **Python + FastAPI** (readable, quick to write, good for learning) or **Node.js** (same language as the frontend) | Python + FastAPI. | Phase 0 |
-| D-7 | How users sign in to the portal | **Sign in with Google**, **email magic link**, **username and password**, or a **hosted auth service** (see [design](03-design.md#5-signing-in-to-the-portal-d-7-open)) | Sign in with Google | Phase 2 |
+| D-7 | How users sign in to the portal | **Sign in with Google**, **email magic link**, **username and password**, or a **hosted auth service** (see [design](03-design.md#5-signing-in-to-the-portal-d-7)) | **Decided** (Team Lead, 2026-10-25): Sign in with Google for the MVP. | Done |
 
 ## 6. Risks
 
@@ -156,6 +158,7 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | R-3 | Canvas rate limits slow down large accounts | Slow loading | Cache results, fetch courses in parallel within limits, show partial results (NFR-2). |
 | R-4 | Assignments change in Canvas (renamed, deleted, new due date) | Board shows stale or orphaned cards | Match cards by Canvas assignment ID, not name; keep notes on deleted assignments in an "Archived" area (FR-35, FR-45). |
 | R-5 | Learning web development alongside building | Slower progress | Small phases, one new technology at a time, docs explain terms. |
+| R-6 | A school-managed Google account blocks sign-in to outside apps | Student can't sign in | Allow any Google account, so a personal one works; explain this on the sign-in screen. |
 
 ## Change log
 
@@ -163,3 +166,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 |------|--------|
 | 2026-10-25 | First draft. |
 | 2026-10-25 | D-1 postponed; D-2 decided (server storage), so accounts move into Phase 2 and Phase 4 becomes polish and deploy. R-1 cleared with student and parent test tokens. Parent view added to Phase 5. |
+| 2026-10-25 | D-7 decided: Sign in with Google for the MVP. Added Google setup to Phase 0 and risk R-6. |

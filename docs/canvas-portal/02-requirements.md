@@ -21,6 +21,26 @@ This document uses Trello's words where they apply: a **board** holds
 **Out of scope:** submitting work, changing anything in Canvas, teacher or
 admin features, grades analytics (possibly Phase 5).
 
+Requirements say *what* the portal does, not *how*. Canvas endpoints,
+tables, and component choices are in the [design](03-design.md); a
+requirement names one only where it sets the scope.
+
+### Requirements by goal
+
+Every requirement serves one of the project goals in the
+[roadmap](01-roadmap.md#1-project-goals), except the maintainability
+requirements, which serve the developer, and the two listed under *No goal yet*.
+
+| Goal | Requirements |
+|------|--------------|
+| G-1 One place for everything due | FR-1 to FR-3, FR-6, FR-10 to FR-16, FR-20 to FR-29, FR-31, FR-34, FR-38, FR-39, FR-45, FR-55, FR-79, NFR-1, NFR-2, NFR-4, NFR-20; notes FR-40 to FR-43, FR-46 |
+| G-2 Read only toward Canvas | C-3, FR-28, FR-44, NFR-13 |
+| G-3 Feels like Trello | FR-32, FR-36, FR-60 to FR-80, NFR-3, NFR-33 to NFR-36 |
+| G-4 Follows the student everywhere | FR-5, FR-33, FR-35, FR-50, FR-51, FR-53, NFR-22 |
+| G-5 Private and safe | FR-4, FR-54, NFR-10 to NFR-14, NFR-21 |
+| No goal yet | NFR-30 (browsers), NFR-32 (accessibility): no roadmap goal says the portal works for every student whatever their browser or ability. See Q-11. |
+| Developer | NFR-40 to NFR-42 |
+
 ### Priority and phase
 
 - **Must**: required for the phase to be done.
@@ -127,22 +147,22 @@ Removed requirements are not listed.
 
 | ID | Requirement | Priority | Phase |
 |----|-------------|----------|-------|
-| FR-1 | The user can enter their school's Canvas address and a personal access token. | Must | 1 |
+| FR-1 | The user can enter their school's Canvas address and a personal access token. If the address can't be reached, the portal says so and keeps what the user typed. | Must | 1 |
 | FR-2 | The portal checks the token by fetching the user's Canvas profile and shows their name on success. | Must | 1 |
 | FR-3 | The connect screen explains, with steps, how to create a token in Canvas. | Should | 1 |
 | FR-4 | The user can disconnect, which removes the token from the portal. The board is kept, so reconnecting the same Canvas account brings it back (see Q-8 for a different account). | Must | 1 |
 | FR-5 | The portal remembers the connection between visits until the user disconnects. The connection is stored with the user's portal account, so it works on any device they sign in from. | Must | 1 |
-| FR-6 | If Canvas rejects the token (wrong, expired, or revoked), the portal says so and returns to the connect screen without losing the board layout. | Must | 1 |
+| FR-6 | If Canvas rejects the token (wrong, expired, or revoked), the portal shows a message saying the token no longer works and returns to the connect screen without losing the board layout. | Must | 1 |
 
 ### 4.2 Fetching data from Canvas
 
 | ID | Requirement | Priority | Phase |
 |----|-------------|----------|-------|
-| FR-10 | The backend fetches the user's active course enrollments (`GET /api/v1/courses?enrollment_state=active`). | Must | 1 |
-| FR-11 | The backend fetches assignments for each active course, including the user's submission status (`GET /api/v1/courses/:id/assignments?include[]=submission`). No other kinds of course item, such as ungraded discussions, pages, or announcements, are fetched. Graded quizzes and graded discussions that Canvas returns in this same list show as ordinary assignments. | Must | 1 |
-| FR-12 | The backend follows Canvas paging so no courses or assignments are missed. | Must | 1 |
+| FR-10 | The portal fetches the courses in which the user's Canvas enrollment is active. Ended (concluded) courses are not fetched. | Must | 1 |
+| FR-11 | The portal fetches the assignments of each active course, with the user's own submission for each, from Canvas's assignments list (the design names the endpoint). No other kinds of course item, such as ungraded discussions, pages, or announcements, are fetched. Graded quizzes and graded discussions that Canvas returns in this same list show as ordinary assignments. | Must | 1 |
+| FR-12 | The portal follows Canvas paging so no courses or assignments are missed. | Must | 1 |
 | FR-13 | The user can refresh data on demand. The header always shows the date and time of the last complete Refresh, such as "Synced Oct 25, 10:42 AM". | Must | 1 |
-| FR-14 | The backend keeps the last complete copy of the student's Canvas data and shows it on every load, so opening the board never waits on Canvas. | Must | 1 |
+| FR-14 | The portal keeps the last complete copy of the student's Canvas data and shows it on every load, so opening the board never waits on Canvas. | Must | 1 |
 | FR-15 | The portal fetches from Canvas only when the student selects Refresh, or on the very first load when there is no data yet. It never starts a fetch on its own. When the data is more than an hour old, the Refresh button is highlighted. | Must | 1 |
 | FR-16 | Every Refresh, including the first load, shows its progress: how many courses are done out of the total, and for each course whether it is waiting, being fetched, waiting on a Canvas rate limit, done (with its number of assignments), or failed (with the reason, such as a timeout or an error from Canvas). When the Refresh ends, a summary says what was synced; if anything failed, it says the previous data was kept and offers Retry. The log of the last Refresh can be reopened until the next one starts. | Must | 1 |
 
@@ -150,9 +170,9 @@ Removed requirements are not listed.
 
 | ID | Requirement | Priority | Phase |
 |----|-------------|----------|-------|
-| FR-20 | The board lists the user's active courses by name and course code. | Must | 1 |
+| FR-20 | The board lists the user's active courses by name and course code. If the user has no active courses, or no assignments, the board says so instead of showing empty lists. | Must | 1 |
 | FR-21 | The board shows the assignments of every active course together, in the order FR-38 sets. | Must | 1 |
-| FR-22 | Each assignment shows: name, course, due date and time in the user's time zone, points possible, and status. The due date is the one Canvas gives this student, including a date set just for them (a Canvas *override*). | Must | 1 |
+| FR-22 | Each assignment shows: name, course, due date and time in the time zone of the device being used, points possible, and status. The due date is the one Canvas gives this student, including a date set just for them (a Canvas *override*). | Must | 1 |
 | FR-23 | Status is shown exactly as Canvas reports it, with nothing worked out by the portal. The submission state (Canvas field `workflow_state`) is one of *Not submitted*, *Submitted*, *Graded*, or *Pending review*. Canvas's own *Late*, *Missing*, and *Excused* flags (fields `late`, `missing`, `excused`) show as separate tags, because they can apply at the same time as a state, such as Graded and Late. | Must | 1 |
 | FR-24 | The user can filter by course, by Canvas submission state and flags (FR-23), and search by assignment name. | — | 5 |
 | FR-25 | The user can hide assignments, for example those Canvas reports as *Graded* or *Excused*. | — | 5 |
@@ -218,7 +238,7 @@ Removed requirements are not listed.
 
 | ID | Requirement | Priority | Phase |
 |----|-------------|----------|-------|
-| FR-50 | The user can sign in to the portal so their Canvas connection and board (and, from Phase 5, notes) are tied to them on the server. | Must | 1 |
+| FR-50 | The user can sign in to the portal so their Canvas connection and board (and, from Phase 5, notes) are tied to them on the server. They stay signed in on that browser between visits until they sign out, and they can sign out from any screen. | Must | 1 |
 | FR-51 | The board layout stored on the server (and, from Phase 5, notes) appears on any device where the user signs in. | Must | 2 |
 | FR-52 | *(Removed: board and notes are on the server from the start, so there is no browser data to import.)* | n/a | n/a |
 | FR-53 | The user can export their board and notes as a JSON file. | — | 5 |
@@ -231,8 +251,8 @@ Removed requirements are not listed.
 
 | ID | Requirement | Phase |
 |----|-------------|-------|
-| NFR-1 | With cached data, the board is usable within 2 seconds of opening. | 1 |
-| NFR-2 | A full Refresh of the Team Lead's real account completes within a target set from the Phase 1 TP-14 baseline, with each course's progress shown as it arrives (FR-16). Until the baseline is recorded, the placeholder is 15 seconds for 8 courses and 200 assignments. | 3 |
+| NFR-1 | With saved data, the board shows every card and responds to clicks within 2 seconds of opening the portal, for an account of up to 8 courses and 200 assignments, however slow Canvas is. | 1 |
+| NFR-2 | A full Refresh of the Team Lead's real account completes within a target set from the Phase 1 TP-14 baseline, with each course's progress shown as it arrives (FR-16). Until the baseline is recorded, the placeholder is 15 seconds for 8 courses and 200 assignments. The Team Lead writes the target here before Phase 3 starts. | 3 |
 | NFR-3 | Dragging a card responds within 100 ms. | 2 |
 | NFR-4 | Background sync (future): changes made in Canvas show on the board within 15 minutes without the student pressing Refresh, including refreshing while they are signed out. | 5 |
 
@@ -244,13 +264,13 @@ Removed requirements are not listed.
 | NFR-11 | The token is stored encrypted on the server. All traffic uses HTTPS, except on a developer's own machine (`localhost`). | 1 |
 | NFR-12 | A user's Canvas connection, cached Canvas data, and board are visible only to that user. | 1 |
 | NFR-13 | The portal calls only Canvas read (`GET`) endpoints. | 1 |
-| NFR-14 | Student data is handled with care for privacy rules such as FERPA (US student records law): no analytics or third-party trackers that see course data. | 1 |
+| NFR-14 | Out of respect for student privacy rules such as FERPA (US student records law), the portal loads no analytics, advertising, or other third-party scripts, and sends course data only to the signed-in user's browser. Google sign-in (FR-50) sees only who the user is, never course data. | 1 |
 
 ### 5.3 Reliability
 
 | ID | Requirement | Phase |
 |----|-------------|-------|
-| NFR-20 | When Canvas is slow, down, or rate limiting, the page shows a clear message and the last cached data rather than an empty screen. | 1 |
+| NFR-20 | When Canvas is slow, down, or rate limiting, the page keeps showing the last saved data with a message that says Canvas couldn't be reached and the time of the data shown. If there is no saved data yet (the first load), the page says so and offers Retry, never an empty or error page. | 1 |
 | NFR-21 | No user action or Canvas change can silently delete a note. | 5 |
 | NFR-22 | When the same account is open on more than one device or browser tab, a card moved on one shows in its new list on the others within 30 seconds, without a reload. If the same card is moved on two devices, every device ends up showing the move that reached the server last. A card is never lost or shown twice, even if two devices load the board at the same moment or a save fails. | 2 |
 
@@ -258,11 +278,11 @@ Removed requirements are not listed.
 
 | ID | Requirement | Phase |
 |----|-------------|-------|
-| NFR-30 | Works in current Chrome, Firefox, Safari, and Edge. | 1 |
+| NFR-30 | Works in the current release of Chrome, Firefox, Safari, and Edge on a laptop or desktop, checked when each phase is signed off. | 1 |
 | NFR-31 | *(Removed: keyboard-only use is not a requirement. From the Team Lead's review.)* | n/a |
 | NFR-32 | Meets WCAG 2.2 level AA (the standard web accessibility guideline) for contrast, labels, and focus. | 4 |
 | NFR-33 | Usable on a phone-width screen. As in Trello's mobile layout, one list fills the screen and the user swipes between lists. The UI details are worked out before this is built. | 5 |
-| NFR-34 | Visual style is close to Trello's within C-4: a colored board background, light gray lists with rounded corners, white cards with rounded corners and a soft shadow, and compact text. | 1 |
+| NFR-34 | Visual style is close to Trello's within C-4: a colored board background, light gray lists with rounded corners, white cards with rounded corners and a soft shadow, and compact text. Checked against approved reference screenshots and the Trello comparison review (TP-13). | 1 |
 | NFR-35 | Board actions (open a card, show or hide a course, filter) need no more clicks than the same action in Trello. | 5 |
 | NFR-36 | Nothing depends on hovering. Once phones are supported, every action and every piece of information can be reached by tapping. Hover can add a shortcut on desktop, but never the only way. Earlier phases avoid hover-only designs where it costs nothing, so phone support needs less rework. | 5 |
 
@@ -285,6 +305,8 @@ Removed requirements are not listed.
 - **Q-7** *(Needed before Phase 3.)* When a course ends or the student drops it, should its cards be archived at once, kept until the student hides the course, or kept until the next term starts? (Recommendation: archive when the course leaves Canvas's active list, and bring them back if it returns.)
 - **Q-8** *(Needed before Phase 1 is done.)* If a student disconnects and then connects a different Canvas account or school, what happens to the old board? (Recommendation: keep the old account's cards but show only the new account's, starting them in Backlog, and bring the old cards back if the student reconnects the old account. Each card already records its connection. Showing two schools on one board is FR-55, Phase 5.)
 - **Q-9** Some assignments can't be submitted in Canvas, such as on-paper or in-class work. Canvas reports them as not submitted until they are graded, so their cards say *Not submitted* (FR-23). Is that acceptable for Phase 1, or should the card show Canvas's submission type instead, such as *On paper*? (Recommendation: show *On paper* or *No submission* from Canvas's `submission_types` field, which is still a Canvas value, not one the portal works out.)
+- **Q-10** *(Needed before Phase 3.)* NFR-13 and C-3 allow only Canvas `GET` calls, but the design's first Phase 3 speed-up is Canvas GraphQL, which reads data through `POST /api/graphql`. Should NFR-13 allow read-only GraphQL queries (never mutations), or should Phase 3 tuning skip GraphQL? (Recommendation: allow read-only queries; the goal, G-2, is that nothing in Canvas changes, and a query changes nothing.)
+- **Q-11** Should the roadmap add a goal for reach, such as "works for every student, whatever their browser or ability", so NFR-30 and NFR-32 trace to a goal?
 
 ## Change log
 
@@ -329,3 +351,4 @@ Removed requirements are not listed.
 | 2026-10-25 | Added FR-16 (Refresh progress, Phase 1) and FR-29 (quizzes and discussions, Phase 5); Q-3 answered; FR-11 fetches only courses and assignments; NFR-2's target is set from the TP-14 baseline; Phase 5 rows have no priority. From the Team Lead's review. |
 | 2026-10-25 | In-depth review after PR #3: FR-22's points and status now appear on the card front (FR-65), since there is no card back until Phase 5; FR-34 is all Phase 1, since Phase 1 Refreshes already add new assignments to Backlog; the index lists FR-80's Phase 2 drop rule; FR-13 shows the last complete Refresh; FR-21 points to FR-38's order instead of repeating it; FR-39 leaves out the description until the card back shows it; FR-78 says the Phase 1 choice is kept in the browser; FR-42 drops Ctrl+Enter (keyboard actions are not a requirement); NFR-2 shows progress as courses arrive, since only a complete Refresh replaces the data (FR-14); NFR-22 says which move wins; FR-11 says what "nothing else" means; Q-7 is needed before Phase 3; Phase columns use one format; removed the stale "column" note; NFR priority explained. |
 | 2026-10-25 | Requirements review, continued: FR-35 (match by Canvas ID, one card per assignment) moves to Phase 1, since Phase 1 Refreshes already add cards and two devices can load the board at once; until Phase 3 a card whose assignment is gone from Canvas is hidden but kept (FR-45); FR-22 uses the student's own due date (overrides); FR-38 states the name tiebreak once and marks dropping as Phase 2; FR-65's badge shows red over green when both apply; FR-4 keeps the board on disconnect; FR-50 and FR-51 mention notes only as Phase 5; FR-80 says what dropping on a minimized list with cards does; NFR-11 allows plain HTTP on `localhost`; the index labels every split requirement; added Q-8 (connecting a different Canvas account) and Q-9 (assignments that can't be submitted in Canvas). |
+| 2026-10-25 | Business analyst review: added *Requirements by goal*, tracing every requirement to a roadmap goal; requirements say "the portal", not "the backend", and FR-10 and FR-11 no longer name Canvas endpoints (the design does); FR-1 covers an unreachable address; FR-20 covers no courses or no assignments; FR-22 uses the device's time zone; FR-50 covers staying signed in and signing out; NFR-1, NFR-14, NFR-20, NFR-30, and NFR-34 have measurable or checkable wording; NFR-2's target is written in before Phase 3; NFR-20 covers a failed first load; added Q-10 (Canvas GraphQL versus GET-only, from the design review) and Q-11 (no goal covers browsers and accessibility). |

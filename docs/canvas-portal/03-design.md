@@ -161,7 +161,7 @@ Design notes:
 - **Notes are separate from cards**, so a note survives if a card is archived
   or a list is archived (NFR-21). A note also records its
   `canvas_assignment_id`, so it can be reattached if its card is rebuilt.
-- **Personal cards** (FR-71) are cards with no `canvas_assignment_id`; their
+- **Personal cards** (FR-71, Phase 5) are cards with no `canvas_assignment_id`; their
   title and due date are stored on the card itself.
 - **Course label colors** (FR-66) are stored per user and course, picked
   automatically from a fixed palette the first time a course appears. The
@@ -189,9 +189,9 @@ and require a signed-in session except where noted.
 | `GET /api/assignments` | All assignments across active courses, with status | FR-11, FR-21 to FR-23 |
 | `POST /api/refresh` | Bypass the cache and re-fetch from Canvas | FR-13 |
 | `GET /api/board` | Lists and cards with labels and badges, after merging in new or removed assignments | FR-33, FR-34, FR-65 |
-| `POST /api/board/lists` | Add a list at the end | FR-64 |
-| `PATCH /api/board/lists/{id}` | Rename, move (new position), archive, or restore a list | FR-36, FR-62, FR-63, FR-74 |
-| `POST /api/board/cards` | Add a personal card | FR-71 |
+| `POST /api/board/lists` | Phase 5: add a list at the end | FR-64 |
+| `PATCH /api/board/lists/{id}` | Rename or move (new position) a list; archive and restore in Phase 5 | FR-36, FR-62, FR-63 |
+| `POST /api/board/cards` | Phase 5: add a personal card | FR-71 |
 | `GET /api/board/cards/{id}` | Everything for the card back | FR-67, FR-68 |
 | `PATCH /api/board/cards/{id}` | Move (new list and position), archive, or restore a card | FR-32, FR-33, FR-74 |
 | `GET /api/board/archived` | Archived lists and cards | FR-74 |
@@ -397,10 +397,8 @@ flowchart TD
     App --> CardBack["CardBackDialog<br/>opens on /c/{cardId}"]
     App --> BoardMenu["BoardMenu<br/>right-side panel, archived items"]
     Board --> List["List (one per list)"]
-    Board --> AddList["AddListButton"]
     List --> ListHeader["ListHeader<br/>inline rename, list menu, drag handle"]
     List --> Card["CardFront (one per card)"]
-    List --> AddCard["AddCardComposer"]
     Card --> Badges["Label strip, due badge,<br/>description icon"]
     Card --> QuickEdit["QuickEditMenu<br/>pencil or right-click"]
     CardBack --> Desc["Description (note editor)"]
@@ -430,7 +428,6 @@ UI uses:
 | Drag a list | Grab the list header; other lists slide aside | FR-62 |
 | Scroll the board | Horizontal scrollbar, or drag on empty background | FR-61 |
 | Rename a list | Click the title, it becomes a text box; Enter saves, Escape cancels | FR-63 |
-| Add a card or list | Composer opens in place with the text box focused; Enter adds and keeps the composer open for the next one, as Trello does | FR-64, FR-71 |
 | Open a card | Click, or focus it and press Enter; address changes to `/c/{cardId}` | FR-67 |
 | Quick edit | Pencil on hover, right-click, or `e` | FR-69 |
 | Show or hide a course | Tap its button in the row under the header, or Show all / Hide all; the board updates at once and the choice is saved in the background (optimistic update) | FR-78 |
@@ -480,3 +477,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | Trello goal (G-3): data model now board, lists, cards, checklists, course labels; new list, card, checklist, and label endpoints; new section 9 on Trello-style UI; D-1 section updated. |
 | 2026-10-25 | Course show/hide buttons (FR-78): `hidden` on course labels, toggle bar component, label endpoint. |
 | 2026-10-25 | Checklists (FR-70) marked Phase 5: tables and endpoints kept for later, removed from the Phase 2 component diagram. |
+| 2026-10-25 | Adding cards and lists moved to Phase 5: endpoints marked, composers removed from the component diagram. |

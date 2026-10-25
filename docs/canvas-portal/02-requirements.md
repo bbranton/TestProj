@@ -107,7 +107,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-33 | The board layout (which column each card is in, and its order) is saved and restored on the next visit. | Must | 2 |
 | FR-34 | Assignments that are new since the last visit appear at the bottom of *To do*. | Must | 2 |
 | FR-35 | Cards are matched to assignments by Canvas assignment ID, so a renamed or rescheduled assignment keeps its place. | Must | 2 |
-| FR-36 | The user can archive a list, as in Trello. Its cards go with it and can be restored together. | Should | 2 |
+| FR-36 | The user can archive a list, as in Trello. Its cards go with it and can be restored together. | Could | 5 |
 | FR-37 | *(Removed: no "Move to Done?" hint. The student drags cards to Done; the due badge turning green already shows the assignment is submitted, FR-65.)* | n/a | n/a |
 
 ### 4.5 Trello-style look and behavior (goal G-3)
@@ -118,17 +118,17 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-61 | Lists sit side by side at a fixed width and the board scrolls sideways. Dragging empty board background also scrolls it. | Must | 2 |
 | FR-62 | The user can drag a list by its header to reorder the lists. | Must | 2 |
 | FR-63 | Clicking a list title edits it in place. Enter or clicking away saves, and Escape cancels. | Must | 2 |
-| FR-64 | An "+ Add another list" control after the last list adds a list. | Must | 2 |
+| FR-64 | An "+ Add another list" control after the last list adds a list. | Could | 5 |
 | FR-65 | Card fronts show: the course as a colored label strip, the title, and badges for the due date, a note (description icon), and, from Phase 5, checklist progress (FR-70). The due date badge is green when submitted or graded, yellow when due soon, red when overdue, and plain otherwise. | Must | 1 (list), 2 (board) |
 | FR-66 | Each course gets a label color automatically. The user can change a course's color and name its label. | Should | 2 |
 | FR-67 | Clicking a card opens its card back in a dialog over the board, which stays visible behind it. The browser address changes to the card's own link, so reloading or sharing the link reopens the card, and Back closes it. | Must | 2 |
 | FR-68 | The card back shows: the title; "in list *name*" (clicking it moves the card); labels; due date; points and status; an "Open in Canvas" button; *Description* (the private note); and *Archive*. Checklists are added in Phase 5 (FR-70). | Must | 2 (3 for notes) |
 | FR-69 | Hovering a card shows an edit (pencil) button; it and right-click open a quick edit menu: Open card, Move, Change label color, Open in Canvas, Archive. | Should | 3 |
 | FR-70 | A card back can hold one or more checklists of items that can be checked off. The card front shows progress such as 2/5 (2 of 5 items done). | Could | 5 |
-| FR-71 | "+ Add a card" at the bottom of each list creates a personal card that isn't a Canvas assignment. It supports everything a card back has except the Canvas details. | Should | 3 |
+| FR-71 | "+ Add a card" at the bottom of each list creates a personal card that isn't a Canvas assignment. It supports everything a card back has except the Canvas details. | Could | 5 |
 | FR-72 | A Filter menu in the board header filters cards by label (course), by due date (overdue, due in the next day, next week, next month, no due date, complete), and by keyword. When a filter is on, the header says so and offers "Clear". | Must | 2 |
-| FR-73 | Keyboard shortcuts follow Trello's where the action exists, including: arrow keys move between cards, Enter opens a card, Escape closes, `e` quick edit, `f` filter, `x` clear filters, `n` add a card, `?` shows the shortcut list. The final list is checked against Trello's own shortcut page during design. | Should | 2 |
-| FR-74 | Archived cards and lists are found under "Archived items" in the board menu, where they can be restored. | Must | 2 |
+| FR-73 | Keyboard shortcuts follow Trello's where the action exists, including: arrow keys move between cards, Enter opens a card, Escape closes, `e` quick edit, `f` filter, `x` clear filters, `?` shows the shortcut list. The final list is checked against Trello's own shortcut page during design. | Should | 2 |
+| FR-74 | Archived cards (and, from Phase 5, lists) are found under "Archived items" in the board menu, where they can be restored. | Must | 2 |
 | FR-75 | A board menu opens as a panel from the right edge with: board background color, labels, archived items. | Could | 5 |
 | FR-76 | The user can have more than one board. | Could | 5 |
 | FR-77 | Dragging feels like Trello: the card tilts slightly and lifts while dragged, a gray gap shows where it will land, and the board scrolls when the card nears an edge. | Should | 2 |
@@ -192,7 +192,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | NFR-32 | Meets WCAG 2.2 level AA (the standard web accessibility guideline) for contrast, labels, and focus. | 4 |
 | NFR-33 | Usable on a phone-width screen. As in Trello's mobile layout, one list fills the screen and the user swipes between lists. | 4 |
 | NFR-34 | Visual style is close to Trello's within C-4: a colored board background, light gray lists with rounded corners, white cards with rounded corners and a soft shadow, and compact text. | 2 |
-| NFR-35 | Board actions (open a card, rename a list, add a card) need no more clicks than the same action in Trello. | 2 |
+| NFR-35 | Board actions (open a card, rename a list, filter) need no more clicks than the same action in Trello. | 2 |
 
 ### 5.5 Maintainability
 
@@ -209,7 +209,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 - **Q-3** Should discussion posts and quizzes appear alongside assignments? Canvas exposes them as assignments in most cases, so the default is yes.
 - ~~**Q-4** Is multi-device sync wanted, or is one browser enough?~~ Answered: yes, the user signs in from anywhere and sees their saved state (D-2).
 - **Q-5** Should the portal support parent (observer) tokens? Canvas returns observed students' data through different options, so the views would need a student picker. Proposed for Phase 5.
-- **Q-6** Should personal cards (FR-71) come in Phase 3, or wait until later? They are a big part of how Trello feels, but they are new data the portal owns, not Canvas data.
+- ~~**Q-6** Should personal cards (FR-71) come in Phase 3, or wait until later?~~ Answered: later. Students don't need to create their own cards or lists yet, so FR-64 and FR-71 are Phase 5 future features.
 
 ## Change log
 
@@ -222,3 +222,4 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | 2026-10-25 | FR-78 gains Hide all. |
 | 2026-10-25 | FR-37 ("Move to Done?" hint) removed, from the Team Lead's review. |
 | 2026-10-25 | Checklists (FR-70) moved to Phase 5, ideas for later, from the Team Lead's review. |
+| 2026-10-25 | FR-36, FR-64, and FR-71 (archive lists, add lists, add personal cards) moved to Phase 5; `n` shortcut dropped; Q-6 answered. From the Team Lead's review. |

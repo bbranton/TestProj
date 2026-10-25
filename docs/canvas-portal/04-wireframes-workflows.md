@@ -129,7 +129,7 @@ Each row uses the same label colors and due badges as the cards.
 
 ### S-4 Board (home screen)
 
-Requirements: FR-31 to FR-36, FR-60 to FR-66, FR-72 to FR-74, FR-77, FR-78,
+Requirements: FR-31 to FR-35, FR-60 to FR-63, FR-65, FR-66, FR-72 to FR-74, FR-77, FR-78,
 NFR-3, NFR-31, NFR-34.
 
 ```text
@@ -146,12 +146,12 @@ NFR-3, NFR-31, NFR-34.
 |  | | Problem set 7  | | | | Lab report 3   | | | | Quiz 4         | |    |
 |  | | (◷ Wed 9:00) ✎ | | | | (◷ Tue 11:59)  | | | | (◷ Oct 20 ✓)   | |    |
 |  | +----------------+ | | | ≡              | | | +----------------+ |    |
-|  | +----------------+ | | +----------------+ | | + Add a card       |    |
+|  | +----------------+ | | +----------------+ | |                    |    |
 |  | | ▬▬ HIST 210    | | | ┌ ─ ─ ─ ─ ─ ─ ─ ┐  | +--------------------+    |
 |  | | Essay draft:   | | | │   drop gap    │  |                           |
-|  | | causes of WWI  | | | │   (FR-77)     │  | +--------------------+    |
-|  | | (◷ Nov 3) ≡    | | | └ ─ ─ ─ ─ ─ ─ ─ ┘  | | + Add another list |    |
-|  | |                | | | + Add a card       | +--------------------+    |
+|  | | causes of WWI  | | | │   (FR-77)     │  |                           |
+|  | | (◷ Nov 3) ≡    | | | └ ─ ─ ─ ─ ─ ─ ─ ┘  |                           |
+|  | |                | | |                    |                           |
 |  | |                | | +--------------------+                           |
 |  | +----------------+ |                                                  |
 |  | +----------------+ |                                                  |
@@ -159,7 +159,7 @@ NFR-3, NFR-31, NFR-34.
 |  | | NEW            | |    the bottom of To do                           |
 |  | | Chapter 5 qs   | |                                                  |
 |  | +----------------+ |                           ──scrolls──>           |
-|  | + Add a card       | <- FR-71: personal card (Phase 3)                |
+|  |                    |                                                  |
 |  +--------------------+                                                  |
 +--------------------------------------------------------------------------+
   Course buttons (FR-78): one per active course, in its label color. ● shown,
@@ -169,10 +169,11 @@ NFR-3, NFR-31, NFR-34.
   their list and position.
   ▬▬ label strip in the course color (FR-66). (◷ ...) due badge: yellow due
   soon, red overdue, green with ✓ when complete (FR-65). ≡ has a description.
-  ✎ is shown here on the card the mouse is over.
-  ✎ appears on hover and opens S-7.
-  List title: click to rename (FR-63). Drag a list by its header (FR-62).
-  […] list menu: Add card, Move list, Archive list (FR-36).
+  ✎ is shown on the card the mouse is over and opens S-7.
+  The three lists are fixed. List title: click to rename (FR-63). Drag a list
+  by its header to reorder (FR-62). […] list menu: Move list.
+  Adding cards and lists (FR-64, FR-71) and archiving lists (FR-36) are
+  Phase 5 ideas.
   Cards move between lists only when the student drags them; the portal never
   moves a card on its own, even when Canvas marks it submitted.
 ```
@@ -205,7 +206,7 @@ the screen.
 |   +------------------------------------------------------------------+   |
 +--------------------------------------------------------------------------+
   The due-date checkbox is display only for Canvas cards: completion comes
-  from Canvas. Personal cards can be checked off. Escape, [x], clicking
+  from Canvas. Escape, [x], clicking
   outside, or the browser's Back button closes the dialog.
 ```
 
@@ -323,7 +324,7 @@ The user swipes sideways between lists, and dots show which list is shown.
 | | Problem set 7          | |
 | | (◷ Wed 9:00)           | |
 | +------------------------+ |
-| + Add a card               |
+|                            |
 |                            |
 |          ○ ● ○ ○           |
 +----------------------------+
@@ -433,22 +434,21 @@ flowchart TD
     F --> G[Remove user, token, board,<br/>notes, cache] --> H[S-1 Sign in]
 ```
 
-### W-7 Shape the board (lists)
+### W-7 Arrange the lists
+
+The board always has the same three lists. Students can rename and reorder
+them; adding and archiving lists are Phase 5 ideas.
 
 ```mermaid
 flowchart TD
     A([Board]) --> B{What does the user do?}
-    B -- "+ Add another list" --> C[Type the name, press Enter]
-    C --> D[List added at the end;<br/>composer stays open for another]
     B -- click list title --> E[Title becomes a text box]
     E -- Enter or click away --> F[Saved]
     E -- Escape --> G[Unchanged]
     B -- drag list header --> H[Other lists slide aside;<br/>drop saves the new order]
-    B -- list menu: Archive list --> I[List and its cards move<br/>to Archived items]
-    I --> J[S-9: Restore brings both back]
 ```
 
-### W-8 Add a personal card (Phase 3, Q-6)
+### W-8 Add a personal card (Phase 5, future feature)
 
 ```mermaid
 flowchart TD
@@ -470,3 +470,4 @@ flowchart TD
 | 2026-10-25 | Added Hide all next to Show all on the course button row (FR-78). |
 | 2026-10-25 | Removed the "Move to Done?" hint (FR-37) from S-4 and W-5; students drag cards to Done themselves. |
 | 2026-10-25 | Checklists (FR-70) moved to Phase 5: removed checklist badges and the card back checklist section. |
+| 2026-10-25 | Adding cards and lists moved to Phase 5: removed "+ Add a card" and "+ Add another list" from S-4 and the phone layout; W-7 now covers rename and reorder only; W-8 marked Phase 5. |

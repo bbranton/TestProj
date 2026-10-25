@@ -99,15 +99,15 @@ first.
 - Drag cards between and within lists with Trello's drag feel, and drag lists
   to reorder them; keyboard alternative for dragging (FR-32, FR-62, FR-77,
   NFR-31).
-- Rename lists by clicking their title; add a list at the end of the board
-  (FR-63, FR-64).
+- The board has three fixed lists (To do, In progress, Done) that can be
+  renamed by clicking their title (FR-31, FR-63).
 - A row of show/hide buttons under the header, one per course (FR-78).
 - Trello-style filter menu and keyboard shortcuts (FR-72, FR-73).
 - New assignments from Canvas land in *To do*; cards are matched by Canvas ID
   and only move when the student drags them (FR-34, FR-35).
 - Board layout is saved on the server and restored on any device (FR-33,
   FR-51).
-- Archive and restore lists and cards, as in Trello (FR-36, FR-74).
+- Archive and restore cards, as in Trello (FR-74).
 
 **Exit criteria:** layout survives a page reload and a Canvas refresh without
 losing or duplicating cards, the same layout appears after signing in on a
@@ -119,8 +119,6 @@ second device, and the Trello comparison review (TP-13) passes for the board.
 - Notes are the card's *Description*, as on a Trello card back; a card with a
   note shows the description icon (FR-43).
 - Quick edit menu on each card (FR-69).
-- Personal cards: "+ Add a card" at the bottom of a list creates a card that
-  isn't a Canvas assignment (FR-71, Q-6).
 - Notes are never sent to Canvas (FR-44, NFR-12).
 
 **Exit criteria:** notes survive reloads and Canvas refreshes, appear on a
@@ -141,6 +139,9 @@ accessibility checks pass.
 - "Log in with Canvas" (OAuth 2) instead of pasting a token (D-4).
 - Calendar view of due dates; reminders.
 - Grades and submission feedback view.
+- Personal cards and lists: "+ Add a card" creates a card that isn't a
+  Canvas assignment, and "+ Add another list" adds lists; lists can also be
+  archived (FR-71, FR-64, FR-36).
 - Checklists inside a card, with progress such as 2/5 on the card front
   (FR-70).
 - More than one board, such as one per course or term, as in Trello (FR-76).
@@ -196,3 +197,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | Phase 2 adds course show/hide buttons (FR-78), from the Team Lead's review. |
 | 2026-10-25 | Dropped the "Move to Done?" hint (FR-37) from Phase 2. |
 | 2026-10-25 | Checklists (FR-70) moved from Phase 3 to Phase 5. |
+| 2026-10-25 | Adding cards and lists, and archiving lists, moved to Phase 5 as future features (Q-6 answered). |

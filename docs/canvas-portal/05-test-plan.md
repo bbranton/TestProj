@@ -97,17 +97,17 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | FR-60 | Signed-in, connected user lands on the board | E2E |
 | FR-61, FR-62 | Board scrolls sideways; dragging a list header reorders lists and the order survives reload | E2E |
 | FR-63 | Click a list title, type, Enter saves; Escape cancels | E2E |
-| FR-64, FR-71 | Composer adds a list or a personal card and stays open for the next | E2E |
+| FR-64, FR-71 (Phase 5) | Composer adds a list or a personal card and stays open for the next | E2E |
 | FR-65 | Due badge color for each status (green, yellow, red, plain) | Unit, E2E |
 | FR-66 | Each course gets a palette color; changing it updates every card of that course | API, E2E |
 | FR-67 | Opening a card changes the address to `/c/{id}`; reloading that address reopens it; Back closes it | E2E |
-| FR-68 | Card back shows every listed field for a Canvas card and for a personal card | E2E |
+| FR-68 | Card back shows every listed field for a Canvas card | E2E |
 | FR-69 | Pencil, right-click, and `e` open the quick edit menu | E2E |
 | FR-70 (Phase 5) | Add, check, reorder, and delete checklist items; card front shows progress | API, E2E |
 | FR-72 | Each filter option, combined filters, and Clear | E2E |
 | FR-78 | Tapping a course button hides and shows its cards on board and table; Show all and Hide all; hidden cards keep their place; choice survives reload and a second session | API, E2E |
 | FR-73 | Every shortcut in the keyboard map does its action, and `?` lists them all | E2E |
-| FR-74 | Archive and restore a card and a list | API, E2E |
+| FR-74 | Archive and restore a card (a list from Phase 5) | API, E2E |
 | NFR-34 | Visual comparison: screenshots of S-4 and S-5 match approved reference images (Playwright `toHaveScreenshot`) | E2E |
 | NFR-32 | axe-core finds no serious issues on S-1 to S-9 | Accessibility |
 
@@ -276,14 +276,14 @@ how it looks, what it takes (clicks or keys), or how it responds.
 | 3 | Drag a card toward the right edge | Board scrolls automatically |
 | 4 | Drag a list by its header | Lists reorder the same way |
 | 5 | Click a list title and rename it | Edits in place; Enter saves, Escape cancels |
-| 6 | Add a list, then add three cards in a row | Composer stays open after each, as in Trello |
+| 6 | *(Phase 5)* Add a list, then add three cards in a row | Composer stays open after each, as in Trello |
 | 7 | Open a card | Dialog over the dimmed board, same section order; address changes |
 | 8 | Reload, then press Back | Reload reopens the card; Back closes it |
 | 9 | Use the pencil and right-click on a card | Quick edit menu next to the raised card |
 | 10 | Press `f`, filter by a label and by "Overdue", then `x` | Same behavior; header shows the filter is active |
 | 11 | Try each shortcut in Trello's shortcut list that the portal supports | Same key does the same thing |
 | 12 | Archive a card and restore it from the board menu | Same steps |
-| 13 | Count clicks to open a card, rename a list, and add a card | No more than Trello (NFR-35) |
+| 13 | Count clicks to open a card, rename a list, and filter by a course | No more than Trello (NFR-35) |
 | 14 | Check for Trello's name, logo, icons, or artwork anywhere | None (C-4) |
 
 Record the result of each step as *Same*, *Close* (small, acceptable
@@ -314,3 +314,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | Hide all added to FR-78 tests and TP-04 step 7. |
 | 2026-10-25 | FR-37 removed: tests now check that a submitted card only changes its badge. |
 | 2026-10-25 | FR-70 checklist tests marked Phase 5. |
+| 2026-10-25 | Adding cards and lists moved to Phase 5 in the automated tests and TP-13. |

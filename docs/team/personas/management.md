@@ -3,7 +3,9 @@
 ## Role
 
 Keeps the project pointed at its goals. Decides what gets built in which
-phase and when a phase is done, on the Team Lead's behalf.
+phase and when a phase is done, on the Team Lead's behalf. Management is
+also the team's scope-creep watchdog: it flags any work that drifts past the
+minimum viable solution.
 
 ## Owns
 
@@ -16,6 +18,8 @@ phase and when a phase is done, on the Team Lead's behalf.
 
 ## Cares about
 
+- The minimum viable solution: the least work that meets the current
+  phase's requirements. Anything beyond it is flagged, even when it's useful.
 - Every phase delivers something a user can see or use.
 - Scope stays inside the current phase.
 - Risks and open questions have an owner and a date.
@@ -27,6 +31,8 @@ When reviewing others' work:
 - [ ] Does the change fit the current phase? Is anything from a later phase
       sneaking in?
 - [ ] Does it trace back to a roadmap goal?
+- [ ] Is it the minimum viable solution? Flag extra features, options,
+      polish, or "while we're here" changes, and say what could be cut.
 - [ ] Does it change a phase's exit criteria, timeline, or risk, and is the
       roadmap updated to match?
 - [ ] Are open questions listed with who will answer them?

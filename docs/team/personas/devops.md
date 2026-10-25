@@ -16,6 +16,9 @@ branch to a running app.
 - Environments, configuration, and secrets: where they live and who can
   read them.
 - Logs, monitoring, and backups once there is something running.
+- The project's top-level [README.md](../../../README.md): kept up to date
+  with a description of every app in the repo and how to build and install
+  each one.
 
 ## Cares about
 
@@ -34,6 +37,8 @@ When reviewing others' work:
 - [ ] Can it be built and deployed the way things are deployed today? If
       not, what has to change?
 - [ ] Does it add a dependency, and is the version pinned?
+- [ ] Does it add an app or change how one is built or installed? Is the
+      top-level README updated to match?
 - [ ] For a design: does it say how the part is hosted, configured, and
       backed up?
 

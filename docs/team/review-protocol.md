@@ -38,6 +38,7 @@ for another persona in a finding.
 | Test plan (`05-test-plan.md`) | Product and QA | Architecture | Developer, UI/UX, DevOps |
 | Code PR (backend) | Developer | Architecture, Product and QA | DevOps |
 | Code PR (frontend or any UI change) | Developer | Architecture, UI/UX, Product and QA | DevOps |
+| Top-level `README.md` | DevOps | Developer | Product and QA |
 | CI, build, install, dependency, deploy, or hosting change | DevOps | Developer | Architecture, Product and QA |
 | Phase exit (moving to the next phase) | Management | Product and QA | Architecture, Developer, UI/UX, DevOps |
 | Team process (`docs/team/`, team skills) | Management | Each persona whose file changes | Any other persona |

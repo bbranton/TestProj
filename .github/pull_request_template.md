@@ -30,6 +30,13 @@ The Team Lead ticks each reviewer to run, or ticks *Team Lead review only*.
 | # | Found by | Fix in | Finding | Status |
 |---|----------|--------|---------|--------|
 
+## Follow-ups opened
+
+<!-- Each GitHub issue reviewers opened for work outside this PR, with its
+     persona label. "None" when there are none. See "Follow-up work" in
+     the review protocol. -->
+- None
+
 ## Cost
 
 <!-- For a feature with a cost plan: the plan's estimate. After merge, each

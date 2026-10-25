@@ -76,7 +76,7 @@ Removed requirements are not listed.
 - Trello-style look and behavior: FR-60 (read only), FR-61, FR-65, FR-66, FR-78, FR-80
 - Accounts, sync, and data control: FR-50
 - Performance: NFR-1
-- Security and privacy: NFR-10, NFR-11, NFR-12, NFR-13, NFR-14
+- Security and privacy: NFR-10, NFR-11 (encrypted storage), NFR-12, NFR-13, NFR-14
 - Reliability: NFR-20
 - Usability and accessibility: NFR-30, NFR-34
 - Maintainability: NFR-41
@@ -97,6 +97,7 @@ Removed requirements are not listed.
 **Phase 4: Polish and deploy**
 
 - Accounts, sync, and data control: FR-54
+- Security and privacy: NFR-11 (HTTPS when deployed)
 - Usability and accessibility: NFR-32
 
 **Phase 5: Later ideas (not committed)**
@@ -164,7 +165,7 @@ Removed requirements are not listed.
 | FR-13 | The user can refresh data on demand. The header always shows the date and time of the last complete Refresh, such as "Synced Oct 25, 10:42 AM". | Must | 1 |
 | FR-14 | The portal keeps the last complete copy of the student's Canvas data and shows it on every load, so opening the board never waits on Canvas. | Must | 1 |
 | FR-15 | The portal fetches from Canvas only when the student selects Refresh, or on the very first load when there is no data yet. It never starts a fetch on its own. When the data is more than an hour old, the Refresh button is highlighted. | Must | 1 |
-| FR-16 | Every Refresh, including the first load, shows its progress: how many courses are done out of the total, and for each course whether it is waiting, being fetched, waiting on a Canvas rate limit, done (with its number of assignments), or failed (with the reason, such as a timeout or an error from Canvas). When the Refresh ends, a summary says what was synced; if anything failed, it says the previous data was kept and offers Retry. The log of the last Refresh can be reopened until the next one starts. | Must | 1 |
+| FR-16 | Every Refresh, including the first load, shows its progress: how many courses are done out of the total, and for each course whether it is waiting, being fetched, waiting on a Canvas rate limit, done (with its number of assignments), or failed (with the reason, such as a timeout or an error from Canvas). When the Refresh ends, a summary says what was synced; if anything failed, it says the previous data was kept and offers Retry. The log of the last Refresh can be reopened until the next one starts. Only one Refresh runs at a time for a student: selecting Refresh while one is running, on any device, joins it and shows its progress. | Must | 1 |
 
 ### 4.3 Viewing courses and assignments
 
@@ -242,7 +243,7 @@ Removed requirements are not listed.
 | FR-51 | The board layout stored on the server (and, from Phase 5, notes) appears on any device where the user signs in. | Must | 2 |
 | FR-52 | *(Removed: board and notes are on the server from the start, so there is no browser data to import.)* | n/a | n/a |
 | FR-53 | The user can export their board and notes as a JSON file. | — | 5 |
-| FR-54 | The user can delete all their data from the portal. | Must | 4 |
+| FR-54 | The user can delete all their data from the portal. It is removed from the live app at once; copies in backups are removed when those backups expire, and the confirmation says how long that takes (the design sets the backup retention). | Must | 4 |
 | FR-55 | A student can connect more than one school (more than one Canvas address and token), for example a high school and a community college during dual enrollment. Courses from every school appear on the same board, and each course button and card shows which school it comes from. | — | 5 |
 
 ## 5. Non-functional requirements
@@ -261,7 +262,7 @@ Removed requirements are not listed.
 | ID | Requirement | Phase |
 |----|-------------|-------|
 | NFR-10 | The Canvas token is never written to logs, error messages, or the page's address (URL). | 1 |
-| NFR-11 | The token is stored encrypted on the server. All traffic uses HTTPS, except on a developer's own machine (`localhost`). | 1 |
+| NFR-11 | The token is stored encrypted on the server. Once deployed, all traffic uses HTTPS; on a developer's own machine (`localhost`) plain HTTP is allowed. | 1 (encrypted storage), 4 (HTTPS when deployed) |
 | NFR-12 | A user's Canvas connection, cached Canvas data, and board are visible only to that user. | 1 |
 | NFR-13 | The portal calls only Canvas read (`GET`) endpoints. | 1 |
 | NFR-14 | Out of respect for student privacy rules such as FERPA (US student records law), the portal loads no analytics, advertising, or other third-party scripts, and sends course data only to the signed-in user's browser. Google sign-in (FR-50) sees only who the user is, never course data. | 1 |
@@ -353,3 +354,4 @@ Removed requirements are not listed.
 | 2026-10-25 | Requirements review, continued: FR-35 (match by Canvas ID, one card per assignment) moves to Phase 1, since Phase 1 Refreshes already add cards and two devices can load the board at once; until Phase 3 a card whose assignment is gone from Canvas is hidden but kept (FR-45); FR-22 uses the student's own due date (overrides); FR-38 states the name tiebreak once and marks dropping as Phase 2; FR-65's badge shows red over green when both apply; FR-4 keeps the board on disconnect; FR-50 and FR-51 mention notes only as Phase 5; FR-80 says what dropping on a minimized list with cards does; NFR-11 allows plain HTTP on `localhost`; the index labels every split requirement; added Q-8 (connecting a different Canvas account) and Q-9 (assignments that can't be submitted in Canvas). |
 | 2026-10-25 | Business analyst review: added *Requirements by goal*, tracing every requirement to a roadmap goal; requirements say "the portal", not "the backend", and FR-10 and FR-11 no longer name Canvas endpoints (the design does); FR-1 covers an unreachable address; FR-20 covers no courses or no assignments; FR-22 uses the device's time zone; FR-50 covers staying signed in and signing out; NFR-1, NFR-14, NFR-20, NFR-30, and NFR-34 have measurable or checkable wording; NFR-2's target is written in before Phase 3; NFR-20 covers a failed first load; added Q-10 (Canvas GraphQL versus GET-only, from the design review) and Q-11 (no goal covers browsers and accessibility). |
 | 2026-10-25 | From the test plan review: NFR-32 names the WCAG criteria it covers and leaves out keyboard and focus criteria (NFR-31 removed); FR-80's card count and "empty" rule count only shown cards, not those of hidden courses (FR-78). |
+| 2026-10-25 | From the roadmap cross-review: FR-16 says a second Refresh joins the running one; FR-54 says backup copies go when the backups expire; NFR-11 is split into encrypted storage (Phase 1) and HTTPS when deployed (Phase 4). |

@@ -65,7 +65,7 @@ erDiagram
     USER ||--o{ BOARD : owns
     BOARD ||--o{ LIST : contains
     LIST ||--o{ CARD : contains
-    CARD ||--o| NOTE : "has description"
+    CARD ||--o{ NOTE : has
     CARD ||--o{ CHECKLIST : has
     CHECKLIST ||--o{ CHECKLIST_ITEM : contains
     USER ||--o{ COURSE_LABEL : colors
@@ -113,6 +113,7 @@ erDiagram
         uuid card_id FK
         int canvas_assignment_id
         text body
+        datetime created_at
         datetime updated_at
     }
     CHECKLIST {
@@ -161,7 +162,13 @@ Design notes:
 - **Checklists** (FR-70) are Phase 5. The `CHECKLIST` and `CHECKLIST_ITEM`
   tables are shown so the model is ready for them, but they are not built
   until then; checklist items will use the same position technique.
-- **Notes are separate from cards**, so a note survives if a card is archived
+- **Notes work like Trello comments:** a card can have any number, one row
+  each, with `created_at` for the date shown and `updated_at` to mark it
+  "(edited)" (FR-40, FR-41).
+- **The description is not stored as a note.** It is the assignment's
+  `description` field from Canvas, kept only in `CANVAS_CACHE` and shown read
+  only (FR-28).
+- **Notes are separate from cards**, so notes survive if a card is archived
   or a list is archived (NFR-21). A note also records its
   `canvas_assignment_id`, so it can be reattached if its card is rebuilt.
 - **Personal cards** (FR-71, Phase 5) are cards with no `canvas_assignment_id`; their
@@ -171,7 +178,7 @@ Design notes:
   same row stores whether the course is hidden by the show/hide buttons
   (FR-78), so that choice follows the user between devices.
 - **Archived, not deleted:** if an assignment disappears from Canvas, its card
-  is marked `archived` and its note stays (FR-45).
+  is marked `archived` and its notes stay (FR-45).
 - **Every row has `user_id`**, and every query filters by the signed-in user,
   so one user can never read another's data (NFR-12).
 
@@ -195,14 +202,15 @@ and require a signed-in session except where noted.
 | `POST /api/board/lists` | Phase 5: add a list at the end | FR-64 |
 | `PATCH /api/board/lists/{id}` | Rename or move (new position) a list; archive and restore in Phase 5 | FR-36, FR-62, FR-63 |
 | `POST /api/board/cards` | Phase 5: add a personal card | FR-71 |
-| `GET /api/board/cards/{id}` | Everything for the card back | FR-67, FR-68 |
+| `GET /api/board/cards/{id}` | Everything for the card back, including the cleaned Canvas description | FR-28, FR-67, FR-68 |
 | `PATCH /api/board/cards/{id}` | Move to another list, archive, or restore a card | FR-32, FR-33, FR-74 |
 | `GET /api/board/archived` | Archived lists and cards | FR-74 |
 | `POST`, `PATCH`, `DELETE /api/cards/{id}/checklists/...` | Phase 5: add, rename, check off, reorder, and remove checklists and items | FR-70 |
 | `PATCH /api/labels/{course_id}` | Change a course label's color or name, or hide or show the course | FR-66, FR-78 |
-| `GET /api/notes/{assignment_id}` | Read a note | FR-43 |
-| `PUT /api/notes/{assignment_id}` | Create or replace a note | FR-40 to FR-42 |
-| `DELETE /api/notes/{assignment_id}` | Delete a note | FR-41 |
+| `GET /api/board/cards/{id}/notes` | A card's notes, newest first | FR-40, FR-43 |
+| `POST /api/board/cards/{id}/notes` | Add a note | FR-40, FR-42 |
+| `PATCH /api/notes/{note_id}` | Change a note's text | FR-41 |
+| `DELETE /api/notes/{note_id}` | Delete a note | FR-41 |
 | `GET /api/export` | Download board and notes as JSON | FR-53 |
 | `DELETE /api/me` | Delete the account and all its data | FR-54 |
 
@@ -351,6 +359,7 @@ sequenceDiagram
 | One user seeing another's data | Every query filters on the session's `user_id`; tests check this for every endpoint | NFR-12 |
 | Writes to Canvas | The Canvas client only implements `GET` | NFR-13 |
 | Trackers | No third-party analytics or scripts | NFR-14 |
+| Harmful code in a Canvas description | Descriptions are HTML written by teachers. Showing HTML from elsewhere could run someone else's script in the portal (called *cross-site scripting*, or XSS). The backend cleans each description with an allow-list HTML cleaner (such as `nh3`) that keeps formatting and links and removes scripts, styles, and event attributes; links open in a new tab | FR-28 |
 | Test tokens | Read from a git-ignored `.env` file in local dev; CI uses recorded sample data instead | A-3, NFR-41 |
 
 ## 8. Repository layout
@@ -400,9 +409,10 @@ flowchart TD
     Board --> List["List (one per list)"]
     List --> ListHeader["ListHeader<br/>inline rename, list menu, drag handle"]
     List --> Card["CardFront (one per card)"]
-    Card --> Badges["Label strip, due badge,<br/>description icon"]
+    Card --> Badges["Label strip, due badge,<br/>notes count"]
     Card --> QuickEdit["QuickEditMenu, Phase 5<br/>pencil or right-click"]
-    CardBack --> Desc["Description (note editor)"]
+    CardBack --> Desc["Description<br/>from Canvas, read only"]
+    CardBack --> Notes["Notes<br/>new note box, dated list"]
     CardBack --> Sidebar["Card actions: Move, Open in Canvas, Archive"]
 ```
 
@@ -440,7 +450,7 @@ UI uses:
 Nothing above depends on the framework; the backend and data model are the
 same either way. The frontend's hardest parts are the Trello-style board
 (smooth, accessible drag and drop of cards and lists, FR-77 and NFR-31), the
-card back dialog with its own address (FR-67), and the note editor (FR-42).
+card back dialog with its own address (FR-67), and the notes list (FR-40 to FR-42).
 
 The Trello goal (G-3) leans toward React. React has the most examples of
 Trello-style boards to learn from, and Pragmatic drag and drop ships extra
@@ -485,3 +495,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | Due soon removed from the status flowchart and badge colors; it is Phase 5 (FR-27). |
 | 2026-10-25 | Status flowchart replaced by a direct mapping of Canvas submission fields (FR-23); computed statuses are Phase 5 (FR-27). |
 | 2026-10-25 | Filter button moved from the header to the course toggle bar. |
+| 2026-10-25 | Notes are now many dated entries per card (NOTE has `created_at`; new notes endpoints); the Canvas description is shown read only and cleaned against XSS (FR-28). |

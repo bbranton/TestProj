@@ -94,6 +94,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-22 | Each assignment shows: name, course, due date and time in the user's time zone, points possible, and status. | Must | 1 |
 | FR-23 | Status is shown exactly as Canvas reports it, with nothing worked out by the portal. The submission state (Canvas field `workflow_state`) is one of *Not submitted*, *Submitted*, *Graded*, or *Pending review*. Canvas's own *Late*, *Missing*, and *Excused* flags (fields `late`, `missing`, `excused`) show as separate tags, because they can apply at the same time as a state, such as Graded and Late. | Must | 1 |
 | FR-27 | Statuses the portal works out by combining Canvas fields or comparing with the clock, such as *Upcoming*, *Due soon* (for example within 48 hours, with a yellow badge), and *Overdue*. They need clear rules for cases that overlap. | Could | 5 |
+| FR-28 | The card back shows the assignment's description (its instructions) exactly as Canvas has it, with Canvas's formatting. It is read only: the portal never edits it, and it is not a note. | Must | 2 |
 | FR-24 | The user can filter by course, by Canvas submission state and flags (FR-23), and search by assignment name. | Should | 1 |
 | FR-25 | The user can hide assignments, for example those Canvas reports as *Graded* or *Excused*. | Could | 5 |
 | FR-26 | Each assignment links to its page in Canvas, opening in a new tab. | Must | 1 |
@@ -121,10 +122,10 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-62 | The user can drag a list by its header to reorder the lists. | Must | 2 |
 | FR-63 | Clicking a list title edits it in place. Enter or clicking away saves, and Escape cancels. | Must | 2 |
 | FR-64 | An "+ Add another list" control after the last list adds a list. | Could | 5 |
-| FR-65 | Card fronts show: the course as a colored label strip, the title, and badges for the due date, a note (description icon), and, from Phase 5, checklist progress (FR-70). The due date badge is green when Canvas reports *Submitted* or *Graded*, red when Canvas flags it *Missing*, and plain otherwise. Yellow for *Due soon* comes with FR-27 in Phase 5. | Must | 1 (list), 2 (board) |
+| FR-65 | Card fronts show: the course as a colored label strip, the title, and badges for the due date, the number of notes (FR-43), and, from Phase 5, checklist progress (FR-70). The due date badge is green when Canvas reports *Submitted* or *Graded*, red when Canvas flags it *Missing*, and plain otherwise. Yellow for *Due soon* comes with FR-27 in Phase 5. | Must | 1 (list), 2 (board) |
 | FR-66 | Each course gets a label color automatically. The user can change a course's color and name its label. | Should | 2 |
 | FR-67 | Clicking a card opens its card back in a dialog over the board, which stays visible behind it. The browser address changes to the card's own link, so reloading or sharing the link reopens the card, and Back closes it. | Must | 2 |
-| FR-68 | The card back shows: the title; "in list *name*" (clicking it moves the card); labels; due date; points and status; an "Open in Canvas" button; *Description* (the private note); and *Archive*. Checklists are added in Phase 5 (FR-70). | Must | 2 (3 for notes) |
+| FR-68 | The card back shows: the title; "in list *name*" (clicking it moves the card); labels; due date; points and status; an "Open in Canvas" button; *Description*, from Canvas and read only (FR-28); *Notes*, private (FR-40); and *Archive*. Checklists are added in Phase 5 (FR-70). | Must | 2 (3 for notes) |
 | FR-69 | Hovering a card shows an edit (pencil) button; it and right-click open a quick edit menu: Open card, Move, Change label color, Open in Canvas, Archive. | Could | 5 |
 | FR-70 | A card back can hold one or more checklists of items that can be checked off. The card front shows progress such as 2/5 (2 of 5 items done). | Could | 5 |
 | FR-71 | "+ Add a card" at the bottom of each list creates a personal card that isn't a Canvas assignment. It supports everything a card back has except the Canvas details. | Could | 5 |
@@ -141,12 +142,12 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 
 | ID | Requirement | Priority | Phase |
 |----|-------------|----------|-------|
-| FR-40 | The user can add a plain-text note to any assignment. | Must | 3 |
-| FR-41 | The user can edit and delete a note. | Must | 3 |
-| FR-42 | Notes save automatically while typing, and the page shows when the note was saved. | Should | 3 |
-| FR-43 | A card with a note shows a note icon; opening the assignment shows the full note. | Must | 3 |
+| FR-40 | The user can add any number of plain-text notes to an assignment, like comments on a Trello card. Each note is stamped with the date and time it was added, and the card back lists them newest first. Notes are separate from the Canvas description (FR-28). | Must | 3 |
+| FR-41 | The user can edit or delete each note. An edited note keeps its original date and says "(edited)". Deleting asks for confirmation first. | Must | 3 |
+| FR-42 | A note is saved when the user presses Save or Ctrl+Enter. If saving fails, the text stays in the box; closing the card with unsaved text warns first. | Must | 3 |
+| FR-43 | A card with notes shows a badge with the number of notes; opening the card shows them all. | Must | 3 |
 | FR-44 | Notes are never sent to Canvas. | Must | 3 |
-| FR-45 | If an assignment disappears from Canvas, its note and card move to an *Archived* area rather than being deleted. | Should | 3 |
+| FR-45 | If an assignment disappears from Canvas, its card and notes move to an *Archived* area rather than being deleted. | Should | 3 |
 | FR-46 | Notes support simple formatting (bold, lists, links). | Could | 3 |
 
 ### 4.7 Accounts, sync, and data control
@@ -235,3 +236,4 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | 2026-10-25 | Hiding assignments (FR-25) moved to Phase 5, from the Team Lead's review. |
 | 2026-10-25 | FR-72: the Filter button sits in the course button row, not the header. |
 | 2026-10-25 | FR-72 filters by course; the UI says "course", not "label". |
+| 2026-10-25 | Notes are now dated, comment-style entries, any number per card (FR-40 to FR-43); new FR-28 shows the Canvas description read only. From the Team Lead's review. |

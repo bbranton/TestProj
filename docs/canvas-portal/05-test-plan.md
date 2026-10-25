@@ -30,6 +30,8 @@ saved Canvas JSON responses for a made-up student, covering:
   graded, pending review), with the late, missing, and excused flags, including
   one that is both graded and late,
   no due date
+- An assignment description with formatting, a link, a `<script>` tag, and
+  an `onclick` attribute (FR-28)
 - A course with more than 100 assignments, split over two pages (FR-12)
 - A `403 Rate Limit Exceeded` response followed by success (C-2)
 - A `401 Unauthorized` response (FR-6)
@@ -86,11 +88,12 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | FR-32, FR-33, FR-38 | Drag a card to another list; it lands in its due date place; reload, it is still there | E2E |
 | FR-31, FR-34 | First board load puts every assignment in Backlog; a new fixture assignment appears in Backlog in its due date place | API |
 | FR-38 | Changing a fixture assignment's due date moves its card to the new place in the same list | API |
-| FR-35 | Renamed assignment keeps its column and note | API |
+| FR-28 | Card back shows the fixture description; a description with a `<script>` tag and an `onclick` attribute comes back with both removed | Unit, API |
+| FR-35 | Renamed assignment keeps its column and notes | API |
 | FR-34, FR-65 | Card marked submitted in Canvas gets a green badge and is not moved | API, E2E |
-| FR-40 to FR-42 | Create, edit, autosave, delete a note | API, E2E |
+| FR-40 to FR-42 | Add several notes and get them back newest first with dates; edit one and see it marked edited; delete one after confirming | API, E2E |
 | FR-44, NFR-13 | Canvas client has no non-GET method; a test fails if one is added | Unit |
-| FR-45 | Removed assignment's card is archived and its note kept | API |
+| FR-45 | Removed assignment's card is archived and its notes kept | API |
 | FR-51 | Same user, two browser sessions, see the same board | E2E |
 | FR-53, FR-54 | Export contains board and notes; delete removes every row for the user | API |
 | NFR-10 | Logs captured during a full test run contain no token string | API |
@@ -214,22 +217,25 @@ steps, and the expected result. Screen IDs refer to the
 | Step | Action | Expected |
 |------|--------|----------|
 | 1 | Load the board; put a note on assignment X; move it to In progress | Saved |
-| 2 | Edit the fixture: rename X, add a new assignment Y; refresh | X keeps its list and note, with the new name; Y appears in Backlog in its due date place |
+| 2 | Edit the fixture: rename X, add a new assignment Y; refresh | X keeps its list and notes, with the new name; Y appears in Backlog in its due date place |
 | 3 | Edit the fixture: mark X submitted; refresh | X's due badge turns green and X stays in In progress |
-| 4 | Edit the fixture: remove X; refresh | X is under Archived with its note |
+| 4 | Edit the fixture: remove X; refresh | X is under Archived with its notes |
 
 ### TP-09 Notes
 
-**Checks:** FR-40 to FR-44, NFR-21 · **Phase:** 3
+**Checks:** FR-28, FR-40 to FR-44, NFR-21 · **Phase:** 3
 
 | Step | Action | Expected |
 |------|--------|----------|
-| 1 | Open an assignment; type a note; wait 2 seconds | "Saved *time*" |
-| 2 | Close and reopen the assignment | Note is there; card shows ✎ |
-| 3 | Open the note on a second device | Same text |
-| 4 | Open the browser's developer tools, Network tab; edit the note | Requests go only to the portal's `/api/` address, none to Canvas |
-| 5 | Turn off Wi-Fi; type more; try to close | "Not saved" shown; closing warns |
-| 6 | Delete the note | ✎ disappears from the card |
+| 1 | Open an assignment and compare the Description with the assignment's page in Canvas | Same text and formatting; there is no way to edit it |
+| 2 | Click "Write a note...", type a note, press Save | The note appears under Notes with today's date and time; the card shows ✎ 1 |
+| 3 | Add a second note with Ctrl+Enter | Both notes show, newest first; the card shows ✎ 2 |
+| 4 | Close and reopen the card, then open it on a second device | Same notes, same order and dates |
+| 5 | Open the browser's developer tools, Network tab; add a note | Requests go only to the portal's `/api/` address, none to Canvas |
+| 6 | Edit the older note | New text, original date, marked "(edited)" |
+| 7 | Type a note without saving; try to close the card | Closing warns; the text is still there after cancelling |
+| 8 | Turn off Wi-Fi; save a note | "Not saved, try again"; the text stays in the box |
+| 9 | Delete a note, cancel, then delete it and confirm | Cancel keeps it; confirm removes it; the card shows ✎ 1 |
 
 ### TP-10 Privacy between users
 
@@ -326,3 +332,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | Status tests now check the direct mapping of Canvas fields (FR-23); fixtures cover every state and flag. |
 | 2026-10-25 | "Hide finished" steps removed from TP-03 and TP-04; hiding assignments is Phase 5 (FR-25). |
 | 2026-10-25 | TP-13 step 10 notes the Filter button's new place in the course row. |
+| 2026-10-25 | TP-09 rewritten for dated, comment-style notes and the read-only Canvas description (FR-28); description cleaning fixture and test added. |

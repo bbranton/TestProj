@@ -92,7 +92,7 @@ first.
 - Trello-style board: lists side by side that scroll sideways, lists
   *Backlog*, *To do*, *In progress*, *Done*; the board becomes the home screen (FR-30,
   FR-31, FR-60, FR-61).
-- Trello-style cards: course label colors, colored due date badges, note icon
+- Trello-style cards: course label colors, colored due date badges, notes count
   (FR-65, FR-66).
 - Clicking a card opens its "card back" in a dialog over the board, with its
   own link (FR-67, FR-68).
@@ -117,9 +117,11 @@ second device, and the Trello comparison review (TP-13) passes for the board.
 
 ### Phase 3: Private notes
 
-- Add, edit, and delete a note on any assignment (FR-40 to FR-42).
-- Notes are the card's *Description*, as on a Trello card back; a card with a
-  note shows the description icon (FR-43).
+- Add dated notes to any assignment, like the comments on a Trello card, and
+  edit or delete each one (FR-40 to FR-42).
+- Notes are not the *Description*: that comes from Canvas, is read only, and
+  is on the card back from Phase 2 (FR-28). A card with notes shows how many
+  (FR-43).
 - Notes are never sent to Canvas (FR-44, NFR-12).
 
 **Exit criteria:** notes survive reloads and Canvas refreshes, appear on a
@@ -212,3 +214,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | Added FR-27 (Due soon status) to Phase 5. |
 | 2026-10-25 | FR-27 in Phase 5 now covers all computed statuses (Upcoming, Due soon, Overdue). |
 | 2026-10-25 | Hiding assignments (FR-25) moved from Phase 1 to Phase 5. |
+| 2026-10-25 | Phase 3 notes are dated, comment-style entries, separate from the read-only Canvas description (FR-28). |

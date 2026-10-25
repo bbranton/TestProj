@@ -114,14 +114,14 @@ Each row uses the same label colors and due badges as the cards.
 +--------------------------------------------------------------------------+
 | Card               | List         | Label      | Due          | Points   |
 |--------------------+--------------+------------+--------------+----------|
-| Lab report 3     ≡ | In progress  | ■ BIO 101  | (◷ Tue 11:59)| 20       |
+| Lab report 3   ✎ 2 | In progress  | ■ BIO 101  | (◷ Tue 11:59)| 20       |
 |                    |              |            |              |          |
 | Problem set 7      | To do        | ■ MATH 152 | (◷ Wed 9:00) | 10       |
 |                    |              |            |              |          |
-| Essay draft      ≡ | To do        | ■ HIST 210 | (◷ Nov 3)    | 50       |
+| Essay draft    ✎ 1 | To do        | ■ HIST 210 | (◷ Nov 3)    | 50       |
 | Reading reflection | Backlog      | ■ HIST 210 | none         | 5        |
 +--------------------------------------------------------------------------+
-  ≡ = has a description (note), FR-43. ■ = course label color, FR-66.
+  ✎ 2 = number of notes, FR-43. ■ = course label color, FR-66.
   Clicking a row opens S-5. The List column appears from Phase 2.
   The course buttons are the same as on the board, and hiding a course on one
   view hides it on the other (FR-78).
@@ -145,12 +145,12 @@ NFR-3, NFR-31, NFR-34.
 |  | | ▬▬ HIST 210    | | | | ▬▬ MATH 152    | | | | ▬▬ BIO 101     | |    |
 |  | | Chapter 5      | | | | Problem set 7  | | | | Lab report 3   | |    |
 |  | | questions      | | | | (◷ Wed 9:00)   | | | | (◷ Tue 11:59)  | |    |
-|  | | (◷ Nov 8)      | | | +----------------+ | | | ≡              | |    |
+|  | | (◷ Nov 8)      | | | +----------------+ | | | ✎ 2            | |    |
 |  | +----------------+ | | +----------------+ | | +----------------+ |    |
 |  | +----------------+ | | | ▬▬ HIST 210    | | | ┌ ─ ─ ─ ─ ─ ─ ─ ┐  |    |
 |  | | ▬▬ HIST 210    | | | | Essay draft:   | | | │   drop gap    │  |    |
 |  | | Reading        | | | | causes of WWI  | | | │   (FR-77)     │  |    |
-|  | | reflection     | | | | (◷ Nov 3) ≡    | | | └ ─ ─ ─ ─ ─ ─ ─ ┘  |    |
+|  | | reflection     | | | | (◷ Nov 3) ✎ 1  | | | └ ─ ─ ─ ─ ─ ─ ─ ┘  |    |
 |  | | (no due date)  | | | +----------------+ | +--------------------+    |
 |  | +----------------+ | +--------------------+                           |
 |  +--------------------+                                                  |
@@ -163,7 +163,7 @@ NFR-3, NFR-31, NFR-34.
   their list.
   ▬▬ label strip in the course color (FR-66). (◷ ...) due badge: red
   when Canvas flags Missing, green with ✓ when Submitted or Graded, plain
-  otherwise (FR-65). ≡ has a description.
+  otherwise (FR-65). ✎ 2 is the number of notes (FR-43).
   The lists are fixed. List title: click to rename (FR-63). Drag a list
   by its header to reorder (FR-62). […] list menu: Move list.
   Adding cards and lists (FR-64, FR-71) and archiving lists (FR-36) are
@@ -180,7 +180,7 @@ NFR-3, NFR-31, NFR-34.
 
 ### S-5 Card back
 
-Requirements: FR-22, FR-26, FR-40 to FR-44, FR-46, FR-67, FR-68.
+Requirements: FR-22, FR-26, FR-28, FR-40 to FR-44, FR-46, FR-67, FR-68.
 Opens as a dialog over the dimmed board at `/c/{cardId}`. On phones it fills
 the screen.
 
@@ -196,18 +196,34 @@ the screen.
 |   |                                                |                 |   |
 |   | 20 points · Not submitted                      | Actions         |   |
 |   |                                                | [→ Move      ]  |   |
-|   | ≡ Description            private, never sent   | [↗ Open in   ]  |   |
-|   |                          to Canvas             | [   Canvas   ]  |   |
-|   | +------------------------------------------+   | [▤ Archive   ]  |   |
-|   | | Ask Dr. Lee about graph axes.            |   |                 |   |
-|   | | Data is in the shared folder.            |   |                 |   |
+|   | ≡ Description           from Canvas, read only | [↗ Open in   ]  |   |
+|   |   Write up the photosynthesis lab using the    | [   Canvas   ]  |   |
+|   |   template. Include a graph of O2 vs. light.   | [▤ Archive   ]  |   |
+|   |   [Show more]                                  |                 |   |
+|   |                                                |                 |   |
+|   | ✎ Notes            private, not sent to Canvas |                 |   |
 |   | +------------------------------------------+   |                 |   |
-|   | Saved 10:51 AM                     [Edit]      |                 |   |
+|   | | Write a note...                          |   |                 |   |
+|   | +------------------------------------------+   |                 |   |
+|   | Oct 24, 10:51 AM                               |                 |   |
+|   |   Ask Dr. Lee about graph axes.                |                 |   |
+|   |   [Edit] · [Delete]                            |                 |   |
+|   | Oct 22, 4:05 PM (edited)                       |                 |   |
+|   |   Data is in the shared folder.                |                 |   |
+|   |   [Edit] · [Delete]                            |                 |   |
 |   +------------------------------------------------------------------+   |
 +--------------------------------------------------------------------------+
   The due-date checkbox is display only for Canvas cards: completion comes
-  from Canvas. Escape, [x], clicking
-  outside, or the browser's Back button closes the dialog.
+  from Canvas.
+  Description is the assignment's instructions from Canvas, shown read only
+  with Canvas's formatting (FR-28). Notes work like the comments at the
+  bottom of a Trello card ("Comments and activity"): the student can add as
+  many as they like, each stamped with the date and time, newest first
+  (FR-40). Clicking "Write a note..." opens the box with a [Save] button;
+  Ctrl+Enter also saves. Edit and Delete work on one note at a time, an
+  edited note says "(edited)", and Delete asks first (FR-41, NFR-21).
+  Escape, [x], clicking outside, or the browser's Back button closes the
+  dialog.
 ```
 
 ### S-6 Settings
@@ -300,7 +316,7 @@ board.
                           | | ▬▬ BIO 101                     | |
                           | | Old lab (removed from Canvas)  | |
                           | +--------------------------------+ |
-                          | [Restore]  ≡ note kept             |
+                          | [Restore]  ✎ notes kept            |
                           +------------------------------------+
   Cards for assignments removed from Canvas land here (FR-45).
   Restore puts a card back in its old list, in its due date place.
@@ -321,7 +337,7 @@ The user swipes sideways between lists, and dots show which list is shown.
 | +------------------------+ |
 | | ▬▬ BIO 101             | |
 | | Lab report 3           | |
-| | (◷ Tue 11:59) ≡        | |
+| | (◷ Tue 11:59) ✎ 2      | |
 | +------------------------+ |
 | +------------------------+ |
 | | ▬▬ MATH 152            | |
@@ -400,20 +416,24 @@ Moving the card on screen before the server answers is called an
 *optimistic update*. It keeps dragging fast (NFR-3), and the card snaps back
 if the save fails, so the screen never shows a state the server doesn't have.
 
-### W-4 Write a note (card description)
+### W-4 Add, edit, or delete a note
 
 ```mermaid
 flowchart TD
-    A([Open card back S-5]) --> B[Select Description and type]
-    B --> C[Wait until 1 s after<br/>the last keystroke]
-    C --> D[PUT /api/notes/id]
+    A([Open card back S-5]) --> B[Click 'Write a note...' and type]
+    B --> C[Save or Ctrl+Enter]
+    C --> D[POST /api/cards/id/notes]
     D --> E{Saved?}
-    E -- yes --> F[Show 'Saved 10:51 AM']
-    E -- no --> G[Show 'Not saved, retrying'<br/>and keep the text on screen]
-    G --> D
-    F --> H{Close panel}
-    G --> H
-    H -- unsaved text --> I[Warn before closing]
+    E -- yes --> F[Note appears at the top<br/>with the date and time]
+    E -- no --> G[Show 'Not saved, try again'<br/>and keep the text in the box]
+    G --> C
+    F --> H{Change a note?}
+    H -- Edit --> I[Note becomes a text box; Save] --> J["PATCH /api/notes/id<br/>note shows (edited)"]
+    H -- Delete --> K{Delete this note?}
+    K -- yes --> L[DELETE /api/notes/id]
+    K -- no --> F
+    B --> M{Close the card<br/>with unsaved text?}
+    M -- yes --> N[Warn before closing]
 ```
 
 ### W-5 Assignment changes in Canvas
@@ -424,7 +444,7 @@ flowchart TD
     B -- has a card --> C[Keep its list; update name and due date,<br/>re-sort the list by due date]
     B -- no card yet --> D[Add card to Backlog<br/>in its due date place]
     A --> E{For each card}
-    E -- assignment gone from Canvas --> F[Mark card archived;<br/>keep its note]
+    E -- assignment gone from Canvas --> F[Mark card archived;<br/>keep its notes]
     E -- submitted in Canvas --> G[Due badge turns green;<br/>card stays where the student put it]
 ```
 
@@ -463,7 +483,7 @@ flowchart TD
     C -- Enter --> D[Card added; box stays open<br/>for the next card]
     D --> B
     C -- Escape --> E[Box closes; nothing added]
-    D --> F[Open the card to add a due date,<br/>or description]
+    D --> F[Open the card to add a due date<br/>or notes]
 ```
 
 ## Change log
@@ -485,3 +505,4 @@ flowchart TD
 | 2026-10-25 | Statuses now come straight from Canvas fields (FR-23): S-4 badge notes, S-5, and the S-8 filter menu updated. |
 | 2026-10-25 | Filter button moved from the header to the start of the course button row (S-3, S-4, phone), from the Team Lead's review. |
 | 2026-10-25 | The filter menu and card back say "Courses"/"Course" instead of "Labels", from the Team Lead's review. |
+| 2026-10-25 | Notes are now dated, comment-style entries (like Trello's "Comments and activity"), separate from the read-only Canvas description: S-5 redrawn, note count badges on S-3, S-4, and phone, W-4 rewritten, from the Team Lead's review. |

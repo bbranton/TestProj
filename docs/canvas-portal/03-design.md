@@ -225,7 +225,7 @@ and require a signed-in session except where noted.
 | `GET /api/board` | Lists and cards with course label colors, cards sorted by due date. Read only: cards are added when a Refresh is saved (section 6) | FR-31, FR-34, FR-38, FR-65, FR-66 | 1 |
 | `PATCH /api/board/cards/{id}` | Move to another list; returns the new `change_seq` | FR-32, FR-33, NFR-22 | 2 |
 | `GET /api/board/changes?since={seq}` | Cards changed since that `change_seq`, and the current value | NFR-22 | 2 |
-| `DELETE /api/me` | Delete the account and all its data | FR-54 | 4 |
+| `DELETE /api/me` | Delete the account and all its data from the live database at once; backups age out (section 7) | FR-54 | 4 |
 
 The backend only ever sends filtered, portal-shaped data to the frontend. It
 does not pass Canvas responses straight through, and it never includes the
@@ -485,6 +485,13 @@ running between requests (roadmap D-3).
 - **A server restart mid-Refresh:** when the server starts, any run still
   marked *running* is marked *incomplete* ("interrupted"), so the student is
   never stuck waiting on a Refresh that no longer exists.
+- **One backend instance.** The portal runs as a single backend process.
+  All Refresh state is already in the database (`REFRESH_RUN`), so any
+  request can join or report on a run, but the task itself lives in that one
+  process, and the restart rule above assumes no other process is running a
+  Refresh. Running more than one instance later would need a heartbeat on
+  `REFRESH_RUN` instead of the restart rule. That is a design change, not a
+  hosting setting.
 
 ### Saving a complete Refresh (FR-14, FR-34)
 
@@ -616,6 +623,7 @@ sequenceDiagram
 | A Canvas address that points somewhere else | The student types the Canvas address, and the server then calls it, so a bad address could make the server call machines on its own network. The address must be `https`, must resolve only to public internet addresses, and is checked again on every call | NFR-11, NFR-12 |
 | Token sent to the wrong host | The client sends the token only to the saved Canvas host. It does not follow redirects, or paging `Link` URLs, that lead to another host; that course fails instead | NFR-10 |
 | Trackers | No third-party analytics or scripts | NFR-14 |
+| Deleted accounts in backups | Deleting an account removes its rows from the live database at once. Database backups are kept for at most 30 days, so a deleted account, and its encrypted token, are gone from every copy within 30 days. Backups are encrypted by the host. How backups are taken is DevOps's call; the 30-day limit is the design's | FR-54, NFR-11 |
 | Test tokens | Read from a git-ignored `.env` file in local dev; CI uses recorded sample data instead | A-3, NFR-41 |
 
 ## 8. Repository layout
@@ -808,3 +816,4 @@ What the connect screen says when a student connects a different account
 | 2026-10-25 | In-depth review after PR #3: cards are added when a complete Refresh is saved (new *Saving a complete Refresh*, Phase 1), so loading the board only reads; the unique card rule moves to Phase 1; one Refresh at a time, token problems, and rate-limit retries are Phase 1 (*Bringing the backend in step* keeps only Phase 3 work); the board changes once per complete Refresh while S-10 shows progress (FR-14, NFR-2); a restart marks a stuck Refresh incomplete; disconnecting keeps the connection row so the board survives (FR-4, FR-6), with an open check for connecting a different account; a Refresh on another device reaches open devices through the changes endpoint; GraphQL needs a call on NFR-13 (it uses `POST`); nearest-due-first dropped; description changes have nothing to show before Phase 5; keys on `COURSE_LABEL`, `CANVAS_CACHE`, `REFRESH_RUN`, `user_id` on `LIST`, `canvas_user_id` on the connection; health endpoint and fuller requirement IDs in the API table; cookie and token-in-URL rows in security; repository layout matches the skeleton; refresh panel and warning banner in the component diagram; traceability lists only Phase 0 to 4 IDs. |
 | 2026-10-25 | Architecture review: server-side sessions (new `SESSION` table), Fernet token encryption, and the in-process Refresh task in the technology table; one error shape with codes for each screen; dates sent in UTC; security rows for Canvas addresses that point elsewhere and for never sending the token to another host; Phase 1 settings listed. Matched to requirements PR #6: until Phase 3 a card with no Canvas data is hidden, not deleted (FR-45); the different-account check is Q-8; a Missing badge stays red when also Graded (FR-65). |
 | 2026-10-25 | Matched to the team personas: proposals that need the Team Lead (a new dependency, token storage or sending) are listed under *Open decisions raised here*; testing, CI, hosting, and screen choices are left to the personas that own them. |
+| 2026-10-25 | From the roadmap cross-review (X-24, X-25): the portal runs as one backend instance, with Refresh state in the database; backups are kept at most 30 days, so a deleted account leaves every copy within 30 days. |

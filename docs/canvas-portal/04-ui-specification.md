@@ -167,7 +167,7 @@ student typed in the address field:
 | First connection, or after disconnecting | None |
 | Canvas rejects the saved token during a Refresh (FR-6) | "Canvas no longer accepts your saved token. Please create a new one. Your board is safe." |
 | Canvas rejects the token just entered | "Canvas did not accept this token." |
-| The address can't be reached or isn't a Canvas site | "Couldn't reach that Canvas address." |
+| The address can't be reached, isn't a Canvas site, or doesn't start with `https://` | "Couldn't reach that Canvas address. Check that it starts with https://." |
 
 On success the portal shows "Connected as *Name*" (FR-2) and opens S-4. On
 the very first connection there is no data yet, so S-4 opens with S-10
@@ -180,9 +180,9 @@ kept so the other screen numbers don't change.
 
 ### S-4 Board (home screen)
 
-Requirements: FR-13 to FR-16, FR-20 to FR-23, FR-26, FR-31, FR-34, FR-38,
-FR-60, FR-61, FR-65, FR-66, FR-78, FR-80, NFR-1, NFR-20, NFR-34. From
-Phase 2: FR-32, FR-33, FR-35, FR-77, NFR-3. The sketches show Phases 1 to
+Requirements: FR-13 to FR-16, FR-20 to FR-23, FR-26, FR-31, FR-34, FR-35,
+FR-38, FR-45 (keeping cards), FR-60, FR-61, FR-65, FR-66, FR-78, FR-80,
+NFR-1, NFR-20, NFR-34. From Phase 2: FR-32, FR-33, FR-77, NFR-3. The sketches show Phases 1 to
 4 only.
 
 The board is the only view. In Phase 1 it is read only: every card is in
@@ -259,13 +259,17 @@ show the same fields as the Phase 1 sketch.
   status: the state (Not submitted, Submitted, Graded, Pending review)
   and a tag for each Late, Missing, or Excused flag (FR-23). The due
   badge shows the date and time in the student's time zone, such as
-  "Oct 28, 11:59 PM". It is red when Canvas flags Missing, green with ✓
-  when Submitted or Graded, and plain otherwise. From Phase 5, cards with
+  "Oct 28, 11:59 PM". It is red when Canvas flags Missing, even if the
+  assignment is also graded; otherwise green with ✓ when Submitted or
+  Graded; and plain otherwise. From Phase 5, cards with
   notes also show a ✎ note count (FR-43).
   Clicking a card opens the assignment in Canvas in a new tab (FR-26).
   From Phase 5 it opens the card back (S-5) instead.
   Cards in every list are always sorted by due date, earliest at the top;
-  cards with no due date come last, then by name (FR-38).
+  cards with no due date come last. Cards with the same due date, or no
+  due date, are in name order (FR-38). A card whose assignment is gone
+  from the last complete Canvas data is hidden but kept (FR-45); from
+  Phase 3 it is archived instead.
 
   Lists: Backlog, To do, In progress, and Done, always in that order
   (FR-31). New assignments from Canvas land in Backlog until the student
@@ -281,6 +285,9 @@ show the same fields as the Phase 1 sketch.
   rest start expanded; this state is not saved.
 
   Course buttons (FR-78): one per active course, in its label color.
+  Each shows the course code and, below it in smaller text, the course
+  name, shortened with "..." when long (FR-20). The sketches show only
+  the codes.
   ● shown, ○ hidden; selecting one hides or shows that course's cards.
   [Show all] and [Hide all] show or hide every course at once. With every
   course hidden, the board says "All courses are hidden" with a Show all
@@ -620,8 +627,9 @@ flowchart TD
 
 ### W-5 Assignment changes in Canvas
 
-Phase 1 builds the complete-fetch check, showing the current fields, and
-adding new assignments to Backlog (FR-14, FR-34, FR-38). Archiving cards
+Phase 1 builds the complete-fetch check, showing the current fields,
+adding new assignments to Backlog, and hiding (not deleting) cards whose
+assignments are gone (FR-14, FR-34, FR-35, FR-38, FR-45). Archiving cards
 and bringing them back come in Phase 3 (FR-39, FR-45).
 
 ```mermaid
@@ -634,7 +642,7 @@ flowchart TD
     B -- no card yet --> D[Add card to Backlog<br/>in its due date place]
     B -. archived card, Phase 3 .-> R[Bring card back<br/>to its old list]
     Z -- yes --> E{For each card}
-    E -. assignment gone from Canvas, Phase 3 .-> F[Mark card archived;<br/>it leaves the board]
+    E -- assignment gone from Canvas --> F[Card leaves the board but is kept;<br/>from Phase 3 it is marked archived]
     E -- state or flags changed --> G[Badge shows the current Canvas value;<br/>card stays where the student put it]
 ```
 
@@ -712,4 +720,4 @@ flowchart TD
 | 2026-10-25 | S-4 and the header now show only Phases 1 to 4: the [Filter] button, note counts, and [⋯] board menu are described as Phase 5 additions instead of drawn; S-2's error no longer mentions notes. From the whole-set review. |
 | 2026-10-25 | S-4 no longer lists NFR-31. From the Team Lead's review: keyboard actions are not a requirement. |
 | 2026-10-25 | Added S-10 Refresh progress (FR-16): per-course states, errors and timeouts, a summary, and the last Refresh's log, from the Team Lead's review. |
-| 2026-10-25 | In-depth UI/UX review after PR #3: added *UI by phase* and *Conventions on every screen* (color never the only signal, named icon buttons, one date format, consistent words, helpful messages); S-4 has a Phase 1 sketch, and card fronts show the due date and time, points, and Canvas status (FR-22, FR-65); board messages for a failed Refresh, the first load, and no courses; the header's "Synced" time is the last complete Refresh (FR-13), and [⟳] starts a Refresh; S-1 says a personal Google account works (R-6); S-2 lists its messages; S-10 closes without stopping the Refresh and uses ⏸ for rate limits, so ◷ only means a due date; S-6 marks deletion Phase 4; S-8 adds Pending review and Excused; Ctrl+Enter and the `f` key removed (keyboard actions are not a requirement); W-3 marked Phase 2; W-5 marks its Phase 3 parts; W-4 no longer names undesigned Phase 5 endpoints; Oct 28, 2026 is a Wednesday. |
+| 2026-10-25 | In-depth UI/UX review after PR #3: added *UI by phase* and *Conventions on every screen* (color never the only signal, named icon buttons, one date format, consistent words, helpful messages); S-4 has a Phase 1 sketch, and card fronts show the due date and time, points, and Canvas status, with red winning over green on the due badge (FR-22, FR-65); course buttons show the course name under the code (FR-20); cards of removed assignments are hidden but kept until Phase 3 (FR-45); board messages for a failed Refresh, the first load, and no courses; the header's "Synced" time is the last complete Refresh (FR-13), and [⟳] starts a Refresh; S-1 says a personal Google account works (R-6); S-2 lists its messages; S-10 closes without stopping the Refresh and uses ⏸ for rate limits, so ◷ only means a due date; S-6 marks deletion Phase 4; S-8 adds Pending review and Excused; Ctrl+Enter and the `f` key removed (keyboard actions are not a requirement); W-3 marked Phase 2; W-5 marks its Phase 3 parts; W-4 no longer names undesigned Phase 5 endpoints; Oct 28, 2026 is a Wednesday. |

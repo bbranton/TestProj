@@ -3,19 +3,32 @@
 How personas review each other's work. The personas are listed in the
 [team README](README.md).
 
+## The Team Lead has the final say
+
+The Team Lead has the final say on every decision and every disagreement
+between personas. The Team Lead can override any persona, any rule or table
+in this protocol, and the reviewers for any PR. Everything below describes
+the default when the Team Lead hasn't said otherwise.
+
 ## Who reviews what
 
 Every piece of work has one **owner** persona, who writes it and answers its
-findings, and one or more **required reviewers**. An optional reviewer is
-added when the change touches its area. The owner lists the required and
-optional reviewers in the PR description, with a reason for each optional
-one.
+findings. The table below gives the **recommended reviewers** for each kind
+of work. An optional reviewer is recommended when the change touches its
+area. The owner lists the recommended and optional reviewers in the PR
+description, with a reason for each optional one.
+
+Reviews cost real time and tokens, so **the Team Lead confirms the reviewers
+for each PR** before any review starts. The Team Lead can add or drop any
+reviewer, including all of them when the change is small and the Team
+Lead's own review gives enough coverage. The reviewers the Team Lead keeps
+are the PR's **confirmed reviewers**.
 
 Picking optional reviewers follows Management's rule: given the topic or
 the changes, does another persona need to join? Any reviewer can also ask
 for another persona in a finding.
 
-| Work | Owner | Required reviewers | Optional reviewers |
+| Work | Owner | Recommended reviewers | Optional reviewers |
 |------|-------|--------------------|--------------------|
 | Roadmap (`01-roadmap.md`) | Management | Product and QA | Architecture, DevOps |
 | Requirements (`02-requirements.md`) | Product and QA | Architecture, plus Management when a phase changes | UI/UX, Developer |
@@ -68,9 +81,9 @@ the decision to them.
 ## How a review runs
 
 1. **Owner prepares.** The owner opens the PR and lists in its description
-   the requirement IDs it touches and which reviewers are required, from the
-   table above.
-2. **Reviewers review.** Each required reviewer reads the change against its
+   the requirement IDs it touches and the recommended reviewers, from the
+   table above. The Team Lead confirms the reviewers.
+2. **Reviewers review.** Each confirmed reviewer reads the change against its
    checklist and posts one review headed with its persona name, such as
    "**DevOps review**". Reviewers can run in parallel.
 3. **Findings are logged.** Each finding gets an ID and a row in a findings
@@ -79,15 +92,16 @@ the decision to them.
    still changes only what it owns.
 4. **Owner answers.** The owner fixes each finding or replies with why not.
    Findings that need a decision go to the Team Lead.
-5. **Sign-off.** Each required reviewer ends with one verdict:
+5. **Sign-off.** Each confirmed reviewer ends with one verdict:
    - **Recommend** — no open findings from this reviewer.
    - **Recommend with notes** — only minor findings, which the owner may
      fix later.
    - **Changes needed** — at least one finding must be fixed before merge.
 6. **Re-review.** After the owner pushes fixes for a **Changes needed**
    verdict, that reviewer checks the fixes and updates its verdict.
-7. **Team Lead decides.** The PR is ready when every required reviewer's
-   latest verdict is **Recommend** or **Recommend with notes**. The Team Lead approves and merges. A persona never
+7. **Team Lead decides.** The PR is ready when every confirmed reviewer's
+   latest verdict is **Recommend** or **Recommend with notes**. With no
+   confirmed reviewers, the Team Lead's own review is the review. The Team Lead approves and merges. A persona never
    approves or merges.
 
 ## Findings table
@@ -116,15 +130,18 @@ log or decision list.
 
 ### One thread per reviewer
 
-Each required reviewer runs in **its own thread, started fresh** for that
+Each confirmed reviewer runs in **its own thread, started fresh** for that
 review. It reads only its persona file, its notes, this protocol, the PR,
-and the docs the PR changes or names. It doesn't see the owner's thread or the other reviewers' reviews
-before writing its own. That keeps reviews independent.
+and the docs the PR changes or names. It doesn't see the owner's thread or
+the other reviewers' reviews before writing its own. That keeps reviews independent.
 
 - The **owner thread** wrote the PR and is subscribed to it, so it wakes
   on every comment. It never reviews its own PR as another persona.
-- Only the coordinator can start threads. The owner asks the coordinator
-  for the reviewers it needs, naming the PR and the personas.
+- Only the coordinator can start threads, and it starts reviewer threads
+  only after the Team Lead confirms them. The owner sends the coordinator
+  the PR and its recommended reviewers. The coordinator gives the Team Lead
+  its recommendation, with the PR's size and risk and a reason for each
+  reviewer, and starts only the threads the Team Lead confirms.
 - Each reviewer thread posts **one PR review** headed with its persona name
   and verdict, such as "**DevOps review: Recommend with notes**", with its
   findings as inline comments. All comments post from the Team Lead's
@@ -134,7 +151,7 @@ before writing its own. That keeps reviews independent.
   that happens.
 
 One thread playing several personas is only for quick, informal checks
-that the Team Lead asks for. It never counts as a required review.
+that the Team Lead asks for. It never counts as a confirmed review.
 
 ### Questions and discussion between threads
 
@@ -162,10 +179,14 @@ reached there is written on the PR before anyone acts on it.
 
 When asked to "run a cross-review" of a PR or doc, the owner thread:
 
-1. Finds the required reviewers in the table above, and adds optional ones
-   by Management's rule, with a reason for each.
-2. Asks the coordinator for one fresh thread per reviewer, naming the PR
-   and the persona.
+1. Finds the recommended reviewers in the table above, adds optional ones
+   by Management's rule, and lists them in the PR description with a reason
+   for each.
+2. Sends the coordinator the PR and its recommended reviewers. The
+   coordinator recommends reviewers to the Team Lead and starts one fresh
+   thread per reviewer the Team Lead confirms. If the Team Lead confirms
+   none, no reviewer threads start and the Team Lead reviews the PR
+   directly.
 3. Waits for the reviews to arrive as PR comments, then answers or fixes
    each finding, following the steps above for any question.
 4. After pushing fixes for a **Changes needed** verdict, messages that

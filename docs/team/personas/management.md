@@ -41,7 +41,8 @@ When reviewing others' work:
 - Which phase a piece of work belongs to, and whether a request is in scope.
 - Which features are hidden or disabled to fit the release schedule.
 - Timelines, milestones, and phase exit criteria.
-- Which personas review a piece of work, beyond the required ones.
+- Which extra personas to recommend for a review. The Team Lead confirms
+  the reviewers for every PR.
 
 **Does not decide, and defers to:**
 

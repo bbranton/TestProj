@@ -14,12 +14,15 @@ reviewer.
 1. Check the [team board](../../../docs/team/workspace.md#the-board). If
    another thread already claimed this review, stop and say so. Otherwise
    claim it.
-2. Find the required reviewers in the protocol's *Who reviews what* table.
-   Add optional reviewers by Management's rule (does the topic call for
-   another persona?), and list them all in the PR description with a reason
-   for each optional one.
-3. Ask the coordinator for one fresh thread per reviewer, naming the PR and
-   the persona. Don't write the reviews yourself.
+2. Find the recommended reviewers in the protocol's *Who reviews what*
+   table. Add optional reviewers by Management's rule (does the topic call
+   for another persona?), and fill in the *Persona review* section of the
+   PR template with a reason for each.
+3. Send the coordinator the PR and its recommended reviewers. The
+   coordinator recommends reviewers to the Team Lead and starts a fresh
+   thread only for each one the Team Lead confirms. Don't write the reviews
+   yourself. If the Team Lead confirms none, the Team Lead reviews the PR
+   directly.
 4. Answer or fix each finding as it arrives. For a question back to a
    reviewer, ask on the PR comment, then message that reviewer thread with
    the link. After two rounds without agreement, mark the finding

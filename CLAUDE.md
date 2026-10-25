@@ -26,7 +26,8 @@
 - When asked to review or cross-review a doc or PR, follow the
   [review protocol](docs/team/review-protocol.md): it says which personas
   review what and how findings are logged.
-- Personas recommend; only the Team Lead approves or merges.
+- Personas recommend; the Team Lead has the final say on every decision,
+  confirms each PR's reviewers, and is the only one who approves or merges.
 
 ## Canvas portal phases
 

@@ -35,6 +35,14 @@ To add a skill, copy an existing folder, write a `SKILL.md` whose
 `description` says when to use it, and add a row here. Scripts use only the
 standard library, so they run anywhere without installing anything.
 
+## PR template
+
+[`.github/pull_request_template.md`](../../.github/pull_request_template.md)
+fills in every new PR's description with the sections the
+[review protocol](review-protocol.md) needs: requirement IDs, the owner, the
+recommended reviewers for the Team Lead to confirm, verdicts, findings,
+testing, and screenshots. Keep its sections in step with the protocol.
+
 ## The board
 
 The board is `/mnt/project-files/team/board.md`, in the project's shared

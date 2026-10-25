@@ -20,9 +20,7 @@ flowchart TD
     Q -- no --> S2[S-2 Connect Canvas]
     Q -- yes --> S4[S-4 Board, home screen]
     S2 --> S4
-    S4 <--> S3[S-3 Table view]
     S4 --> S5[S-5 Card back dialog]
-    S3 --> S5
     S4 -.-> S7[S-7 Quick edit menu, Phase 5]
     S4 --> S8[S-8 Filter menu]
     S4 --> S9[S-9 Board menu and archived items]
@@ -36,7 +34,7 @@ sits on the board's background color:
 
 ```text
 +--------------------------------------------------------------------------+
-| Canvas Portal  My assignments  [*Board*| Table ]            [⟳] [⋯] (A)  |
+| Canvas Portal  My assignments                               [⟳] [⋯] (A)  |
 +--------------------------------------------------------------------------+
   [⟳] refreshes from Canvas; hovering shows "Updated 3 min
   ago". [⋯] opens S-9. (A) is the account menu: Settings, Sign out.
@@ -96,45 +94,24 @@ disconnecting, or when Canvas rejects the saved token.
 +--------------------------------------------------------------+
 ```
 
-On success the portal shows "Connected as *Name*" (FR-2) and opens S-3.
+On success the portal shows "Connected as *Name*" (FR-2) and opens S-4.
 
-### S-3 Table view
+### S-3 Table view (removed)
 
-Requirements: FR-13, FR-20 to FR-26, FR-30, FR-65, FR-78, NFR-20. In Phase 1 this
-is the only view. From Phase 2 it is the secondary view behind the board.
-Each row uses the same label colors and due badges as the cards.
-
-```text
-+--------------------------------------------------------------------------+
-| Canvas Portal  My assignments  [ Board |*Table*]            [⟳] [⋯] (A)  |
-+--------------------------------------------------------------------------+
-| [Filter] | [● BIO 101] [● HIST 210] [● MATH 152]  [Show all] [Hide all]  |
-+--------------------------------------------------------------------------+
-| [!] Canvas isn't responding. Showing data from 10:42 AM.  <- NFR-20 only |
-+--------------------------------------------------------------------------+
-| Card               | List         | Label      | Due          | Points   |
-|--------------------+--------------+------------+--------------+----------|
-| Lab report 3   ✎ 2 | In progress  | ■ BIO 101  | (◷ Tue 11:59)| 20       |
-|                    |              |            |              |          |
-| Problem set 7      | To do        | ■ MATH 152 | (◷ Wed 9:00) | 10       |
-|                    |              |            |              |          |
-| Essay draft    ✎ 1 | To do        | ■ HIST 210 | (◷ Nov 3)    | 50       |
-| Reading reflection | Backlog      | ■ HIST 210 | none         | 5        |
-+--------------------------------------------------------------------------+
-  ✎ 2 = number of notes, FR-43. ■ = course label color, FR-66.
-  Clicking a row opens S-5. The List column appears from Phase 2.
-  The course buttons are the same as on the board, and hiding a course on one
-  view hides it on the other (FR-78).
-```
+Removed from the Team Lead's review: the board is the only view. The ID is
+kept so the other screen numbers don't change.
 
 ### S-4 Board (home screen)
 
-Requirements: FR-31 to FR-35, FR-38, FR-60, FR-61, FR-65, FR-66, FR-72 to FR-74, FR-77, FR-78,
-NFR-3, NFR-31, NFR-34.
+Requirements: FR-13, FR-20 to FR-26, FR-31 to FR-35, FR-38, FR-60, FR-61, FR-65, FR-66, FR-72 to FR-74, FR-77, FR-78,
+NFR-3, NFR-20, NFR-31, NFR-34.
+
+The board is the only view. In Phase 1 it is read only: every card is in
+Backlog, and dragging between lists arrives in Phase 2 (FR-60).
 
 ```text
 +--------------------------------------------------------------------------+
-| Canvas Portal  My assignments  [*Board*| Table ]            [⟳] [⋯] (A)  |
+| Canvas Portal  My assignments                               [⟳] [⋯] (A)  |
 +--------------------------------------------------------------------------+
 | [Filter] | [● BIO 101] [● HIST 210] [● MATH 152]  [Show all] [Hide all]  |
 +--------------------------------------------------------------------------+
@@ -156,6 +133,9 @@ NFR-3, NFR-31, NFR-34.
 |  +--------------------+                                                  |
 +--------------------------------------------------------------------------+
   [Filter] at the start of the course row opens S-8 (FR-72).
+  If Canvas can't be reached, a warning banner between the course row and
+  the lists says "Canvas isn't responding. Showing data from 10:42 AM."
+  (NFR-20).
   Course buttons (FR-78): one per active course, in its label color. ● shown,
   ○ hidden; tapping one hides or shows that course's cards. [Show all] and
   [Hide all] show or hide every course at once. With every course hidden, the
@@ -507,3 +487,4 @@ flowchart TD
 | 2026-10-25 | The filter menu and card back say "Courses"/"Course" instead of "Labels", from the Team Lead's review. |
 | 2026-10-25 | Notes are now dated, comment-style entries (like Trello's "Comments and activity"), separate from the read-only Canvas description: S-5 redrawn, note count badges on S-3, S-4, and phone, W-4 rewritten, from the Team Lead's review. |
 | 2026-10-25 | Renaming and reordering lists moved to Phase 5: list menus removed from S-4 and the phone layout, W-7 marked Phase 5, from the Team Lead's review. |
+| 2026-10-25 | Table view (S-3) removed: no view switch in the header, S-2 opens the board, and the board takes over S-3's requirements and Canvas warning banner, from the Team Lead's review. |

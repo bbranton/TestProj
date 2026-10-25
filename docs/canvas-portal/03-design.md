@@ -397,7 +397,6 @@ and the Back button behave the way they do in Trello.
 |---------|-------|--------------|
 | `/` | The board (or S-1 / S-2 if not signed in or connected) | FR-60 |
 | `/c/{cardId}` | The board with that card's card back open as a dialog | FR-67 |
-| `/table` | Table view of all assignments | FR-30 |
 | `/settings` | Settings | FR-4, FR-53, FR-54 |
 
 ### Component structure
@@ -407,7 +406,7 @@ is built from these:
 
 ```mermaid
 flowchart TD
-    App --> Header["BoardHeader<br/>board name, view switch, Refresh, menu"]
+    App --> Header["BoardHeader<br/>board name, Refresh, menu"]
     App --> Toggles["CourseToggleBar<br/>Filter button, one show/hide button per course"]
     App --> Board
     App --> CardBack["CardBackDialog<br/>opens on /c/{cardId}"]
@@ -504,3 +503,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | Notes are now many dated entries per card (NOTE has `created_at`; new notes endpoints); the Canvas description is shown read only and cleaned against XSS (FR-28). |
 | 2026-10-25 | Renaming and reordering lists (FR-62, FR-63) marked Phase 5 in the API, component, and interaction tables. |
 | 2026-10-25 | Data model note on supporting more than one school per user later (FR-55). |
+| 2026-10-25 | Removed the `/table` route and the header's view switch; the board is the only view. |

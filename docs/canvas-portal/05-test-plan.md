@@ -82,7 +82,7 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | FR-10, FR-11 | Only active courses and their assignments are returned | API |
 | FR-12 | All 120+ assignments returned from a two-page fixture | API |
 | FR-14 | Second request within 5 minutes makes no Canvas call | API |
-| FR-21, FR-38 | Sort order: soonest first, no-due-date last, ties by name; applies to every list and the table | Unit |
+| FR-21, FR-38 | Sort order: soonest first, no-due-date last, ties by name; applies to every list | Unit |
 | FR-23 | Each Canvas `workflow_state` maps to its label, and the late, missing, and excused flags show as tags, including together with a state | Unit |
 | FR-24 | Course, Canvas state and flag, and search filters | E2E |
 | FR-32, FR-33, FR-38 | Drag a card to another list; it lands in its due date place; reload, it is still there | E2E |
@@ -112,7 +112,7 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | FR-69 (Phase 5) | Pencil and right-click open the quick edit menu | E2E |
 | FR-70 (Phase 5) | Add, check, reorder, and delete checklist items; card front shows progress | API, E2E |
 | FR-72 | Each filter option, combined filters, and Clear | E2E |
-| FR-78 | Tapping a course button hides and shows its cards on board and table; Show all and Hide all; hidden cards keep their place; choice survives reload and a second session | API, E2E |
+| FR-78 | Tapping a course button hides and shows its cards on the board; Show all and Hide all; hidden cards keep their place; choice survives reload and a second session | API, E2E |
 | FR-73 | Every shortcut in the keyboard map does its action, and `?` lists them all | E2E |
 | FR-74 | Archive and restore a card (a list from Phase 5) | API, E2E |
 | NFR-34 | Visual comparison: screenshots of S-4 and S-5 match approved reference images (Playwright `toHaveScreenshot`) | E2E |
@@ -133,8 +133,8 @@ steps, and the expected result. Screen IDs refer to the
 |------|--------|----------|
 | 1 | Open the portal | S-2 Connect Canvas is shown |
 | 2 | Expand "How do I get a token?" | Four steps are shown and match Canvas's current menus |
-| 3 | Enter the school address and student token; select Connect | "Connected as *student name*", then S-3 |
-| 4 | Close the browser, reopen the portal | S-3 opens without asking for the token |
+| 3 | Enter the school address and student token; select Connect | "Connected as *student name*", then the board (S-4) |
+| 4 | Close the browser, reopen the portal | The board opens without asking for the token |
 
 ### TP-02 Bad and expired tokens
 
@@ -157,14 +157,14 @@ steps, and the expected result. Screen IDs refer to the
 | Step | Action | Expected |
 |------|--------|----------|
 | 1 | In Canvas, open each current course's Assignments page | Note the assignments, due dates, and points |
-| 2 | In the portal, open S-3 | Same courses (no ended ones) and same assignments |
+| 2 | In the portal, open the board | Same courses (no ended ones) and same assignments |
 | 3 | Compare due dates | Match, shown in your local time zone |
 | 4 | Check one assignment of each state, and any marked Late, Missing, or Excused | Labels and tags match what Canvas shows on its own assignment page |
 | 5 | Select ↗ on any assignment | Its Canvas page opens in a new tab |
 
 ### TP-04 Filters and search
 
-**Checks:** FR-24, FR-78 · **Phase:** 1 (steps 5 to 7 on the board from Phase 2)
+**Checks:** FR-24, FR-78 · **Phase:** 1
 
 | Step | Action | Expected |
 |------|--------|----------|
@@ -183,13 +183,13 @@ steps, and the expected result. Screen IDs refer to the
 
 | Step | Action | Expected |
 |------|--------|----------|
-| 1 | Load S-3 so data is cached | "Updated just now" |
+| 1 | Load the board so data is cached | "Updated just now" |
 | 2 | Point the backend's Canvas address at an unreachable host; select Refresh | Warning banner; last data still listed with its time |
 | 3 | Restore the address; select Refresh | Banner goes away; time updates |
 
 ### TP-06 Board layout persists and syncs
 
-**Checks:** FR-30 to FR-33, FR-38, FR-51, FR-60 · **Phase:** 2
+**Checks:** FR-31 to FR-33, FR-38, FR-51, FR-60 · **Phase:** 2
 **Needs:** two devices or two different browsers, same portal account.
 
 | Step | Action | Expected |
@@ -265,9 +265,9 @@ steps, and the expected result. Screen IDs refer to the
 | Step | Action | Expected |
 |------|--------|----------|
 | 1 | Run TP-01, TP-03, and TP-06 in Chrome, Firefox, Safari, and Edge | Same results in each |
-| 2 | On a phone, open S-3, S-4, and S-5 | Phone layout from the wireframes: one list fills the screen and swiping moves between lists |
+| 2 | On a phone, open S-4 and S-5 | Phone layout from the wireframes: one list fills the screen and swiping moves between lists |
 | 3 | Zoom the browser to 200% | All text readable; nothing cut off |
-| 4 | Turn on a screen reader (VoiceOver or NVDA) and go through S-3 | Every control is announced with a name |
+| 4 | Turn on a screen reader (VoiceOver or NVDA) and go through S-4 | Every control is announced with a name |
 
 ### TP-13 Trello comparison review
 
@@ -335,3 +335,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | TP-13 step 10 notes the Filter button's new place in the course row. |
 | 2026-10-25 | TP-09 rewritten for dated, comment-style notes and the read-only Canvas description (FR-28); description cleaning fixture and test added. |
 | 2026-10-25 | List rename and reorder tests (FR-62, FR-63, TP-13 steps 4 and 5) marked Phase 5. |
+| 2026-10-25 | Table view removed: TP-01, TP-03, TP-04, TP-05, TP-11, and coverage rows now use the board. |

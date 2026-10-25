@@ -69,9 +69,10 @@ The smallest thing that is useful: connect, then see everything that's due.
 - Connect screen: paste a Canvas URL and personal access token (FR-1 to FR-5).
 - Backend calls Canvas for active courses and their assignments (FR-10 to
   FR-14), handling Canvas's paging and rate limits.
-- Dashboard shows courses and an upcoming-assignments list sorted by due date,
-  with filters by course and status, each assignment drawn as a Trello-style
-  card (FR-20 to FR-24, FR-26, FR-65).
+- A read-only board: every assignment is a Trello-style card in the Backlog
+  list, sorted by due date, with the course show/hide buttons and filters by
+  course and status (FR-20 to FR-24, FR-26, FR-60, FR-65, FR-78). Moving
+  cards between lists comes in Phase 2, once accounts can save it.
 - Each assignment links back to its Canvas page (FR-26).
 - Clear error messages for a bad token, an expired token, or Canvas being
   unreachable (FR-6, NFR-20).
@@ -89,9 +90,8 @@ first.
 - The user's Canvas connection is saved on the server with their account, so
   signing in on a new device doesn't require pasting the token again (FR-5,
   NFR-11).
-- Trello-style board: lists side by side that scroll sideways, lists
-  *Backlog*, *To do*, *In progress*, *Done*; the board becomes the home screen (FR-30,
-  FR-31, FR-60, FR-61).
+- Trello-style board with all four lists side by side, scrolling sideways:
+  *Backlog*, *To do*, *In progress*, *Done* (FR-31, FR-60, FR-61).
 - Trello-style cards: course label colors, colored due date badges, notes count
   (FR-65, FR-66).
 - Clicking a card opens its "card back" in a dialog over the board, with its
@@ -221,3 +221,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | Phase 3 notes are dated, comment-style entries, separate from the read-only Canvas description (FR-28). |
 | 2026-10-25 | Renaming and reordering lists (FR-62, FR-63) moved from Phase 2 to Phase 5. |
 | 2026-10-25 | Added more than one school per student (FR-55) to Phase 5. |
+| 2026-10-25 | Table view removed; Phase 1 shows a read-only board with every card in Backlog, from the Team Lead's review. |

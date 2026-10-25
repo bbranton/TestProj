@@ -108,7 +108,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-34 | Assignments that are new since the last visit appear at the bottom of *To do*. | Must | 2 |
 | FR-35 | Cards are matched to assignments by Canvas assignment ID, so a renamed or rescheduled assignment keeps its place. | Must | 2 |
 | FR-36 | The user can archive a list, as in Trello. Its cards go with it and can be restored together. | Should | 2 |
-| FR-37 | When Canvas reports an assignment as submitted and its card is not in *Done*, the card shows a "Submitted, move to Done?" hint. The portal does not move it automatically. | Should | 2 |
+| FR-37 | *(Removed: no "Move to Done?" hint. The student drags cards to Done; the due badge turning green already shows the assignment is submitted, FR-65.)* | n/a | n/a |
 
 ### 4.5 Trello-style look and behavior (goal G-3)
 
@@ -220,3 +220,4 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | 2026-10-25 | Trello goal (G-3): added Trello terms, constraint C-4, FR-60 to FR-77, NFR-34, NFR-35, Q-6. FR-30 and FR-36 changed, NFR-33 now follows Trello's phone layout. |
 | 2026-10-25 | Added FR-78, course show/hide buttons, from the Team Lead's review. |
 | 2026-10-25 | FR-78 gains Hide all. |
+| 2026-10-25 | FR-37 ("Move to Done?" hint) removed, from the Team Lead's review. |

@@ -456,7 +456,7 @@ works without a framework, but there are fewer worked examples to copy from.
 | FR-1 to FR-6 (connect) | Sections 4, 6, 7 |
 | FR-10 to FR-14 (fetch) | Section 6 |
 | FR-20 to FR-26 (view) | Section 4 (status), wireframes |
-| FR-30 to FR-37 (board) | Sections 3, 4, 6 (loading sequence), 9 |
+| FR-30 to FR-36 (board) | Sections 3, 4, 6 (loading sequence), 9 |
 | FR-40 to FR-46 (notes) | Sections 3, 4, 9 |
 | FR-60 to FR-78 (Trello-style, course buttons) | Sections 3, 4, 9 |
 | FR-50 to FR-54 (accounts, data) | Sections 4, 5 |

@@ -84,7 +84,7 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | FR-32, FR-33 | Drag a card, reload, card is still there | E2E |
 | FR-34 | New fixture assignment appears at bottom of To do | API |
 | FR-35 | Renamed assignment keeps its column and note | API |
-| FR-37 | Submitted card outside Done shows hint and is not moved | API, E2E |
+| FR-34, FR-65 | Card marked submitted in Canvas gets a green badge and is not moved | API, E2E |
 | FR-40 to FR-42 | Create, edit, autosave, delete a note | API, E2E |
 | FR-44, NFR-13 | Canvas client has no non-GET method; a test fails if one is added | Unit |
 | FR-45 | Removed assignment's card is archived and its note kept | API |
@@ -205,14 +205,14 @@ steps, and the expected result. Screen IDs refer to the
 
 ### TP-08 Canvas changes reach the board
 
-**Checks:** FR-34, FR-35, FR-37, FR-45 · **Phase:** 2–3
+**Checks:** FR-34, FR-35, FR-45, FR-65 · **Phase:** 2–3
 **Needs:** recorded data in local environment, edited between steps.
 
 | Step | Action | Expected |
 |------|--------|----------|
 | 1 | Load the board; put a note on assignment X; move it to In progress | Saved |
 | 2 | Edit the fixture: rename X, add a new assignment Y; refresh | X keeps column and note with new name; Y at bottom of To do with NEW |
-| 3 | Edit the fixture: mark X submitted; refresh | X shows "Move to Done?" and stays in In progress |
+| 3 | Edit the fixture: mark X submitted; refresh | X's due badge turns green and X stays in In progress |
 | 4 | Edit the fixture: remove X; refresh | X is under Archived with its note |
 
 ### TP-09 Notes
@@ -312,3 +312,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | Trello goal (G-3): Trello comparison step in the PR checklist, automated tests for FR-60 to FR-77 and NFR-34, TP-13 Trello comparison review; TP-06, TP-07, TP-12 updated. |
 | 2026-10-25 | Course show/hide buttons (FR-78): automated test and TP-04 steps 5 and 6. |
 | 2026-10-25 | Hide all added to FR-78 tests and TP-04 step 7. |
+| 2026-10-25 | FR-37 removed: tests now check that a submitted card only changes its badge. |

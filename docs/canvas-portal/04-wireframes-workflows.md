@@ -129,7 +129,7 @@ Each row uses the same label colors and due badges as the cards.
 
 ### S-4 Board (home screen)
 
-Requirements: FR-31 to FR-37, FR-60 to FR-66, FR-72 to FR-74, FR-77, FR-78,
+Requirements: FR-31 to FR-36, FR-60 to FR-66, FR-72 to FR-74, FR-77, FR-78,
 NFR-3, NFR-31, NFR-34.
 
 ```text
@@ -148,11 +148,11 @@ NFR-3, NFR-31, NFR-34.
 |  | +----------------+ | | | ≡  ☑ 2/5       | | | +----------------+ |    |
 |  | +----------------+ | | +----------------+ | | + Add a card       |    |
 |  | | ▬▬ HIST 210    | | | ┌ ─ ─ ─ ─ ─ ─ ─ ┐  | +--------------------+    |
-|  | | Essay draft    | | | │   drop gap    │  |                           |
-|  | | (◷ Nov 3) ≡    | | | │   (FR-77)     │  | +--------------------+    |
-|  | | Submitted.     | | | └ ─ ─ ─ ─ ─ ─ ─ ┘  | | + Add another list |    |
-|  | | Move to Done?  | | | + Add a card       | +--------------------+    |
-|  | | [Move]         | | +--------------------+                           |
+|  | | Essay draft:   | | | │   drop gap    │  |                           |
+|  | | causes of WWI  | | | │   (FR-77)     │  | +--------------------+    |
+|  | | (◷ Nov 3) ≡    | | | └ ─ ─ ─ ─ ─ ─ ─ ┘  | | + Add another list |    |
+|  | | ☑ 1/3          | | | + Add a card       | +--------------------+    |
+|  | |                | | +--------------------+                           |
 |  | +----------------+ |                                                  |
 |  | +----------------+ |                                                  |
 |  | | ▬▬ HIST 210    | | <- FR-34: new Canvas assignments land at         |
@@ -173,7 +173,8 @@ NFR-3, NFR-31, NFR-34.
   ☑ 2/5 checklist progress (FR-70). ✎ appears on hover and opens S-7.
   List title: click to rename (FR-63). Drag a list by its header (FR-62).
   […] list menu: Add card, Move list, Archive list (FR-36).
-  "Submitted. Move to Done?" hint never moves the card itself (FR-37).
+  Cards move between lists only when the student drags them; the portal never
+  moves a card on its own, even when Canvas marks it submitted.
 ```
 
 ### S-5 Card back
@@ -427,7 +428,7 @@ flowchart TD
     B -- no card yet --> D[Add card at bottom of To do<br/>with NEW badge]
     A --> E{For each card}
     E -- assignment gone from Canvas --> F[Mark card archived;<br/>keep its note]
-    E -- submitted but not in Done --> G[Show 'Move to Done?' hint]
+    E -- submitted in Canvas --> G[Due badge turns green;<br/>card stays where the student put it]
 ```
 
 ### W-6 Disconnect and delete data
@@ -476,3 +477,4 @@ flowchart TD
 | 2026-10-25 | Trello goal (G-3): board is home; S-3 becomes Table view; S-4 and S-5 redrawn as Trello board and card back; added S-7 quick edit, S-8 filter, S-9 board menu; Trello-style phone layout; W-7 and W-8 added. |
 | 2026-10-25 | Added the course show/hide button row under the header on S-3, S-4, and the phone layout (FR-78), from the Team Lead's review. |
 | 2026-10-25 | Added Hide all next to Show all on the course button row (FR-78). |
+| 2026-10-25 | Removed the "Move to Done?" hint (FR-37) from S-4 and W-5; students drag cards to Done themselves. |

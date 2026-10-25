@@ -36,9 +36,9 @@ sits on the board's background color:
 
 ```text
 +--------------------------------------------------------------------------+
-| Canvas Portal  My assignments  [*Board*| Table ]   [Filter] [⟳] [⋯] (A)  |
+| Canvas Portal  My assignments  [*Board*| Table ]            [⟳] [⋯] (A)  |
 +--------------------------------------------------------------------------+
-  [Filter] opens S-8. [⟳] refreshes from Canvas; hovering shows "Updated 3 min
+  [⟳] refreshes from Canvas; hovering shows "Updated 3 min
   ago". [⋯] opens S-9. (A) is the account menu: Settings, Sign out.
 ```
 
@@ -106,9 +106,9 @@ Each row uses the same label colors and due badges as the cards.
 
 ```text
 +--------------------------------------------------------------------------+
-| Canvas Portal  My assignments  [ Board |*Table*]   [Filter] [⟳] [⋯] (A)  |
+| Canvas Portal  My assignments  [ Board |*Table*]            [⟳] [⋯] (A)  |
 +--------------------------------------------------------------------------+
-| [● BIO 101] [● HIST 210] [● MATH 152] [○ ART 120]  [Show all] [Hide all] |
+| [Filter] | [● BIO 101] [● HIST 210] [● MATH 152]  [Show all] [Hide all]  |
 +--------------------------------------------------------------------------+
 | [!] Canvas isn't responding. Showing data from 10:42 AM.  <- NFR-20 only |
 +--------------------------------------------------------------------------+
@@ -134,9 +134,9 @@ NFR-3, NFR-31, NFR-34.
 
 ```text
 +--------------------------------------------------------------------------+
-| Canvas Portal  My assignments  [*Board*| Table ]   [Filter] [⟳] [⋯] (A)  |
+| Canvas Portal  My assignments  [*Board*| Table ]            [⟳] [⋯] (A)  |
 +--------------------------------------------------------------------------+
-| [● BIO 101] [● HIST 210] [● MATH 152] [○ ART 120]  [Show all] [Hide all] |
+| [Filter] | [● BIO 101] [● HIST 210] [● MATH 152]  [Show all] [Hide all]  |
 +--------------------------------------------------------------------------+
 |  board background color                                       Done ──>   |
 |  +--------------------+ +--------------------+ +--------------------+    |
@@ -155,6 +155,7 @@ NFR-3, NFR-31, NFR-34.
 |  | +----------------+ | +--------------------+                           |
 |  +--------------------+                                                  |
 +--------------------------------------------------------------------------+
+  [Filter] at the start of the course row opens S-8 (FR-72).
   Course buttons (FR-78): one per active course, in its label color. ● shown,
   ○ hidden; tapping one hides or shows that course's cards. [Show all] and
   [Hide all] show or hide every course at once. With every course hidden, the
@@ -251,7 +252,8 @@ as in Trello.
 
 ### S-8 Filter menu
 
-Requirements: FR-72. A dropdown under the Filter button, opened with `f`.
+Requirements: FR-72. A dropdown under the Filter button at the start of the
+course row, opened with `f`.
 
 ```text
 +------------------------------------------+
@@ -275,7 +277,7 @@ Requirements: FR-72. A dropdown under the Filter button, opened with `f`.
 | [ ] ■ HIST 210                           |
 | [ ] ■ MATH 152                           |
 +------------------------------------------+
-  With a filter on, the header shows
+  With a filter on, the course row shows
   [Filter · 3 cards match  (x) Clear], and x clears it.
 ```
 
@@ -311,9 +313,9 @@ The user swipes sideways between lists, and dots show which list is shown.
 
 ```text
 +----------------------------+
-| ‹  My assignments  [⚲] [⋯] |
+| ‹  My assignments  [⟳] [⋯] |
 +----------------------------+
-| [● BIO] [● HIST] [○ MATH] ›|
+| [⚲] [● BIO] [● HIST] [● MA›|
 +----------------------------+
 | In progress            […] |
 | +------------------------+ |
@@ -330,7 +332,8 @@ The user swipes sideways between lists, and dots show which list is shown.
 |                            |
 |          ○ ● ○ ○           |
 +----------------------------+
-  The course buttons scroll sideways when they don't fit; Show all and Hide
+  [⚲] opens the filter menu. The course buttons scroll sideways when they
+  don't fit; Show all and Hide
   all are at the end of the row (FR-78).
   To move a card, press and hold it, then drag it to a screen edge to go
   to the next list, or use Move on the card back.
@@ -480,3 +483,4 @@ flowchart TD
 | 2026-10-25 | Removed the NEW badge from S-4 and W-5; marking new and updated assignments is now a Phase 5 idea (FR-79). |
 | 2026-10-25 | Due soon removed (Phase 5, FR-27): no yellow badges in S-3, S-4, S-5, or the filter menu. |
 | 2026-10-25 | Statuses now come straight from Canvas fields (FR-23): S-4 badge notes, S-5, and the S-8 filter menu updated. |
+| 2026-10-25 | Filter button moved from the header to the start of the course button row (S-3, S-4, phone), from the Team Lead's review. |

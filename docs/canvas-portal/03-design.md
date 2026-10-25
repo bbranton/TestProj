@@ -392,8 +392,8 @@ is built from these:
 
 ```mermaid
 flowchart TD
-    App --> Header["BoardHeader<br/>board name, view switch, Filter, Refresh, menu"]
-    App --> Toggles["CourseToggleBar<br/>one show/hide button per course"]
+    App --> Header["BoardHeader<br/>board name, view switch, Refresh, menu"]
+    App --> Toggles["CourseToggleBar<br/>Filter button, one show/hide button per course"]
     App --> Board
     App --> CardBack["CardBackDialog<br/>opens on /c/{cardId}"]
     App --> BoardMenu["BoardMenu<br/>right-side panel, archived items"]
@@ -432,7 +432,7 @@ UI uses:
 | Open a card | Click, or focus it and press Enter; address changes to `/c/{cardId}` | FR-67 |
 | Quick edit (Phase 5) | Pencil on hover or right-click | FR-69 |
 | Show or hide a course | Tap its button in the row under the header, or Show all / Hide all; the board updates at once and the choice is saved in the background (optimistic update) | FR-78 |
-| Filter | `f` or the Filter button; non-matching cards are hidden and the header shows the filter is active | FR-72 |
+| Filter | `f` or the Filter button in the course row; non-matching cards are hidden and the course row shows the filter is active | FR-72 |
 | Keyboard map | Kept in one file and shown by `?`; checked against Trello's shortcut page | FR-73, NFR-31 |
 
 ## 10. What this means for D-1 (React or Svelte)
@@ -484,3 +484,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | New assignments go to the Backlog list. |
 | 2026-10-25 | Due soon removed from the status flowchart and badge colors; it is Phase 5 (FR-27). |
 | 2026-10-25 | Status flowchart replaced by a direct mapping of Canvas submission fields (FR-23); computed statuses are Phase 5 (FR-27). |
+| 2026-10-25 | Filter button moved from the header to the course toggle bar. |

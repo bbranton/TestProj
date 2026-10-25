@@ -28,7 +28,7 @@ gantt
     section Viewer
     Phase 1 Read-only viewer         :p1, after p0, 28d
     section Organize
-    Phase 2 Accounts, drag, and sync :p2, after p1, 28d
+    Phase 2 Dragging and sync        :p2, after p1, 28d
     section Keep current
     Phase 3 Performance and Canvas sync :p3, after p2, 28d
     section Harden
@@ -71,13 +71,17 @@ a test Canvas account works with a token.
 
 The smallest thing that is useful: connect, then see everything that's due.
 
-- Connect screen: paste a Canvas URL and personal access token (FR-1 to FR-5).
+- Sign in with Google, so the server knows whose data is whose (FR-50,
+  D-7).
+- Connect screen: paste a Canvas URL and personal access token (FR-1 to
+  FR-4). The connection is saved, encrypted, with the student's account, so
+  it works on any device they sign in from (FR-5, NFR-11).
 - Backend calls Canvas for active courses and their assignments (FR-10 to
   FR-14), handling Canvas's paging and rate limits.
 - A read-only board: every assignment is a Trello-style card in the Backlog
   list, sorted by due date, with the course show/hide buttons (FR-20 to
   FR-23, FR-60, FR-65, FR-66, FR-78). Moving cards between lists comes in
-  Phase 2, once accounts can save it.
+  Phase 2.
 - Clicking a card opens that assignment's own page in Canvas, in a new tab
   (FR-26). The portal's own card detail view (the card back) is a Phase 5
   future feature.
@@ -91,20 +95,15 @@ The smallest thing that is useful: connect, then see everything that's due.
 assignments Canvas shows, verified by the Phase 1 test procedures, and
 TP-14 has a recorded baseline.
 
-### Phase 2: Accounts, dragging, and sync
+### Phase 2: Dragging and sync
 
 This phase does one thing: the student can drag cards between lists, and
 that is saved and kept in sync on every device they use. Board layout is
-stored on the server (D-2), so it needs portal accounts first. Keeping the
+stored on the server (D-2), using the accounts from Phase 1. Keeping the
 student's own devices in sync is needed here, but it is the simpler kind of
 sync; keeping the backend in step with Canvas is the hard part and gets
 Phase 3.
 
-- Portal sign-in with Google, so the server knows whose board is whose
-  (FR-50, D-7).
-- The user's Canvas connection is saved on the server with their account, so
-  signing in on a new device doesn't require pasting the token again (FR-5,
-  NFR-11).
 - All four lists side by side, scrolling sideways: *Backlog*, *To do*,
   *In progress*, *Done* (FR-31, FR-60, FR-61).
 - Drag cards between lists with Trello's drag feel, with a keyboard
@@ -276,3 +275,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | Export (FR-53) moved from Phase 4 to Phase 5. |
 | 2026-10-25 | Whole-plan review: Gantt sections renamed, Phase 1 no longer lists Phase 5 filters (FR-24), Phase 0 adds a Canvas teacher sandbox, D-3 notes the background job and same-site cookie needs, R-4 merged into R-9. |
 | 2026-10-25 | Phase 1: merged the two "opens in Canvas" lines into one clear bullet, from the Team Lead's review. |
+| 2026-10-25 | Google sign-in and the saved Canvas connection (FR-50, FR-5, NFR-11) moved from Phase 2 to Phase 1, from the Team Lead; Phase 2 renamed "Dragging and sync". |

@@ -72,7 +72,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-2 | The portal checks the token by fetching the user's Canvas profile and shows their name on success. | Must | 1 |
 | FR-3 | The connect screen explains, with steps, how to create a token in Canvas. | Should | 1 |
 | FR-4 | The user can disconnect, which removes the token from the portal. | Must | 1 |
-| FR-5 | The portal remembers the connection between visits until the user disconnects. From Phase 2 the connection is stored with the user's portal account, so it works on any device they sign in from. | Should | 1 |
+| FR-5 | The portal remembers the connection between visits until the user disconnects. The connection is stored with the user's portal account, so it works on any device they sign in from. | Must | 1 |
 | FR-6 | If Canvas rejects the token (wrong, expired, or revoked), the portal says so and returns to the connect screen without losing board layout or notes. | Must | 1 |
 
 ### 4.2 Fetching data from Canvas
@@ -155,7 +155,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 
 | ID | Requirement | Priority | Phase |
 |----|-------------|----------|-------|
-| FR-50 | The user can sign in to the portal so their board and notes are tied to them on the server. | Must | 2 |
+| FR-50 | The user can sign in to the portal so their Canvas connection, board, and notes are tied to them on the server. | Must | 1 |
 | FR-51 | Board and notes stored on the server appear on any device where the user signs in. | Must | 2 |
 | FR-52 | *(Removed: board and notes are on the server from the start, so there is no browser data to import.)* | n/a | n/a |
 | FR-53 | The user can export their board and notes as a JSON file. | Could | 5 |
@@ -178,7 +178,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | ID | Requirement | Phase |
 |----|-------------|-------|
 | NFR-10 | The Canvas token is never written to logs, error messages, or the page's address (URL). | 1 |
-| NFR-11 | If the token is stored on the server it is encrypted at rest; all traffic uses HTTPS. | 1 |
+| NFR-11 | The token is stored encrypted on the server; all traffic uses HTTPS. | 1 |
 | NFR-12 | Notes and board data are visible only to the user who created them. | 2 |
 | NFR-13 | The portal calls only Canvas read (`GET`) endpoints. | 1 |
 | NFR-14 | Student data is handled with care for privacy rules such as FERPA (US student records law): no analytics or third-party trackers that see course data. | 1 |
@@ -250,3 +250,4 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | 2026-10-25 | Added FR-39 (fields added, changed, or cleared in Canvas, including states going backward); FR-45 now Must, archives only after a complete refresh, and restores republished assignments; added Q-7 (cards of ended or dropped courses). From the Team Lead's review. |
 | 2026-10-25 | Export (FR-53) moved to Phase 5, from the Team Lead's review. |
 | 2026-10-25 | Whole-plan review: rows in each table put in ID order, FR-45 moved to the board section (it is Canvas sync, not notes), scope mentions Canvas sync and notes as a future feature, "dashboard" now "board", FR-66 automatic colors in Phase 1 with custom colors in Phase 5, Q-1 answered. |
+| 2026-10-25 | Sign-in (FR-50) moved to Phase 1; FR-5 now always stores the connection with the account (and is Must); NFR-11 simplified. From the Team Lead. |

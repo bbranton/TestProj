@@ -137,7 +137,7 @@ steps, and the expected result. Screen IDs refer to the
 
 ### TP-01 Connect with a student token
 
-**Checks:** FR-1, FR-2, FR-3, FR-5 · **Phase:** 1
+**Checks:** FR-1, FR-2, FR-3, FR-5, FR-50 · **Phase:** 1
 **Needs:** signed-in portal account with no Canvas connection; student token.
 
 | Step | Action | Expected |
@@ -146,6 +146,8 @@ steps, and the expected result. Screen IDs refer to the
 | 2 | Expand "How do I get a token?" | Four steps are shown and match Canvas's current menus |
 | 3 | Enter the school address and student token; select Connect | "Connected as *student name*", then the board (S-4) |
 | 4 | Close the browser, reopen the portal | The board opens without asking for the token |
+| 5 | Sign in with the same Google account on a second device | The board opens without asking for the token |
+| 6 | Sign out, then open the portal | S-1 Sign in is shown |
 
 ### TP-02 Bad and expired tokens
 
@@ -406,3 +408,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | Added TP-15 (Canvas changes over time, run as teacher), change sequence fixtures, and an automated replay test for FR-39 and FR-45, from the Team Lead's review. |
 | 2026-10-25 | Export tests (FR-53, TP-10 step 3) marked Phase 5. |
 | 2026-10-25 | Whole-plan review: TP-02, TP-12, TP-13, and the FR-78 and NFR-34 tests now mark Phase 5 steps. |
+| 2026-10-25 | TP-01 checks sign-in (FR-50) and the saved connection on a second device, now that both are Phase 1. |

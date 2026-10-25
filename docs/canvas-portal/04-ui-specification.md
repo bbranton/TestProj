@@ -8,7 +8,24 @@ colors or fonts. They are drawn here as text so they can be reviewed and
 changed in pull requests. Workflows show how a user moves between screens to
 get something done.
 
-Screen IDs (`S-1`, `S-2`, ...) are used by the test procedures.
+Screen IDs (`S-1`, `S-2`, ...) and workflow IDs (`W-1`, `W-2`, ...) are
+used by the design and the test procedures.
+
+### UI by phase
+
+Build only what is listed for the current phase (see the repo's
+[CLAUDE.md](../../CLAUDE.md) and
+[Requirements by phase](02-requirements.md#requirements-by-phase)). The
+Phase 5 sketches are kept as a starting point for later; they are out of
+scope until the Team Lead plans them into a phase.
+
+| Phase | Screens and workflows |
+|-------|-----------------------|
+| 1 | Header, S-1, S-2, S-4 (read only), S-6 (disconnect and sign out), S-10; W-1, W-2, and W-5's complete-fetch check and new cards in Backlog |
+| 2 | Dragging cards on S-4; W-3 |
+| 3 | W-5's archiving and returning cards (FR-45) |
+| 4 | S-6 and W-6's account deletion (FR-54) |
+| 5 | S-5, S-7, S-8, S-9, the phone layout, S-6 and W-6's export; W-4, W-7, W-8 |
 
 ## 1. Screen map
 
@@ -27,9 +44,13 @@ flowchart TD
     S4 -.-> S9[S-9 Board menu and archived items, Phase 5]
     S4 --> S6[S-6 Settings]
     S4 --> S10[S-10 Refresh progress]
+    S10 -- Canvas rejects the token --> S2
     S6 -- disconnect --> S2
     S6 -- sign out --> S1
+    S6 -. delete account, Phase 4 .-> S1
 ```
+
+Dashed arrows lead to screens and actions from later phases.
 
 Every signed-in screen shares a header bar, like Trello's board header. It
 sits on the board's background color:
@@ -38,20 +59,50 @@ sits on the board's background color:
 +--------------------------------------------------------------------------+
 | Canvas Portal  My assignments          Synced Oct 25, 10:42 AM  [⟳] (A)  |
 +--------------------------------------------------------------------------+
-  "Synced ..." always shows the date and time of the last sync, with
-  nothing hidden behind hover (FR-13, NFR-36). [⟳] refreshes from Canvas.
-  The portal never refreshes on its own (FR-15): when the data is more
-  than an hour old, [⟳] is highlighted. During a refresh [⟳] spins and
-  the board stays usable; [⟳] or the "Synced" time opens S-10 with the
-  Refresh's progress. (A) is the account menu: Settings, Sign out.
+  "Synced ..." always shows the date and time of the last complete
+  Refresh, with nothing hidden behind hover (FR-13). A Refresh that fails
+  or stops partway leaves it unchanged (FR-14). Selecting [⟳] starts a
+  Refresh. The portal never refreshes on its own (FR-15): when the data
+  is more than an hour old, [⟳] is highlighted. During a Refresh [⟳]
+  spins and the board stays usable; selecting [⟳] or the "Synced" time
+  then opens S-10 with the Refresh's progress. When no Refresh is
+  running, the "Synced" time opens the last Refresh's log in S-10.
+  (A) is the account menu: Settings, Sign out. Selecting "My assignments"
+  goes back to the board from any screen.
   From Phase 5, a [⋯] board menu button before (A) opens S-9.
 ```
+
+S-2 has a smaller header with only "Canvas Portal" and (A), so the student
+can still sign out, since there is no board or sync time to show yet.
+
+### Conventions on every screen
+
+These keep the screens consistent and cost little to build from Phase 1,
+even though the formal accessibility check (NFR-32) is Phase 4.
+
+- **Color is never the only signal.** A red or green due badge always
+  comes with the status text and tags on the card (FR-23), and a green
+  badge also shows ✓. Course buttons show ● or ○ as well as their color.
+- **Every icon button has a name.** [⟳] is "Refresh from Canvas", [−] and
+  [+] are "Minimize *list*" and "Expand *list*", and (A) is "Account
+  menu". Screen readers announce these names, and they make the controls
+  testable.
+- **Dates and times look the same everywhere,** in the student's time
+  zone: "Oct 28, 11:59 PM", so "Synced Oct 25, 10:42 AM" and a due badge
+  read the same way.
+- **One word per idea.** The action is always "Refresh", lists are
+  "lists", and courses are "courses" (not "labels").
+- **Messages say what happened and what to do next,** in plain words,
+  with the button that does it, such as [Retry refresh]. They never show
+  error codes or the token.
+- **Destructive actions ask first:** disconnecting Canvas and deleting
+  the account.
 
 ## 2. Screens
 
 ### S-1 Sign in
 
-Requirements: FR-50, D-7. Shown when no one is signed in.
+Requirements: FR-50; decision D-7; risk R-6. Shown when no one is signed in.
 
 ```text
 +--------------------------------------------------+
@@ -64,10 +115,16 @@ Requirements: FR-50, D-7. Shown when no one is signed in.
 |                                                  |
 |          [  G  Sign in with Google  ]            |
 |                                                  |
+|   Any Google account works. If your school       |
+|   account is blocked, use a personal one.        |
+|                                                  |
 |   We only read from Canvas. We never change      |
 |   anything there.                                |
 +--------------------------------------------------+
 ```
+
+If Google sign-in fails or is cancelled, S-1 stays open and says "Sign-in
+didn't finish. Try again, or use a personal Google account."
 
 ### S-2 Connect Canvas
 
@@ -93,7 +150,8 @@ disconnecting, or when Canvas rejects the saved token.
 |    2. Under Approved Integrations, choose                    |
 |       New Access Token.                                      |
 |    3. Enter a purpose such as "Canvas Portal"                |
-|       and generate it.                                       |
+|       and generate it. If you set an expiry date,            |
+|       you will need a new token after it.                    |
 |    4. Copy the token and paste it here. Canvas               |
 |       only shows it once.                                    |
 |                                                              |
@@ -101,7 +159,19 @@ disconnecting, or when Canvas rejects the saved token.
 +--------------------------------------------------------------+
 ```
 
-On success the portal shows "Connected as *Name*" (FR-2) and opens S-4.
+The message at the top depends on why S-2 is shown. Each keeps what the
+student typed in the address field:
+
+| When | Message |
+|------|---------|
+| First connection, or after disconnecting | None |
+| Canvas rejects the saved token during a Refresh (FR-6) | "Canvas no longer accepts your saved token. Please create a new one. Your board is safe." |
+| Canvas rejects the token just entered | "Canvas did not accept this token." |
+| The address can't be reached or isn't a Canvas site | "Couldn't reach that Canvas address." |
+
+On success the portal shows "Connected as *Name*" (FR-2) and opens S-4. On
+the very first connection there is no data yet, so S-4 opens with S-10
+showing the first load (FR-15, FR-16).
 
 ### S-3 Table view (removed)
 
@@ -110,13 +180,56 @@ kept so the other screen numbers don't change.
 
 ### S-4 Board (home screen)
 
-Requirements: FR-13, FR-20 to FR-23, FR-26, FR-31 to FR-35, FR-38, FR-60, FR-61, FR-65, FR-66, FR-77, FR-78, FR-80,
-NFR-3, NFR-20, NFR-34. The sketch shows Phases 1 to 4 only.
+Requirements: FR-13 to FR-16, FR-20 to FR-23, FR-26, FR-31, FR-34, FR-38,
+FR-60, FR-61, FR-65, FR-66, FR-78, FR-80, NFR-1, NFR-20, NFR-34. From
+Phase 2: FR-32, FR-33, FR-35, FR-77, NFR-3. The sketches show Phases 1 to
+4 only.
 
 The board is the only view. In Phase 1 it is read only: every card is in
 Backlog, so the other three lists are empty and start minimized, and
-dragging between lists arrives in Phase 2 (FR-60, FR-80). The sketch shows
-a later day, with Done empty and minimized.
+dragging between lists arrives in Phase 2 (FR-60). This is the Phase 1
+board:
+
+```text
++--------------------------------------------------------------------------+
+| Canvas Portal  My assignments          Synced Oct 25, 10:42 AM  [⟳] (A)  |
++--------------------------------------------------------------------------+
+| [● BIO 101] [● HIST 210] [● MATH 152]  [Show all] [Hide all]             |
++--------------------------------------------------------------------------+
+|  board background color                                                  |
+| +------------------------------------------------+ +----+ +----+ +----+  |
+| | Backlog                                    [−] | |[+] | |[+] | |[+] |  |
+| | +--------------------------------------------+ | | T  | | I  | | D  |  |
+| | | ▬▬ HIST 210                                | | | o  | | n  | | o  |  |
+| | | Chapter 4 questions                        | | |    | |    | | n  |  |
+| | | (◷ Oct 20, 11:59 PM)  10 pts               | | | d  | | p  | | e  |  |
+| | | Not submitted  [Missing]                   | | | o  | | r  | |    |  |
+| | +--------------------------------------------+ | |    | | o  | | 0  |  |
+| | +--------------------------------------------+ | | 0  | | g  | +----+  |
+| | | ▬▬ BIO 101                                 | | +----+ | r  |         |
+| | | Lab report 2                               | |        | e  |         |
+| | | (✓ Oct 22, 11:59 PM)  20 pts               | |        | s  |         |
+| | | Graded  [Late]                             | |        | s  |         |
+| | +--------------------------------------------+ |        |    |         |
+| | +--------------------------------------------+ |        | 0  |         |
+| | | ▬▬ BIO 101                                 | |        +----+         |
+| | | Lab report 3                               | |                       |
+| | | (◷ Oct 28, 11:59 PM)  20 pts               | |                       |
+| | | Not submitted                              | |                       |
+| | +--------------------------------------------+ |                       |
+| | +--------------------------------------------+ |                       |
+| | | ▬▬ HIST 210                                | |                       |
+| | | Reading reflection                         | |                       |
+| | | (no due date)  15 pts                      | |                       |
+| | | Not submitted                              | |                       |
+| | +--------------------------------------------+ |                       |
+| +------------------------------------------------+                       |
++--------------------------------------------------------------------------+
+```
+
+From Phase 2 the student drags cards between lists. This sketch shows a
+later day, with Done empty and minimized. Its cards are abbreviated: they
+show the same fields as the Phase 1 sketch.
 
 ```text
 +--------------------------------------------------------------------------+
@@ -130,53 +243,68 @@ a later day, with Done empty and minimized.
 | | +---------------+ | | +---------------+ | | +---------------+ | | D  | |
 | | | ▬▬ HIST 210   | | | | ▬▬ MATH 152   | | | | ▬▬ BIO 101    | | | o  | |
 | | | Chapter 5     | | | | Problem set 7 | | | | Lab report 3  | | | n  | |
-| | | questions     | | | | (◷ Wed 9:00)  | | | | (◷ Tue 11:59) | | | e  | |
+| | | questions     | | | | (◷ Oct 29)    | | | | (◷ Oct 28)    | | | e  | |
 | | | (◷ Nov 8)     | | | +---------------+ | | |               | | |    | |
 | | +---------------+ | | +---------------+ | | +---------------+ | | 0  | |
 | | +---------------+ | | | ▬▬ HIST 210   | | | ┌ ─ ─ ─ ─ ─ ─ ┐   | +----+ |
 | | | ▬▬ HIST 210   | | | | Essay draft:  | | | │  drop gap   │   |        |
-| | | Reading       | | | | causes of WWI | | | │  (FR-77)    │   |        |
+| | | Reading       | | | | causes of WWI | | | │  (Phase 2)  │   |        |
 | | | reflection    | | | | (◷ Nov 3)     | | | └ ─ ─ ─ ─ ─ ─ ┘   |        |
 | | | (no due date) | | | +---------------+ | +-------------------+        |
 | | +---------------+ | +-------------------+                              |
 | +-------------------+                                                    |
 +--------------------------------------------------------------------------+
+  Card fronts (FR-22, FR-65): ▬▬ label strip in the course's automatic
+  color (FR-66), the title, the due badge, the points, and the Canvas
+  status: the state (Not submitted, Submitted, Graded, Pending review)
+  and a tag for each Late, Missing, or Excused flag (FR-23). The due
+  badge shows the date and time in the student's time zone, such as
+  "Oct 28, 11:59 PM". It is red when Canvas flags Missing, green with ✓
+  when Submitted or Graded, and plain otherwise. From Phase 5, cards with
+  notes also show a ✎ note count (FR-43).
+  Clicking a card opens the assignment in Canvas in a new tab (FR-26).
+  From Phase 5 it opens the card back (S-5) instead.
+  Cards in every list are always sorted by due date, earliest at the top;
+  cards with no due date come last, then by name (FR-38).
+
+  Lists: Backlog, To do, In progress, and Done, always in that order
+  (FR-31). New assignments from Canvas land in Backlog until the student
+  sorts them (FR-34). The lists are fixed: they can't be renamed or
+  reordered. Renaming (FR-63), dragging lists (FR-62), adding cards and
+  lists (FR-64, FR-71), and archiving lists (FR-36) are Phase 5 ideas.
   [−] in a list header minimizes it to a narrow strip with its title and
   card count; [+] expands it again (FR-80). Expanded lists share the
-  board's whole width and resize whenever a list is minimized or expanded.
-  Each time the board loads or is refreshed, empty lists start minimized
-  and the rest start expanded; this state is not saved. From Phase 2,
-  dropping a card on an empty minimized list expands it.
-  From Phase 5, a [Filter] button starts the course row and opens S-8
-  (FR-72).
-  Until the card back arrives in Phase 5, clicking a card opens the
-  assignment in Canvas in a new tab (FR-26).
-  If Canvas can't be reached, a warning banner between the course row and
-  the lists says "Canvas isn't responding. Showing data from 10:42 AM."
-  (NFR-20).
-  Course buttons (FR-78): one per active course, in its label color. ● shown,
-  ○ hidden; tapping one hides or shows that course's cards. [Show all] and
-  [Hide all] show or hide every course at once. With every course hidden, the
-  board says "All courses are hidden" with a Show all link. Hidden cards keep
-  their list.
-  ▬▬ label strip in the course's automatic color (FR-66). (◷ ...) due badge: red
-  when Canvas flags Missing, green with ✓ when Submitted or Graded, plain
-  otherwise (FR-65). From Phase 5, cards with notes also show a ✎ note
-  count (FR-43).
-  The lists are fixed: they can't be renamed or reordered. Renaming
-  (FR-63) and dragging lists (FR-62) are Phase 5 ideas.
-  Adding cards and lists (FR-64, FR-71) and archiving lists (FR-36) are
-  Phase 5 ideas.
-  The four lists are Backlog, To do, In progress, and Done. The board only
-  scrolls sideways if the window is too narrow for every expanded list to
-  be at least 240 px wide (FR-61). New assignments from Canvas land
-  in Backlog until the student sorts them (FR-31, FR-34).
-  Cards in every list are always sorted by due date, earliest at the top
-  (FR-38). Dragging only chooses the list; the card slots into its due date
-  place, which the gray gap shows. Cards move between lists only when the
-  student drags them; the portal never moves a card to another list on its
-  own, even when Canvas marks it submitted.
+  board's whole width and resize whenever a list is minimized or
+  expanded. The board only scrolls sideways if the window is too narrow
+  for every expanded list to be at least 240 px wide (FR-61). Each time
+  the board loads or is refreshed, empty lists start minimized and the
+  rest start expanded; this state is not saved.
+
+  Course buttons (FR-78): one per active course, in its label color.
+  ● shown, ○ hidden; selecting one hides or shows that course's cards.
+  [Show all] and [Hide all] show or hide every course at once. With every
+  course hidden, the board says "All courses are hidden" with a Show all
+  link. Hidden cards keep their list. Until Phase 5 the choice is kept in
+  this browser. From Phase 5, a [Filter] button starts the course row and
+  opens S-8 (FR-72).
+
+  Dragging (Phase 2, FR-32, FR-77): dragging only chooses the list; the
+  card slots into its due date place, which the gray gap shows. Dropping
+  a card on an empty minimized list expands it; dropping it on a
+  minimized list that has cards keeps the list minimized and updates its
+  count (FR-80). Cards move between lists only when the student drags
+  them; the portal never moves a card to another list on its own, even
+  when Canvas marks it submitted.
 ```
+
+Messages on the board:
+
+| When | The board shows |
+|------|-----------------|
+| A Refresh fails or stops partway (NFR-20) | A warning banner between the course row and the lists: "Couldn't refresh from Canvas. Showing data from Oct 25, 10:42 AM." with [Details], which opens S-10. It stays until a Refresh completes. |
+| First load still running and S-10 closed | "Loading your assignments from Canvas..." with [Show progress], which reopens S-10. |
+| First load failed, so there is no data at all | "Couldn't load your assignments from Canvas." with [Retry refresh] and [Details]. |
+| Canvas has no active courses for this account | "Canvas shows no active courses for this account." The course row is empty. |
 
 ### S-5 Card back (Phase 5, future feature)
 
@@ -192,7 +320,7 @@ the screen.
 |   |   in list In progress  <- click to move                          |   |
 |   |                                                                  |   |
 |   | Course          Due date                       |                 |   |
-|   | [■ BIO 101]     [ ] Tue Oct 28, 11:59 PM       |                 |   |
+|   | [■ BIO 101]     [ ] Wed Oct 28, 11:59 PM       |                 |   |
 |   |                                                |                 |   |
 |   | 20 points · Not submitted                      | Actions         |   |
 |   |                                                | [→ Move      ]  |   |
@@ -219,8 +347,8 @@ the screen.
   with Canvas's formatting (FR-28). Notes work like the comments at the
   bottom of a Trello card ("Comments and activity"): the student can add as
   many as they like, each stamped with the date and time, newest first
-  (FR-40). Clicking "Write a note..." opens the box with a [Save] button;
-  Ctrl+Enter also saves. Edit and Delete work on one note at a time, an
+  (FR-40). Clicking "Write a note..." opens the box with a [Save] button
+  (FR-42). Edit and Delete work on one note at a time, an
   edited note says "(edited)", and Delete asks first (FR-41, NFR-21).
   Escape, [x], clicking outside, or the browser's Back button closes the
   dialog.
@@ -228,7 +356,7 @@ the screen.
 
 ### S-6 Settings
 
-Requirements: FR-4, FR-53, FR-54.
+Requirements: FR-4, FR-50, FR-53 (Phase 5), FR-54 (Phase 4).
 
 ```text
 +--------------------------------------------------------------+
@@ -240,19 +368,21 @@ Requirements: FR-4, FR-53, FR-54.
 |                                                              |
 | Your data                                                    |
 |   [ Export board and notes (.json) ]   (Phase 5)             |
-|   [ Delete my account and all data ]   <- asks to confirm    |
+|   [ Delete my account and all data ]   (Phase 4)             |
 |                                                              |
 | Account                                                      |
 |   Signed in as alex@example.com        [ Sign out ]          |
 +--------------------------------------------------------------+
+  Disconnect Canvas and Delete my account both ask to confirm first
+  (W-6). Until Phase 4, "Your data" is not shown.
 ```
 
 ### S-7 Quick edit menu (Phase 5, future feature)
 
-Requirements: FR-69, NFR-36. Phase 5. Opens from a ✎ button on each card
+Requirements: FR-69, NFR-36. Opens from a ✎ button on each card
 (shown on hover on desktop, always shown on touch screens), by
-right-clicking, or by a long press on a phone. The card is shown raised, with a menu beside it,
-as in Trello.
+right-clicking, or by a long press on a phone. The card is shown raised,
+with a menu beside it, as in Trello.
 
 ```text
 +--------------------------------------------------------------+
@@ -260,7 +390,7 @@ as in Trello.
 |   +------------------+  +------------------------+           |
 |   | ▬▬ BIO 101       |  | [▭ Open card        ]  |           |
 |   | Lab report 3     |  | [→ Move             ]  |           |
-|   | (◷ Tue 11:59) ≡  |  | [■ Change label color] |           |
+|   | (◷ Oct 28)    ≡  |  | [■ Change label color] |           |
 |   |                  |  | [↗ Open in Canvas   ]  |           |
 |   +------------------+  | [▤ Archive          ]  |           |
 |                         +------------------------+           |
@@ -269,8 +399,8 @@ as in Trello.
 
 ### S-8 Filter menu (Phase 5, future feature)
 
-Requirements: FR-72. A dropdown under the Filter button at the start of the
-course row, opened with `f`.
+Requirements: FR-24, FR-72. A dropdown under the Filter button at the
+start of the course row.
 
 ```text
 +------------------------------------------+
@@ -287,7 +417,8 @@ course row, opened with `f`.
 |                                          |
 | Canvas status                            |
 | [ ] Not submitted  [ ] Submitted         |
-| [ ] Graded         [ ] Missing  [ ] Late |
+| [ ] Graded         [ ] Pending review    |
+| [ ] Late    [ ] Missing    [ ] Excused   |
 |                                          |
 | Courses                                  |
 | [ ] ■ BIO 101                            |
@@ -308,8 +439,8 @@ board.
                           | Menu                           [x] |
                           |------------------------------------|
                           | [▤ Archived items]                 |
-                          | [■ Course colors]     (Phase 5)    |
-                          | [▧ Change background] (Phase 5)    |
+                          | [■ Course colors]                  |
+                          | [▧ Change background]              |
                           |------------------------------------|
                           | Archived items                     |
                           | [Search archive...]  [Cards|Lists] |
@@ -319,14 +450,15 @@ board.
                           | +--------------------------------+ |
                           | [Restore]  ✎ notes kept            |
                           +------------------------------------+
-  Cards for assignments removed from Canvas land here (FR-45).
+  Cards for assignments removed from Canvas land here (FR-45). They are
+  archived from Phase 3, but can only be seen here from Phase 5.
   Restore puts a card back in its old list, in its due date place.
 ```
 
 ### S-10 Refresh progress
 
-Requirements: FR-14, FR-15, FR-16, NFR-20. Phase 1. A panel that opens
-below the header, over the board.
+Requirements: FR-6, FR-14, FR-15, FR-16, NFR-20. A panel that opens below
+the header, over the board.
 
 ```text
 +--------------------------------------------------+
@@ -340,15 +472,14 @@ below the header, over the board.
 | ✓ CHEM 110     19 assignments   1 page    0:08   |
 | ✗ ART 105      timed out after 30 s              |
 | ⟳ ENG 101      page 2 of 3                       |
-| ◷ SPAN 201     waiting: Canvas rate limit, 5 s   |
+| ⏸ SPAN 201     waiting: Canvas rate limit, 5 s   |
 | · PE 100       not started                       |
 +--------------------------------------------------+
-```
   Opens on its own for the very first load, when there is no data to show
   yet. On later Refreshes the board stays usable, [⟳] spins, and selecting
   [⟳] or the "Synced" time opens the panel.
   Each course shows one state: · not started, ⟳ being fetched (with its
-  page), ◷ waiting on a Canvas rate limit, ✓ done (with its assignment
+  page), ⏸ waiting on a Canvas rate limit, ✓ done (with its assignment
   count, pages, and time), or ✗ failed (with the reason, such as a timeout
   or Canvas's error message, never the token).
   When the Refresh ends, the top line becomes a summary: "Synced 8 courses,
@@ -357,6 +488,10 @@ below the header, over the board.
   [Retry refresh]. Only a complete Refresh replaces the saved data (FR-14).
   The log of the last Refresh stays available from the "Synced" time until
   the next Refresh starts.
+  [x] closes the panel; the Refresh keeps running. If Canvas rejects the
+  token, the Refresh stops and the portal opens S-2 with the
+  expired-token message (FR-6).
+```
 
 ### Phone layout (Phase 5)
 
@@ -376,22 +511,23 @@ The user swipes sideways between lists, and dots show which list is shown.
 | +------------------------+ |
 | | ▬▬ BIO 101             | |
 | | Lab report 3           | |
-| | (◷ Tue 11:59) ✎ 2      | |
+| | (◷ Oct 28) ✎ 2         | |
 | +------------------------+ |
 | +------------------------+ |
 | | ▬▬ MATH 152            | |
 | | Problem set 7          | |
-| | (◷ Wed 9:00)           | |
+| | (◷ Oct 29)             | |
 | +------------------------+ |
 |                            |
 |                            |
 |          ○ ● ○ ○           |
 +----------------------------+
-  [⚲] opens the filter menu (Phase 5). The course buttons scroll sideways when they
-  don't fit; Show all and Hide
-  all are at the end of the row (FR-78).
+  [⚲] opens the filter menu (S-8). The course buttons scroll sideways
+  when they don't fit; Show all and Hide all are at the end of the row
+  (FR-78). [⋯] opens the board menu (S-9), which also holds Settings and
+  Sign out on phones.
   To move a card, press and hold it, then drag it to a screen edge to go
-  to the next list, or (from Phase 5) use Move on the card back.
+  to the next list, or use Move on the card back.
   Minimized lists are skipped when swiping (FR-80).
 ```
 
@@ -410,8 +546,11 @@ flowchart TD
     E -- address unreachable --> G[Show 'Couldn't reach that<br/>Canvas address']
     G --> D
     E -- accepted --> H[Show 'Connected as Name']
-    H --> I[Fetch courses and assignments]
-    I --> J[Board created: Backlog, To do, In progress, Done;<br/>every assignment in Backlog]
+    H --> I[First load: S-4 opens with S-10<br/>showing each course's progress]
+    I --> Z{Every course arrived?}
+    Z -- no --> Y[No data yet: board offers Retry refresh]
+    Y --> I
+    Z -- yes --> J[Board created: Backlog, To do, In progress, Done;<br/>every assignment in Backlog]
     J --> K[S-4 Board]
 ```
 
@@ -427,14 +566,14 @@ flowchart TD
     E -- no --> G[Board ready]
     K --> G
     G --> L{Student selects Refresh?}
-    L -- yes --> F[Fetch from Canvas;<br/>courses fill in, board stays usable]
+    L -- yes --> F[Fetch from Canvas;<br/>S-10 shows progress, board stays usable]
     F --> H{Canvas OK?}
-    H -- yes --> M[Board updated,<br/>highlight cleared]
+    H -- every course arrived --> M[Board updated, Synced time updated,<br/>highlight cleared]
     H -- token rejected --> I[S-2 with expired-token message]
-    H -- down or rate limited --> J[Show cached data<br/>with warning banner]
+    H -- a course failed or timed out --> J[Keep the last data;<br/>warning banner and Retry refresh in S-10]
 ```
 
-### W-3 Move a card
+### W-3 Move a card (Phase 2)
 
 ```mermaid
 sequenceDiagram
@@ -457,23 +596,23 @@ sequenceDiagram
 
 Moving the card on screen before the server answers is called an
 *optimistic update*. It keeps dragging fast (NFR-3), and the card snaps back
-if the save fails, so the screen never shows a state the server doesn't have.
+if the save fails, so the screen never keeps a move the server didn't save.
 
 ### W-4 Add, edit, or delete a note (Phase 5, future feature)
 
 ```mermaid
 flowchart TD
     A([Open card back S-5]) --> B[Click 'Write a note...' and type]
-    B --> C[Save or Ctrl+Enter]
-    C --> D[POST /api/cards/id/notes]
+    B --> C[Select Save]
+    C --> D[Send the note to the backend]
     D --> E{Saved?}
     E -- yes --> F[Note appears at the top<br/>with the date and time]
     E -- no --> G[Show 'Not saved, try again'<br/>and keep the text in the box]
     G --> C
     F --> H{Change a note?}
-    H -- Edit --> I[Note becomes a text box; Save] --> J["PATCH /api/notes/id<br/>note shows (edited)"]
+    H -- Edit --> I[Note becomes a text box; Save] --> J["Saved;<br/>note shows (edited)"]
     H -- Delete --> K{Delete this note?}
-    K -- yes --> L[DELETE /api/notes/id]
+    K -- yes --> L[Note deleted]
     K -- no --> F
     B --> M{Close the card<br/>with unsaved text?}
     M -- yes --> N[Warn before closing]
@@ -481,17 +620,21 @@ flowchart TD
 
 ### W-5 Assignment changes in Canvas
 
+Phase 1 builds the complete-fetch check, showing the current fields, and
+adding new assignments to Backlog (FR-14, FR-34, FR-38). Archiving cards
+and bringing them back come in Phase 3 (FR-39, FR-45).
+
 ```mermaid
 flowchart TD
     A([Refresh from Canvas]) --> Z{Every course and<br/>page arrived?}
-    Z -- no --> Y[Change nothing;<br/>keep last complete data, show warning]
+    Z -- no --> Y[Change nothing;<br/>keep last complete data, show warning banner]
     Z -- yes --> B{For each Canvas assignment}
     B -- has a card --> C[Keep its list; show the current fields,<br/>including ones added or cleared]
     C --> C2[Re-sort by due date;<br/>no due date goes last]
     B -- no card yet --> D[Add card to Backlog<br/>in its due date place]
-    B -- archived card --> R[Bring card back<br/>to its old list]
+    B -. archived card, Phase 3 .-> R[Bring card back<br/>to its old list]
     Z -- yes --> E{For each card}
-    E -- assignment gone from Canvas --> F[Mark card archived;<br/>keep its notes]
+    E -. assignment gone from Canvas, Phase 3 .-> F[Mark card archived;<br/>it leaves the board]
     E -- state or flags changed --> G[Badge shows the current Canvas value;<br/>card stays where the student put it]
 ```
 
@@ -500,10 +643,11 @@ flowchart TD
 ```mermaid
 flowchart TD
     A([S-6 Settings]) --> B{Which action?}
-    B -- Disconnect Canvas --> C[Delete stored token] --> D[S-2 Connect Canvas<br/>board and notes kept]
+    B -- Disconnect Canvas --> C0{Disconnect Canvas?}
+    C0 -- yes --> C[Delete stored token] --> D[S-2 Connect Canvas<br/>board kept]
     B -. Export, Phase 5 .-> E[Download JSON file]
-    B -- Delete account --> F[Confirm: type DELETE]
-    F --> G[Remove user, token, board,<br/>notes, cache] --> H[S-1 Sign in]
+    B -. Delete account, Phase 4 .-> F[Confirm: type DELETE]
+    F --> G[Remove the account and<br/>everything stored for it] --> H[S-1 Sign in]
 ```
 
 ### W-7 Arrange the lists (Phase 5, future feature)
@@ -568,3 +712,4 @@ flowchart TD
 | 2026-10-25 | S-4 and the header now show only Phases 1 to 4: the [Filter] button, note counts, and [⋯] board menu are described as Phase 5 additions instead of drawn; S-2's error no longer mentions notes. From the whole-set review. |
 | 2026-10-25 | S-4 no longer lists NFR-31. From the Team Lead's review: keyboard actions are not a requirement. |
 | 2026-10-25 | Added S-10 Refresh progress (FR-16): per-course states, errors and timeouts, a summary, and the last Refresh's log, from the Team Lead's review. |
+| 2026-10-25 | In-depth UI/UX review after PR #3: added *UI by phase* and *Conventions on every screen* (color never the only signal, named icon buttons, one date format, consistent words, helpful messages); S-4 has a Phase 1 sketch, and card fronts show the due date and time, points, and Canvas status (FR-22, FR-65); board messages for a failed Refresh, the first load, and no courses; the header's "Synced" time is the last complete Refresh (FR-13), and [⟳] starts a Refresh; S-1 says a personal Google account works (R-6); S-2 lists its messages; S-10 closes without stopping the Refresh and uses ⏸ for rate limits, so ◷ only means a due date; S-6 marks deletion Phase 4; S-8 adds Pending review and Excused; Ctrl+Enter and the `f` key removed (keyboard actions are not a requirement); W-3 marked Phase 2; W-5 marks its Phase 3 parts; W-4 no longer names undesigned Phase 5 endpoints; Oct 28, 2026 is a Wednesday. |

@@ -93,6 +93,7 @@ supported (Phase 5).
 | FR-10, FR-11 | Only active courses and their assignments are returned | API |
 | FR-12 | All 120+ assignments returned from a two-page fixture | API |
 | FR-14, FR-15 | Loading the board with saved data makes no Canvas call, however old the data; the first ever load fetches; Refresh fetches; data over an hour old comes back flagged so the frontend highlights Refresh | API, E2E |
+| FR-16 | Fixture with one slow course and one that times out: progress reports each course's state in order; the run ends incomplete, the saved data is unchanged, and no error text holds the token; the log is still returned after the run ends | API, E2E |
 | FR-21, FR-38 | Sort order: soonest first, no-due-date last, ties by name; applies to every list | Unit |
 | FR-23 | Each Canvas `workflow_state` maps to its label, and the late, missing, and excused flags show as tags, including together with a state | Unit |
 | FR-24 (Phase 5) | Course, Canvas state and flag, and search filters | E2E |
@@ -109,8 +110,8 @@ supported (Phase 5).
 | FR-53 (Phase 5) | Export contains the board and notes | API |
 | FR-54 | Delete removes every row for the user | API |
 | NFR-10 | Logs captured during a full test run contain no token string | API |
-| NFR-12 | User B gets `404` for every one of user A's cards and notes | API |
-| NFR-1, NFR-2 | Fixture server adds 1 second to every Canvas response: with saved data the board answers in under 2 seconds and makes no Canvas call; a cold load of 8 courses and 200 assignments finishes in 15 seconds, with courses appearing one at a time | API, E2E |
+| NFR-12 | User B gets `404` for every one of user A's cards, Canvas data, and Refresh logs | API |
+| NFR-1, NFR-2 | Fixture server adds 1 second to every Canvas response: with saved data the board answers in under 2 seconds and makes no Canvas call; a cold load of 8 courses and 200 assignments finishes within the NFR-2 target, with courses appearing one at a time | API, E2E |
 | FR-39, FR-45 | Replays every change sequence fixture and checks each card's list, fields, sort place, and archived flag after every step; a cut-off fetch changes nothing; no card is ever deleted | API |
 | NFR-4 (Phase 5) | With background sync on and a fixture changed (new assignment, new due date, newly graded), the board shows each change within one job cycle without Refresh; the job backs off when the fixture reports a low rate-limit budget | API |
 | NFR-20 | Canvas down: cached data plus warning banner | API, E2E |
@@ -197,13 +198,14 @@ wireframes in the
 
 ### TP-05 Canvas unavailable
 
-**Checks:** NFR-20, FR-13 · **Phase:** 1
+**Checks:** NFR-20, FR-13, FR-16 · **Phase:** 1
 **Needs:** local environment.
 
 | Step | Action | Expected |
 |------|--------|----------|
 | 1 | Select Refresh so data is saved | Header shows "Synced" with the current date and time |
 | 2 | Point the backend's Canvas address at an unreachable host; select Refresh | Warning banner; last data still listed with its time |
+| 2a | Open the progress panel (S-10) from the Synced time | Each course shows as failed with the reason; the summary says the previous data was kept and offers Retry refresh |
 | 3 | Restore the address; select Refresh | Banner goes away; time updates |
 
 ### TP-06 Board layout persists and syncs
@@ -331,11 +333,11 @@ the backend's Canvas timing log.
 
 | Step | Action | Expected |
 |------|--------|----------|
-| 1 | Clear the portal's cache; open the board | Courses appear one at a time; record the total time until the last one |
+| 1 | Clear the portal's cache; open the board | The progress panel (S-10) lists each course as it finishes; record the total time it shows |
 | 2 | From the timing log, record the number of courses, assignments, requests, and the slowest request | Written in the results log |
 | 3 | Reload the board | Shows within 2 seconds from the cache (NFR-1) |
 | 4 | Wait more than an hour; reload | Old data shows at once, Refresh is highlighted, and nothing is fetched until Refresh is selected; during the Refresh the board stays usable |
-| 5 | Repeat step 1 on a weekday evening, when Canvas is busiest | Record the time. In Phase 3, if any run misses 15 seconds (NFR-2), apply the next fix in the design's *Phase 3 tuning* list and rerun |
+| 5 | Repeat step 1 on a weekday evening, when Canvas is busiest | Record the time. In Phase 3, if any run misses the NFR-2 target, apply the next fix in the design's *Phase 3 tuning* list and rerun |
 
 Record times only, never the token or assignment names, in the results log.
 
@@ -422,3 +424,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | TP-13 starts in Phase 1 for the visual style (NFR-34). |
 | 2026-10-25 | Whole-set review: TP-04 renamed to match its Phase 1 steps, TP-10 starts in Phase 1 with NFR-12, and the unit test example says status mapping. |
 | 2026-10-25 | TP-07 (keyboard only), the NFR-31 and FR-73 automated tests, and the TP-13 shortcut step removed; TP-13 steps renumbered. From the Team Lead's review: keyboard actions are not a requirement. |
+| 2026-10-25 | FR-16 progress test; TP-05 step 2a checks the progress panel on failure; TP-14 reads times from the panel and uses the NFR-2 target. |

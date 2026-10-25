@@ -20,7 +20,7 @@ Build only the parts listed for the current phase (see the repo's
 | Phase | Builds |
 |-------|--------|
 | 0 | Repository layout (section 8), empty frontend and backend, CI, the Google OAuth client (section 5) |
-| 1 | Tables `USER`, `CANVAS_CONNECTION`, `BOARD`, `LIST`, `CARD` (without `archived`), `COURSE_LABEL`, `CANVAS_CACHE`; the Phase 1 endpoints in section 4; sign-in (section 5); talking to Canvas, caching, and *Built from the start* (section 6); security (section 7); the board, course buttons, minimize and expand, visual style, and the Phase 1 interactions (section 9) |
+| 1 | Tables `USER`, `CANVAS_CONNECTION`, `BOARD`, `LIST`, `CARD` (without `archived`), `COURSE_LABEL`, `CANVAS_CACHE`, `REFRESH_RUN`; the Phase 1 endpoints in section 4; sign-in (section 5); talking to Canvas, caching, *Built from the start*, and *Refresh progress* (section 6); security (section 7); the board, course buttons, minimize and expand, visual style, and the Phase 1 interactions (section 9) |
 | 2 | Moving cards and *Keeping devices in sync* (section 4): the Phase 2 endpoints, `change_seq`, the unique card rule; dragging (section 9) |
 | 3 | *Phase 3 tuning*, *Bringing the backend in step with Canvas*, and *What can change in Canvas* (section 6); `CARD.archived` |
 | 4 | Deleting all of a user's data (section 4), accessibility checks, deploying (roadmap D-3) |
@@ -65,7 +65,7 @@ both.
 | Frontend language | TypeScript | Proposed | JavaScript with types; catches mistakes before running, much like C++'s compiler does |
 | Frontend build tool | Vite | Proposed | Fast local dev server; works with React and Svelte |
 | Drag and drop | Pragmatic drag and drop (Atlassian), or dnd-kit (React) / svelte-dnd-action (Svelte) | Proposed, follows D-1 | Pragmatic drag and drop is Atlassian's open-source library behind Trello's own drag and drop and works with any framework, which suits G-3. |
-| Backend | Python 3.12 + FastAPI | Proposed (D-6) | Short, readable code; generates API docs automatically |
+| Backend | Python 3.12 + FastAPI | **Decided (D-6)** | Short, readable code; generates API docs automatically |
 | Canvas client | `httpx` (Python HTTP library) | Proposed | Async requests, so courses can be fetched in parallel (NFR-2) |
 | Database | Postgres in production, SQLite for local dev and tests | Proposed | Postgres is what hosts offer; SQLite needs no setup |
 | Database access | SQLAlchemy + Alembic | Proposed | Python models for tables; Alembic tracks schema changes over time ("migrations") |
@@ -81,6 +81,7 @@ come from Canvas and are cached, not copied permanently.
 erDiagram
     USER ||--o| CANVAS_CONNECTION : has
     USER ||--o| BOARD : owns
+    USER ||--o| REFRESH_RUN : runs
     BOARD ||--o{ LIST : contains
     LIST ||--o{ CARD : contains
     CANVAS_CONNECTION ||--o{ COURSE_LABEL : colors
@@ -126,6 +127,13 @@ erDiagram
         uuid connection_id FK
         int canvas_course_id
         string color
+    }
+    REFRESH_RUN {
+        uuid user_id FK
+        string state "running, complete, incomplete"
+        datetime started_at
+        datetime finished_at
+        json courses "per-course state, counts, error"
     }
     CANVAS_CACHE {
         uuid user_id FK
@@ -185,7 +193,8 @@ and require a signed-in session except where noted.
 | `DELETE /api/canvas/connection` | Disconnect and delete the stored token | FR-4 | 1 |
 | `GET /api/courses` | Active courses (cached) | FR-10, FR-20 | 1 |
 | `GET /api/assignments` | All assignments across active courses, with Canvas status fields | FR-11, FR-21 to FR-23 | 1 |
-| `POST /api/refresh` | Re-fetch from Canvas | FR-13, FR-15 | 1 |
+| `POST /api/refresh` | Start a Refresh in the background, or join the one already running; returns at once | FR-13, FR-15, FR-16 | 1 |
+| `GET /api/refresh/latest` | Progress of the running Refresh, or the log of the last one | FR-16 | 1 |
 | `GET /api/board` | Lists and cards with labels and badges, cards sorted by due date, after merging in new assignments | FR-31, FR-34, FR-38, FR-65 | 1 |
 | `PATCH /api/board/cards/{id}` | Move to another list; returns the new `change_seq` | FR-32, FR-33, NFR-22 | 2 |
 | `GET /api/board/changes?since={seq}` | Cards changed since that `change_seq`, and the current value | NFR-22 | 2 |
@@ -344,7 +353,7 @@ the start, and Phase 3 tuning that starts from the Phase 1 timings
 
 - **Never wait on Canvas.** If there is any saved data, `GET /api/assignments`
   returns it at once, with the time it was fetched. Only the first ever
-  load waits for Canvas.
+  load waits for Canvas, with the progress panel open (FR-16).
 - **Refresh only when asked (FR-15).** The portal never starts a fetch on
   its own. The header always shows the last sync time ("Synced Oct 25,
   10:42 AM", FR-13). When the data is more than an hour old, the frontend
@@ -379,6 +388,26 @@ the start, and Phase 3 tuning that starts from the Phase 1 timings
 4. **Planner API** (`/api/v1/planner/items`), which lists due items across
    all courses in one paged list. It has fewer fields, so it's a fallback if
    GraphQL is not available at the school.
+
+### Refresh progress (FR-16)
+
+A Refresh can take minutes, so it runs as a background task on the server
+and reports as it goes.
+
+- `POST /api/refresh` starts the task and returns at once. If a Refresh is
+  already running for this student, it returns that one instead.
+- The task keeps one `REFRESH_RUN` row per student up to date: the overall
+  state, and for each course its state (not started, fetching with page
+  number, waiting on a rate limit, done, failed), assignment and page
+  counts, time taken, and any error. Only the latest run is kept.
+- While a Refresh runs, the frontend asks `GET /api/refresh/latest` about
+  once a second and draws S-10 from the answer.
+- A request that takes longer than 30 seconds counts as timed out, and a
+  failed course is reported with Canvas's error message or "timed out".
+  Error text is passed through the same filter as logs, so it never holds
+  the token (NFR-10).
+- If any course failed, the run ends *incomplete* and the saved data is not
+  replaced (FR-14); the student can retry.
 
 ### Bringing the backend in step with Canvas (Phase 3)
 
@@ -458,19 +487,25 @@ sequenceDiagram
         D-->>A: cached assignments, returned at once
         Note over A: Nothing is fetched. The page shows the age and highlights Refresh if older than 1 hour
     else first ever load
-        A->>D: Load and decrypt Canvas token
-        A->>C: GET courses (follow pages)
-        C-->>A: courses
-        par up to 4 courses at a time
-            A->>C: GET assignments for course
+        A->>A: Start a Refresh task (FR-15, FR-16)
+        A-->>B: no data yet, Refresh running
+        par Refresh task
+            A->>C: GET courses (follow pages)
+            C-->>A: courses
+            A->>C: GET assignments for each course, up to 4 at a time
             C-->>A: assignments + submissions
+            A->>D: Update REFRESH_RUN after each course
+        and S-10 progress panel
+            B->>A: GET /api/refresh/latest, about once a second
+            A-->>B: per-course progress
         end
-        A->>D: Save to cache
+        A->>D: Save to cache only if every course arrived
+        B->>A: GET /api/assignments
     end
     A-->>B: assignments with Canvas status fields
     B->>A: GET /api/board
     A->>D: Load lists and cards
-    A->>A: Add cards for new assignments to Backlog,<br/>archive cards for removed ones
+    A->>A: Add cards for new assignments to Backlog,<br/>archive cards for removed ones (Phase 3)
     A-->>B: board
 ```
 
@@ -607,8 +642,8 @@ possible without reworking what Phases 1 to 4 build:
 - **D-8** How other devices learn about a move (section 4). Recommended:
   polling every 30 seconds and on focus for Phase 2.
 
-- **D-7** How users sign in to the portal (section 5). Decided: Sign in with
-  Google for the MVP.
+- ~~**D-7** How users sign in to the portal (section 5).~~ Decided: Sign in
+  with Google for the MVP.
 
 ## Change log
 
@@ -644,3 +679,4 @@ possible without reworking what Phases 1 to 4 build:
 | 2026-10-25 | Traceability table refers to the renamed User Interface Specification. |
 | 2026-10-25 | Design now covers Phases 0 to 4 only, from the Team Lead's review: removed Phase 5 tables (notes, checklists), fields, endpoints, routes, components, styles, and interactions; added *Design by phase*, a Phase column in the API table, and section 12, *Leave room for later*. |
 | 2026-10-25 | Keyboard card moves removed (NFR-31). From the Team Lead's review: keyboard actions are not a requirement. |
+| 2026-10-25 | Added *Refresh progress* (FR-16): Refresh runs as a background task tracked in a new `REFRESH_RUN` table, with a progress endpoint and a 30 second request timeout; loading sequence updated. D-6 and D-7 marked decided. |

@@ -26,6 +26,7 @@ flowchart TD
     S4 -.-> S8[S-8 Filter menu, Phase 5]
     S4 -.-> S9[S-9 Board menu and archived items, Phase 5]
     S4 --> S6[S-6 Settings]
+    S4 --> S10[S-10 Refresh progress]
     S6 -- disconnect --> S2
     S6 -- sign out --> S1
 ```
@@ -41,7 +42,8 @@ sits on the board's background color:
   nothing hidden behind hover (FR-13, NFR-36). [⟳] refreshes from Canvas.
   The portal never refreshes on its own (FR-15): when the data is more
   than an hour old, [⟳] is highlighted. During a refresh [⟳] spins and
-  the board stays usable. (A) is the account menu: Settings, Sign out.
+  the board stays usable; [⟳] or the "Synced" time opens S-10 with the
+  Refresh's progress. (A) is the account menu: Settings, Sign out.
   From Phase 5, a [⋯] board menu button before (A) opens S-9.
 ```
 
@@ -321,6 +323,41 @@ board.
   Restore puts a card back in its old list, in its due date place.
 ```
 
+### S-10 Refresh progress
+
+Requirements: FR-14, FR-15, FR-16, NFR-20. Phase 1. A panel that opens
+below the header, over the board.
+
+```text
++--------------------------------------------------+
+| Refresh from Canvas                          [x] |
+| 5 of 8 courses · 132 assignments · 0:48          |
+| [████████████████░░░░░░░░░░░░░]                  |
+|--------------------------------------------------|
+| ✓ BIO 101      34 assignments   2 pages   0:12   |
+| ✓ HIST 210     21 assignments   1 page    0:06   |
+| ✓ MATH 152     58 assignments   1 page    0:19   |
+| ✓ CHEM 110     19 assignments   1 page    0:08   |
+| ✗ ART 105      timed out after 30 s              |
+| ⟳ ENG 101      page 2 of 3                       |
+| ◷ SPAN 201     waiting: Canvas rate limit, 5 s   |
+| · PE 100       not started                       |
++--------------------------------------------------+
+```
+  Opens on its own for the very first load, when there is no data to show
+  yet. On later Refreshes the board stays usable, [⟳] spins, and selecting
+  [⟳] or the "Synced" time opens the panel.
+  Each course shows one state: · not started, ⟳ being fetched (with its
+  page), ◷ waiting on a Canvas rate limit, ✓ done (with its assignment
+  count, pages, and time), or ✗ failed (with the reason, such as a timeout
+  or Canvas's error message, never the token).
+  When the Refresh ends, the top line becomes a summary: "Synced 8 courses,
+  214 assignments in 1:42", or, if any course failed, "Refresh incomplete:
+  1 course failed. Still showing data from Oct 25, 10:42 AM" with
+  [Retry refresh]. Only a complete Refresh replaces the saved data (FR-14).
+  The log of the last Refresh stays available from the "Synced" time until
+  the next Refresh starts.
+
 ### Phone layout (Phase 5)
 
 Requirement: NFR-33. Phase 5: this sketch is a starting point, and the UI
@@ -530,3 +567,4 @@ flowchart TD
 | 2026-10-25 | Renamed from "Wireframes and workflows" to "User Interface Specification" (file `04-ui-specification.md`), from the Team Lead's request. |
 | 2026-10-25 | S-4 and the header now show only Phases 1 to 4: the [Filter] button, note counts, and [⋯] board menu are described as Phase 5 additions instead of drawn; S-2's error no longer mentions notes. From the whole-set review. |
 | 2026-10-25 | S-4 no longer lists NFR-31. From the Team Lead's review: keyboard actions are not a requirement. |
+| 2026-10-25 | Added S-10 Refresh progress (FR-16): per-course states, errors and timeouts, a summary, and the last Refresh's log, from the Team Lead's review. |

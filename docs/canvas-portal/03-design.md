@@ -216,16 +216,16 @@ and require a signed-in session except where noted.
 | `POST /api/board/lists` | Phase 5: add a list at the end | FR-64 |
 | `PATCH /api/board/lists/{id}` | Phase 5: rename, move (new position), archive, or restore a list | FR-36, FR-62, FR-63 |
 | `POST /api/board/cards` | Phase 5: add a personal card | FR-71 |
-| `GET /api/board/cards/{id}` | Everything for the card back, including the cleaned Canvas description | FR-28, FR-67, FR-68 |
-| `PATCH /api/board/cards/{id}` | Move to another list, archive, or restore a card; returns the new `change_seq` | FR-32, FR-33, FR-74, NFR-22 |
+| `GET /api/board/cards/{id}` | Phase 5: everything for the card back, including the cleaned Canvas description | FR-28, FR-67, FR-68 |
+| `PATCH /api/board/cards/{id}` | Move to another list (archive and restore in Phase 5); returns the new `change_seq` | FR-32, FR-33, FR-74, NFR-22 |
 | `GET /api/board/changes?since={seq}` | Cards changed since that `change_seq`, and the current value | NFR-22 |
-| `GET /api/board/archived` | Archived lists and cards | FR-74 |
+| `GET /api/board/archived` | Phase 5: archived lists and cards | FR-74 |
 | `POST`, `PATCH`, `DELETE /api/cards/{id}/checklists/...` | Phase 5: add, rename, check off, reorder, and remove checklists and items | FR-70 |
-| `PATCH /api/labels/{course_id}` | Change a course label's color or name, or hide or show the course | FR-66, FR-78 |
-| `GET /api/board/cards/{id}/notes` | A card's notes, newest first | FR-40, FR-43 |
-| `POST /api/board/cards/{id}/notes` | Add a note | FR-40, FR-42 |
-| `PATCH /api/notes/{note_id}` | Change a note's text | FR-41 |
-| `DELETE /api/notes/{note_id}` | Delete a note | FR-41 |
+| `PATCH /api/labels/{course_id}` | Phase 5: change a course label's color or name, or hide or show the course | FR-66, FR-78 |
+| `GET /api/board/cards/{id}/notes` | Phase 5: a card's notes, newest first | FR-40, FR-43 |
+| `POST /api/board/cards/{id}/notes` | Phase 5: add a note | FR-40, FR-42 |
+| `PATCH /api/notes/{note_id}` | Phase 5: change a note's text | FR-41 |
+| `DELETE /api/notes/{note_id}` | Phase 5: delete a note | FR-41 |
 | `GET /api/export` | Download board and notes as JSON | FR-53 |
 | `DELETE /api/me` | Delete the account and all its data | FR-54 |
 
@@ -379,8 +379,8 @@ only), and `SameSite=Lax` (other sites can't trigger requests with it).
 
 In the Team Lead's experience, loading every course with 100+ assignments
 each can take several minutes. The plan has two layers: things built from
-the start, and things to add if the Phase 1 timings (TP-14) are still too
-slow.
+the start, and Phase 3 tuning that starts from the Phase 1 timings
+(TP-14).
 
 **Built from the start**
 
@@ -401,7 +401,7 @@ slow.
   (without the token, NFR-10), page count, and time taken, so slow spots show
   up in numbers, not guesses.
 
-**If TP-14 is still too slow**, in this order:
+**Phase 3 tuning**, starting from the TP-14 baseline, in this order:
 
 1. **Canvas GraphQL.** Canvas also has a GraphQL API (`POST /api/graphql`),
    where one request names exactly the fields wanted. A single query can
@@ -421,6 +421,31 @@ slow.
 5. **Planner API** (`/api/v1/planner/items`), which lists due items across
    all courses in one paged list. It has fewer fields, so it's a fallback if
    GraphQL is not available at the school.
+
+### Keeping the backend in step with Canvas (Phase 3, NFR-4)
+
+Canvas can't tell the portal when something changes, so the backend checks
+on its own schedule.
+
+- **A background job per student** refreshes their Canvas data: every 15
+  minutes for assignments due in the next two weeks, less often for the
+  rest, and daily for the course list (to catch a new term or a dropped
+  course).
+- **Find what changed:** the job compares the new data with the cached copy,
+  by Canvas ID, and sorts it into new, removed, renamed, new due date, and
+  new submission state.
+- **Apply it to the board** in one database transaction: new assignments
+  get a card in Backlog (FR-34), removed ones are marked archived (FR-45),
+  and the rest only update what the card shows (FR-35). The board's
+  `change_seq` goes up, so the student's open devices pick the changes up on
+  their next check (NFR-22).
+- **Stay within the rate limit:** jobs share a per-student request budget
+  and back off when `X-Rate-Limit-Remaining` runs low (C-2). Students who
+  haven't visited in a week are refreshed only daily, and only when they
+  visit after a month.
+- **Token problems:** if Canvas rejects the token, the job stops for that
+  student and the board shows the reconnect message on their next visit
+  (FR-6).
 
 ### Loading sequence
 
@@ -570,7 +595,7 @@ works without a framework, but there are fewer worked examples to copy from.
 | FR-40 to FR-46 (notes) | Sections 3, 4, 9 |
 | FR-60 to FR-78 (Trello-style, course buttons) | Sections 3, 4, 9 |
 | FR-50 to FR-54 (accounts, data) | Sections 4, 5 |
-| NFR-1 to NFR-3 (performance) | Sections 3 (sorting, list positions), 6 (caching, parallel fetch, making Canvas loads fast) |
+| NFR-1 to NFR-4 (performance, Canvas freshness) | Sections 3 (sorting, list positions), 6 (caching, parallel fetch, making Canvas loads fast, keeping the backend in step with Canvas) |
 | NFR-10 to NFR-14 (security) | Section 7 |
 | NFR-20 to NFR-22 (reliability, sync) | Sections 3, 4 (keeping devices in sync), 6 |
 | NFR-30 to NFR-35 (usability, Trello style) | Sections 2, 9, wireframes |
@@ -606,3 +631,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | Removed the `/table` route and the header's view switch; the board is the only view. |
 | 2026-10-25 | Added *Keeping devices in sync* (NFR-22, D-8): `change_seq` on boards and cards, a changes endpoint, last-save-wins, and a unique card rule per assignment. |
 | 2026-10-25 | Added *Making Canvas loads fast*: show cached data and refresh in the background, per-call timing logs, and a fallback order (GraphQL, descriptions on demand, scheduled and tiered refresh, Planner API). |
+| 2026-10-25 | Phase 3 is performance and Canvas sync: tuning list renamed *Phase 3 tuning*, added *Keeping the backend in step with Canvas* (NFR-4); card back, notes, label, and archive endpoints marked Phase 5. |

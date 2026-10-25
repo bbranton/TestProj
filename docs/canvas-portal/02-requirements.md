@@ -94,8 +94,8 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-22 | Each assignment shows: name, course, due date and time in the user's time zone, points possible, and status. | Must | 1 |
 | FR-23 | Status is shown exactly as Canvas reports it, with nothing worked out by the portal. The submission state (Canvas field `workflow_state`) is one of *Not submitted*, *Submitted*, *Graded*, or *Pending review*. Canvas's own *Late*, *Missing*, and *Excused* flags (fields `late`, `missing`, `excused`) show as separate tags, because they can apply at the same time as a state, such as Graded and Late. | Must | 1 |
 | FR-27 | Statuses the portal works out by combining Canvas fields or comparing with the clock, such as *Upcoming*, *Due soon* (for example within 48 hours, with a yellow badge), and *Overdue*. They need clear rules for cases that overlap. | Could | 5 |
-| FR-28 | The card back shows the assignment's description (its instructions) exactly as Canvas has it, with Canvas's formatting. It is read only: the portal never edits it, and it is not a note. | Must | 3 |
-| FR-24 | The user can filter by course, by Canvas submission state and flags (FR-23), and search by assignment name. | Should | 1 |
+| FR-28 | The card back shows the assignment's description (its instructions) exactly as Canvas has it, with Canvas's formatting. It is read only: the portal never edits it, and it is not a note. | Must | 5 |
+| FR-24 | The user can filter by course, by Canvas submission state and flags (FR-23), and search by assignment name. | Should | 5 |
 | FR-25 | The user can hide assignments, for example those Canvas reports as *Graded* or *Excused*. | Could | 5 |
 | FR-26 | Each assignment links to its page in Canvas, opening in a new tab. | Must | 1 |
 
@@ -123,32 +123,32 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-63 | Clicking a list title edits it in place. Enter or clicking away saves, and Escape cancels. | Could | 5 |
 | FR-64 | An "+ Add another list" control after the last list adds a list. | Could | 5 |
 | FR-65 | Card fronts show: the course as a colored label strip, the title, and badges for the due date, the number of notes (FR-43), and, from Phase 5, checklist progress (FR-70). The due date badge is green when Canvas reports *Submitted* or *Graded*, red when Canvas flags it *Missing*, and plain otherwise. Yellow for *Due soon* comes with FR-27 in Phase 5. | Must | 1 |
-| FR-66 | Each course gets a label color automatically. The user can change a course's color and name its label. | Should || 3 |
-| FR-67 | Clicking a card opens its card back in a dialog over the board, which stays visible behind it. The browser address changes to the card's own link, so reloading or sharing the link reopens the card, and Back closes it. | Must || 3 |
-| FR-68 | The card back shows: the title; "in list *name*" (clicking it moves the card); labels; due date; points and status; an "Open in Canvas" button; *Description*, from Canvas and read only (FR-28); *Notes*, private (FR-40); and *Archive*. Checklists are added in Phase 5 (FR-70). | Must | 3 |
+| FR-66 | Each course gets a label color automatically. The user can change a course's color and name its label. | Should | 5 |
+| FR-67 | Clicking a card opens its card back in a dialog over the board, which stays visible behind it. The browser address changes to the card's own link, so reloading or sharing the link reopens the card, and Back closes it. | Must | 5 |
+| FR-68 | The card back shows: the title; "in list *name*" (clicking it moves the card); labels; due date; points and status; an "Open in Canvas" button; *Description*, from Canvas and read only (FR-28); *Notes*, private (FR-40); and *Archive*. Checklists are added in Phase 5 (FR-70). | Must | 5 |
 | FR-69 | Hovering a card shows an edit (pencil) button; it and right-click open a quick edit menu: Open card, Move, Change label color, Open in Canvas, Archive. | Could | 5 |
 | FR-70 | A card back can hold one or more checklists of items that can be checked off. The card front shows progress such as 2/5 (2 of 5 items done). | Could | 5 |
 | FR-71 | "+ Add a card" at the bottom of each list creates a personal card that isn't a Canvas assignment. It supports everything a card back has except the Canvas details. | Could | 5 |
-| FR-72 | A Filter button at the start of the course button row (FR-78), under the header, opens a menu that filters cards by course, by due date (due date passed, due in the next day, next week, next month, no due date), by Canvas submission state and flags (FR-23), and by keyword. When a filter is on, the course row says so and offers "Clear". | Must || 3 |
-| FR-73 | Keyboard shortcuts follow Trello's where the action exists, including: arrow keys move between cards, Enter opens a card, Escape closes, `f` filter, `x` clear filters, `?` shows the shortcut list. The final list is checked against Trello's own shortcut page during design. | Should || 3 |
-| FR-74 | Archived cards (and, from Phase 5, lists) are found under "Archived items" in the board menu, where they can be restored. | Must || 3 |
+| FR-72 | A Filter button at the start of the course button row (FR-78), under the header, opens a menu that filters cards by course, by due date (due date passed, due in the next day, next week, next month, no due date), by Canvas submission state and flags (FR-23), and by keyword. When a filter is on, the course row says so and offers "Clear". | Must | 5 |
+| FR-73 | Keyboard shortcuts follow Trello's where the action exists, including: arrow keys move between cards, Enter opens a card, Escape closes, `f` filter, `x` clear filters, `?` shows the shortcut list. The final list is checked against Trello's own shortcut page during design. | Should | 5 |
+| FR-74 | Archived cards (and, from Phase 5, lists) are found under "Archived items" in the board menu, where they can be restored. | Must | 5 |
 | FR-75 | A board menu opens as a panel from the right edge with: board background color, labels, archived items. | Could | 5 |
 | FR-76 | The user can have more than one board. | Could | 5 |
 | FR-77 | Dragging feels like Trello: the card tilts slightly and lifts while dragged, the list under it is highlighted and a gray gap shows the due date spot where it will land, and the board scrolls when the card nears an edge. | Should | 2 |
-| FR-78 | Between the header and the board, a row of show/hide buttons has one button per active course, in the course's label color. Tapping a button hides or shows that course's cards; "Show all" and "Hide all" buttons show or hide every course at once. When every course is hidden, the board says so and offers Show all. Hidden cards keep their list. From Phase 3 the choice is saved with the user's account so it follows them between devices. | Must | 1 (3 for saving) |
+| FR-78 | Between the header and the board, a row of show/hide buttons has one button per active course, in the course's label color. Tapping a button hides or shows that course's cards; "Show all" and "Hide all" buttons show or hide every course at once. When every course is hidden, the board says so and offers Show all. Hidden cards keep their list. From Phase 5 the choice is saved with the user's account so it follows them between devices. | Must | 1 (5 for saving) |
 | FR-79 | Help the student see which assignments are new or have changed in Canvas (for example a new due date or new instructions) since they last looked, such as with a badge on the card and a way to clear it. | Could | 5 |
 
 ### 4.6 Private notes
 
 | ID | Requirement | Priority | Phase |
 |----|-------------|----------|-------|
-| FR-40 | The user can add any number of plain-text notes to an assignment, like comments on a Trello card. Each note is stamped with the date and time it was added, and the card back lists them newest first. Notes are separate from the Canvas description (FR-28). | Must | 3 |
-| FR-41 | The user can edit or delete each note. An edited note keeps its original date and says "(edited)". Deleting asks for confirmation first. | Must | 3 |
-| FR-42 | A note is saved when the user presses Save or Ctrl+Enter. If saving fails, the text stays in the box; closing the card with unsaved text warns first. | Must | 3 |
-| FR-43 | A card with notes shows a badge with the number of notes; opening the card shows them all. | Must | 3 |
-| FR-44 | Notes are never sent to Canvas. | Must | 3 |
-| FR-45 | If an assignment disappears from Canvas, its card and notes move to an *Archived* area rather than being deleted. | Should | 3 |
-| FR-46 | Notes support simple formatting (bold, lists, links). | Could | 3 |
+| FR-40 | The user can add any number of plain-text notes to an assignment, like comments on a Trello card. Each note is stamped with the date and time it was added, and the card back lists them newest first. Notes are separate from the Canvas description (FR-28). | Must | 5 |
+| FR-41 | The user can edit or delete each note. An edited note keeps its original date and says "(edited)". Deleting asks for confirmation first. | Must | 5 |
+| FR-42 | A note is saved when the user presses Save or Ctrl+Enter. If saving fails, the text stays in the box; closing the card with unsaved text warns first. | Must | 5 |
+| FR-43 | A card with notes shows a badge with the number of notes; opening the card shows them all. | Must | 5 |
+| FR-44 | Notes are never sent to Canvas. | Must | 5 |
+| FR-45 | If an assignment disappears from Canvas, its card (and any notes) is marked archived rather than deleted, and leaves the board. Viewing and restoring archived cards comes with FR-74. | Should | 3 |
+| FR-46 | Notes support simple formatting (bold, lists, links). | Could | 5 |
 
 ### 4.7 Accounts, sync, and data control
 
@@ -168,8 +168,9 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | ID | Requirement | Phase |
 |----|-------------|-------|
 | NFR-1 | With cached data, the dashboard is usable within 2 seconds of opening. | 1 |
-| NFR-2 | For an account with 8 courses and 200 assignments, a full refresh from Canvas completes within 15 seconds, with courses appearing as they arrive. | 1 |
+| NFR-2 | For an account with 8 courses and 200 assignments, a full refresh from Canvas completes within 15 seconds, with courses appearing as they arrive. | 3 |
 | NFR-3 | Dragging a card responds within 100 ms. | 2 |
+| NFR-4 | Changes made in Canvas (a new or removed assignment, a new due date, a new submission state) show on the board within 15 minutes, without the student pressing Refresh. | 3 |
 
 ### 5.2 Security and privacy
 
@@ -177,7 +178,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 |----|-------------|-------|
 | NFR-10 | The Canvas token is never written to logs, error messages, or the page's address (URL). | 1 |
 | NFR-11 | If the token is stored on the server it is encrypted at rest; all traffic uses HTTPS. | 1 |
-| NFR-12 | Notes and board data are visible only to the user who created them. | 3 |
+| NFR-12 | Notes and board data are visible only to the user who created them. | 2 |
 | NFR-13 | The portal calls only Canvas read (`GET`) endpoints. | 1 |
 | NFR-14 | Student data is handled with care for privacy rules such as FERPA (US student records law): no analytics or third-party trackers that see course data. | 1 |
 
@@ -186,7 +187,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | ID | Requirement | Phase |
 |----|-------------|-------|
 | NFR-20 | When Canvas is slow, down, or rate limiting, the page shows a clear message and the last cached data rather than an empty screen. | 1 |
-| NFR-21 | No user action or Canvas change can silently delete a note. | 3 |
+| NFR-21 | No user action or Canvas change can silently delete a note. | 5 |
 | NFR-22 | When the same account is open on more than one device or browser tab, a card moved on one shows in its new list on the others within 30 seconds, without a reload. If the same card is moved on two devices, every device ends up showing the last move. A card is never lost or shown twice, even if two devices load the board at the same moment or a save fails. | 2 |
 
 ### 5.4 Usability and accessibility
@@ -197,8 +198,8 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | NFR-31 | Every action, including moving cards, can be done with the keyboard alone. | 2 |
 | NFR-32 | Meets WCAG 2.2 level AA (the standard web accessibility guideline) for contrast, labels, and focus. | 4 |
 | NFR-33 | Usable on a phone-width screen. As in Trello's mobile layout, one list fills the screen and the user swipes between lists. | 4 |
-| NFR-34 | Visual style is close to Trello's within C-4: a colored board background, light gray lists with rounded corners, white cards with rounded corners and a soft shadow, and compact text. || 3 |
-| NFR-35 | Board actions (open a card, show or hide a course, filter) need no more clicks than the same action in Trello. || 3 |
+| NFR-34 | Visual style is close to Trello's within C-4: a colored board background, light gray lists with rounded corners, white cards with rounded corners and a soft shadow, and compact text. | 5 |
+| NFR-35 | Board actions (open a card, show or hide a course, filter) need no more clicks than the same action in Trello. | 5 |
 
 ### 5.5 Maintainability
 
@@ -243,3 +244,4 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | 2026-10-25 | Added FR-55 (more than one school per student) as a Phase 5 future feature, from the Team Lead's review. |
 | 2026-10-25 | Table view removed (FR-30); the board is the only view and appears read only in Phase 1 (FR-60, FR-65, FR-78). From the Team Lead's review. |
 | 2026-10-25 | Phase 2 is now accounts, dragging, and sync only: FR-28, FR-66 to FR-68, FR-72 to FR-74, FR-78 saving, NFR-34, and NFR-35 move to Phase 3. Added NFR-22 (sync between devices). From the Team Lead's review. |
+| 2026-10-25 | Phase 3 is now performance and Canvas sync, from the Team Lead: FR-24, FR-28, FR-40 to FR-44, FR-46, FR-66 to FR-68, FR-72 to FR-74, FR-78 saving, NFR-21, NFR-34, and NFR-35 move to Phase 5; NFR-2 moves to Phase 3 and NFR-12 to Phase 2; FR-45 reworded; added NFR-4 (Canvas changes appear within 15 minutes). Fixed broken table cells in FR-66, FR-67, FR-72 to FR-74, NFR-34, and NFR-35. |

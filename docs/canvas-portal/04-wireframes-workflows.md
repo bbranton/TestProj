@@ -20,10 +20,10 @@ flowchart TD
     Q -- no --> S2[S-2 Connect Canvas]
     Q -- yes --> S4[S-4 Board, home screen]
     S2 --> S4
-    S4 --> S5[S-5 Card back dialog]
+    S4 -.-> S5[S-5 Card back dialog, Phase 5]
     S4 -.-> S7[S-7 Quick edit menu, Phase 5]
-    S4 --> S8[S-8 Filter menu]
-    S4 --> S9[S-9 Board menu and archived items]
+    S4 -.-> S8[S-8 Filter menu, Phase 5]
+    S4 -.-> S9[S-9 Board menu and archived items, Phase 5]
     S4 --> S6[S-6 Settings]
     S6 -- disconnect --> S2
     S6 -- sign out --> S1
@@ -132,7 +132,9 @@ Backlog, and dragging between lists arrives in Phase 2 (FR-60).
 |  | +----------------+ | +--------------------+                           |
 |  +--------------------+                                                  |
 +--------------------------------------------------------------------------+
-  [Filter] at the start of the course row opens S-8 (FR-72).
+  [Filter] at the start of the course row opens S-8 (FR-72, Phase 5).
+  Until the card back arrives in Phase 5, clicking a card opens the
+  assignment in Canvas in a new tab (FR-26).
   If Canvas can't be reached, a warning banner between the course row and
   the lists says "Canvas isn't responding. Showing data from 10:42 AM."
   (NFR-20).
@@ -158,7 +160,7 @@ Backlog, and dragging between lists arrives in Phase 2 (FR-60).
   own, even when Canvas marks it submitted.
 ```
 
-### S-5 Card back
+### S-5 Card back (Phase 5, future feature)
 
 Requirements: FR-22, FR-26, FR-28, FR-40 to FR-44, FR-46, FR-67, FR-68.
 Opens as a dialog over the dimmed board at `/c/{cardId}`. On phones it fills
@@ -246,7 +248,7 @@ as in Trello.
 +--------------------------------------------------------------+
 ```
 
-### S-8 Filter menu
+### S-8 Filter menu (Phase 5, future feature)
 
 Requirements: FR-72. A dropdown under the Filter button at the start of the
 course row, opened with `f`.
@@ -277,7 +279,7 @@ course row, opened with `f`.
   [Filter · 3 cards match  (x) Clear], and x clears it.
 ```
 
-### S-9 Board menu and archived items
+### S-9 Board menu and archived items (Phase 5, future feature)
 
 Requirements: FR-74, FR-75. A panel that slides in from the right edge of the
 board.
@@ -396,7 +398,7 @@ Moving the card on screen before the server answers is called an
 *optimistic update*. It keeps dragging fast (NFR-3), and the card snaps back
 if the save fails, so the screen never shows a state the server doesn't have.
 
-### W-4 Add, edit, or delete a note
+### W-4 Add, edit, or delete a note (Phase 5, future feature)
 
 ```mermaid
 flowchart TD
@@ -488,3 +490,4 @@ flowchart TD
 | 2026-10-25 | Notes are now dated, comment-style entries (like Trello's "Comments and activity"), separate from the read-only Canvas description: S-5 redrawn, note count badges on S-3, S-4, and phone, W-4 rewritten, from the Team Lead's review. |
 | 2026-10-25 | Renaming and reordering lists moved to Phase 5: list menus removed from S-4 and the phone layout, W-7 marked Phase 5, from the Team Lead's review. |
 | 2026-10-25 | Table view (S-3) removed: no view switch in the header, S-2 opens the board, and the board takes over S-3's requirements and Canvas warning banner, from the Team Lead's review. |
+| 2026-10-25 | Card back (S-5), filter menu (S-8), board menu and archive (S-9), and notes (W-4) marked Phase 5; until then clicking a card opens it in Canvas. From the Team Lead. |

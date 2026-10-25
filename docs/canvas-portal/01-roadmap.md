@@ -29,7 +29,7 @@ gantt
     Phase 1 Read-only viewer         :p1, after p0, 28d
     section Organize
     Phase 2 Accounts, drag, and sync :p2, after p1, 28d
-    Phase 3 Card back, notes, extras :p3, after p2, 28d
+    Phase 3 Performance and Canvas sync :p3, after p2, 28d
     section Harden
     Phase 4 Polish and deploy        :p4, after p3, 21d
     section Later
@@ -77,13 +77,12 @@ The smallest thing that is useful: connect, then see everything that's due.
 - Clear error messages for a bad token, an expired token, or Canvas being
   unreachable (FR-6, NFR-20).
 - Measure how long a full Canvas load takes with the Team Lead's real
-  student account (TP-14). If it misses NFR-2, apply the fixes in the
-  design's [Making Canvas loads fast](03-design.md#making-canvas-loads-fast-nfr-1-nfr-2-r-3)
-  before Phase 2, so sync work isn't built on a slow foundation.
+  student account and record it as a baseline (TP-14). Tuning is Phase 3; see
+  the design's [Making Canvas loads fast](03-design.md#making-canvas-loads-fast-nfr-1-nfr-2-r-3).
 
 **Exit criteria:** the Team Lead can connect a real account and see the same
-assignments Canvas shows, verified by the Phase 1 test procedures, and the
-TP-14 timings meet NFR-1 and NFR-2.
+assignments Canvas shows, verified by the Phase 1 test procedures, and
+TP-14 has a recorded baseline.
 
 ### Phase 2: Accounts, dragging, and sync
 
@@ -116,31 +115,31 @@ leaves a device showing a move the server doesn't have. The concurrency tests
 for NFR-22 pass, and the drag steps of the Trello comparison review (TP-13)
 pass.
 
-### Phase 3: Card back, notes, and board extras
+### Phase 3: Performance and Canvas sync
 
-Everything on the board besides dragging.
+This phase makes loading fast and keeps the portal's copy of Canvas data
+current, so the student never waits on Canvas or has to press Refresh. It
+starts from the TP-14 timings recorded in Phase 1.
 
-- Clicking a card opens its "card back" in a dialog over the board, with its
-  own link, showing the assignment's Canvas description read only (FR-28,
-  FR-67, FR-68).
-- Course label colors and the notes count on card fronts (FR-65, FR-66).
-- The course show/hide choice is saved with the account and follows the
-  student between devices (FR-78).
-- Trello-style filter menu and keyboard shortcuts (FR-72, FR-73).
-- Archive and restore cards, as in Trello (FR-74).
-- Add dated notes to any assignment, like the comments on a Trello card, and
-  edit or delete each one (FR-40 to FR-42). Notes are not the *Description*,
-  which comes from Canvas and is read only. A card with notes shows how many
-  (FR-43).
-- Notes are never sent to Canvas (FR-44, NFR-12).
+- Tune loading, working through the design's list in order: Canvas GraphQL,
+  descriptions left out of the main load, refresh on a schedule and by
+  urgency, then the Planner API as a fallback (NFR-1, NFR-2, R-3).
+- A background job keeps each student's Canvas data current: new, changed,
+  and removed assignments, new due dates and submission states, and course
+  changes such as a new term (FR-13, FR-34, FR-35, FR-45, NFR-4).
+- Changes the job finds reach the student's open devices through the
+  Phase 2 sync (NFR-22).
+- The job stays within Canvas's rate limits and slows down for students who
+  haven't visited lately (C-2).
 
-**Exit criteria:** notes survive reloads and Canvas refreshes and appear on a
-second device; a network capture shows no note text going to Canvas; the
-full Trello comparison review (TP-13) passes.
+**Exit criteria:** TP-14 meets NFR-1 and NFR-2 on the Team Lead's real
+account, including at a busy time; TP-08 passes with Canvas changes showing
+within 15 minutes and no Refresh (NFR-4); a week of background refreshing
+produces no rate-limit errors and no lost or duplicated cards.
 
 ### Phase 4: Polish and deploy
 
-- Export notes and board as a file (FR-53); delete my data (FR-54).
+- Export the board as a file (FR-53); delete my data (FR-54).
 - Accessibility and mobile layout pass (NFR-30 to NFR-33).
 - Deploy to the chosen host (D-3) and link it from the repo's landing page.
 
@@ -165,6 +164,17 @@ accessibility checks pass.
   student last looked, such as with a badge (FR-79).
 - Checklists inside a card, with progress such as 2/5 on the card front
   (FR-70).
+- Card back: clicking a card opens a dialog with its own link, showing the
+  assignment's Canvas description read only (FR-28, FR-67, FR-68). Until
+  then, clicking a card opens the assignment in Canvas (FR-26).
+- Private notes: dated, comment-style notes on any assignment, like the
+  comments on a Trello card, never sent to Canvas (FR-40 to FR-44, FR-46,
+  NFR-21).
+- Course label colors chosen by the student (FR-66), and the course
+  show/hide choice saved with the account (FR-78).
+- Trello-style filter menu with status filters and search, and keyboard
+  shortcuts (FR-24, FR-72, FR-73).
+- Archive and restore cards, as in Trello (FR-74).
 - More than one board, such as one per course or term, as in Trello (FR-76).
 - Board background choices and the board menu sidebar (FR-75).
 - More than one school per student, such as a high school and a college
@@ -180,7 +190,7 @@ accessibility checks pass.
 | M1 | First real assignment list | 1 | Canvas connection works |
 | M2 | Viewer complete | 1 | MVP usable day to day |
 | M3 | Dragging saves and syncs | 2 | Core organizing feature works on every device |
-| M4 | Card back and notes complete | 3 | All user-requested features exist |
+| M4 | Fast loads and Canvas sync | 3 | Board stays current without waiting on Canvas |
 | M5 | Deployed with sync | 4 | Usable from any device |
 
 ## 5. Open decisions
@@ -204,7 +214,7 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 |----|------|--------|------------|
 | R-1 | The school has turned off personal access tokens | Phase 1 can't connect | Check early (Phase 0). Fallback: a free Canvas account from Instructure for testing; OAuth with the school later. |
 | R-2 | Canvas tokens are powerful; a leak exposes a student's whole account | Privacy harm | Backend never logs tokens, stores them encrypted or not at all, and only uses read endpoints (NFR-10, NFR-11). |
-| R-3 | Canvas is slow: in the Team Lead's experience a full load of courses, each with 100+ assignments, can take several minutes, and rate limits slow it further | Students wait or give up | Never make the student wait on Canvas: show cached data and refresh in the background. Measure early with a real account (TP-14, Phase 1), then fetch less, in fewer requests, and switch to Canvas GraphQL if needed (see design, *Making Canvas loads fast*). |
+| R-3 | Canvas is slow: in the Team Lead's experience a full load of courses, each with 100+ assignments, can take several minutes, and rate limits slow it further | Students wait or give up | Never make the student wait on Canvas: show cached data and refresh in the background. Measure early with a real account (TP-14 baseline in Phase 1), then in Phase 3 fetch less, in fewer requests, and switch to Canvas GraphQL if needed (see design, *Making Canvas loads fast*). |
 | R-4 | Assignments change in Canvas (renamed, deleted, new due date) | Board shows stale or orphaned cards | Match cards by Canvas assignment ID, not name; keep notes on deleted assignments in an "Archived" area (FR-35, FR-45). |
 | R-5 | Learning web development alongside building | Slower progress | Small phases, one new technology at a time, docs explain terms. |
 | R-6 | A school-managed Google account blocks sign-in to outside apps | Student can't sign in | Allow any Google account, so a personal one works; explain this on the sign-in screen. |
@@ -236,3 +246,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | Table view removed; Phase 1 shows a read-only board with every card in Backlog, from the Team Lead's review. |
 | 2026-10-25 | Phase 2 narrowed to accounts, dragging between lists, and sync, from the Team Lead's review; everything else moved to Phase 3. Added D-8 (how devices learn about changes) and R-8 (sync bugs). |
 | 2026-10-25 | R-3 widened to slow Canvas loads, from the Team Lead's experience; Phase 1 now measures load times (TP-14) and fixes them before Phase 2. |
+| 2026-10-25 | Phase 3 is now performance and Canvas sync, from the Team Lead; the card back, notes, label colors, saved course toggles, filter menu, shortcuts, and archiving move to Phase 5. Phase 1 records a TP-14 baseline instead of meeting NFR-2. |

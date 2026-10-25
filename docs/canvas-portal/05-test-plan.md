@@ -84,14 +84,14 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | FR-14 | Second request within 5 minutes makes no Canvas call | API |
 | FR-21, FR-38 | Sort order: soonest first, no-due-date last, ties by name; applies to every list | Unit |
 | FR-23 | Each Canvas `workflow_state` maps to its label, and the late, missing, and excused flags show as tags, including together with a state | Unit |
-| FR-24 | Course, Canvas state and flag, and search filters | E2E |
+| FR-24 (Phase 5) | Course, Canvas state and flag, and search filters | E2E |
 | FR-32, FR-33, FR-38 | Drag a card to another list; it lands in its due date place; reload, it is still there | E2E |
 | FR-31, FR-34 | First board load puts every assignment in Backlog; a new fixture assignment appears in Backlog in its due date place | API |
 | FR-38 | Changing a fixture assignment's due date moves its card to the new place in the same list | API |
-| FR-28 | Card back shows the fixture description; a description with a `<script>` tag and an `onclick` attribute comes back with both removed | Unit, API |
+| FR-28 (Phase 5) | Card back shows the fixture description; a description with a `<script>` tag and an `onclick` attribute comes back with both removed | Unit, API |
 | FR-35 | Renamed assignment keeps its column and notes | API |
 | FR-34, FR-65 | Card marked submitted in Canvas gets a green badge and is not moved | API, E2E |
-| FR-40 to FR-42 | Add several notes and get them back newest first with dates; edit one and see it marked edited; delete one after confirming | API, E2E |
+| FR-40 to FR-42 (Phase 5) | Add several notes and get them back newest first with dates; edit one and see it marked edited; delete one after confirming | API, E2E |
 | FR-44, NFR-13 | Canvas client has no non-GET method; a test fails if one is added | Unit |
 | FR-45 | Removed assignment's card is archived and its notes kept | API |
 | FR-51 | Same user, two browser sessions, see the same board | E2E |
@@ -99,6 +99,7 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | NFR-10 | Logs captured during a full test run contain no token string | API |
 | NFR-12 | User B gets `404` for every one of user A's cards and notes | API |
 | NFR-1, NFR-2 | Fixture server adds 1 second to every Canvas response: with a warm cache the board answers in under 2 seconds and refreshes in the background; a cold load of 8 courses and 200 assignments finishes in 15 seconds, with courses appearing one at a time | API, E2E |
+| NFR-4 | With the background job on and a fixture changed (new assignment, new due date, newly graded), the board shows each change within one job cycle without Refresh; the job backs off when the fixture reports a low rate-limit budget | API |
 | NFR-20 | Canvas down: cached data plus warning banner | API, E2E |
 | NFR-22 | Concurrency: 20 parallel moves of one card leave it in exactly one list; `changes?since=` returns every change once; two parallel board loads with a new assignment create one card; two browser sessions converge within one poll | API, E2E |
 | NFR-31 | Move a card using only the keyboard | E2E |
@@ -108,15 +109,15 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | FR-63 (Phase 5) | Click a list title, type, Enter saves; Escape cancels | E2E |
 | FR-64, FR-71 (Phase 5) | Composer adds a list or a personal card and stays open for the next | E2E |
 | FR-65 | Due badge is green for Submitted or Graded, red for Missing, plain otherwise | Unit, E2E |
-| FR-66 | Each course gets a palette color; changing it updates every card of that course | API, E2E |
-| FR-67 | Opening a card changes the address to `/c/{id}`; reloading that address reopens it; Back closes it | E2E |
-| FR-68 | Card back shows every listed field for a Canvas card | E2E |
+| FR-66 (Phase 5) | Each course gets a palette color; changing it updates every card of that course | API, E2E |
+| FR-67 (Phase 5) | Opening a card changes the address to `/c/{id}`; reloading that address reopens it; Back closes it | E2E |
+| FR-68 (Phase 5) | Card back shows every listed field for a Canvas card | E2E |
 | FR-69 (Phase 5) | Pencil and right-click open the quick edit menu | E2E |
 | FR-70 (Phase 5) | Add, check, reorder, and delete checklist items; card front shows progress | API, E2E |
-| FR-72 | Each filter option, combined filters, and Clear | E2E |
+| FR-72 (Phase 5) | Each filter option, combined filters, and Clear | E2E |
 | FR-78 | Tapping a course button hides and shows its cards on the board; Show all and Hide all; hidden cards keep their place; choice survives reload and a second session | API, E2E |
-| FR-73 | Every shortcut in the keyboard map does its action, and `?` lists them all | E2E |
-| FR-74 | Archive and restore a card (a list from Phase 5) | API, E2E |
+| FR-73 (Phase 5) | Every shortcut in the keyboard map does its action, and `?` lists them all | E2E |
+| FR-74 (Phase 5) | Archive and restore a card or a list | API, E2E |
 | NFR-34 | Visual comparison: screenshots of S-4 and S-5 match approved reference images (Playwright `toHaveScreenshot`) | E2E |
 | NFR-32 | axe-core finds no serious issues on S-1 to S-9 | Accessibility |
 
@@ -166,7 +167,7 @@ steps, and the expected result. Screen IDs refer to the
 
 ### TP-04 Filters and search
 
-**Checks:** FR-24, FR-78 · **Phase:** 1
+**Checks:** FR-24, FR-78 · **Phase:** 1 (steps 1 to 4 from Phase 5)
 
 | Step | Action | Expected |
 |------|--------|----------|
@@ -221,7 +222,7 @@ steps, and the expected result. Screen IDs refer to the
 
 ### TP-08 Canvas changes reach the board
 
-**Checks:** FR-34, FR-35, FR-38, FR-45, FR-65 · **Phase:** 2–3
+**Checks:** FR-34, FR-35, FR-38, FR-45, FR-65, NFR-4 · **Phase:** 2–3 (from Phase 3, also without pressing Refresh)
 **Needs:** recorded data in local environment, edited between steps.
 
 | Step | Action | Expected |
@@ -233,7 +234,7 @@ steps, and the expected result. Screen IDs refer to the
 
 ### TP-09 Notes
 
-**Checks:** FR-28, FR-40 to FR-44, NFR-21 · **Phase:** 3
+**Checks:** FR-28, FR-40 to FR-44, NFR-21 · **Phase:** 5
 
 | Step | Action | Expected |
 |------|--------|----------|
@@ -249,12 +250,12 @@ steps, and the expected result. Screen IDs refer to the
 
 ### TP-10 Privacy between users
 
-**Checks:** NFR-12, FR-54 · **Phase:** 3–4
+**Checks:** NFR-12, FR-54 · **Phase:** 2–4
 **Needs:** two portal accounts A and B.
 
 | Step | Action | Expected |
 |------|--------|----------|
-| 1 | As A, write a note; copy the card's ID from developer tools | |
+| 1 | As A, move a card (from Phase 5, also write a note); copy the card's ID from developer tools | |
 | 2 | As B, request A's card and note IDs directly | Not found |
 | 3 | As A, export data | JSON file holds A's board and notes only |
 | 4 | As A, delete account | Signed out; signing in again starts fresh |
@@ -311,8 +312,8 @@ deliberate, documented difference such as Canvas-only fields).
 
 ### TP-14 Canvas load timing
 
-**Checks:** NFR-1, NFR-2, R-3 · **Phase:** 1 (repeat after any change to
-fetching)
+**Checks:** NFR-1, NFR-2, R-3 · **Phase:** 1 (baseline), 3 (must pass); repeat
+after any change to fetching
 **Needs:** the Team Lead's real student token in the git-ignored `.env`, and
 the backend's Canvas timing log.
 
@@ -322,7 +323,7 @@ the backend's Canvas timing log.
 | 2 | From the timing log, record the number of courses, assignments, requests, and the slowest request | Written in the results log |
 | 3 | Reload the board | Shows within 2 seconds from the cache (NFR-1) |
 | 4 | Wait past 5 minutes; reload | Old data shows at once with "Updating..."; the board stays usable while it refreshes |
-| 5 | Repeat step 1 on a weekday evening, when Canvas is busiest | Record the time; if any run misses 15 seconds (NFR-2), apply the next fix in the design's *Making Canvas loads fast* list and rerun |
+| 5 | Repeat step 1 on a weekday evening, when Canvas is busiest | Record the time. In Phase 3, if any run misses 15 seconds (NFR-2), apply the next fix in the design's *Phase 3 tuning* list and rerun |
 
 Record times only, never the token or assignment names, in the results log.
 
@@ -364,3 +365,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | Table view removed: TP-01, TP-03, TP-04, TP-05, TP-11, and coverage rows now use the board. |
 | 2026-10-25 | TP-06 gains sync steps 6 to 12 and an NFR-22 concurrency test row, for the Phase 2 focus on dragging and sync. |
 | 2026-10-25 | Added TP-14 (Canvas load timing with the real student account) and a slow-Canvas automated test for NFR-1 and NFR-2. |
+| 2026-10-25 | Phase 3 is performance and Canvas sync: TP-09 and the card back, notes, filter, label, shortcut, and archive tests move to Phase 5; TP-14 is a Phase 1 baseline and must pass in Phase 3; added an NFR-4 background refresh test. |

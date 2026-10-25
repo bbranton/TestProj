@@ -15,6 +15,8 @@ code, and is the specialist in how code is written.
   idioms.
 - Bugs and their root causes, including reading logs and stack traces.
 - Carrying out Architecture's transition plans when the design changes.
+- Raising risks in the code, such as fragile areas and hard-to-fix bugs, and owning their mitigation once Management
+  adds them to the risk list.
 
 ## Cares about
 

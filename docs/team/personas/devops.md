@@ -19,6 +19,8 @@ branch to a running app.
 - The project's top-level [README.md](../../../README.md): kept up to date
   with a description of every app in the repo and how to build and install
   each one.
+- Raising dependency, build, deploy, hosting, and outage risks, and owning their mitigation once Management
+  adds them to the risk list.
 
 ## Cares about
 

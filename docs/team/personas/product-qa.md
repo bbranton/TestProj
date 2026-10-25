@@ -17,6 +17,8 @@ passes.
 - Acceptance: whether a finished feature does what its requirement means and
   passes its tests.
 - The test part of each phase's exit criteria.
+- Raising quality risks and gaps in test coverage, and owning their mitigation once Management
+  adds them to the risk list.
 
 ## Cares about
 

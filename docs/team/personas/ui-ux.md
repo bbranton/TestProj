@@ -10,6 +10,8 @@ Decides what each screen looks like and how a user moves through the app.
   states (empty, loading, error), wording, and flows.
 - Accessibility and layout at phone and desktop widths.
 - The screenshots in UI PRs, which [CLAUDE.md](../../../CLAUDE.md) requires.
+- Raising usability and accessibility risks, and owning their mitigation once Management
+  adds them to the risk list.
 
 ## Cares about
 

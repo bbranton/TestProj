@@ -17,6 +17,8 @@ design documents and transition plans, not code: Developers implement them.
   phases are planned, split, or consolidated.
 - The security design: how tokens, external calls, and user data are
   handled.
+- Raising technical and security risks, and owning their mitigation once Management
+  adds them to the risk list.
 
 ## Cares about
 

@@ -6,7 +6,7 @@ reviews someone else's work, and which decisions it can and cannot make.
 
 | Persona | Owns | File |
 |---------|------|------|
-| Management | Roadmap, phases, scope, priorities | [management.md](personas/management.md) |
+| Management | Roadmap, phases, scope, priorities, risks | [management.md](personas/management.md) |
 | Product and QA | Requirements, test plan, acceptance | [product-qa.md](personas/product-qa.md) |
 | Architecture | Design docs, transition plans, data, APIs | [architecture.md](personas/architecture.md) |
 | UI/UX | UI specification, screens, accessibility | [ui-ux.md](personas/ui-ux.md) |

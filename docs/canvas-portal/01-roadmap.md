@@ -95,8 +95,27 @@ The smallest thing that is useful: connect, then see everything that's due.
   need it.
 - Before step 6: create the free Koyeb and Neon accounts for the test
   deploy (D-3), add the test host's address as a redirect URI on the Google
-  client, and add the deploy and backup secrets to GitHub Actions. GitHub
-  Actions is a new place secrets live, so the Team Lead sets them.
+  client, and add the deploy and backup secrets to a GitHub Actions
+  environment that only `master` can use, with the Team Lead as its
+  required reviewer. Plain repository secrets reach workflows on any
+  branch, and every thread pushes branches to this public repo. GitHub
+  Actions is a new place secrets live, so the Team Lead sets them (#26).
+
+**Before step 6 goes live**, because real tokens then sit on an
+internet-facing server (R-14). Each of these is a potential data breach
+if skipped, so none can be dropped or delayed without the Team Lead:
+
+- The incident plan for a leaked token is in place (#17).
+- How the token encryption key and session secret are stored, rotated,
+  and replaced after a leak is written down and set up (#19).
+- Secret scanning with push protection is on for the repo (#20).
+- The session cookie and every write are protected on Koyeb's shared
+  domain (#25). `koyeb.app` isn't on the Public Suffix List, so other
+  Koyeb apps count as the same site and `SameSite=Lax` doesn't stop them.
+  Moving the test deploy to Render free or a custom domain would also
+  solve this, but it changes D-3, so it's the Team Lead's call.
+- Deploy secrets and database backups are kept private on the public
+  repo (#26).
 
 **Before step 2 starts:** the Team Lead decides how the Canvas token is
 stored and sent, which the review protocol reserves for the Team Lead. The
@@ -151,8 +170,11 @@ such as encrypting tokens with Fernet (a new dependency).
   never in the repo or the build. It runs as a single backend
   instance. CI deploys it, and a bad deploy can be rolled back to the last
   good one. A nightly GitHub Actions job saves an encrypted
-  `pg_dump`, kept for 30 days, and a restore into a spare Neon branch has
-  been tried once.
+  `pg_dump`, kept for 30 days. Dumps are stored outside the repo and its
+  workflow artifacts, where only the Team Lead and the backup job can read
+  them, and the backup key is its own secret, never stored with the dumps
+  (#26). A restore into a spare Neon branch has been tried once, and that
+  branch is deleted afterward.
 - Measure how long a full Canvas load takes with the Team Lead's real
   student account and record it as a baseline (TP-14). Tuning is Phase 3; see
   the design's [Making Canvas loads fast](03-design.md#making-canvas-loads-fast-nfr-1-nfr-2-r-3).
@@ -174,8 +196,13 @@ pull requests, each one usable on its own:
 5. The Phase 1 checks: NFR-1, NFR-14, NFR-30, the TP-14 baseline, and the
    manual test pass.
 6. The private test deploy, with CI deploys, rollback, and the nightly
-   backup. It goes live only after step 5's security checks pass, and with
-   the Team Lead's OK. Milestone M2.
+   backup. It goes live only with the Team Lead's OK, once everything in
+   *Before step 6 goes live* is done and these security checks pass: the
+   automated NFR-10 to NFR-14 tests and the FR-1 address check, TP-02
+   (no token in logs, NFR-10), TP-02's check that the stored token is
+   encrypted (NFR-11), TP-10 step 2 (NFR-12), and TP-03's network check
+   (NFR-14). Product and QA confirms the step numbers once the test plan
+   review (#9) merges. Milestone M2.
 
 Each step adds only the tables it uses, through a migration, so each pull
 request stays small.
@@ -228,7 +255,7 @@ assignment and a submitted one stay in their list), leaving out step 1's
 note. The NFR-3 timing test passes. It is still to be added to the test
 plan. CI is green. The phase is deployed to the test host with the Team
 Lead's OK: a backup is taken first, and the migration is tried on a copy (a
-Neon branch) before the live database.
+Neon branch) before the live database. The copy is deleted afterward.
 
 ### Phase 3: Performance and Canvas sync
 
@@ -287,7 +314,8 @@ Canvas*) and a test (TP-15).
   Each day's check (card count against Canvas, plus any archived cards) is
   recorded in the test plan's results log.
 - The phase is deployed to the test host with the Team Lead's OK, taking a
-  backup first and trying the migration on a copy, as in Phase 2.
+  backup first and trying the migration on a copy that is deleted
+  afterward, as in Phase 2.
 
 ### Phase 4: Polish and publish
 
@@ -401,14 +429,18 @@ Each risk is rated Low, Medium, or High for how likely it is and how much
 harm it would do, and has an owner: the team persona that watches it and
 carries out its mitigation (see the [team personas](../team/README.md)).
 Management keeps this list, rates each risk, assigns its owner, and reviews
-it with the Team Lead at every phase boundary. Accepting a risk instead of
+it with the Team Lead at every phase boundary. A risk that is a
+[potential data breach](../team/personas/security.md#potential-data-breach)
+is marked **Critical**: it is must-fix, its mitigations come first in the
+current phase and are done before the next deploy, and only the Team Lead
+can delay one. Accepting a risk instead of
 reducing it, or a mitigation that changes scope or timeline, needs the Team
 Lead.
 
 | ID | Risk | Effect | Likelihood | Impact | Owner | Mitigation |
 |----|------|--------|------------|--------|-------|------------|
 | R-1 | A student's school has turned off personal access tokens | Students at that school can't connect | Medium | Medium | Architecture | Cleared for the Team Lead's school in Phase 0 (A-1), but D-5 opens the portal to any school. The connect screen's error says tokens may be turned off at the student's school (FR-6), and OAuth stays the Phase 5 path (D-4). |
-| R-2 | Canvas tokens are powerful; a leak exposes a student's whole account | Privacy harm | Low | High | Architecture | The backend never logs tokens (NFR-10), stores them encrypted with a key held only in the server's settings (NFR-11), never returns them to the browser, shows each user only their own data (NFR-12), and only uses Canvas read calls (NFR-13; "read-only queries" if the Team Lead approves GraphQL). |
+| R-2 | Canvas tokens are powerful; a leak exposes a student's whole account | Privacy harm | Low | High, **Critical** | Security, with Architecture making the design fixes | The backend never logs tokens (NFR-10), stores them encrypted with a key held only in the server's settings (NFR-11), never returns them to the browser, shows each user only their own data (NFR-12), and only uses Canvas read calls (NFR-13; "read-only queries" if the Team Lead approves GraphQL). Students are told to give the token an expiry and to delete it in Canvas when they leave (#21). |
 | R-3 | Canvas is slow: in the Team Lead's experience a full load of courses, each with 100+ assignments, can take several minutes, and rate limits slow it further | Students wait or give up | High | Medium | Architecture | Never make the student wait on Canvas: show the last data at once, refresh only when the student asks, and highlight Refresh when the data is old (FR-15). Measure early with a real account (TP-14 baseline in Phase 1), then in Phase 3 fetch less, in fewer requests, and switch to Canvas GraphQL if needed and the Team Lead approves it against NFR-13 (see design, *Making Canvas loads fast*). |
 | ~~R-4~~ | ~~Assignments change in Canvas (renamed, deleted, new due date)~~ | ~~Board shows stale or orphaned cards~~ | — | — | — | Merged into R-9. |
 | R-5 | Learning web development alongside building | Slower progress | Medium | Medium | Management | Small phases, one new technology at a time, docs explain terms. |
@@ -420,7 +452,7 @@ Lead.
 | R-11 | One person carries every decision, every review, and every test with real accounts | Work stalls while it waits on the Team Lead | High | Medium | Management | Section 8 says which tasks need the Team Lead. Decisions are asked for before the phase that needs them ("Before it starts" in each phase), and CI uses recorded Canvas data, so only the manual passes need a real token. |
 | R-12 | Google's review for publishing the sign-in app takes longer than expected, or needs things that aren't ready | Phase 4 can't let in students who aren't test users | Medium | Medium | DevOps | The app asks only for `openid email profile`, which needs the lightest review. D-3, including the domain and redirect address, is decided before Phase 4 starts, and Phase 4 adds the home page and privacy policy Google asks for. |
 | R-13 | Hosting costs money from Phase 4: production hosting and its database run about $13 to $14 a month, and a custom domain is paid | A monthly bill the Team Lead didn't plan for, or a Phase 4 delay | Medium | Low | DevOps | Test deploys in Phases 1 to 3 are $0 (D-3). DevOps prices the production options in its D-3 recommendation, well before Phase 4, so the Team Lead can decide on the cost early. |
-| R-14 | Real Canvas tokens sit on an internet-facing server from Phase 1, not only on the Team Lead's computer | A break-in exposes testers' Canvas accounts | Low | High | DevOps | The test deploy goes live only after Phase 1's security checks pass (NFR-10 to NFR-14); the Google app stays in testing mode with a short list of test users; secrets live only in the host's settings and GitHub Actions; backups are encrypted. Until FR-54 ships in Phase 4, the Team Lead deletes a tester's data by hand on request. |
+| R-14 | Real Canvas tokens sit on an internet-facing server from Phase 1, not only on the Team Lead's computer | A break-in exposes testers' Canvas accounts | Medium | High, **Critical** | DevOps, with Security | The test deploy goes live only after everything in Phase 1's *Before step 6 goes live* is done and its security checks pass, including the incident plan (#17), key handling (#19), secret scanning (#20), the shared-domain protections (#25), and private secrets and backups (#26). Only the Team Lead's own accounts connect until the client security document is published (#16) and the incident plan is in place; after that, a short list of Google test users. Until FR-54 ships in Phase 4, the Team Lead deletes a tester's data by hand on request. That doesn't reach the backups, which keep it for up to 30 days, and the tester also deletes their token in Canvas (#21). |
 | R-15 | A free tier changes or runs out: Koyeb ends or limits its free instance, or the database uses up Neon's monthly compute hours and is suspended until next month | The test deploy goes down until it moves or the month ends | Medium | Low | DevOps | The backend ships as a container, with the database outside it, so moving to Render free (the fallback) means changing the deploy target and a few settings. Hidden tabs stop polling, nothing pings the app to keep it awake, and the database is capped at its smallest size. The nightly backup means Neon never holds the only copy. |
 
 ## 7. Scope control
@@ -451,7 +483,7 @@ The plan has grown quickly, so these rules keep each phase finishable:
 | Who | Does |
 |-----|------|
 | Team Lead | Has the final say on every decision and disagreement; decides open decisions and questions; OKs each phase's test deploy; approves every roadmap and scope change; confirms each pull request's reviewers, and approves and merges every pull request; runs the manual test procedures that need real Canvas accounts or the teacher sandbox; sets up the Google and Canvas accounts in each phase's prerequisites; changes the current phase in CLAUDE.md. |
-| Team personas (Claude) | Management, Product and QA, Architecture, UI/UX, Developer, and DevOps, as described in the [team README](../team/README.md) and the [review protocol](../team/review-protocol.md). Each one writes the documents and code it owns and reviews others' work when the Team Lead confirms it, in pull requests limited to the current phase; recommends but never approves or merges; lists the requirement IDs each pull request implements; brings anything outside the current phase to the Team Lead instead of building it. |
+| Team personas (Claude) | Management, Product and QA, Architecture, UI/UX, Developer, DevOps, and Security, as described in the [team README](../team/README.md) and the [review protocol](../team/review-protocol.md). Each one writes the documents and code it owns and reviews others' work when the Team Lead confirms it, in pull requests limited to the current phase; recommends but never approves or merges; lists the requirement IDs each pull request implements; brings anything outside the current phase to the Team Lead instead of building it. |
 
 ## Change log
 
@@ -499,3 +531,4 @@ The plan has grown quickly, so these rules keep each phase finishable:
 | 2026-10-25 | Aligned with the team personas and review protocol: sections 6 to 8 say which persona makes each call and what needs the Team Lead (scope calls, phase done, accepted risks, reviewers); D-3 and D-8 name the persona that recommends them; links point to the team docs. |
 | 2026-10-25 | Cross-review by Product and QA, Architecture, and DevOps: Phase 1 lists the token decisions needed before step 2, and its order of work names the tables and IDs for each step; Phases 1 to 4 name the exact test steps their exit criteria need, including tests still to be added (NFR-3, joining a running Refresh, a deployed smoke test); TP-08 moves to Phase 2's exit; the GraphQL call is in Phase 3's "Before it starts"; Phase 4 adds secrets, rollback, backups, and the pages Google requires; D-3 covers the database and domain and drops Vercel; R-1, R-2, R-3, R-9, and R-12 updated, and R-13 (hosting cost) added. |
 | 2026-10-25 | Deploy at the end of every phase, from the Team Lead: Phases 1 to 3 end with a private deploy to a free test host (Koyeb free plus Neon free, decided in D-3), with HTTPS, secrets, CI deploys and rollback, and a nightly encrypted backup set up in Phase 1 (new step 6 and exit criterion). NFR-1 is measured once the test server is awake and checked on the Phase 4 host. Phase 2 pauses polling in hidden tabs. Phase 4 becomes "Polish and publish" and M5 "Published". R-13 now starts in Phase 4; added R-14 (tokens on a live server from Phase 1) and R-15 (a free tier changes or runs out). |
+| 2026-10-25 | Security review: Phase 1 lists what must be done before the test deploy goes live (#17, #19, #20, #25, #26), keeps deploy secrets in a `master`-only Actions environment, says where backups and their key live and that restore and migration copies are deleted, and names step 6's security checks. Risks: potential data breaches are marked Critical; R-2 is owned by Security, and R-14 is rated Medium and limited to the Team Lead's own accounts until #16 and #17. Section 8 adds Security. |

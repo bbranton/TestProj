@@ -15,7 +15,9 @@ Recommended reviewers, from *Who reviews what* in
 [the review protocol](../blob/master/docs/team/review-protocol.md#who-reviews-what).
 The Team Lead ticks each reviewer to run, or ticks *Team Lead review only*.
 
-<!-- One line per reviewer, with why. Add optional reviewers the same way. -->
+<!-- One line per reviewer, with why. Add optional reviewers the same way.
+     Add Security when the PR touches tokens, sign-in, secrets, or student
+     data, and say which. -->
 - [ ] Persona: reason
 - [ ] Team Lead review only
 

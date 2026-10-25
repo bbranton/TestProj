@@ -23,3 +23,11 @@ Lasting lessons for the Management persona. See the
   wants $0 until real users arrive, so test deploys use free tiers (D-3)
   and the paid host waits for Phase 4. Ask DevOps to research free options
   before offering a paid one.
+- A `potential-breach` issue skips the usual triage choices: recommend it as
+  critical, first in the current phase, and fixed before the next deploy.
+  Only the Team Lead can delay it.
+- Before any deploy that puts real tokens online, the roadmap lists its
+  go-live conditions (incident plan, key handling, secret scanning, cookie
+  safety on the host's domain, private secrets and backups). A shared
+  default domain that isn't on the Public Suffix List makes other tenants
+  "same site"; check it when picking a free host.

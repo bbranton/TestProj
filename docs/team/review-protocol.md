@@ -16,7 +16,7 @@ this and brings in any other persona the topic or changes call for.
 | Requirements (`02-requirements.md`) | Product and QA | Architecture | UI/UX, Management |
 | Design (`03-design.md`) | Architecture | Product and QA, Developer | UI/UX, DevOps |
 | Transition plan (major design change) | Architecture | Developer, Product and QA | DevOps, Management |
-| UI specification (`04-ui-specification.md`) | UI/UX | Product and QA, Architecture | |
+| UI specification (`04-ui-specification.md`) | UI/UX | Product and QA, Architecture | Management, when features must be hidden or disabled to fit the release schedule |
 | Test plan (`05-test-plan.md`) | Product and QA | Architecture | Developer, UI/UX, DevOps |
 | Code PR (backend) | Developer | Architecture, Product and QA | DevOps |
 | Code PR (frontend or any UI change) | Developer | Architecture, UI/UX, Product and QA | DevOps |

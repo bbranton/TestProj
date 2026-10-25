@@ -17,7 +17,9 @@ Build only what is listed for the current phase (see the repo's
 [CLAUDE.md](../../CLAUDE.md) and
 [Requirements by phase](02-requirements.md#requirements-by-phase)). The
 Phase 5 sketches are kept as a starting point for later; they are out of
-scope until the Team Lead plans them into a phase.
+scope until the Team Lead plans them into a phase. This table only mirrors the
+requirements index, which Product and QA owns; where they differ, the
+requirements index wins.
 
 | Phase | Screens and workflows |
 |-------|-----------------------|

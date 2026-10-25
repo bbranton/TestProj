@@ -1,9 +1,9 @@
 # Canvas Assignments Portal
 
 The app described in [docs/canvas-portal](../docs/canvas-portal/README.md).
-This is the Phase 0 skeleton: a backend with one health endpoint, and CI
-that runs its tests on every pull request. The frontend arrives once the
-framework is chosen (decision D-1).
+This is the Phase 0 skeleton: a FastAPI backend with one health endpoint,
+a React + TypeScript frontend (built with Vite) with one page, and CI that
+tests both on every pull request.
 
 ## Run the backend locally
 
@@ -21,6 +21,20 @@ uvicorn app.main:app --reload
 Then open <http://localhost:8000/api/health>, which answers
 `{"status": "ok"}`, or <http://localhost:8000/docs> for the API docs that
 FastAPI generates.
+
+## Run the frontend locally
+
+Needs Node.js 22 or newer. In a second terminal:
+
+```sh
+cd canvas-portal/frontend
+npm install
+npm test
+npm run dev
+```
+
+Then open the address Vite prints (usually <http://localhost:5173>). Calls
+to `/api/...` are passed to the backend on port 8000.
 
 ## Settings
 

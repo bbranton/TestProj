@@ -4,8 +4,8 @@
 
 This document describes how the portal is built: its parts, the data it
 stores, how those parts talk to each other, and how each part meets the
-[requirements](02-requirements.md). It is written so that the frontend
-framework (decision D-1) can still be chosen at the end of the design.
+[requirements](02-requirements.md). The frontend framework (decision
+D-1) was chosen after the design: React.
 
 **Scope:** this design covers Phases 0 to 4 only. Phase 5 ideas in the
 requirements and roadmap are not designed here; each gets its design when
@@ -61,10 +61,10 @@ both.
 
 | Area | Choice | Status | Why |
 |------|--------|--------|-----|
-| Frontend framework | React or Svelte | **Open (D-1)**, after design | See section 10 for how the design affects the choice |
-| Frontend language | TypeScript | Proposed | JavaScript with types; catches mistakes before running, much like C++'s compiler does |
-| Frontend build tool | Vite | Proposed | Fast local dev server; works with React and Svelte |
-| Drag and drop | Pragmatic drag and drop (Atlassian), or dnd-kit (React) / svelte-dnd-action (Svelte) | Proposed, follows D-1 | Pragmatic drag and drop is Atlassian's open-source library behind Trello's own drag and drop and works with any framework, which suits G-3. |
+| Frontend framework | React | **Decided (D-1)** | See section 10 for why |
+| Frontend language | TypeScript | Decided with D-1 | JavaScript with types; catches mistakes before running, much like C++'s compiler does |
+| Frontend build tool | Vite | Decided with D-1 | Fast local dev server and build for React |
+| Drag and drop | Pragmatic drag and drop (Atlassian), or dnd-kit | Proposed, chosen in Phase 2 | Pragmatic drag and drop is Atlassian's open-source library behind Trello's own drag and drop and works with any framework, which suits G-3. |
 | Backend | Python 3.12 + FastAPI | **Decided (D-6)** | Short, readable code; generates API docs automatically |
 | Canvas client | `httpx` (Python HTTP library) | Proposed | Async requests, so courses can be fetched in parallel (NFR-2) |
 | Database | Postgres in production, SQLite for local dev and tests | Proposed | Postgres is what hosts offer; SQLite needs no setup |
@@ -590,17 +590,17 @@ UI uses:
 | Open a card | Click: the assignment opens in Canvas in a new tab | FR-26 |
 | Show or hide a course | Tap its button in the row under the header, or Show all / Hide all; the board updates at once. The choice is kept in this browser | FR-78 |
 
-## 10. What this means for D-1 (React or Svelte)
+## 10. Why React (D-1)
 
 Nothing above depends on the framework; the backend and data model are the
 same either way. The frontend's hardest parts are the Trello-style board
 (smooth drag and drop of cards, FR-77) and keeping
 open devices in step without cards jumping (NFR-22).
 
-The Trello goal (G-3) leans toward React. React has the most examples of
+The Trello goal (G-3) led to React. React has the most examples of
 Trello-style boards to learn from, and Pragmatic drag and drop ships extra
-React helpers. Svelte can still do all of it, since Pragmatic drag and drop
-works without a framework, but there are fewer worked examples to copy from.
+React helpers. Svelte could also have done it, but with fewer worked
+examples to copy from.
 
 ## 11. Traceability
 
@@ -680,3 +680,4 @@ possible without reworking what Phases 1 to 4 build:
 | 2026-10-25 | Design now covers Phases 0 to 4 only, from the Team Lead's review: removed Phase 5 tables (notes, checklists), fields, endpoints, routes, components, styles, and interactions; added *Design by phase*, a Phase column in the API table, and section 12, *Leave room for later*. |
 | 2026-10-25 | Keyboard card moves removed (NFR-31). From the Team Lead's review: keyboard actions are not a requirement. |
 | 2026-10-25 | Added *Refresh progress* (FR-16): Refresh runs as a background task tracked in a new `REFRESH_RUN` table, with a progress endpoint and a 30 second request timeout; loading sequence updated. D-6 and D-7 marked decided. |
+| 2026-10-25 | D-1 decided: React with TypeScript and Vite; section 10 now explains the choice. |

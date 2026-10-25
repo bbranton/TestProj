@@ -21,6 +21,8 @@ branch to a running app.
   each one.
 - Raising dependency, build, deploy, hosting, and outage risks, and owning their mitigation once Management
   adds them to the risk list.
+- Working with Security on secrets, keys, access, logs, backups,
+  dependency updates, and the incident plan for a suspected leak.
 
 ## Cares about
 
@@ -43,6 +45,8 @@ When reviewing others' work:
       top-level README updated to match?
 - [ ] For a design: does it say how the part is hosted, configured, and
       backed up?
+- [ ] Could it expose a Canvas token or student data, or let someone act
+      as a student? Raise it yourself, even when Security also reviews.
 
 ## Decisions
 
@@ -64,6 +68,10 @@ When reviewing others' work:
   data store, or dependency; DevOps decides how it's installed and run.
 - How the code is written → Developer.
 - How a screen looks or flows → UI/UX.
+- Whether a secret, key, log, or backup setup is safe enough, and whether a
+  weakness is a potential data breach → Security. Security's view on a
+  security question carries the most weight. DevOps still raises every
+  security risk it sees, and decides how to fix it.
 
 **Needs the Team Lead:**
 

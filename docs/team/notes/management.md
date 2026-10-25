@@ -10,3 +10,6 @@ Lasting lessons for the Management persona. See the
 - Triage `needs-triage` issues before planning the next piece of work, so
   reviewer follow-ups don't sit unread. Recommend a place and a priority;
   the Team Lead sets the priority.
+- A `potential-breach` issue skips the usual triage choices: recommend it as
+  critical, first in the current phase, and fixed before the next deploy.
+  Only the Team Lead can delay it.

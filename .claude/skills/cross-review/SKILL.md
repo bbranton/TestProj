@@ -44,7 +44,7 @@ reviewer.
    IDs and test coverage, `ci-paths` for whether CI runs.
 3. For work you find that is outside this PR, open a GitHub issue that
    links the PR, with the owning persona's `persona: <name>` label and
-   `needs-triage`, and log it as a finding with status "Moved to #issue".
+   `needs-triage` (plus `potential-breach` when Security marks it one), and log it as a finding with status "Moved to #issue".
    See [Follow-up work](../../../docs/team/review-protocol.md#follow-up-work).
 4. Post one PR review headed with your persona and verdict, such as
    "**DevOps review: Changes needed**", with findings as inline comments.

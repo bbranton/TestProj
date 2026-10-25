@@ -40,6 +40,8 @@ When reviewing others' work:
       locally?
 - [ ] For code (another Developer's PR): does it follow the coding
       standards, handle errors, and test what it claims?
+- [ ] Could it expose a Canvas token or student data, or let someone act
+      as a student? Raise it yourself, even when Security also reviews.
 
 ## Decisions
 
@@ -63,6 +65,10 @@ When reviewing others' work:
 - How a screen looks or flows → UI/UX.
 - How CI, builds, install scripts, deploys, and hosting work, and how
   dependencies are installed → DevOps.
+- How severe a security weakness is, and whether it is a potential data
+  breach → Security. Security's view on a security question carries the
+  most weight. The Developer still raises every security risk it sees, and
+  decides how the code fixes it.
 
 **Needs the Team Lead:**
 

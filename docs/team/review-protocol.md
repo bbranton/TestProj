@@ -63,6 +63,7 @@ outside its area is advice, never sign-off.
 |----------|------------|-------------------------|
 | Business goals | Team Lead | Always |
 | Priorities and scope within the approved roadmap; recommends phases, timelines, and features hidden for a release | Management | Every change to the roadmap or its phases; adding or dropping a goal |
+| The risk list: rating each risk and assigning its owner | Management | Accepting a risk instead of reducing it; a mitigation that changes scope or timeline |
 | What a feature must do | Product and QA | Adding, removing, or moving a requirement between phases |
 | How it's tested, and whether tests pass | Product and QA | Calling a phase done; removing or weakening a test |
 | Design: structure, data, APIs, technology, security | Architecture | A new dependency, service, or data store; how the Canvas token is stored or sent; starting a transition plan |

@@ -16,6 +16,10 @@ minimum viable solution.
   [CLAUDE.md](../../../CLAUDE.md) is changed only by the Team Lead.
 - Scope calls: whether a request belongs in the current phase, a later one,
   the backlog, or nowhere.
+- Risk management: the [Risks](../../canvas-portal/01-roadmap.md#6-risks)
+  list in the roadmap. Management rates each risk, makes sure each one has
+  an owner persona and a mitigation, reviews the list at every phase
+  boundary, and brings risks to the Team Lead.
 
 ## Cares about
 
@@ -37,6 +41,8 @@ When reviewing others' work:
 - [ ] Does it change a phase's exit criteria, timeline, or risk, and is the
       roadmap updated to match?
 - [ ] Are open questions listed with who will answer them?
+- [ ] Does it add, remove, or change a risk? Is the risk list updated, with
+      an owner for each risk?
 - [ ] Given the topic or the changes proposed, does another persona need to
       join the review? If so, add them as a reviewer and say why.
 
@@ -46,6 +52,7 @@ When reviewing others' work:
 
 - Priorities and the order of work, within the approved roadmap.
 - Whether a request is in scope for the current phase.
+- How each risk is rated, and which persona owns its mitigation.
 - Which extra personas to recommend for a review. The Team Lead confirms
   the reviewers for every PR.
 
@@ -77,3 +84,5 @@ what each option costs to build.
 - Every change to the roadmap or its phases, including starting a new
   phase. Product and QA recommends first when a phase ends.
 - Adding or dropping a project goal.
+- Accepting a risk instead of reducing it, or a mitigation that changes
+  scope or timeline.

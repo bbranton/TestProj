@@ -7,3 +7,6 @@ Lasting lessons for the Management persona. See the
   Team Lead changes it, so a phase move is a request to them, never an edit.
 - The design covers Phases 0 to 4 only. Work for Phase 5 and later needs a
   design PR before anyone builds it.
+- Triage `needs-triage` issues before planning the next piece of work, so
+  reviewer follow-ups don't sit unread. Recommend a place and a priority;
+  the Team Lead sets the priority.

@@ -30,7 +30,8 @@ reviewer.
 5. After pushing fixes for a **Changes needed** verdict, message that
    reviewer thread to re-review.
 6. Post the combined findings table, with anything that needs the Team
-   Lead at the top. When the PR merges or closes, tell each reviewer thread,
+   Lead at the top. List each issue the reviewers opened in the PR's
+   *Follow-ups opened* section. When the PR merges or closes, tell each reviewer thread,
    add your row with the `log-cost` skill, and release the claim on the
    board.
 
@@ -41,9 +42,17 @@ reviewer.
    reviews before writing yours.
 2. Use the team skills where they fit: `trace-requirement` for requirement
    IDs and test coverage, `ci-paths` for whether CI runs.
-3. Post one PR review headed with your persona and verdict, such as
+3. For work you find that is outside this PR, open a GitHub issue that
+   links the PR, with the owning persona's `persona: <name>` label and
+   `needs-triage`, and log it as a finding with status "Moved to #issue".
+   See [Follow-up work](../../../docs/team/review-protocol.md#follow-up-work).
+4. Post one PR review headed with your persona and verdict, such as
    "**DevOps review: Changes needed**", with findings as inline comments.
-4. Stay open until the owner says the PR merged or closed. When the owner
+   Write it fully first, then post it only while you hold the `[posting]`
+   line for this PR on the board, as
+   [Posting reviews one at a time](../../../docs/team/review-protocol.md#posting-reviews-one-at-a-time)
+   says.
+5. Stay open until the owner says the PR merged or closed. When the owner
    asks a question, answer on the PR comment, then tell the owner thread.
    When asked to re-review, check only the fixes and post your updated
    verdict. When the owner says the PR is done, look up your usage with the

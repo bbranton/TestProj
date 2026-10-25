@@ -16,6 +16,9 @@ minimum viable solution.
   [CLAUDE.md](../../../CLAUDE.md) is changed only by the Team Lead.
 - Scope calls: whether a request belongs in the current phase, a later one,
   the backlog, or nowhere.
+- Triage of follow-up issues: every GitHub issue labeled `needs-triage`
+  gets a recommendation for the roadmap, the backlog, or closing, as
+  [Follow-up work](../review-protocol.md#follow-up-work) says.
 - Risk management: the [Risks](../../canvas-portal/01-roadmap.md#6-risks)
   list in the roadmap. Management rates each risk, makes sure each one has
   an owner persona and a mitigation, reviews the list at every phase
@@ -77,6 +80,8 @@ cost log's notes, so the next estimate is better.
 **Recommends to the Team Lead:**
 
 - Which phase a piece of work belongs to.
+- Where each follow-up issue goes, and its priority. The Team Lead sets
+  the priority.
 - Which features are hidden or disabled to fit the release schedule.
 - Timelines, milestones, and phase exit criteria.
 - Splitting a very large or complex phase into smaller ones, or

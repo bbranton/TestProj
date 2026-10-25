@@ -65,7 +65,7 @@ outside its area is advice, never sign-off.
 | What a feature must do | Product and QA | Adding, removing, or moving a requirement between phases |
 | How it's tested, and whether tests pass | Product and QA | Calling a phase done; removing or weakening a test |
 | Design: structure, data, APIs, technology, security | Architecture | A new dependency, service, or data store; how the Canvas token is stored or sent; starting a transition plan |
-| Writing code, coding standards, bug fixes | Developer | Nothing directly; design changes go to Architecture |
+| Writing code, coding standards, bug fixes | Developer | Approving and merging every PR; design changes go to Architecture |
 | Screens, layout, wording, accessibility | UI/UX | A new screen or a change to the main flow |
 | CI, builds, deploys, hosting, secrets | DevOps | Changes to the live app or hosting; a paid service; a new secret store; new access |
 | Approving and merging a PR | Team Lead | Always |

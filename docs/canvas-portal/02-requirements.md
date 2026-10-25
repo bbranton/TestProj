@@ -95,7 +95,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-23 | Status is shown exactly as Canvas reports it, with nothing worked out by the portal. The submission state (Canvas field `workflow_state`) is one of *Not submitted*, *Submitted*, *Graded*, or *Pending review*. Canvas's own *Late*, *Missing*, and *Excused* flags (fields `late`, `missing`, `excused`) show as separate tags, because they can apply at the same time as a state, such as Graded and Late. | Must | 1 |
 | FR-27 | Statuses the portal works out by combining Canvas fields or comparing with the clock, such as *Upcoming*, *Due soon* (for example within 48 hours, with a yellow badge), and *Overdue*. They need clear rules for cases that overlap. | Could | 5 |
 | FR-24 | The user can filter by course, by Canvas submission state and flags (FR-23), and search by assignment name. | Should | 1 |
-| FR-25 | The user can hide assignments Canvas reports as *Graded* or *Excused* (on by default). | Should | 1 |
+| FR-25 | The user can hide assignments, for example those Canvas reports as *Graded* or *Excused*. | Could | 5 |
 | FR-26 | Each assignment links to its page in Canvas, opening in a new tab. | Must | 1 |
 
 ### 4.4 Kanban board
@@ -232,3 +232,4 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | 2026-10-25 | NEW badge removed from FR-34; added FR-79 (show new and updated assignments) as a Phase 5 future feature, from the Team Lead's review. |
 | 2026-10-25 | *Due soon* status moved out of FR-23 into new FR-27, a Phase 5 future feature, from the Team Lead's review. |
 | 2026-10-25 | FR-23 now shows only statuses that map to a single Canvas field (submission state plus Late, Missing, Excused flags). Upcoming and Overdue join Due soon in FR-27 as Phase 5 future features. FR-24, FR-25, FR-65, and FR-72 updated to match. From the Team Lead's review. |
+| 2026-10-25 | Hiding assignments (FR-25) moved to Phase 5, from the Team Lead's review. |

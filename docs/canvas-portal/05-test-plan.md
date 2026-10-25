@@ -153,21 +153,21 @@ steps, and the expected result. Screen IDs refer to the
 | Step | Action | Expected |
 |------|--------|----------|
 | 1 | In Canvas, open each current course's Assignments page | Note the assignments, due dates, and points |
-| 2 | In the portal, open S-3 with "Hide finished" off | Same courses (no ended ones) and same assignments |
+| 2 | In the portal, open S-3 | Same courses (no ended ones) and same assignments |
 | 3 | Compare due dates | Match, shown in your local time zone |
 | 4 | Check one assignment of each state, and any marked Late, Missing, or Excused | Labels and tags match what Canvas shows on its own assignment page |
 | 5 | Select ↗ on any assignment | Its Canvas page opens in a new tab |
 
 ### TP-04 Filters and search
 
-**Checks:** FR-24, FR-25, FR-78 · **Phase:** 1 (steps 5 to 7 on the board from Phase 2)
+**Checks:** FR-24, FR-78 · **Phase:** 1 (steps 5 to 7 on the board from Phase 2)
 
 | Step | Action | Expected |
 |------|--------|----------|
 | 1 | Select one course | Only that course's assignments are listed |
 | 2 | Set Status to Not submitted | Only that course's assignments Canvas reports as not submitted |
 | 3 | Type part of an assignment name | List narrows as you type |
-| 4 | Clear filters; toggle "Hide finished" | Graded and excused assignments hide and show |
+| 4 | Clear the filters | Every assignment is listed again |
 | 5 | Tap one course's button in the row under the header, then tap it again | Its assignments hide, then come back; the button shows hidden (○) and shown (●) |
 | 6 | Hide two courses, then select Show all | Every course is shown |
 | 7 | Select Hide all | No assignments shown; the page says all courses are hidden and offers Show all |
@@ -324,3 +324,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | NEW badge removed from the FR-34 test and TP-08 step 2. |
 | 2026-10-25 | Due soon removed from fixtures and status tests (Phase 5, FR-27). |
 | 2026-10-25 | Status tests now check the direct mapping of Canvas fields (FR-23); fixtures cover every state and flag. |
+| 2026-10-25 | "Hide finished" steps removed from TP-03 and TP-04; hiding assignments is Phase 5 (FR-25). |

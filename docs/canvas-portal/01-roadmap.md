@@ -71,7 +71,7 @@ The smallest thing that is useful: connect, then see everything that's due.
   FR-14), handling Canvas's paging and rate limits.
 - Dashboard shows courses and an upcoming-assignments list sorted by due date,
   with filters by course and status, each assignment drawn as a Trello-style
-  card (FR-20 to FR-25, FR-65).
+  card (FR-20 to FR-24, FR-26, FR-65).
 - Each assignment links back to its Canvas page (FR-26).
 - Clear error messages for a bad token, an expired token, or Canvas being
   unreachable (FR-6, NFR-20).
@@ -144,6 +144,7 @@ accessibility checks pass.
   Canvas assignment, and "+ Add another list" adds lists; lists can also be
   archived (FR-71, FR-64, FR-36).
 - Quick edit menu on each card: pencil button or right-click (FR-69).
+- Hide assignments, such as graded or excused ones (FR-25).
 - Statuses the portal works out itself, such as *Upcoming*, *Due soon* (with a
   yellow badge), and *Overdue* (FR-27).
 - Show which assignments are new or were updated in Canvas since the
@@ -210,3 +211,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | Added FR-79 (new and updated assignment indicators) to Phase 5. |
 | 2026-10-25 | Added FR-27 (Due soon status) to Phase 5. |
 | 2026-10-25 | FR-27 in Phase 5 now covers all computed statuses (Upcoming, Due soon, Overdue). |
+| 2026-10-25 | Hiding assignments (FR-25) moved from Phase 1 to Phase 5. |

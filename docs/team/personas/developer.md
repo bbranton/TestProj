@@ -63,5 +63,7 @@ When reviewing others' work:
 
 **Needs the Team Lead:**
 
-- Nothing directly. Anything that needs the Team Lead goes through the
-  persona that owns it, such as Architecture for a new dependency.
+- Approving and merging every PR. The Developer recommends; only the Team
+  Lead approves.
+- Anything else that needs the Team Lead goes through the persona that owns
+  it, such as Architecture for a new dependency.

@@ -87,7 +87,7 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | FR-6 | `401` from Canvas returns "reconnect" and leaves board and notes untouched | API, E2E |
 | FR-10, FR-11 | Only active courses and their assignments are returned | API |
 | FR-12 | All 120+ assignments returned from a two-page fixture | API |
-| FR-14 | Second request within 5 minutes makes no Canvas call | API |
+| FR-14, FR-15 | Loading the board with saved data makes no Canvas call, however old the data; the first ever load fetches; Refresh fetches; data over an hour old comes back flagged so the frontend highlights Refresh | API, E2E |
 | FR-21, FR-38 | Sort order: soonest first, no-due-date last, ties by name; applies to every list | Unit |
 | FR-23 | Each Canvas `workflow_state` maps to its label, and the late, missing, and excused flags show as tags, including together with a state | Unit |
 | FR-24 (Phase 5) | Course, Canvas state and flag, and search filters | E2E |
@@ -105,9 +105,9 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | FR-54 | Delete removes every row for the user | API |
 | NFR-10 | Logs captured during a full test run contain no token string | API |
 | NFR-12 | User B gets `404` for every one of user A's cards and notes | API |
-| NFR-1, NFR-2 | Fixture server adds 1 second to every Canvas response: with a warm cache the board answers in under 2 seconds and refreshes in the background; a cold load of 8 courses and 200 assignments finishes in 15 seconds, with courses appearing one at a time | API, E2E |
+| NFR-1, NFR-2 | Fixture server adds 1 second to every Canvas response: with saved data the board answers in under 2 seconds and makes no Canvas call; a cold load of 8 courses and 200 assignments finishes in 15 seconds, with courses appearing one at a time | API, E2E |
 | FR-39, FR-45 | Replays every change sequence fixture and checks each card's list, fields, sort place, and archived flag after every step; a cut-off fetch changes nothing; no card is ever deleted | API |
-| NFR-4 | With the background job on and a fixture changed (new assignment, new due date, newly graded), the board shows each change within one job cycle without Refresh; the job backs off when the fixture reports a low rate-limit budget | API |
+| NFR-4 (Phase 5) | With background sync on and a fixture changed (new assignment, new due date, newly graded), the board shows each change within one job cycle without Refresh; the job backs off when the fixture reports a low rate-limit budget | API |
 | NFR-20 | Canvas down: cached data plus warning banner | API, E2E |
 | NFR-22 | Concurrency: 20 parallel moves of one card leave it in exactly one list; `changes?since=` returns every change once; two parallel board loads with a new assignment create one card; two browser sessions converge within one poll | API, E2E |
 | NFR-31 | Move a card using only the keyboard | E2E |
@@ -234,7 +234,7 @@ steps, and the expected result. Screen IDs refer to the
 
 ### TP-08 Canvas changes reach the board
 
-**Checks:** FR-34, FR-35, FR-38, FR-45, FR-65, NFR-4 · **Phase:** 2–3 (from Phase 3, also without pressing Refresh; TP-15 covers Phase 3 in depth)
+**Checks:** FR-34, FR-35, FR-38, FR-45, FR-65 · **Phase:** 2–3 (TP-15 covers Phase 3 in depth)
 **Needs:** recorded data in local environment, edited between steps.
 
 | Step | Action | Expected |
@@ -334,20 +334,21 @@ the backend's Canvas timing log.
 | 1 | Clear the portal's cache; open the board | Courses appear one at a time; record the total time until the last one |
 | 2 | From the timing log, record the number of courses, assignments, requests, and the slowest request | Written in the results log |
 | 3 | Reload the board | Shows within 2 seconds from the cache (NFR-1) |
-| 4 | Wait past 5 minutes; reload | Old data shows at once with "Updating..."; the board stays usable while it refreshes |
+| 4 | Wait more than an hour; reload | Old data shows at once, Refresh is highlighted, and nothing is fetched until Refresh is selected; during the Refresh the board stays usable |
 | 5 | Repeat step 1 on a weekday evening, when Canvas is busiest | Record the time. In Phase 3, if any run misses 15 seconds (NFR-2), apply the next fix in the design's *Phase 3 tuning* list and rerun |
 
 Record times only, never the token or assignment names, in the results log.
 
 ### TP-15 Canvas changes over time
 
-**Checks:** FR-23, FR-34, FR-35, FR-38, FR-39, FR-45, NFR-4, Q-7 · **Phase:** 3
+**Checks:** FR-15, FR-23, FR-34, FR-35, FR-38, FR-39, FR-45, Q-7 · **Phase:** 3
 **Needs:** a Canvas course where the Team Lead can act as teacher (a free
 Canvas account from Instructure works), a student account enrolled in it,
-and the portal with background refresh on.
+and the portal.
 
-Run every step as teacher in Canvas, then wait for the background refresh
-(no Refresh button) and check the student's board.
+Run every step as teacher in Canvas, then select Refresh on the student's
+board and check it. Before each Refresh, check that the board has not
+changed on its own (FR-15).
 
 | Step | Teacher does in Canvas | Expected on the student's board |
 |------|------------------------|---------------------------------|
@@ -412,3 +413,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | Whole-plan review: TP-02, TP-12, TP-13, and the FR-78 and NFR-34 tests now mark Phase 5 steps. |
 | 2026-10-25 | TP-01 checks sign-in (FR-50) and the saved connection on a second device, now that both are Phase 1. |
 | 2026-10-25 | Added an FR-80 test (minimize, expand, and width fitting) and TP-06 step 13 (dropping on a minimized list). |
+| 2026-10-25 | Refresh is manual (FR-15): tests check that loading never fetches and that Refresh is highlighted after an hour; TP-15 uses Refresh instead of waiting for background sync; NFR-4 test is Phase 5. |

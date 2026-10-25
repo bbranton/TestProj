@@ -83,7 +83,8 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-11 | The backend fetches assignments for each active course, including the user's submission status (`GET /api/v1/courses/:id/assignments?include[]=submission`). | Must | 1 |
 | FR-12 | The backend follows Canvas paging so no courses or assignments are missed. | Must | 1 |
 | FR-13 | The user can refresh data on demand; the page shows when data was last fetched. | Must | 1 |
-| FR-14 | The backend caches Canvas responses for a short time (default 5 minutes) to stay inside rate limits. | Should | 1 |
+| FR-14 | The backend keeps the last complete copy of the student's Canvas data and shows it on every load, so opening the board never waits on Canvas. | Must | 1 |
+| FR-15 | The portal fetches from Canvas only when the student selects Refresh, or on the very first load when there is no data yet. It never starts a fetch on its own. When the data is more than an hour old, the Refresh button is highlighted and the page says the data may be out of date. | Must | 1 |
 
 ### 4.3 Viewing courses and assignments
 
@@ -172,7 +173,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | NFR-1 | With cached data, the board is usable within 2 seconds of opening. | 1 |
 | NFR-2 | For an account with 8 courses and 200 assignments, a full refresh from Canvas completes within 15 seconds, with courses appearing as they arrive. | 3 |
 | NFR-3 | Dragging a card responds within 100 ms. | 2 |
-| NFR-4 | Changes made in Canvas (a new or removed assignment, a new due date, a new submission state) show on the board within 15 minutes, without the student pressing Refresh. | 3 |
+| NFR-4 | Background sync (future): changes made in Canvas show on the board within 15 minutes without the student pressing Refresh, including refreshing while they are signed out. | 5 |
 
 ### 5.2 Security and privacy
 
@@ -253,3 +254,4 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | 2026-10-25 | Whole-plan review: rows in each table put in ID order, FR-45 moved to the board section (it is Canvas sync, not notes), scope mentions Canvas sync and notes as a future feature, "dashboard" now "board", FR-66 automatic colors in Phase 1 with custom colors in Phase 5, Q-1 answered. |
 | 2026-10-25 | Sign-in (FR-50) moved to Phase 1; FR-5 now always stores the connection with the account (and is Must); NFR-11 simplified. From the Team Lead. |
 | 2026-10-25 | Added FR-80 (minimize and expand lists; expanded lists share the width; empty lists start minimized), Phase 1; FR-61 now fits lists to the width instead of a fixed width, and moves to Phase 1. From the Team Lead's review. |
+| 2026-10-25 | Canvas fetches are manual, from the Team Lead's review: added FR-15 (fetch only on Refresh or the first load; highlight Refresh when data is over an hour old), FR-14 now keeps the last complete copy, and background sync (NFR-4) moves to Phase 5. |

@@ -371,11 +371,11 @@ only), and `SameSite=Lax` (other sites can't trigger requests with it).
   `X-Rate-Limit-Remaining` header and answers `403` with "Rate Limit Exceeded"
   when it runs out. The client fetches at most 4 courses at once and waits and
   retries with increasing delays when limited.
-- **Caching (FR-14):** results are stored in `CANVAS_CACHE`. A page load
-  always gets the cached copy at once; if it is older than 5 minutes, a
-  refresh starts in the background (see *Never wait on Canvas* below).
-  *Refresh* starts one regardless of age. If Canvas fails, the last cached
-  data stays, with a warning flag (NFR-20).
+- **Last complete copy (FR-14):** results are stored in `CANVAS_CACHE`. A
+  page load always gets that copy at once and never fetches from Canvas,
+  except on the very first load when there is no copy yet (FR-15). Only
+  *Refresh* fetches. If Canvas fails, the last copy stays, with a warning
+  flag (NFR-20).
 
 ### Making Canvas loads fast (NFR-1, NFR-2, R-3)
 
@@ -386,12 +386,14 @@ the start, and Phase 3 tuning that starts from the Phase 1 timings
 
 **Built from the start**
 
-- **Never wait on Canvas.** If there is any cached data, `GET /api/assignments`
-  returns it at once, even if it is old, and starts a refresh in the
-  background. The response says a refresh is running, the page shows
-  "Updating...", and it checks back until the refresh finishes. Only the
-  first ever load waits for Canvas. (This pattern is called
-  *stale-while-revalidate*.)
+- **Never wait on Canvas.** If there is any saved data, `GET /api/assignments`
+  returns it at once, with the time it was fetched. Only the first ever
+  load waits for Canvas.
+- **Refresh only when asked (FR-15).** The portal never starts a fetch on
+  its own. When the data is more than an hour old, the frontend highlights
+  the Refresh button and the header says "Updated 3 hours ago, refresh for
+  the latest". While a Refresh runs, the board stays usable, the button
+  shows progress, and the page checks back until it finishes.
 - **Show results as they arrive.** Courses fill in one by one instead of
   the page staying empty (NFR-2).
 - **Fewer, larger requests.** `per_page=100` on every list, and up to 4
@@ -415,28 +417,24 @@ the start, and Phase 3 tuning that starts from the Phase 1 timings
 2. **Leave descriptions out of the list.** Descriptions are often the
    largest part of each assignment. With GraphQL they can be skipped in the
    main load and fetched for one assignment when its card back opens (FR-28).
-3. **Refresh on a schedule** (part of the Phase 3 background job below). A backend job refreshes each user's data every
-   15 minutes or so, so a visit almost always finds fresh data and the slow
-   fetch happens while nobody is watching.
-4. **Refresh by urgency.** Assignments due in the next two weeks refresh
-   often; ones far in the future, or already graded, refresh less often.
-5. **Planner API** (`/api/v1/planner/items`), which lists due items across
+3. **Nearest due dates first.** A Refresh fetches the courses with the
+   soonest due dates first, so the cards that matter most update first.
+   Nothing is archived until the whole Refresh completes (FR-45).
+4. **Planner API** (`/api/v1/planner/items`), which lists due items across
    all courses in one paged list. It has fewer fields, so it's a fallback if
    GraphQL is not available at the school.
 
-### Keeping the backend in step with Canvas (Phase 3, NFR-4)
+### Bringing the backend in step with Canvas (Phase 3)
 
-Canvas can't tell the portal when something changes, so the backend checks
-on its own schedule.
+Canvas can't tell the portal when something changes, so each Refresh does
+the checking (FR-15).
 
-- **A background job per student** refreshes their Canvas data: every 15
-  minutes for assignments due in the next two weeks, less often for the
-  rest, and daily for the course list (to catch a new term or a dropped
-  course).
-- **Find what changed:** the job compares the new data with the last
+- **One Refresh at a time per student.** A Refresh started from a second
+  device while one is running joins the running one.
+- **Find what changed:** the Refresh compares the new data with the last
   complete copy, by Canvas ID, field by field (see *What can change in
   Canvas* below).
-- **Only a complete fetch counts:** the job keeps the new data only if every
+- **Only a complete fetch counts:** the Refresh keeps the new data only if every
   course and every page arrived. A timeout, a rate-limit stop, or an error
   halfway leaves the previous copy in place, so a missing page can never
   look like deleted assignments (FR-45).
@@ -445,13 +443,18 @@ on its own schedule.
   and the rest only update what the card shows (FR-35). The board's
   `change_seq` goes up, so the student's open devices pick the changes up on
   their next check (NFR-22).
-- **Stay within the rate limit:** jobs share a per-student request budget
-  and back off when `X-Rate-Limit-Remaining` runs low (C-2). Students who
-  haven't visited in a week are refreshed only daily, and only when they
-  visit after a month.
-- **Token problems:** if Canvas rejects the token, the job stops for that
-  student and the board shows the reconnect message on their next visit
-  (FR-6).
+- **Stay within the rate limit:** the Refresh backs off when
+  `X-Rate-Limit-Remaining` runs low (C-2).
+- **Token problems:** if Canvas rejects the token, the Refresh stops and the
+  board shows the reconnect message (FR-6).
+
+**Background sync is a Phase 5 idea (NFR-4).** Leaving it out keeps the
+design much simpler: there is no scheduler or always-running worker to
+build and host, no per-student schedules or shared request budgets, no
+background fetch competing with a student's own Refresh, and the stored
+token is only ever used while the student is there and asking. Everything
+in *What can change in Canvas* below is needed either way, so adding
+background sync later reuses the same Refresh code on a timer.
 
 ### What can change in Canvas (Phase 3, FR-39, FR-45)
 
@@ -500,7 +503,7 @@ sequenceDiagram
     A->>D: Look up user, cache
     alt any cached copy exists
         D-->>A: cached assignments, returned at once
-        Note over A: If older than 5 minutes, the steps below run in the background
+        Note over A: Nothing is fetched. The page shows the age and highlights Refresh if older than 1 hour
     else first ever load
         A->>D: Load and decrypt Canvas token
         A->>C: GET courses (follow pages)
@@ -639,7 +642,7 @@ works without a framework, but there are fewer worked examples to copy from.
 | FR-40 to FR-46 (notes) | Sections 3, 4, 9 |
 | FR-60 to FR-78 (Trello-style, course buttons) | Sections 3, 4, 9 |
 | FR-50 to FR-54 (accounts, data) | Sections 4, 5 |
-| NFR-1 to NFR-4 (performance, Canvas freshness) | Sections 3 (sorting, list positions), 6 (caching, parallel fetch, making Canvas loads fast, keeping the backend in step with Canvas) |
+| NFR-1 to NFR-4 (performance; NFR-4 is Phase 5) | Sections 3 (sorting, list positions), 6 (caching, parallel fetch, making Canvas loads fast, bringing the backend in step with Canvas) |
 | NFR-10 to NFR-14 (security) | Section 7 |
 | NFR-20 to NFR-22 (reliability, sync) | Sections 3, 4 (keeping devices in sync), 6 |
 | NFR-30 to NFR-35 (usability, Trello style) | Sections 2, 9, wireframes |
@@ -680,3 +683,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | Export endpoint marked Phase 5. |
 | 2026-10-25 | Whole-plan review: caching and the loading sequence now match *Never wait on Canvas*; card back, board menu, filter, and shortcuts marked Phase 5 in routes, components, style, and interactions; until Phase 5 a click opens the assignment in Canvas; section 10 updated. |
 | 2026-10-25 | Lists fill the board width and can be minimized (FR-80): visual style, list header component, and interaction table updated. |
+| 2026-10-25 | Refresh is manual (FR-15): caching and *Never wait on Canvas* no longer fetch on their own; the background job section is now *Bringing the backend in step with Canvas*, run by each Refresh; background sync is Phase 5 (NFR-4), with what leaving it out saves. |

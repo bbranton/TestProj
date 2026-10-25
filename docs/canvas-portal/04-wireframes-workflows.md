@@ -36,8 +36,11 @@ sits on the board's background color:
 +--------------------------------------------------------------------------+
 | Canvas Portal  My assignments                               [⟳] [⋯] (A)  |
 +--------------------------------------------------------------------------+
-  [⟳] refreshes from Canvas; hovering shows "Updated 3 min
-  ago". [⋯] opens S-9. (A) is the account menu: Settings, Sign out.
+  [⟳] refreshes from Canvas; hovering shows "Updated 3 min ago". The
+  portal never refreshes on its own (FR-15): when the data is more than an
+  hour old, [⟳] is highlighted and the header says "Updated 3 hours ago,
+  refresh for the latest". During a refresh [⟳] spins and the board stays
+  usable. [⋯] opens S-9. (A) is the account menu: Settings, Sign out.
 ```
 
 ## 2. Screens
@@ -373,12 +376,15 @@ flowchart TD
 flowchart TD
     A([Open portal on any device]) --> B{Signed in?}
     B -- no --> C[S-1 Sign in] --> D
-    B -- yes --> D[Load cached data, page usable<br/>within 2 s, NFR-1]
-    D --> E{Cache older<br/>than 5 min?}
-    E -- yes --> F[Refresh from Canvas in background]
-    E -- no --> G[Show data]
+    B -- yes --> D[Show the last data, page usable<br/>within 2 s, NFR-1]
+    D --> E{Data older<br/>than 1 hour?}
+    E -- yes --> K[Highlight Refresh:<br/>'Updated 3 hours ago']
+    E -- no --> G[Board ready]
+    K --> G
+    G --> L{Student selects Refresh?}
+    L -- yes --> F[Fetch from Canvas;<br/>courses fill in, board stays usable]
     F --> H{Canvas OK?}
-    H -- yes --> G
+    H -- yes --> M[Board updated,<br/>highlight cleared]
     H -- token rejected --> I[S-2 with expired-token message]
     H -- down or rate limited --> J[Show cached data<br/>with warning banner]
 ```
@@ -509,3 +515,4 @@ flowchart TD
 | 2026-10-25 | Export marked Phase 5 on S-6 and W-6. |
 | 2026-10-25 | Whole-plan review: S-1 no longer promises notes, S-4 and the phone layout mark notes, the filter menu, and the card back as Phase 5. |
 | 2026-10-25 | Lists can be minimized and expanded (FR-80): S-4 redrawn with Done minimized and the other lists sharing the width; empty lists start minimized; phone layout skips minimized lists. From the Team Lead's review. |
+| 2026-10-25 | Header legend and W-2 now show manual Refresh: no automatic fetch, Refresh highlighted when data is over an hour old (FR-15), from the Team Lead's review. |

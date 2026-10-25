@@ -127,9 +127,11 @@ pass.
 
 ### Phase 3: Performance and Canvas sync
 
-This phase makes loading fast and keeps the portal's copy of Canvas data
-current, so the student never waits on Canvas or has to press Refresh. It
-starts from the TP-14 timings recorded in Phase 1.
+This phase makes Refresh fast and makes sure every Refresh brings the
+portal's copy of Canvas data fully in step with Canvas. Refresh stays
+manual: the portal never fetches on its own, and highlights Refresh when the
+data is more than an hour old (FR-15). It starts from the TP-14 timings
+recorded in Phase 1.
 
 Keeping the backend in step with Canvas is the hardest part of the whole
 project and gets the most testing. Teachers create, delete, and change
@@ -138,26 +140,26 @@ added later, changed, or cleared again; and a fetch can fail halfway. Every
 one of these cases has a planned outcome in the design (*What can change in
 Canvas*) and a test (TP-15).
 
-- Tune loading, working through the design's list in order: Canvas GraphQL,
-  descriptions left out of the main load, refresh on a schedule and by
-  urgency, then the Planner API as a fallback (NFR-1, NFR-2, R-3).
-- A background job keeps each student's Canvas data current: new, changed,
-  and removed assignments, new due dates and submission states, and course
-  changes such as a new term (FR-13, FR-34, FR-35, FR-45, NFR-4).
+- Tune Refresh, working through the design's list in order: Canvas
+  GraphQL, descriptions left out of the main load, nearest due dates first,
+  then the Planner API as a fallback (NFR-1, NFR-2, R-3).
+- Each Refresh brings in every change: new, changed, and removed
+  assignments, new due dates and submission states, and course changes
+  such as a new term (FR-13, FR-34, FR-35, FR-45).
 - Every kind of Canvas change has a defined result on the board: new,
   deleted, unpublished and republished, renamed, fields added, changed, or
   cleared, submission state going forward or back, and courses ending or
   being dropped (FR-39, FR-45, Q-7).
 - A partial or failed fetch never archives or changes cards (FR-45).
-- Changes the job finds reach the student's open devices through the
+- Changes from a Refresh reach the student's other open devices through the
   Phase 2 sync (NFR-22).
-- The job stays within Canvas's rate limits and slows down for students who
-  haven't visited lately (C-2).
+- A Refresh stays within Canvas's rate limits, and a second Refresh while
+  one is running (for example from another device) joins it instead of
+  starting another (C-2).
 
 **Exit criteria:** TP-14 meets NFR-1 and NFR-2 on the Team Lead's real
-account, including at a busy time; TP-08 passes with Canvas changes showing
-within 15 minutes and no Refresh (NFR-4); every scenario in TP-15 and its
-automated suite passes; a week of background refreshing against the Team
+account, including at a busy time; TP-08 passes; every scenario in TP-15
+and its automated suite passes; a week of daily Refreshes against the Team
 Lead's real account produces no rate-limit errors and no lost, duplicated,
 or wrongly archived cards.
 
@@ -200,6 +202,9 @@ accessibility checks pass.
   shortcuts (FR-24, FR-72, FR-73).
 - Archive and restore cards, as in Trello (FR-74).
 - Export the board and notes as a file (FR-53).
+- Background sync: refresh from Canvas on a schedule, even while the
+  student is signed out, so changes appear without pressing Refresh
+  (NFR-4).
 - More than one board, such as one per course or term, as in Trello (FR-76).
 - Board background choices and the board menu sidebar (FR-75).
 - More than one school per student, such as a high school and a college
@@ -226,7 +231,7 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 |----|----------|---------|----------------|-----------|
 | D-1 | Frontend framework | **React** (largest ecosystem, most tutorials, mature drag-and-drop libraries such as dnd-kit) or **Svelte** (less code, closer to QML's declarative feel, smaller community) | **Postponed** by the Team Lead (2026-10-25) until requirements and design are further along, since the features may change which fits best. Leaning React for learning resources and drag-and-drop support. | End of Phase 0 design |
 | D-2 | Where notes and board layout are stored | **Browser local storage** (no accounts, works offline, but tied to one browser and lost if site data is cleared) or **server database** (follows the user between devices, but needs portal sign-in and more security work) | **Decided** (Team Lead, 2026-10-25): server database. The user should be able to sign in from anywhere and see their saved state. | Done |
-| D-3 | Hosting | Frontend on **GitHub Pages**. Backend on **Render**, **Fly.io**, or **Vercel** serverless functions. All have free or cheap tiers with limits. | Decide in Phase 4; run locally until then. Two needs narrow the choice: the Phase 3 background job needs a host that can run scheduled or always-on jobs (which rules out serverless-only hosting), and the sign-in cookie works best when the frontend and backend share one site, so the backend can also serve the built frontend instead of GitHub Pages. | Phase 4 |
+| D-3 | Hosting | Frontend on **GitHub Pages**. Backend on **Render**, **Fly.io**, or **Vercel** serverless functions. All have free or cheap tiers with limits. | Decide in Phase 4; run locally until then. The sign-in cookie works best when the frontend and backend share one site, so the backend can also serve the built frontend instead of GitHub Pages. If background sync (Phase 5) is added later, the host must also run scheduled jobs. | Phase 4 |
 | D-4 | How users connect to Canvas | **Personal access token** (works today, no school involvement, user must create and paste it) or **OAuth** (smooth sign-in, needs a developer key from the school's Canvas admin) | Token first; OAuth in Phase 5 if a school will issue a key. | Phase 0 |
 | D-5 | Who the app is for | Just the Team Lead, a few friends, or any student at any school | Design for any school (the Canvas URL is a setting), test with one. | Phase 0 |
 | D-6 | Backend language | **Python + FastAPI** (readable, quick to write, good for learning) or **Node.js** (same language as the frontend) | Python + FastAPI. | Phase 0 |
@@ -239,7 +244,7 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 |----|------|--------|------------|
 | R-1 | The school has turned off personal access tokens | Phase 1 can't connect | Check early (Phase 0). Fallback: a free Canvas account from Instructure for testing; OAuth with the school later. |
 | R-2 | Canvas tokens are powerful; a leak exposes a student's whole account | Privacy harm | Backend never logs tokens, stores them encrypted or not at all, and only uses read endpoints (NFR-10, NFR-11). |
-| R-3 | Canvas is slow: in the Team Lead's experience a full load of courses, each with 100+ assignments, can take several minutes, and rate limits slow it further | Students wait or give up | Never make the student wait on Canvas: show cached data and refresh in the background. Measure early with a real account (TP-14 baseline in Phase 1), then in Phase 3 fetch less, in fewer requests, and switch to Canvas GraphQL if needed (see design, *Making Canvas loads fast*). |
+| R-3 | Canvas is slow: in the Team Lead's experience a full load of courses, each with 100+ assignments, can take several minutes, and rate limits slow it further | Students wait or give up | Never make the student wait on Canvas: show the last data at once, refresh only when the student asks, and highlight Refresh when the data is old (FR-15). Measure early with a real account (TP-14 baseline in Phase 1), then in Phase 3 fetch less, in fewer requests, and switch to Canvas GraphQL if needed (see design, *Making Canvas loads fast*). |
 | R-4 | Assignments change in Canvas (renamed, deleted, new due date) | Board shows stale or orphaned cards | Merged into R-9. |
 | R-5 | Learning web development alongside building | Slower progress | Small phases, one new technology at a time, docs explain terms. |
 | R-6 | A school-managed Google account blocks sign-in to outside apps | Student can't sign in | Allow any Google account, so a personal one works; explain this on the sign-in screen. |
@@ -279,3 +284,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | Phase 1: merged the two "opens in Canvas" lines into one clear bullet, from the Team Lead's review. |
 | 2026-10-25 | Google sign-in and the saved Canvas connection (FR-50, FR-5, NFR-11) moved from Phase 2 to Phase 1, from the Team Lead; Phase 2 renamed "Dragging and sync". |
 | 2026-10-25 | Minimize and expand lists (FR-80) added to Phase 1, along with the four lists (FR-31) and width-fitting lists (FR-61); Phase 2 no longer lists them. |
+| 2026-10-25 | Refresh is manual (FR-15), from the Team Lead's review: Phase 3 tunes and verifies Refresh instead of running a background job; background sync (NFR-4) is a Phase 5 idea; D-3 and R-3 updated. |

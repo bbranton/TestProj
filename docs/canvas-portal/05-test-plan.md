@@ -111,6 +111,7 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | NFR-20 | Canvas down: cached data plus warning banner | API, E2E |
 | NFR-22 | Concurrency: 20 parallel moves of one card leave it in exactly one list; `changes?since=` returns every change once; two parallel board loads with a new assignment create one card; two browser sessions converge within one poll | API, E2E |
 | NFR-31 | Move a card using only the keyboard | E2E |
+| NFR-36 | At phone width with touch emulation (no hover), every control and the sync time are visible and work by tap | E2E |
 | FR-60 | Signed-in, connected user lands on the board | E2E |
 | FR-61 | The four lists are always Backlog, To do, In progress, Done; expanded lists fill the width; the board scrolls sideways only below 240 px per list | E2E |
 | FR-80 | Minimizing a list widens the others to fill the board, expanding narrows them; on load, empty lists are minimized and other lists keep their last state; a minimized list shows its card count | E2E |
@@ -197,7 +198,7 @@ steps, and the expected result. Screen IDs refer to the
 
 | Step | Action | Expected |
 |------|--------|----------|
-| 1 | Load the board so data is cached | "Updated just now" |
+| 1 | Select Refresh so data is saved | Header shows "Synced" with the current date and time |
 | 2 | Point the backend's Canvas address at an unreachable host; select Refresh | Warning banner; last data still listed with its time |
 | 3 | Restore the address; select Refresh | Banner goes away; time updates |
 
@@ -414,3 +415,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | TP-01 checks sign-in (FR-50) and the saved connection on a second device, now that both are Phase 1. |
 | 2026-10-25 | Added an FR-80 test (minimize, expand, and width fitting) and TP-06 step 13 (dropping on a minimized list). |
 | 2026-10-25 | Refresh is manual (FR-15): tests check that loading never fetches and that Refresh is highlighted after an hour; TP-15 uses Refresh instead of waiting for background sync; NFR-4 test is Phase 5. |
+| 2026-10-25 | TP-05 checks the sync date and time; added an NFR-36 touch test (no hover). |

@@ -34,13 +34,13 @@ sits on the board's background color:
 
 ```text
 +--------------------------------------------------------------------------+
-| Canvas Portal  My assignments                               [⟳] [⋯] (A)  |
+| Canvas Portal  My assignments      Synced Oct 25, 10:42 AM  [⟳] [⋯] (A)  |
 +--------------------------------------------------------------------------+
-  [⟳] refreshes from Canvas; hovering shows "Updated 3 min ago". The
-  portal never refreshes on its own (FR-15): when the data is more than an
-  hour old, [⟳] is highlighted and the header says "Updated 3 hours ago,
-  refresh for the latest". During a refresh [⟳] spins and the board stays
-  usable. [⋯] opens S-9. (A) is the account menu: Settings, Sign out.
+  "Synced ..." always shows the date and time of the last sync, with
+  nothing hidden behind hover (FR-13, NFR-36). [⟳] refreshes from Canvas.
+  The portal never refreshes on its own (FR-15): when the data is more
+  than an hour old, [⟳] is highlighted. During a refresh [⟳] spins and
+  the board stays usable. [⋯] opens S-9. (A) is the account menu: Settings, Sign out.
 ```
 
 ## 2. Screens
@@ -116,7 +116,7 @@ a later day, with Done empty and minimized.
 
 ```text
 +--------------------------------------------------------------------------+
-| Canvas Portal  My assignments                               [⟳] [⋯] (A)  |
+| Canvas Portal  My assignments      Synced Oct 25, 10:42 AM  [⟳] [⋯] (A)  |
 +--------------------------------------------------------------------------+
 | [Filter] | [● BIO 101] [● HIST 210] [● MATH 152]  [Show all] [Hide all]  |
 +--------------------------------------------------------------------------+
@@ -243,8 +243,9 @@ Requirements: FR-4, FR-53, FR-54.
 
 ### S-7 Quick edit menu (Phase 5, future feature)
 
-Requirements: FR-69. Phase 5. Opens from a ✎ button on hover or by
-right-clicking a card. The card is shown raised, with a menu beside it,
+Requirements: FR-69, NFR-36. Phase 5. Opens from a ✎ button on each card
+(shown on hover on desktop, always shown on touch screens), by
+right-clicking, or by a long press on a phone. The card is shown raised, with a menu beside it,
 as in Trello.
 
 ```text
@@ -324,6 +325,7 @@ The user swipes sideways between lists, and dots show which list is shown.
 ```text
 +----------------------------+
 | ‹  My assignments  [⟳] [⋯] |
+| Synced Oct 25, 10:42 AM    |
 +----------------------------+
 | [⚲] [● BIO] [● HIST] [● MA›|
 +----------------------------+
@@ -378,7 +380,7 @@ flowchart TD
     B -- no --> C[S-1 Sign in] --> D
     B -- yes --> D[Show the last data, page usable<br/>within 2 s, NFR-1]
     D --> E{Data older<br/>than 1 hour?}
-    E -- yes --> K[Highlight Refresh:<br/>'Updated 3 hours ago']
+    E -- yes --> K[Highlight Refresh;<br/>header still shows 'Synced' time]
     E -- no --> G[Board ready]
     K --> G
     G --> L{Student selects Refresh?}
@@ -516,3 +518,4 @@ flowchart TD
 | 2026-10-25 | Whole-plan review: S-1 no longer promises notes, S-4 and the phone layout mark notes, the filter menu, and the card back as Phase 5. |
 | 2026-10-25 | Lists can be minimized and expanded (FR-80): S-4 redrawn with Done minimized and the other lists sharing the width; empty lists start minimized; phone layout skips minimized lists. From the Team Lead's review. |
 | 2026-10-25 | Header legend and W-2 now show manual Refresh: no automatic fetch, Refresh highlighted when data is over an hour old (FR-15), from the Team Lead's review. |
+| 2026-10-25 | Header always shows the last sync date and time instead of a hover tooltip, from the Team Lead's review; quick edit (S-7) no longer depends on hover (NFR-36). |

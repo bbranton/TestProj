@@ -82,9 +82,9 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-10 | The backend fetches the user's active course enrollments (`GET /api/v1/courses?enrollment_state=active`). | Must | 1 |
 | FR-11 | The backend fetches assignments for each active course, including the user's submission status (`GET /api/v1/courses/:id/assignments?include[]=submission`). | Must | 1 |
 | FR-12 | The backend follows Canvas paging so no courses or assignments are missed. | Must | 1 |
-| FR-13 | The user can refresh data on demand; the page shows when data was last fetched. | Must | 1 |
+| FR-13 | The user can refresh data on demand. The header always shows the date and time of the last sync, such as "Synced Oct 25, 10:42 AM". | Must | 1 |
 | FR-14 | The backend keeps the last complete copy of the student's Canvas data and shows it on every load, so opening the board never waits on Canvas. | Must | 1 |
-| FR-15 | The portal fetches from Canvas only when the student selects Refresh, or on the very first load when there is no data yet. It never starts a fetch on its own. When the data is more than an hour old, the Refresh button is highlighted and the page says the data may be out of date. | Must | 1 |
+| FR-15 | The portal fetches from Canvas only when the student selects Refresh, or on the very first load when there is no data yet. It never starts a fetch on its own. When the data is more than an hour old, the Refresh button is highlighted. | Must | 1 |
 
 ### 4.3 Viewing courses and assignments
 
@@ -129,7 +129,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-66 | Each course gets a label color automatically, used on its cards and its course button. From Phase 5 the user can change a course's color and name its label. | Should | 1 (5 for changing) |
 | FR-67 | Clicking a card opens its card back in a dialog over the board, which stays visible behind it. The browser address changes to the card's own link, so reloading or sharing the link reopens the card, and Back closes it. | Must | 5 |
 | FR-68 | The card back shows: the title; "in list *name*" (clicking it moves the card); labels; due date; points and status; an "Open in Canvas" button; *Description*, from Canvas and read only (FR-28); *Notes*, private (FR-40); and *Archive*. Checklists are added in Phase 5 (FR-70). | Must | 5 |
-| FR-69 | Hovering a card shows an edit (pencil) button; it and right-click open a quick edit menu: Open card, Move, Change label color, Open in Canvas, Archive. | Could | 5 |
+| FR-69 | An edit (pencil) button on each card (shown on hover on desktop, always shown on touch screens), right-click, or a long press opens a quick edit menu: Open card, Move, Change label color, Open in Canvas, Archive. | Could | 5 |
 | FR-70 | A card back can hold one or more checklists of items that can be checked off. The card front shows progress such as 2/5 (2 of 5 items done). | Could | 5 |
 | FR-71 | "+ Add a card" at the bottom of each list creates a personal card that isn't a Canvas assignment. It supports everything a card back has except the Canvas details. | Could | 5 |
 | FR-72 | A Filter button at the start of the course button row (FR-78), under the header, opens a menu that filters cards by course, by due date (due date passed, due in the next day, next week, next month, no due date), by Canvas submission state and flags (FR-23), and by keyword. When a filter is on, the course row says so and offers "Clear". | Must | 5 |
@@ -203,6 +203,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | NFR-33 | Usable on a phone-width screen. As in Trello's mobile layout, one list fills the screen and the user swipes between lists. | 4 |
 | NFR-34 | Visual style is close to Trello's within C-4: a colored board background, light gray lists with rounded corners, white cards with rounded corners and a soft shadow, and compact text. | 5 |
 | NFR-35 | Board actions (open a card, show or hide a course, filter) need no more clicks than the same action in Trello. | 5 |
+| NFR-36 | Nothing depends on hovering. Phones are a target platform, so every action and every piece of information can be reached by tapping. Hover can add a shortcut on desktop, but never the only way. | 1 |
 
 ### 5.5 Maintainability
 
@@ -255,3 +256,4 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | 2026-10-25 | Sign-in (FR-50) moved to Phase 1; FR-5 now always stores the connection with the account (and is Must); NFR-11 simplified. From the Team Lead. |
 | 2026-10-25 | Added FR-80 (minimize and expand lists; expanded lists share the width; empty lists start minimized), Phase 1; FR-61 now fits lists to the width instead of a fixed width, and moves to Phase 1. From the Team Lead's review. |
 | 2026-10-25 | Canvas fetches are manual, from the Team Lead's review: added FR-15 (fetch only on Refresh or the first load; highlight Refresh when data is over an hour old), FR-14 now keeps the last complete copy, and background sync (NFR-4) moves to Phase 5. |
+| 2026-10-25 | FR-13 shows the last sync date and time in the header; added NFR-36 (nothing depends on hover, since phones are a target platform); FR-69 works without hover. From the Team Lead's review. |

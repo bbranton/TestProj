@@ -390,9 +390,9 @@ the start, and Phase 3 tuning that starts from the Phase 1 timings
   returns it at once, with the time it was fetched. Only the first ever
   load waits for Canvas.
 - **Refresh only when asked (FR-15).** The portal never starts a fetch on
-  its own. When the data is more than an hour old, the frontend highlights
-  the Refresh button and the header says "Updated 3 hours ago, refresh for
-  the latest". While a Refresh runs, the board stays usable, the button
+  its own. The header always shows the last sync time ("Synced Oct 25,
+  10:42 AM", FR-13). When the data is more than an hour old, the frontend
+  also highlights the Refresh button. While a Refresh runs, the board stays usable, the button
   shows progress, and the page checks back until it finishes.
 - **Show results as they arrive.** Courses fill in one by one instead of
   the page staying empty (NFR-2).
@@ -612,7 +612,8 @@ UI uses:
 | Scroll the board | Only when the window is too narrow for the expanded lists (240 px minimum each): horizontal scrollbar, or drag on empty background | FR-61 |
 | Rename a list (Phase 5) | Click the title, it becomes a text box; Enter saves, Escape cancels | FR-63 |
 | Open a card | Click, or focus it and press Enter. Until Phase 5 this opens the assignment in Canvas in a new tab (FR-26); from Phase 5 it opens the card back and the address changes to `/c/{cardId}` | FR-26, FR-67 |
-| Quick edit (Phase 5) | Pencil on hover or right-click | FR-69 |
+| Quick edit (Phase 5) | Pencil button (on hover on desktop, always shown on touch screens), right-click, or long press | FR-69, NFR-36 |
+| No hover-only actions | Anything a hover reveals is also visible or reachable by tap, so phones lose nothing | NFR-36 |
 | Show or hide a course | Tap its button in the row under the header, or Show all / Hide all; the board updates at once. Until Phase 5 the choice is kept in this browser; from Phase 5 it is saved with the account in the background (optimistic update) | FR-78 |
 | Filter (Phase 5) | `f` or the Filter button in the course row; non-matching cards are hidden and the course row shows the filter is active | FR-72 |
 | Keyboard map (Phase 5) | Kept in one file and shown by `?`; checked against Trello's shortcut page | FR-73, NFR-31 |
@@ -684,3 +685,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | Whole-plan review: caching and the loading sequence now match *Never wait on Canvas*; card back, board menu, filter, and shortcuts marked Phase 5 in routes, components, style, and interactions; until Phase 5 a click opens the assignment in Canvas; section 10 updated. |
 | 2026-10-25 | Lists fill the board width and can be minimized (FR-80): visual style, list header component, and interaction table updated. |
 | 2026-10-25 | Refresh is manual (FR-15): caching and *Never wait on Canvas* no longer fetch on their own; the background job section is now *Bringing the backend in step with Canvas*, run by each Refresh; background sync is Phase 5 (NFR-4), with what leaving it out saves. |
+| 2026-10-25 | Header shows the last sync date and time (FR-13); quick edit and a new interaction row follow NFR-36 (no hover-only actions). |

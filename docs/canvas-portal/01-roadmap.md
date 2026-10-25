@@ -157,6 +157,8 @@ accessibility checks pass.
   (FR-70).
 - More than one board, such as one per course or term, as in Trello (FR-76).
 - Board background choices and the board menu sidebar (FR-75).
+- More than one school per student, such as a high school and a college
+  during dual enrollment, all on one board (FR-55).
 - Parent view: a parent (Canvas *observer*) token shows the courses and
   assignments of the students they observe (Q-5).
 
@@ -218,3 +220,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | Hiding assignments (FR-25) moved from Phase 1 to Phase 5. |
 | 2026-10-25 | Phase 3 notes are dated, comment-style entries, separate from the read-only Canvas description (FR-28). |
 | 2026-10-25 | Renaming and reordering lists (FR-62, FR-63) moved from Phase 2 to Phase 5. |
+| 2026-10-25 | Added more than one school per student (FR-55) to Phase 5. |

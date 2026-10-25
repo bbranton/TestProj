@@ -172,6 +172,11 @@ Design notes:
 - **Notes are separate from cards**, so notes survive if a card is archived
   or a list is archived (NFR-21). A note also records its
   `canvas_assignment_id`, so it can be reattached if its card is rebuilt.
+- **One school per user for now.** `USER` has at most one
+  `CANVAS_CONNECTION`. More than one school (FR-55, Phase 5) changes that to
+  many, adds a `connection_id` to `CARD`, `COURSE_LABEL`, and `CANVAS_CACHE`,
+  and makes course and assignment IDs unique only within a connection, since
+  two schools can use the same Canvas ID numbers.
 - **Personal cards** (FR-71, Phase 5) are cards with no `canvas_assignment_id`; their
   title and due date are stored on the card itself.
 - **Course label colors** (FR-66) are stored per user and course, picked
@@ -498,3 +503,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | Filter button moved from the header to the course toggle bar. |
 | 2026-10-25 | Notes are now many dated entries per card (NOTE has `created_at`; new notes endpoints); the Canvas description is shown read only and cleaned against XSS (FR-28). |
 | 2026-10-25 | Renaming and reordering lists (FR-62, FR-63) marked Phase 5 in the API, component, and interaction tables. |
+| 2026-10-25 | Data model note on supporting more than one school per user later (FR-55). |

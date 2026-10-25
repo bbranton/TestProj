@@ -159,6 +159,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-52 | *(Removed: board and notes are on the server from the start, so there is no browser data to import.)* | n/a | n/a |
 | FR-53 | The user can export their board and notes as a JSON file. | Should | 4 |
 | FR-54 | The user can delete all their data from the portal. | Must | 4 |
+| FR-55 | A student can connect more than one school (more than one Canvas address and token), for example a high school and a community college during dual enrollment. Courses from every school appear on the same board, and each course button and card shows which school it comes from. | Could | 5 |
 
 ## 5. Non-functional requirements
 
@@ -238,3 +239,4 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | 2026-10-25 | FR-72 filters by course; the UI says "course", not "label". |
 | 2026-10-25 | Notes are now dated, comment-style entries, any number per card (FR-40 to FR-43); new FR-28 shows the Canvas description read only. From the Team Lead's review. |
 | 2026-10-25 | Renaming and reordering lists (FR-62, FR-63) moved to Phase 5, from the Team Lead's review. |
+| 2026-10-25 | Added FR-55 (more than one school per student) as a Phase 5 future feature, from the Team Lead's review. |

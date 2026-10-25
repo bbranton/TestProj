@@ -67,12 +67,12 @@ both.
 | Drag and drop | Pragmatic drag and drop (Atlassian), or dnd-kit | Proposed, chosen in Phase 2 | Pragmatic drag and drop is Atlassian's open-source library behind Trello's own drag and drop and works with any framework, which suits G-3. |
 | Backend | Python 3.12 + FastAPI | **Decided (D-6)** | Short, readable code; generates API docs automatically |
 | Canvas client | `httpx` (Python HTTP library) | Proposed | Async requests, so courses can be fetched in parallel (NFR-2) |
-| Database | Postgres in production, SQLite for local dev and tests | Proposed | Postgres is what hosts offer; SQLite needs no setup. SQLite locks the whole file on every write, so the NFR-22 concurrency tests also need a Postgres run in CI to prove anything |
+| Database | Postgres in production, SQLite for local dev and tests | Proposed | Postgres is what hosts offer; SQLite needs no setup. SQLite locks the whole file on every write, so concurrency tests on SQLite say little about Postgres. How NFR-22 is tested is Product and QA's call, and CI is DevOps's |
 | Database access | SQLAlchemy + Alembic | Proposed | Python models for tables; Alembic tracks schema changes over time ("migrations") |
 | Portal sign-in | Sign in with Google (OAuth 2 / OpenID Connect) via the Authlib Python library | **Decided for MVP (D-7)** | No passwords to store; see section 5 |
 | Sessions | Server-side `SESSION` rows, looked up by a random ID in the cookie | Proposed | Sign out and account deletion end the session at once, which a self-contained signed cookie can't do |
-| Token encryption | Fernet, from the `cryptography` Python library | Proposed | Authenticated encryption in one call; `MultiFernet` lets the key be replaced later without losing stored tokens |
-| Background Refresh | An `asyncio` task inside the one server process | Proposed | Nothing extra to host; needs a host that keeps the process running (roadmap D-3) and a single server process, which suits one student's load |
+| Token encryption | Fernet, from the `cryptography` Python library | Proposed; needs the Team Lead (new dependency, token storage) | Authenticated encryption in one call; `MultiFernet` lets the key be replaced later without losing stored tokens |
+| Background Refresh | An `asyncio` task inside the one server process | Proposed | Nothing extra to build; it needs a host that keeps one server process running, which DevOps weighs when choosing the host (roadmap D-3) |
 | Hosting | See roadmap D-3 | Open | |
 
 ## 3. Data model
@@ -238,7 +238,7 @@ zone setting.
 **Errors** all have one shape, `{"error": "<code>", "message": "<text>"}`,
 so the frontend can choose a screen by code without reading the text:
 
-| Code | HTTP status | Frontend shows |
+| Code | HTTP status | Frontend shows (screens from the UI specification) |
 |------|-------------|----------------|
 | `not_signed_in` | 401 | S-1 Sign in |
 | `canvas_not_connected` | 409 | S-2 Connect Canvas |
@@ -753,6 +753,21 @@ possible without reworking what Phases 1 to 4 build:
 - ~~**D-7** How users sign in to the portal (section 5).~~ Decided: Sign in
   with Google for the MVP.
 
+Proposed in this design and waiting on the Team Lead, because each one
+adds a dependency or changes how the Canvas token is stored or sent:
+
+- **Token encryption with Fernet** (`cryptography` library), section 2.
+- **Disconnect keeps the connection row** with the token emptied, so the
+  board survives (section 3).
+- **The token goes only to the saved Canvas host**, never through a
+  redirect or paging link to another host, and only to `https` public
+  addresses (section 7).
+- **Canvas GraphQL** reads through `POST` (Phase 3 tuning), which NFR-13
+  doesn't allow today.
+
+What the connect screen says when a student connects a different account
+(Q-8) is for Product and QA and UI/UX; section 3 gives the data side.
+
 ## Change log
 
 | Date | Change |
@@ -792,3 +807,4 @@ possible without reworking what Phases 1 to 4 build:
 | 2026-10-25 | The Google OAuth client is a Phase 1 prerequisite. |
 | 2026-10-25 | In-depth review after PR #3: cards are added when a complete Refresh is saved (new *Saving a complete Refresh*, Phase 1), so loading the board only reads; the unique card rule moves to Phase 1; one Refresh at a time, token problems, and rate-limit retries are Phase 1 (*Bringing the backend in step* keeps only Phase 3 work); the board changes once per complete Refresh while S-10 shows progress (FR-14, NFR-2); a restart marks a stuck Refresh incomplete; disconnecting keeps the connection row so the board survives (FR-4, FR-6), with an open check for connecting a different account; a Refresh on another device reaches open devices through the changes endpoint; GraphQL needs a call on NFR-13 (it uses `POST`); nearest-due-first dropped; description changes have nothing to show before Phase 5; keys on `COURSE_LABEL`, `CANVAS_CACHE`, `REFRESH_RUN`, `user_id` on `LIST`, `canvas_user_id` on the connection; health endpoint and fuller requirement IDs in the API table; cookie and token-in-URL rows in security; repository layout matches the skeleton; refresh panel and warning banner in the component diagram; traceability lists only Phase 0 to 4 IDs. |
 | 2026-10-25 | Architecture review: server-side sessions (new `SESSION` table), Fernet token encryption, and the in-process Refresh task in the technology table; one error shape with codes for each screen; dates sent in UTC; security rows for Canvas addresses that point elsewhere and for never sending the token to another host; Phase 1 settings listed. Matched to requirements PR #6: until Phase 3 a card with no Canvas data is hidden, not deleted (FR-45); the different-account check is Q-8; a Missing badge stays red when also Graded (FR-65). |
+| 2026-10-25 | Matched to the team personas: proposals that need the Team Lead (a new dependency, token storage or sending) are listed under *Open decisions raised here*; testing, CI, hosting, and screen choices are left to the personas that own them. |

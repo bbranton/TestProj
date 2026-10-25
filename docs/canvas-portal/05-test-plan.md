@@ -99,6 +99,7 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | NFR-10 | Logs captured during a full test run contain no token string | API |
 | NFR-12 | User B gets `404` for every one of user A's cards and notes | API |
 | NFR-20 | Canvas down: cached data plus warning banner | API, E2E |
+| NFR-22 | Concurrency: 20 parallel moves of one card leave it in exactly one list; `changes?since=` returns every change once; two parallel board loads with a new assignment create one card; two browser sessions converge within one poll | API, E2E |
 | NFR-31 | Move a card using only the keyboard | E2E |
 | FR-60 | Signed-in, connected user lands on the board | E2E |
 | FR-61 | Board scrolls sideways; the four lists are always Backlog, To do, In progress, Done | E2E |
@@ -189,7 +190,7 @@ steps, and the expected result. Screen IDs refer to the
 
 ### TP-06 Board layout persists and syncs
 
-**Checks:** FR-31 to FR-33, FR-38, FR-51, FR-60 · **Phase:** 2
+**Checks:** FR-31 to FR-33, FR-38, FR-51, FR-60, NFR-22 · **Phase:** 2
 **Needs:** two devices or two different browsers, same portal account.
 
 | Step | Action | Expected |
@@ -199,6 +200,13 @@ steps, and the expected result. Screen IDs refer to the
 | 3 | Reload the page | Same layout |
 | 4 | Sign in on device B | Same layout |
 | 5 | Move a card on device B; reload device A | Device A shows the move |
+| 6 | With both devices open, move a card on A and wait without touching B | B shows the move within 30 seconds |
+| 7 | Put B to sleep or switch to another app; move three cards on A; wake B | B catches up as soon as it is focused |
+| 8 | Move the same card to different lists on A and B within a few seconds | Within 30 seconds both show the card in the list of the later move |
+| 9 | On A, start dragging a card while B moves a different card | A's drag isn't interrupted; B's move appears after the drop |
+| 10 | Turn off Wi-Fi on A; drag a card | Card goes back with "Couldn't save, try again"; B never shows the move |
+| 11 | Add an assignment to the fixture; open the board on A and B at the same moment | The new card appears once, in Backlog, on both |
+| 12 | Open the board in two tabs of the same browser and repeat step 6 | Same as with two devices |
 
 ### TP-07 Board with keyboard only
 
@@ -336,3 +344,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | TP-09 rewritten for dated, comment-style notes and the read-only Canvas description (FR-28); description cleaning fixture and test added. |
 | 2026-10-25 | List rename and reorder tests (FR-62, FR-63, TP-13 steps 4 and 5) marked Phase 5. |
 | 2026-10-25 | Table view removed: TP-01, TP-03, TP-04, TP-05, TP-11, and coverage rows now use the board. |
+| 2026-10-25 | TP-06 gains sync steps 6 to 12 and an NFR-22 concurrency test row, for the Phase 2 focus on dragging and sync. |

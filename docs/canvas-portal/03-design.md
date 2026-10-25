@@ -89,6 +89,7 @@ erDiagram
         uuid user_id FK
         string title
         string background
+        int change_seq
     }
     LIST {
         uuid id PK
@@ -106,6 +107,7 @@ erDiagram
         string title "personal cards only"
         datetime due_at "personal cards only"
         bool archived
+        int change_seq
     }
     NOTE {
         uuid id PK
@@ -177,6 +179,12 @@ Design notes:
   many, adds a `connection_id` to `CARD`, `COURSE_LABEL`, and `CANVAS_CACHE`,
   and makes course and assignment IDs unique only within a connection, since
   two schools can use the same Canvas ID numbers.
+- **One card per assignment, enforced by the database:** a unique rule on
+  (`user_id`, `canvas_assignment_id`) means two devices loading the board at
+  the same moment can't both add a card for a new assignment (NFR-22).
+- **`change_seq`** is a counter on the board that goes up by one with every
+  change, and each card records the value from its last change. It lets a
+  device ask "what changed since number 41?" (see *Keeping devices in sync*).
 - **Personal cards** (FR-71, Phase 5) are cards with no `canvas_assignment_id`; their
   title and due date are stored on the card itself.
 - **Course label colors** (FR-66) are stored per user and course, picked
@@ -209,7 +217,8 @@ and require a signed-in session except where noted.
 | `PATCH /api/board/lists/{id}` | Phase 5: rename, move (new position), archive, or restore a list | FR-36, FR-62, FR-63 |
 | `POST /api/board/cards` | Phase 5: add a personal card | FR-71 |
 | `GET /api/board/cards/{id}` | Everything for the card back, including the cleaned Canvas description | FR-28, FR-67, FR-68 |
-| `PATCH /api/board/cards/{id}` | Move to another list, archive, or restore a card | FR-32, FR-33, FR-74 |
+| `PATCH /api/board/cards/{id}` | Move to another list, archive, or restore a card; returns the new `change_seq` | FR-32, FR-33, FR-74, NFR-22 |
+| `GET /api/board/changes?since={seq}` | Cards changed since that `change_seq`, and the current value | NFR-22 |
 | `GET /api/board/archived` | Archived lists and cards | FR-74 |
 | `POST`, `PATCH`, `DELETE /api/cards/{id}/checklists/...` | Phase 5: add, rename, check off, reorder, and remove checklists and items | FR-70 |
 | `PATCH /api/labels/{course_id}` | Change a course label's color or name, or hide or show the course | FR-66, FR-78 |
@@ -223,6 +232,47 @@ and require a signed-in session except where noted.
 The backend only ever sends filtered, portal-shaped data to the frontend. It
 does not pass Canvas responses straight through, and it never includes the
 token.
+
+### Keeping devices in sync (NFR-22, D-8)
+
+A student may have the board open on a laptop and a phone at once. The
+server's copy is the only real one; each device shows a copy and keeps it
+up to date.
+
+- **Saving a move:** the device moves the card on screen at once (an
+  optimistic update, W-3) and sends `PATCH /api/board/cards/{id}`. The server
+  saves it in one database transaction, raises the board's `change_seq`, and
+  stamps the card with it. If the save fails, the card goes back.
+- **Seeing other devices' moves (polling, D-8):** every 30 seconds, and
+  whenever the window comes back into focus, the device calls
+  `GET /api/board/changes?since=41` with the last number it knows. The server
+  returns the cards changed since then, and the device moves them. A device
+  that was asleep or offline catches up the same way.
+- **Two moves of the same card:** the last save to reach the server wins.
+  The other device sees the winning list on its next check, so every device
+  ends up the same. For one person's board this is simpler than asking which
+  move to keep.
+- **Drag in progress:** a change that arrives while the student is dragging
+  waits until the drop, so cards never jump under the pointer.
+- **Canvas refresh on two devices:** adding cards for new assignments relies
+  on the unique rule in section 3, so a second device's attempt just finds
+  the card already there.
+
+```mermaid
+sequenceDiagram
+    participant L as Laptop
+    participant A as Backend
+    participant P as Phone
+
+    L->>L: Drag card to In progress (shown at once)
+    L->>A: PATCH card, list = In progress
+    A->>A: Save, change_seq 41 to 42
+    A-->>L: 200 OK, change_seq 42
+    Note over P: Up to 30 s later, or when the phone's window is focused
+    P->>A: GET /api/board/changes?since=41
+    A-->>P: card is now in In progress, change_seq 42
+    P->>P: Move card to In progress
+```
 
 ### Assignment status
 
@@ -475,11 +525,14 @@ works without a framework, but there are fewer worked examples to copy from.
 | FR-50 to FR-54 (accounts, data) | Sections 4, 5 |
 | NFR-1 to NFR-3 (performance) | Sections 3 (sorting, list positions), 6 (caching, parallel fetch) |
 | NFR-10 to NFR-14 (security) | Section 7 |
-| NFR-20, NFR-21 (reliability) | Sections 3, 6 |
+| NFR-20 to NFR-22 (reliability, sync) | Sections 3, 4 (keeping devices in sync), 6 |
 | NFR-30 to NFR-35 (usability, Trello style) | Sections 2, 9, wireframes |
 | NFR-40 to NFR-42 (maintainability) | Sections 7, 8 |
 
 ## Open decisions raised here
+
+- **D-8** How other devices learn about a move (section 4). Recommended:
+  polling every 30 seconds and on focus for Phase 2.
 
 - **D-7** How users sign in to the portal (section 5). Decided: Sign in with
   Google for the MVP.
@@ -504,3 +557,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | Renaming and reordering lists (FR-62, FR-63) marked Phase 5 in the API, component, and interaction tables. |
 | 2026-10-25 | Data model note on supporting more than one school per user later (FR-55). |
 | 2026-10-25 | Removed the `/table` route and the header's view switch; the board is the only view. |
+| 2026-10-25 | Added *Keeping devices in sync* (NFR-22, D-8): `change_seq` on boards and cards, a changes endpoint, last-save-wins, and a unique card rule per assignment. |

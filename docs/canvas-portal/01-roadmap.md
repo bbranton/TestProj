@@ -28,8 +28,8 @@ gantt
     section Viewer
     Phase 1 Read-only viewer         :p1, after p0, 28d
     section Organize
-    Phase 2 Accounts and kanban board :p2, after p1, 28d
-    Phase 3 Private notes            :p3, after p2, 14d
+    Phase 2 Accounts, drag, and sync :p2, after p1, 28d
+    Phase 3 Card back, notes, extras :p3, after p2, 28d
     section Harden
     Phase 4 Polish and deploy        :p4, after p3, 21d
     section Later
@@ -80,53 +80,58 @@ The smallest thing that is useful: connect, then see everything that's due.
 **Exit criteria:** the Team Lead can connect a real account and see the same
 assignments Canvas shows, verified by the Phase 1 test procedures.
 
-### Phase 2: Accounts and kanban board
+### Phase 2: Accounts, dragging, and sync
 
-Board layout and notes are stored on the server from the start (D-2), so
-they follow the user to any device or browser. That needs portal accounts
-first.
+This phase does one thing: the student can drag cards between lists, and
+that is saved and kept in sync on every device they use. Board layout is
+stored on the server (D-2), so it needs portal accounts first. Keeping
+devices in sync is the hardest part of the phase and gets the most testing.
 
-- Portal sign-in so the server knows whose data is whose (FR-50).
+- Portal sign-in with Google, so the server knows whose board is whose
+  (FR-50, D-7).
 - The user's Canvas connection is saved on the server with their account, so
   signing in on a new device doesn't require pasting the token again (FR-5,
   NFR-11).
-- Trello-style board with all four lists side by side, scrolling sideways:
-  *Backlog*, *To do*, *In progress*, *Done* (FR-31, FR-60, FR-61).
-- Trello-style cards: course label colors, colored due date badges, notes count
-  (FR-65, FR-66).
-- Clicking a card opens its "card back" in a dialog over the board, with its
-  own link (FR-67, FR-68).
+- All four lists side by side, scrolling sideways: *Backlog*, *To do*,
+  *In progress*, *Done* (FR-31, FR-60, FR-61).
 - Drag cards between lists with Trello's drag feel, with a keyboard
-  alternative (FR-32, FR-77, NFR-31).
-- Cards in every list are always sorted by due date, earliest at the top
-  (FR-38).
-- The board has four fixed lists, always in this order: Backlog, To do,
-  In progress, Done (FR-31).
-- A row of show/hide buttons under the header, one per course (FR-78).
-- Trello-style filter menu and keyboard shortcuts (FR-72, FR-73).
-- New assignments from Canvas land in *Backlog* until the student sorts them;
-  cards are matched by Canvas ID
-  and only move when the student drags them (FR-34, FR-35).
-- Board layout is saved on the server and restored on any device (FR-33,
+  alternative; cards keep their due date order (FR-32, FR-38, FR-77, NFR-3,
+  NFR-31).
+- The layout is saved on the server and restored on any device (FR-33,
   FR-51).
+- Sync: a move made on one device appears on the user's other open devices
+  within 30 seconds, and no card is ever lost or duplicated (NFR-22, D-8).
+- Canvas merge: new assignments land in *Backlog*, cards are matched by
+  Canvas ID, and they move only when the student drags them (FR-34, FR-35).
+
+**Exit criteria:** TP-06 passes in full: layout survives reloads and Canvas
+refreshes, two devices open at the same time stay in step, moving the same
+card on both settles on one list everywhere, and a dropped connection never
+leaves a device showing a move the server doesn't have. The concurrency tests
+for NFR-22 pass, and the drag steps of the Trello comparison review (TP-13)
+pass.
+
+### Phase 3: Card back, notes, and board extras
+
+Everything on the board besides dragging.
+
+- Clicking a card opens its "card back" in a dialog over the board, with its
+  own link, showing the assignment's Canvas description read only (FR-28,
+  FR-67, FR-68).
+- Course label colors and the notes count on card fronts (FR-65, FR-66).
+- The course show/hide choice is saved with the account and follows the
+  student between devices (FR-78).
+- Trello-style filter menu and keyboard shortcuts (FR-72, FR-73).
 - Archive and restore cards, as in Trello (FR-74).
-
-**Exit criteria:** layout survives a page reload and a Canvas refresh without
-losing or duplicating cards, the same layout appears after signing in on a
-second device, and the Trello comparison review (TP-13) passes for the board.
-
-### Phase 3: Private notes
-
 - Add dated notes to any assignment, like the comments on a Trello card, and
-  edit or delete each one (FR-40 to FR-42).
-- Notes are not the *Description*: that comes from Canvas, is read only, and
-  is on the card back from Phase 2 (FR-28). A card with notes shows how many
+  edit or delete each one (FR-40 to FR-42). Notes are not the *Description*,
+  which comes from Canvas and is read only. A card with notes shows how many
   (FR-43).
 - Notes are never sent to Canvas (FR-44, NFR-12).
 
-**Exit criteria:** notes survive reloads and Canvas refreshes, appear on a
-second device, and a network
-capture shows no note text going to Canvas.
+**Exit criteria:** notes survive reloads and Canvas refreshes and appear on a
+second device; a network capture shows no note text going to Canvas; the
+full Trello comparison review (TP-13) passes.
 
 ### Phase 4: Polish and deploy
 
@@ -169,8 +174,8 @@ accessibility checks pass.
 | M0 | Empty app builds in CI | 0 | Tooling works end to end |
 | M1 | First real assignment list | 1 | Canvas connection works |
 | M2 | Viewer complete | 1 | MVP usable day to day |
-| M3 | Board saves layout | 2 | Core organizing feature works |
-| M4 | Notes complete | 3 | All user-requested features exist |
+| M3 | Dragging saves and syncs | 2 | Core organizing feature works on every device |
+| M4 | Card back and notes complete | 3 | All user-requested features exist |
 | M5 | Deployed with sync | 4 | Usable from any device |
 
 ## 5. Open decisions
@@ -186,6 +191,7 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | D-5 | Who the app is for | Just the Team Lead, a few friends, or any student at any school | Design for any school (the Canvas URL is a setting), test with one. | Phase 0 |
 | D-6 | Backend language | **Python + FastAPI** (readable, quick to write, good for learning) or **Node.js** (same language as the frontend) | Python + FastAPI. | Phase 0 |
 | D-7 | How users sign in to the portal | **Sign in with Google**, **email magic link**, **username and password**, or a **hosted auth service** (see [design](03-design.md#5-signing-in-to-the-portal-d-7)) | **Decided** (Team Lead, 2026-10-25): Sign in with Google for the MVP. | Done |
+| D-8 | How other open devices learn about a move (NFR-22) | **Polling** (each device asks "anything new?" every 30 seconds and when its window comes back into focus; simple, works on any host) or **live push** (the server tells devices instantly over a WebSocket or server-sent events; faster, but more to build and host) | Polling for Phase 2; live push only if 30 seconds feels slow in practice. See [design](03-design.md#keeping-devices-in-sync-nfr-22-d-8). | Start of Phase 2 |
 
 ## 6. Risks
 
@@ -198,6 +204,7 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | R-5 | Learning web development alongside building | Slower progress | Small phases, one new technology at a time, docs explain terms. |
 | R-6 | A school-managed Google account blocks sign-in to outside apps | Student can't sign in | Allow any Google account, so a personal one works; explain this on the sign-in screen. |
 | R-7 | Matching Trello too closely in look (logo, artwork, exact styling) | Trademark or copyright complaint | Copy behavior and layout patterns only; our own name, colors, and icons (C-4). |
+| R-8 | Sync bugs: two devices or two browser tabs disagree, or a card is lost or duplicated | Student stops trusting the board | Phase 2 is only dragging and sync; one row per card enforced by the database; concurrency tests in CI and the TP-06 sync procedure (NFR-22). |
 
 ## Change log
 
@@ -222,3 +229,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | Renaming and reordering lists (FR-62, FR-63) moved from Phase 2 to Phase 5. |
 | 2026-10-25 | Added more than one school per student (FR-55) to Phase 5. |
 | 2026-10-25 | Table view removed; Phase 1 shows a read-only board with every card in Backlog, from the Team Lead's review. |
+| 2026-10-25 | Phase 2 narrowed to accounts, dragging between lists, and sync, from the Team Lead's review; everything else moved to Phase 3. Added D-8 (how devices learn about changes) and R-8 (sync bugs). |

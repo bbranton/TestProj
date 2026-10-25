@@ -27,7 +27,7 @@ Skills live in `.claude/skills/<name>/SKILL.md`, with any script beside it.
 
 | Skill | What it does | Mostly used by |
 |-------|--------------|----------------|
-| `trace-requirement` | Finds a requirement ID in the design, UI spec, test plan, and code; lists requirements with no test | Product and QA |
+| `trace-requirement` | Finds a requirement ID in the design, UI spec, test plan, and code; lists requirements with no test | Product and QA, Developer |
 | `ci-paths` | Says which workflows a branch's changes will trigger | DevOps |
 | `cross-review` | Runs a cross-review by the [review protocol](review-protocol.md) | Anyone asked to cross-review |
 

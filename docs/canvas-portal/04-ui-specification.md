@@ -35,13 +35,14 @@ sits on the board's background color:
 
 ```text
 +--------------------------------------------------------------------------+
-| Canvas Portal  My assignments      Synced Oct 25, 10:42 AM  [⟳] [⋯] (A)  |
+| Canvas Portal  My assignments          Synced Oct 25, 10:42 AM  [⟳] (A)  |
 +--------------------------------------------------------------------------+
   "Synced ..." always shows the date and time of the last sync, with
   nothing hidden behind hover (FR-13, NFR-36). [⟳] refreshes from Canvas.
   The portal never refreshes on its own (FR-15): when the data is more
   than an hour old, [⟳] is highlighted. During a refresh [⟳] spins and
-  the board stays usable. [⋯] opens S-9. (A) is the account menu: Settings, Sign out.
+  the board stays usable. (A) is the account menu: Settings, Sign out.
+  From Phase 5, a [⋯] board menu button before (A) opens S-9.
 ```
 
 ## 2. Screens
@@ -76,8 +77,8 @@ disconnecting, or when Canvas rejects the saved token.
 |  Connect your Canvas account                                 |
 |                                                              |
 |  [!] Canvas no longer accepts your saved token.   <- FR-6,   |
-|      Please create a new one. Your board and         shown   |
-|      notes are safe.                                 only on |
+|      Please create a new one. Your board is          shown   |
+|      safe.                                           only on |
 |                                                      error   |
 |  School Canvas address                                       |
 |  [ https://myschool.instructure.com            ]             |
@@ -107,8 +108,8 @@ kept so the other screen numbers don't change.
 
 ### S-4 Board (home screen)
 
-Requirements: FR-13, FR-20 to FR-26, FR-31 to FR-35, FR-38, FR-60, FR-61, FR-65, FR-66, FR-72 to FR-74, FR-77, FR-78, FR-80,
-NFR-3, NFR-20, NFR-31, NFR-34.
+Requirements: FR-13, FR-20 to FR-23, FR-26, FR-31 to FR-35, FR-38, FR-60, FR-61, FR-65, FR-66, FR-77, FR-78, FR-80,
+NFR-3, NFR-20, NFR-31, NFR-34. The sketch shows Phases 1 to 4 only.
 
 The board is the only view. In Phase 1 it is read only: every card is in
 Backlog, so the other three lists are empty and start minimized, and
@@ -117,9 +118,9 @@ a later day, with Done empty and minimized.
 
 ```text
 +--------------------------------------------------------------------------+
-| Canvas Portal  My assignments      Synced Oct 25, 10:42 AM  [⟳] [⋯] (A)  |
+| Canvas Portal  My assignments          Synced Oct 25, 10:42 AM  [⟳] (A)  |
 +--------------------------------------------------------------------------+
-| [Filter] | [● BIO 101] [● HIST 210] [● MATH 152]  [Show all] [Hide all]  |
+| [● BIO 101] [● HIST 210] [● MATH 152]  [Show all] [Hide all]             |
 +--------------------------------------------------------------------------+
 |  board background color                                                  |
 | +-------------------+ +-------------------+ +-------------------+ +----+ |
@@ -128,12 +129,12 @@ a later day, with Done empty and minimized.
 | | | ▬▬ HIST 210   | | | | ▬▬ MATH 152   | | | | ▬▬ BIO 101    | | | o  | |
 | | | Chapter 5     | | | | Problem set 7 | | | | Lab report 3  | | | n  | |
 | | | questions     | | | | (◷ Wed 9:00)  | | | | (◷ Tue 11:59) | | | e  | |
-| | | (◷ Nov 8)     | | | +---------------+ | | | ✎ 2           | | |    | |
+| | | (◷ Nov 8)     | | | +---------------+ | | |               | | |    | |
 | | +---------------+ | | +---------------+ | | +---------------+ | | 0  | |
 | | +---------------+ | | | ▬▬ HIST 210   | | | ┌ ─ ─ ─ ─ ─ ─ ┐   | +----+ |
 | | | ▬▬ HIST 210   | | | | Essay draft:  | | | │  drop gap   │   |        |
 | | | Reading       | | | | causes of WWI | | | │  (FR-77)    │   |        |
-| | | reflection    | | | | (◷ Nov 3) ✎ 1 | | | └ ─ ─ ─ ─ ─ ─ ┘   |        |
+| | | reflection    | | | | (◷ Nov 3)     | | | └ ─ ─ ─ ─ ─ ─ ┘   |        |
 | | | (no due date) | | | +---------------+ | +-------------------+        |
 | | +---------------+ | +-------------------+                              |
 | +-------------------+                                                    |
@@ -144,7 +145,8 @@ a later day, with Done empty and minimized.
   Each time the board loads or is refreshed, empty lists start minimized
   and the rest start expanded; this state is not saved. From Phase 2,
   dropping a card on an empty minimized list expands it.
-  [Filter] at the start of the course row opens S-8 (FR-72, Phase 5).
+  From Phase 5, a [Filter] button starts the course row and opens S-8
+  (FR-72).
   Until the card back arrives in Phase 5, clicking a card opens the
   assignment in Canvas in a new tab (FR-26).
   If Canvas can't be reached, a warning banner between the course row and
@@ -157,8 +159,8 @@ a later day, with Done empty and minimized.
   their list.
   ▬▬ label strip in the course's automatic color (FR-66). (◷ ...) due badge: red
   when Canvas flags Missing, green with ✓ when Submitted or Graded, plain
-  otherwise (FR-65). ✎ 2 is the number of notes (FR-43), shown once notes
-  arrive in Phase 5.
+  otherwise (FR-65). From Phase 5, cards with notes also show a ✎ note
+  count (FR-43).
   The lists are fixed: they can't be renamed or reordered. Renaming
   (FR-63) and dragging lists (FR-62) are Phase 5 ideas.
   Adding cards and lists (FR-64, FR-71) and archiving lists (FR-36) are
@@ -526,3 +528,4 @@ flowchart TD
 | 2026-10-25 | S-4 notes: list state is set fresh on each load, not saved; dropping a card on an empty minimized list expands it. |
 | 2026-10-25 | Phone layout marked Phase 5, a starting sketch whose UI details are still to be worked out, from the Team Lead's review. |
 | 2026-10-25 | Renamed from "Wireframes and workflows" to "User Interface Specification" (file `04-ui-specification.md`), from the Team Lead's request. |
+| 2026-10-25 | S-4 and the header now show only Phases 1 to 4: the [Filter] button, note counts, and [⋯] board menu are described as Phase 5 additions instead of drawn; S-2's error no longer mentions notes. From the whole-set review. |

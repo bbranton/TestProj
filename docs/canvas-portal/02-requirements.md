@@ -49,11 +49,11 @@ Removed requirements are not listed.
 - Connecting to Canvas: FR-1, FR-2, FR-3, FR-4, FR-5, FR-6
 - Fetching data from Canvas: FR-10, FR-11, FR-12, FR-13, FR-14, FR-15
 - Viewing courses and assignments: FR-20, FR-21, FR-22, FR-23, FR-26
-- Kanban board: FR-31, FR-38
+- Kanban board: FR-31, FR-34 (first board), FR-38
 - Trello-style look and behavior: FR-60 (read only), FR-61, FR-65, FR-66, FR-78, FR-80
 - Accounts, sync, and data control: FR-50
 - Performance: NFR-1
-- Security and privacy: NFR-10, NFR-11, NFR-13, NFR-14
+- Security and privacy: NFR-10, NFR-11, NFR-12, NFR-13, NFR-14
 - Reliability: NFR-20
 - Usability and accessibility: NFR-30, NFR-34
 - Maintainability: NFR-41
@@ -64,7 +64,6 @@ Removed requirements are not listed.
 - Trello-style look and behavior: FR-60, FR-77
 - Accounts, sync, and data control: FR-51
 - Performance: NFR-3
-- Security and privacy: NFR-12
 - Reliability: NFR-22
 - Usability and accessibility: NFR-31
 
@@ -132,7 +131,7 @@ Removed requirements are not listed.
 | FR-3 | The connect screen explains, with steps, how to create a token in Canvas. | Should | 1 |
 | FR-4 | The user can disconnect, which removes the token from the portal. | Must | 1 |
 | FR-5 | The portal remembers the connection between visits until the user disconnects. The connection is stored with the user's portal account, so it works on any device they sign in from. | Must | 1 |
-| FR-6 | If Canvas rejects the token (wrong, expired, or revoked), the portal says so and returns to the connect screen without losing board layout or notes. | Must | 1 |
+| FR-6 | If Canvas rejects the token (wrong, expired, or revoked), the portal says so and returns to the connect screen without losing the board layout. | Must | 1 |
 
 ### 4.2 Fetching data from Canvas
 
@@ -167,13 +166,13 @@ Removed requirements are not listed.
 | FR-31 | The board has four lists, in this order: *Backlog*, *To do*, *In progress*, *Done*. *Backlog* holds Canvas assignments the student hasn't sorted yet. | Must | 1 |
 | FR-32 | The user can drag a card to another list. Cards cannot be reordered by hand within a list (FR-38). | Must | 2 |
 | FR-33 | The board layout (which list each card is in) is saved and restored on the next visit. | Must | 2 |
-| FR-34 | Assignments that are new since the last visit appear in *Backlog*, in their due date place (FR-38). When the board is first created, every assignment starts in *Backlog*. | Must | 2 |
+| FR-34 | Assignments that are new since the last visit appear in *Backlog*, in their due date place (FR-38). When the board is first created, every assignment starts in *Backlog*. | Must | 1 (first board), 2 |
 | FR-35 | Cards are matched to assignments by Canvas assignment ID, so a renamed or rescheduled assignment keeps its place. | Must | 2 |
 | FR-36 | The user can archive a list, as in Trello. Its cards go with it and can be restored together. | Could | 5 |
 | FR-37 | *(Removed: no "Move to Done?" hint. The student drags cards to Done; the due badge turning green already shows the assignment is submitted, FR-65.)* | n/a | n/a |
 | FR-38 | Within every list, assignments are always sorted by due date, earliest at the top. Assignments with no due date come last, then by name. A card dropped into a list slots into its due date place, and a changed due date in Canvas moves the card to its new place. | Must | 1 |
 | FR-39 | When a field changes in Canvas, the card shows the new value after the next refresh, and never changes list because of it. This covers a field being added later (such as a due date set after the assignment was created), changed, or cleared (such as a due date removed: the card moves to the end of its list with no due date). It applies to the name, due date, points, description, submission state, and the late, missing, and excused flags, including a state going backward (for example graded back to submitted after a resubmission). | Must | 3 |
-| FR-45 | If an assignment disappears from Canvas (deleted or unpublished by the teacher), its card (and any notes) is marked archived rather than deleted, and leaves the board. Only a complete, successful refresh can archive a card; a failed or partial fetch changes nothing. If the assignment comes back (republished), the card returns to its old list. Viewing and restoring archived cards by hand comes with FR-74. | Must | 3 |
+| FR-45 | If an assignment disappears from Canvas (deleted or unpublished by the teacher), its card is marked archived rather than deleted, and leaves the board. Only a complete, successful refresh can archive a card; a failed or partial fetch changes nothing. If the assignment comes back (republished), the card returns to its old list. Viewing and restoring archived cards by hand comes with FR-74. | Must | 3 |
 
 ### 4.5 Trello-style look and behavior (goal G-3)
 
@@ -184,7 +183,7 @@ Removed requirements are not listed.
 | FR-62 | The user can drag a list by its header to reorder the lists. | Could | 5 |
 | FR-63 | Clicking a list title edits it in place. Enter or clicking away saves, and Escape cancels. | Could | 5 |
 | FR-64 | An "+ Add another list" control after the last list adds a list. | Could | 5 |
-| FR-65 | Card fronts show: the course as a colored label strip, the title, and badges for the due date, the number of notes (FR-43), and, from Phase 5, checklist progress (FR-70). The due date badge is green when Canvas reports *Submitted* or *Graded*, red when Canvas flags it *Missing*, and plain otherwise. Yellow for *Due soon* comes with FR-27 in Phase 5. | Must | 1 |
+| FR-65 | Card fronts show: the course as a colored label strip, the title, and a due date badge. Phase 5 ideas add a note count (FR-43) and checklist progress (FR-70). The due date badge is green when Canvas reports *Submitted* or *Graded*, red when Canvas flags it *Missing*, and plain otherwise. Yellow for *Due soon* comes with FR-27 in Phase 5. | Must | 1 |
 | FR-66 | Each course gets a label color automatically, used on its cards and its course button. From Phase 5 the user can change a course's color and name its label. | Should | 1 (5 for changing) |
 | FR-67 | Clicking a card opens its card back in a dialog over the board, which stays visible behind it. The browser address changes to the card's own link, so reloading or sharing the link reopens the card, and Back closes it. | Must | 5 |
 | FR-68 | The card back shows: the title; "in list *name*" (clicking it moves the card); labels; due date; points and status; an "Open in Canvas" button; *Description*, from Canvas and read only (FR-28); *Notes*, private (FR-40); and *Archive*. Checklists are added in Phase 5 (FR-70). | Must | 5 |
@@ -240,7 +239,7 @@ Removed requirements are not listed.
 |----|-------------|-------|
 | NFR-10 | The Canvas token is never written to logs, error messages, or the page's address (URL). | 1 |
 | NFR-11 | The token is stored encrypted on the server; all traffic uses HTTPS. | 1 |
-| NFR-12 | Notes and board data are visible only to the user who created them. | 2 |
+| NFR-12 | A user's Canvas connection, cached Canvas data, and board are visible only to that user. | 1 |
 | NFR-13 | The portal calls only Canvas read (`GET`) endpoints. | 1 |
 | NFR-14 | Student data is handled with care for privacy rules such as FERPA (US student records law): no analytics or third-party trackers that see course data. | 1 |
 
@@ -320,3 +319,4 @@ Removed requirements are not listed.
 | 2026-10-25 | NFR-33 (phone layout) and NFR-36 (nothing depends on hover) moved to Phase 5, from the Team Lead's review. |
 | 2026-10-25 | Added the Requirements by phase index, so it's clear which requirements are in scope for the current phase, from the Team Lead's review. |
 | 2026-10-25 | NFR-34 (Trello visual style) moved to Phase 1, from the Team Lead. |
+| 2026-10-25 | Whole-set review: NFR-12 (each user sees only their own data) moves to Phase 1, since Phase 1 stores tokens and Canvas data; FR-34's first-board rule is Phase 1; FR-6, FR-45, and FR-65 no longer mention Phase 5 notes or checklists in Phase 1–3 text. |

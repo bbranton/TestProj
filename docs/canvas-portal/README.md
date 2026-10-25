@@ -1,7 +1,7 @@
 # Canvas Assignments Portal
 
 A personal dashboard where a student connects their Canvas account, sees their
-current courses and assignments in one place, arranges assignments on a
+current courses and assignments in one place, and arranges them on a
 Trello-style board that stays current with Canvas. Private notes on each
 assignment are planned as a future feature. The full list of
 project goals is in the [roadmap](01-roadmap.md#1-project-goals).
@@ -69,7 +69,7 @@ one helps.
 | Database | Structured storage on the server, shared across the user's devices. SQLite (one file) or Postgres (a database server). |
 | Kanban | A board of columns (such as To do, Doing, Done) with cards you drag between them. |
 | Trello terms | The portal follows [Trello](https://trello.com)'s words: a *board* holds *lists* (columns), lists hold *cards*, and opening a card shows its *card back*. |
-| Dialog (modal) | A box that opens over the page and must be closed before using the page behind it, like a QML `Dialog`. The card back is one. |
+| Dialog (modal) | A box that opens over the page and must be closed before using the page behind it, like a QML `Dialog`. The card back (a Phase 5 idea) would be one. |
 | Component | A reusable piece of UI, like a QML component file. React and Svelte are both built around components. |
 | Deploy / hosting | Putting the app on a server on the internet so others can open it. |
 | CI | "Continuous integration": GitHub Actions running builds and tests on every push. |

@@ -168,7 +168,8 @@ or wrongly archived cards.
 ### Phase 4: Polish and deploy
 
 - Delete my data (FR-54).
-- Accessibility pass (NFR-30 to NFR-32).
+- Accessibility pass to WCAG 2.2 AA (NFR-32), and a final check that
+  every browser (NFR-30) and keyboard use (NFR-31) still work.
 - Deploy to the chosen host (D-3) and link it from the repo's landing page.
 
 **Exit criteria:** the deployed app works from a laptop or desktop in
@@ -228,7 +229,7 @@ accessibility checks pass.
 | M2 | Viewer complete | 1 | MVP usable day to day |
 | M3 | Dragging saves and syncs | 2 | Core organizing feature works on every device |
 | M4 | Fast loads and Canvas sync | 3 | Board stays current without waiting on Canvas |
-| M5 | Deployed with sync | 4 | Usable from any device |
+| M5 | Deployed with sync | 4 | Usable from any laptop or desktop browser |
 
 ## 5. Open decisions
 
@@ -250,7 +251,7 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | ID | Risk | Effect | Mitigation |
 |----|------|--------|------------|
 | R-1 | The school has turned off personal access tokens | Phase 1 can't connect | Check early (Phase 0). Fallback: a free Canvas account from Instructure for testing; OAuth with the school later. |
-| R-2 | Canvas tokens are powerful; a leak exposes a student's whole account | Privacy harm | Backend never logs tokens, stores them encrypted or not at all, and only uses read endpoints (NFR-10, NFR-11). |
+| R-2 | Canvas tokens are powerful; a leak exposes a student's whole account | Privacy harm | Backend never logs tokens, stores them encrypted, and only uses read endpoints (NFR-10, NFR-11). |
 | R-3 | Canvas is slow: in the Team Lead's experience a full load of courses, each with 100+ assignments, can take several minutes, and rate limits slow it further | Students wait or give up | Never make the student wait on Canvas: show the last data at once, refresh only when the student asks, and highlight Refresh when the data is old (FR-15). Measure early with a real account (TP-14 baseline in Phase 1), then in Phase 3 fetch less, in fewer requests, and switch to Canvas GraphQL if needed (see design, *Making Canvas loads fast*). |
 | R-4 | Assignments change in Canvas (renamed, deleted, new due date) | Board shows stale or orphaned cards | Merged into R-9. |
 | R-5 | Learning web development alongside building | Slower progress | Small phases, one new technology at a time, docs explain terms. |
@@ -294,3 +295,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | Refresh is manual (FR-15), from the Team Lead's review: Phase 3 tunes and verifies Refresh instead of running a background job; background sync (NFR-4) is a Phase 5 idea; D-3 and R-3 updated. |
 | 2026-10-25 | Phone support (NFR-33, NFR-36) moved from Phase 4 to Phase 5, since its UI details need working out first; the Phase 4 exit criteria now cover laptops and desktops only. From the Team Lead's review. |
 | 2026-10-25 | Phase 1 includes Trello's visual style (NFR-34), from the Team Lead. |
+| 2026-10-25 | Whole-set review: Phase 4's accessibility bullet matches the requirement phases, R-2 says tokens are stored encrypted, M5 no longer promises phones. |

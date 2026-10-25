@@ -11,7 +11,7 @@ results are recorded in section 7.
 
 | Level | What it checks | Tool | Runs |
 |-------|----------------|------|------|
-| **Unit** | One function on its own, such as status calculation or card ordering | pytest (backend); Vitest (frontend) | Every PR, in CI |
+| **Unit** | One function on its own, such as mapping Canvas status fields or card ordering | pytest (backend); Vitest (frontend) | Every PR, in CI |
 | **API** | A backend endpoint end to end, with a test database and recorded Canvas responses | pytest + FastAPI test client | Every PR, in CI |
 | **End-to-end (E2E)** | A real browser clicking through screens against a running backend with recorded Canvas data | Playwright | Every PR, in CI |
 | **Accessibility** | Contrast, labels, focus, keyboard use | axe-core inside Playwright, plus manual keyboard pass | Every PR (automated); each phase (manual) |
@@ -89,7 +89,7 @@ supported (Phase 5).
 |-------------|--------------------------|-------|
 | FR-2 | Valid token returns user name; invalid token returns a clear error | API |
 | FR-4 | Disconnect deletes the stored token row | API |
-| FR-6 | `401` from Canvas returns "reconnect" and leaves board and notes untouched | API, E2E |
+| FR-6 | `401` from Canvas returns "reconnect" and leaves the board untouched | API, E2E |
 | FR-10, FR-11 | Only active courses and their assignments are returned | API |
 | FR-12 | All 120+ assignments returned from a two-page fixture | API |
 | FR-14, FR-15 | Loading the board with saved data makes no Canvas call, however old the data; the first ever load fetches; Refresh fetches; data over an hour old comes back flagged so the frontend highlights Refresh | API, E2E |
@@ -183,7 +183,7 @@ wireframes in the
 | 4 | Check one assignment of each state, and any marked Late, Missing, or Excused | Labels and tags match what Canvas shows on its own assignment page |
 | 5 | Select ↗ on any assignment | Its Canvas page opens in a new tab |
 
-### TP-04 Filters and search
+### TP-04 Course buttons, filters, and search
 
 **Checks:** FR-24, FR-78 · **Phase:** 1 (steps 1 to 4 from Phase 5)
 
@@ -270,7 +270,7 @@ wireframes in the
 
 ### TP-10 Privacy between users
 
-**Checks:** NFR-12, FR-54 · **Phase:** 2–4
+**Checks:** NFR-12, FR-54 · **Phase:** 1–4
 **Needs:** two portal accounts A and B.
 
 | Step | Action | Expected |
@@ -428,3 +428,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | Links point to the renamed User Interface Specification. |
 | 2026-10-25 | PR checklist: each PR lists the requirement IDs it implements, all from the current phase. |
 | 2026-10-25 | TP-13 starts in Phase 1 for the visual style (NFR-34). |
+| 2026-10-25 | Whole-set review: TP-04 renamed to match its Phase 1 steps, TP-10 starts in Phase 1 with NFR-12, and the unit test example says status mapping. |

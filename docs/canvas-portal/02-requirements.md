@@ -28,15 +28,20 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | User | Description | Main goal |
 |------|-------------|-----------|
 | Student | Enrolled in one or more Canvas courses at a school | See everything due and plan their work |
+| Parent (observer) | A Canvas *observer* account linked to one or more students; sees their courses and assignments with limited access | Keep track of a student's work (Phase 5, see Q-5) |
 | Developer (Bridget) | Builds and runs the portal | Test against real and sample Canvas data |
 
 ## 3. Assumptions and constraints
 
 - **A-1** The student can create a Canvas personal access token at their
   school (*Account → Settings → Approved Integrations → New Access Token*).
-  Some schools disable this; see risk R-1.
+  Some schools disable this; see risk R-1. Bridget's school allows it, and
+  Bridget has a student token and a parent (observer) token for testing.
 - **A-2** Each school has its own Canvas address, such as
   `https://myschool.instructure.com`, so the address is a user setting.
+- **A-3** Test tokens are real credentials. They are kept out of the
+  repository, chat, and screenshots, and are loaded from a local file that git
+  ignores.
 - **C-1** Browsers block pages from calling the Canvas API directly from
   another site (CORS, see the [glossary](README.md#web-terms-used-in-these-docs)).
   All Canvas calls go through the portal's backend.
@@ -55,7 +60,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-2 | The portal checks the token by fetching the user's Canvas profile and shows their name on success. | Must | 1 |
 | FR-3 | The connect screen explains, with steps, how to create a token in Canvas. | Should | 1 |
 | FR-4 | The user can disconnect, which removes the token from the portal. | Must | 1 |
-| FR-5 | The portal remembers the connection between visits until the user disconnects. | Should | 1 |
+| FR-5 | The portal remembers the connection between visits until the user disconnects. From Phase 2 the connection is stored with the user's portal account, so it works on any device they sign in from. | Should | 1 |
 | FR-6 | If Canvas rejects the token (wrong, expired, or revoked), the portal says so and returns to the connect screen without losing board layout or notes. | Must | 1 |
 
 ### 4.2 Fetching data from Canvas
@@ -109,9 +114,9 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 
 | ID | Requirement | Priority | Phase |
 |----|-------------|----------|-------|
-| FR-50 | The user can sign in to the portal so their board and notes are tied to them on the server. | Must if D-2 = server | 4 |
-| FR-51 | Board and notes stored on the server appear on any device where the user signs in. | Must if D-2 = server | 4 |
-| FR-52 | On first sign-in, board and notes already in browser storage are imported to the server. | Should | 4 |
+| FR-50 | The user can sign in to the portal so their board and notes are tied to them on the server. | Must | 2 |
+| FR-51 | Board and notes stored on the server appear on any device where the user signs in. | Must | 2 |
+| FR-52 | *(Removed: board and notes are on the server from the start, so there is no browser data to import.)* | n/a | n/a |
 | FR-53 | The user can export their board and notes as a JSON file. | Should | 4 |
 | FR-54 | The user can delete all their data from the portal. | Must | 4 |
 
@@ -164,10 +169,12 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 - **Q-1** Does Bridget's school allow personal access tokens? (Blocks Phase 1; see R-1.)
 - **Q-2** Should "Due soon" be 48 hours, or configurable?
 - **Q-3** Should discussion posts and quizzes appear alongside assignments? Canvas exposes them as assignments in most cases, so the default is yes.
-- **Q-4** Is multi-device sync (Phase 4) wanted, or is one browser enough? This settles D-2.
+- ~~**Q-4** Is multi-device sync wanted, or is one browser enough?~~ Answered: yes, the user signs in from anywhere and sees their saved state (D-2).
+- **Q-5** Should the portal support parent (observer) tokens? Canvas returns observed students' data through different options, so the views would need a student picker. Proposed for Phase 5.
 
 ## Change log
 
 | Date | Change |
 |------|--------|
 | 2026-10-25 | First draft. |
+| 2026-10-25 | Server storage decided: FR-50 and FR-51 move to Phase 2, FR-52 removed. Added parent (observer) user, test tokens under A-1, A-3 token handling, Q-5. |

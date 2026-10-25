@@ -119,8 +119,8 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 |----|-------------|----------|-------|
 | FR-60 | Once the board exists, it is the home screen, as a Trello board is. | Must | 2 |
 | FR-61 | Lists sit side by side at a fixed width and the board scrolls sideways. Dragging empty board background also scrolls it. | Must | 2 |
-| FR-62 | The user can drag a list by its header to reorder the lists. | Must | 2 |
-| FR-63 | Clicking a list title edits it in place. Enter or clicking away saves, and Escape cancels. | Must | 2 |
+| FR-62 | The user can drag a list by its header to reorder the lists. | Could | 5 |
+| FR-63 | Clicking a list title edits it in place. Enter or clicking away saves, and Escape cancels. | Could | 5 |
 | FR-64 | An "+ Add another list" control after the last list adds a list. | Could | 5 |
 | FR-65 | Card fronts show: the course as a colored label strip, the title, and badges for the due date, the number of notes (FR-43), and, from Phase 5, checklist progress (FR-70). The due date badge is green when Canvas reports *Submitted* or *Graded*, red when Canvas flags it *Missing*, and plain otherwise. Yellow for *Due soon* comes with FR-27 in Phase 5. | Must | 1 (list), 2 (board) |
 | FR-66 | Each course gets a label color automatically. The user can change a course's color and name its label. | Should | 2 |
@@ -196,7 +196,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | NFR-32 | Meets WCAG 2.2 level AA (the standard web accessibility guideline) for contrast, labels, and focus. | 4 |
 | NFR-33 | Usable on a phone-width screen. As in Trello's mobile layout, one list fills the screen and the user swipes between lists. | 4 |
 | NFR-34 | Visual style is close to Trello's within C-4: a colored board background, light gray lists with rounded corners, white cards with rounded corners and a soft shadow, and compact text. | 2 |
-| NFR-35 | Board actions (open a card, rename a list, filter) need no more clicks than the same action in Trello. | 2 |
+| NFR-35 | Board actions (open a card, show or hide a course, filter) need no more clicks than the same action in Trello. | 2 |
 
 ### 5.5 Maintainability
 
@@ -237,3 +237,4 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | 2026-10-25 | FR-72: the Filter button sits in the course button row, not the header. |
 | 2026-10-25 | FR-72 filters by course; the UI says "course", not "label". |
 | 2026-10-25 | Notes are now dated, comment-style entries, any number per card (FR-40 to FR-43); new FR-28 shows the Canvas description read only. From the Team Lead's review. |
+| 2026-10-25 | Renaming and reordering lists (FR-62, FR-63) moved to Phase 5, from the Team Lead's review. |

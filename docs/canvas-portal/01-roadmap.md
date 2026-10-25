@@ -96,12 +96,12 @@ first.
   (FR-65, FR-66).
 - Clicking a card opens its "card back" in a dialog over the board, with its
   own link (FR-67, FR-68).
-- Drag cards between lists with Trello's drag feel, and drag lists to reorder
-  them; keyboard alternative for dragging (FR-32, FR-62, FR-77, NFR-31).
+- Drag cards between lists with Trello's drag feel, with a keyboard
+  alternative (FR-32, FR-77, NFR-31).
 - Cards in every list are always sorted by due date, earliest at the top
   (FR-38).
-- The board has four fixed lists (Backlog, To do, In progress, Done) that can
-  be renamed by clicking their title (FR-31, FR-63).
+- The board has four fixed lists, always in this order: Backlog, To do,
+  In progress, Done (FR-31).
 - A row of show/hide buttons under the header, one per course (FR-78).
 - Trello-style filter menu and keyboard shortcuts (FR-72, FR-73).
 - New assignments from Canvas land in *Backlog* until the student sorts them;
@@ -145,6 +145,8 @@ accessibility checks pass.
 - Personal cards and lists: "+ Add a card" creates a card that isn't a
   Canvas assignment, and "+ Add another list" adds lists; lists can also be
   archived (FR-71, FR-64, FR-36).
+- Rename a list by clicking its title, and drag lists to reorder them
+  (FR-63, FR-62).
 - Quick edit menu on each card: pencil button or right-click (FR-69).
 - Hide assignments, such as graded or excused ones (FR-25).
 - Statuses the portal works out itself, such as *Upcoming*, *Due soon* (with a
@@ -215,3 +217,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | FR-27 in Phase 5 now covers all computed statuses (Upcoming, Due soon, Overdue). |
 | 2026-10-25 | Hiding assignments (FR-25) moved from Phase 1 to Phase 5. |
 | 2026-10-25 | Phase 3 notes are dated, comment-style entries, separate from the read-only Canvas description (FR-28). |
+| 2026-10-25 | Renaming and reordering lists (FR-62, FR-63) moved from Phase 2 to Phase 5. |

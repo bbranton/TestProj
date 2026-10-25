@@ -157,8 +157,9 @@ Design notes:
   changed in Canvas moves the card automatically. Moving a card only changes
   its `list_id`, a one-row update (NFR-3).
 - **List `position` is a sortable string** (a technique called *fractional
-  indexing*: to put a list between "a" and "b", give it "an"), so dragging a
-  list updates one row instead of renumbering them all (FR-62).
+  indexing*: to put a list between "a" and "b", give it "an"). Until Phase 5
+  it just holds the fixed order of the four lists; when dragging lists
+  arrives (FR-62), a move updates one row instead of renumbering them all.
 - **Checklists** (FR-70) are Phase 5. The `CHECKLIST` and `CHECKLIST_ITEM`
   tables are shown so the model is ready for them, but they are not built
   until then; checklist items will use the same position technique.
@@ -200,7 +201,7 @@ and require a signed-in session except where noted.
 | `POST /api/refresh` | Bypass the cache and re-fetch from Canvas | FR-13 |
 | `GET /api/board` | Lists and cards with labels and badges, cards sorted by due date, after merging in new or removed assignments | FR-33, FR-34, FR-38, FR-65 |
 | `POST /api/board/lists` | Phase 5: add a list at the end | FR-64 |
-| `PATCH /api/board/lists/{id}` | Rename or move (new position) a list; archive and restore in Phase 5 | FR-36, FR-62, FR-63 |
+| `PATCH /api/board/lists/{id}` | Phase 5: rename, move (new position), archive, or restore a list | FR-36, FR-62, FR-63 |
 | `POST /api/board/cards` | Phase 5: add a personal card | FR-71 |
 | `GET /api/board/cards/{id}` | Everything for the card back, including the cleaned Canvas description | FR-28, FR-67, FR-68 |
 | `PATCH /api/board/cards/{id}` | Move to another list, archive, or restore a card | FR-32, FR-33, FR-74 |
@@ -407,7 +408,7 @@ flowchart TD
     App --> CardBack["CardBackDialog<br/>opens on /c/{cardId}"]
     App --> BoardMenu["BoardMenu<br/>right-side panel, archived items"]
     Board --> List["List (one per list)"]
-    List --> ListHeader["ListHeader<br/>inline rename, list menu, drag handle"]
+    List --> ListHeader["ListHeader<br/>list title; rename and drag in Phase 5"]
     List --> Card["CardFront (one per card)"]
     Card --> Badges["Label strip, due badge,<br/>notes count"]
     Card --> QuickEdit["QuickEditMenu, Phase 5<br/>pencil or right-click"]
@@ -436,9 +437,9 @@ UI uses:
 | Behavior | How it works | Requirements |
 |----------|--------------|--------------|
 | Drag a card | Card lifts and tilts about 4°, the list under it is highlighted and a gray gap shows its due date spot in that list, the board auto-scrolls near the edges; the move is saved with an optimistic update (W-3) | FR-32, FR-77 |
-| Drag a list | Grab the list header; other lists slide aside | FR-62 |
+| Drag a list (Phase 5) | Grab the list header; other lists slide aside | FR-62 |
 | Scroll the board | Horizontal scrollbar, or drag on empty background | FR-61 |
-| Rename a list | Click the title, it becomes a text box; Enter saves, Escape cancels | FR-63 |
+| Rename a list (Phase 5) | Click the title, it becomes a text box; Enter saves, Escape cancels | FR-63 |
 | Open a card | Click, or focus it and press Enter; address changes to `/c/{cardId}` | FR-67 |
 | Quick edit (Phase 5) | Pencil on hover or right-click | FR-69 |
 | Show or hide a course | Tap its button in the row under the header, or Show all / Hide all; the board updates at once and the choice is saved in the background (optimistic update) | FR-78 |
@@ -496,3 +497,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | Status flowchart replaced by a direct mapping of Canvas submission fields (FR-23); computed statuses are Phase 5 (FR-27). |
 | 2026-10-25 | Filter button moved from the header to the course toggle bar. |
 | 2026-10-25 | Notes are now many dated entries per card (NOTE has `created_at`; new notes endpoints); the Canvas description is shown read only and cleaned against XSS (FR-28). |
+| 2026-10-25 | Renaming and reordering lists (FR-62, FR-63) marked Phase 5 in the API, component, and interaction tables. |

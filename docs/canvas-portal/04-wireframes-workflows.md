@@ -129,7 +129,7 @@ Each row uses the same label colors and due badges as the cards.
 
 ### S-4 Board (home screen)
 
-Requirements: FR-31 to FR-35, FR-38, FR-60 to FR-63, FR-65, FR-66, FR-72 to FR-74, FR-77, FR-78,
+Requirements: FR-31 to FR-35, FR-38, FR-60, FR-61, FR-65, FR-66, FR-72 to FR-74, FR-77, FR-78,
 NFR-3, NFR-31, NFR-34.
 
 ```text
@@ -140,7 +140,7 @@ NFR-3, NFR-31, NFR-34.
 +--------------------------------------------------------------------------+
 |  board background color                                       Done ──>   |
 |  +--------------------+ +--------------------+ +--------------------+    |
-|  | Backlog        […] | | To do          […] | | In progress    […] |    |
+|  | Backlog            | | To do              | | In progress        |    |
 |  | +----------------+ | | +----------------+ | | +----------------+ |    |
 |  | | ▬▬ HIST 210    | | | | ▬▬ MATH 152    | | | | ▬▬ BIO 101     | |    |
 |  | | Chapter 5      | | | | Problem set 7  | | | | Lab report 3   | |    |
@@ -164,8 +164,8 @@ NFR-3, NFR-31, NFR-34.
   ▬▬ label strip in the course color (FR-66). (◷ ...) due badge: red
   when Canvas flags Missing, green with ✓ when Submitted or Graded, plain
   otherwise (FR-65). ✎ 2 is the number of notes (FR-43).
-  The lists are fixed. List title: click to rename (FR-63). Drag a list
-  by its header to reorder (FR-62). […] list menu: Move list.
+  The lists are fixed: they can't be renamed or reordered. Renaming
+  (FR-63) and dragging lists (FR-62) are Phase 5 ideas.
   Adding cards and lists (FR-64, FR-71) and archiving lists (FR-36) are
   Phase 5 ideas.
   The four lists are Backlog, To do, In progress, and Done; Done is off to
@@ -333,7 +333,7 @@ The user swipes sideways between lists, and dots show which list is shown.
 +----------------------------+
 | [⚲] [● BIO] [● HIST] [● MA›|
 +----------------------------+
-| In progress            […] |
+| In progress                |
 | +------------------------+ |
 | | ▬▬ BIO 101             | |
 | | Lab report 3           | |
@@ -459,11 +459,11 @@ flowchart TD
     F --> G[Remove user, token, board,<br/>notes, cache] --> H[S-1 Sign in]
 ```
 
-### W-7 Arrange the lists
+### W-7 Arrange the lists (Phase 5, future feature)
 
-The board always has the same four lists: Backlog, To do, In progress, and
-Done. Students can rename and reorder
-them; adding and archiving lists are Phase 5 ideas.
+Until Phase 5 the board always has the same four lists, in this order:
+Backlog, To do, In progress, and Done. Renaming and reordering them (FR-62,
+FR-63), and adding and archiving lists, are Phase 5 ideas.
 
 ```mermaid
 flowchart TD
@@ -506,3 +506,4 @@ flowchart TD
 | 2026-10-25 | Filter button moved from the header to the start of the course button row (S-3, S-4, phone), from the Team Lead's review. |
 | 2026-10-25 | The filter menu and card back say "Courses"/"Course" instead of "Labels", from the Team Lead's review. |
 | 2026-10-25 | Notes are now dated, comment-style entries (like Trello's "Comments and activity"), separate from the read-only Canvas description: S-5 redrawn, note count badges on S-3, S-4, and phone, W-4 rewritten, from the Team Lead's review. |
+| 2026-10-25 | Renaming and reordering lists moved to Phase 5: list menus removed from S-4 and the phone layout, W-7 marked Phase 5, from the Team Lead's review. |

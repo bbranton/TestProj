@@ -101,8 +101,9 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | NFR-20 | Canvas down: cached data plus warning banner | API, E2E |
 | NFR-31 | Move a card using only the keyboard | E2E |
 | FR-60 | Signed-in, connected user lands on the board | E2E |
-| FR-61, FR-62 | Board scrolls sideways; dragging a list header reorders lists and the order survives reload | E2E |
-| FR-63 | Click a list title, type, Enter saves; Escape cancels | E2E |
+| FR-61 | Board scrolls sideways; the four lists are always Backlog, To do, In progress, Done | E2E |
+| FR-62 (Phase 5) | Dragging a list header reorders lists and the order survives reload | E2E |
+| FR-63 (Phase 5) | Click a list title, type, Enter saves; Escape cancels | E2E |
 | FR-64, FR-71 (Phase 5) | Composer adds a list or a personal card and stays open for the next | E2E |
 | FR-65 | Due badge is green for Submitted or Graded, red for Missing, plain otherwise | Unit, E2E |
 | FR-66 | Each course gets a palette color; changing it updates every card of that course | API, E2E |
@@ -283,8 +284,8 @@ how it looks, what it takes (clicks or keys), or how it responds.
 | 1 | Look at the board as a whole | Same arrangement: header on top, lists side by side on a colored background, gray lists, white cards with label strips and badges |
 | 2 | Drag a card to another list, slowly | Card lifts and tilts, the target list is highlighted, a gap opens at the card's due date spot, neighbors slide smoothly. (Deliberate difference: Trello lets you drop anywhere; the portal keeps due date order, FR-38.) |
 | 3 | Drag a card toward the right edge | Board scrolls automatically |
-| 4 | Drag a list by its header | Lists reorder the same way |
-| 5 | Click a list title and rename it | Edits in place; Enter saves, Escape cancels |
+| 4 | *(Phase 5)* Drag a list by its header | Lists reorder the same way |
+| 5 | *(Phase 5)* Click a list title and rename it | Edits in place; Enter saves, Escape cancels |
 | 6 | *(Phase 5)* Add a list, then add three cards in a row | Composer stays open after each, as in Trello |
 | 7 | Open a card | Dialog over the dimmed board, same section order; address changes |
 | 8 | Reload, then press Back | Reload reopens the card; Back closes it |
@@ -292,7 +293,7 @@ how it looks, what it takes (clicks or keys), or how it responds.
 | 10 | Press `f`, filter by a course and by "Due date passed", then `x` | Same behavior; the course row shows the filter is active (deliberate difference: Trello puts Filter in the board header) |
 | 11 | Try each shortcut in Trello's shortcut list that the portal supports | Same key does the same thing |
 | 12 | Archive a card and restore it from the board menu | Same steps |
-| 13 | Count clicks to open a card, rename a list, and filter by a course | No more than Trello (NFR-35) |
+| 13 | Count clicks to open a card and filter by a course | No more than Trello (NFR-35) |
 | 14 | Check for Trello's name, logo, icons, or artwork anywhere | None (C-4) |
 
 Record the result of each step as *Same*, *Close* (small, acceptable
@@ -333,3 +334,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | "Hide finished" steps removed from TP-03 and TP-04; hiding assignments is Phase 5 (FR-25). |
 | 2026-10-25 | TP-13 step 10 notes the Filter button's new place in the course row. |
 | 2026-10-25 | TP-09 rewritten for dated, comment-style notes and the read-only Canvas description (FR-28); description cleaning fixture and test added. |
+| 2026-10-25 | List rename and reorder tests (FR-62, FR-63, TP-13 steps 4 and 5) marked Phase 5. |

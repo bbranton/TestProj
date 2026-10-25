@@ -124,11 +124,11 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-66 | Each course gets a label color automatically. The user can change a course's color and name its label. | Should | 2 |
 | FR-67 | Clicking a card opens its card back in a dialog over the board, which stays visible behind it. The browser address changes to the card's own link, so reloading or sharing the link reopens the card, and Back closes it. | Must | 2 |
 | FR-68 | The card back shows: the title; "in list *name*" (clicking it moves the card); labels; due date; points and status; an "Open in Canvas" button; *Description* (the private note); and *Archive*. Checklists are added in Phase 5 (FR-70). | Must | 2 (3 for notes) |
-| FR-69 | Hovering a card shows an edit (pencil) button; it and right-click open a quick edit menu: Open card, Move, Change label color, Open in Canvas, Archive. | Should | 3 |
+| FR-69 | Hovering a card shows an edit (pencil) button; it and right-click open a quick edit menu: Open card, Move, Change label color, Open in Canvas, Archive. | Could | 5 |
 | FR-70 | A card back can hold one or more checklists of items that can be checked off. The card front shows progress such as 2/5 (2 of 5 items done). | Could | 5 |
 | FR-71 | "+ Add a card" at the bottom of each list creates a personal card that isn't a Canvas assignment. It supports everything a card back has except the Canvas details. | Could | 5 |
 | FR-72 | A Filter menu in the board header filters cards by label (course), by due date (overdue, due in the next day, next week, next month, no due date, complete), and by keyword. When a filter is on, the header says so and offers "Clear". | Must | 2 |
-| FR-73 | Keyboard shortcuts follow Trello's where the action exists, including: arrow keys move between cards, Enter opens a card, Escape closes, `e` quick edit, `f` filter, `x` clear filters, `?` shows the shortcut list. The final list is checked against Trello's own shortcut page during design. | Should | 2 |
+| FR-73 | Keyboard shortcuts follow Trello's where the action exists, including: arrow keys move between cards, Enter opens a card, Escape closes, `f` filter, `x` clear filters, `?` shows the shortcut list. The final list is checked against Trello's own shortcut page during design. | Should | 2 |
 | FR-74 | Archived cards (and, from Phase 5, lists) are found under "Archived items" in the board menu, where they can be restored. | Must | 2 |
 | FR-75 | A board menu opens as a panel from the right edge with: board background color, labels, archived items. | Could | 5 |
 | FR-76 | The user can have more than one board. | Could | 5 |
@@ -225,3 +225,4 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | 2026-10-25 | Checklists (FR-70) moved to Phase 5, ideas for later, from the Team Lead's review. |
 | 2026-10-25 | FR-36, FR-64, and FR-71 (archive lists, add lists, add personal cards) moved to Phase 5; `n` shortcut dropped; Q-6 answered. From the Team Lead's review. |
 | 2026-10-25 | Added FR-38: cards are always sorted by due date, earliest first, in every list and the table. FR-32, FR-33, FR-34, and FR-77 changed to match: no hand reordering within a list. From the Team Lead's review. |
+| 2026-10-25 | Quick edit menu (FR-69) and its `e` shortcut moved to Phase 5, from the Team Lead's review. |

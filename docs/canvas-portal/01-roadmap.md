@@ -119,7 +119,6 @@ second device, and the Trello comparison review (TP-13) passes for the board.
 - Add, edit, and delete a note on any assignment (FR-40 to FR-42).
 - Notes are the card's *Description*, as on a Trello card back; a card with a
   note shows the description icon (FR-43).
-- Quick edit menu on each card (FR-69).
 - Notes are never sent to Canvas (FR-44, NFR-12).
 
 **Exit criteria:** notes survive reloads and Canvas refreshes, appear on a
@@ -143,6 +142,7 @@ accessibility checks pass.
 - Personal cards and lists: "+ Add a card" creates a card that isn't a
   Canvas assignment, and "+ Add another list" adds lists; lists can also be
   archived (FR-71, FR-64, FR-36).
+- Quick edit menu on each card: pencil button or right-click (FR-69).
 - Checklists inside a card, with progress such as 2/5 on the card front
   (FR-70).
 - More than one board, such as one per course or term, as in Trello (FR-76).
@@ -200,3 +200,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | Checklists (FR-70) moved from Phase 3 to Phase 5. |
 | 2026-10-25 | Adding cards and lists, and archiving lists, moved to Phase 5 as future features (Q-6 answered). |
 | 2026-10-25 | Phase 2 adds FR-38: cards always sorted by due date within each list. |
+| 2026-10-25 | Quick edit menu (FR-69) moved from Phase 3 to Phase 5. |

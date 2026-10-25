@@ -103,7 +103,7 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | FR-66 | Each course gets a palette color; changing it updates every card of that course | API, E2E |
 | FR-67 | Opening a card changes the address to `/c/{id}`; reloading that address reopens it; Back closes it | E2E |
 | FR-68 | Card back shows every listed field for a Canvas card | E2E |
-| FR-69 | Pencil, right-click, and `e` open the quick edit menu | E2E |
+| FR-69 (Phase 5) | Pencil and right-click open the quick edit menu | E2E |
 | FR-70 (Phase 5) | Add, check, reorder, and delete checklist items; card front shows progress | API, E2E |
 | FR-72 | Each filter option, combined filters, and Clear | E2E |
 | FR-78 | Tapping a course button hides and shows its cards on board and table; Show all and Hide all; hidden cards keep their place; choice survives reload and a second session | API, E2E |
@@ -280,7 +280,7 @@ how it looks, what it takes (clicks or keys), or how it responds.
 | 6 | *(Phase 5)* Add a list, then add three cards in a row | Composer stays open after each, as in Trello |
 | 7 | Open a card | Dialog over the dimmed board, same section order; address changes |
 | 8 | Reload, then press Back | Reload reopens the card; Back closes it |
-| 9 | Use the pencil and right-click on a card | Quick edit menu next to the raised card |
+| 9 | *(Phase 5)* Use the pencil and right-click on a card | Quick edit menu next to the raised card |
 | 10 | Press `f`, filter by a label and by "Overdue", then `x` | Same behavior; header shows the filter is active |
 | 11 | Try each shortcut in Trello's shortcut list that the portal supports | Same key does the same thing |
 | 12 | Archive a card and restore it from the board menu | Same steps |
@@ -317,3 +317,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | FR-70 checklist tests marked Phase 5. |
 | 2026-10-25 | Adding cards and lists moved to Phase 5 in the automated tests and TP-13. |
 | 2026-10-25 | FR-38 (always sorted by due date): sort tests, TP-06 step 2, TP-08 step 2, and TP-13 step 2 updated. |
+| 2026-10-25 | Quick edit tests marked Phase 5. |

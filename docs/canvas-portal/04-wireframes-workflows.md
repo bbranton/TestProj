@@ -23,7 +23,7 @@ flowchart TD
     S4 <--> S3[S-3 Table view]
     S4 --> S5[S-5 Card back dialog]
     S3 --> S5
-    S4 --> S7[S-7 Quick edit menu]
+    S4 -.-> S7[S-7 Quick edit menu, Phase 5]
     S4 --> S8[S-8 Filter menu]
     S4 --> S9[S-9 Board menu and archived items]
     S4 --> S6[S-6 Settings]
@@ -144,7 +144,7 @@ NFR-3, NFR-31, NFR-34.
 |  | +----------------+ | | +----------------+ | | +----------------+ |    |
 |  | | ▬▬ MATH 152    | | | | ▬▬ BIO 101     | | | | ▬▬ BIO 101     | |    |
 |  | | Problem set 7  | | | | Lab report 3   | | | | Quiz 4         | |    |
-|  | | (◷ Wed 9:00) ✎ | | | | (◷ Tue 11:59)  | | | | (◷ Oct 20 ✓)   | |    |
+|  | | (◷ Wed 9:00)   | | | | (◷ Tue 11:59)  | | | | (◷ Oct 20 ✓)   | |    |
 |  | +----------------+ | | | ≡              | | | +----------------+ |    |
 |  | +----------------+ | | +----------------+ | |                    |    |
 |  | | ▬▬ HIST 210    | | | ┌ ─ ─ ─ ─ ─ ─ ─ ┐  | +--------------------+    |
@@ -169,7 +169,6 @@ NFR-3, NFR-31, NFR-34.
   their list.
   ▬▬ label strip in the course color (FR-66). (◷ ...) due badge: yellow due
   soon, red overdue, green with ✓ when complete (FR-65). ≡ has a description.
-  ✎ is shown on the card the mouse is over and opens S-7.
   The three lists are fixed. List title: click to rename (FR-63). Drag a list
   by its header to reorder (FR-62). […] list menu: Move list.
   Adding cards and lists (FR-64, FR-71) and archiving lists (FR-36) are
@@ -234,10 +233,10 @@ Requirements: FR-4, FR-53, FR-54.
 +--------------------------------------------------------------+
 ```
 
-### S-7 Quick edit menu
+### S-7 Quick edit menu (Phase 5, future feature)
 
-Requirements: FR-69. Opens from the ✎ button on hover, by right-clicking a
-card, or by pressing `e`. The card is shown raised, with a menu beside it,
+Requirements: FR-69. Phase 5. Opens from a ✎ button on hover or by
+right-clicking a card. The card is shown raised, with a menu beside it,
 as in Trello.
 
 ```text
@@ -475,3 +474,4 @@ flowchart TD
 | 2026-10-25 | Checklists (FR-70) moved to Phase 5: removed checklist badges and the card back checklist section. |
 | 2026-10-25 | Adding cards and lists moved to Phase 5: removed "+ Add a card" and "+ Add another list" from S-4 and the phone layout; W-7 now covers rename and reorder only; W-8 marked Phase 5. |
 | 2026-10-25 | Cards always sorted by due date within each list (FR-38): S-4 notes, S-9 restore, W-3, and W-5 updated. |
+| 2026-10-25 | Quick edit menu (S-7, FR-69) moved to Phase 5; removed the ✎ hover button from S-4. |

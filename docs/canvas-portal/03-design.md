@@ -403,7 +403,7 @@ flowchart TD
     List --> ListHeader["ListHeader<br/>inline rename, list menu, drag handle"]
     List --> Card["CardFront (one per card)"]
     Card --> Badges["Label strip, due badge,<br/>description icon"]
-    Card --> QuickEdit["QuickEditMenu<br/>pencil or right-click"]
+    Card --> QuickEdit["QuickEditMenu, Phase 5<br/>pencil or right-click"]
     CardBack --> Desc["Description (note editor)"]
     CardBack --> Sidebar["Card actions: Move, Labels, Open in Canvas, Archive"]
 ```
@@ -432,7 +432,7 @@ UI uses:
 | Scroll the board | Horizontal scrollbar, or drag on empty background | FR-61 |
 | Rename a list | Click the title, it becomes a text box; Enter saves, Escape cancels | FR-63 |
 | Open a card | Click, or focus it and press Enter; address changes to `/c/{cardId}` | FR-67 |
-| Quick edit | Pencil on hover, right-click, or `e` | FR-69 |
+| Quick edit (Phase 5) | Pencil on hover or right-click | FR-69 |
 | Show or hide a course | Tap its button in the row under the header, or Show all / Hide all; the board updates at once and the choice is saved in the background (optimistic update) | FR-78 |
 | Filter | `f` or the Filter button; non-matching cards are hidden and the header shows the filter is active | FR-72 |
 | Keyboard map | Kept in one file and shown by `?`; checked against Trello's shortcut page | FR-73, NFR-31 |
@@ -482,3 +482,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | Checklists (FR-70) marked Phase 5: tables and endpoints kept for later, removed from the Phase 2 component diagram. |
 | 2026-10-25 | Adding cards and lists moved to Phase 5: endpoints marked, composers removed from the component diagram. |
 | 2026-10-25 | FR-38: cards always sorted by due date. Removed the card `position` column; only lists keep positions. |
+| 2026-10-25 | Quick edit menu (FR-69) marked Phase 5. |

@@ -15,7 +15,7 @@ minimum viable solution.
 - Proposing when the current phase changes. The phase line in
   [CLAUDE.md](../../../CLAUDE.md) is changed only by the Team Lead.
 - Scope calls: whether a request belongs in the current phase, a later one,
-  or nowhere.
+  the backlog, or nowhere.
 
 ## Cares about
 

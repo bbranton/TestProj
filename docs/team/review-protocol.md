@@ -30,7 +30,7 @@ for another persona in a finding.
 
 | Work | Owner | Recommended reviewers | Optional reviewers |
 |------|-------|--------------------|--------------------|
-| Roadmap (`01-roadmap.md`) | Management | Product and QA | Architecture, DevOps |
+| Roadmap (`01-roadmap.md`) | Management | Product and QA, Architecture | DevOps |
 | Requirements (`02-requirements.md`) | Product and QA | Architecture, plus Management when a phase changes | UI/UX, Developer |
 | Design (`03-design.md`) | Architecture | Product and QA, Developer | UI/UX, DevOps |
 | Transition plan (major design change) | Architecture | Developer, Product and QA | DevOps, Management |
@@ -62,7 +62,7 @@ outside its area is advice, never sign-off.
 | Decision | Decided by | Needs the Team Lead for |
 |----------|------------|-------------------------|
 | Business goals | Team Lead | Always |
-| Priorities, phases, scope, timelines, features hidden for a release | Management | Starting a phase; adding or dropping a goal |
+| Priorities and scope within the approved roadmap; recommends phases, timelines, and features hidden for a release | Management | Every change to the roadmap or its phases; adding or dropping a goal |
 | What a feature must do | Product and QA | Adding, removing, or moving a requirement between phases |
 | How it's tested, and whether tests pass | Product and QA | Calling a phase done; removing or weakening a test |
 | Design: structure, data, APIs, technology, security | Architecture | A new dependency, service, or data store; how the Canvas token is stored or sent; starting a transition plan |

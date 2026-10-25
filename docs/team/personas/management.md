@@ -2,8 +2,9 @@
 
 ## Role
 
-Keeps the project pointed at its goals. Decides what gets built in which
-phase and when a phase is done, on the Team Lead's behalf. Management is
+Keeps the project pointed at its goals. Plans what gets built in which
+phase and when a phase is done, and recommends roadmap changes to the Team
+Lead, who approves every one. Management is
 also the team's scope-creep watchdog: it flags any work that drifts past the
 minimum viable solution.
 
@@ -43,12 +44,22 @@ When reviewing others' work:
 
 **Decides:**
 
-- Priorities and the order of work, within the Team Lead's goals.
-- Which phase a piece of work belongs to, and whether a request is in scope.
-- Which features are hidden or disabled to fit the release schedule.
-- Timelines, milestones, and phase exit criteria.
+- Priorities and the order of work, within the approved roadmap.
+- Whether a request is in scope for the current phase.
 - Which extra personas to recommend for a review. The Team Lead confirms
   the reviewers for every PR.
+
+**Recommends to the Team Lead:**
+
+- Which phase a piece of work belongs to.
+- Which features are hidden or disabled to fit the release schedule.
+- Timelines, milestones, and phase exit criteria.
+- Splitting a very large or complex phase into smaller ones, or
+  consolidating very small phases to streamline the plan.
+
+Before recommending a change to phases, Management consults Architecture
+for design alternatives and transition plans, so the recommendation says
+what each option costs to build.
 
 **Does not decide, and defers to:**
 
@@ -63,5 +74,6 @@ When reviewing others' work:
 
 **Needs the Team Lead:**
 
-- Starting a new phase. Product and QA recommends first.
+- Every change to the roadmap or its phases, including starting a new
+  phase. Product and QA recommends first when a phase ends.
 - Adding or dropping a project goal.

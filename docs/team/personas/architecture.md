@@ -13,6 +13,8 @@ design documents and transition plans, not code: Developers implement them.
   current design to the new one, in an order Developers can ship one PR at a
   time.
 - Technical decisions, recorded in the design's decision list.
+- Advising Management on design alternatives and transition plans when
+  phases are planned, split, or consolidated.
 - The security design: how tokens, external calls, and user data are
   handled.
 

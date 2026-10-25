@@ -65,7 +65,6 @@ Removed requirements are not listed.
 - Accounts, sync, and data control: FR-51
 - Performance: NFR-3
 - Reliability: NFR-22
-- Usability and accessibility: NFR-31
 
 **Phase 3: Performance and Canvas sync**
 
@@ -81,7 +80,7 @@ Removed requirements are not listed.
 
 - Viewing courses and assignments: FR-24, FR-25, FR-27, FR-28
 - Kanban board: FR-36
-- Trello-style look and behavior: FR-62, FR-63, FR-64, FR-66 (changing colors), FR-67, FR-68, FR-69, FR-70, FR-71, FR-72, FR-73, FR-74, FR-75, FR-76, FR-78 (saving the choice), FR-79
+- Trello-style look and behavior: FR-62, FR-63, FR-64, FR-66 (changing colors), FR-67, FR-68, FR-69, FR-70, FR-71, FR-72, FR-74, FR-75, FR-76, FR-78 (saving the choice), FR-79
 - Private notes: FR-40, FR-41, FR-42, FR-43, FR-44, FR-46
 - Accounts, sync, and data control: FR-53, FR-55
 - Performance: NFR-4
@@ -114,8 +113,7 @@ Removed requirements are not listed.
   time) and limits how fast one token can make requests. The backend must
   follow page links and back off when limited.
 - **C-3** The portal uses only Canvas *read* endpoints.
-- **C-4** "Like Trello" means Trello's layout, interactions, and keyboard
-  habits. The portal does not use the Trello name or logo, Trello's icons,
+- **C-4** "Like Trello" means Trello's layout and interactions. The portal does not use the Trello name or logo, Trello's icons,
   illustrations, or fonts, or copy Trello's stylesheets. Colors and icons are
   our own, chosen to give a similar feel. (Trello is a trademark of
   Atlassian.)
@@ -191,7 +189,7 @@ Removed requirements are not listed.
 | FR-70 | A card back can hold one or more checklists of items that can be checked off. The card front shows progress such as 2/5 (2 of 5 items done). | Could | 5 |
 | FR-71 | "+ Add a card" at the bottom of each list creates a personal card that isn't a Canvas assignment. It supports everything a card back has except the Canvas details. | Could | 5 |
 | FR-72 | A Filter button at the start of the course button row (FR-78), under the header, opens a menu that filters cards by course, by due date (due date passed, due in the next day, next week, next month, no due date), by Canvas submission state and flags (FR-23), and by keyword. When a filter is on, the course row says so and offers "Clear". | Must | 5 |
-| FR-73 | Keyboard shortcuts follow Trello's where the action exists, including: arrow keys move between cards, Enter opens a card, Escape closes, `f` filter, `x` clear filters, `?` shows the shortcut list. The final list is checked against Trello's own shortcut page during design. | Should | 5 |
+| FR-73 | *(Removed: no keyboard shortcuts. From the Team Lead's review.)* | n/a | n/a |
 | FR-74 | Archived cards and lists are found under "Archived items" in the board menu, where they can be restored. | Must | 5 |
 | FR-75 | A board menu opens as a panel from the right edge with: board background color, labels, archived items. | Could | 5 |
 | FR-76 | The user can have more than one board. | Could | 5 |
@@ -256,7 +254,7 @@ Removed requirements are not listed.
 | ID | Requirement | Phase |
 |----|-------------|-------|
 | NFR-30 | Works in current Chrome, Firefox, Safari, and Edge. | 1 |
-| NFR-31 | Every action, including moving cards, can be done with the keyboard alone. | 2 |
+| NFR-31 | *(Removed: keyboard-only use is not a requirement. From the Team Lead's review.)* | n/a |
 | NFR-32 | Meets WCAG 2.2 level AA (the standard web accessibility guideline) for contrast, labels, and focus. | 4 |
 | NFR-33 | Usable on a phone-width screen. As in Trello's mobile layout, one list fills the screen and the user swipes between lists. The UI details are worked out before this is built. | 5 |
 | NFR-34 | Visual style is close to Trello's within C-4: a colored board background, light gray lists with rounded corners, white cards with rounded corners and a soft shadow, and compact text. | 1 |
@@ -320,3 +318,4 @@ Removed requirements are not listed.
 | 2026-10-25 | Added the Requirements by phase index, so it's clear which requirements are in scope for the current phase, from the Team Lead's review. |
 | 2026-10-25 | NFR-34 (Trello visual style) moved to Phase 1, from the Team Lead. |
 | 2026-10-25 | Whole-set review: NFR-12 (each user sees only their own data) moves to Phase 1, since Phase 1 stores tokens and Canvas data; FR-34's first-board rule is Phase 1; FR-6, FR-45, and FR-65 no longer mention Phase 5 notes or checklists in Phase 1–3 text. |
+| 2026-10-25 | NFR-31 (keyboard-only use) and FR-73 (keyboard shortcuts) removed; C-4 no longer mentions keyboard habits. From the Team Lead's review: keyboard actions are not a requirement. |

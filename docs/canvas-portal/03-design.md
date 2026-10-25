@@ -64,7 +64,7 @@ both.
 | Frontend framework | React or Svelte | **Open (D-1)**, after design | See section 10 for how the design affects the choice |
 | Frontend language | TypeScript | Proposed | JavaScript with types; catches mistakes before running, much like C++'s compiler does |
 | Frontend build tool | Vite | Proposed | Fast local dev server; works with React and Svelte |
-| Drag and drop | Pragmatic drag and drop (Atlassian), or dnd-kit (React) / svelte-dnd-action (Svelte) | Proposed, follows D-1 | Pragmatic drag and drop is Atlassian's open-source library behind Trello's own drag and drop and works with any framework, which suits G-3. Its keyboard support must be checked against NFR-31; the other two have it built in |
+| Drag and drop | Pragmatic drag and drop (Atlassian), or dnd-kit (React) / svelte-dnd-action (Svelte) | Proposed, follows D-1 | Pragmatic drag and drop is Atlassian's open-source library behind Trello's own drag and drop and works with any framework, which suits G-3. |
 | Backend | Python 3.12 + FastAPI | Proposed (D-6) | Short, readable code; generates API docs automatically |
 | Canvas client | `httpx` (Python HTTP library) | Proposed | Async requests, so courses can be fetched in parallel (NFR-2) |
 | Database | Postgres in production, SQLite for local dev and tests | Proposed | Postgres is what hosts offer; SQLite needs no setup |
@@ -552,15 +552,14 @@ UI uses:
 | Drag a card (Phase 2) | Card lifts and tilts about 4°, the list under it is highlighted and a gray gap shows its due date spot in that list, the board auto-scrolls near the edges; the move is saved with an optimistic update (W-3) | FR-32, FR-77 |
 | Minimize or expand a list | [−] or [+] in the list header; the other expanded lists widen or narrow to fill the board, with a short animation. On each load or refresh, empty lists start minimized and the rest expanded; nothing is saved, in the browser or the backend. From Phase 2, dropping a card on an empty minimized list puts it there and expands the list; dropping on a minimized list that already has cards keeps it minimized and shows the new count | FR-80 |
 | Scroll the board | Only when the window is too narrow for the expanded lists (240 px minimum each): horizontal scrollbar, or drag on empty background | FR-61 |
-| Open a card | Click, or focus it and press Enter: the assignment opens in Canvas in a new tab | FR-26 |
+| Open a card | Click: the assignment opens in Canvas in a new tab | FR-26 |
 | Show or hide a course | Tap its button in the row under the header, or Show all / Hide all; the board updates at once. The choice is kept in this browser | FR-78 |
-| Move a card by keyboard (Phase 2) | Focus a card, then move it to the next or previous list with the keyboard | NFR-31 |
 
 ## 10. What this means for D-1 (React or Svelte)
 
 Nothing above depends on the framework; the backend and data model are the
 same either way. The frontend's hardest parts are the Trello-style board
-(smooth, accessible drag and drop of cards, FR-77 and NFR-31) and keeping
+(smooth drag and drop of cards, FR-77) and keeping
 open devices in step without cards jumping (NFR-22).
 
 The Trello goal (G-3) leans toward React. React has the most examples of
@@ -644,3 +643,4 @@ possible without reworking what Phases 1 to 4 build:
 | 2026-10-25 | Phones are a Phase 5 platform: the device sync example uses a laptop and a desktop, and the no-hover interaction row is marked Phase 5. |
 | 2026-10-25 | Traceability table refers to the renamed User Interface Specification. |
 | 2026-10-25 | Design now covers Phases 0 to 4 only, from the Team Lead's review: removed Phase 5 tables (notes, checklists), fields, endpoints, routes, components, styles, and interactions; added *Design by phase*, a Phase column in the API table, and section 12, *Leave room for later*. |
+| 2026-10-25 | Keyboard card moves removed (NFR-31). From the Team Lead's review: keyboard actions are not a requirement. |

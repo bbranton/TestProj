@@ -109,7 +109,7 @@ kept so the other screen numbers don't change.
 ### S-4 Board (home screen)
 
 Requirements: FR-13, FR-20 to FR-23, FR-26, FR-31 to FR-35, FR-38, FR-60, FR-61, FR-65, FR-66, FR-77, FR-78, FR-80,
-NFR-3, NFR-20, NFR-31, NFR-34. The sketch shows Phases 1 to 4 only.
+NFR-3, NFR-20, NFR-34. The sketch shows Phases 1 to 4 only.
 
 The board is the only view. In Phase 1 it is read only: every card is in
 Backlog, so the other three lists are empty and start minimized, and
@@ -529,3 +529,4 @@ flowchart TD
 | 2026-10-25 | Phone layout marked Phase 5, a starting sketch whose UI details are still to be worked out, from the Team Lead's review. |
 | 2026-10-25 | Renamed from "Wireframes and workflows" to "User Interface Specification" (file `04-ui-specification.md`), from the Team Lead's request. |
 | 2026-10-25 | S-4 and the header now show only Phases 1 to 4: the [Filter] button, note counts, and [⋯] board menu are described as Phase 5 additions instead of drawn; S-2's error no longer mentions notes. From the whole-set review. |
+| 2026-10-25 | S-4 no longer lists NFR-31. From the Team Lead's review: keyboard actions are not a requirement. |

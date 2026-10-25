@@ -14,7 +14,7 @@ results are recorded in section 7.
 | **Unit** | One function on its own, such as mapping Canvas status fields or card ordering | pytest (backend); Vitest (frontend) | Every PR, in CI |
 | **API** | A backend endpoint end to end, with a test database and recorded Canvas responses | pytest + FastAPI test client | Every PR, in CI |
 | **End-to-end (E2E)** | A real browser clicking through screens against a running backend with recorded Canvas data | Playwright | Every PR, in CI |
-| **Accessibility** | Contrast, labels, focus, keyboard use | axe-core inside Playwright, plus manual keyboard pass | Every PR (automated); each phase (manual) |
+| **Accessibility** | Contrast, labels, focus | axe-core inside Playwright, plus a manual check | Every PR (automated); each phase (manual) |
 | **Manual, live Canvas** | Real accounts with the Team Lead's student and parent tokens | A person following section 5 | Before each phase is done |
 
 The Qt parallel: unit tests are like Qt Test cases on a single class, and E2E
@@ -115,7 +115,6 @@ supported (Phase 5).
 | NFR-4 (Phase 5) | With background sync on and a fixture changed (new assignment, new due date, newly graded), the board shows each change within one job cycle without Refresh; the job backs off when the fixture reports a low rate-limit budget | API |
 | NFR-20 | Canvas down: cached data plus warning banner | API, E2E |
 | NFR-22 | Concurrency: 20 parallel moves of one card leave it in exactly one list; `changes?since=` returns every change once; two parallel board loads with a new assignment create one card; two browser sessions converge within one poll | API, E2E |
-| NFR-31 | Move a card using only the keyboard | E2E |
 | NFR-36 (Phase 5) | At phone width with touch emulation (no hover), every control and the sync time are visible and work by tap | E2E |
 | FR-60 | Signed-in, connected user lands on the board | E2E |
 | FR-61 | The four lists are always Backlog, To do, In progress, Done; expanded lists fill the width; the board scrolls sideways only below 240 px per list | E2E |
@@ -131,7 +130,6 @@ supported (Phase 5).
 | FR-70 (Phase 5) | Add, check, reorder, and delete checklist items; card front shows progress | API, E2E |
 | FR-72 (Phase 5) | Each filter option, combined filters, and Clear | E2E |
 | FR-78 | Tapping a course button hides and shows its cards on the board; Show all and Hide all; hidden cards keep their place; choice survives a reload (and, from Phase 5, a second session) | API, E2E |
-| FR-73 (Phase 5) | Every shortcut in the keyboard map does its action, and `?` lists them all | E2E |
 | FR-74 (Phase 5) | Archive and restore a card or a list | API, E2E |
 | NFR-34 | Visual comparison: screenshots of S-4 (and S-5 from Phase 5) match approved reference images (Playwright `toHaveScreenshot`) | E2E |
 | NFR-32 | axe-core finds no serious issues on S-1 to S-9 | Accessibility |
@@ -230,15 +228,10 @@ wireframes in the
 | 13 | Minimize In progress, then drag a card onto its strip | The card goes into In progress; the strip's count goes up and it stays minimized |
 | 14 | Reload so an empty Done list starts minimized, then drag a card onto its strip | The card goes into Done and the Done list expands; the other lists narrow to make room |
 
-### TP-07 Board with keyboard only
+### TP-07 Board with keyboard only (removed)
 
-**Checks:** NFR-31 · **Phase:** 2
-
-| Step | Action | Expected |
-|------|--------|----------|
-| 1 | Using only Tab, reach a card | The card has a visible focus outline |
-| 2 | Press Space, then the right arrow, then Space | Card moves one list right; a screen reader announcement is made |
-| 3 | Pick up a card and press Escape | Card returns to where it was |
+Removed from the Team Lead's review: keyboard-only use is not a
+requirement. The ID is kept so the other procedure numbers don't change.
 
 ### TP-08 Canvas changes reach the board
 
@@ -320,11 +313,10 @@ how it looks, what it takes (clicks or keys), or how it responds.
 | 7 | *(Phase 5)* Open a card | Dialog over the dimmed board, same section order; address changes |
 | 8 | *(Phase 5)* Reload, then press Back | Reload reopens the card; Back closes it |
 | 9 | *(Phase 5)* Use the pencil and right-click on a card | Quick edit menu next to the raised card |
-| 10 | *(Phase 5)* Press `f`, filter by a course and by "Due date passed", then `x` | Same behavior; the course row shows the filter is active (deliberate difference: Trello puts Filter in the board header) |
-| 11 | *(Phase 5)* Try each shortcut in Trello's shortcut list that the portal supports | Same key does the same thing |
-| 12 | *(Phase 5)* Archive a card and restore it from the board menu | Same steps |
-| 13 | *(Phase 5)* Count clicks to open a card and filter by a course | No more than Trello (NFR-35) |
-| 14 | Check for Trello's name, logo, icons, or artwork anywhere | None (C-4) |
+| 10 | *(Phase 5)* Open Filter, filter by a course and by "Due date passed", then Clear | Same behavior; the course row shows the filter is active (deliberate difference: Trello puts Filter in the board header) |
+| 11 | *(Phase 5)* Archive a card and restore it from the board menu | Same steps |
+| 12 | *(Phase 5)* Count clicks to open a card and filter by a course | No more than Trello (NFR-35) |
+| 13 | Check for Trello's name, logo, icons, or artwork anywhere | None (C-4) |
 
 Record the result of each step as *Same*, *Close* (small, acceptable
 difference, noted), or *Different* (opens an issue unless it is a
@@ -429,3 +421,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | PR checklist: each PR lists the requirement IDs it implements, all from the current phase. |
 | 2026-10-25 | TP-13 starts in Phase 1 for the visual style (NFR-34). |
 | 2026-10-25 | Whole-set review: TP-04 renamed to match its Phase 1 steps, TP-10 starts in Phase 1 with NFR-12, and the unit test example says status mapping. |
+| 2026-10-25 | TP-07 (keyboard only), the NFR-31 and FR-73 automated tests, and the TP-13 shortcut step removed; TP-13 steps renumbered. From the Team Lead's review: keyboard actions are not a requirement. |

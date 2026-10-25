@@ -8,12 +8,12 @@
 |----|------|
 | G-1 | **One place for everything due.** A student sees what they have due across all their Canvas courses, and what they're doing about it. |
 | G-2 | **Read only toward Canvas.** The portal never changes anything in Canvas. Board layout and notes belong to the student and live in the portal. |
-| G-3 | **Feels like Trello.** The board looks and behaves as much like [Trello](https://trello.com) as we can: lists side by side, cards you drag, a card that opens into a detailed view, colored labels, due date badges, and Trello's keyboard habits. Someone who uses Trello should feel at home without instructions. |
+| G-3 | **Feels like Trello.** The board looks and behaves as much like [Trello](https://trello.com) as we can: lists side by side, cards you drag, a card that opens into a detailed view, colored labels, and due date badges. Someone who uses Trello should feel at home without instructions. |
 | G-4 | **Follows the student everywhere.** Signing in on any device or browser shows the same board and notes. |
 | G-5 | **Private and safe.** Canvas tokens and notes are protected and never shared. |
 
 G-3 shapes most of the screen and interaction design. It means copying
-Trello's *patterns* (layout, behaviors, shortcuts), not its name, logo, icons,
+Trello's *patterns* (layout and behaviors), not its name, logo, icons,
 or artwork; see constraint C-4 in the [requirements](02-requirements.md).
 
 ## 2. Phases at a glance
@@ -110,9 +110,8 @@ student's own devices in sync is needed here, but it is the simpler kind of
 sync; keeping the backend in step with Canvas is the hard part and gets
 Phase 3.
 
-- Drag cards between lists with Trello's drag feel, with a keyboard
-  alternative; cards keep their due date order (FR-32, FR-38, FR-77, NFR-3,
-  NFR-31).
+- Drag cards between lists with Trello's drag feel; cards keep their due
+  date order (FR-32, FR-38, FR-77, NFR-3).
 - The layout is saved on the server and restored on any device (FR-33,
   FR-51).
 - Sync: a move made on one device appears on the user's other open devices
@@ -168,8 +167,8 @@ or wrongly archived cards.
 ### Phase 4: Polish and deploy
 
 - Delete my data (FR-54).
-- Accessibility pass to WCAG 2.2 AA (NFR-32), and a final check that
-  every browser (NFR-30) and keyboard use (NFR-31) still work.
+- Accessibility pass for contrast, labels, and focus (NFR-32), and a final
+  check that every browser still works (NFR-30).
 - Deploy to the chosen host (D-3) and link it from the repo's landing page.
 
 **Exit criteria:** the deployed app works from a laptop or desktop in
@@ -206,8 +205,7 @@ accessibility checks pass.
   NFR-21).
 - Course label colors chosen by the student (FR-66), and the course
   show/hide choice saved with the account (FR-78).
-- Trello-style filter menu with status filters and search, and keyboard
-  shortcuts (FR-24, FR-72, FR-73).
+- Trello-style filter menu with status filters and search (FR-24, FR-72).
 - Archive and restore cards, as in Trello (FR-74).
 - Export the board and notes as a file (FR-53).
 - Background sync: refresh from Canvas on a schedule, even while the
@@ -296,3 +294,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | Phone support (NFR-33, NFR-36) moved from Phase 4 to Phase 5, since its UI details need working out first; the Phase 4 exit criteria now cover laptops and desktops only. From the Team Lead's review. |
 | 2026-10-25 | Phase 1 includes Trello's visual style (NFR-34), from the Team Lead. |
 | 2026-10-25 | Whole-set review: Phase 4's accessibility bullet matches the requirement phases, R-2 says tokens are stored encrypted, M5 no longer promises phones. |
+| 2026-10-25 | Keyboard alternative and shortcuts removed from G-3, Phase 2, Phase 4, and Phase 5 (NFR-31, FR-73). From the Team Lead's review: keyboard actions are not a requirement. |

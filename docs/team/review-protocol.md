@@ -7,7 +7,8 @@ How personas review each other's work. The personas are listed in the
 
 Every piece of work has one **owner** persona, who writes it and answers its
 findings, and one or more **required reviewers**. Optional reviewers join
-when the change touches what they own.
+when the change touches what they own. Management checks every review for
+this and brings in any other persona the topic or changes call for.
 
 | Work | Owner | Required reviewers | Optional reviewers |
 |------|-------|--------------------|--------------------|
@@ -72,7 +73,9 @@ log or decision list.
 
 When asked to "run a cross-review" of a PR or doc, the agent:
 
-1. Finds the owner and required reviewers in the table above.
+1. Finds the owner and required reviewers in the table above, then acts as
+   Management to check whether the topic or changes call for any other
+   persona, and adds them.
 2. Reviews once per required reviewer, reading that persona's file first and
    staying inside its checklist.
 3. Posts one review per persona and a single findings table that combines

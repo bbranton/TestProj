@@ -30,6 +30,8 @@ When reviewing others' work:
 - [ ] Does it change a phase's exit criteria, timeline, or risk, and is the
       roadmap updated to match?
 - [ ] Are open questions listed with who will answer them?
+- [ ] Given the topic or the changes proposed, does another persona need to
+      join the review? If so, add them as a reviewer and say why.
 
 ## Never signs off alone on
 

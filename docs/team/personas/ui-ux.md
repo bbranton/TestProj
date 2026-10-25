@@ -43,8 +43,8 @@ When reviewing others' work:
 
 - Business goals, priorities, phases, and planning → Management.
 - Whether a feature is needed or what it must do → Product and QA.
-- How a screen is built, or what data and endpoints it uses →
-  Architecture.
+- What data and endpoints a screen uses → Architecture.
+- How a screen is coded → Developer.
 - Whether the UI passes its tests → Product and QA.
 
 **Needs the Team Lead:**

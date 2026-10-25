@@ -47,7 +47,8 @@ When reviewing others' work:
 - What the app must do, how it's tested, and whether tests pass → Product
   and QA. DevOps makes sure the tests run; it doesn't decide what they
   check.
-- Technology, code structure, data, and APIs → Architecture. Architecture
+- Technology, data, and APIs → Architecture. How the code is written →
+  Developer. Architecture
   picks a service or data store; DevOps decides how it's run.
 - How a screen looks or flows → UI/UX.
 

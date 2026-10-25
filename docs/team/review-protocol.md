@@ -14,13 +14,14 @@ this and brings in any other persona the topic or changes call for.
 |------|-------|--------------------|--------------------|
 | Roadmap (`01-roadmap.md`) | Management | Product and QA | Architecture, DevOps |
 | Requirements (`02-requirements.md`) | Product and QA | Architecture | UI/UX, Management |
-| Design (`03-design.md`) | Architecture | Product and QA, DevOps | UI/UX |
+| Design (`03-design.md`) | Architecture | Product and QA, Developer | UI/UX, DevOps |
+| Transition plan (major design change) | Architecture | Developer, Product and QA | DevOps, Management |
 | UI specification (`04-ui-specification.md`) | UI/UX | Product and QA, Architecture | |
-| Test plan (`05-test-plan.md`) | Product and QA | Architecture | UI/UX, DevOps |
-| Code PR (backend) | Architecture | Product and QA | DevOps |
-| Code PR (frontend or any UI change) | Architecture | UI/UX, Product and QA | DevOps |
-| CI, deploy, or hosting change | DevOps | Architecture | Product and QA |
-| Phase exit (moving to the next phase) | Management | Product and QA | Architecture, UI/UX, DevOps |
+| Test plan (`05-test-plan.md`) | Product and QA | Architecture | Developer, UI/UX, DevOps |
+| Code PR (backend) | Developer | Architecture, Product and QA | DevOps |
+| Code PR (frontend or any UI change) | Developer | Architecture, UI/UX, Product and QA | DevOps |
+| CI, deploy, or hosting change | DevOps | Developer | Architecture, Product and QA |
+| Phase exit (moving to the next phase) | Management | Product and QA | Architecture, Developer, UI/UX, DevOps |
 
 Each reviewer looks through its own lens, using the review checklist in its
 persona file. For example, DevOps reads the design asking "how is this
@@ -41,12 +42,13 @@ outside its area is advice, never sign-off.
 | Decision | Decided by | Never decided by |
 |----------|------------|------------------|
 | Business goals | Team Lead | Any persona |
-| Priorities, phases, scope, timelines | Management | Product and QA, Architecture, UI/UX, DevOps |
-| What a feature must do | Product and QA | Management, Architecture, UI/UX, DevOps |
-| How it's tested, and whether tests pass | Product and QA | Management, Architecture, UI/UX, DevOps |
-| Technology, code, data, APIs, security | Architecture | Management, Product and QA, UI/UX, DevOps |
-| Screens, layout, wording, accessibility | UI/UX | Management, Product and QA, Architecture, DevOps |
-| CI, builds, deploys, hosting, secrets | DevOps | Management, Product and QA, Architecture, UI/UX |
+| Priorities, phases, scope, timelines | Management | Product and QA, Architecture, Developer, UI/UX, DevOps |
+| What a feature must do | Product and QA | Management, Architecture, Developer, UI/UX, DevOps |
+| How it's tested, and whether tests pass | Product and QA | Management, Architecture, Developer, UI/UX, DevOps |
+| Design: structure, data, APIs, technology, security | Architecture | Management, Product and QA, Developer, UI/UX, DevOps |
+| Writing code, coding standards, bug fixes | Developer | Management, Product and QA, Architecture, UI/UX, DevOps |
+| Screens, layout, wording, accessibility | UI/UX | Management, Product and QA, Architecture, Developer, DevOps |
+| CI, builds, deploys, hosting, secrets | DevOps | Management, Product and QA, Architecture, Developer, UI/UX |
 | Approving and merging a PR | Team Lead | Any persona |
 
 Each persona file has a **Decisions** section that lists what it decides,

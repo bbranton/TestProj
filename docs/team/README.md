@@ -8,8 +8,9 @@ reviews someone else's work, and which decisions it can and cannot make.
 |---------|------|------|
 | Management | Roadmap, phases, scope, priorities | [management.md](personas/management.md) |
 | Product and QA | Requirements, test plan, acceptance | [product-qa.md](personas/product-qa.md) |
-| Architecture | Design, code structure, data, APIs | [architecture.md](personas/architecture.md) |
+| Architecture | Design docs, transition plans, data, APIs | [architecture.md](personas/architecture.md) |
 | UI/UX | UI specification, screens, accessibility | [ui-ux.md](personas/ui-ux.md) |
+| Developer | Code, coding standards, bug fixes | [developer.md](personas/developer.md) |
 | DevOps | CI, builds, deploys, hosting, secrets | [devops.md](personas/devops.md) |
 
 How personas review each other's work is in the
@@ -21,6 +22,7 @@ Tell the agent which persona to act as, and on what. For example:
 
 - "Act as the Product and QA persona and review `docs/canvas-portal/03-design.md`."
 - "Act as the Architecture persona and draft the design for FR-20."
+- "Act as the Developer persona and implement FR-20."
 - "Run a cross-review of PR #12."
 
 An agent acting as a persona:

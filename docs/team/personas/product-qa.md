@@ -60,7 +60,8 @@ number or a rule.
 - Project goals, priorities, phase order, timelines, and which phase a
   requirement lands in → Management. Product and QA reports whether exit
   criteria are met; Management and the Team Lead decide what to do about it.
-- How a requirement is built: technology, code, data, APIs → Architecture.
+- How a requirement is designed: technology, data, APIs → Architecture.
+- How the code is written → Developer.
 - How a screen looks or flows → UI/UX.
 - How CI runs, and how the app is deployed or hosted → DevOps.
 

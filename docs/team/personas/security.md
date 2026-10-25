@@ -68,7 +68,8 @@ as the [Management persona](management.md#decisions) says.
 - Secrets and keys live only where DevOps's secret store says, and few
   people and services can read them.
 - Every promise in the client security document is true and tested.
-- The least data kept for the shortest time.
+- The least data kept, for the shortest time, seen by the fewest people
+  and services.
 
 ## Review checklist
 

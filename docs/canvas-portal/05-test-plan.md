@@ -112,7 +112,8 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | NFR-22 | Concurrency: 20 parallel moves of one card leave it in exactly one list; `changes?since=` returns every change once; two parallel board loads with a new assignment create one card; two browser sessions converge within one poll | API, E2E |
 | NFR-31 | Move a card using only the keyboard | E2E |
 | FR-60 | Signed-in, connected user lands on the board | E2E |
-| FR-61 | Board scrolls sideways; the four lists are always Backlog, To do, In progress, Done | E2E |
+| FR-61 | The four lists are always Backlog, To do, In progress, Done; expanded lists fill the width; the board scrolls sideways only below 240 px per list | E2E |
+| FR-80 | Minimizing a list widens the others to fill the board, expanding narrows them; on load, empty lists are minimized and other lists keep their last state; a minimized list shows its card count | E2E |
 | FR-62 (Phase 5) | Dragging a list header reorders lists and the order survives reload | E2E |
 | FR-63 (Phase 5) | Click a list title, type, Enter saves; Escape cancels | E2E |
 | FR-64, FR-71 (Phase 5) | Composer adds a list or a personal card and stays open for the next | E2E |
@@ -219,6 +220,7 @@ steps, and the expected result. Screen IDs refer to the
 | 10 | Turn off Wi-Fi on A; drag a card | Card goes back with "Couldn't save, try again"; B never shows the move |
 | 11 | Add an assignment to the fixture; open the board on A and B at the same moment | The new card appears once, in Backlog, on both |
 | 12 | Open the board in two tabs of the same browser and repeat step 6 | Same as with two devices |
+| 13 | Minimize In progress, then drag a card onto its strip | The card goes into In progress; the strip's count goes up and it stays minimized |
 
 ### TP-07 Board with keyboard only
 
@@ -409,3 +411,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | Export tests (FR-53, TP-10 step 3) marked Phase 5. |
 | 2026-10-25 | Whole-plan review: TP-02, TP-12, TP-13, and the FR-78 and NFR-34 tests now mark Phase 5 steps. |
 | 2026-10-25 | TP-01 checks sign-in (FR-50) and the saved connection on a second device, now that both are Phase 1. |
+| 2026-10-25 | Added an FR-80 test (minimize, expand, and width fitting) and TP-06 step 13 (dropping on a minimized list). |

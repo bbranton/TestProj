@@ -104,7 +104,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | ID | Requirement | Priority | Phase |
 |----|-------------|----------|-------|
 | FR-30 | *(Removed: there is no table view; the board is the only view. From the Team Lead's review.)* | n/a | n/a |
-| FR-31 | The board has four lists, in this order: *Backlog*, *To do*, *In progress*, *Done*. *Backlog* holds Canvas assignments the student hasn't sorted yet. | Must | 2 |
+| FR-31 | The board has four lists, in this order: *Backlog*, *To do*, *In progress*, *Done*. *Backlog* holds Canvas assignments the student hasn't sorted yet. | Must | 1 |
 | FR-32 | The user can drag a card to another list. Cards cannot be reordered by hand within a list (FR-38). | Must | 2 |
 | FR-33 | The board layout (which list each card is in) is saved and restored on the next visit. | Must | 2 |
 | FR-34 | Assignments that are new since the last visit appear in *Backlog*, in their due date place (FR-38). When the board is first created, every assignment starts in *Backlog*. | Must | 2 |
@@ -120,7 +120,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | ID | Requirement | Priority | Phase |
 |----|-------------|----------|-------|
 | FR-60 | The board is the home screen and the only view, as a Trello board is. In Phase 1 it is read only: every card sits in Backlog and cannot be dragged. | Must | 1 (read only), 2 |
-| FR-61 | Lists sit side by side at a fixed width and the board scrolls sideways. Dragging empty board background also scrolls it. | Must | 2 |
+| FR-61 | Lists sit side by side and share the board's width (FR-80). If the window is too narrow for every expanded list to be at least 240 px wide, the board scrolls sideways; dragging empty board background also scrolls it. | Must | 1 |
 | FR-62 | The user can drag a list by its header to reorder the lists. | Could | 5 |
 | FR-63 | Clicking a list title edits it in place. Enter or clicking away saves, and Escape cancels. | Could | 5 |
 | FR-64 | An "+ Add another list" control after the last list adds a list. | Could | 5 |
@@ -139,6 +139,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-77 | Dragging feels like Trello: the card tilts slightly and lifts while dragged, the list under it is highlighted and a gray gap shows the due date spot where it will land, and the board scrolls when the card nears an edge. | Should | 2 |
 | FR-78 | Between the header and the board, a row of show/hide buttons has one button per active course, in the course's label color. Tapping a button hides or shows that course's cards; "Show all" and "Hide all" buttons show or hide every course at once. When every course is hidden, the board says so and offers Show all. Hidden cards keep their list. From Phase 5 the choice is saved with the user's account so it follows them between devices. | Must | 1 (5 for saving) |
 | FR-79 | Help the student see which assignments are new or have changed in Canvas (for example a new due date or new instructions) since they last looked, such as with a badge on the card and a way to clear it. | Could | 5 |
+| FR-80 | Each list has a minimize/expand toggle in its header. A minimized list shrinks to a narrow strip showing its title and number of cards. Expanded lists share the whole width of the board and resize whenever a list is minimized or expanded. When the board loads, any empty list starts minimized; other lists keep the student's last choice on that device. | Must | 1 |
 
 ### 4.6 Private notes
 
@@ -251,3 +252,4 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | 2026-10-25 | Export (FR-53) moved to Phase 5, from the Team Lead's review. |
 | 2026-10-25 | Whole-plan review: rows in each table put in ID order, FR-45 moved to the board section (it is Canvas sync, not notes), scope mentions Canvas sync and notes as a future feature, "dashboard" now "board", FR-66 automatic colors in Phase 1 with custom colors in Phase 5, Q-1 answered. |
 | 2026-10-25 | Sign-in (FR-50) moved to Phase 1; FR-5 now always stores the connection with the account (and is Must); NFR-11 simplified. From the Team Lead. |
+| 2026-10-25 | Added FR-80 (minimize and expand lists; expanded lists share the width; empty lists start minimized), Phase 1; FR-61 now fits lists to the width instead of a fixed width, and moves to Phase 1. From the Team Lead's review. |

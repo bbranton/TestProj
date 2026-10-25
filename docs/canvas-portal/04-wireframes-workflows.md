@@ -103,11 +103,13 @@ kept so the other screen numbers don't change.
 
 ### S-4 Board (home screen)
 
-Requirements: FR-13, FR-20 to FR-26, FR-31 to FR-35, FR-38, FR-60, FR-61, FR-65, FR-66, FR-72 to FR-74, FR-77, FR-78,
+Requirements: FR-13, FR-20 to FR-26, FR-31 to FR-35, FR-38, FR-60, FR-61, FR-65, FR-66, FR-72 to FR-74, FR-77, FR-78, FR-80,
 NFR-3, NFR-20, NFR-31, NFR-34.
 
 The board is the only view. In Phase 1 it is read only: every card is in
-Backlog, and dragging between lists arrives in Phase 2 (FR-60).
+Backlog, so the other three lists are empty and start minimized, and
+dragging between lists arrives in Phase 2 (FR-60, FR-80). The sketch shows
+a later day, with Done empty and minimized.
 
 ```text
 +--------------------------------------------------------------------------+
@@ -115,23 +117,28 @@ Backlog, and dragging between lists arrives in Phase 2 (FR-60).
 +--------------------------------------------------------------------------+
 | [Filter] | [● BIO 101] [● HIST 210] [● MATH 152]  [Show all] [Hide all]  |
 +--------------------------------------------------------------------------+
-|  board background color                                       Done ──>   |
-|  +--------------------+ +--------------------+ +--------------------+    |
-|  | Backlog            | | To do              | | In progress        |    |
-|  | +----------------+ | | +----------------+ | | +----------------+ |    |
-|  | | ▬▬ HIST 210    | | | | ▬▬ MATH 152    | | | | ▬▬ BIO 101     | |    |
-|  | | Chapter 5      | | | | Problem set 7  | | | | Lab report 3   | |    |
-|  | | questions      | | | | (◷ Wed 9:00)   | | | | (◷ Tue 11:59)  | |    |
-|  | | (◷ Nov 8)      | | | +----------------+ | | | ✎ 2            | |    |
-|  | +----------------+ | | +----------------+ | | +----------------+ |    |
-|  | +----------------+ | | | ▬▬ HIST 210    | | | ┌ ─ ─ ─ ─ ─ ─ ─ ┐  |    |
-|  | | ▬▬ HIST 210    | | | | Essay draft:   | | | │   drop gap    │  |    |
-|  | | Reading        | | | | causes of WWI  | | | │   (FR-77)     │  |    |
-|  | | reflection     | | | | (◷ Nov 3) ✎ 1  | | | └ ─ ─ ─ ─ ─ ─ ─ ┘  |    |
-|  | | (no due date)  | | | +----------------+ | +--------------------+    |
-|  | +----------------+ | +--------------------+                           |
-|  +--------------------+                                                  |
+|  board background color                                                  |
+| +-------------------+ +-------------------+ +-------------------+ +----+ |
+| | Backlog       [−] | | To do         [−] | | In progress   [−] | |[+] | |
+| | +---------------+ | | +---------------+ | | +---------------+ | | D  | |
+| | | ▬▬ HIST 210   | | | | ▬▬ MATH 152   | | | | ▬▬ BIO 101    | | | o  | |
+| | | Chapter 5     | | | | Problem set 7 | | | | Lab report 3  | | | n  | |
+| | | questions     | | | | (◷ Wed 9:00)  | | | | (◷ Tue 11:59) | | | e  | |
+| | | (◷ Nov 8)     | | | +---------------+ | | | ✎ 2           | | |    | |
+| | +---------------+ | | +---------------+ | | +---------------+ | | 0  | |
+| | +---------------+ | | | ▬▬ HIST 210   | | | ┌ ─ ─ ─ ─ ─ ─ ┐   | +----+ |
+| | | ▬▬ HIST 210   | | | | Essay draft:  | | | │  drop gap   │   |        |
+| | | Reading       | | | | causes of WWI | | | │  (FR-77)    │   |        |
+| | | reflection    | | | | (◷ Nov 3) ✎ 1 | | | └ ─ ─ ─ ─ ─ ─ ┘   |        |
+| | | (no due date) | | | +---------------+ | +-------------------+        |
+| | +---------------+ | +-------------------+                              |
+| +-------------------+                                                    |
 +--------------------------------------------------------------------------+
+  [−] in a list header minimizes it to a narrow strip with its title and
+  card count; [+] expands it again (FR-80). Expanded lists share the
+  board's whole width and resize whenever a list is minimized or expanded.
+  When the board loads, any empty list starts minimized; other lists keep
+  the student's last choice on this device.
   [Filter] at the start of the course row opens S-8 (FR-72, Phase 5).
   Until the card back arrives in Phase 5, clicking a card opens the
   assignment in Canvas in a new tab (FR-26).
@@ -151,8 +158,9 @@ Backlog, and dragging between lists arrives in Phase 2 (FR-60).
   (FR-63) and dragging lists (FR-62) are Phase 5 ideas.
   Adding cards and lists (FR-64, FR-71) and archiving lists (FR-36) are
   Phase 5 ideas.
-  The four lists are Backlog, To do, In progress, and Done; Done is off to
-  the right, and the board scrolls sideways. New assignments from Canvas land
+  The four lists are Backlog, To do, In progress, and Done. The board only
+  scrolls sideways if the window is too narrow for every expanded list to
+  be at least 240 px wide (FR-61). New assignments from Canvas land
   in Backlog until the student sorts them (FR-31, FR-34).
   Cards in every list are always sorted by due date, earliest at the top
   (FR-38). Dragging only chooses the list; the card slots into its due date
@@ -336,6 +344,7 @@ The user swipes sideways between lists, and dots show which list is shown.
   all are at the end of the row (FR-78).
   To move a card, press and hold it, then drag it to a screen edge to go
   to the next list, or (from Phase 5) use Move on the card back.
+  Minimized lists are skipped when swiping (FR-80).
 ```
 
 ## 3. Workflows
@@ -499,3 +508,4 @@ flowchart TD
 | 2026-10-25 | W-5 now covers partial fetches, fields added or cleared, and republished assignments, from the Team Lead's review. |
 | 2026-10-25 | Export marked Phase 5 on S-6 and W-6. |
 | 2026-10-25 | Whole-plan review: S-1 no longer promises notes, S-4 and the phone layout mark notes, the filter menu, and the card back as Phase 5. |
+| 2026-10-25 | Lists can be minimized and expanded (FR-80): S-4 redrawn with Done minimized and the other lists sharing the width; empty lists start minimized; phone layout skips minimized lists. From the Team Lead's review. |

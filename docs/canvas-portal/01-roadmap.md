@@ -78,9 +78,13 @@ The smallest thing that is useful: connect, then see everything that's due.
   it works on any device they sign in from (FR-5, NFR-11).
 - Backend calls Canvas for active courses and their assignments (FR-10 to
   FR-14), handling Canvas's paging and rate limits.
-- A read-only board: every assignment is a Trello-style card in the Backlog
-  list, sorted by due date, with the course show/hide buttons (FR-20 to
-  FR-23, FR-60, FR-65, FR-66, FR-78). Moving cards between lists comes in
+- A read-only board with the four lists Backlog, To do, In progress, and
+  Done: every assignment is a Trello-style card in Backlog, sorted by due
+  date, with the course show/hide buttons (FR-20 to FR-23, FR-31, FR-60,
+  FR-65, FR-66, FR-78).
+- Each list can be minimized or expanded; expanded lists share the full
+  width and resize as lists open and close, and empty lists start
+  minimized, so in Phase 1 Backlog fills the board (FR-61, FR-80). Moving cards between lists comes in
   Phase 2.
 - Clicking a card opens that assignment's own page in Canvas, in a new tab
   (FR-26). The portal's own card detail view (the card back) is a Phase 5
@@ -104,8 +108,6 @@ student's own devices in sync is needed here, but it is the simpler kind of
 sync; keeping the backend in step with Canvas is the hard part and gets
 Phase 3.
 
-- All four lists side by side, scrolling sideways: *Backlog*, *To do*,
-  *In progress*, *Done* (FR-31, FR-60, FR-61).
 - Drag cards between lists with Trello's drag feel, with a keyboard
   alternative; cards keep their due date order (FR-32, FR-38, FR-77, NFR-3,
   NFR-31).
@@ -276,3 +278,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | Whole-plan review: Gantt sections renamed, Phase 1 no longer lists Phase 5 filters (FR-24), Phase 0 adds a Canvas teacher sandbox, D-3 notes the background job and same-site cookie needs, R-4 merged into R-9. |
 | 2026-10-25 | Phase 1: merged the two "opens in Canvas" lines into one clear bullet, from the Team Lead's review. |
 | 2026-10-25 | Google sign-in and the saved Canvas connection (FR-50, FR-5, NFR-11) moved from Phase 2 to Phase 1, from the Team Lead; Phase 2 renamed "Dragging and sync". |
+| 2026-10-25 | Minimize and expand lists (FR-80) added to Phase 1, along with the four lists (FR-31) and width-fitting lists (FR-61); Phase 2 no longer lists them. |

@@ -575,7 +575,7 @@ flowchart TD
     App --> CardBack["CardBackDialog, Phase 5<br/>opens on /c/{cardId}"]
     App --> BoardMenu["BoardMenu, Phase 5<br/>right-side panel, archived items"]
     Board --> List["List (one per list)"]
-    List --> ListHeader["ListHeader<br/>list title; rename and drag in Phase 5"]
+    List --> ListHeader["ListHeader<br/>list title, minimize/expand toggle;<br/>rename and drag in Phase 5"]
     List --> Card["CardFront (one per card)"]
     Card --> Badges["Label strip, due badge,<br/>notes count"]
     Card --> QuickEdit["QuickEditMenu, Phase 5<br/>pencil or right-click"]
@@ -593,7 +593,7 @@ UI uses:
 | Element | Style |
 |---------|-------|
 | Board background | One solid color per board, user can change it later (FR-75); default a deep blue |
-| List | 272 px wide, light gray, 12 px rounded corners, 8 px gap between lists |
+| List | Expanded lists share the board's width equally, at least 240 px each; minimized lists are a 40 px strip with the title written vertically and the card count. Light gray, 12 px rounded corners, 8 px gap between lists |
 | Card | White, 8 px rounded corners, soft shadow, 8 px padding; label strip at the top in the course color |
 | Due badge | Small pill with a clock icon: green (Canvas says Submitted or Graded), red (Canvas flags Missing), plain otherwise; yellow (due soon) comes with FR-27 in Phase 5 |
 | Text | System font, 14 px on cards, bold list titles |
@@ -605,7 +605,8 @@ UI uses:
 |----------|--------------|--------------|
 | Drag a card | Card lifts and tilts about 4°, the list under it is highlighted and a gray gap shows its due date spot in that list, the board auto-scrolls near the edges; the move is saved with an optimistic update (W-3) | FR-32, FR-77 |
 | Drag a list (Phase 5) | Grab the list header; other lists slide aside | FR-62 |
-| Scroll the board | Horizontal scrollbar, or drag on empty background | FR-61 |
+| Minimize or expand a list | [−] or [+] in the list header; the other expanded lists widen or narrow to fill the board, with a short animation. On load, empty lists start minimized; the choice for other lists is kept in this browser. From Phase 2, dropping a card on a minimized list puts it in that list, which stays minimized and shows the new count | FR-80 |
+| Scroll the board | Only when the window is too narrow for the expanded lists (240 px minimum each): horizontal scrollbar, or drag on empty background | FR-61 |
 | Rename a list (Phase 5) | Click the title, it becomes a text box; Enter saves, Escape cancels | FR-63 |
 | Open a card | Click, or focus it and press Enter. Until Phase 5 this opens the assignment in Canvas in a new tab (FR-26); from Phase 5 it opens the card back and the address changes to `/c/{cardId}` | FR-26, FR-67 |
 | Quick edit (Phase 5) | Pencil on hover or right-click | FR-69 |
@@ -678,3 +679,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | Added *What can change in Canvas* (FR-39, FR-45): one planned result per change case, the two rules behind them, and complete-fetch-only archiving. |
 | 2026-10-25 | Export endpoint marked Phase 5. |
 | 2026-10-25 | Whole-plan review: caching and the loading sequence now match *Never wait on Canvas*; card back, board menu, filter, and shortcuts marked Phase 5 in routes, components, style, and interactions; until Phase 5 a click opens the assignment in Canvas; section 10 updated. |
+| 2026-10-25 | Lists fill the board width and can be minimized (FR-80): visual style, list header component, and interaction table updated. |

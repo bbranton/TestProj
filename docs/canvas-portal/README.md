@@ -39,6 +39,9 @@ flowchart LR
   from text inside a ```` ```mermaid ```` block.
 - A change to the plan goes through a pull request, the same as a code change.
   The PR description says what changed and why.
+- A pull request that changes anything a user sees must include screenshots
+  of the changed screens in the PR description (before and after when an
+  existing screen changes). The test procedures will make this a review step.
 - Open decisions are marked **DECISION** with an ID (`D-1`, `D-2`, ...) and are
   collected in the roadmap until they are settled.
 

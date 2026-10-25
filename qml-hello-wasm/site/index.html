@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hello QML</title>
+  <style>
+    html, body { margin: 0; height: 100%; background: #f4f4f4; font-family: system-ui, sans-serif; }
+    #screen { position: absolute; inset: 0; }
+    #status { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #555; }
+  </style>
+</head>
+<body>
+  <div id="screen"></div>
+  <div id="status">Loading Qt for WebAssembly…</div>
+
+  <script src="hello.js"></script>
+  <script src="qtloader.js"></script>
+  <script>
+    const status = document.getElementById('status');
+    qtLoad({
+      qt: {
+        containerElements: [document.getElementById('screen')],
+        entryFunction: window.hello_entry,
+        onLoaded: () => { status.remove(); },
+        onExit: (exit) => {
+          status.textContent = exit.crashed ? 'The app crashed: ' + exit.text : 'The app exited.';
+        },
+      },
+    }).catch((e) => {
+      status.textContent = 'Could not start the app: ' + e;
+    });
+  </script>
+</body>
+</html>

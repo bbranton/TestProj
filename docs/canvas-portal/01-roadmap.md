@@ -24,7 +24,7 @@ gantt
     dateFormat  YYYY-MM-DD
     axisFormat  %b
     section Foundation
-    Phase 0 Decisions and setup      :p0, 2026-11-01, 14d
+    Phase 0 Decisions and setup      :done, p0, 2026-10-11, 14d
     section Viewer
     Phase 1 Read-only viewer         :p1, after p0, 28d
     section Organize
@@ -38,11 +38,14 @@ gantt
 ```
 
 The bars show order and rough size. There are no fixed dates; a phase is done
-when its exit criteria are met.
+when its exit criteria are met. Phase 0 is done. The current phase is named in
+the repo's [CLAUDE.md](../../CLAUDE.md).
 
 ## 3. Phases in detail
 
 ### Phase 0: Decisions and setup
+
+**Status:** done (2026-10-25).
 
 Settle the open decisions in section 5 and set up the empty project so later
 phases only add features.
@@ -83,16 +86,28 @@ The smallest thing that is useful: connect, then see everything that's due.
   it works on any device they sign in from (FR-5, NFR-11).
 - Backend calls Canvas for active courses and their assignments (FR-10 to
   FR-14), handling Canvas's paging and rate limits.
+- Refresh is manual from the start: the portal fetches only when the
+  student selects Refresh or on the very first load, and highlights Refresh
+  when the data is more than an hour old (FR-15). Each Refresh shows its
+  progress course by course, with a summary and Retry if anything failed
+  (FR-16).
 - A read-only board with the four lists Backlog, To do, In progress, and
-  Done: every assignment is a Trello-style card in Backlog, sorted by due
-  date, with the course show/hide buttons (FR-20 to FR-23, FR-31, FR-60,
-  FR-65, FR-66, FR-78). The board has Trello's visual style from the start:
-  colored background, light gray rounded lists, and white cards with a soft
-  shadow (NFR-34).
+  Done: when the board is first created, every assignment is a Trello-style
+  card in Backlog, sorted by due date, with the course show/hide buttons
+  (FR-20 to FR-23, FR-31, FR-34, FR-38, FR-60, FR-65, FR-66, FR-78). The
+  board has Trello's visual style from the start: colored background, light
+  gray rounded lists, and white cards with a soft shadow (NFR-34).
 - Each list can be minimized or expanded; expanded lists share the full
   width and resize as lists open and close, and empty lists start
-  minimized, so in Phase 1 Backlog fills the board (FR-61, FR-80). Moving cards between lists comes in
-  Phase 2.
+  minimized, so in Phase 1 Backlog fills the board (FR-61, FR-80). Moving
+  cards between lists comes in Phase 2.
+- With saved data the board is usable within 2 seconds (NFR-1), and it
+  works in current Chrome, Firefox, Safari, and Edge (NFR-30).
+- Security from the first stored token: tokens never appear in logs,
+  errors, or addresses; each user sees only their own data; only Canvas
+  read calls; no trackers (NFR-10, NFR-12 to NFR-14).
+- Backend tests run against recorded Canvas responses, so CI never needs a
+  real token (NFR-41).
 - Clicking a card opens that assignment's own page in Canvas, in a new tab
   (FR-26). The portal's own card detail view (the card back) is a Phase 5
   future feature.
@@ -115,8 +130,10 @@ student's own devices in sync is needed here, but it is the simpler kind of
 sync; keeping the backend in step with Canvas is the hard part and gets
 Phase 3.
 
-- Drag cards between lists with Trello's drag feel; cards keep their due
-  date order (FR-32, FR-38, FR-77, NFR-3).
+- The board stops being read only: drag cards between lists with Trello's
+  drag feel; cards keep their due date order, and dropping a card on an
+  empty minimized list expands it (FR-32, FR-38, FR-60, FR-77, FR-80,
+  NFR-3).
 - The layout is saved on the server and restored on any device (FR-33,
   FR-51).
 - Sync: a move made on one device appears on the user's other open devices
@@ -155,13 +172,14 @@ Canvas*) and a test (TP-15).
 - Every kind of Canvas change has a defined result on the board: new,
   deleted, unpublished and republished, renamed, fields added, changed, or
   cleared, submission state going forward or back, and courses ending or
-  being dropped (FR-39, FR-45, Q-7).
+  being dropped (FR-39, FR-45, Q-7). Q-7 in the requirements must be
+  answered before this work starts.
 - A partial or failed fetch never archives or changes cards (FR-45).
 - Changes from a Refresh reach the student's other open devices through the
   Phase 2 sync (NFR-22).
-- A Refresh stays within Canvas's rate limits, and a second Refresh while
-  one is running (for example from another device) joins it instead of
-  starting another (C-2).
+- A Refresh stays within Canvas's rate limits (C-2), including when a
+  second device starts a Refresh while one is running. Joining the running
+  Refresh is built in Phase 1 (FR-16); Phase 3 tests it under load.
 
 **Exit criteria:** TP-14 meets NFR-1 and NFR-2 on the Team Lead's real
 account, including at a busy time; TP-08 passes; every scenario in TP-15
@@ -174,17 +192,25 @@ or wrongly archived cards.
 - Delete my data (FR-54).
 - Accessibility pass for contrast, labels, and focus (NFR-32), and a final
   check that every browser still works (NFR-30).
-- Deploy to the chosen host (D-3) and link it from the repo's landing page.
+- Deploy to the chosen host (D-3), over HTTPS (NFR-11), and link it from
+  the repo's landing page.
+- Publish the Google OAuth client out of "testing" mode. Until then only
+  listed test users can sign in, which doesn't fit "any student at any
+  school" (D-5). See the design's
+  [Signing in to the portal](03-design.md#5-signing-in-to-the-portal-d-7).
 
 **Exit criteria:** the deployed app works from a laptop or desktop in
-every browser in NFR-30;
-accessibility checks pass.
+every browser in NFR-30; a Google account that isn't a test user can sign
+in; deleting an account removes all its data (TP-10); accessibility checks
+pass.
 
 ### Phase 5: Later ideas (not committed)
 
 - "Log in with Canvas" (OAuth 2) instead of pasting a token (D-4).
 - Calendar view of due dates; reminders.
 - Grades and submission feedback view.
+- Quizzes and discussions as their own kinds of item, with their own
+  badges (FR-29).
 - Personal cards and lists: "+ Add a card" creates a card that isn't a
   Canvas assignment, and "+ Add another list" adds lists; lists can also be
   archived (FR-71, FR-64, FR-36).
@@ -211,6 +237,7 @@ accessibility checks pass.
 - Course label colors chosen by the student (FR-66), and the course
   show/hide choice saved with the account (FR-78).
 - Trello-style filter menu with status filters and search (FR-24, FR-72).
+- Board actions take no more clicks than in Trello (NFR-35).
 - Archive and restore cards, as in Trello (FR-74).
 - Export the board and notes as a file (FR-53).
 - Background sync: refresh from Canvas on a schedule, even while the
@@ -243,7 +270,7 @@ decisions are struck through and kept for the record.
 |----|----------|---------|----------------|-----------|
 | ~~D-1~~ | ~~Frontend framework~~ | **React** (largest ecosystem, most tutorials, mature drag-and-drop libraries such as dnd-kit) or **Svelte** (less code, closer to QML's declarative feel, smaller community) | **Decided** (Team Lead, 2026-10-25): React, with TypeScript and Vite. React has the most Trello-style board examples and the best support from Pragmatic drag and drop. | Done |
 | ~~D-2~~ | ~~Where notes and board layout are stored~~ | **Browser local storage** (no accounts, works offline, but tied to one browser and lost if site data is cleared) or **server database** (follows the user between devices, but needs portal sign-in and more security work) | **Decided** (Team Lead, 2026-10-25): server database. The user should be able to sign in from anywhere and see their saved state. | Done |
-| D-3 | Hosting | Frontend on **GitHub Pages**. Backend on **Render**, **Fly.io**, or **Vercel** serverless functions. All have free or cheap tiers with limits. | Decide in Phase 4; run locally until then. The sign-in cookie works best when the frontend and backend share one site, so the backend can also serve the built frontend instead of GitHub Pages. If background sync (Phase 5) is added later, the host must also run scheduled jobs. | Phase 4 |
+| D-3 | Hosting | Frontend on **GitHub Pages**. Backend on **Render**, **Fly.io**, or **Vercel** serverless functions. All have free or cheap tiers with limits. | Decide in Phase 4; run locally until then. The backend host must keep a process running, because a Refresh runs as a background task for up to several minutes (FR-16); serverless functions such as Vercel's stop when the request ends, so they don't fit. The sign-in cookie works best when the frontend and backend share one site, so the backend can also serve the built frontend instead of GitHub Pages. If background sync (Phase 5) is added later, the host must also run scheduled jobs. | Phase 4 |
 | ~~D-4~~ | ~~How users connect to Canvas~~ | **Personal access token** (works today, no school involvement, user must create and paste it) or **OAuth** (smooth sign-in, needs a developer key from the school's Canvas admin) | **Decided** (Team Lead, 2026-10-25): personal access token. OAuth is a Phase 5 idea if a school will issue a key. | Done |
 | ~~D-5~~ | ~~Who the app is for~~ | Just the Team Lead, a few friends, or any student at any school | **Decided** (Team Lead, 2026-10-25): any student at any school (the Canvas address is a setting), tested with the Team Lead's school. | Done |
 | ~~D-6~~ | ~~Backend language~~ | **Python + FastAPI** (readable, quick to write, good for learning) or **Node.js** (same language as the frontend) | **Decided** (Team Lead, 2026-10-25): Python + FastAPI. | Done |
@@ -254,10 +281,10 @@ decisions are struck through and kept for the record.
 
 | ID | Risk | Effect | Mitigation |
 |----|------|--------|------------|
-| R-1 | The school has turned off personal access tokens | Phase 1 can't connect | Check early (Phase 0). Fallback: a free Canvas account from Instructure for testing; OAuth with the school later. |
+| R-1 | The school has turned off personal access tokens | Phase 1 can't connect | Cleared in Phase 0 for the Team Lead's school (A-1). Other schools may still turn tokens off; fallback: a free Canvas account from Instructure for testing, OAuth with the school later (Phase 5). |
 | R-2 | Canvas tokens are powerful; a leak exposes a student's whole account | Privacy harm | Backend never logs tokens, stores them encrypted, and only uses read endpoints (NFR-10, NFR-11). |
 | R-3 | Canvas is slow: in the Team Lead's experience a full load of courses, each with 100+ assignments, can take several minutes, and rate limits slow it further | Students wait or give up | Never make the student wait on Canvas: show the last data at once, refresh only when the student asks, and highlight Refresh when the data is old (FR-15). Measure early with a real account (TP-14 baseline in Phase 1), then in Phase 3 fetch less, in fewer requests, and switch to Canvas GraphQL if needed (see design, *Making Canvas loads fast*). |
-| R-4 | Assignments change in Canvas (renamed, deleted, new due date) | Board shows stale or orphaned cards | Merged into R-9. |
+| ~~R-4~~ | ~~Assignments change in Canvas (renamed, deleted, new due date)~~ | ~~Board shows stale or orphaned cards~~ | Merged into R-9. |
 | R-5 | Learning web development alongside building | Slower progress | Small phases, one new technology at a time, docs explain terms. |
 | R-6 | A school-managed Google account blocks sign-in to outside apps | Student can't sign in | Allow any Google account, so a personal one works; explain this on the sign-in screen. |
 | R-7 | Matching Trello too closely in look (logo, artwork, exact styling) | Trademark or copyright complaint | Copy behavior and layout patterns only; our own name, colors, and icons (C-4). |
@@ -304,3 +331,4 @@ decisions are struck through and kept for the record.
 | 2026-10-25 | D-4 (token), D-5 (any school), and D-6 (Python + FastAPI) decided; settled decisions D-2, D-4 to D-7 struck through, from the Team Lead. |
 | 2026-10-25 | D-1 decided: React. |
 | 2026-10-25 | Phase 0 marked done; the Google OAuth client and the Canvas teacher sandbox move to Phase 1 as prerequisites, from the Team Lead. |
+| 2026-10-25 | In-depth review after PR #3: Phase 0 shown as done in the chart and its section; Phase 1 now lists every Phase 1 requirement in the requirements index (adds FR-15, FR-16, FR-34, FR-38, NFR-1, NFR-10, NFR-12 to NFR-14, NFR-30, NFR-41); Phase 2 lists FR-60 and FR-80 drops; Phase 3 no longer claims joining a running Refresh (Phase 1) and needs Q-7 answered first; Phase 4 adds HTTPS, publishing the Google OAuth client, and data deletion to the exit criteria; Phase 5 adds FR-29 and NFR-35; D-3 rules out serverless backends; R-1 marked cleared and R-4 struck through. |

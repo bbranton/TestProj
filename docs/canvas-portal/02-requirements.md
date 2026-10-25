@@ -30,6 +30,65 @@ admin features, grades analytics (possibly Phase 5).
 
 The *Phase* column matches the [roadmap](01-roadmap.md).
 
+### Requirements by phase
+
+This index lists every requirement by the phase that builds it, so it's
+clear what is in scope at any time. Build only the requirements listed for
+the current phase, which the repo's [CLAUDE.md](../../CLAUDE.md) names.
+Anything listed for a later phase is out of scope, even where the design or
+the User Interface Specification already describes it. When a
+requirement's *Phase* column changes, update this index in the same PR.
+Removed requirements are not listed.
+
+**Phase 0: Decisions and setup**
+
+- Maintainability: NFR-40, NFR-42
+
+**Phase 1: Read-only viewer**
+
+- Connecting to Canvas: FR-1, FR-2, FR-3, FR-4, FR-5, FR-6
+- Fetching data from Canvas: FR-10, FR-11, FR-12, FR-13, FR-14, FR-15
+- Viewing courses and assignments: FR-20, FR-21, FR-22, FR-23, FR-26
+- Kanban board: FR-31, FR-38
+- Trello-style look and behavior: FR-60 (read only), FR-61, FR-65, FR-66, FR-78, FR-80
+- Accounts, sync, and data control: FR-50
+- Performance: NFR-1
+- Security and privacy: NFR-10, NFR-11, NFR-13, NFR-14
+- Reliability: NFR-20
+- Usability and accessibility: NFR-30
+- Maintainability: NFR-41
+
+**Phase 2: Dragging and sync**
+
+- Kanban board: FR-32, FR-33, FR-34, FR-35
+- Trello-style look and behavior: FR-60, FR-77
+- Accounts, sync, and data control: FR-51
+- Performance: NFR-3
+- Security and privacy: NFR-12
+- Reliability: NFR-22
+- Usability and accessibility: NFR-31
+
+**Phase 3: Performance and Canvas sync**
+
+- Kanban board: FR-39, FR-45
+- Performance: NFR-2
+
+**Phase 4: Polish and deploy**
+
+- Accounts, sync, and data control: FR-54
+- Usability and accessibility: NFR-32
+
+**Phase 5: Later ideas (not committed)**
+
+- Viewing courses and assignments: FR-24, FR-25, FR-27, FR-28
+- Kanban board: FR-36
+- Trello-style look and behavior: FR-62, FR-63, FR-64, FR-66 (changing colors), FR-67, FR-68, FR-69, FR-70, FR-71, FR-72, FR-73, FR-74, FR-75, FR-76, FR-78 (saving the choice), FR-79
+- Private notes: FR-40, FR-41, FR-42, FR-43, FR-44, FR-46
+- Accounts, sync, and data control: FR-53, FR-55
+- Performance: NFR-4
+- Reliability: NFR-21
+- Usability and accessibility: NFR-33, NFR-34, NFR-35, NFR-36
+
 ## 2. Users
 
 | User | Description | Main goal |
@@ -259,3 +318,4 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | 2026-10-25 | FR-13 shows the last sync date and time in the header; added NFR-36 (nothing depends on hover, since phones are a target platform); FR-69 works without hover. From the Team Lead's review. |
 | 2026-10-25 | FR-80: minimized or expanded state is not saved and is set fresh on each load or refresh; dropping a card on an empty minimized list expands it. From the Team Lead's review. |
 | 2026-10-25 | NFR-33 (phone layout) and NFR-36 (nothing depends on hover) moved to Phase 5, from the Team Lead's review. |
+| 2026-10-25 | Added the Requirements by phase index, so it's clear which requirements are in scope for the current phase, from the Team Lead's review. |

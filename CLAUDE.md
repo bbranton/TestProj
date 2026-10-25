@@ -12,3 +12,15 @@
 
 - Never use the project owner's first name anywhere in the repo: files, docs,
   code comments, and commit messages. Refer to them as "Team Lead".
+
+## Canvas portal phases
+
+- The current phase is **Phase 0** (decisions and setup). The Team Lead
+  changes this line when a new phase starts.
+- Build only the requirements listed for the current phase in
+  [Requirements by phase](docs/canvas-portal/02-requirements.md#requirements-by-phase).
+  Anything marked a later phase in any doc under `docs/canvas-portal/` is out
+  of scope, even when the design or UI specification already describes it.
+  Ask the Team Lead before building it.
+- Every implementation PR lists the requirement IDs it implements in its
+  description.

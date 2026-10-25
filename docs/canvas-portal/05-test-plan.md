@@ -49,6 +49,10 @@ live account, names and IDs are replaced before it is committed.
 
 Every pull request must meet these before merge:
 
+- [ ] The PR description lists the requirement IDs it implements, and each
+      one is in the current phase in
+      [Requirements by phase](02-requirements.md#requirements-by-phase).
+      The repo's [CLAUDE.md](../../CLAUDE.md) names the current phase.
 - [ ] CI is green: unit, API, E2E, and accessibility tests pass.
 - [ ] New or changed behavior has tests that name the requirement IDs they
       check, such as `test_fr23_missing_flag`.
@@ -422,3 +426,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | FR-80 test now checks list state is set fresh on reload; TP-06 step 14 checks that dropping on an empty minimized list expands it. |
 | 2026-10-25 | Phone tests marked Phase 5: the NFR-36 touch test and TP-12 step 2; phone browsers join the manual passes in Phase 5. |
 | 2026-10-25 | Links point to the renamed User Interface Specification. |
+| 2026-10-25 | PR checklist: each PR lists the requirement IDs it implements, all from the current phase. |

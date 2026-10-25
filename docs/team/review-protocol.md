@@ -38,7 +38,7 @@ for another persona in a finding.
 | Test plan (`05-test-plan.md`) | Product and QA | Architecture | Developer, UI/UX, DevOps |
 | Code PR (backend) | Developer | Architecture, Product and QA | DevOps |
 | Code PR (frontend or any UI change) | Developer | Architecture, UI/UX, Product and QA | DevOps |
-| CI, deploy, or hosting change | DevOps | Developer | Architecture, Product and QA |
+| CI, build, install, dependency, deploy, or hosting change | DevOps | Developer | Architecture, Product and QA |
 | Phase exit (moving to the next phase) | Management | Product and QA | Architecture, Developer, UI/UX, DevOps |
 | Team process (`docs/team/`, team skills) | Management | Each persona whose file changes | Any other persona |
 
@@ -67,7 +67,7 @@ outside its area is advice, never sign-off.
 | Design: structure, data, APIs, technology, security | Architecture | A new dependency, service, or data store; how the Canvas token is stored or sent; starting a transition plan |
 | Writing code, coding standards, bug fixes | Developer | Approving and merging every PR; design changes go to Architecture |
 | Screens, layout, wording, accessibility | UI/UX | A new screen or a change to the main flow |
-| CI, builds, deploys, hosting, secrets | DevOps | Changes to the live app or hosting; a paid service; a new secret store; new access |
+| CI, build and install scripts, dependency integration, deploys, hosting, secrets | DevOps | Changes to the live app or hosting; a paid service; a new secret store; new access |
 | Approving and merging a PR | Team Lead | Always |
 
 Only the persona in **Decided by** makes that decision. Every other persona

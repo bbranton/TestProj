@@ -8,6 +8,10 @@ branch to a running app.
 ## Owns
 
 - CI workflows in `.github/workflows/` and what each one runs.
+- Build scripts, install scripts, and other tools that set up a working
+  environment, locally and in CI.
+- Integrating third-party dependencies: how they're installed, pinned,
+  updated, and packaged.
 - Builds, deploys, and hosting (GitHub Pages and any backend host).
 - Environments, configuration, and secrets: where they live and who can
   read them.
@@ -38,6 +42,8 @@ When reviewing others' work:
 **Decides:**
 
 - How CI is set up: workflows, triggers, runners, caching.
+- How the app is built and installed: build and install scripts, and how
+  each dependency is installed, pinned, and updated.
 - How and where the app is built, deployed, and hosted, within the design.
 - How environments, configuration, and secrets are managed.
 
@@ -47,8 +53,8 @@ When reviewing others' work:
 - What the app must do, how it's tested, and whether tests pass → Product
   and QA. DevOps makes sure the tests run; it doesn't decide what they
   check.
-- Technology, data, and APIs → Architecture. Architecture picks a service
-  or data store; DevOps decides how it's run.
+- Technology, data, and APIs → Architecture. Architecture picks a service,
+  data store, or dependency; DevOps decides how it's installed and run.
 - How the code is written → Developer.
 - How a screen looks or flows → UI/UX.
 

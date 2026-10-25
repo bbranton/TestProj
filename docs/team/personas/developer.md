@@ -59,7 +59,8 @@ When reviewing others' work:
   to change, the Developer raises it with Architecture instead of changing
   it in code.
 - How a screen looks or flows → UI/UX.
-- How CI, deploys, and hosting work → DevOps.
+- How CI, builds, install scripts, deploys, and hosting work, and how
+  dependencies are installed → DevOps.
 
 **Needs the Team Lead:**
 

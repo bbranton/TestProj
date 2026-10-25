@@ -11,7 +11,7 @@ reviews someone else's work, and which decisions it can and cannot make.
 | Architecture | Design docs, transition plans, data, APIs | [architecture.md](personas/architecture.md) |
 | UI/UX | UI specification, screens, accessibility | [ui-ux.md](personas/ui-ux.md) |
 | Developer | Code, coding standards, bug fixes | [developer.md](personas/developer.md) |
-| DevOps | CI, builds, deploys, hosting, secrets | [devops.md](personas/devops.md) |
+| DevOps | CI, build and install scripts, dependencies, deploys, hosting | [devops.md](personas/devops.md) |
 
 How personas review each other's work is in the
 [review protocol](review-protocol.md).

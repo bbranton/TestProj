@@ -101,18 +101,62 @@ owning persona's view counts most, but a disagreement still goes to the
 Team Lead. The Team Lead's decision is recorded in the doc's change
 log or decision list.
 
-## Running a cross-review with an agent
+## Running reviews with agents
 
-When asked to "run a cross-review" of a PR or doc, the agent:
+### One thread per reviewer
 
-1. Finds the owner and required reviewers in the table above, then acts as
-   Management to check whether the topic or changes call for any other
-   persona, and adds them.
-2. Reviews once per required reviewer, reading that persona's file first and
-   staying inside its checklist.
-3. Posts one review per persona and a single findings table that combines
-   them, with no duplicate findings.
-4. Lists any finding that needs the Team Lead's call at the top.
+Each required reviewer runs in **its own thread, started fresh** for that
+review. It reads only its persona file, its notes, this protocol, and the
+PR. It doesn't see the owner's thread or the other reviewers' reviews
+before writing its own. That keeps reviews independent.
 
-The agent does not fix the findings in the same pass unless the Team Lead
-asks it to, so the reviews stay independent of the fixes.
+- The **owner thread** wrote the PR and is subscribed to it, so it wakes
+  on every comment. It never reviews its own PR as another persona.
+- Only the coordinator can start threads. The owner asks the coordinator
+  for the reviewers it needs, naming the PR and the personas.
+- Each reviewer thread posts **one PR review** headed with its persona name
+  and verdict, such as "**DevOps review: Recommend with notes**", with its
+  findings as inline comments. All comments post from the Team Lead's
+  GitHub account, so the heading is how readers tell personas apart.
+- A reviewer thread is done when its review is posted. It stays open until
+  the PR merges, in case the owner has a question.
+
+One thread playing several personas is only for quick, informal checks
+that the Team Lead asks for. It never counts as a required review.
+
+### Questions and discussion between threads
+
+A PR's GitHub events reach only the owner thread, so a reviewer doesn't
+see replies on its comments by itself. When the owner needs an answer
+from a reviewer:
+
+1. **Ask on the PR.** Reply on the reviewer's comment, so the question and
+   answer stay on the record.
+2. **Ring the reviewer.** Message the reviewer thread directly, with a link
+   to the comment. Threads may message each other when one's work depends
+   on the other's, which a pending review answer does. Use the coordinator
+   only when the owner doesn't know the reviewer thread, the reviewer
+   thread is resolved, or a new persona is needed.
+3. **Answer on the PR.** The reviewer replies on the same comment, then
+   messages the owner thread that it answered.
+4. **Cap the rounds.** After two rounds on the same point without
+   agreement, the owner marks the finding **Waiting on the Team Lead**, as
+   in [Disagreements](#disagreements).
+
+Messages between threads aren't visible to the Team Lead, so any decision
+reached there is written on the PR before anyone acts on it.
+
+### Running a cross-review
+
+When asked to "run a cross-review" of a PR or doc, the owner thread:
+
+1. Finds the required reviewers in the table above. As Management, it
+   checks whether the topic or changes call for any other persona.
+2. Asks the coordinator for one fresh thread per reviewer, naming the PR
+   and the persona.
+3. Waits for the reviews to arrive as PR comments, then answers or fixes
+   each finding, following the steps above for any question.
+4. Collects all findings into a single findings table on the PR, without
+   duplicates, with anything that needs the Team Lead at the top.
+
+Reviews are written before any fixes, so they stay independent of them.

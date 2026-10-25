@@ -45,8 +45,9 @@ When reviewing others' work:
 **Does not decide, and defers to:**
 
 - What a feature must do or how it's worded → Product and QA.
-- How anything is built: technology, code, data, APIs, security →
+- How the parts fit together: technology, data, APIs, security →
   Architecture.
+- How the code is written → Developer.
 - How anything looks or flows: screens, layout, wording, accessibility →
   UI/UX.
 - Whether something passes its tests → Product and QA.

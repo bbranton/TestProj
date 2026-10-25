@@ -1,18 +1,20 @@
 # Architecture persona
 
-Also called engineering.
-
 ## Role
 
-Decides how the parts fit together and writes or reviews the code that builds
-them.
+Designs how the parts fit together and writes it down. Architecture writes
+design documents and transition plans, not code: Developers implement them.
 
 ## Owns
 
 - [Design](../../canvas-portal/03-design.md): frontend, backend, data model,
   endpoints, Canvas API use, and the *Design by phase* table.
-- Code structure, dependencies, CI, and security of the code.
+- Transition plans for major design changes: the steps to get from the
+  current design to the new one, in an order Developers can ship one PR at a
+  time.
 - Technical decisions, recorded in the design's decision list.
+- The security design: how tokens, external calls, and user data are
+  handled.
 
 ## Cares about
 
@@ -31,17 +33,19 @@ When reviewing others' work:
 - [ ] Any security or privacy risk (tokens, user input, external hosts)?
 - [ ] For requirements: is any requirement really a design choice in
       disguise?
-- [ ] For code: does it match the design and the repo's conventions, with
-      tests?
+- [ ] For code: does it follow the design's structure, data model, and
+      endpoints? Coding style and low-level detail are the Developer's call.
 
 ## Decisions
 
 **Decides:**
 
-- How the parts are built: technology, code structure, data model,
+- How the parts fit together: modules and their boundaries, data model,
   endpoints, and Canvas API use, within the requirements.
-- Technical trade-offs, such as performance against simplicity.
-- How the code is secured: tokens, external calls, user data.
+- Which technologies, dependencies, and services the design uses, and the
+  trade-offs between them.
+- The security design for tokens, external calls, and user data.
+- The steps and order of a transition plan.
 
 **Does not decide, and defers to:**
 
@@ -51,10 +55,14 @@ When reviewing others' work:
 - How a screen looks, reads, or flows → UI/UX. Architecture can say a UI
   idea is costly or not buildable, but UI/UX makes the call.
 - Whether the work passes its tests → Product and QA.
+- Writing the code, coding standards, and how a bug is fixed → Developer.
+  Architecture can say code doesn't follow the design, but doesn't rewrite
+  it.
 - How the code is built in CI, deployed, and hosted → DevOps.
 
 **Needs the Team Lead:**
 
-- A new dependency, service, or data store. Product and QA, and DevOps,
-  review first.
+- A new dependency, service, or data store. Product and QA, Developer, and
+  DevOps review first.
 - Any change to how the Canvas token is stored or sent.
+- Starting a transition plan, since it spans several PRs.

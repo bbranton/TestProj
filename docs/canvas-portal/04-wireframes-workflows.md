@@ -161,7 +161,8 @@ NFR-3, NFR-31, NFR-34.
   board says "All courses are hidden" with a Show all link. Hidden cards keep
   their list.
   ▬▬ label strip in the course color (FR-66). (◷ ...) due badge: red
-  overdue, green with ✓ when complete, plain otherwise (FR-65). ≡ has a description.
+  when Canvas flags Missing, green with ✓ when Submitted or Graded, plain
+  otherwise (FR-65). ≡ has a description.
   The lists are fixed. List title: click to rename (FR-63). Drag a list
   by its header to reorder (FR-62). […] list menu: Move list.
   Adding cards and lists (FR-64, FR-71) and archiving lists (FR-36) are
@@ -191,7 +192,7 @@ the screen.
 |   |                                                                  |   |
 |   | Labels          Due date                       |                 |   |
 |   | [■ BIO 101]     [ ] Tue Oct 28, 11:59 PM       |                 |   |
-|   |                 (Upcoming)                     |                 |   |
+|   |                                                |                 |   |
 |   | 20 points · Not submitted                      | Actions         |   |
 |   |                                                | [→ Move      ]  |   |
 |   | ≡ Description            private, never sent   | [↗ Open in   ]  |   |
@@ -260,11 +261,14 @@ Requirements: FR-72. A dropdown under the Filter button, opened with `f`.
 |                                          |
 | Due date                                 |
 | [ ] No dates                             |
-| [ ] Overdue                    (red)     |
+| [ ] Due date passed                      |
 | [ ] Due in the next day                  |
 | [ ] Due in the next week                 |
 | [ ] Due in the next month                |
-| [ ] Marked as complete         (green)   |
+|                                          |
+| Canvas status                            |
+| [ ] Not submitted  [ ] Submitted         |
+| [ ] Graded         [ ] Missing  [ ] Late |
 |                                          |
 | Labels                                   |
 | [ ] ■ BIO 101                            |
@@ -475,3 +479,4 @@ flowchart TD
 | 2026-10-25 | Added a Backlog list before To do for new, unsorted Canvas assignments: S-4 redrawn, S-3, W-1, W-5, and W-7 updated. |
 | 2026-10-25 | Removed the NEW badge from S-4 and W-5; marking new and updated assignments is now a Phase 5 idea (FR-79). |
 | 2026-10-25 | Due soon removed (Phase 5, FR-27): no yellow badges in S-3, S-4, S-5, or the filter menu. |
+| 2026-10-25 | Statuses now come straight from Canvas fields (FR-23): S-4 badge notes, S-5, and the S-8 filter menu updated. |

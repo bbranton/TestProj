@@ -189,7 +189,7 @@ and require a signed-in session except where noted.
 | `PUT /api/canvas/connection` | Save Canvas URL and token; backend verifies with Canvas first | FR-1, FR-2 |
 | `DELETE /api/canvas/connection` | Disconnect and delete the stored token | FR-4 |
 | `GET /api/courses` | Active courses (cached) | FR-10, FR-20 |
-| `GET /api/assignments` | All assignments across active courses, with status | FR-11, FR-21 to FR-23 |
+| `GET /api/assignments` | All assignments across active courses, with Canvas status fields | FR-11, FR-21 to FR-23 |
 | `POST /api/refresh` | Bypass the cache and re-fetch from Canvas | FR-13 |
 | `GET /api/board` | Lists and cards with labels and badges, cards sorted by due date, after merging in new or removed assignments | FR-33, FR-34, FR-38, FR-65 |
 | `POST /api/board/lists` | Phase 5: add a list at the end | FR-64 |
@@ -212,21 +212,21 @@ token.
 
 ### Assignment status
 
-The backend computes status (FR-23) from Canvas's submission data, so every
-device shows the same answer:
+The portal shows status exactly as Canvas reports it (FR-23) and works
+nothing out itself. Canvas returns these fields on each assignment's
+`submission`:
 
-```mermaid
-flowchart TD
-    A[Assignment] --> G{Submission graded?}
-    G -- yes --> Graded
-    G -- no --> S{Submitted?}
-    S -- yes --> Submitted
-    S -- no --> D{Has due date?}
-    D -- no --> Upcoming
-    D -- yes --> P{Due date passed?}
-    P -- yes --> Overdue
-    P -- no --> Upcoming
-```
+| Canvas field | Values | Shown as |
+|--------------|--------|----------|
+| `workflow_state` | `unsubmitted`, `submitted`, `graded`, `pending_review` | The state: *Not submitted*, *Submitted*, *Graded*, *Pending review* |
+| `late` | true or false | A *Late* tag when true |
+| `missing` | true or false | A *Missing* tag when true, and a red due badge |
+| `excused` | true or false | An *Excused* tag when true |
+
+The state and the tags can appear together, for example *Graded* with *Late*.
+Statuses that would combine fields or compare with the clock, such as
+*Upcoming*, *Due soon*, and *Overdue*, are Phase 5 (FR-27) and will need their
+own rules for cases that overlap.
 
 ## 5. Signing in to the portal (D-7)
 
@@ -334,7 +334,7 @@ sequenceDiagram
         end
         A->>D: Save to cache
     end
-    A-->>B: assignments with computed status
+    A-->>B: assignments with Canvas status fields
     B->>A: GET /api/board
     A->>D: Load lists and cards
     A->>A: Add cards for new assignments to Backlog,<br/>archive cards for removed ones
@@ -417,7 +417,7 @@ UI uses:
 | Board background | One solid color per board, user can change it later (FR-75); default a deep blue |
 | List | 272 px wide, light gray, 12 px rounded corners, 8 px gap between lists |
 | Card | White, 8 px rounded corners, soft shadow, 8 px padding; label strip at the top in the course color |
-| Due badge | Small pill with a clock icon: green (complete), red (overdue), plain (upcoming); yellow (due soon) comes with FR-27 in Phase 5 |
+| Due badge | Small pill with a clock icon: green (Canvas says Submitted or Graded), red (Canvas flags Missing), plain otherwise; yellow (due soon) comes with FR-27 in Phase 5 |
 | Text | System font, 14 px on cards, bold list titles |
 | Card back | Centered dialog about 768 px wide over a dimmed board; main column on the left, action buttons on the right |
 
@@ -483,3 +483,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | Quick edit menu (FR-69) marked Phase 5. |
 | 2026-10-25 | New assignments go to the Backlog list. |
 | 2026-10-25 | Due soon removed from the status flowchart and badge colors; it is Phase 5 (FR-27). |
+| 2026-10-25 | Status flowchart replaced by a direct mapping of Canvas submission fields (FR-23); computed statuses are Phase 5 (FR-27). |

@@ -92,10 +92,10 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-20 | The dashboard lists the user's active courses by name and course code. | Must | 1 |
 | FR-21 | The dashboard lists assignments across all courses, sorted by due date, soonest first; assignments with no due date come last. | Must | 1 |
 | FR-22 | Each assignment shows: name, course, due date and time in the user's time zone, points possible, and status. | Must | 1 |
-| FR-23 | Status is one of: *Upcoming*, *Overdue*, *Submitted*, *Graded*. | Must | 1 |
-| FR-27 | A *Due soon* status (for example within 48 hours) with a yellow due badge, so close deadlines stand out. | Could | 5 |
-| FR-24 | The user can filter by course and by status, and search by assignment name. | Should | 1 |
-| FR-25 | The user can hide past, completed assignments (on by default). | Should | 1 |
+| FR-23 | Status is shown exactly as Canvas reports it, with nothing worked out by the portal. The submission state (Canvas field `workflow_state`) is one of *Not submitted*, *Submitted*, *Graded*, or *Pending review*. Canvas's own *Late*, *Missing*, and *Excused* flags (fields `late`, `missing`, `excused`) show as separate tags, because they can apply at the same time as a state, such as Graded and Late. | Must | 1 |
+| FR-27 | Statuses the portal works out by combining Canvas fields or comparing with the clock, such as *Upcoming*, *Due soon* (for example within 48 hours, with a yellow badge), and *Overdue*. They need clear rules for cases that overlap. | Could | 5 |
+| FR-24 | The user can filter by course, by Canvas submission state and flags (FR-23), and search by assignment name. | Should | 1 |
+| FR-25 | The user can hide assignments Canvas reports as *Graded* or *Excused* (on by default). | Should | 1 |
 | FR-26 | Each assignment links to its page in Canvas, opening in a new tab. | Must | 1 |
 
 ### 4.4 Kanban board
@@ -121,14 +121,14 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-62 | The user can drag a list by its header to reorder the lists. | Must | 2 |
 | FR-63 | Clicking a list title edits it in place. Enter or clicking away saves, and Escape cancels. | Must | 2 |
 | FR-64 | An "+ Add another list" control after the last list adds a list. | Could | 5 |
-| FR-65 | Card fronts show: the course as a colored label strip, the title, and badges for the due date, a note (description icon), and, from Phase 5, checklist progress (FR-70). The due date badge is green when submitted or graded, red when overdue, and plain otherwise (yellow for due soon comes with FR-27 in Phase 5). | Must | 1 (list), 2 (board) |
+| FR-65 | Card fronts show: the course as a colored label strip, the title, and badges for the due date, a note (description icon), and, from Phase 5, checklist progress (FR-70). The due date badge is green when Canvas reports *Submitted* or *Graded*, red when Canvas flags it *Missing*, and plain otherwise. Yellow for *Due soon* comes with FR-27 in Phase 5. | Must | 1 (list), 2 (board) |
 | FR-66 | Each course gets a label color automatically. The user can change a course's color and name its label. | Should | 2 |
 | FR-67 | Clicking a card opens its card back in a dialog over the board, which stays visible behind it. The browser address changes to the card's own link, so reloading or sharing the link reopens the card, and Back closes it. | Must | 2 |
 | FR-68 | The card back shows: the title; "in list *name*" (clicking it moves the card); labels; due date; points and status; an "Open in Canvas" button; *Description* (the private note); and *Archive*. Checklists are added in Phase 5 (FR-70). | Must | 2 (3 for notes) |
 | FR-69 | Hovering a card shows an edit (pencil) button; it and right-click open a quick edit menu: Open card, Move, Change label color, Open in Canvas, Archive. | Could | 5 |
 | FR-70 | A card back can hold one or more checklists of items that can be checked off. The card front shows progress such as 2/5 (2 of 5 items done). | Could | 5 |
 | FR-71 | "+ Add a card" at the bottom of each list creates a personal card that isn't a Canvas assignment. It supports everything a card back has except the Canvas details. | Could | 5 |
-| FR-72 | A Filter menu in the board header filters cards by label (course), by due date (overdue, due in the next day, next week, next month, no due date, complete), and by keyword. When a filter is on, the header says so and offers "Clear". | Must | 2 |
+| FR-72 | A Filter menu in the board header filters cards by label (course), by due date (due date passed, due in the next day, next week, next month, no due date), by Canvas submission state and flags (FR-23), and by keyword. When a filter is on, the header says so and offers "Clear". | Must | 2 |
 | FR-73 | Keyboard shortcuts follow Trello's where the action exists, including: arrow keys move between cards, Enter opens a card, Escape closes, `f` filter, `x` clear filters, `?` shows the shortcut list. The final list is checked against Trello's own shortcut page during design. | Should | 2 |
 | FR-74 | Archived cards (and, from Phase 5, lists) are found under "Archived items" in the board menu, where they can be restored. | Must | 2 |
 | FR-75 | A board menu opens as a panel from the right edge with: board background color, labels, archived items. | Could | 5 |
@@ -231,3 +231,4 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | 2026-10-25 | Added a *Backlog* list before *To do* for new, unsorted Canvas assignments (FR-31, FR-34), from the Team Lead's review. |
 | 2026-10-25 | NEW badge removed from FR-34; added FR-79 (show new and updated assignments) as a Phase 5 future feature, from the Team Lead's review. |
 | 2026-10-25 | *Due soon* status moved out of FR-23 into new FR-27, a Phase 5 future feature, from the Team Lead's review. |
+| 2026-10-25 | FR-23 now shows only statuses that map to a single Canvas field (submission state plus Late, Missing, Excused flags). Upcoming and Overdue join Due soon in FR-27 as Phase 5 future features. FR-24, FR-25, FR-65, and FR-72 updated to match. From the Team Lead's review. |

@@ -26,7 +26,9 @@ CI never uses a real token (A-3). Instead, `backend/tests/fixtures/` holds
 saved Canvas JSON responses for a made-up student, covering:
 
 - 3 active courses, 1 concluded course (must not appear)
-- Assignments in every status: upcoming, overdue, submitted, graded,
+- Assignments in every Canvas submission state (unsubmitted, submitted,
+  graded, pending review), with the late, missing, and excused flags, including
+  one that is both graded and late,
   no due date
 - A course with more than 100 assignments, split over two pages (FR-12)
 - A `403 Rate Limit Exceeded` response followed by success (C-2)
@@ -41,7 +43,7 @@ Every pull request must meet these before merge:
 
 - [ ] CI is green: unit, API, E2E, and accessibility tests pass.
 - [ ] New or changed behavior has tests that name the requirement IDs they
-      check, such as `test_fr23_overdue_status`.
+      check, such as `test_fr23_missing_flag`.
 - [ ] **If the PR changes anything a user sees, the PR description includes
       screenshots of each changed screen, with before and after shots when an
       existing screen changes.** Wide and phone widths for layout changes.
@@ -79,8 +81,8 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | FR-12 | All 120+ assignments returned from a two-page fixture | API |
 | FR-14 | Second request within 5 minutes makes no Canvas call | API |
 | FR-21, FR-38 | Sort order: soonest first, no-due-date last, ties by name; applies to every list and the table | Unit |
-| FR-23 | Each status from the status flowchart, including an assignment due exactly now | Unit |
-| FR-24 | Course, status, and search filters | E2E |
+| FR-23 | Each Canvas `workflow_state` maps to its label, and the late, missing, and excused flags show as tags, including together with a state | Unit |
+| FR-24 | Course, Canvas state and flag, and search filters | E2E |
 | FR-32, FR-33, FR-38 | Drag a card to another list; it lands in its due date place; reload, it is still there | E2E |
 | FR-31, FR-34 | First board load puts every assignment in Backlog; a new fixture assignment appears in Backlog in its due date place | API |
 | FR-38 | Changing a fixture assignment's due date moves its card to the new place in the same list | API |
@@ -99,7 +101,7 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | FR-61, FR-62 | Board scrolls sideways; dragging a list header reorders lists and the order survives reload | E2E |
 | FR-63 | Click a list title, type, Enter saves; Escape cancels | E2E |
 | FR-64, FR-71 (Phase 5) | Composer adds a list or a personal card and stays open for the next | E2E |
-| FR-65 | Due badge color for each status (green, red, plain) | Unit, E2E |
+| FR-65 | Due badge is green for Submitted or Graded, red for Missing, plain otherwise | Unit, E2E |
 | FR-66 | Each course gets a palette color; changing it updates every card of that course | API, E2E |
 | FR-67 | Opening a card changes the address to `/c/{id}`; reloading that address reopens it; Back closes it | E2E |
 | FR-68 | Card back shows every listed field for a Canvas card | E2E |
@@ -153,7 +155,7 @@ steps, and the expected result. Screen IDs refer to the
 | 1 | In Canvas, open each current course's Assignments page | Note the assignments, due dates, and points |
 | 2 | In the portal, open S-3 with "Hide finished" off | Same courses (no ended ones) and same assignments |
 | 3 | Compare due dates | Match, shown in your local time zone |
-| 4 | Check one assignment of each status | Status label matches the status flowchart in the design |
+| 4 | Check one assignment of each state, and any marked Late, Missing, or Excused | Labels and tags match what Canvas shows on its own assignment page |
 | 5 | Select ↗ on any assignment | Its Canvas page opens in a new tab |
 
 ### TP-04 Filters and search
@@ -163,9 +165,9 @@ steps, and the expected result. Screen IDs refer to the
 | Step | Action | Expected |
 |------|--------|----------|
 | 1 | Select one course | Only that course's assignments are listed |
-| 2 | Set Status to Overdue | Only overdue assignments in that course |
+| 2 | Set Status to Not submitted | Only that course's assignments Canvas reports as not submitted |
 | 3 | Type part of an assignment name | List narrows as you type |
-| 4 | Clear filters; toggle "Hide finished" | Past graded or submitted work hides and shows |
+| 4 | Clear filters; toggle "Hide finished" | Graded and excused assignments hide and show |
 | 5 | Tap one course's button in the row under the header, then tap it again | Its assignments hide, then come back; the button shows hidden (○) and shown (●) |
 | 6 | Hide two courses, then select Show all | Every course is shown |
 | 7 | Select Hide all | No assignments shown; the page says all courses are hidden and offers Show all |
@@ -281,7 +283,7 @@ how it looks, what it takes (clicks or keys), or how it responds.
 | 7 | Open a card | Dialog over the dimmed board, same section order; address changes |
 | 8 | Reload, then press Back | Reload reopens the card; Back closes it |
 | 9 | *(Phase 5)* Use the pencil and right-click on a card | Quick edit menu next to the raised card |
-| 10 | Press `f`, filter by a label and by "Overdue", then `x` | Same behavior; header shows the filter is active |
+| 10 | Press `f`, filter by a label and by "Due date passed", then `x` | Same behavior; header shows the filter is active |
 | 11 | Try each shortcut in Trello's shortcut list that the portal supports | Same key does the same thing |
 | 12 | Archive a card and restore it from the board menu | Same steps |
 | 13 | Count clicks to open a card, rename a list, and filter by a course | No more than Trello (NFR-35) |
@@ -321,3 +323,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | Backlog list: FR-31/FR-34 test, TP-06 step 1, and TP-08 step 2 updated. |
 | 2026-10-25 | NEW badge removed from the FR-34 test and TP-08 step 2. |
 | 2026-10-25 | Due soon removed from fixtures and status tests (Phase 5, FR-27). |
+| 2026-10-25 | Status tests now check the direct mapping of Canvas fields (FR-23); fixtures cover every state and flag. |

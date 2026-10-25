@@ -24,3 +24,4 @@ thread re-read on each turn, and is usually most of the cost.
 | Date | PR | Thread | Persona | Threads / PRs / rounds / files | Output | Cache read | Cache write | Cost (USD) | Notes |
 |------|----|--------|---------|--------------------------------|--------|------------|-------------|------------|-------|
 | 2026-10-25 | #10, #11 | Owner | (none; set up the team) | 1 / 2 / ~16 / 27 | 95K | 25.9M | 0.27M | 11.08 | Taken just before merge. Long thread with many small rounds; docs and small scripts only, no app code. |
+| 2026-10-25 | #7 | Owner | Architecture | 1 / 1 / 4 / 3 | 40K | 5.8M | 0.18M | 3.69 | Taken before review, so review rounds are not included. Design doc review, then an architecture pass and a pass to match the persona policies. Docs only. |

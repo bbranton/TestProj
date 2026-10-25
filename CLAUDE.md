@@ -23,6 +23,7 @@
   Before editing a doc or starting a cross-review, claim it on the board
   described in the [team workspace](docs/team/workspace.md). Add lasting lessons to the notes
   in the same PR.
+- When a thread's work is done, record its cost with the `log-cost` skill.
 - When asked to review or cross-review a doc or PR, follow the
   [review protocol](docs/team/review-protocol.md): it says which personas
   review what and how findings are logged.

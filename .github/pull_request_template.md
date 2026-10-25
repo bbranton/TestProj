@@ -30,6 +30,13 @@ The Team Lead ticks each reviewer to run, or ticks *Team Lead review only*.
 | # | Found by | Fix in | Finding | Status |
 |---|----------|--------|---------|--------|
 
+## Cost
+
+<!-- For a feature with a cost plan: the plan's estimate. After merge, each
+     thread logs its actual cost with the log-cost skill. Delete this
+     section for small PRs with no plan. -->
+Estimate: 
+
 ## Testing
 
 <!-- What you ran and what it showed. The ci-paths skill says whether CI

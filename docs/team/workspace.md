@@ -29,6 +29,7 @@ Skills live in `.claude/skills/<name>/SKILL.md`, with any script beside it.
 |-------|--------------|----------------|
 | `trace-requirement` | Finds a requirement ID in the design, UI spec, test plan, and code; lists requirements with no test | Product and QA, Developer |
 | `ci-paths` | Says which workflows a branch's changes will trigger | DevOps |
+| `log-cost` | Records a thread's real token use and cost in the [cost log](cost-log.md) | Every thread, when its work is done |
 | `cross-review` | Steps for the owner and for each fresh reviewer thread in a cross-review | Owner and reviewer threads |
 
 To add a skill, copy an existing folder, write a `SKILL.md` whose

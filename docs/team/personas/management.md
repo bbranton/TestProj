@@ -46,6 +46,23 @@ When reviewing others' work:
 - [ ] Given the topic or the changes proposed, does another persona need to
       join the review? If so, add them as a reviewer and say why.
 
+## Cost plans
+
+For a feature that spans several PRs or threads, Management writes a cost
+plan before work starts, and the Team Lead approves it with the plan:
+
+1. Break the work into PRs, and for each PR list the owner thread and the
+   recommended reviewers.
+2. Size it in the units from the [cost log](../cost-log.md#size-units).
+3. Find the closest past rows in the cost log and scale from them. Give a
+   low and a high cost, and a confidence (low, medium, or high). Until the
+   log has about five comparable rows, confidence is low.
+4. Name the biggest cost risks, such as many review rounds or an unclear
+   design, and the cheapest way to cut cost, such as fewer reviewers.
+
+When the feature is done, compare the actual cost with the plan in the
+cost log's notes, so the next estimate is better.
+
 ## Decisions
 
 **Decides:**
@@ -53,6 +70,7 @@ When reviewing others' work:
 - Priorities and the order of work, within the approved roadmap.
 - Whether a request is in scope for the current phase.
 - How each risk is rated, and which persona owns its mitigation.
+- Cost estimates for features, as ranges from the cost log.
 - Which extra personas to recommend for a review. The Team Lead confirms
   the reviewers for every PR.
 

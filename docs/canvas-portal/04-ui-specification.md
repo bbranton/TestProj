@@ -1,8 +1,9 @@
-# Wireframes and workflows
+# User Interface Specification
 
 **Status:** Draft · **Owner:** Team Lead · **Last updated:** 2026-10-25
 
-Wireframes are rough sketches of each screen: what is on it and where, not
+This document specifies the portal's user interface through wireframes and
+workflows. Wireframes are rough sketches of each screen: what is on it and where, not
 colors or fonts. They are drawn here as text so they can be reviewed and
 changed in pull requests. Workflows show how a user moves between screens to
 get something done.
@@ -524,3 +525,4 @@ flowchart TD
 | 2026-10-25 | Header always shows the last sync date and time instead of a hover tooltip, from the Team Lead's review; quick edit (S-7) no longer depends on hover (NFR-36). |
 | 2026-10-25 | S-4 notes: list state is set fresh on each load, not saved; dropping a card on an empty minimized list expands it. |
 | 2026-10-25 | Phone layout marked Phase 5, a starting sketch whose UI details are still to be worked out, from the Team Lead's review. |
+| 2026-10-25 | Renamed from "Wireframes and workflows" to "User Interface Specification" (file `04-ui-specification.md`), from the Team Lead's request. |

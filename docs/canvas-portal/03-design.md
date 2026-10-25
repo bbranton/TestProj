@@ -639,7 +639,7 @@ works without a framework, but there are fewer worked examples to copy from.
 |-------------------|------------|
 | FR-1 to FR-6 (connect) | Sections 4, 6, 7 |
 | FR-10 to FR-14 (fetch) | Section 6 |
-| FR-20 to FR-26 (view) | Section 4 (status), wireframes |
+| FR-20 to FR-26 (view) | Section 4 (status), User Interface Specification |
 | FR-30 to FR-39 (board, Canvas changes) | Sections 3, 4, 6 (loading sequence, keeping the backend in step, what can change in Canvas), 9 |
 | FR-40 to FR-46 (notes) | Sections 3, 4, 9 |
 | FR-60 to FR-78 (Trello-style, course buttons) | Sections 3, 4, 9 |
@@ -647,7 +647,7 @@ works without a framework, but there are fewer worked examples to copy from.
 | NFR-1 to NFR-4 (performance; NFR-4 is Phase 5) | Sections 3 (sorting, list positions), 6 (caching, parallel fetch, making Canvas loads fast, bringing the backend in step with Canvas) |
 | NFR-10 to NFR-14 (security) | Section 7 |
 | NFR-20 to NFR-22 (reliability, sync) | Sections 3, 4 (keeping devices in sync), 6 |
-| NFR-30 to NFR-35 (usability, Trello style) | Sections 2, 9, wireframes |
+| NFR-30 to NFR-35 (usability, Trello style) | Sections 2, 9, User Interface Specification |
 | NFR-40 to NFR-42 (maintainability) | Sections 7, 8 |
 
 ## Open decisions raised here
@@ -689,3 +689,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | Header shows the last sync date and time (FR-13); quick edit and a new interaction row follow NFR-36 (no hover-only actions). |
 | 2026-10-25 | Minimize interaction: list state is no longer saved; dropping a card on an empty minimized list expands it. |
 | 2026-10-25 | Phones are a Phase 5 platform: the device sync example uses a laptop and a desktop, and the no-hover interaction row is marked Phase 5. |
+| 2026-10-25 | Traceability table refers to the renamed User Interface Specification. |

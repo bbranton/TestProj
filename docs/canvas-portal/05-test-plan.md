@@ -136,7 +136,8 @@ supported (Phase 5).
 
 Each procedure lists the requirements it checks, what's needed first, the
 steps, and the expected result. Screen IDs refer to the
-[wireframes](04-wireframes-workflows.md).
+wireframes in the
+[User Interface Specification](04-ui-specification.md).
 
 ### TP-01 Connect with a student token
 
@@ -420,3 +421,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | TP-05 checks the sync date and time; added an NFR-36 touch test (no hover). |
 | 2026-10-25 | FR-80 test now checks list state is set fresh on reload; TP-06 step 14 checks that dropping on an empty minimized list expands it. |
 | 2026-10-25 | Phone tests marked Phase 5: the NFR-36 touch test and TP-12 step 2; phone browsers join the manual passes in Phase 5. |
+| 2026-10-25 | Links point to the renamed User Interface Specification. |

@@ -14,7 +14,7 @@ and a change log at the bottom, so it can grow as the project does.
 | 1 | [Roadmap](01-roadmap.md) | What gets built, in what order, and how we know a phase is done | Draft |
 | 2 | [Requirements](02-requirements.md) | What the app must do, and how well | Draft |
 | 3 | [Design](03-design.md) | How the parts fit together: frontend, backend, data, Canvas API | Draft |
-| 4 | [Wireframes and workflows](04-wireframes-workflows.md) | What each screen looks like and how a user moves through it | Draft |
+| 4 | [User Interface Specification](04-ui-specification.md) | What each screen looks like and how a user moves through it | Draft |
 | 5 | [Test procedures](05-test-plan.md) | How each requirement is checked, step by step | Draft |
 
 ## How these documents work together
@@ -28,7 +28,7 @@ the code that implements it and the test that proves it.
 flowchart LR
     R[Roadmap<br/>phases and milestones] --> Q[Requirements<br/>FR / NFR IDs]
     Q --> D[Design]
-    Q --> W[Wireframes and workflows]
+    Q --> W[User Interface<br/>Specification]
     D --> T[Test procedures]
     W --> T
     T -. results feed back .-> R

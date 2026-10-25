@@ -145,6 +145,7 @@ These need Bridget's call. Each has a recommendation, but nothing is settled.
 | D-4 | How users connect to Canvas | **Personal access token** (works today, no school involvement, user must create and paste it) or **OAuth** (smooth sign-in, needs a developer key from the school's Canvas admin) | Token first; OAuth in Phase 5 if a school will issue a key. | Phase 0 |
 | D-5 | Who the app is for | Just Bridget, a few friends, or any student at any school | Design for any school (the Canvas URL is a setting), test with one. | Phase 0 |
 | D-6 | Backend language | **Python + FastAPI** (readable, quick to write, good for learning) or **Node.js** (same language as the frontend) | Python + FastAPI. | Phase 0 |
+| D-7 | How users sign in to the portal | **Sign in with Google**, **email magic link**, **username and password**, or a **hosted auth service** (see [design](03-design.md#5-signing-in-to-the-portal-d-7-open)) | Sign in with Google | Phase 2 |
 
 ## 6. Risks
 

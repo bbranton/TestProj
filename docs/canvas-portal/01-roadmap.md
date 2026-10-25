@@ -74,7 +74,7 @@ assignments Canvas shows, verified by the Phase 1 test procedures.
 - Drag cards between and within columns; keyboard alternative for dragging
   (FR-32, NFR-31).
 - New assignments from Canvas land in *To do*; assignments Canvas reports as
-  submitted can be suggested for *Done* (FR-34, FR-35).
+  submitted can be suggested for *Done*; cards are matched by Canvas ID (FR-34, FR-35, FR-37).
 - Board layout is saved and restored (FR-33).
 - Optional: rename, add, and remove columns (FR-36).
 

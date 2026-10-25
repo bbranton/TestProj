@@ -13,3 +13,6 @@ Lasting lessons for the Management persona. See the
   of Phase 1 missing from the roadmap.
 - Each later phase lists what must be decided "Before it starts", so a
   decision is asked for before the phase that needs it, not during it.
+- Exit criteria name exact test steps that can run in that phase, such as
+  "TP-14 steps 3 and 4". "The Phase 1 steps of TP-10" failed review
+  because the test plan didn't mark its steps by phase.

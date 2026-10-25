@@ -91,6 +91,12 @@ The smallest thing that is useful: connect, then see everything that's due.
   responses for the test fixtures, and the Phase 3 change tests (TP-15)
   need it.
 
+**Before step 2 starts:** the Team Lead decides how the Canvas token is
+stored and sent, which the review protocol reserves for the Team Lead. The
+design lists these calls in
+[Open decisions raised here](03-design.md#open-decisions-raised-here),
+such as encrypting tokens with Fernet (a new dependency).
+
 **Work:**
 
 - Sign in with Google, so the server knows whose data is whose (FR-50,
@@ -134,18 +140,33 @@ The smallest thing that is useful: connect, then see everything that's due.
 **Order of work.** Phase 1 is the largest phase, so it is built in small
 pull requests, each one usable on its own:
 
-1. Sign in with Google and the data model (FR-50).
-2. Connect, check, and disconnect Canvas (FR-1 to FR-6).
-3. Fetch, cache, and Refresh with progress (FR-10 to FR-16). The first
-   real assignment list appears here: milestone M1.
-4. The read-only board with its lists, course buttons, and visual style.
-   Milestone M2.
-5. The TP-14 baseline and the Phase 1 manual test pass.
+1. Sign in with Google (FR-50), with the `USER` table and its sessions.
+2. Connect, check, and disconnect Canvas (FR-1 to FR-6), with
+   `CANVAS_CONNECTION`. This step stores the first token, so its security
+   comes with it (NFR-10 to NFR-12).
+3. Fetch, cache, and Refresh with progress (FR-10 to FR-16, NFR-13,
+   NFR-20), with `CANVAS_CACHE` and `REFRESH_RUN`, tested against recorded
+   Canvas responses (NFR-41). Milestone M1: the Refresh panel's per-course
+   counts show the real assignments, so no throwaway list view is built.
+4. The read-only board (FR-20 to FR-23, FR-26, FR-31, FR-34, FR-38, FR-60,
+   FR-61, FR-65, FR-66, FR-78, FR-80, NFR-34), with `BOARD`, `LIST`,
+   `CARD`, and `COURSE_LABEL`.
+5. The Phase 1 checks: NFR-1, NFR-14, NFR-30, the TP-14 baseline, and the
+   manual test pass. Milestone M2.
+
+Each step adds only the tables it uses, through a migration, so each pull
+request stays small.
 
 **Exit criteria:** the Team Lead can connect a real account and see the same
-assignments Canvas shows. TP-01, TP-02, TP-03, and TP-05 pass, along with
-the Phase 1 steps of TP-04, TP-10, and TP-13. CI is green, and TP-14 has a
-recorded baseline.
+assignments Canvas shows. CI is green. These pass:
+
+- TP-01, TP-02, TP-03, and TP-05.
+- TP-01 and TP-03 again in each NFR-30 browser.
+- TP-04 steps 5 to 7, and TP-13 steps 1 and 13.
+- TP-10 step 2, for user A's cards, Canvas data, and Refresh logs
+  (NFR-12).
+- TP-14 has a recorded baseline, and its steps 3 and 4 pass (NFR-1,
+  FR-15).
 
 ### Phase 2: Dragging and sync
 
@@ -174,8 +195,11 @@ and drop library is chosen (design, section 2).
 refreshes, two devices open at the same time stay in step, moving the same
 card on both settles on one list everywhere, and a dropped connection never
 leaves a device showing a move the server doesn't have. The concurrency tests
-for NFR-22 pass, and the drag steps of the Trello comparison review (TP-13)
-pass.
+for NFR-22 pass, and the drag steps of the Trello comparison review (TP-13
+steps 2 and 3) pass. TP-08 steps 2 and 3 pass (FR-34, FR-35: a renamed
+assignment and a submitted one stay in their list), leaving out step 1's
+note. The NFR-3 timing test passes. It is still to be added to the test
+plan. CI is green.
 
 ### Phase 3: Performance and Canvas sync
 
@@ -192,14 +216,20 @@ added later, changed, or cleared again; and a fetch can fail halfway. Every
 one of these cases has a planned outcome in the design (*What can change in
 Canvas*) and a test (TP-15).
 
-**Before it starts:** Q-7 in the requirements (what happens to the cards of
-an ended or dropped course) is answered.
+**Before it starts:**
+
+- Q-7 in the requirements (what happens to the cards of an ended or dropped
+  course) is answered.
+- The Team Lead decides whether Canvas GraphQL may be used. It reads data
+  but is sent as a `POST`, and NFR-13 allows only `GET` calls to Canvas
+  (see the design's
+  [Open decisions raised here](03-design.md#open-decisions-raised-here)).
+  If the answer is no, tuning goes straight to leaving descriptions out and
+  the Planner API, which are both `GET`.
 
 - Tune Refresh, working through the design's list in order: Canvas
-  GraphQL, descriptions left out of the main load, then the Planner API as
-  a fallback (NFR-1, NFR-2, R-3). GraphQL reads data but is sent as a
-  `POST`, so using it needs the Team Lead's call against NFR-13 (only `GET`
-  calls to Canvas); see the design.
+  GraphQL if the Team Lead approves it, descriptions left out of the main
+  load, then the Planner API as a fallback (NFR-1, NFR-2, R-3).
 - Each Refresh brings in every change: new, changed, and removed
   assignments, new due dates and submission states, and course changes
   such as a new term (FR-13, FR-34, FR-35, FR-45).
@@ -212,32 +242,52 @@ an ended or dropped course) is answered.
   Phase 2 sync (NFR-22).
 - A Refresh stays within Canvas's rate limits (C-2), including when a
   second device starts a Refresh while one is running. Joining the running
-  Refresh is built in Phase 1 (FR-16); Phase 3 tests it under load.
+  Refresh is built in Phase 1 (see the design's *Refresh progress*);
+  Phase 3 tests it under load.
 
-**Exit criteria:** TP-14 meets NFR-1 and NFR-2 on the Team Lead's real
-account, including at a busy time; TP-08 passes; every scenario in TP-15
-and its automated suite passes; a week of daily Refreshes against the Team
-Lead's real account produces no rate-limit errors and no lost, duplicated,
-or wrongly archived cards.
+**Exit criteria:**
+
+- TP-14 meets NFR-1 and NFR-2 on the Team Lead's real account, including at
+  a busy time.
+- Every scenario in TP-15 passes, and so does its automated replay test
+  (FR-39, FR-45).
+- The test for joining a running Refresh from a second device passes. That
+  test is still to be added to the test plan.
+- A week of daily Refreshes against the Team Lead's real account gives no
+  rate-limit errors and no lost, duplicated, or wrongly archived cards.
+  Each day's check (card count against Canvas, plus any archived cards) is
+  recorded in the test plan's results log.
 
 ### Phase 4: Polish and deploy
 
-**Before it starts:** D-3 (hosting) is decided.
+**Before it starts:** D-3 (hosting, including the database and the domain) is decided, with its cost.
 
 - Delete my data (FR-54).
 - Accessibility pass for contrast, labels, and focus (NFR-32), and a final
   check that every browser still works (NFR-30).
 - Deploy to the chosen host (D-3), over HTTPS (NFR-11), and link it from
-  the repo's landing page.
+  the repo's landing page. The Google client secret, the token encryption
+  key, and the session key are set in the host's environment settings,
+  never in the repo or the build. Deploys run from CI or the host's git
+  integration, and a bad deploy can be rolled back to the last good one.
+  Postgres is backed up on a schedule, and a restore has been tried once.
+- A home page and a privacy policy page on the app's domain, which Google
+  requires before it publishes the sign-in app.
 - Publish the Google OAuth client out of "testing" mode. Until then only
   listed test users can sign in, which doesn't fit "any student at any
   school" (D-5). See the design's
   [Signing in to the portal](03-design.md#5-signing-in-to-the-portal-d-7).
 
-**Exit criteria:** the deployed app works from a laptop or desktop in
-every browser in NFR-30; a Google account that isn't a test user can sign
-in; deleting an account removes all its data (TP-10); accessibility checks
-pass.
+**Exit criteria:**
+
+- TP-12 steps 1, 3, and 4 pass on the deployed app, and so does the
+  axe-core test for NFR-32.
+- TP-10 step 4 passes, along with the FR-54 API test (every row for the
+  user is removed).
+- A deployed smoke test passes. It is still to be added to the test plan,
+  and it checks that the site loads only over HTTPS and that a Google
+  account that isn't a test user can sign in.
+- A rollback and a backup restore have each been tried once.
 
 ### Phase 5: Later ideas (not committed)
 
@@ -306,7 +356,7 @@ through and kept for the record.
 |----|----------|---------|----------------|-----------|
 | ~~D-1~~ | ~~Frontend framework~~ | **React** (largest ecosystem, most tutorials, mature drag-and-drop libraries such as dnd-kit) or **Svelte** (less code, closer to QML's declarative feel, smaller community) | **Decided** (Team Lead, 2026-10-25): React, with TypeScript and Vite. React has the most Trello-style board examples and the best support from Pragmatic drag and drop. | Done |
 | ~~D-2~~ | ~~Where notes and board layout are stored~~ | **Browser local storage** (no accounts, works offline, but tied to one browser and lost if site data is cleared) or **server database** (follows the user between devices, but needs portal sign-in and more security work) | **Decided** (Team Lead, 2026-10-25): server database. The user should be able to sign in from anywhere and see their saved state. | Done |
-| D-3 | Hosting | Frontend on **GitHub Pages**. Backend on **Render**, **Fly.io**, or **Vercel** serverless functions. All have free or cheap tiers with limits. | Decide in Phase 4; run locally until then. The backend host must keep a process running, because a Refresh runs as a background task for up to several minutes (FR-16); serverless functions such as Vercel's stop when the request ends, so they don't fit. The sign-in cookie works best when the frontend and backend share one site, so the backend can also serve the built frontend instead of GitHub Pages. If background sync (Phase 5) is added later, the host must also run scheduled jobs. DevOps makes the final recommendation. | Phase 4 |
+| D-3 | Hosting, including where the Postgres database lives and the app's domain | Frontend on **GitHub Pages**, or served by the backend. Backend and its Postgres database on **Render** or **Fly.io**, or the database on a separate managed service. Serverless functions (such as Vercel's) are ruled out: a Refresh runs as a background task for up to several minutes (FR-16), and serverless functions stop when the request ends. | Decide before Phase 4; run locally until then. The sign-in cookie works best when the frontend and backend share one site, so the backend can also serve the built frontend. The decision also names the domain: Google's publishing review needs a home page, a privacy policy, a verified domain, and the final redirect address, and a host's shared default domain may not be accepted. Free tiers may not keep the app and its data up (free databases can expire, and free services sleep), so hosting and a custom domain may cost a few dollars a month, which needs the Team Lead (R-13). If background sync (Phase 5) is added later, the host must also run scheduled jobs. DevOps makes the final recommendation. | Before Phase 4 |
 | ~~D-4~~ | ~~How users connect to Canvas~~ | **Personal access token** (works today, no school involvement, user must create and paste it) or **OAuth** (smooth sign-in, needs a developer key from the school's Canvas admin) | **Decided** (Team Lead, 2026-10-25): personal access token. OAuth is a Phase 5 idea if a school will issue a key. | Done |
 | ~~D-5~~ | ~~Who the app is for~~ | Just the Team Lead, a few friends, or any student at any school | **Decided** (Team Lead, 2026-10-25): any student at any school (the Canvas address is a setting), tested with the Team Lead's school. | Done |
 | ~~D-6~~ | ~~Backend language~~ | **Python + FastAPI** (readable, quick to write, good for learning) or **Node.js** (same language as the frontend) | **Decided** (Team Lead, 2026-10-25): Python + FastAPI. | Done |
@@ -325,18 +375,19 @@ Lead.
 
 | ID | Risk | Effect | Likelihood | Impact | Owner | Mitigation |
 |----|------|--------|------------|--------|-------|------------|
-| R-1 | The school has turned off personal access tokens | Phase 1 can't connect | Low | High | Architecture | Cleared in Phase 0 for the Team Lead's school (A-1). Other schools may still turn tokens off; fallback: a free Canvas account from Instructure for testing, OAuth with the school later (Phase 5). |
-| R-2 | Canvas tokens are powerful; a leak exposes a student's whole account | Privacy harm | Low | High | Architecture | Backend never logs tokens, stores them encrypted, and only uses read endpoints (NFR-10, NFR-11). |
-| R-3 | Canvas is slow: in the Team Lead's experience a full load of courses, each with 100+ assignments, can take several minutes, and rate limits slow it further | Students wait or give up | High | Medium | Architecture | Never make the student wait on Canvas: show the last data at once, refresh only when the student asks, and highlight Refresh when the data is old (FR-15). Measure early with a real account (TP-14 baseline in Phase 1), then in Phase 3 fetch less, in fewer requests, and switch to Canvas GraphQL if needed (see design, *Making Canvas loads fast*). |
+| R-1 | A student's school has turned off personal access tokens | Students at that school can't connect | Medium | Medium | Architecture | Cleared for the Team Lead's school in Phase 0 (A-1), but D-5 opens the portal to any school. The connect screen's error says tokens may be turned off at the student's school (FR-6), and OAuth stays the Phase 5 path (D-4). |
+| R-2 | Canvas tokens are powerful; a leak exposes a student's whole account | Privacy harm | Low | High | Architecture | The backend never logs tokens (NFR-10), stores them encrypted with a key held only in the server's settings (NFR-11), never returns them to the browser, shows each user only their own data (NFR-12), and only uses Canvas read calls (NFR-13; "read-only queries" if the Team Lead approves GraphQL). |
+| R-3 | Canvas is slow: in the Team Lead's experience a full load of courses, each with 100+ assignments, can take several minutes, and rate limits slow it further | Students wait or give up | High | Medium | Architecture | Never make the student wait on Canvas: show the last data at once, refresh only when the student asks, and highlight Refresh when the data is old (FR-15). Measure early with a real account (TP-14 baseline in Phase 1), then in Phase 3 fetch less, in fewer requests, and switch to Canvas GraphQL if needed and the Team Lead approves it against NFR-13 (see design, *Making Canvas loads fast*). |
 | ~~R-4~~ | ~~Assignments change in Canvas (renamed, deleted, new due date)~~ | ~~Board shows stale or orphaned cards~~ | — | — | — | Merged into R-9. |
 | R-5 | Learning web development alongside building | Slower progress | Medium | Medium | Management | Small phases, one new technology at a time, docs explain terms. |
 | R-6 | A school-managed Google account blocks sign-in to outside apps | Student can't sign in | Medium | Medium | UI/UX | Allow any Google account, so a personal one works; explain this on the sign-in screen. |
 | R-7 | Matching Trello too closely in look (logo, artwork, exact styling) | Trademark or copyright complaint | Low | Medium | UI/UX | Copy behavior and layout patterns only; our own name, colors, and icons (C-4). |
 | R-8 | Sync bugs: two devices or two browser tabs disagree, or a card is lost or duplicated | Student stops trusting the board | Medium | High | Developer | Phase 2 is only dragging and sync; one row per card enforced by the database; concurrency tests in CI and the TP-06 sync procedure (NFR-22). |
-| R-9 | The backend falls out of step with Canvas: a teacher deletes, changes, or clears something and the board shows stale data, loses a card, or archives one that still exists | Students miss or mistrust deadlines | High | High | Architecture | Phase 3 is dedicated to it; every change case has a planned outcome (design, *What can change in Canvas*); only complete fetches can archive; scenario fixtures replayed in CI and TP-15 against a real account. |
+| R-9 | The backend falls out of step with Canvas: a teacher deletes, changes, or clears something and the board shows stale data, loses a card, or archives one that still exists | Students miss or mistrust deadlines | High | High | Architecture | Phase 3 is dedicated to it; every change case has a planned outcome (design, *What can change in Canvas*); only complete fetches can archive; scenario fixtures replayed in CI and TP-15 against a real account. Until Phase 3, a complete Refresh adds new assignments to Backlog, and a card whose assignment is gone is hidden, never deleted. |
 | R-10 | Scope grows faster than it is built: ideas and fixes pile into the current phase, and pull requests touch many documents at once | Phases never finish, and reviews get too big to check | High | High | Management | Section 7: new ideas go to Phase 5 by default, a phase's scope is fixed once it starts, and each pull request covers one document or one feature. |
 | R-11 | One person carries every decision, every review, and every test with real accounts | Work stalls while it waits on the Team Lead | High | Medium | Management | Section 8 says which tasks need the Team Lead. Decisions are asked for before the phase that needs them ("Before it starts" in each phase), and CI uses recorded Canvas data, so only the manual passes need a real token. |
-| R-12 | Google's review for publishing the sign-in app takes longer than expected | Phase 4 can't let in students who aren't test users | Medium | Medium | DevOps | The app asks only for `openid email profile`, which needs the lightest review. Start publishing early in Phase 4, not at the end. |
+| R-12 | Google's review for publishing the sign-in app takes longer than expected, or needs things that aren't ready | Phase 4 can't let in students who aren't test users | Medium | Medium | DevOps | The app asks only for `openid email profile`, which needs the lightest review. D-3, including the domain and redirect address, is decided before Phase 4 starts, and Phase 4 adds the home page and privacy policy Google asks for. |
+| R-13 | Hosting costs money: free tiers may not keep the app and its database up, and a custom domain is paid | A monthly bill the Team Lead didn't plan for, or a Phase 4 delay | Medium | Low | DevOps | DevOps prices the options in its D-3 recommendation, well before Phase 4, so the Team Lead can decide on the cost early. |
 
 ## 7. Scope control
 
@@ -412,3 +463,4 @@ The plan has grown quickly, so these rules keep each phase finishable:
 | 2026-10-25 | Program-management review: section 2 says what each phase gives a student; Phase 1 gets an order of work tied to M1 and M2, and its exit criteria name the test procedures; Phases 2 to 4 list the decisions needed before they start; milestones gain a status, and M5 is renamed "Deployed"; added risks R-10 (scope growth), R-11 (one person carries every decision and test), and R-12 (Google review time); added section 7, *Scope control*, and section 8, *Roles*. Phase 3 tuning no longer lists "nearest due dates first" (it changes nothing when only a complete Refresh updates the board) and notes that GraphQL's `POST` needs a call against NFR-13, to match the design review. |
 | 2026-10-25 | Risks table gains Likelihood, Impact, and Owner columns, with an owner persona for each risk, and Management reviews it at every phase boundary; section 8 names the team personas instead of a single developer. This matches the Management persona's ownership of the risk list. |
 | 2026-10-25 | Aligned with the team personas and review protocol: sections 6 to 8 say which persona makes each call and what needs the Team Lead (scope calls, phase done, accepted risks, reviewers); D-3 and D-8 name the persona that recommends them; links point to the team docs. |
+| 2026-10-25 | Cross-review by Product and QA, Architecture, and DevOps: Phase 1 lists the token decisions needed before step 2, and its order of work names the tables and IDs for each step; Phases 1 to 4 name the exact test steps their exit criteria need, including tests still to be added (NFR-3, joining a running Refresh, a deployed smoke test); TP-08 moves to Phase 2's exit; the GraphQL call is in Phase 3's "Before it starts"; Phase 4 adds secrets, rollback, backups, and the pages Google requires; D-3 covers the database and domain and drops Vercel; R-1, R-2, R-3, R-9, and R-12 updated, and R-13 (hosting cost) added. |

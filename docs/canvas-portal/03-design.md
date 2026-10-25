@@ -20,7 +20,7 @@ Build only the parts listed for the current phase (see the repo's
 | Phase | Builds |
 |-------|--------|
 | 0 | Repository layout (section 8), empty frontend and backend, CI |
-| 1 | Tables `USER`, `CANVAS_CONNECTION`, `BOARD`, `LIST`, `CARD`, `COURSE_LABEL`, `CANVAS_CACHE`, `REFRESH_RUN`, without the columns marked Phase 2 or 3, and with the unique card rule; the Phase 1 endpoints in section 4; sign-in (section 5); talking to Canvas, caching, *Built from the start*, *Refresh progress*, and *Saving a complete Refresh* (section 6); security (section 7); the board, course buttons, minimize and expand, visual style, the Refresh progress panel, and the Phase 1 interactions (section 9) |
+| 1 | Tables `USER`, `SESSION`, `CANVAS_CONNECTION`, `BOARD`, `LIST`, `CARD`, `COURSE_LABEL`, `CANVAS_CACHE`, `REFRESH_RUN`, without the columns marked Phase 2 or 3, and with the unique card rule; the Phase 1 endpoints in section 4; sign-in (section 5); talking to Canvas, caching, *Built from the start*, *Refresh progress*, and *Saving a complete Refresh* (section 6); security (section 7); the board, course buttons, minimize and expand, visual style, the Refresh progress panel, and the Phase 1 interactions (section 9) |
 | 2 | Moving cards and *Keeping devices in sync* (section 4): the Phase 2 endpoints and `change_seq`; dragging (section 9) |
 | 3 | *Phase 3 tuning*, *Bringing the backend in step with Canvas*, and *What can change in Canvas* (section 6); `CARD.archived` |
 | 4 | Deleting all of a user's data (section 4), accessibility checks, publishing the Google sign-in app (section 5), deploying (roadmap D-3) |
@@ -70,6 +70,9 @@ both.
 | Database | Postgres in production, SQLite for local dev and tests | Proposed | Postgres is what hosts offer; SQLite needs no setup. SQLite locks the whole file on every write, so the NFR-22 concurrency tests also need a Postgres run in CI to prove anything |
 | Database access | SQLAlchemy + Alembic | Proposed | Python models for tables; Alembic tracks schema changes over time ("migrations") |
 | Portal sign-in | Sign in with Google (OAuth 2 / OpenID Connect) via the Authlib Python library | **Decided for MVP (D-7)** | No passwords to store; see section 5 |
+| Sessions | Server-side `SESSION` rows, looked up by a random ID in the cookie | Proposed | Sign out and account deletion end the session at once, which a self-contained signed cookie can't do |
+| Token encryption | Fernet, from the `cryptography` Python library | Proposed | Authenticated encryption in one call; `MultiFernet` lets the key be replaced later without losing stored tokens |
+| Background Refresh | An `asyncio` task inside the one server process | Proposed | Nothing extra to host; needs a host that keeps the process running (roadmap D-3) and a single server process, which suits one student's load |
 | Hosting | See roadmap D-3 | Open | |
 
 ## 3. Data model
@@ -82,6 +85,7 @@ erDiagram
     USER ||--o| CANVAS_CONNECTION : has
     USER ||--o| BOARD : owns
     USER ||--o| REFRESH_RUN : runs
+    USER ||--o{ SESSION : "signs in with"
     BOARD ||--o{ LIST : contains
     LIST ||--o{ CARD : contains
     CANVAS_CONNECTION ||--o{ COURSE_LABEL : colors
@@ -92,6 +96,11 @@ erDiagram
         string google_sub
         string email
         datetime created_at
+    }
+    SESSION {
+        string id PK "random, in the cookie"
+        uuid user_id FK
+        datetime expires_at
     }
     CANVAS_CONNECTION {
         uuid id PK
@@ -222,6 +231,22 @@ The backend only ever sends filtered, portal-shaped data to the frontend. It
 does not pass Canvas responses straight through, and it never includes the
 token.
 
+**Dates** are sent as Canvas gives them, in UTC (ISO 8601). The frontend
+shows them in the browser's time zone (FR-22), so the backend needs no time
+zone setting.
+
+**Errors** all have one shape, `{"error": "<code>", "message": "<text>"}`,
+so the frontend can choose a screen by code without reading the text:
+
+| Code | HTTP status | Frontend shows |
+|------|-------------|----------------|
+| `not_signed_in` | 401 | S-1 Sign in |
+| `canvas_not_connected` | 409 | S-2 Connect Canvas |
+| `canvas_token_rejected` | 409 | S-2 with the reconnect message (FR-6) |
+| `canvas_unreachable` | 502 | The warning banner with the last data (NFR-20) |
+| `canvas_address_invalid` | 400 | "Couldn't reach that Canvas address" on S-2 (W-1) |
+| `not_found` | 404 | Nothing; also what another user's IDs return (NFR-12) |
+
 ### Keeping devices in sync (NFR-22, D-8)
 
 A student may have the board open on a laptop and a desktop computer, or
@@ -339,7 +364,9 @@ sequenceDiagram
 
 After sign-in, the backend sets a **session cookie**: a small value the browser
 sends back automatically with each request so the backend knows who is
-asking. The cookie is `HttpOnly` (page scripts can't read it), `Secure` (HTTPS
+asking. The cookie holds only a random session ID; the `SESSION` row says
+whose it is. A session lasts 30 days. Signing out deletes the row, and
+deleting the account deletes all of the user's sessions. The cookie is `HttpOnly` (page scripts can't read it), `Secure` (HTTPS
 only), and `SameSite=Lax` (the browser leaves it off requests that other
 sites start, except a plain link to the portal). Because a link can still
 carry it, no `GET` endpoint changes the board or the account. The one
@@ -583,6 +610,8 @@ sequenceDiagram
 | Other sites acting as the user | Session cookie is `SameSite=Lax`, and no `GET` endpoint changes data (section 5) | NFR-12 |
 | One user seeing another's data | Every query filters on the session's `user_id`; tests check this for every endpoint | NFR-12 |
 | Writes to Canvas | The Canvas client only implements `GET` (see the GraphQL note in *Phase 3 tuning*) | NFR-13 |
+| A Canvas address that points somewhere else | The student types the Canvas address, and the server then calls it, so a bad address could make the server call machines on its own network. The address must be `https`, must resolve only to public internet addresses, and is checked again on every call | NFR-11, NFR-12 |
+| Token sent to the wrong host | The client sends the token only to the saved Canvas host. It does not follow redirects, or paging `Link` URLs, that lead to another host; that course fails instead | NFR-10 |
 | Trackers | No third-party analytics or scripts | NFR-14 |
 | Test tokens | Read from a git-ignored `.env` file in local dev; CI uses recorded sample data instead | A-3, NFR-41 |
 
@@ -602,7 +631,9 @@ canvas-portal/
                     beside it (App.tsx and App.test.tsx)
     e2e/            Playwright browser tests (from Phase 1)
     package.json
-  .env.example      lists settings; the real .env is git-ignored
+  .env.example      lists settings; the real .env is git-ignored. Phase 1
+                    adds DATABASE_URL, SESSION_SECRET (signs the OAuth
+                    "state"), and TOKEN_ENCRYPTION_KEY
 docs/canvas-portal/ these documents
 ```
 
@@ -757,3 +788,4 @@ possible without reworking what Phases 1 to 4 build:
 | 2026-10-25 | D-1 decided: React with TypeScript and Vite; section 10 now explains the choice. |
 | 2026-10-25 | The Google OAuth client is a Phase 1 prerequisite. |
 | 2026-10-25 | In-depth review after PR #3: cards are added when a complete Refresh is saved (new *Saving a complete Refresh*, Phase 1), so loading the board only reads; the unique card rule moves to Phase 1; one Refresh at a time, token problems, and rate-limit retries are Phase 1 (*Bringing the backend in step* keeps only Phase 3 work); the board changes once per complete Refresh while S-10 shows progress (FR-14, NFR-2); a restart marks a stuck Refresh incomplete; disconnecting keeps the connection row so the board survives (FR-4, FR-6), with an open check for connecting a different account; a Refresh on another device reaches open devices through the changes endpoint; GraphQL needs a call on NFR-13 (it uses `POST`); nearest-due-first dropped; description changes have nothing to show before Phase 5; keys on `COURSE_LABEL`, `CANVAS_CACHE`, `REFRESH_RUN`, `user_id` on `LIST`, `canvas_user_id` on the connection; health endpoint and fuller requirement IDs in the API table; cookie and token-in-URL rows in security; repository layout matches the skeleton; refresh panel and warning banner in the component diagram; traceability lists only Phase 0 to 4 IDs. |
+| 2026-10-25 | Architecture review: server-side sessions (new `SESSION` table), Fernet token encryption, and the in-process Refresh task in the technology table; one error shape with codes for each screen; dates sent in UTC; security rows for Canvas addresses that point elsewhere and for never sending the token to another host; Phase 1 settings listed. |

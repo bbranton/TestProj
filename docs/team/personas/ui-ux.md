@@ -42,12 +42,12 @@ When reviewing others' work:
 **Does not decide, and defers to:**
 
 - Business goals, priorities, phases, and planning → Management.
-- Whether a feature is needed or what it must do → Product owner.
+- Whether a feature is needed or what it must do → Product and QA.
 - How a screen is built, or what data and endpoints it uses →
   Architecture.
-- Whether the UI passes its tests → QA.
+- Whether the UI passes its tests → Product and QA.
 
 **Needs the Team Lead:**
 
-- A new screen or a change to the main flow. Product owner and
-  Architecture review first.
+- A new screen or a change to the main flow. Product and QA, and
+  Architecture, review first.

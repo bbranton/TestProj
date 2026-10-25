@@ -47,13 +47,14 @@ When reviewing others' work:
 
 - Business goals, priorities, phases, and planning → Management.
 - What a feature must do, or adding behavior no requirement asks for →
-  Product owner.
+  Product and QA.
 - How a screen looks, reads, or flows → UI/UX. Architecture can say a UI
   idea is costly or not buildable, but UI/UX makes the call.
-- Whether the work passes its tests → QA.
+- Whether the work passes its tests → Product and QA.
+- How the code is built in CI, deployed, and hosted → DevOps.
 
 **Needs the Team Lead:**
 
-- A new dependency, service, or data store. Product owner and QA review
-  first.
+- A new dependency, service, or data store. Product and QA, and DevOps,
+  review first.
 - Any change to how the Canvas token is stored or sent.

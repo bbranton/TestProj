@@ -12,18 +12,24 @@ this and brings in any other persona the topic or changes call for.
 
 | Work | Owner | Required reviewers | Optional reviewers |
 |------|-------|--------------------|--------------------|
-| Roadmap (`01-roadmap.md`) | Management | Product owner | Architecture, QA |
-| Requirements (`02-requirements.md`) | Product owner | QA, Architecture | UI/UX, Management |
-| Design (`03-design.md`) | Architecture | Product owner, QA | UI/UX |
-| UI specification (`04-ui-specification.md`) | UI/UX | Product owner, Architecture | QA |
-| Test plan (`05-test-plan.md`) | QA | Product owner | Architecture, UI/UX |
-| Code PR (backend) | Architecture | QA | Product owner |
-| Code PR (frontend or any UI change) | Architecture | UI/UX, QA | Product owner |
-| Phase exit (moving to the next phase) | Management | QA, Product owner | Architecture, UI/UX |
+| Roadmap (`01-roadmap.md`) | Management | Product and QA | Architecture, DevOps |
+| Requirements (`02-requirements.md`) | Product and QA | Architecture | UI/UX, Management |
+| Design (`03-design.md`) | Architecture | Product and QA, DevOps | UI/UX |
+| UI specification (`04-ui-specification.md`) | UI/UX | Product and QA, Architecture | |
+| Test plan (`05-test-plan.md`) | Product and QA | Architecture | UI/UX, DevOps |
+| Code PR (backend) | Architecture | Product and QA | DevOps |
+| Code PR (frontend or any UI change) | Architecture | UI/UX, Product and QA | DevOps |
+| CI, deploy, or hosting change | DevOps | Architecture | Product and QA |
+| Phase exit (moving to the next phase) | Management | Product and QA | Architecture, UI/UX, DevOps |
 
 Each reviewer looks through its own lens, using the review checklist in its
-persona file. For example, QA reads the requirements asking "can I write a
-test that passes or fails for this?", not "is this the right feature?".
+persona file. For example, DevOps reads the design asking "how is this
+hosted and configured?", not "is this the right feature?".
+
+Product and QA owns both the requirements and the tests, so no one else
+checks that its requirements can be tested. It must run its own
+testability check before handing requirements on, and Architecture's
+review of the requirements and the test plan is the outside check.
 
 ## Who decides what
 
@@ -35,11 +41,12 @@ outside its area is advice, never sign-off.
 | Decision | Decided by | Never decided by |
 |----------|------------|------------------|
 | Business goals | Team Lead | Any persona |
-| Priorities, phases, scope, timelines | Management | Architecture, UI/UX, QA |
-| What a feature must do | Product owner | Management, Architecture, UI/UX, QA |
-| Technology, code, data, APIs, security | Architecture | Management, Product owner, UI/UX, QA |
-| Screens, layout, wording, accessibility | UI/UX | Management, Product owner, Architecture, QA |
-| How it's tested, and whether tests pass | QA | Management, Product owner, Architecture, UI/UX |
+| Priorities, phases, scope, timelines | Management | Product and QA, Architecture, UI/UX, DevOps |
+| What a feature must do | Product and QA | Management, Architecture, UI/UX, DevOps |
+| How it's tested, and whether tests pass | Product and QA | Management, Architecture, UI/UX, DevOps |
+| Technology, code, data, APIs, security | Architecture | Management, Product and QA, UI/UX, DevOps |
+| Screens, layout, wording, accessibility | UI/UX | Management, Product and QA, Architecture, DevOps |
+| CI, builds, deploys, hosting, secrets | DevOps | Management, Product and QA, Architecture, UI/UX |
 | Approving and merging a PR | Team Lead | Any persona |
 
 Each persona file has a **Decisions** section that lists what it decides,
@@ -54,7 +61,7 @@ the decision to them.
    table above.
 2. **Reviewers review.** Each required reviewer reads the change against its
    checklist and posts one review headed with its persona name, such as
-   "**QA review**". Reviewers can run in parallel.
+   "**DevOps review**". Reviewers can run in parallel.
 3. **Findings are logged.** Each finding gets an ID and a row in a findings
    table (format below). A finding that needs a change in a different doc
    names that doc under **Fix in**, and is fixed in that doc's PR, so each PR
@@ -76,7 +83,7 @@ Use the same shape as the canvas portal docs review:
 
 | # | Found by | Fix in | Finding | Status |
 |---|----------|--------|---------|--------|
-| F-1 | QA | Requirements | FR-12 says "fast"; give a number so it can be tested. | Open |
+| F-1 | Product and QA | Requirements | FR-12 says "fast"; give a number so it can be tested. | Open |
 
 - **#** is unique within the review (`F-1`, `F-2`, ...). Findings that span
   several docs use `X-` IDs.

@@ -44,14 +44,15 @@ When reviewing others' work:
 
 **Does not decide, and defers to:**
 
-- What a feature must do or how it's worded → Product owner.
+- What a feature must do or how it's worded → Product and QA.
 - How anything is built: technology, code, data, APIs, security →
   Architecture.
 - How anything looks or flows: screens, layout, wording, accessibility →
   UI/UX.
-- Whether something passes its tests → QA.
+- Whether something passes its tests → Product and QA.
+- How CI, deploys, and hosting work → DevOps.
 
 **Needs the Team Lead:**
 
-- Starting a new phase. QA and Product owner recommend first.
+- Starting a new phase. Product and QA recommends first.
 - Adding or dropping a project goal.

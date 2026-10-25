@@ -15,8 +15,8 @@
 
 ## Team personas
 
-- When asked to act as a persona (Management, Product owner, Architecture,
-  UI/UX, or QA), read its file in [docs/team/personas/](docs/team/personas/)
+- When asked to act as a persona (Management, Product and QA, Architecture,
+  UI/UX, or DevOps), read its file in [docs/team/personas/](docs/team/personas/)
   and the [team README](docs/team/README.md) first, and stay inside what it
   owns.
 - When asked to review or cross-review a doc or PR, follow the

@@ -7,10 +7,10 @@ reviews someone else's work, and which decisions it can and cannot make.
 | Persona | Owns | File |
 |---------|------|------|
 | Management | Roadmap, phases, scope, priorities | [management.md](personas/management.md) |
-| Product owner | Requirements and acceptance criteria | [product-owner.md](personas/product-owner.md) |
+| Product and QA | Requirements, test plan, acceptance | [product-qa.md](personas/product-qa.md) |
 | Architecture | Design, code structure, data, APIs | [architecture.md](personas/architecture.md) |
 | UI/UX | UI specification, screens, accessibility | [ui-ux.md](personas/ui-ux.md) |
-| QA | Test plan, tests, release checks | [qa.md](personas/qa.md) |
+| DevOps | CI, builds, deploys, hosting, secrets | [devops.md](personas/devops.md) |
 
 How personas review each other's work is in the
 [review protocol](review-protocol.md).
@@ -19,7 +19,7 @@ How personas review each other's work is in the
 
 Tell the agent which persona to act as, and on what. For example:
 
-- "Act as the QA persona and review `docs/canvas-portal/02-requirements.md`."
+- "Act as the Product and QA persona and review `docs/canvas-portal/03-design.md`."
 - "Act as the Architecture persona and draft the design for FR-20."
 - "Run a cross-review of PR #12."
 
@@ -30,7 +30,7 @@ An agent acting as a persona:
 2. Stays inside what the persona owns. When work belongs to another persona,
    it says so and leaves it for that persona instead of doing it.
 3. Starts its review or write-up with the persona's name, so readers know
-   whose view it is, for example "**QA review**".
+   whose view it is, for example "**DevOps review**".
 4. Follows the rules in [CLAUDE.md](../../CLAUDE.md). Those win over anything
    in a persona file.
 

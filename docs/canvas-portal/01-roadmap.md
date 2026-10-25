@@ -166,10 +166,11 @@ or wrongly archived cards.
 ### Phase 4: Polish and deploy
 
 - Delete my data (FR-54).
-- Accessibility and mobile layout pass (NFR-30 to NFR-33).
+- Accessibility pass (NFR-30 to NFR-32).
 - Deploy to the chosen host (D-3) and link it from the repo's landing page.
 
-**Exit criteria:** the deployed app works from a laptop and a phone;
+**Exit criteria:** the deployed app works from a laptop or desktop in
+every browser in NFR-30;
 accessibility checks pass.
 
 ### Phase 5: Later ideas (not committed)
@@ -183,6 +184,10 @@ accessibility checks pass.
 - Rename a list by clicking its title, and drag lists to reorder them
   (FR-63, FR-62).
 - Quick edit menu on each card: pencil button or right-click (FR-69).
+- Phone support: a layout for phone-width screens, where one list fills the
+  screen and the student swipes between lists, plus nothing that depends on
+  hover (NFR-33, NFR-36). The UI details come first, such as how dragging,
+  minimized lists, and the course row work on a small touch screen.
 - Hide assignments, such as graded or excused ones (FR-25).
 - Statuses the portal works out itself, such as *Upcoming*, *Due soon* (with a
   yellow badge), and *Overdue* (FR-27).
@@ -285,3 +290,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | Google sign-in and the saved Canvas connection (FR-50, FR-5, NFR-11) moved from Phase 2 to Phase 1, from the Team Lead; Phase 2 renamed "Dragging and sync". |
 | 2026-10-25 | Minimize and expand lists (FR-80) added to Phase 1, along with the four lists (FR-31) and width-fitting lists (FR-61); Phase 2 no longer lists them. |
 | 2026-10-25 | Refresh is manual (FR-15), from the Team Lead's review: Phase 3 tunes and verifies Refresh instead of running a background job; background sync (NFR-4) is a Phase 5 idea; D-3 and R-3 updated. |
+| 2026-10-25 | Phone support (NFR-33, NFR-36) moved from Phase 4 to Phase 5, since its UI details need working out first; the Phase 4 exit criteria now cover laptops and desktops only. From the Team Lead's review. |

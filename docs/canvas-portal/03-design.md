@@ -235,7 +235,8 @@ token.
 
 ### Keeping devices in sync (NFR-22, D-8)
 
-A student may have the board open on a laptop and a phone at once. The
+A student may have the board open on a laptop and a desktop computer at once
+(or a phone, once phones are supported in Phase 5). The
 server's copy is the only real one; each device shows a copy and keeps it
 up to date.
 
@@ -262,16 +263,16 @@ up to date.
 sequenceDiagram
     participant L as Laptop
     participant A as Backend
-    participant P as Phone
+    participant D as Desktop
 
     L->>L: Drag card to In progress (shown at once)
     L->>A: PATCH card, list = In progress
     A->>A: Save, change_seq 41 to 42
     A-->>L: 200 OK, change_seq 42
-    Note over P: Up to 30 s later, or when the phone's window is focused
-    P->>A: GET /api/board/changes?since=41
-    A-->>P: card is now in In progress, change_seq 42
-    P->>P: Move card to In progress
+    Note over D: Up to 30 s later, or when the desktop's window is focused
+    D->>A: GET /api/board/changes?since=41
+    A-->>D: card is now in In progress, change_seq 42
+    D->>D: Move card to In progress
 ```
 
 ### Assignment status
@@ -613,7 +614,7 @@ UI uses:
 | Rename a list (Phase 5) | Click the title, it becomes a text box; Enter saves, Escape cancels | FR-63 |
 | Open a card | Click, or focus it and press Enter. Until Phase 5 this opens the assignment in Canvas in a new tab (FR-26); from Phase 5 it opens the card back and the address changes to `/c/{cardId}` | FR-26, FR-67 |
 | Quick edit (Phase 5) | Pencil button (on hover on desktop, always shown on touch screens), right-click, or long press | FR-69, NFR-36 |
-| No hover-only actions | Anything a hover reveals is also visible or reachable by tap, so phones lose nothing | NFR-36 |
+| No hover-only actions (Phase 5) | Anything a hover reveals is also visible or reachable by tap, so phones lose nothing. Earlier phases avoid hover-only designs where it is free | NFR-36 |
 | Show or hide a course | Tap its button in the row under the header, or Show all / Hide all; the board updates at once. Until Phase 5 the choice is kept in this browser; from Phase 5 it is saved with the account in the background (optimistic update) | FR-78 |
 | Filter (Phase 5) | `f` or the Filter button in the course row; non-matching cards are hidden and the course row shows the filter is active | FR-72 |
 | Keyboard map (Phase 5) | Kept in one file and shown by `?`; checked against Trello's shortcut page | FR-73, NFR-31 |
@@ -687,3 +688,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | Refresh is manual (FR-15): caching and *Never wait on Canvas* no longer fetch on their own; the background job section is now *Bringing the backend in step with Canvas*, run by each Refresh; background sync is Phase 5 (NFR-4), with what leaving it out saves. |
 | 2026-10-25 | Header shows the last sync date and time (FR-13); quick edit and a new interaction row follow NFR-36 (no hover-only actions). |
 | 2026-10-25 | Minimize interaction: list state is no longer saved; dropping a card on an empty minimized list expands it. |
+| 2026-10-25 | Phones are a Phase 5 platform: the device sync example uses a laptop and a desktop, and the no-hover interaction row is marked Phase 5. |

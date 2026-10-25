@@ -76,7 +76,8 @@ E2E tests save screenshots of each screen as they run (Playwright's
 | Deployed | Chosen host (D-3) | Postgres | Real Canvas | Phase 4 manual tests |
 
 Browsers for manual passes (NFR-30): current Chrome, Firefox, Safari, and
-Edge on a laptop, plus Chrome or Safari on a phone.
+Edge on a laptop, plus Chrome or Safari on a phone once phones are
+supported (Phase 5).
 
 ## 4. Automated test coverage
 
@@ -111,7 +112,7 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | NFR-20 | Canvas down: cached data plus warning banner | API, E2E |
 | NFR-22 | Concurrency: 20 parallel moves of one card leave it in exactly one list; `changes?since=` returns every change once; two parallel board loads with a new assignment create one card; two browser sessions converge within one poll | API, E2E |
 | NFR-31 | Move a card using only the keyboard | E2E |
-| NFR-36 | At phone width with touch emulation (no hover), every control and the sync time are visible and work by tap | E2E |
+| NFR-36 (Phase 5) | At phone width with touch emulation (no hover), every control and the sync time are visible and work by tap | E2E |
 | FR-60 | Signed-in, connected user lands on the board | E2E |
 | FR-61 | The four lists are always Backlog, To do, In progress, Done; expanded lists fill the width; the board scrolls sideways only below 240 px per list | E2E |
 | FR-80 | Minimizing a list widens the others to fill the board, expanding narrows them; on each load or refresh, empty lists are minimized and the rest expanded, even if the student changed them before reloading; a minimized list shows its card count | E2E |
@@ -284,12 +285,12 @@ steps, and the expected result. Screen IDs refer to the
 
 ### TP-12 Browsers, phone, and accessibility
 
-**Checks:** NFR-30, NFR-32, NFR-33 · **Phase:** 4
+**Checks:** NFR-30, NFR-32, NFR-33 (Phase 5) · **Phase:** 4, step 2 in Phase 5
 
 | Step | Action | Expected |
 |------|--------|----------|
 | 1 | Run TP-01, TP-03, and TP-06 in Chrome, Firefox, Safari, and Edge | Same results in each |
-| 2 | On a phone, open S-4 (and S-5 from Phase 5) | Phone layout from the wireframes: one list fills the screen and swiping moves between lists |
+| 2 | Phase 5: on a phone, open S-4 and S-5 | Phone layout from the wireframes: one list fills the screen and swiping moves between lists |
 | 3 | Zoom the browser to 200% | All text readable; nothing cut off |
 | 4 | Turn on a screen reader (VoiceOver or NVDA) and go through S-4 | Every control is announced with a name |
 
@@ -418,3 +419,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | Refresh is manual (FR-15): tests check that loading never fetches and that Refresh is highlighted after an hour; TP-15 uses Refresh instead of waiting for background sync; NFR-4 test is Phase 5. |
 | 2026-10-25 | TP-05 checks the sync date and time; added an NFR-36 touch test (no hover). |
 | 2026-10-25 | FR-80 test now checks list state is set fresh on reload; TP-06 step 14 checks that dropping on an empty minimized list expands it. |
+| 2026-10-25 | Phone tests marked Phase 5: the NFR-36 touch test and TP-12 step 2; phone browsers join the manual passes in Phase 5. |

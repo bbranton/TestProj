@@ -318,9 +318,11 @@ board.
   Restore puts a card back in its old list, in its due date place.
 ```
 
-### Phone layout
+### Phone layout (Phase 5)
 
-Requirement: NFR-33. As in Trello's phone layout, one list fills the screen.
+Requirement: NFR-33. Phase 5: this sketch is a starting point, and the UI
+details are worked out before phone support is built. As in Trello's phone
+layout, one list fills the screen.
 The user swipes sideways between lists, and dots show which list is shown.
 
 ```text
@@ -521,3 +523,4 @@ flowchart TD
 | 2026-10-25 | Header legend and W-2 now show manual Refresh: no automatic fetch, Refresh highlighted when data is over an hour old (FR-15), from the Team Lead's review. |
 | 2026-10-25 | Header always shows the last sync date and time instead of a hover tooltip, from the Team Lead's review; quick edit (S-7) no longer depends on hover (NFR-36). |
 | 2026-10-25 | S-4 notes: list state is set fresh on each load, not saved; dropping a card on an empty minimized list expands it. |
+| 2026-10-25 | Phone layout marked Phase 5, a starting sketch whose UI details are still to be worked out, from the Team Lead's review. |

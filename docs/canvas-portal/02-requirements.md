@@ -158,7 +158,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-50 | The user can sign in to the portal so their board and notes are tied to them on the server. | Must | 2 |
 | FR-51 | Board and notes stored on the server appear on any device where the user signs in. | Must | 2 |
 | FR-52 | *(Removed: board and notes are on the server from the start, so there is no browser data to import.)* | n/a | n/a |
-| FR-53 | The user can export their board and notes as a JSON file. | Should | 4 |
+| FR-53 | The user can export their board and notes as a JSON file. | Could | 5 |
 | FR-54 | The user can delete all their data from the portal. | Must | 4 |
 | FR-55 | A student can connect more than one school (more than one Canvas address and token), for example a high school and a community college during dual enrollment. Courses from every school appear on the same board, and each course button and card shows which school it comes from. | Could | 5 |
 
@@ -248,3 +248,4 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | 2026-10-25 | Phase 2 is now accounts, dragging, and sync only: FR-28, FR-66 to FR-68, FR-72 to FR-74, FR-78 saving, NFR-34, and NFR-35 move to Phase 3. Added NFR-22 (sync between devices). From the Team Lead's review. |
 | 2026-10-25 | Phase 3 is now performance and Canvas sync, from the Team Lead: FR-24, FR-28, FR-40 to FR-44, FR-46, FR-66 to FR-68, FR-72 to FR-74, FR-78 saving, NFR-21, NFR-34, and NFR-35 move to Phase 5; NFR-2 moves to Phase 3 and NFR-12 to Phase 2; FR-45 reworded; added NFR-4 (Canvas changes appear within 15 minutes). Fixed broken table cells in FR-66, FR-67, FR-72 to FR-74, NFR-34, and NFR-35. |
 | 2026-10-25 | Added FR-39 (fields added, changed, or cleared in Canvas, including states going backward); FR-45 now Must, archives only after a complete refresh, and restores republished assignments; added Q-7 (cards of ended or dropped courses). From the Team Lead's review. |
+| 2026-10-25 | Export (FR-53) moved to Phase 5, from the Team Lead's review. |

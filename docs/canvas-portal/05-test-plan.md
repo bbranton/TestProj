@@ -101,7 +101,8 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | FR-44, NFR-13 | Canvas client has no non-GET method; a test fails if one is added | Unit |
 | FR-45 | Removed assignment's card is archived and its notes kept | API |
 | FR-51 | Same user, two browser sessions, see the same board | E2E |
-| FR-53, FR-54 | Export contains board and notes; delete removes every row for the user | API |
+| FR-53 (Phase 5) | Export contains the board and notes | API |
+| FR-54 | Delete removes every row for the user | API |
 | NFR-10 | Logs captured during a full test run contain no token string | API |
 | NFR-12 | User B gets `404` for every one of user A's cards and notes | API |
 | NFR-1, NFR-2 | Fixture server adds 1 second to every Canvas response: with a warm cache the board answers in under 2 seconds and refreshes in the background; a cold load of 8 courses and 200 assignments finishes in 15 seconds, with courses appearing one at a time | API, E2E |
@@ -264,7 +265,7 @@ steps, and the expected result. Screen IDs refer to the
 |------|--------|----------|
 | 1 | As A, move a card (from Phase 5, also write a note); copy the card's ID from developer tools | |
 | 2 | As B, request A's card and note IDs directly | Not found |
-| 3 | As A, export data | JSON file holds A's board and notes only |
+| 3 | *(Phase 5)* As A, export data | JSON file holds A's board and notes only |
 | 4 | As A, delete account | Signed out; signing in again starts fresh |
 
 ### TP-11 Parent (observer) token
@@ -403,3 +404,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | Added TP-14 (Canvas load timing with the real student account) and a slow-Canvas automated test for NFR-1 and NFR-2. |
 | 2026-10-25 | Phase 3 is performance and Canvas sync: TP-09 and the card back, notes, filter, label, shortcut, and archive tests move to Phase 5; TP-14 is a Phase 1 baseline and must pass in Phase 3; added an NFR-4 background refresh test. |
 | 2026-10-25 | Added TP-15 (Canvas changes over time, run as teacher), change sequence fixtures, and an automated replay test for FR-39 and FR-45, from the Team Lead's review. |
+| 2026-10-25 | Export tests (FR-53, TP-10 step 3) marked Phase 5. |

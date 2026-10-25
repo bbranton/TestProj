@@ -221,7 +221,7 @@ Requirements: FR-4, FR-53, FR-54.
 |   [ Disconnect Canvas ]                                      |
 |                                                              |
 | Your data                                                    |
-|   [ Export board and notes (.json) ]                         |
+|   [ Export board and notes (.json) ]   (Phase 5)             |
 |   [ Delete my account and all data ]   <- asks to confirm    |
 |                                                              |
 | Account                                                      |
@@ -440,7 +440,7 @@ flowchart TD
 flowchart TD
     A([S-6 Settings]) --> B{Which action?}
     B -- Disconnect Canvas --> C[Delete stored token] --> D[S-2 Connect Canvas<br/>board and notes kept]
-    B -- Export --> E[Download JSON file]
+    B -. Export, Phase 5 .-> E[Download JSON file]
     B -- Delete account --> F[Confirm: type DELETE]
     F --> G[Remove user, token, board,<br/>notes, cache] --> H[S-1 Sign in]
 ```
@@ -496,3 +496,4 @@ flowchart TD
 | 2026-10-25 | Table view (S-3) removed: no view switch in the header, S-2 opens the board, and the board takes over S-3's requirements and Canvas warning banner, from the Team Lead's review. |
 | 2026-10-25 | Card back (S-5), filter menu (S-8), board menu and archive (S-9), and notes (W-4) marked Phase 5; until then clicking a card opens it in Canvas. From the Team Lead. |
 | 2026-10-25 | W-5 now covers partial fetches, fields added or cleared, and republished assignments, from the Team Lead's review. |
+| 2026-10-25 | Export marked Phase 5 on S-6 and W-6. |

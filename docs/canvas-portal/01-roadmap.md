@@ -155,7 +155,7 @@ or wrongly archived cards.
 
 ### Phase 4: Polish and deploy
 
-- Export the board as a file (FR-53); delete my data (FR-54).
+- Delete my data (FR-54).
 - Accessibility and mobile layout pass (NFR-30 to NFR-33).
 - Deploy to the chosen host (D-3) and link it from the repo's landing page.
 
@@ -191,6 +191,7 @@ accessibility checks pass.
 - Trello-style filter menu with status filters and search, and keyboard
   shortcuts (FR-24, FR-72, FR-73).
 - Archive and restore cards, as in Trello (FR-74).
+- Export the board and notes as a file (FR-53).
 - More than one board, such as one per course or term, as in Trello (FR-76).
 - Board background choices and the board menu sidebar (FR-75).
 - More than one school per student, such as a high school and a college
@@ -265,3 +266,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | R-3 widened to slow Canvas loads, from the Team Lead's experience; Phase 1 now measures load times (TP-14) and fixes them before Phase 2. |
 | 2026-10-25 | Phase 3 is now performance and Canvas sync, from the Team Lead; the card back, notes, label colors, saved course toggles, filter menu, shortcuts, and archiving move to Phase 5. Phase 1 records a TP-14 baseline instead of meeting NFR-2. |
 | 2026-10-25 | Backend-to-Canvas sync named the hardest part of the project, from the Team Lead's review: Phase 3 lists the change cases (FR-39, FR-45, Q-7) and TP-15 in its exit criteria; added R-9. |
+| 2026-10-25 | Export (FR-53) moved from Phase 4 to Phase 5. |

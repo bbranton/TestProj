@@ -226,7 +226,7 @@ and require a signed-in session except where noted.
 | `POST /api/board/cards/{id}/notes` | Phase 5: add a note | FR-40, FR-42 |
 | `PATCH /api/notes/{note_id}` | Phase 5: change a note's text | FR-41 |
 | `DELETE /api/notes/{note_id}` | Phase 5: delete a note | FR-41 |
-| `GET /api/export` | Download board and notes as JSON | FR-53 |
+| `GET /api/export` | Phase 5: download board and notes as JSON | FR-53 |
 | `DELETE /api/me` | Delete the account and all its data | FR-54 |
 
 The backend only ever sends filtered, portal-shaped data to the frontend. It
@@ -671,3 +671,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | Added *Making Canvas loads fast*: show cached data and refresh in the background, per-call timing logs, and a fallback order (GraphQL, descriptions on demand, scheduled and tiered refresh, Planner API). |
 | 2026-10-25 | Phase 3 is performance and Canvas sync: tuning list renamed *Phase 3 tuning*, added *Keeping the backend in step with Canvas* (NFR-4); card back, notes, label, and archive endpoints marked Phase 5. |
 | 2026-10-25 | Added *What can change in Canvas* (FR-39, FR-45): one planned result per change case, the two rules behind them, and complete-fetch-only archiving. |
+| 2026-10-25 | Export endpoint marked Phase 5. |

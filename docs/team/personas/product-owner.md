@@ -33,13 +33,23 @@ When reviewing others' work:
 - [ ] Do the words match the requirements (names of screens, states, terms)?
 - [ ] For a test plan: does every requirement in the phase have a test?
 
-## Never signs off alone on
+## Decisions
 
-- Adding, removing, or changing the phase of a requirement. QA and
-  Architecture review it, and the Team Lead decides.
+**Decides:**
 
-## Hands off to
+- What the app must do and how well (requirements and their wording).
+- Which phase each requirement should go in, as a proposal to Management.
+- Acceptance: whether a finished feature does what its requirement means.
 
-- How it's built → Architecture.
-- How it looks → UI/UX.
-- Whether it can be tested → QA.
+**Does not decide, and defers to:**
+
+- Project goals, priorities, phase order, timelines, and which phase a
+  requirement lands in → Management.
+- How a requirement is built: technology, code, data, APIs → Architecture.
+- How a screen looks or flows → UI/UX.
+- How a requirement is tested, or whether a test passed → QA.
+
+**Needs the Team Lead:**
+
+- Adding, removing, or moving a requirement to another phase. QA and
+  Architecture review first.

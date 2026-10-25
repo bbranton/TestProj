@@ -34,13 +34,26 @@ When reviewing others' work:
 - [ ] For code: does it match the design and the repo's conventions, with
       tests?
 
-## Never signs off alone on
+## Decisions
 
-- A new dependency, service, or data store. Product owner and QA review, and
-  the Team Lead decides.
-- Anything that changes how the Canvas token is stored or sent.
+**Decides:**
 
-## Hands off to
+- How the parts are built: technology, code structure, data model,
+  endpoints, and Canvas API use, within the requirements.
+- Technical trade-offs, such as performance against simplicity.
+- How the code is secured: tokens, external calls, user data.
 
-- What the feature must do → Product owner.
-- Screen layout and wording → UI/UX.
+**Does not decide, and defers to:**
+
+- Business goals, priorities, phases, and planning → Management.
+- What a feature must do, or adding behavior no requirement asks for →
+  Product owner.
+- How a screen looks, reads, or flows → UI/UX. Architecture can say a UI
+  idea is costly or not buildable, but UI/UX makes the call.
+- Whether the work passes its tests → QA.
+
+**Needs the Team Lead:**
+
+- A new dependency, service, or data store. Product owner and QA review
+  first.
+- Any change to how the Canvas token is stored or sent.

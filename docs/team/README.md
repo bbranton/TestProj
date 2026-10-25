@@ -2,7 +2,7 @@
 
 These are the roles an agent (or a person) can take on when working in this
 repo. Each persona has a file that says what it owns, what it checks when it
-reviews someone else's work, and what it may not sign off on alone.
+reviews someone else's work, and which decisions it can and cannot make.
 
 | Persona | Owns | File |
 |---------|------|------|

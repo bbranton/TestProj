@@ -31,12 +31,23 @@ When reviewing others' work:
 - [ ] For a UI PR: are there screenshots of each changed page, including
       phone width?
 
-## Never signs off alone on
+## Decisions
 
-- A new screen or a change to the main flow. Product owner and Architecture
-  review, and the Team Lead decides.
+**Decides:**
 
-## Hands off to
+- What each screen looks like and how a user moves through the app.
+- Screen wording, empty, loading, and error states.
+- Accessibility and layout at each screen width.
 
-- Whether the feature is needed → Product owner.
-- Whether it can be built → Architecture.
+**Does not decide, and defers to:**
+
+- Business goals, priorities, phases, and planning → Management.
+- Whether a feature is needed or what it must do → Product owner.
+- How a screen is built, or what data and endpoints it uses →
+  Architecture.
+- Whether the UI passes its tests → QA.
+
+**Needs the Team Lead:**
+
+- A new screen or a change to the main flow. Product owner and
+  Architecture review first.

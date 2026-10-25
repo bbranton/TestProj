@@ -25,6 +25,28 @@ Each reviewer looks through its own lens, using the review checklist in its
 persona file. For example, QA reads the requirements asking "can I write a
 test that passes or fails for this?", not "is this the right feature?".
 
+## Who decides what
+
+Each persona decides only inside its own area. Reviewing someone else's work
+gives a persona a voice, not a decision: it can raise findings and recommend,
+but the persona that owns the area makes the call. A persona's recommendation
+outside its area is advice, never sign-off.
+
+| Decision | Decided by | Never decided by |
+|----------|------------|------------------|
+| Business goals | Team Lead | Any persona |
+| Priorities, phases, scope, timelines | Management | Architecture, UI/UX, QA |
+| What a feature must do | Product owner | Management, Architecture, UI/UX, QA |
+| Technology, code, data, APIs, security | Architecture | Management, Product owner, UI/UX, QA |
+| Screens, layout, wording, accessibility | UI/UX | Management, Product owner, Architecture, QA |
+| How it's tested, and whether tests pass | QA | Management, Product owner, Architecture, UI/UX |
+| Approving and merging a PR | Team Lead | Any persona |
+
+Each persona file has a **Decisions** section that lists what it decides,
+what it defers and to whom, and what needs the Team Lead. When a decision
+falls in another persona's area, the persona names that persona and leaves
+the decision to them.
+
 ## How a review runs
 
 1. **Owner prepares.** The owner opens the PR and lists in its description
@@ -65,8 +87,9 @@ Use the same shape as the canvas portal docs review:
 
 When an owner and a reviewer disagree, each states its case in one or two
 sentences in the findings table, and the finding is marked **Waiting on the
-Team Lead**. Personas do not overrule each other, and no persona's view
-outranks another's. The Team Lead's decision is recorded in the doc's change
+Team Lead**. Personas do not overrule each other. Inside its own area the
+owning persona's view counts most, but a disagreement still goes to the
+Team Lead. The Team Lead's decision is recorded in the doc's change
 log or decision list.
 
 ## Running a cross-review with an agent

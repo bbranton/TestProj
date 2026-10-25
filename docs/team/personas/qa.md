@@ -33,13 +33,24 @@ When reviewing others' work:
 - [ ] For code: are there tests for the requirement IDs it claims, and does
       CI pass?
 
-## Never signs off alone on
+## Decisions
 
-- Calling a phase done. Management and Product owner review, and the Team
-  Lead decides.
-- Removing or weakening a test. A failing test is fixed, never skipped.
+**Decides:**
 
-## Hands off to
+- How each requirement is tested and what counts as pass or fail.
+- Whether a test passed, and whether a requirement is testable as written.
+- Whether CI coverage is enough for the current phase.
 
+**Does not decide, and defers to:**
+
+- Business goals, priorities, phases, and planning → Management. QA
+  reports whether exit criteria are met; Management and the Team Lead
+  decide what to do about it.
 - What the right behavior is → Product owner.
-- Why the code behaves that way → Architecture.
+- How the code is built or fixed → Architecture.
+- How a screen should look → UI/UX.
+
+**Needs the Team Lead:**
+
+- Calling a phase done. Management and Product owner review first.
+- Removing or weakening a test. A failing test is fixed, never skipped.

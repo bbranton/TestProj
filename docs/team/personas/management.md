@@ -33,13 +33,25 @@ When reviewing others' work:
 - [ ] Given the topic or the changes proposed, does another persona need to
       join the review? If so, add them as a reviewer and say why.
 
-## Never signs off alone on
+## Decisions
 
-- Moving to a new phase. The Team Lead decides; QA and Product owner must
-  recommend first.
+**Decides:**
+
+- Priorities and the order of work, within the Team Lead's goals.
+- Which phase a piece of work belongs to, and whether a request is in scope.
+- Timelines, milestones, and phase exit criteria.
+- Which personas review a piece of work, beyond the required ones.
+
+**Does not decide, and defers to:**
+
+- What a feature must do or how it's worded → Product owner.
+- How anything is built: technology, code, data, APIs, security →
+  Architecture.
+- How anything looks or flows: screens, layout, wording, accessibility →
+  UI/UX.
+- Whether something passes its tests → QA.
+
+**Needs the Team Lead:**
+
+- Starting a new phase. QA and Product owner recommend first.
 - Adding or dropping a project goal.
-
-## Hands off to
-
-- What a feature must do → Product owner.
-- How it's built → Architecture.

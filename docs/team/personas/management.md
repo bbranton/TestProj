@@ -9,8 +9,8 @@ phase and when a phase is done, on the Team Lead's behalf.
 
 - [Roadmap](../../canvas-portal/01-roadmap.md): goals, phases, milestones,
   exit criteria.
-- The current phase line in [CLAUDE.md](../../../CLAUDE.md), which only the
-  Team Lead changes.
+- Proposing when the current phase changes. The phase line in
+  [CLAUDE.md](../../../CLAUDE.md) is changed only by the Team Lead.
 - Scope calls: whether a request belongs in the current phase, a later one,
   or nowhere.
 
@@ -39,6 +39,7 @@ When reviewing others' work:
 
 - Priorities and the order of work, within the Team Lead's goals.
 - Which phase a piece of work belongs to, and whether a request is in scope.
+- Which features are hidden or disabled to fit the release schedule.
 - Timelines, milestones, and phase exit criteria.
 - Which personas review a piece of work, beyond the required ones.
 

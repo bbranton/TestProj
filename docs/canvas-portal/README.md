@@ -12,8 +12,8 @@ and a change log at the bottom, so it can grow as the project does.
 | 1 | [Roadmap](01-roadmap.md) | What gets built, in what order, and how we know a phase is done | Draft |
 | 2 | [Requirements](02-requirements.md) | What the app must do, and how well | Draft |
 | 3 | [Design](03-design.md) | How the parts fit together: frontend, backend, data, Canvas API | Draft |
-| 4 | Wireframes and workflows (`04-wireframes-workflows.md`) | What each screen looks like and how a user moves through it | Not started |
-| 5 | Test procedures (`05-test-plan.md`) | How each requirement is checked, step by step | Not started |
+| 4 | [Wireframes and workflows](04-wireframes-workflows.md) | What each screen looks like and how a user moves through it | Draft |
+| 5 | [Test procedures](05-test-plan.md) | How each requirement is checked, step by step | Draft |
 
 ## How these documents work together
 
@@ -41,7 +41,10 @@ flowchart LR
   The PR description says what changed and why.
 - A pull request that changes anything a user sees must include screenshots
   of the changed screens in the PR description (before and after when an
-  existing screen changes). The test procedures will make this a review step.
+  existing screen changes), following the steps in the repo's
+  [CLAUDE.md](../../CLAUDE.md). The [test procedures](05-test-plan.md) make
+  this a review step.
+- The project owner is called "Team Lead" in the repo; no personal names.
 - Open decisions are marked **DECISION** with an ID (`D-1`, `D-2`, ...) and are
   collected in the roadmap until they are settled.
 

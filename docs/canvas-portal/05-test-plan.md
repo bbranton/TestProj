@@ -124,20 +124,22 @@ checks more than one phase's behavior says which part comes later.
 | 1 | FR-13 | The header shows "Synced" with the date and time of the last complete Refresh; an incomplete Refresh leaves it unchanged | E2E |
 | 1 | FR-14, FR-15 | Loading the board with saved data makes no Canvas call, however old the data; the first ever load fetches; Refresh fetches; data over an hour old comes back flagged so the frontend highlights Refresh | API, E2E |
 | 1 | FR-16 | Fixture with one slow course and one that times out: progress reports each course's state in order; the rate-limit fixture shows a course waiting on the rate limit, then done; the run ends incomplete, the saved data is unchanged, and no error text holds the token; the log is still returned after the run ends; a second `POST /api/refresh` while one is running joins it instead of starting another; rate-limit retries stop after 5 tries and the course is marked failed; after a server restart, a run left *running* is marked incomplete | API, E2E |
+| 1 | FR-20, NFR-20 | Board messages: the first load still running, a failed first load with Retry refresh, no active courses, and courses with no assignments each show their message instead of an empty board | E2E |
+| 1 | FR-1, FR-2, FR-6 | S-2 shows each of its messages: none on first connect, saved token rejected, entered token rejected, and address unreachable or not `https` | E2E |
 | 1 | FR-21, FR-38 | Sort order: soonest first, no-due-date last, ties by name; applies to every list | Unit |
 | 1 | FR-22 | Due dates show in the browser's time zone, including across a daylight saving change (Playwright `timezoneId`); the override fixture shows the student's date; each card shows the name, course, due date, points, and status | Unit, E2E |
 | 1 | FR-23 | Each Canvas `workflow_state` maps to its label, and the late, missing, and excused flags show as tags, including together with a state | Unit |
 | 1 | FR-26 | Clicking a card opens the assignment's Canvas page in a new tab | E2E |
 | 1 | FR-31, FR-34 | The first complete Refresh puts every assignment in Backlog; after a later complete Refresh, a new fixture assignment appears in Backlog in its due date place | API |
 | 1 | FR-38 | Changing a fixture assignment's due date moves its card to the new place in the same list | API |
-| 1 | FR-50 | Without a session, every `/api/` endpoint except the sign-in ones returns `401`; the Google callback rejects a wrong `state` value; the session cookie is `HttpOnly`, `Secure`, and `SameSite=Lax`; signing out ends the session | API |
+| 1 | FR-50 | Without a session, every `/api/` endpoint except the sign-in ones returns `401`; the Google callback rejects a wrong `state` value; the session cookie is `HttpOnly`, `Secure`, and `SameSite=Lax`; a session survives closing the browser; signing out ends the session | API |
 | 1 | FR-60 | Not signed in shows S-1; signed in but not connected shows S-2; signed in and connected lands on the board; in Phase 1 cards can't be dragged | E2E |
 | 1 | FR-61 | The four lists are always Backlog, To do, In progress, Done; expanded lists fill the width; the board scrolls sideways only below 240 px per list, and dragging empty background scrolls it | E2E |
 | 1 | FR-65 | Due badge is green for Submitted or Graded, red for Missing, plain otherwise; red wins when an assignment is both Missing and Graded | Unit, E2E |
 | 1 | FR-66 | Each course gets a palette color the first time it appears, the same on its button and its cards, and keeps it after a reload and in a second session | API, E2E |
 | 1 | FR-78 | Tapping a course button hides and shows its cards; Show all and Hide all; hidden cards keep their place; the choice survives a reload in the same browser (from Phase 5, also a second session) | E2E |
 | 1 | FR-80 | Minimizing a list widens the others to fill the board, expanding narrows them; on each load or Refresh, empty lists are minimized and the rest expanded, even if the student changed them before reloading; a minimized list shows its card count | E2E |
-| 1 | NFR-1 | Fixture server adds 1 second to every Canvas response: with saved data the board is usable in under 2 seconds and makes no Canvas call | E2E |
+| 1 | NFR-1 | With the 8-course, 200-assignment fixture saved and the fixture server adding 1 second to every Canvas response, the board is usable in under 2 seconds and makes no Canvas call | E2E |
 | 1 | NFR-10 | Logs, error messages, API responses, and page addresses captured during a full test run contain no token string | API, E2E |
 | 1 | NFR-11 | The stored connection row doesn't hold the token in plain text, and it decrypts only with the key from the environment | API |
 | 1 | NFR-12 | Two users with different fixtures: every endpoint returns only the signed-in user's connection, courses, assignments, board, and Refresh log; from Phase 2, requests naming the other user's card IDs return `404` | API |
@@ -232,7 +234,7 @@ student works).
 | Step | Action | Expected |
 |------|--------|----------|
 | 1 | On S-2, enter a made-up token | "Canvas did not accept this token"; form keeps the address |
-| 2 | Enter an address that isn't a Canvas site | "Couldn't reach that Canvas address"; form keeps what was typed |
+| 2 | Enter an address that isn't a Canvas site, then one that starts with `http://` | Each is refused with its S-2 message; form keeps what was typed |
 | 3 | Connect with a real token; from Phase 2, move one card (from Phase 5, also write a note) | Connected (from Phase 2, the move is saved) |
 | 4 | In Canvas, delete that token; in the portal select Refresh | S-2 with the expired-token message |
 | 5 | Reconnect with a new token | The board is back as it was; from Phase 2 the moved card is still in its list (from Phase 5, with its note) |
@@ -279,7 +281,7 @@ sandbox with its test student.
 |------|--------|----------|
 | 1 | Select Refresh so data is saved | Header shows "Synced" with the current date and time |
 | 2 | Cut the backend off from Canvas, for example by stopping the recorded-data server or blocking the Canvas address on the backend's machine; select Refresh | Warning banner; the board still shows the last data; the "Synced" time doesn't change |
-| 3 | Open the progress panel (S-10) from the "Synced" time | Each course shows as failed with the reason; the summary says the previous data was kept and offers Retry refresh |
+| 3 | Open the progress panel (S-10) from the banner's Details link | Each course shows as failed with the reason; the summary says the previous data was kept and offers Retry refresh |
 | 4 | Close S-10, then open it again from the "Synced" time | The same log is shown |
 | 5 | Restore the connection; select Retry refresh | The summary says what was synced; the banner goes away; the "Synced" time updates |
 | 6 | Make the recorded data answer one course with `403 Rate Limit Exceeded` a few times; select Refresh and open S-10 | That course shows as waiting on a Canvas rate limit, then done; the Refresh completes |
@@ -477,6 +479,7 @@ assignments with no due date; a second device.
 | 7 | Minimize Backlog | It becomes a strip with its title and card count; To do widens to fill the board |
 | 8 | Reload | Back to step 1: Backlog expanded, the empty lists minimized |
 | 9 | Open the board on the second device | Each course has the same color as on the first device |
+| 10 | Connect the portal as the sandbox's test student after removing them from every course, then after adding them to a course with no assignments | The board says there are no active courses, then that there are no assignments, instead of showing empty lists |
 
 ### TP-17 Deployed app
 
@@ -557,4 +560,4 @@ TP-14 timings go in their own table, one row per run:
 | 2026-10-25 | Whole-set review: TP-04 renamed to match its Phase 1 steps, TP-10 starts in Phase 1 with NFR-12, and the unit test example says status mapping. |
 | 2026-10-25 | TP-07 (keyboard only), the NFR-31 and FR-73 automated tests, and the TP-13 shortcut step removed; TP-13 steps renumbered. From the Team Lead's review: keyboard actions are not a requirement. |
 | 2026-10-25 | FR-16 progress test; TP-05 step 2a checks the progress panel on failure; TP-14 reads times from the panel and uses the NFR-2 target. |
-| 2026-10-25 | In-depth QA review after PR #3: added *Procedures by phase* with entry and exit criteria, a Phase column in the coverage table, and failure severity; added Phase 1 tests for FR-1 address checks, FR-4, FR-5, FR-13, FR-20, FR-22 (time zone, override, points and status on cards), FR-26, FR-50, FR-60, FR-66, NFR-10, NFR-11, NFR-14, and NFR-41, Phase 2 tests for NFR-3 and FR-80 drops, and an NFR-2 row of its own; FR-16 test covers rate-limit waits, joining a running Refresh, retry limits, and stuck runs; concurrency tests also run on Postgres; new fixtures; TP-01 signs in, disconnects, and reconnects; the FR-65 test checks that red wins over green; TP-03 checks points and the override open check, and clicks the card instead of a missing ↗; TP-04 puts Phase 1 steps first and checks reload; TP-05 uses Retry refresh and a rate-limit step; TP-08 no longer needs Phase 5 notes or the Archived view; TP-09 drops Ctrl+Enter; TP-10, TP-12, and TP-13 mark their phases correctly (NFR-30 is Phase 1); TP-14 uses Refresh and a timing table; added TP-16 (read-only board, Phase 1) and TP-17 (deployed app, Phase 4); accessibility tests start in Phase 4; fixture path matches the repo; "column" now "list". |
+| 2026-10-25 | In-depth QA review after PR #3: added *Procedures by phase* with entry and exit criteria, a Phase column in the coverage table, and failure severity; added Phase 1 tests for FR-1 address checks, FR-4, FR-5, FR-13, FR-20, FR-22 (time zone, override, points and status on cards), FR-26, FR-50, FR-60, FR-66, NFR-10, NFR-11, NFR-14, and NFR-41, Phase 2 tests for NFR-3 and FR-80 drops, and an NFR-2 row of its own; FR-16 test covers rate-limit waits, joining a running Refresh, retry limits, and stuck runs; concurrency tests also run on Postgres; new fixtures; TP-01 signs in, disconnects, and reconnects; the FR-65 test checks that red wins over green; TP-03 checks points and the override open check, and clicks the card instead of a missing ↗; TP-04 puts Phase 1 steps first and checks reload; TP-05 uses Retry refresh and a rate-limit step; TP-08 no longer needs Phase 5 notes or the Archived view; TP-09 drops Ctrl+Enter; TP-10, TP-12, and TP-13 mark their phases correctly (NFR-30 is Phase 1); TP-14 uses Refresh and a timing table; added TP-16 (read-only board, Phase 1) and TP-17 (deployed app, Phase 4); accessibility tests start in Phase 4 and check only screens that exist; tests for board messages, S-2 messages, and an empty account (TP-16 step 10); fixture path matches the repo; "column" now "list". |

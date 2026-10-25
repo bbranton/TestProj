@@ -32,7 +32,7 @@ gantt
     section Keep current
     Phase 3 Performance and Canvas sync :p3, after p2, 28d
     section Harden
-    Phase 4 Polish and deploy        :p4, after p3, 21d
+    Phase 4 Polish and publish       :p4, after p3, 21d
     section Later
     Phase 5 Future features          :p5, after p4, 28d
 ```
@@ -42,14 +42,17 @@ when its exit criteria are met. Phase 0 is done. The current phase is named in
 the repo's [CLAUDE.md](../../CLAUDE.md).
 
 Each phase ends with something a student can use, so the project is worth
-having even if it stops after any phase.
+having even if it stops after any phase. From Phase 1 on, each phase also
+ends with a private deploy to a free test host (D-3), so deploy, backup, and
+restore problems show up early. Only listed Google test users can sign in
+there until Phase 4 publishes the app.
 
 | Phase | What a student can do afterward | Goals |
 |-------|---------------------------------|-------|
-| 1 | Sign in anywhere and see everything due across all courses on one board | G-1, G-2, G-5 |
+| 1 | Sign in anywhere (as a listed test user on the private deploy) and see everything due across all courses on one board | G-1, G-2, G-5 |
 | 2 | Organize that board by dragging cards, and see the same board on every device | G-3, G-4 |
 | 3 | Trust that a Refresh is quick and that the board matches Canvas | G-1 |
-| 4 | Use it as a deployed site, without the Team Lead running it locally | All |
+| 4 | Use it as a published site: any student can sign in, not only listed test users | All |
 | 5 | Ideas only; each is planned into a phase when the Team Lead picks it | |
 
 ## 3. Phases in detail
@@ -90,6 +93,10 @@ The smallest thing that is useful: connect, then see everything that's due.
   check that a token from it works. It is the safe place to record Canvas
   responses for the test fixtures, and the Phase 3 change tests (TP-15)
   need it.
+- Before step 6: create the free Koyeb and Neon accounts for the test
+  deploy (D-3), add the test host's address as a redirect URI on the Google
+  client, and add the deploy and backup secrets to GitHub Actions. GitHub
+  Actions is a new place secrets live, so the Team Lead sets them.
 
 **Before step 2 starts:** the Team Lead decides how the Canvas token is
 stored and sent, which the review protocol reserves for the Team Lead. The
@@ -122,7 +129,10 @@ such as encrypting tokens with Fernet (a new dependency).
   minimized, so in Phase 1 Backlog fills the board (FR-61, FR-80). Moving
   cards between lists comes in Phase 2.
 - With saved data the board is usable within 2 seconds (NFR-1), and it
-  works in current Chrome, Firefox, Safari, and Edge (NFR-30).
+  works in current Chrome, Firefox, Safari, and Edge (NFR-30). On the free
+  test host, NFR-1 is measured once the server is awake: the first load
+  after an idle hour can take a few seconds longer while it wakes. NFR-1 is
+  checked on the Phase 4 host.
 - Security from the first stored token: tokens never appear in logs,
   errors, or addresses; each user sees only their own data; only Canvas
   read calls; no trackers (NFR-10, NFR-12 to NFR-14).
@@ -133,6 +143,16 @@ such as encrypting tokens with Fernet (a new dependency).
   future feature.
 - Clear error messages for a bad token, an expired token, or Canvas being
   unreachable (FR-6, NFR-20).
+- A private deploy to the free test host (D-3): the backend ships as a
+  container on Koyeb's free instance, which also serves the built frontend,
+  with Neon's free Postgres in the same region. It runs over HTTPS on the
+  host's default address (NFR-11), with the Google client secret, the token
+  encryption key, and the session key in the host's environment settings,
+  never in the repo or the build. It runs as a single backend
+  instance. CI deploys it, and a bad deploy can be rolled back to the last
+  good one. A nightly GitHub Actions job saves an encrypted
+  `pg_dump`, kept for 30 days, and a restore into a spare Neon branch has
+  been tried once.
 - Measure how long a full Canvas load takes with the Team Lead's real
   student account and record it as a baseline (TP-14). Tuning is Phase 3; see
   the design's [Making Canvas loads fast](03-design.md#making-canvas-loads-fast-nfr-1-nfr-2-r-3).
@@ -152,7 +172,10 @@ pull requests, each one usable on its own:
    FR-61, FR-65, FR-66, FR-78, FR-80, NFR-34), with `BOARD`, `LIST`,
    `CARD`, and `COURSE_LABEL`.
 5. The Phase 1 checks: NFR-1, NFR-14, NFR-30, the TP-14 baseline, and the
-   manual test pass. Milestone M2.
+   manual test pass.
+6. The private test deploy, with CI deploys, rollback, and the nightly
+   backup. It goes live only after step 5's security checks pass, and with
+   the Team Lead's OK. Milestone M2.
 
 Each step adds only the tables it uses, through a migration, so each pull
 request stays small.
@@ -166,7 +189,9 @@ assignments Canvas shows. CI is green. These pass:
 - TP-10 step 2, for user A's cards, Canvas data, and Refresh logs
   (NFR-12).
 - TP-14 has a recorded baseline, and its steps 3 and 4 pass (NFR-1,
-  FR-15).
+  FR-15). Step 3 is measured locally or on the awake test deploy.
+- The test deploy loads only over HTTPS, a listed test user can sign in
+  there, and a rollback and a backup restore have each been tried once.
 
 ### Phase 2: Dragging and sync
 
@@ -188,6 +213,8 @@ and drop library is chosen (design, section 2).
   FR-51).
 - Sync: a move made on one device appears on the user's other open devices
   within 30 seconds, and no card is ever lost or duplicated (NFR-22, D-8).
+  A tab stops polling while it is hidden, so the free database can sleep
+  and stay within its monthly compute hours (D-3, R-15).
 - Canvas merge: new assignments land in *Backlog*, cards are matched by
   Canvas ID, and they move only when the student drags them (FR-34, FR-35).
 
@@ -199,7 +226,9 @@ for NFR-22 pass, and the drag steps of the Trello comparison review (TP-13
 steps 2 and 3) pass. TP-08 steps 2 and 3 pass (FR-34, FR-35: a renamed
 assignment and a submitted one stay in their list), leaving out step 1's
 note. The NFR-3 timing test passes. It is still to be added to the test
-plan. CI is green.
+plan. CI is green. The phase is deployed to the test host with the Team
+Lead's OK: a backup is taken first, and the migration is tried on a copy (a
+Neon branch) before the live database.
 
 ### Phase 3: Performance and Canvas sync
 
@@ -257,20 +286,22 @@ Canvas*) and a test (TP-15).
   rate-limit errors and no lost, duplicated, or wrongly archived cards.
   Each day's check (card count against Canvas, plus any archived cards) is
   recorded in the test plan's results log.
+- The phase is deployed to the test host with the Team Lead's OK, taking a
+  backup first and trying the migration on a copy, as in Phase 2.
 
-### Phase 4: Polish and deploy
+### Phase 4: Polish and publish
 
-**Before it starts:** D-3 (hosting, including the database and the domain) is decided, with its cost.
+**Before it starts:** the Phase 4 half of D-3 (the production host, its
+database, and the domain) is decided, with its cost.
 
 - Delete my data (FR-54).
 - Accessibility pass for contrast, labels, and focus (NFR-32), and a final
   check that every browser still works (NFR-30).
-- Deploy to the chosen host (D-3), over HTTPS (NFR-11), and link it from
-  the repo's landing page. The Google client secret, the token encryption
-  key, and the session key are set in the host's environment settings,
-  never in the repo or the build. Deploys run from CI or the host's git
-  integration, and a bad deploy can be rolled back to the last good one.
-  Postgres is backed up on a schedule, and a restore has been tried once.
+- Move from the free test host to the production host chosen in D-3, on
+  the app's domain, and link it from the repo's landing page. The deploy
+  setup from Phase 1 carries over: HTTPS (NFR-11), secrets in the host's
+  environment settings, CI deploys with rollback, and scheduled backups.
+  NFR-1 is checked here without the test host's wake-up allowance.
 - A home page and a privacy policy page on the app's domain, which Google
   requires before it publishes the sign-in app.
 - Publish the Google OAuth client out of "testing" mode. Until then only
@@ -287,7 +318,8 @@ Canvas*) and a test (TP-15).
 - A deployed smoke test passes. It is still to be added to the test plan,
   and it checks that the site loads only over HTTPS and that a Google
   account that isn't a test user can sign in.
-- A rollback and a backup restore have each been tried once.
+- A rollback and a backup restore have each been tried once on the
+  production host, and TP-14 step 3 passes there (NFR-1).
 
 ### Phase 5: Later ideas (not committed)
 
@@ -341,10 +373,10 @@ Canvas*) and a test (TP-15).
 |----|-----------|-------|------------|--------|
 | M0 | Empty app builds in CI | 0 | Tooling works end to end | Reached 2026-10-25 |
 | M1 | First real assignment list | 1 | Canvas connection works: after step 3 of Phase 1's order of work, the Team Lead's real courses and assignments come back from a Refresh | |
-| M2 | Viewer complete | 1 | MVP usable day to day: Phase 1's exit criteria are met | |
+| M2 | Viewer complete | 1 | MVP usable day to day on the private test deploy: Phase 1's exit criteria are met | |
 | M3 | Dragging saves and syncs | 2 | Core organizing feature works on every device | |
 | M4 | Fast loads and Canvas sync | 3 | Board stays current without waiting on Canvas | |
-| M5 | Deployed | 4 | Usable from any laptop or desktop browser | |
+| M5 | Published | 4 | Any student can sign in and use it from any laptop or desktop browser | |
 
 ## 5. Open decisions
 
@@ -356,7 +388,7 @@ through and kept for the record.
 |----|----------|---------|----------------|-----------|
 | ~~D-1~~ | ~~Frontend framework~~ | **React** (largest ecosystem, most tutorials, mature drag-and-drop libraries such as dnd-kit) or **Svelte** (less code, closer to QML's declarative feel, smaller community) | **Decided** (Team Lead, 2026-10-25): React, with TypeScript and Vite. React has the most Trello-style board examples and the best support from Pragmatic drag and drop. | Done |
 | ~~D-2~~ | ~~Where notes and board layout are stored~~ | **Browser local storage** (no accounts, works offline, but tied to one browser and lost if site data is cleared) or **server database** (follows the user between devices, but needs portal sign-in and more security work) | **Decided** (Team Lead, 2026-10-25): server database. The user should be able to sign in from anywhere and see their saved state. | Done |
-| D-3 | Hosting, including where the Postgres database lives and the app's domain | Frontend on **GitHub Pages**, or served by the backend. Backend and its Postgres database on **Render** or **Fly.io**, or the database on a separate managed service. Serverless functions (such as Vercel's) are ruled out: a Refresh runs as a background task for up to several minutes (FR-16), and serverless functions stop when the request ends. | Decide before Phase 4; run locally until then. The sign-in cookie works best when the frontend and backend share one site, so the backend can also serve the built frontend. The decision also names the domain: Google's publishing review needs a home page, a privacy policy, a verified domain, and the final redirect address, and a host's shared default domain may not be accepted. Free tiers may not keep the app and its data up (free databases can expire, and free services sleep), so hosting and a custom domain may cost a few dollars a month, which needs the Team Lead (R-13). If background sync (Phase 5) is added later, the host must also run scheduled jobs. DevOps makes the final recommendation. | Before Phase 4 |
+| D-3 | Hosting, including where the Postgres database lives and the app's domain | **Test deploys (Phases 1 to 3):** Koyeb free, Render free, Oracle Always Free, Google Cloud Run, or a paid host (see the DevOps comparison in PR #4). **Phase 4:** a production host and database, such as Render or Koyeb paid with managed Postgres, plus a domain. Serverless functions (such as Vercel's) are ruled out: a Refresh runs as a background task for up to several minutes (FR-16), and serverless functions stop when the request ends. | **Test deploys decided** (Team Lead, 2026-10-25): $0 on Koyeb's free instance plus Neon's free Postgres, in the same region, with Render free as the fallback. The backend serves the built frontend, so the sign-in cookie stays on one site. Conditions: the database is capped at its smallest size, health checks don't touch it, hidden tabs stop polling, and a nightly encrypted backup runs from GitHub Actions. NFR-1 is measured once the server is awake. **Phase 4 still open:** the production host, database, and domain. Google's publishing review needs a home page, a privacy policy, a verified domain, and the final redirect address, and a host's shared default domain may not be accepted. DevOps priced paid hosting at about $13 to $14 a month plus a domain, which needs the Team Lead (R-13). If background sync (Phase 5) is added later, the host must also run scheduled jobs. DevOps makes the recommendation. | Test deploys: done. Production: before Phase 4 |
 | ~~D-4~~ | ~~How users connect to Canvas~~ | **Personal access token** (works today, no school involvement, user must create and paste it) or **OAuth** (smooth sign-in, needs a developer key from the school's Canvas admin) | **Decided** (Team Lead, 2026-10-25): personal access token. OAuth is a Phase 5 idea if a school will issue a key. | Done |
 | ~~D-5~~ | ~~Who the app is for~~ | Just the Team Lead, a few friends, or any student at any school | **Decided** (Team Lead, 2026-10-25): any student at any school (the Canvas address is a setting), tested with the Team Lead's school. | Done |
 | ~~D-6~~ | ~~Backend language~~ | **Python + FastAPI** (readable, quick to write, good for learning) or **Node.js** (same language as the frontend) | **Decided** (Team Lead, 2026-10-25): Python + FastAPI. | Done |
@@ -387,7 +419,9 @@ Lead.
 | R-10 | Scope grows faster than it is built: ideas and fixes pile into the current phase, and pull requests touch many documents at once | Phases never finish, and reviews get too big to check | High | High | Management | Section 7: new ideas go to Phase 5 by default, a phase's scope is fixed once it starts, and each pull request covers one document or one feature. |
 | R-11 | One person carries every decision, every review, and every test with real accounts | Work stalls while it waits on the Team Lead | High | Medium | Management | Section 8 says which tasks need the Team Lead. Decisions are asked for before the phase that needs them ("Before it starts" in each phase), and CI uses recorded Canvas data, so only the manual passes need a real token. |
 | R-12 | Google's review for publishing the sign-in app takes longer than expected, or needs things that aren't ready | Phase 4 can't let in students who aren't test users | Medium | Medium | DevOps | The app asks only for `openid email profile`, which needs the lightest review. D-3, including the domain and redirect address, is decided before Phase 4 starts, and Phase 4 adds the home page and privacy policy Google asks for. |
-| R-13 | Hosting costs money: free tiers may not keep the app and its database up, and a custom domain is paid | A monthly bill the Team Lead didn't plan for, or a Phase 4 delay | Medium | Low | DevOps | DevOps prices the options in its D-3 recommendation, well before Phase 4, so the Team Lead can decide on the cost early. |
+| R-13 | Hosting costs money from Phase 4: production hosting and its database run about $13 to $14 a month, and a custom domain is paid | A monthly bill the Team Lead didn't plan for, or a Phase 4 delay | Medium | Low | DevOps | Test deploys in Phases 1 to 3 are $0 (D-3). DevOps prices the production options in its D-3 recommendation, well before Phase 4, so the Team Lead can decide on the cost early. |
+| R-14 | Real Canvas tokens sit on an internet-facing server from Phase 1, not only on the Team Lead's computer | A break-in exposes testers' Canvas accounts | Low | High | DevOps | The test deploy goes live only after Phase 1's security checks pass (NFR-10 to NFR-14); the Google app stays in testing mode with a short list of test users; secrets live only in the host's settings and GitHub Actions; backups are encrypted. Until FR-54 ships in Phase 4, the Team Lead deletes a tester's data by hand on request. |
+| R-15 | A free tier changes or runs out: Koyeb ends or limits its free instance, or the database uses up Neon's monthly compute hours and is suspended until next month | The test deploy goes down until it moves or the month ends | Medium | Low | DevOps | The backend ships as a container, with the database outside it, so moving to Render free (the fallback) means changing the deploy target and a few settings. Hidden tabs stop polling, nothing pings the app to keep it awake, and the database is capped at its smallest size. The nightly backup means Neon never holds the only copy. |
 
 ## 7. Scope control
 
@@ -416,7 +450,7 @@ The plan has grown quickly, so these rules keep each phase finishable:
 
 | Who | Does |
 |-----|------|
-| Team Lead | Has the final say on every decision and disagreement; decides open decisions and questions; approves every roadmap and scope change; confirms each pull request's reviewers, and approves and merges every pull request; runs the manual test procedures that need real Canvas accounts or the teacher sandbox; sets up the Google and Canvas accounts in each phase's prerequisites; changes the current phase in CLAUDE.md. |
+| Team Lead | Has the final say on every decision and disagreement; decides open decisions and questions; OKs each phase's test deploy; approves every roadmap and scope change; confirms each pull request's reviewers, and approves and merges every pull request; runs the manual test procedures that need real Canvas accounts or the teacher sandbox; sets up the Google and Canvas accounts in each phase's prerequisites; changes the current phase in CLAUDE.md. |
 | Team personas (Claude) | Management, Product and QA, Architecture, UI/UX, Developer, and DevOps, as described in the [team README](../team/README.md) and the [review protocol](../team/review-protocol.md). Each one writes the documents and code it owns and reviews others' work when the Team Lead confirms it, in pull requests limited to the current phase; recommends but never approves or merges; lists the requirement IDs each pull request implements; brings anything outside the current phase to the Team Lead instead of building it. |
 
 ## Change log
@@ -464,3 +498,4 @@ The plan has grown quickly, so these rules keep each phase finishable:
 | 2026-10-25 | Risks table gains Likelihood, Impact, and Owner columns, with an owner persona for each risk, and Management reviews it at every phase boundary; section 8 names the team personas instead of a single developer. This matches the Management persona's ownership of the risk list. |
 | 2026-10-25 | Aligned with the team personas and review protocol: sections 6 to 8 say which persona makes each call and what needs the Team Lead (scope calls, phase done, accepted risks, reviewers); D-3 and D-8 name the persona that recommends them; links point to the team docs. |
 | 2026-10-25 | Cross-review by Product and QA, Architecture, and DevOps: Phase 1 lists the token decisions needed before step 2, and its order of work names the tables and IDs for each step; Phases 1 to 4 name the exact test steps their exit criteria need, including tests still to be added (NFR-3, joining a running Refresh, a deployed smoke test); TP-08 moves to Phase 2's exit; the GraphQL call is in Phase 3's "Before it starts"; Phase 4 adds secrets, rollback, backups, and the pages Google requires; D-3 covers the database and domain and drops Vercel; R-1, R-2, R-3, R-9, and R-12 updated, and R-13 (hosting cost) added. |
+| 2026-10-25 | Deploy at the end of every phase, from the Team Lead: Phases 1 to 3 end with a private deploy to a free test host (Koyeb free plus Neon free, decided in D-3), with HTTPS, secrets, CI deploys and rollback, and a nightly encrypted backup set up in Phase 1 (new step 6 and exit criterion). NFR-1 is measured once the test server is awake and checked on the Phase 4 host. Phase 2 pauses polling in hidden tabs. Phase 4 becomes "Polish and publish" and M5 "Published". R-13 now starts in Phase 4; added R-14 (tokens on a live server from Phase 1) and R-15 (a free tier changes or runs out). |

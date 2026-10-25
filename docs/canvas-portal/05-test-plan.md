@@ -7,6 +7,12 @@ This document says how we check that the portal meets its
 request. Manual procedures are run before a phase is called done, and their
 results are recorded in section 7.
 
+Like the requirements, tests are built with their phase. Write the automated
+tests listed for the current phase (the repo's [CLAUDE.md](../../CLAUDE.md)
+names it), and run the manual procedures listed for it in
+[Procedures by phase](#procedures-by-phase). Tests marked for a later phase
+are planned here so nothing is forgotten, but are not written early.
+
 ## 1. Test levels
 
 | Level | What it checks | Tool | Runs |
@@ -14,36 +20,49 @@ results are recorded in section 7.
 | **Unit** | One function on its own, such as mapping Canvas status fields or card ordering | pytest (backend); Vitest (frontend) | Every PR, in CI |
 | **API** | A backend endpoint end to end, with a test database and recorded Canvas responses | pytest + FastAPI test client | Every PR, in CI |
 | **End-to-end (E2E)** | A real browser clicking through screens against a running backend with recorded Canvas data | Playwright | Every PR, in CI |
-| **Accessibility** | Contrast, labels, focus | axe-core inside Playwright, plus a manual check | Every PR (automated); each phase (manual) |
-| **Manual, live Canvas** | Real accounts with the Team Lead's student and parent tokens | A person following section 5 | Before each phase is done |
+| **Accessibility** | Contrast, labels, focus (NFR-32) | axe-core inside Playwright, plus a manual check | From Phase 4: every PR (automated) and each phase sign-off (manual) |
+| **Manual, live Canvas** | Real accounts: the Team Lead's student token, the Canvas teacher sandbox (a roadmap Phase 1 prerequisite), and from Phase 5 the parent token | A person following section 5 | Before each phase is done |
 
 The Qt parallel: unit tests are like Qt Test cases on a single class, and E2E
 tests are like Squish driving the whole app.
 
 ### Recorded Canvas data
 
-CI never uses a real token (A-3). Instead, `backend/tests/fixtures/` holds
-saved Canvas JSON responses for a made-up student, covering:
+CI never uses a real token (A-3, NFR-41). Instead,
+`canvas-portal/backend/tests/fixtures/` holds saved Canvas JSON responses
+for made-up students, covering:
 
-- 3 active courses, 1 concluded course (must not appear)
+- 3 active courses, each with a name and course code, and 1 concluded
+  course (must not appear)
 - Assignments in every Canvas submission state (unsubmitted, submitted,
-  graded, pending review), with the late, missing, and excused flags, including
-  one that is both graded and late,
-  no due date
-- An assignment description with formatting, a link, a `<script>` tag, and
-  an `onclick` attribute (FR-28)
+  graded, pending review), with the late, missing, and excused flags,
+  including one that is both graded and late
+- Assignments with no due date, and two with the same due date, to check
+  the sort order (FR-38)
+- A graded quiz and a graded discussion in the assignment list, which show
+  as ordinary assignments (FR-11)
+- Due dates on both sides of a daylight saving time change (FR-22)
+- An assignment where the student's due date differs from the class's (a
+  Canvas *override*, FR-22)
 - A course with more than 100 assignments, split over two pages (FR-12)
-- A `403 Rate Limit Exceeded` response followed by success (C-2)
+- A `403 Rate Limit Exceeded` response followed by success (C-2, FR-16)
 - A `401 Unauthorized` response (FR-6)
+- A course that answers slowly and one that times out (FR-16, NFR-20)
+- A larger account of 8 courses and 200 assignments, for timing tests
+  (NFR-1, NFR-2)
+- A second student with different courses, for privacy tests (NFR-12)
 - **Change sequences** for Phase 3 (FR-39, FR-45): a series of snapshots of
-  the same account over time, replayed one per refresh, covering every row of
+  the same account over time, replayed one per Refresh, covering every row of
   the design's *What can change in Canvas* table, such as a due date that is
   empty, then set, then changed, then cleared; an assignment deleted and
   then republished; a state going graded to submitted; and a fetch cut off
   after the first page
+- *(Phase 5)* An assignment description with formatting, a link, a
+  `<script>` tag, and an `onclick` attribute (FR-28)
 
 Fixtures contain no real names or data. When a fixture is recorded from a
-live account, names and IDs are replaced before it is committed.
+live account, names and IDs are replaced before it is committed. The Canvas
+teacher sandbox is the safest place to record from.
 
 ## 2. Pull request checklist
 
@@ -53,15 +72,16 @@ Every pull request must meet these before merge:
       one is in the current phase in
       [Requirements by phase](02-requirements.md#requirements-by-phase).
       The repo's [CLAUDE.md](../../CLAUDE.md) names the current phase.
-- [ ] CI is green: unit, API, E2E, and accessibility tests pass.
+- [ ] CI is green: unit, API, and E2E tests pass, and from Phase 4 the
+      accessibility tests too.
 - [ ] New or changed behavior has tests that name the requirement IDs they
       check, such as `test_fr23_missing_flag`.
 - [ ] **If the PR changes anything a user sees, the PR description includes
       screenshots of each changed screen, with before and after shots when an
       existing screen changes.** Wide and phone widths for layout changes.
       Store and embed them as the repo's [CLAUDE.md](../../CLAUDE.md) describes.
-- [ ] If the PR changes the board, card back, or menus, it says how the
-      change compares with Trello's behavior (goal G-3), and any deliberate
+- [ ] If the PR changes the board or its menus, it says how the change
+      compares with Trello's behavior (goal G-3), and any deliberate
       difference is noted.
 - [ ] Screenshots contain no real tokens, names, or course data. Use the
       recorded test data.
@@ -75,9 +95,13 @@ E2E tests save screenshots of each screen as they run (Playwright's
 
 | Environment | Backend | Database | Canvas | Used for |
 |-------------|---------|----------|--------|----------|
-| Local | `uvicorn` on the developer's machine | SQLite | Recorded data, or real token from `.env` | Development, manual tests |
-| CI | Started by GitHub Actions | SQLite | Recorded data only | Automated tests |
-| Deployed | Chosen host (D-3) | Postgres | Real Canvas | Phase 4 manual tests |
+| Local | `uvicorn` on the developer's machine | SQLite | Recorded data, the Canvas teacher sandbox, or the Team Lead's real token from `.env` | Development, manual tests |
+| CI | Started by GitHub Actions | SQLite, plus Postgres for the concurrency tests | Recorded data only | Automated tests |
+| Deployed | Chosen host (D-3) | Postgres | Real Canvas | Phase 4 manual tests (TP-17) |
+
+The NFR-22 concurrency tests also run against a Postgres service in CI.
+SQLite locks the whole file on every write, so on SQLite alone those tests
+could pass without proving anything about the database used in production.
 
 Browsers for manual passes (NFR-30): current Chrome, Firefox, Safari, and
 Edge on a laptop, plus Chrome or Safari on a phone once phones are
@@ -85,137 +109,190 @@ supported (Phase 5).
 
 ## 4. Automated test coverage
 
-| Requirement | Automated test (planned) | Level |
-|-------------|--------------------------|-------|
-| FR-2 | Valid token returns user name; invalid token returns a clear error | API |
-| FR-4 | Disconnect deletes the stored token row | API |
-| FR-6 | `401` from Canvas returns "reconnect" and leaves the board untouched | API, E2E |
-| FR-10, FR-11 | Only active courses and their assignments are returned | API |
-| FR-12 | All 120+ assignments returned from a two-page fixture | API |
-| FR-14, FR-15 | Loading the board with saved data makes no Canvas call, however old the data; the first ever load fetches; Refresh fetches; data over an hour old comes back flagged so the frontend highlights Refresh | API, E2E |
-| FR-16 | Fixture with one slow course and one that times out: progress reports each course's state in order; the run ends incomplete, the saved data is unchanged, and no error text holds the token; the log is still returned after the run ends | API, E2E |
-| FR-21, FR-38 | Sort order: soonest first, no-due-date last, ties by name; applies to every list | Unit |
-| FR-23 | Each Canvas `workflow_state` maps to its label, and the late, missing, and excused flags show as tags, including together with a state | Unit |
-| FR-24 (Phase 5) | Course, Canvas state and flag, and search filters | E2E |
-| FR-32, FR-33, FR-38 | Drag a card to another list; it lands in its due date place; reload, it is still there | E2E |
-| FR-31, FR-34 | First board load puts every assignment in Backlog; a new fixture assignment appears in Backlog in its due date place | API |
-| FR-38 | Changing a fixture assignment's due date moves its card to the new place in the same list | API |
-| FR-28 (Phase 5) | Card back shows the fixture description; a description with a `<script>` tag and an `onclick` attribute comes back with both removed | Unit, API |
-| FR-35 | Renamed assignment keeps its column and notes | API |
-| FR-34, FR-65 | Card marked submitted in Canvas gets a green badge and is not moved | API, E2E |
-| FR-40 to FR-42 (Phase 5) | Add several notes and get them back newest first with dates; edit one and see it marked edited; delete one after confirming | API, E2E |
-| FR-44, NFR-13 | Canvas client has no non-GET method; a test fails if one is added | Unit |
-| FR-45 | Removed assignment's card is archived and its notes kept | API |
-| FR-51 | Same user, two browser sessions, see the same board | E2E |
-| FR-53 (Phase 5) | Export contains the board and notes | API |
-| FR-54 | Delete removes every row for the user | API |
-| NFR-10 | Logs captured during a full test run contain no token string | API |
-| NFR-12 | User B gets `404` for every one of user A's cards, Canvas data, and Refresh logs | API |
-| NFR-1, NFR-2 | Fixture server adds 1 second to every Canvas response: with saved data the board answers in under 2 seconds and makes no Canvas call; a cold load of 8 courses and 200 assignments finishes within the NFR-2 target, with courses appearing one at a time | API, E2E |
-| FR-39, FR-45 | Replays every change sequence fixture and checks each card's list, fields, sort place, and archived flag after every step; a cut-off fetch changes nothing; no card is ever deleted | API |
-| NFR-4 (Phase 5) | With background sync on and a fixture changed (new assignment, new due date, newly graded), the board shows each change within one job cycle without Refresh; the job backs off when the fixture reports a low rate-limit budget | API |
-| NFR-20 | Canvas down: cached data plus warning banner | API, E2E |
-| NFR-22 | Concurrency: 20 parallel moves of one card leave it in exactly one list; `changes?since=` returns every change once; two parallel board loads with a new assignment create one card; two browser sessions converge within one poll | API, E2E |
-| NFR-36 (Phase 5) | At phone width with touch emulation (no hover), every control and the sync time are visible and work by tap | E2E |
-| FR-60 | Signed-in, connected user lands on the board | E2E |
-| FR-61 | The four lists are always Backlog, To do, In progress, Done; expanded lists fill the width; the board scrolls sideways only below 240 px per list | E2E |
-| FR-80 | Minimizing a list widens the others to fill the board, expanding narrows them; on each load or refresh, empty lists are minimized and the rest expanded, even if the student changed them before reloading; a minimized list shows its card count | E2E |
-| FR-62 (Phase 5) | Dragging a list header reorders lists and the order survives reload | E2E |
-| FR-63 (Phase 5) | Click a list title, type, Enter saves; Escape cancels | E2E |
-| FR-64, FR-71 (Phase 5) | Composer adds a list or a personal card and stays open for the next | E2E |
-| FR-65 | Due badge is green for Submitted or Graded, red for Missing, plain otherwise | Unit, E2E |
-| FR-66 (Phase 5) | Each course gets a palette color; changing it updates every card of that course | API, E2E |
-| FR-67 (Phase 5) | Opening a card changes the address to `/c/{id}`; reloading that address reopens it; Back closes it | E2E |
-| FR-68 (Phase 5) | Card back shows every listed field for a Canvas card | E2E |
-| FR-69 (Phase 5) | Pencil and right-click open the quick edit menu | E2E |
-| FR-70 (Phase 5) | Add, check, reorder, and delete checklist items; card front shows progress | API, E2E |
-| FR-72 (Phase 5) | Each filter option, combined filters, and Clear | E2E |
-| FR-78 | Tapping a course button hides and shows its cards on the board; Show all and Hide all; hidden cards keep their place; choice survives a reload (and, from Phase 5, a second session) | API, E2E |
-| FR-74 (Phase 5) | Archive and restore a card or a list | API, E2E |
-| NFR-34 | Visual comparison: screenshots of S-4 (and S-5 from Phase 5) match approved reference images (Playwright `toHaveScreenshot`) | E2E |
-| NFR-32 | axe-core finds no serious issues on S-1 to S-9 | Accessibility |
+Rows are grouped by the phase that builds the requirement. A row that
+checks more than one phase's behavior says which part comes later.
+
+| Phase | Requirement | Automated test (planned) | Level |
+|-------|-------------|--------------------------|-------|
+| 1 | FR-2 | A valid token returns the user's name; an invalid token returns "Canvas did not accept this token"; an address that isn't Canvas returns "Couldn't reach that Canvas address" | API |
+| 1 | FR-1, NFR-10 | A Canvas address that isn't `https`, or that resolves to a private or local address, is refused; the token is never sent to another host, including through a redirect or a paging `Link` URL that points elsewhere | API |
+| 1 | FR-4 | Disconnect deletes the stored token row, and `GET /api/me` then says not connected; the board is kept, and reconnecting as the same Canvas user brings it back | API |
+| 1 | FR-5 | After connecting, a second session for the same user is connected without entering the token | API |
+| 1 | FR-6 | `401` from Canvas during a Refresh stops it, returns "reconnect", and leaves the board and saved data untouched | API, E2E |
+| 1 | FR-10, FR-11, FR-20 | Only active courses, with their names and codes, and their assignments are returned; the graded quiz and graded discussion come back as ordinary assignments; no other Canvas endpoint is called | API |
+| 1 | FR-12 | All 120+ assignments returned from a two-page fixture | API |
+| 1 | FR-13 | The header shows "Synced" with the date and time of the last complete Refresh; an incomplete Refresh leaves it unchanged | E2E |
+| 1 | FR-14, FR-15 | Loading the board with saved data makes no Canvas call, however old the data; the first ever load fetches; Refresh fetches; data over an hour old comes back flagged so the frontend highlights Refresh | API, E2E |
+| 1 | FR-16 | Fixture with one slow course and one that times out: progress reports each course's state in order; the rate-limit fixture shows a course waiting on the rate limit, then done; the run ends incomplete, the saved data is unchanged, and no error text holds the token; the log is still returned after the run ends; a second `POST /api/refresh` while one is running joins it instead of starting another; rate-limit retries stop after 5 tries and the course is marked failed; after a server restart, a run left *running* is marked incomplete | API, E2E |
+| 1 | FR-21, FR-38 | Sort order: soonest first, no-due-date last, ties by name; applies to every list | Unit |
+| 1 | FR-22 | Due dates show in the browser's time zone, including across a daylight saving change (Playwright `timezoneId`); the override fixture shows the student's date; each card shows the name, course, due date, points, and status | Unit, E2E |
+| 1 | FR-23 | Each Canvas `workflow_state` maps to its label, and the late, missing, and excused flags show as tags, including together with a state | Unit |
+| 1 | FR-26 | Clicking a card opens the assignment's Canvas page in a new tab | E2E |
+| 1 | FR-31, FR-34 | The first complete Refresh puts every assignment in Backlog; after a later complete Refresh, a new fixture assignment appears in Backlog in its due date place | API |
+| 1 | FR-38 | Changing a fixture assignment's due date moves its card to the new place in the same list | API |
+| 1 | FR-50 | Without a session, every `/api/` endpoint except the sign-in ones returns `401`; the Google callback rejects a wrong `state` value; the session cookie is `HttpOnly`, `Secure`, and `SameSite=Lax`; signing out ends the session | API |
+| 1 | FR-60 | Not signed in shows S-1; signed in but not connected shows S-2; signed in and connected lands on the board; in Phase 1 cards can't be dragged | E2E |
+| 1 | FR-61 | The four lists are always Backlog, To do, In progress, Done; expanded lists fill the width; the board scrolls sideways only below 240 px per list, and dragging empty background scrolls it | E2E |
+| 1 | FR-65 | Due badge is green for Submitted or Graded, red for Missing, plain otherwise | Unit, E2E |
+| 1 | FR-66 | Each course gets a palette color the first time it appears, the same on its button and its cards, and keeps it after a reload and in a second session | API, E2E |
+| 1 | FR-78 | Tapping a course button hides and shows its cards; Show all and Hide all; hidden cards keep their place; the choice survives a reload in the same browser (from Phase 5, also a second session) | E2E |
+| 1 | FR-80 | Minimizing a list widens the others to fill the board, expanding narrows them; on each load or Refresh, empty lists are minimized and the rest expanded, even if the student changed them before reloading; a minimized list shows its card count | E2E |
+| 1 | NFR-1 | Fixture server adds 1 second to every Canvas response: with saved data the board is usable in under 2 seconds and makes no Canvas call | E2E |
+| 1 | NFR-10 | Logs, error messages, API responses, and page addresses captured during a full test run contain no token string | API, E2E |
+| 1 | NFR-11 | The stored connection row doesn't hold the token in plain text, and it decrypts only with the key from the environment | API |
+| 1 | NFR-12 | Two users with different fixtures: every endpoint returns only the signed-in user's connection, courses, assignments, board, and Refresh log; from Phase 2, requests naming the other user's card IDs return `404` | API |
+| 1 | NFR-13 | Canvas client has no non-GET method; a test fails if one is added | Unit |
+| 1 | NFR-14 | During the E2E run, every request the page makes goes to the portal's own address; no third-party scripts load | E2E |
+| 1 | NFR-20 | Canvas down, timing out, or still rate limiting after the retries: saved data plus the warning banner; with no saved data yet, S-10 shows the failures and Retry instead of an empty page | API, E2E |
+| 1 | NFR-34 | Visual comparison: screenshots of S-4 (and S-5 from Phase 5) match approved reference images (Playwright `toHaveScreenshot`) | E2E |
+| 1 | NFR-41 | CI runs every backend test with recorded data and no Canvas token in its environment | API |
+| 2 | FR-32, FR-33, FR-38 | Drag a card to another list; it lands in its due date place; reload, it is still there | E2E |
+| 2 | FR-35 | A renamed assignment keeps its list (from Phase 5, also its notes) | API |
+| 2 | FR-35, FR-65 | A card in To do marked submitted in Canvas gets a green badge and stays in To do | API, E2E |
+| 2 | FR-51 | Same user, two browser sessions, see the same board | E2E |
+| 2 | FR-80 | Dropping a card on an empty minimized list expands it; dropping on a minimized list that has cards keeps it minimized and raises its count | E2E |
+| 2 | NFR-3 | With the server's answer delayed by 1 second, a dropped card shows in its new list within 100 ms | E2E |
+| 2 | NFR-22 | Concurrency: 20 parallel moves of one card leave it in exactly one list; `changes?since=` returns every change once; two parallel Refreshes with a new assignment create one card; two browser sessions converge within one poll | API, E2E |
+| 3 | FR-39, FR-45 | Replays every change sequence fixture and checks each card's list, fields, sort place, and archived flag after every step; a cut-off fetch changes nothing; no card is ever deleted | API |
+| 3 | FR-45 | A removed assignment's card is archived and leaves the board; when the assignment comes back, the card returns to its old list (from Phase 5, with its notes) | API |
+| 3 | NFR-2 | Fixture server adds 1 second to every Canvas response: a full Refresh of 8 courses and 200 assignments finishes within the NFR-2 target, and progress reports each course as it finishes | API, E2E |
+| 4 | FR-54 | Delete removes every row for the user | API |
+| 4 | NFR-32 | axe-core finds no serious issues on S-1, S-2, S-4, S-6, and S-10 (and S-5, S-7 to S-9 once they exist) | Accessibility |
+| 5 | FR-24 | Course, Canvas state and flag, and search filters | E2E |
+| 5 | FR-28 | Card back shows the fixture description; a description with a `<script>` tag and an `onclick` attribute comes back with both removed | Unit, API |
+| 5 | FR-40 to FR-42, FR-44 | Add several notes and get them back newest first with dates; edit one and see it marked edited; delete one after confirming; none of it calls Canvas | API, E2E |
+| 5 | FR-53 | Export contains the board and notes | API |
+| 5 | FR-62 | Dragging a list header reorders lists and the order survives reload | E2E |
+| 5 | FR-63 | Click a list title, type, Enter saves; Escape cancels | E2E |
+| 5 | FR-64, FR-71 | Composer adds a list or a personal card and stays open for the next | E2E |
+| 5 | FR-66 | Changing a course's color updates every card of that course | API, E2E |
+| 5 | FR-67 | Opening a card changes the address to `/c/{id}`; reloading that address reopens it; Back closes it | E2E |
+| 5 | FR-68 | Card back shows every listed field for a Canvas card | E2E |
+| 5 | FR-69 | Pencil and right-click open the quick edit menu | E2E |
+| 5 | FR-70 | Add, check, reorder, and delete checklist items; card front shows progress | API, E2E |
+| 5 | FR-72 | Each filter option, combined filters, and Clear | E2E |
+| 5 | FR-74 | Archive and restore a card or a list | API, E2E |
+| 5 | NFR-4 | With background sync on and a fixture changed (new assignment, new due date, newly graded), the board shows each change within one job cycle without Refresh; the job backs off when the fixture reports a low rate-limit budget | API |
+| 5 | NFR-36 | At phone width with touch emulation (no hover), every control and the sync time are visible and work by tap | E2E |
 
 ## 5. Manual procedures
 
 Each procedure lists the requirements it checks, what's needed first, the
 steps, and the expected result. Screen IDs refer to the
 wireframes in the
-[User Interface Specification](04-ui-specification.md).
+[User Interface Specification](04-ui-specification.md). Steps marked with a
+later phase are skipped until that phase.
 
-### TP-01 Connect with a student token
+### Procedures by phase
 
-**Checks:** FR-1, FR-2, FR-3, FR-5, FR-50 · **Phase:** 1
-**Needs:** signed-in portal account with no Canvas connection; student token.
+**Entry criteria.** A phase's manual sign-off starts when its features are
+merged, CI is green with every automated test listed for the phase in
+section 4, and the procedures' **Needs** are in place (for Phase 1, the
+roadmap's prerequisites: the Google OAuth client and the Canvas teacher
+sandbox).
+
+**Exit criteria.** A phase is done when every procedure listed for it
+passes, the results are recorded in section 7, and no open issue fails a
+*Must* requirement of the phase. Later work can break earlier screens, so
+each phase also reruns the earlier procedures for any screen it changed.
+
+| Phase | Procedures |
+|-------|------------|
+| 1 | TP-01, TP-02, TP-03, TP-04 (steps 1 to 4), TP-05, TP-10 (steps 1 to 3), TP-12 (step 1), TP-13 (steps 1, 13, 14), TP-14 (baseline), TP-16 |
+| 2 | TP-06, TP-08 (steps 1 to 4), TP-10 (step 4), TP-13 (steps 2 and 3) |
+| 3 | TP-08, TP-14 (must meet NFR-2), TP-15 |
+| 4 | TP-10 (step 6), TP-12 (steps 3 and 4), TP-17 |
+| 5 | TP-09, TP-11, and the steps marked Phase 5 in the others |
+
+### TP-01 Sign in and connect with a student token
+
+**Checks:** FR-1 to FR-5, FR-16, FR-50 · **Phase:** 1
+**Needs:** a Google account listed as a test user that hasn't used the
+portal; the student token; a second device.
 
 | Step | Action | Expected |
 |------|--------|----------|
-| 1 | Open the portal | S-2 Connect Canvas is shown |
-| 2 | Expand "How do I get a token?" | Four steps are shown and match Canvas's current menus |
-| 3 | Enter the school address and student token; select Connect | "Connected as *student name*", then the board (S-4) |
-| 4 | Close the browser, reopen the portal | The board opens without asking for the token |
-| 5 | Sign in with the same Google account on a second device | The board opens without asking for the token |
-| 6 | Sign out, then open the portal | S-1 Sign in is shown |
+| 1 | Open the portal | S-1 Sign in is shown |
+| 2 | Select Sign in with Google and choose the account | S-2 Connect Canvas is shown |
+| 3 | Expand "How do I get a token?" | Four steps are shown and match Canvas's current menus |
+| 4 | Enter the school address and student token; select Connect | "Connected as *student name*"; S-10 opens on its own and shows each course's progress; when it finishes, the board (S-4) shows every assignment in Backlog |
+| 5 | Close the browser, reopen the portal | The board opens without asking for the token, and the "Synced" time hasn't changed (nothing was fetched) |
+| 6 | Sign in with the same Google account on the second device | The board opens without asking for the token |
+| 7 | On the second device, open Settings (S-6) and select Disconnect Canvas | S-2 is shown |
+| 8 | Reload the portal on the first device | S-2 is shown: the connection was removed from the account, not just the device |
+| 9 | Connect again with the same token | The board comes back as it was, without being rebuilt |
+| 10 | Select Sign out from the account menu | S-1 is shown, and reopening the portal shows S-1 |
 
 ### TP-02 Bad and expired tokens
 
 **Checks:** FR-6, NFR-10 · **Phase:** 1
-**Needs:** a token you can delete in Canvas.
+**Needs:** a token you can delete in Canvas (the teacher sandbox's test
+student works).
 
 | Step | Action | Expected |
 |------|--------|----------|
 | 1 | On S-2, enter a made-up token | "Canvas did not accept this token"; form keeps the address |
-| 2 | Connect with a real token; from Phase 2, move one card (from Phase 5, also write a note) | Saved |
-| 3 | In Canvas, delete that token; in the portal select Refresh | S-2 with the expired-token message |
-| 4 | Reconnect with a new token | The moved card (and note) are still there |
-| 5 | Check backend logs | The token text does not appear anywhere |
+| 2 | Enter an address that isn't a Canvas site | "Couldn't reach that Canvas address"; form keeps what was typed |
+| 3 | Connect with a real token; from Phase 2, move one card (from Phase 5, also write a note) | Connected (from Phase 2, the move is saved) |
+| 4 | In Canvas, delete that token; in the portal select Refresh | S-2 with the expired-token message |
+| 5 | Reconnect with a new token | The board is back as it was; from Phase 2 the moved card is still in its list (from Phase 5, with its note) |
+| 6 | Check the backend logs, the S-10 log, and the browser's address bar and history | The token text does not appear anywhere |
 
 ### TP-03 Assignments match Canvas
 
-**Checks:** FR-10 to FR-12, FR-20 to FR-23, FR-26 · **Phase:** 1
-**Needs:** connected student account.
+**Checks:** FR-10 to FR-12, FR-20 to FR-23, FR-26, FR-65 · **Phase:** 1
+**Needs:** connected student account; for step 7, the Canvas teacher
+sandbox with its test student.
 
 | Step | Action | Expected |
 |------|--------|----------|
-| 1 | In Canvas, open each current course's Assignments page | Note the assignments, due dates, and points |
-| 2 | In the portal, open the board | Same courses (no ended ones) and same assignments |
+| 1 | In Canvas, open each current course's Assignments page | Note the assignments, due dates, points, and status |
+| 2 | In the portal, open the board | Same courses, by name and course code (no ended ones), and same assignments; graded quizzes and graded discussions are there as ordinary assignments |
 | 3 | Compare due dates | Match, shown in your local time zone |
-| 4 | Check one assignment of each state, and any marked Late, Missing, or Excused | Labels and tags match what Canvas shows on its own assignment page |
-| 5 | Select ↗ on any assignment | Its Canvas page opens in a new tab |
+| 4 | Compare points | Match |
+| 5 | Check one assignment of each state, and any marked Late, Missing, or Excused | Labels and tags match what Canvas shows on its own assignment page; the due badge is green for Submitted or Graded, red for Missing, plain otherwise |
+| 6 | Click any card | Its Canvas page opens in a new tab |
+| 7 | In the sandbox, give the test student their own due date for one assignment (an override); connect the portal as that student and select Refresh | The card shows the student's date, not the class's. This answers the design's open check on overrides |
 
 ### TP-04 Course buttons, filters, and search
 
-**Checks:** FR-24, FR-78 · **Phase:** 1 (steps 1 to 4 from Phase 5)
+**Checks:** FR-78, FR-24 (Phase 5) · **Phase:** 1 (steps 5 to 8 from Phase 5)
+**Needs:** connected account with at least three courses; a second device.
 
 | Step | Action | Expected |
 |------|--------|----------|
-| 1 | Select one course | Only that course's assignments are listed |
-| 2 | Set Status to Not submitted | Only that course's assignments Canvas reports as not submitted |
-| 3 | Type part of an assignment name | List narrows as you type |
-| 4 | Clear the filters | Every assignment is listed again |
-| 5 | Tap one course's button in the row under the header, then tap it again | Its assignments hide, then come back; the button shows hidden (○) and shown (●) |
-| 6 | Hide two courses, then select Show all | Every course is shown |
-| 7 | Select Hide all | No assignments shown; the page says all courses are hidden and offers Show all |
+| 1 | Tap one course's button in the row under the header, then tap it again | Its cards hide, then come back; the button shows hidden (○) and shown (●). From Phase 2, the cards come back in the lists they were in |
+| 2 | Hide two courses, then select Show all | Every course is shown |
+| 3 | Select Hide all | No cards shown; the board says all courses are hidden and offers Show all |
+| 4 | Hide one course, then reload; open the portal on the second device | After the reload the course is still hidden; the second device shows every course, since the choice is kept per browser until Phase 5 (from Phase 5, it is hidden there too) |
+| 5 | *(Phase 5)* Filter by one course | Only that course's cards are shown |
+| 6 | *(Phase 5)* Set Status to Not submitted | Only that course's assignments Canvas reports as not submitted |
+| 7 | *(Phase 5)* Type part of an assignment name | Cards narrow as you type |
+| 8 | *(Phase 5)* Clear the filters | Every card is shown again |
 
 ### TP-05 Canvas unavailable
 
-**Checks:** NFR-20, FR-13, FR-16 · **Phase:** 1
-**Needs:** local environment.
+**Checks:** FR-13, FR-16, NFR-20 · **Phase:** 1
+**Needs:** local environment with recorded data.
 
 | Step | Action | Expected |
 |------|--------|----------|
 | 1 | Select Refresh so data is saved | Header shows "Synced" with the current date and time |
-| 2 | Point the backend's Canvas address at an unreachable host; select Refresh | Warning banner; last data still listed with its time |
-| 2a | Open the progress panel (S-10) from the Synced time | Each course shows as failed with the reason; the summary says the previous data was kept and offers Retry refresh |
-| 3 | Restore the address; select Refresh | Banner goes away; time updates |
+| 2 | Cut the backend off from Canvas, for example by stopping the recorded-data server or blocking the Canvas address on the backend's machine; select Refresh | Warning banner; the board still shows the last data; the "Synced" time doesn't change |
+| 3 | Open the progress panel (S-10) from the "Synced" time | Each course shows as failed with the reason; the summary says the previous data was kept and offers Retry refresh |
+| 4 | Close S-10, then open it again from the "Synced" time | The same log is shown |
+| 5 | Restore the connection; select Retry refresh | The summary says what was synced; the banner goes away; the "Synced" time updates |
+| 6 | Make the recorded data answer one course with `403 Rate Limit Exceeded` a few times; select Refresh and open S-10 | That course shows as waiting on a Canvas rate limit, then done; the Refresh completes |
 
 ### TP-06 Board layout persists and syncs
 
-**Checks:** FR-31 to FR-33, FR-38, FR-51, FR-60, NFR-22 · **Phase:** 2
-**Needs:** two devices or two different browsers, same portal account.
+**Checks:** FR-31 to FR-34, FR-38, FR-51, FR-60, FR-80, NFR-22 · **Phase:** 2
+**Needs:** two devices or two different browsers, same portal account;
+local environment with recorded data for step 11.
 
 | Step | Action | Expected |
 |------|--------|----------|
-| 1 | On device A, open the portal | The board is the home screen, with lists Backlog, To do, In progress, Done, and every assignment starts in Backlog |
+| 1 | On device A, open the portal | The board is the home screen, with lists Backlog, To do, In progress, Done |
 | 2 | Drag two cards to In progress | Cards move immediately and sit in due date order, earliest at the top |
 | 3 | Reload the page | Same layout |
 | 4 | Sign in on device B | Same layout |
@@ -225,7 +302,7 @@ wireframes in the
 | 8 | Move the same card to different lists on A and B within a few seconds | Within 30 seconds both show the card in the list of the later move |
 | 9 | On A, start dragging a card while B moves a different card | A's drag isn't interrupted; B's move appears after the drop |
 | 10 | Turn off Wi-Fi on A; drag a card | Card goes back with "Couldn't save, try again"; B never shows the move |
-| 11 | Add an assignment to the fixture; open the board on A and B at the same moment | The new card appears once, in Backlog, on both |
+| 11 | Add an assignment to the fixture; select Refresh on A and B at the same moment | One Refresh runs (B joins A's); the new card appears once, in Backlog, on both |
 | 12 | Open the board in two tabs of the same browser and repeat step 6 | Same as with two devices |
 | 13 | Minimize In progress, then drag a card onto its strip | The card goes into In progress; the strip's count goes up and it stays minimized |
 | 14 | Reload so an empty Done list starts minimized, then drag a card onto its strip | The card goes into Done and the Done list expands; the other lists narrow to make room |
@@ -237,15 +314,18 @@ requirement. The ID is kept so the other procedure numbers don't change.
 
 ### TP-08 Canvas changes reach the board
 
-**Checks:** FR-34, FR-35, FR-38, FR-45, FR-65 · **Phase:** 2–3 (TP-15 covers Phase 3 in depth)
+**Checks:** FR-34, FR-35, FR-38, FR-45, FR-65 · **Phase:** 2 (steps 1 to 4),
+3 (steps 5 and 6). TP-15 covers Phase 3 in depth.
 **Needs:** recorded data in local environment, edited between steps.
 
 | Step | Action | Expected |
 |------|--------|----------|
-| 1 | Load the board; put a note on assignment X; move it to In progress | Saved |
-| 2 | Edit the fixture: rename X, add a new assignment Y; refresh | X keeps its list and notes, with the new name; Y appears in Backlog in its due date place |
-| 3 | Edit the fixture: mark X submitted; refresh | X's due badge turns green and X stays in In progress |
-| 4 | Edit the fixture: remove X; refresh | X is under Archived with its notes |
+| 1 | Load the board; move assignment X to In progress (from Phase 5, also put a note on it) | Saved |
+| 2 | Edit the fixture: rename X, add a new assignment Y; select Refresh | X keeps its list (from Phase 5, its notes), with the new name; Y appears in Backlog in its due date place |
+| 3 | Edit the fixture: change X's due date; select Refresh | X moves to its new due date place, still in In progress |
+| 4 | Edit the fixture: mark X submitted; select Refresh | X's due badge turns green and X stays in In progress |
+| 5 | *(Phase 3)* Edit the fixture: remove X; select Refresh | X leaves the board; its card is marked archived in the database, not deleted (from Phase 5, it is listed under Archived with its notes) |
+| 6 | *(Phase 3)* Edit the fixture: put X back; select Refresh | X returns to In progress |
 
 ### TP-09 Notes
 
@@ -255,7 +335,7 @@ requirement. The ID is kept so the other procedure numbers don't change.
 |------|--------|----------|
 | 1 | Open an assignment and compare the Description with the assignment's page in Canvas | Same text and formatting; there is no way to edit it |
 | 2 | Click "Write a note...", type a note, press Save | The note appears under Notes with today's date and time; the card shows ✎ 1 |
-| 3 | Add a second note with Ctrl+Enter | Both notes show, newest first; the card shows ✎ 2 |
+| 3 | Add a second note | Both notes show, newest first; the card shows ✎ 2 |
 | 4 | Close and reopen the card, then open it on a second device | Same notes, same order and dates |
 | 5 | Open the browser's developer tools, Network tab; add a note | Requests go only to the portal's `/api/` address, none to Canvas |
 | 6 | Edit the older note | New text, original date, marked "(edited)" |
@@ -265,15 +345,19 @@ requirement. The ID is kept so the other procedure numbers don't change.
 
 ### TP-10 Privacy between users
 
-**Checks:** NFR-12, FR-54 · **Phase:** 1–4
-**Needs:** two portal accounts A and B.
+**Checks:** NFR-12, FR-54 · **Phase:** 1 (steps 1 to 3), 2 (step 4),
+4 (step 6), 5 (step 5)
+**Needs:** two Google test users, A and B; A connected with the Team Lead's
+student token, and the teacher sandbox's test student token for B.
 
 | Step | Action | Expected |
 |------|--------|----------|
-| 1 | As A, move a card (from Phase 5, also write a note); copy the card's ID from developer tools | |
-| 2 | As B, request A's card and note IDs directly | Not found |
-| 3 | *(Phase 5)* As A, export data | JSON file holds A's board and notes only |
-| 4 | As A, delete account | Signed out; signing in again starts fresh |
+| 1 | As A, select Refresh and note the courses | |
+| 2 | As B, in another browser, sign in without connecting Canvas | S-2 is shown; nothing of A's appears |
+| 3 | As B, connect with the sandbox student's token | Only the sandbox student's courses appear, never A's |
+| 4 | *(Phase 2)* As A, move a card and copy its ID from developer tools; as B, use developer tools to send the same move request for A's card ID | Not found; A's card hasn't moved |
+| 5 | *(Phase 5)* As A, export data | JSON file holds A's board and notes only |
+| 6 | *(Phase 4)* As A, delete account | Signed out; signing in again starts fresh at S-2; B's board is unchanged |
 
 ### TP-11 Parent (observer) token
 
@@ -285,30 +369,31 @@ requirement. The ID is kept so the other procedure numbers don't change.
 
 ### TP-12 Browsers, phone, and accessibility
 
-**Checks:** NFR-30, NFR-32, NFR-33 (Phase 5) · **Phase:** 4, step 2 in Phase 5
+**Checks:** NFR-30, NFR-32, NFR-33 (Phase 5) · **Phase:** 1 (step 1),
+4 (steps 3 and 4), 5 (step 2)
 
 | Step | Action | Expected |
 |------|--------|----------|
-| 1 | Run TP-01, TP-03, and TP-06 in Chrome, Firefox, Safari, and Edge | Same results in each |
-| 2 | Phase 5: on a phone, open S-4 and S-5 | Phone layout from the wireframes: one list fills the screen and swiping moves between lists |
-| 3 | Zoom the browser to 200% | All text readable; nothing cut off |
-| 4 | Turn on a screen reader (VoiceOver or NVDA) and go through S-4 | Every control is announced with a name |
+| 1 | Run TP-01, TP-03, TP-04, and TP-16 in Chrome, Firefox, Safari, and Edge (from Phase 2, also TP-06) | Same results in each |
+| 2 | *(Phase 5)* On a phone, open S-4 and S-5 | Phone layout from the wireframes: one list fills the screen and swiping moves between lists |
+| 3 | *(Phase 4)* Zoom the browser to 200% | All text readable; nothing cut off |
+| 4 | *(Phase 4)* Turn on a screen reader (VoiceOver or NVDA) and go through S-1, S-2, S-4, S-6, and S-10 | Every control is announced with a name |
 
 ### TP-13 Trello comparison review
 
-**Checks:** goal G-3, FR-60 to FR-77, NFR-34, NFR-35, C-4 · **Phase:** 1 for the
-look (NFR-34), 2 for dragging, then each later phase
+**Checks:** goal G-3, FR-60 to FR-80, NFR-34, NFR-35, C-4 · **Phase:** 1
+(steps 1, 13, 14), 2 (steps 2 and 3), 5 (the rest)
 **Needs:** the portal and a free Trello account side by side, each with a
-board of about three lists and ten cards.
+board of about four lists and ten cards.
 
 Do each action in Trello first, then in the portal. Record any difference in
-how it looks, what it takes (clicks or keys), or how it responds.
+how it looks, what it takes (clicks), or how it responds.
 
 | Step | Action in both | Expected in the portal |
 |------|----------------|------------------------|
 | 1 | Look at the board as a whole | Same arrangement: header on top, lists side by side on a colored background, gray lists, white cards with label strips and badges |
-| 2 | Drag a card to another list, slowly | Card lifts and tilts, the target list is highlighted, a gap opens at the card's due date spot, neighbors slide smoothly. (Deliberate difference: Trello lets you drop anywhere; the portal keeps due date order, FR-38.) |
-| 3 | Drag a card toward the right edge | Board scrolls automatically |
+| 2 | *(Phase 2)* Drag a card to another list, slowly | Card lifts and tilts, the target list is highlighted, a gap opens at the card's due date spot, neighbors slide smoothly. (Deliberate difference: Trello lets you drop anywhere; the portal keeps due date order, FR-38.) |
+| 3 | *(Phase 2)* Drag a card toward the right edge of a board that scrolls | Board scrolls automatically |
 | 4 | *(Phase 5)* Drag a list by its header | Lists reorder the same way |
 | 5 | *(Phase 5)* Click a list title and rename it | Edits in place; Enter saves, Escape cancels |
 | 6 | *(Phase 5)* Add a list, then add three cards in a row | Composer stays open after each, as in Trello |
@@ -319,6 +404,7 @@ how it looks, what it takes (clicks or keys), or how it responds.
 | 11 | *(Phase 5)* Archive a card and restore it from the board menu | Same steps |
 | 12 | *(Phase 5)* Count clicks to open a card and filter by a course | No more than Trello (NFR-35) |
 | 13 | Check for Trello's name, logo, icons, or artwork anywhere | None (C-4) |
+| 14 | Collapse a list in Trello, and minimize one in the portal; then expand it | A similar narrow strip with the list's title and card count; the other lists take up the space (FR-80) |
 
 Record the result of each step as *Same*, *Close* (small, acceptable
 difference, noted), or *Different* (opens an issue unless it is a
@@ -326,27 +412,29 @@ deliberate, documented difference such as Canvas-only fields).
 
 ### TP-14 Canvas load timing
 
-**Checks:** NFR-1, NFR-2, R-3 · **Phase:** 1 (baseline), 3 (must pass); repeat
-after any change to fetching
-**Needs:** the Team Lead's real student token in the git-ignored `.env`, and
-the backend's Canvas timing log.
+**Checks:** FR-15, FR-16, NFR-1, NFR-2, R-3 · **Phase:** 1 (baseline),
+3 (must pass); repeat after any change to fetching
+**Needs:** a local portal connected with the Team Lead's real student token
+(kept in the git-ignored `.env`, never committed), and the backend's Canvas
+timing log.
 
 | Step | Action | Expected |
 |------|--------|----------|
-| 1 | Clear the portal's cache; open the board | The progress panel (S-10) lists each course as it finishes; record the total time it shows |
-| 2 | From the timing log, record the number of courses, assignments, requests, and the slowest request | Written in the results log |
-| 3 | Reload the board | Shows within 2 seconds from the cache (NFR-1) |
+| 1 | Select Refresh and open the progress panel (S-10) | S-10 lists each course as it finishes; record the total time from its summary |
+| 2 | From the timing log, record the number of courses, assignments, requests, and the slowest request | Written in the timing table in section 7 |
+| 3 | Reload the board | Shows within 2 seconds from saved data (NFR-1); the timing log shows no Canvas call |
 | 4 | Wait more than an hour; reload | Old data shows at once, Refresh is highlighted, and nothing is fetched until Refresh is selected; during the Refresh the board stays usable |
 | 5 | Repeat step 1 on a weekday evening, when Canvas is busiest | Record the time. In Phase 3, if any run misses the NFR-2 target, apply the next fix in the design's *Phase 3 tuning* list and rerun |
 
-Record times only, never the token or assignment names, in the results log.
+The Phase 1 runs are the baseline the Team Lead uses to set the NFR-2
+target. Record times only, never the token or assignment names.
 
 ### TP-15 Canvas changes over time
 
-**Checks:** FR-15, FR-23, FR-34, FR-35, FR-38, FR-39, FR-45, Q-7 · **Phase:** 3
-**Needs:** a Canvas course where the Team Lead can act as teacher (a free
-Canvas account from Instructure works), a student account enrolled in it,
-and the portal.
+**Checks:** FR-15, FR-22, FR-23, FR-34, FR-35, FR-38, FR-39, FR-45, NFR-20,
+NFR-22, Q-7 · **Phase:** 3
+**Needs:** the Canvas teacher sandbox, with its test student connected to
+the portal; a second device; Q-7 answered.
 
 Run every step as teacher in Canvas, then select Refresh on the student's
 board and check it. Before each Refresh, check that the board has not
@@ -360,30 +448,74 @@ changed on its own (FR-15).
 | 4 | Clear A's due date | A moves to the end of To do with no due date |
 | 5 | Rename A and change its points | New name and points; same list |
 | 6 | Create B and C at once | Both in Backlog, in date order, once each |
-| 7 | Delete B | B leaves the board; it is archived, not gone |
-| 8 | Unpublish C, wait one refresh, publish it again | C leaves the board, then returns to its old list |
+| 7 | Delete B | B leaves the board; its card is marked archived in the database, not deleted |
+| 8 | Unpublish C; after the Refresh, publish it again and select Refresh | C leaves the board, then returns to its old list |
 | 9 | (Student submits A.) Grade A, then remove the grade | Badge goes Submitted, Graded, then back to Submitted |
 | 10 | Mark A excused, then not excused | Excused tag shows, then goes away |
 | 11 | Give the student their own due date for A (an override) | The student's board shows the student's date |
-| 12 | During a refresh, cut the backend's network for a few seconds | Nothing is archived or changed; the warning banner shows; the next refresh catches up |
+| 12 | During a Refresh, cut the backend's network for a few seconds | Nothing is archived or changed; the warning banner shows; the next Refresh catches up |
 | 13 | Conclude the course | Result matches the Q-7 decision |
 
-After each step, check a second device too: it shows the same thing within
+After each step, check the second device too: it shows the same thing within
 the NFR-22 time.
+
+### TP-16 Read-only board
+
+**Checks:** FR-21, FR-31, FR-34, FR-38, FR-60, FR-61, FR-66, FR-80 ·
+**Phase:** 1 (TP-06 takes over the board in Phase 2)
+**Needs:** connected student account with at least three courses and some
+assignments with no due date; a second device.
+
+| Step | Action | Expected |
+|------|--------|----------|
+| 1 | Open the board | Four lists in order: Backlog, To do, In progress, Done. Backlog is expanded and fills the board; the other three are minimized strips, each with its title and a count of 0 |
+| 2 | Read down Backlog | Cards from every course together, in due date order, earliest at the top; cards with no due date at the end, by name |
+| 3 | Look at each course's button and cards | Each course has its own label color, the same on its button and its cards |
+| 4 | Try to drag a card to another list | The card doesn't move |
+| 5 | Expand To do | To do opens, empty; Backlog narrows so the two share the board's width |
+| 6 | Narrow the window until the expanded lists would be under 240 px each | The board scrolls sideways; dragging empty background also scrolls it |
+| 7 | Minimize Backlog | It becomes a strip with its title and card count; To do widens to fill the board |
+| 8 | Reload | Back to step 1: Backlog expanded, the empty lists minimized |
+| 9 | Open the board on the second device | Each course has the same color as on the first device |
+
+### TP-17 Deployed app
+
+**Checks:** FR-50, NFR-11, D-5 · **Phase:** 4
+**Needs:** the app deployed to the chosen host (D-3), with the Google OAuth
+client published; a Google account that is not a listed test user.
+
+| Step | Action | Expected |
+|------|--------|----------|
+| 1 | Open the deployed address with `http://` | The browser is sent to `https://` and shows a secure connection |
+| 2 | Sign in with the Google account that isn't a test user | Signed in; S-2 is shown |
+| 3 | Run TP-01 and TP-03 on the deployed app, in every browser in NFR-30 | Same results as locally |
 
 ## 6. Reporting a problem
 
 A failed step becomes a GitHub issue that includes the procedure and step
 (such as "TP-06 step 4"), what happened, what was expected, the browser and
-device, and a screenshot with any real data hidden.
+device, and a screenshot with any real data hidden. Never paste a token into
+an issue.
+
+Each issue names the requirement the step checks. A failure against a
+*Must* requirement of the current phase blocks the phase sign-off; a
+*Should* or *Could* failure, or a *Close* result in TP-13, is recorded and
+can be fixed later.
 
 ## 7. Results log
 
-Copy this table for each phase sign-off.
+Copy this table for each phase sign-off, with one row for each procedure in
+[Procedures by phase](#procedures-by-phase).
 
-| Procedure | Date | Tester | Environment and browser | Result | Issue |
-|-----------|------|--------|-------------------------|--------|-------|
-| TP-01 | | | | Pass / Fail | |
+| Procedure | Steps run | Date | Tester | Environment and browser | Result | Issue |
+|-----------|-----------|------|--------|-------------------------|--------|-------|
+| TP-01 | All | | | | Pass / Fail | |
+
+TP-14 timings go in their own table, one row per run:
+
+| Date and time of day | Phase | Courses | Assignments | Requests | Slowest request | Total time | Notes |
+|----------------------|-------|---------|-------------|----------|-----------------|------------|-------|
+| | | | | | | | |
 
 ## Change log
 
@@ -425,3 +557,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | Whole-set review: TP-04 renamed to match its Phase 1 steps, TP-10 starts in Phase 1 with NFR-12, and the unit test example says status mapping. |
 | 2026-10-25 | TP-07 (keyboard only), the NFR-31 and FR-73 automated tests, and the TP-13 shortcut step removed; TP-13 steps renumbered. From the Team Lead's review: keyboard actions are not a requirement. |
 | 2026-10-25 | FR-16 progress test; TP-05 step 2a checks the progress panel on failure; TP-14 reads times from the panel and uses the NFR-2 target. |
+| 2026-10-25 | In-depth QA review after PR #3: added *Procedures by phase* with entry and exit criteria, a Phase column in the coverage table, and failure severity; added Phase 1 tests for FR-1 address checks, FR-4, FR-5, FR-13, FR-20, FR-22 (time zone, override, points and status on cards), FR-26, FR-50, FR-60, FR-66, NFR-10, NFR-11, NFR-14, and NFR-41, Phase 2 tests for NFR-3 and FR-80 drops, and an NFR-2 row of its own; FR-16 test covers rate-limit waits, joining a running Refresh, retry limits, and stuck runs; concurrency tests also run on Postgres; new fixtures; TP-01 signs in, disconnects, and reconnects; TP-03 checks points and the override open check, and clicks the card instead of a missing ↗; TP-04 puts Phase 1 steps first and checks reload; TP-05 uses Retry refresh and a rate-limit step; TP-08 no longer needs Phase 5 notes or the Archived view; TP-09 drops Ctrl+Enter; TP-10, TP-12, and TP-13 mark their phases correctly (NFR-30 is Phase 1); TP-14 uses Refresh and a timing table; added TP-16 (read-only board, Phase 1) and TP-17 (deployed app, Phase 4); accessibility tests start in Phase 4; fixture path matches the repo; "column" now "list". |

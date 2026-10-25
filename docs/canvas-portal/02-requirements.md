@@ -55,7 +55,7 @@ Removed requirements are not listed.
 - Performance: NFR-1
 - Security and privacy: NFR-10, NFR-11, NFR-13, NFR-14
 - Reliability: NFR-20
-- Usability and accessibility: NFR-30
+- Usability and accessibility: NFR-30, NFR-34
 - Maintainability: NFR-41
 
 **Phase 2: Dragging and sync**
@@ -87,7 +87,7 @@ Removed requirements are not listed.
 - Accounts, sync, and data control: FR-53, FR-55
 - Performance: NFR-4
 - Reliability: NFR-21
-- Usability and accessibility: NFR-33, NFR-34, NFR-35, NFR-36
+- Usability and accessibility: NFR-33, NFR-35, NFR-36
 
 ## 2. Users
 
@@ -260,7 +260,7 @@ Removed requirements are not listed.
 | NFR-31 | Every action, including moving cards, can be done with the keyboard alone. | 2 |
 | NFR-32 | Meets WCAG 2.2 level AA (the standard web accessibility guideline) for contrast, labels, and focus. | 4 |
 | NFR-33 | Usable on a phone-width screen. As in Trello's mobile layout, one list fills the screen and the user swipes between lists. The UI details are worked out before this is built. | 5 |
-| NFR-34 | Visual style is close to Trello's within C-4: a colored board background, light gray lists with rounded corners, white cards with rounded corners and a soft shadow, and compact text. | 5 |
+| NFR-34 | Visual style is close to Trello's within C-4: a colored board background, light gray lists with rounded corners, white cards with rounded corners and a soft shadow, and compact text. | 1 |
 | NFR-35 | Board actions (open a card, show or hide a course, filter) need no more clicks than the same action in Trello. | 5 |
 | NFR-36 | Nothing depends on hovering. Once phones are supported, every action and every piece of information can be reached by tapping. Hover can add a shortcut on desktop, but never the only way. Earlier phases avoid hover-only designs where it costs nothing, so phone support needs less rework. | 5 |
 
@@ -319,3 +319,4 @@ Removed requirements are not listed.
 | 2026-10-25 | FR-80: minimized or expanded state is not saved and is set fresh on each load or refresh; dropping a card on an empty minimized list expands it. From the Team Lead's review. |
 | 2026-10-25 | NFR-33 (phone layout) and NFR-36 (nothing depends on hover) moved to Phase 5, from the Team Lead's review. |
 | 2026-10-25 | Added the Requirements by phase index, so it's clear which requirements are in scope for the current phase, from the Team Lead's review. |
+| 2026-10-25 | NFR-34 (Trello visual style) moved to Phase 1, from the Team Lead. |

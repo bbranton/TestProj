@@ -301,8 +301,8 @@ wireframes in the
 
 ### TP-13 Trello comparison review
 
-**Checks:** goal G-3, FR-60 to FR-77, NFR-34, NFR-35, C-4 · **Phase:** 2, then
-each later phase
+**Checks:** goal G-3, FR-60 to FR-77, NFR-34, NFR-35, C-4 · **Phase:** 1 for the
+look (NFR-34), 2 for dragging, then each later phase
 **Needs:** the portal and a free Trello account side by side, each with a
 board of about three lists and ten cards.
 
@@ -427,3 +427,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | Phone tests marked Phase 5: the NFR-36 touch test and TP-12 step 2; phone browsers join the manual passes in Phase 5. |
 | 2026-10-25 | Links point to the renamed User Interface Specification. |
 | 2026-10-25 | PR checklist: each PR lists the requirement IDs it implements, all from the current phase. |
+| 2026-10-25 | TP-13 starts in Phase 1 for the visual style (NFR-34). |

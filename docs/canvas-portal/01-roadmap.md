@@ -81,7 +81,9 @@ The smallest thing that is useful: connect, then see everything that's due.
 - A read-only board with the four lists Backlog, To do, In progress, and
   Done: every assignment is a Trello-style card in Backlog, sorted by due
   date, with the course show/hide buttons (FR-20 to FR-23, FR-31, FR-60,
-  FR-65, FR-66, FR-78).
+  FR-65, FR-66, FR-78). The board has Trello's visual style from the start:
+  colored background, light gray rounded lists, and white cards with a soft
+  shadow (NFR-34).
 - Each list can be minimized or expanded; expanded lists share the full
   width and resize as lists open and close, and empty lists start
   minimized, so in Phase 1 Backlog fills the board (FR-61, FR-80). Moving cards between lists comes in
@@ -291,3 +293,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | Minimize and expand lists (FR-80) added to Phase 1, along with the four lists (FR-31) and width-fitting lists (FR-61); Phase 2 no longer lists them. |
 | 2026-10-25 | Refresh is manual (FR-15), from the Team Lead's review: Phase 3 tunes and verifies Refresh instead of running a background job; background sync (NFR-4) is a Phase 5 idea; D-3 and R-3 updated. |
 | 2026-10-25 | Phone support (NFR-33, NFR-36) moved from Phase 4 to Phase 5, since its UI details need working out first; the Phase 4 exit criteria now cover laptops and desktops only. From the Team Lead's review. |
+| 2026-10-25 | Phase 1 includes Trello's visual style (NFR-34), from the Team Lead. |

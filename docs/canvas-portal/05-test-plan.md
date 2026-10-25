@@ -227,7 +227,7 @@ portal; the student token; a second device.
 
 ### TP-02 Bad and expired tokens
 
-**Checks:** FR-6, NFR-10 · **Phase:** 1
+**Checks:** FR-6, NFR-10, NFR-11 · **Phase:** 1
 **Needs:** a token you can delete in Canvas (the teacher sandbox's test
 student works).
 
@@ -239,11 +239,12 @@ student works).
 | 4 | In Canvas, delete that token; in the portal select Refresh | S-2 with the expired-token message |
 | 5 | Reconnect with a new token | The board is back as it was; from Phase 2 the moved card is still in its list (from Phase 5, with its note) |
 | 6 | Check the backend logs, the S-10 log, and the browser's address bar and history | The token text does not appear anywhere |
+| 7 | Open the local database and look at the stored Canvas connection | The token is stored encrypted: its text can't be read there (NFR-11) |
 
 ### TP-03 Assignments match Canvas
 
-**Checks:** FR-10 to FR-12, FR-20 to FR-23, FR-26, FR-65 · **Phase:** 1
-**Needs:** connected student account; for step 7, the Canvas teacher
+**Checks:** FR-10 to FR-12, FR-20 to FR-23, FR-26, FR-65, NFR-14 · **Phase:** 1
+**Needs:** connected student account; for step 8, the Canvas teacher
 sandbox with its test student.
 
 | Step | Action | Expected |
@@ -254,7 +255,8 @@ sandbox with its test student.
 | 4 | Compare points | Match |
 | 5 | Check one assignment of each state, and any marked Late, Missing, or Excused | Labels and tags match what Canvas shows on its own assignment page; the due badge is green for Submitted or Graded, red for Missing, plain otherwise |
 | 6 | Click any card | Its Canvas page opens in a new tab |
-| 7 | In the sandbox, give the test student their own due date for one assignment (an override); connect the portal as that student and select Refresh | The card shows the student's date, not the class's. This answers the design's open check on overrides |
+| 7 | Open the browser's developer tools, Network tab, and reload the board | Every request goes to the portal's own address; none go to analytics, trackers, or other third-party sites (NFR-14) |
+| 8 | In the sandbox, give the test student their own due date for one assignment (an override); connect the portal as that student and select Refresh | The card shows the student's date, not the class's. This answers the design's open check on overrides |
 
 ### TP-04 Course buttons, filters, and search
 
@@ -274,8 +276,8 @@ sandbox with its test student.
 
 ### TP-05 Canvas unavailable
 
-**Checks:** FR-13, FR-16, NFR-20 · **Phase:** 1
-**Needs:** local environment with recorded data.
+**Checks:** FR-13, FR-16, NFR-20, NFR-41 · **Phase:** 1
+**Needs:** local environment with recorded data and no Canvas token in `.env`, which also checks that the backend runs on recorded data alone (NFR-41).
 
 | Step | Action | Expected |
 |------|--------|----------|
@@ -560,4 +562,4 @@ TP-14 timings go in their own table, one row per run:
 | 2026-10-25 | Whole-set review: TP-04 renamed to match its Phase 1 steps, TP-10 starts in Phase 1 with NFR-12, and the unit test example says status mapping. |
 | 2026-10-25 | TP-07 (keyboard only), the NFR-31 and FR-73 automated tests, and the TP-13 shortcut step removed; TP-13 steps renumbered. From the Team Lead's review: keyboard actions are not a requirement. |
 | 2026-10-25 | FR-16 progress test; TP-05 step 2a checks the progress panel on failure; TP-14 reads times from the panel and uses the NFR-2 target. |
-| 2026-10-25 | In-depth QA review after PR #3: added *Procedures by phase* with entry and exit criteria, a Phase column in the coverage table, and failure severity; added Phase 1 tests for FR-1 address checks, FR-4, FR-5, FR-13, FR-20, FR-22 (time zone, override, points and status on cards), FR-26, FR-50, FR-60, FR-66, NFR-10, NFR-11, NFR-14, and NFR-41, Phase 2 tests for NFR-3 and FR-80 drops, and an NFR-2 row of its own; FR-16 test covers rate-limit waits, joining a running Refresh, retry limits, and stuck runs; concurrency tests also run on Postgres; new fixtures; TP-01 signs in, disconnects, and reconnects; the FR-65 test checks that red wins over green; TP-03 checks points and the override open check, and clicks the card instead of a missing ↗; TP-04 puts Phase 1 steps first and checks reload; TP-05 uses Retry refresh and a rate-limit step; TP-08 no longer needs Phase 5 notes or the Archived view; TP-09 drops Ctrl+Enter; TP-10, TP-12, and TP-13 mark their phases correctly (NFR-30 is Phase 1); TP-14 uses Refresh and a timing table; added TP-16 (read-only board, Phase 1) and TP-17 (deployed app, Phase 4); accessibility tests start in Phase 4 and check only screens that exist; tests for board messages, S-2 messages, and an empty account (TP-16 step 10); fixture path matches the repo; "column" now "list". |
+| 2026-10-25 | In-depth QA review after PR #3: added *Procedures by phase* with entry and exit criteria, a Phase column in the coverage table, and failure severity; added Phase 1 tests for FR-1 address checks, FR-4, FR-5, FR-13, FR-20, FR-22 (time zone, override, points and status on cards), FR-26, FR-50, FR-60, FR-66, NFR-10, NFR-11, NFR-14, and NFR-41, Phase 2 tests for NFR-3 and FR-80 drops, and an NFR-2 row of its own; FR-16 test covers rate-limit waits, joining a running Refresh, retry limits, and stuck runs; concurrency tests also run on Postgres; new fixtures; TP-01 signs in, disconnects, and reconnects; the FR-65 test checks that red wins over green; TP-03 checks points and the override open check, and clicks the card instead of a missing ↗; TP-04 puts Phase 1 steps first and checks reload; TP-05 uses Retry refresh and a rate-limit step; TP-08 no longer needs Phase 5 notes or the Archived view; TP-09 drops Ctrl+Enter; TP-10, TP-12, and TP-13 mark their phases correctly (NFR-30 is Phase 1); TP-14 uses Refresh and a timing table; added TP-16 (read-only board, Phase 1) and TP-17 (deployed app, Phase 4); accessibility tests start in Phase 4 and check only screens that exist; tests for board messages, S-2 messages, and an empty account (TP-16 step 10); manual checks for NFR-11 (TP-02), NFR-14 (TP-03), and NFR-41 (TP-05); fixture path matches the repo; "column" now "list". |

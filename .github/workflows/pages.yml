@@ -1,9 +1,9 @@
-name: Deploy QML hello world to GitHub Pages
+name: Deploy TestProj site to GitHub Pages
 
 on:
   push:
     branches: [master]
-    paths: ["qml-hello-wasm/site/**", ".github/workflows/pages.yml"]
+    paths: ["site/**", "qml-hello-wasm/site/**", ".github/workflows/pages.yml"]
   workflow_dispatch:
 
 permissions:
@@ -24,8 +24,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      # The landing page and placeholders come from site/; each app's built
+      # files are copied into their own subpath.
+      - name: Assemble site
+        run: |
+          mkdir -p _site/qml-hello
+          cp -r site/. _site/
+          cp -r qml-hello-wasm/site/. _site/qml-hello/
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: qml-hello-wasm/site
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4

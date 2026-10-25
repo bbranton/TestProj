@@ -103,7 +103,7 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | FR-67 | Opening a card changes the address to `/c/{id}`; reloading that address reopens it; Back closes it | E2E |
 | FR-68 | Card back shows every listed field for a Canvas card and for a personal card | E2E |
 | FR-69 | Pencil, right-click, and `e` open the quick edit menu | E2E |
-| FR-70 | Add, check, reorder, and delete checklist items; card front shows progress | API, E2E |
+| FR-70 (Phase 5) | Add, check, reorder, and delete checklist items; card front shows progress | API, E2E |
 | FR-72 | Each filter option, combined filters, and Clear | E2E |
 | FR-78 | Tapping a course button hides and shows its cards on board and table; Show all and Hide all; hidden cards keep their place; choice survives reload and a second session | API, E2E |
 | FR-73 | Every shortcut in the keyboard map does its action, and `?` lists them all | E2E |
@@ -313,3 +313,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | Course show/hide buttons (FR-78): automated test and TP-04 steps 5 and 6. |
 | 2026-10-25 | Hide all added to FR-78 tests and TP-04 step 7. |
 | 2026-10-25 | FR-37 removed: tests now check that a submitted card only changes its badge. |
+| 2026-10-25 | FR-70 checklist tests marked Phase 5. |

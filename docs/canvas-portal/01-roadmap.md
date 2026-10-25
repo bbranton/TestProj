@@ -118,7 +118,6 @@ second device, and the Trello comparison review (TP-13) passes for the board.
 - Add, edit, and delete a note on any assignment (FR-40 to FR-42).
 - Notes are the card's *Description*, as on a Trello card back; a card with a
   note shows the description icon (FR-43).
-- Checklists inside a card, with progress shown on the card front (FR-70).
 - Quick edit menu on each card (FR-69).
 - Personal cards: "+ Add a card" at the bottom of a list creates a card that
   isn't a Canvas assignment (FR-71, Q-6).
@@ -142,6 +141,8 @@ accessibility checks pass.
 - "Log in with Canvas" (OAuth 2) instead of pasting a token (D-4).
 - Calendar view of due dates; reminders.
 - Grades and submission feedback view.
+- Checklists inside a card, with progress such as 2/5 on the card front
+  (FR-70).
 - More than one board, such as one per course or term, as in Trello (FR-76).
 - Board background choices and the board menu sidebar (FR-75).
 - Parent view: a parent (Canvas *observer*) token shows the courses and
@@ -194,3 +195,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | Section 1 becomes Project goals, adding G-3 (feels like Trello). Phases 2 and 3 take on Trello-style board, card back, quick edit, checklists, and personal cards. Added risk R-7. |
 | 2026-10-25 | Phase 2 adds course show/hide buttons (FR-78), from the Team Lead's review. |
 | 2026-10-25 | Dropped the "Move to Done?" hint (FR-37) from Phase 2. |
+| 2026-10-25 | Checklists (FR-70) moved from Phase 3 to Phase 5. |

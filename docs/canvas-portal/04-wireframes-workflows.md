@@ -145,13 +145,13 @@ NFR-3, NFR-31, NFR-34.
 |  | | ▬▬ MATH 152    | | | | ▬▬ BIO 101     | | | | ▬▬ BIO 101     | |    |
 |  | | Problem set 7  | | | | Lab report 3   | | | | Quiz 4         | |    |
 |  | | (◷ Wed 9:00) ✎ | | | | (◷ Tue 11:59)  | | | | (◷ Oct 20 ✓)   | |    |
-|  | +----------------+ | | | ≡  ☑ 2/5       | | | +----------------+ |    |
+|  | +----------------+ | | | ≡              | | | +----------------+ |    |
 |  | +----------------+ | | +----------------+ | | + Add a card       |    |
 |  | | ▬▬ HIST 210    | | | ┌ ─ ─ ─ ─ ─ ─ ─ ┐  | +--------------------+    |
 |  | | Essay draft:   | | | │   drop gap    │  |                           |
 |  | | causes of WWI  | | | │   (FR-77)     │  | +--------------------+    |
 |  | | (◷ Nov 3) ≡    | | | └ ─ ─ ─ ─ ─ ─ ─ ┘  | | + Add another list |    |
-|  | | ☑ 1/3          | | | + Add a card       | +--------------------+    |
+|  | |                | | | + Add a card       | +--------------------+    |
 |  | |                | | +--------------------+                           |
 |  | +----------------+ |                                                  |
 |  | +----------------+ |                                                  |
@@ -170,7 +170,7 @@ NFR-3, NFR-31, NFR-34.
   ▬▬ label strip in the course color (FR-66). (◷ ...) due badge: yellow due
   soon, red overdue, green with ✓ when complete (FR-65). ≡ has a description.
   ✎ is shown here on the card the mouse is over.
-  ☑ 2/5 checklist progress (FR-70). ✎ appears on hover and opens S-7.
+  ✎ appears on hover and opens S-7.
   List title: click to rename (FR-63). Drag a list by its header (FR-62).
   […] list menu: Add card, Move list, Archive list (FR-36).
   Cards move between lists only when the student drags them; the portal never
@@ -179,7 +179,7 @@ NFR-3, NFR-31, NFR-34.
 
 ### S-5 Card back
 
-Requirements: FR-22, FR-26, FR-40 to FR-44, FR-46, FR-67, FR-68, FR-70.
+Requirements: FR-22, FR-26, FR-40 to FR-44, FR-46, FR-67, FR-68.
 Opens as a dialog over the dimmed board at `/c/{cardId}`. On phones it fills
 the screen.
 
@@ -190,8 +190,8 @@ the screen.
 |   | ▭ Lab report 3                                              [x]  |   |
 |   |   in list In progress  <- click to move                          |   |
 |   |                                                                  |   |
-|   | Labels          Due date                       | Add to card     |   |
-|   | [■ BIO 101]     [ ] Tue Oct 28, 11:59 PM       | [☑ Checklist]   |   |
+|   | Labels          Due date                       |                 |   |
+|   | [■ BIO 101]     [ ] Tue Oct 28, 11:59 PM       |                 |   |
 |   |                 (Due soon)                     |                 |   |
 |   | 20 points · Not submitted                      | Actions         |   |
 |   |                                                | [→ Move      ]  |   |
@@ -202,15 +202,6 @@ the screen.
 |   | | Data is in the shared folder.            |   |                 |   |
 |   | +------------------------------------------+   |                 |   |
 |   | Saved 10:51 AM                     [Edit]      |                 |   |
-|   |                                                |                 |   |
-|   | ☑ Checklist                 2/5   [Delete]     |                 |   |
-|   | [=====-------]  40%                            |                 |   |
-|   | [x] Collect data                               |                 |   |
-|   | [x] Draw graphs                                |                 |   |
-|   | [ ] Write discussion                           |                 |   |
-|   | [ ] Proofread                                  |                 |   |
-|   | [ ] Submit in Canvas                           |                 |   |
-|   | [Add an item]                                  |                 |   |
 |   +------------------------------------------------------------------+   |
 +--------------------------------------------------------------------------+
   The due-date checkbox is display only for Canvas cards: completion comes
@@ -252,7 +243,7 @@ as in Trello.
 |   | ▬▬ BIO 101       |  | [▭ Open card        ]  |           |
 |   | Lab report 3     |  | [→ Move             ]  |           |
 |   | (◷ Tue 11:59) ≡  |  | [■ Change label color] |           |
-|   | ☑ 2/5            |  | [↗ Open in Canvas   ]  |           |
+|   |                  |  | [↗ Open in Canvas   ]  |           |
 |   +------------------+  | [▤ Archive          ]  |           |
 |                         +------------------------+           |
 +--------------------------------------------------------------+
@@ -325,7 +316,7 @@ The user swipes sideways between lists, and dots show which list is shown.
 | +------------------------+ |
 | | ▬▬ BIO 101             | |
 | | Lab report 3           | |
-| | (◷ Tue 11:59) ≡ ☑ 2/5  | |
+| | (◷ Tue 11:59) ≡        | |
 | +------------------------+ |
 | +------------------------+ |
 | | ▬▬ MATH 152            | |
@@ -466,7 +457,7 @@ flowchart TD
     C -- Enter --> D[Card added; box stays open<br/>for the next card]
     D --> B
     C -- Escape --> E[Box closes; nothing added]
-    D --> F[Open the card to add a due date,<br/>description, or checklist]
+    D --> F[Open the card to add a due date,<br/>or description]
 ```
 
 ## Change log
@@ -478,3 +469,4 @@ flowchart TD
 | 2026-10-25 | Added the course show/hide button row under the header on S-3, S-4, and the phone layout (FR-78), from the Team Lead's review. |
 | 2026-10-25 | Added Hide all next to Show all on the course button row (FR-78). |
 | 2026-10-25 | Removed the "Move to Done?" hint (FR-37) from S-4 and W-5; students drag cards to Done themselves. |
+| 2026-10-25 | Checklists (FR-70) moved to Phase 5: removed checklist badges and the card back checklist section. |

@@ -154,8 +154,10 @@ Design notes:
 - **Card `position` is a sortable string** (a technique called *fractional
   indexing*: to put a card between "a" and "b", give it "an"). Moving one card
   then updates one row instead of renumbering the whole list (NFR-3). Lists
-  and checklist items use the same technique, so they can be dragged too
-  (FR-62).
+  use the same technique, so they can be dragged too (FR-62).
+- **Checklists** (FR-70) are Phase 5. The `CHECKLIST` and `CHECKLIST_ITEM`
+  tables are shown so the model is ready for them, but they are not built
+  until then; checklist items will use the same position technique.
 - **Notes are separate from cards**, so a note survives if a card is archived
   or a list is archived (NFR-21). A note also records its
   `canvas_assignment_id`, so it can be reattached if its card is rebuilt.
@@ -193,7 +195,7 @@ and require a signed-in session except where noted.
 | `GET /api/board/cards/{id}` | Everything for the card back | FR-67, FR-68 |
 | `PATCH /api/board/cards/{id}` | Move (new list and position), archive, or restore a card | FR-32, FR-33, FR-74 |
 | `GET /api/board/archived` | Archived lists and cards | FR-74 |
-| `POST`, `PATCH`, `DELETE /api/cards/{id}/checklists/...` | Add, rename, check off, reorder, and remove checklists and items | FR-70 |
+| `POST`, `PATCH`, `DELETE /api/cards/{id}/checklists/...` | Phase 5: add, rename, check off, reorder, and remove checklists and items | FR-70 |
 | `PATCH /api/labels/{course_id}` | Change a course label's color or name, or hide or show the course | FR-66, FR-78 |
 | `GET /api/notes/{assignment_id}` | Read a note | FR-43 |
 | `PUT /api/notes/{assignment_id}` | Create or replace a note | FR-40 to FR-42 |
@@ -399,10 +401,9 @@ flowchart TD
     List --> ListHeader["ListHeader<br/>inline rename, list menu, drag handle"]
     List --> Card["CardFront (one per card)"]
     List --> AddCard["AddCardComposer"]
-    Card --> Badges["Label strip, due badge,<br/>description icon, checklist progress"]
+    Card --> Badges["Label strip, due badge,<br/>description icon"]
     Card --> QuickEdit["QuickEditMenu<br/>pencil or right-click"]
     CardBack --> Desc["Description (note editor)"]
-    CardBack --> Checklists
     CardBack --> Sidebar["Card actions: Move, Labels, Open in Canvas, Archive"]
 ```
 
@@ -441,8 +442,7 @@ UI uses:
 Nothing above depends on the framework; the backend and data model are the
 same either way. The frontend's hardest parts are the Trello-style board
 (smooth, accessible drag and drop of cards and lists, FR-77 and NFR-31), the
-card back dialog with its own address (FR-67), and the note and checklist
-editors (FR-42, FR-70).
+card back dialog with its own address (FR-67), and the note editor (FR-42).
 
 The Trello goal (G-3) leans toward React. React has the most examples of
 Trello-style boards to learn from, and Pragmatic drag and drop ships extra
@@ -479,3 +479,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | D-7 decided: Sign in with Google. Added auth endpoints and sign-in sequence. |
 | 2026-10-25 | Trello goal (G-3): data model now board, lists, cards, checklists, course labels; new list, card, checklist, and label endpoints; new section 9 on Trello-style UI; D-1 section updated. |
 | 2026-10-25 | Course show/hide buttons (FR-78): `hidden` on course labels, toggle bar component, label endpoint. |
+| 2026-10-25 | Checklists (FR-70) marked Phase 5: tables and endpoints kept for later, removed from the Phase 2 component diagram. |

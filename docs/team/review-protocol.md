@@ -6,14 +6,19 @@ How personas review each other's work. The personas are listed in the
 ## Who reviews what
 
 Every piece of work has one **owner** persona, who writes it and answers its
-findings, and one or more **required reviewers**. Optional reviewers join
-when the change touches what they own. Management checks every review for
-this and brings in any other persona the topic or changes call for.
+findings, and one or more **required reviewers**. An optional reviewer is
+added when the change touches its area. The owner lists the required and
+optional reviewers in the PR description, with a reason for each optional
+one.
+
+Picking optional reviewers follows Management's rule: given the topic or
+the changes, does another persona need to join? Any reviewer can also ask
+for another persona in a finding.
 
 | Work | Owner | Required reviewers | Optional reviewers |
 |------|-------|--------------------|--------------------|
 | Roadmap (`01-roadmap.md`) | Management | Product and QA | Architecture, DevOps |
-| Requirements (`02-requirements.md`) | Product and QA | Architecture | UI/UX, Management |
+| Requirements (`02-requirements.md`) | Product and QA | Architecture, plus Management when a phase changes | UI/UX, Developer |
 | Design (`03-design.md`) | Architecture | Product and QA, Developer | UI/UX, DevOps |
 | Transition plan (major design change) | Architecture | Developer, Product and QA | DevOps, Management |
 | UI specification (`04-ui-specification.md`) | UI/UX | Product and QA, Architecture | Management, when features must be hidden or disabled to fit the release schedule |
@@ -22,6 +27,7 @@ this and brings in any other persona the topic or changes call for.
 | Code PR (frontend or any UI change) | Developer | Architecture, UI/UX, Product and QA | DevOps |
 | CI, deploy, or hosting change | DevOps | Developer | Architecture, Product and QA |
 | Phase exit (moving to the next phase) | Management | Product and QA | Architecture, Developer, UI/UX, DevOps |
+| Team process (`docs/team/`, team skills) | Management | Each persona whose file changes | Any other persona |
 
 Each reviewer looks through its own lens, using the review checklist in its
 persona file. For example, DevOps reads the design asking "how is this
@@ -39,17 +45,20 @@ gives a persona a voice, not a decision: it can raise findings and recommend,
 but the persona that owns the area makes the call. A persona's recommendation
 outside its area is advice, never sign-off.
 
-| Decision | Decided by | Never decided by |
-|----------|------------|------------------|
-| Business goals | Team Lead | Any persona |
-| Priorities, phases, scope, timelines | Management | Product and QA, Architecture, Developer, UI/UX, DevOps |
-| What a feature must do | Product and QA | Management, Architecture, Developer, UI/UX, DevOps |
-| How it's tested, and whether tests pass | Product and QA | Management, Architecture, Developer, UI/UX, DevOps |
-| Design: structure, data, APIs, technology, security | Architecture | Management, Product and QA, Developer, UI/UX, DevOps |
-| Writing code, coding standards, bug fixes | Developer | Management, Product and QA, Architecture, UI/UX, DevOps |
-| Screens, layout, wording, accessibility | UI/UX | Management, Product and QA, Architecture, Developer, DevOps |
-| CI, builds, deploys, hosting, secrets | DevOps | Management, Product and QA, Architecture, Developer, UI/UX |
-| Approving and merging a PR | Team Lead | Any persona |
+| Decision | Decided by | Needs the Team Lead for |
+|----------|------------|-------------------------|
+| Business goals | Team Lead | Always |
+| Priorities, phases, scope, timelines, features hidden for a release | Management | Starting a phase; adding or dropping a goal |
+| What a feature must do | Product and QA | Adding, removing, or moving a requirement between phases |
+| How it's tested, and whether tests pass | Product and QA | Calling a phase done; removing or weakening a test |
+| Design: structure, data, APIs, technology, security | Architecture | A new dependency, service, or data store; how the Canvas token is stored or sent; starting a transition plan |
+| Writing code, coding standards, bug fixes | Developer | Nothing directly; design changes go to Architecture |
+| Screens, layout, wording, accessibility | UI/UX | A new screen or a change to the main flow |
+| CI, builds, deploys, hosting, secrets | DevOps | Changes to the live app or hosting; a paid service; a new secret store; new access |
+| Approving and merging a PR | Team Lead | Always |
+
+Only the persona in **Decided by** makes that decision. Every other persona
+can raise findings about it, and nothing more.
 
 Each persona file has a **Decisions** section that lists what it decides,
 what it defers and to whom, and what needs the Team Lead. When a decision
@@ -75,8 +84,10 @@ the decision to them.
    - **Recommend with notes** — only minor findings, which the owner may
      fix later.
    - **Changes needed** — at least one finding must be fixed before merge.
-6. **Team Lead decides.** The PR is ready when the owner and every required
-   reviewer recommend it. The Team Lead approves and merges. A persona never
+6. **Re-review.** After the owner pushes fixes for a **Changes needed**
+   verdict, that reviewer checks the fixes and updates its verdict.
+7. **Team Lead decides.** The PR is ready when every required reviewer's
+   latest verdict is **Recommend** or **Recommend with notes**. The Team Lead approves and merges. A persona never
    approves or merges.
 
 ## Findings table

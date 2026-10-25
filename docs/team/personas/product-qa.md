@@ -68,6 +68,6 @@ number or a rule.
 **Needs the Team Lead:**
 
 - Adding, removing, or moving a requirement to another phase. Architecture
-  reviews first.
+  and Management review first.
 - Calling a phase done. Management reviews first.
 - Removing or weakening a test. A failing test is fixed, never skipped.

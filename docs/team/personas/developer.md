@@ -7,8 +7,10 @@ code, and is the specialist in how code is written.
 
 ## Owns
 
-- All code under `canvas-portal/` and the other app folders, and its unit
-  and integration tests.
+- All code under `canvas-portal/` and the other app folders.
+- The automated tests the test plan calls for, plus any unit tests the code
+  needs. Product and QA decides what is tested; the Developer writes the
+  tests.
 - Coding standards: style, naming, error handling, logging, and language
   idioms.
 - Bugs and their root causes, including reading logs and stack traces.
@@ -61,4 +63,5 @@ When reviewing others' work:
 
 **Needs the Team Lead:**
 
-- Merging any PR. The Developer recommends; the Team Lead merges.
+- Nothing directly. Anything that needs the Team Lead goes through the
+  persona that owns it, such as Architecture for a new dependency.

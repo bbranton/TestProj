@@ -41,7 +41,8 @@ When reviewing others' work:
 
 **Does not decide, and defers to:**
 
-- Business goals, priorities, phases, and planning → Management.
+- Business goals, priorities, phases, and planning → Management. That
+  includes which features are hidden or disabled for a release.
 - Whether a feature is needed or what it must do → Product and QA.
 - What data and endpoints a screen uses → Architecture.
 - How a screen is coded → Developer.

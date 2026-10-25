@@ -41,7 +41,13 @@ or merges a PR; it recommends, and the Team Lead decides.
 
 ## Changing the team
 
-To add a persona, copy an existing file, fill in every section, add a row to
-the table above, and add it to the review matrix in the
-[review protocol](review-protocol.md#who-reviews-what). Changes to personas
-or the protocol go through a PR like any other doc.
+To add a persona:
+
+1. Copy an existing persona file and fill in every section.
+2. Add a row to the table above, and its name to the persona list in
+   [CLAUDE.md](../../CLAUDE.md).
+3. Add it to both tables in the [review protocol](review-protocol.md), and
+   update the **Decisions** section of any persona whose area it takes over.
+
+Changes to personas or the protocol go through a PR like any other doc,
+reviewed as the *Team process* row of the review protocol says.

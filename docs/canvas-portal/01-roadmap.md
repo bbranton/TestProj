@@ -41,6 +41,17 @@ The bars show order and rough size. There are no fixed dates; a phase is done
 when its exit criteria are met. Phase 0 is done. The current phase is named in
 the repo's [CLAUDE.md](../../CLAUDE.md).
 
+Each phase ends with something a student can use, so the project is worth
+having even if it stops after any phase.
+
+| Phase | What a student can do afterward | Goals |
+|-------|---------------------------------|-------|
+| 1 | Sign in anywhere and see everything due across all courses on one board | G-1, G-2, G-5 |
+| 2 | Organize that board by dragging cards, and see the same board on every device | G-3, G-4 |
+| 3 | Trust that a Refresh is quick and that the board matches Canvas | G-1 |
+| 4 | Use it as a deployed site, without the Team Lead running it locally | All |
+| 5 | Ideas only; each is planned into a phase when the Team Lead picks it | |
+
 ## 3. Phases in detail
 
 ### Phase 0: Decisions and setup
@@ -55,12 +66,15 @@ phases only add features.
 - Create a `canvas-portal/` folder in this repo with a `frontend/` and a
   `backend/` part, each with a "hello" page or endpoint. Done.
 - Add GitHub Actions CI that builds both parts and runs their tests on every
-  pull request. Done.
+  pull request that changes the app. Done.
 - Confirm the Team Lead's school allows personal access tokens (risk R-1). Done:
   the Team Lead has a student token and a parent (observer) token for testing.
 
 **Exit criteria:** design and User Interface Specification reviewed;
 decisions D-1, D-4, D-5, and D-6 recorded; CI is green on the skeleton app.
+The documents were reviewed in PR #3 and again in one pull request per
+document after it; they stay marked Draft until that second review is
+merged.
 
 ### Phase 1: Read-only viewer (minimum viable product)
 
@@ -117,9 +131,21 @@ The smallest thing that is useful: connect, then see everything that's due.
   student account and record it as a baseline (TP-14). Tuning is Phase 3; see
   the design's [Making Canvas loads fast](03-design.md#making-canvas-loads-fast-nfr-1-nfr-2-r-3).
 
+**Order of work.** Phase 1 is the largest phase, so it is built in small
+pull requests, each one usable on its own:
+
+1. Sign in with Google and the data model (FR-50).
+2. Connect, check, and disconnect Canvas (FR-1 to FR-6).
+3. Fetch, cache, and Refresh with progress (FR-10 to FR-16). The first
+   real assignment list appears here: milestone M1.
+4. The read-only board with its lists, course buttons, and visual style.
+   Milestone M2.
+5. The TP-14 baseline and the Phase 1 manual test pass.
+
 **Exit criteria:** the Team Lead can connect a real account and see the same
-assignments Canvas shows, verified by the Phase 1 test procedures, and
-TP-14 has a recorded baseline.
+assignments Canvas shows. TP-01, TP-02, TP-03, and TP-05 pass, along with
+the Phase 1 steps of TP-04, TP-10, and TP-13. CI is green, and TP-14 has a
+recorded baseline.
 
 ### Phase 2: Dragging and sync
 
@@ -129,6 +155,9 @@ stored on the server (D-2), using the accounts from Phase 1. Keeping the
 student's own devices in sync is needed here, but it is the simpler kind of
 sync; keeping the backend in step with Canvas is the hard part and gets
 Phase 3.
+
+**Before it starts:** D-8 (polling or live push) is decided, and the drag
+and drop library is chosen (design, section 2).
 
 - The board stops being read only: drag cards between lists with Trello's
   drag feel; cards keep their due date order, and dropping a card on an
@@ -163,17 +192,21 @@ added later, changed, or cleared again; and a fetch can fail halfway. Every
 one of these cases has a planned outcome in the design (*What can change in
 Canvas*) and a test (TP-15).
 
+**Before it starts:** Q-7 in the requirements (what happens to the cards of
+an ended or dropped course) is answered.
+
 - Tune Refresh, working through the design's list in order: Canvas
-  GraphQL, descriptions left out of the main load, nearest due dates first,
-  then the Planner API as a fallback (NFR-1, NFR-2, R-3).
+  GraphQL, descriptions left out of the main load, then the Planner API as
+  a fallback (NFR-1, NFR-2, R-3). GraphQL reads data but is sent as a
+  `POST`, so using it needs the Team Lead's call against NFR-13 (only `GET`
+  calls to Canvas); see the design.
 - Each Refresh brings in every change: new, changed, and removed
   assignments, new due dates and submission states, and course changes
   such as a new term (FR-13, FR-34, FR-35, FR-45).
 - Every kind of Canvas change has a defined result on the board: new,
   deleted, unpublished and republished, renamed, fields added, changed, or
   cleared, submission state going forward or back, and courses ending or
-  being dropped (FR-39, FR-45, Q-7). Q-7 in the requirements must be
-  answered before this work starts.
+  being dropped (FR-39, FR-45, Q-7).
 - A partial or failed fetch never archives or changes cards (FR-45).
 - Changes from a Refresh reach the student's other open devices through the
   Phase 2 sync (NFR-22).
@@ -188,6 +221,8 @@ Lead's real account produces no rate-limit errors and no lost, duplicated,
 or wrongly archived cards.
 
 ### Phase 4: Polish and deploy
+
+**Before it starts:** D-3 (hosting) is decided.
 
 - Delete my data (FR-54).
 - Accessibility pass for contrast, labels, and focus (NFR-32), and a final
@@ -252,14 +287,14 @@ pass.
 
 ## 4. Milestones
 
-| ID | Milestone | Phase | Shows that |
-|----|-----------|-------|------------|
-| M0 | Empty app builds in CI | 0 | Tooling works end to end |
-| M1 | First real assignment list | 1 | Canvas connection works |
-| M2 | Viewer complete | 1 | MVP usable day to day |
-| M3 | Dragging saves and syncs | 2 | Core organizing feature works on every device |
-| M4 | Fast loads and Canvas sync | 3 | Board stays current without waiting on Canvas |
-| M5 | Deployed with sync | 4 | Usable from any laptop or desktop browser |
+| ID | Milestone | Phase | Shows that | Status |
+|----|-----------|-------|------------|--------|
+| M0 | Empty app builds in CI | 0 | Tooling works end to end | Reached 2026-10-25 |
+| M1 | First real assignment list | 1 | Canvas connection works: after step 3 of Phase 1's order of work, the Team Lead's real courses and assignments come back from a Refresh | |
+| M2 | Viewer complete | 1 | MVP usable day to day: Phase 1's exit criteria are met | |
+| M3 | Dragging saves and syncs | 2 | Core organizing feature works on every device | |
+| M4 | Fast loads and Canvas sync | 3 | Board stays current without waiting on Canvas | |
+| M5 | Deployed | 4 | Usable from any laptop or desktop browser | |
 
 ## 5. Open decisions
 
@@ -290,6 +325,34 @@ decisions are struck through and kept for the record.
 | R-7 | Matching Trello too closely in look (logo, artwork, exact styling) | Trademark or copyright complaint | Copy behavior and layout patterns only; our own name, colors, and icons (C-4). |
 | R-8 | Sync bugs: two devices or two browser tabs disagree, or a card is lost or duplicated | Student stops trusting the board | Phase 2 is only dragging and sync; one row per card enforced by the database; concurrency tests in CI and the TP-06 sync procedure (NFR-22). |
 | R-9 | The backend falls out of step with Canvas: a teacher deletes, changes, or clears something and the board shows stale data, loses a card, or archives one that still exists | Students miss or mistrust deadlines | Phase 3 is dedicated to it; every change case has a planned outcome (design, *What can change in Canvas*); only complete fetches can archive; scenario fixtures replayed in CI and TP-15 against a real account. |
+| R-10 | Scope grows faster than it is built: ideas and fixes pile into the current phase, and pull requests touch many documents at once | Phases never finish, and reviews get too big to check | Section 7: new ideas go to Phase 5 by default, a phase's scope is fixed once it starts, and each pull request covers one document or one feature. |
+| R-11 | One person carries every decision, every review, and every test with real accounts | Work stalls while it waits on the Team Lead | Section 8 says which tasks need the Team Lead. Decisions are asked for before the phase that needs them ("Before it starts" in each phase), and CI uses recorded Canvas data, so only the manual passes need a real token. |
+| R-12 | Google's review for publishing the sign-in app takes longer than expected | Phase 4 can't let in students who aren't test users | The app asks only for `openid email profile`, which needs the lightest review. Start publishing early in Phase 4, not at the end. |
+
+## 7. Scope control
+
+The plan has grown quickly, so these rules keep each phase finishable:
+
+- **New ideas go to Phase 5.** An idea joins an earlier phase only when the
+  Team Lead approves it, in a pull request that updates this roadmap and the
+  requirements' [Requirements by phase](02-requirements.md#requirements-by-phase)
+  together.
+- **A phase's scope is fixed once it starts.** If a requirement in the
+  current phase turns out bigger than expected, the Team Lead either moves
+  part of it to a later phase or accepts a later finish; it doesn't quietly
+  grow.
+- **Small pull requests.** Each pull request covers one document or one
+  feature. A fix that a change needs in another document is noted and made in
+  that document's own pull request.
+- **Exit criteria decide "done".** A phase isn't done until its exit
+  criteria pass, and nothing outside them is needed to call it done.
+
+## 8. Roles
+
+| Who | Does |
+|-----|------|
+| Team Lead | Decides open decisions and questions; approves scope changes; reviews and merges every pull request; runs the manual test procedures that need real Canvas accounts or the teacher sandbox; sets up the Google and Canvas accounts in each phase's prerequisites; changes the current phase in CLAUDE.md. |
+| Developer (Claude) | Writes code, tests, and documents in pull requests limited to the current phase; lists the requirement IDs each pull request implements; brings anything outside the current phase to the Team Lead instead of building it. |
 
 ## Change log
 
@@ -332,3 +395,4 @@ decisions are struck through and kept for the record.
 | 2026-10-25 | D-1 decided: React. |
 | 2026-10-25 | Phase 0 marked done; the Google OAuth client and the Canvas teacher sandbox move to Phase 1 as prerequisites, from the Team Lead. |
 | 2026-10-25 | In-depth review after PR #3: Phase 0 shown as done in the chart and its section; Phase 1 now lists every Phase 1 requirement in the requirements index (adds FR-15, FR-16, FR-34, FR-38, NFR-1, NFR-10, NFR-12 to NFR-14, NFR-30, NFR-41); Phase 2 lists FR-60 and FR-80 drops; Phase 3 no longer claims joining a running Refresh (Phase 1) and needs Q-7 answered first; Phase 4 adds HTTPS, publishing the Google OAuth client, and data deletion to the exit criteria; Phase 5 adds FR-29 and NFR-35; D-3 rules out serverless backends; R-1 marked cleared and R-4 struck through. |
+| 2026-10-25 | Program-management review: section 2 says what each phase gives a student; Phase 1 gets an order of work tied to M1 and M2, and its exit criteria name the test procedures; Phases 2 to 4 list the decisions needed before they start; milestones gain a status, and M5 is renamed "Deployed"; added risks R-10 (scope growth), R-11 (one person carries every decision and test), and R-12 (Google review time); added section 7, *Scope control*, and section 8, *Roles*. Phase 3 tuning no longer lists "nearest due dates first" (it changes nothing when only a complete Refresh updates the board) and notes that GraphQL's `POST` needs a call against NFR-13, to match the design review. |

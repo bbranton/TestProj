@@ -58,7 +58,8 @@ When reviewing others' work:
 - Writing the code, coding standards, and how a bug is fixed → Developer.
   Architecture can say code doesn't follow the design, but doesn't rewrite
   it.
-- How the code is built in CI, deployed, and hosted → DevOps.
+- How the code is built, installed, deployed, and hosted, and how a chosen
+  dependency is integrated → DevOps.
 
 **Needs the Team Lead:**
 

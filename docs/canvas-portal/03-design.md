@@ -1,6 +1,6 @@
 # Design
 
-**Status:** Draft · **Owner:** Bridget · **Last updated:** 2026-10-25
+**Status:** Draft · **Owner:** Team Lead · **Last updated:** 2026-10-25
 
 This document describes how the portal is built: its parts, the data it
 stores, how those parts talk to each other, and how each part meets the

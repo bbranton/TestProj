@@ -1,6 +1,6 @@
 # Wireframes and workflows
 
-**Status:** Draft · **Owner:** Bridget · **Last updated:** 2026-10-25
+**Status:** Draft · **Owner:** Team Lead · **Last updated:** 2026-10-25
 
 Wireframes are rough sketches of each screen: what is on it and where, not
 colors or fonts. They are drawn here as text so they can be reviewed and
@@ -189,7 +189,7 @@ Requirements: FR-4, FR-53, FR-54.
 | Settings                                                     |
 |                                                              |
 | Canvas                                                       |
-|   Connected as Bridget B. at myschool.instructure.com        |
+|   Connected as Alex S. at myschool.instructure.com           |
 |   [ Disconnect Canvas ]                                      |
 |                                                              |
 | Your data                                                    |
@@ -197,7 +197,7 @@ Requirements: FR-4, FR-53, FR-54.
 |   [ Delete my account and all data ]   <- asks to confirm    |
 |                                                              |
 | Account                                                      |
-|   Signed in as bridget@example.com     [ Sign out ]          |
+|   Signed in as alex@example.com        [ Sign out ]          |
 +--------------------------------------------------------------+
 ```
 

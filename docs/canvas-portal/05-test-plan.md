@@ -1,6 +1,6 @@
 # Test procedures
 
-**Status:** Draft · **Owner:** Bridget · **Last updated:** 2026-10-25
+**Status:** Draft · **Owner:** Team Lead · **Last updated:** 2026-10-25
 
 This document says how we check that the portal meets its
 [requirements](02-requirements.md). Automated tests run on every pull
@@ -15,7 +15,7 @@ results are recorded in section 7.
 | **API** | A backend endpoint end to end, with a test database and recorded Canvas responses | pytest + FastAPI test client | Every PR, in CI |
 | **End-to-end (E2E)** | A real browser clicking through screens against a running backend with recorded Canvas data | Playwright | Every PR, in CI |
 | **Accessibility** | Contrast, labels, focus, keyboard use | axe-core inside Playwright, plus manual keyboard pass | Every PR (automated); each phase (manual) |
-| **Manual, live Canvas** | Real accounts with Bridget's student and parent tokens | A person following section 5 | Before each phase is done |
+| **Manual, live Canvas** | Real accounts with the Team Lead's student and parent tokens | A person following section 5 | Before each phase is done |
 
 The Qt parallel: unit tests are like Qt Test cases on a single class, and E2E
 tests are like Squish driving the whole app.

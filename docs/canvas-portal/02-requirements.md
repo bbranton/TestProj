@@ -1,6 +1,6 @@
 # Requirements
 
-**Status:** Draft · **Owner:** Bridget · **Last updated:** 2026-10-25
+**Status:** Draft · **Owner:** Team Lead · **Last updated:** 2026-10-25
 
 ## 1. Purpose and scope
 
@@ -29,14 +29,14 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 |------|-------------|-----------|
 | Student | Enrolled in one or more Canvas courses at a school | See everything due and plan their work |
 | Parent (observer) | A Canvas *observer* account linked to one or more students; sees their courses and assignments with limited access | Keep track of a student's work (Phase 5, see Q-5) |
-| Developer (Bridget) | Builds and runs the portal | Test against real and sample Canvas data |
+| Developer (Team Lead) | Builds and runs the portal | Test against real and sample Canvas data |
 
 ## 3. Assumptions and constraints
 
 - **A-1** The student can create a Canvas personal access token at their
   school (*Account → Settings → Approved Integrations → New Access Token*).
-  Some schools disable this; see risk R-1. Bridget's school allows it, and
-  Bridget has a student token and a parent (observer) token for testing.
+  Some schools disable this; see risk R-1. The Team Lead's school allows it, and
+  the Team Lead has a student token and a parent (observer) token for testing.
 - **A-2** Each school has its own Canvas address, such as
   `https://myschool.instructure.com`, so the address is a user setting.
 - **A-3** Test tokens are real credentials. They are kept out of the
@@ -166,7 +166,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 
 ## 6. Open questions
 
-- **Q-1** Does Bridget's school allow personal access tokens? (Blocks Phase 1; see R-1.)
+- **Q-1** Does the Team Lead's school allow personal access tokens? (Blocks Phase 1; see R-1.)
 - **Q-2** Should "Due soon" be 48 hours, or configurable?
 - **Q-3** Should discussion posts and quizzes appear alongside assignments? Canvas exposes them as assignments in most cases, so the default is yes.
 - ~~**Q-4** Is multi-device sync wanted, or is one browser enough?~~ Answered: yes, the user signs in from anywhere and sees their saved state (D-2).

@@ -1,6 +1,6 @@
 # Roadmap
 
-**Status:** Draft · **Owner:** Bridget · **Last updated:** 2026-10-25
+**Status:** Draft · **Owner:** Team Lead · **Last updated:** 2026-10-25
 
 ## 1. Goal
 
@@ -46,8 +46,8 @@ phases only add features.
   `backend/` part, each with a "hello" page or endpoint.
 - Add GitHub Actions CI that builds both parts and runs their (empty) test
   suites on every pull request.
-- Confirm Bridget's school allows personal access tokens (risk R-1). Done:
-  Bridget has a student token and a parent (observer) token for testing.
+- Confirm the Team Lead's school allows personal access tokens (risk R-1). Done:
+  the Team Lead has a student token and a parent (observer) token for testing.
 
 **Exit criteria:** design and Phase 1 wireframes reviewed; decisions D-1, D-4,
 D-5, and D-6 recorded; CI is green on an empty app;
@@ -66,7 +66,7 @@ The smallest thing that is useful: connect, then see everything that's due.
 - Clear error messages for a bad token, an expired token, or Canvas being
   unreachable (FR-6, NFR-20).
 
-**Exit criteria:** Bridget can connect a real account and see the same
+**Exit criteria:** the Team Lead can connect a real account and see the same
 assignments Canvas shows, verified by the Phase 1 test procedures.
 
 ### Phase 2: Accounts and kanban board
@@ -135,15 +135,15 @@ accessibility checks pass.
 
 ## 5. Open decisions
 
-These need Bridget's call. Each has a recommendation, but nothing is settled.
+These need the Team Lead's call. Each has a recommendation, but nothing is settled.
 
 | ID | Decision | Options | Recommendation | Needed by |
 |----|----------|---------|----------------|-----------|
-| D-1 | Frontend framework | **React** (largest ecosystem, most tutorials, mature drag-and-drop libraries such as dnd-kit) or **Svelte** (less code, closer to QML's declarative feel, smaller community) | **Postponed** by Bridget (2026-10-25) until requirements and design are further along, since the features may change which fits best. Leaning React for learning resources and drag-and-drop support. | End of Phase 0 design |
-| D-2 | Where notes and board layout are stored | **Browser local storage** (no accounts, works offline, but tied to one browser and lost if site data is cleared) or **server database** (follows the user between devices, but needs portal sign-in and more security work) | **Decided** (Bridget, 2026-10-25): server database. The user should be able to sign in from anywhere and see their saved state. | Done |
+| D-1 | Frontend framework | **React** (largest ecosystem, most tutorials, mature drag-and-drop libraries such as dnd-kit) or **Svelte** (less code, closer to QML's declarative feel, smaller community) | **Postponed** by the Team Lead (2026-10-25) until requirements and design are further along, since the features may change which fits best. Leaning React for learning resources and drag-and-drop support. | End of Phase 0 design |
+| D-2 | Where notes and board layout are stored | **Browser local storage** (no accounts, works offline, but tied to one browser and lost if site data is cleared) or **server database** (follows the user between devices, but needs portal sign-in and more security work) | **Decided** (Team Lead, 2026-10-25): server database. The user should be able to sign in from anywhere and see their saved state. | Done |
 | D-3 | Hosting | Frontend on **GitHub Pages**. Backend on **Render**, **Fly.io**, or **Vercel** serverless functions. All have free or cheap tiers with limits. | Decide in Phase 4; run locally until then. | Phase 4 |
 | D-4 | How users connect to Canvas | **Personal access token** (works today, no school involvement, user must create and paste it) or **OAuth** (smooth sign-in, needs a developer key from the school's Canvas admin) | Token first; OAuth in Phase 5 if a school will issue a key. | Phase 0 |
-| D-5 | Who the app is for | Just Bridget, a few friends, or any student at any school | Design for any school (the Canvas URL is a setting), test with one. | Phase 0 |
+| D-5 | Who the app is for | Just the Team Lead, a few friends, or any student at any school | Design for any school (the Canvas URL is a setting), test with one. | Phase 0 |
 | D-6 | Backend language | **Python + FastAPI** (readable, quick to write, good for learning) or **Node.js** (same language as the frontend) | Python + FastAPI. | Phase 0 |
 | D-7 | How users sign in to the portal | **Sign in with Google**, **email magic link**, **username and password**, or a **hosted auth service** (see [design](03-design.md#5-signing-in-to-the-portal-d-7-open)) | Sign in with Google | Phase 2 |
 

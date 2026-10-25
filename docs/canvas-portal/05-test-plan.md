@@ -26,7 +26,7 @@ CI never uses a real token (A-3). Instead, `backend/tests/fixtures/` holds
 saved Canvas JSON responses for a made-up student, covering:
 
 - 3 active courses, 1 concluded course (must not appear)
-- Assignments in every status: upcoming, due soon, overdue, submitted, graded,
+- Assignments in every status: upcoming, overdue, submitted, graded,
   no due date
 - A course with more than 100 assignments, split over two pages (FR-12)
 - A `403 Rate Limit Exceeded` response followed by success (C-2)
@@ -79,7 +79,7 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | FR-12 | All 120+ assignments returned from a two-page fixture | API |
 | FR-14 | Second request within 5 minutes makes no Canvas call | API |
 | FR-21, FR-38 | Sort order: soonest first, no-due-date last, ties by name; applies to every list and the table | Unit |
-| FR-23 | Each status from the status flowchart, including the 48-hour edge | Unit |
+| FR-23 | Each status from the status flowchart, including an assignment due exactly now | Unit |
 | FR-24 | Course, status, and search filters | E2E |
 | FR-32, FR-33, FR-38 | Drag a card to another list; it lands in its due date place; reload, it is still there | E2E |
 | FR-31, FR-34 | First board load puts every assignment in Backlog; a new fixture assignment appears in Backlog in its due date place | API |
@@ -99,7 +99,7 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | FR-61, FR-62 | Board scrolls sideways; dragging a list header reorders lists and the order survives reload | E2E |
 | FR-63 | Click a list title, type, Enter saves; Escape cancels | E2E |
 | FR-64, FR-71 (Phase 5) | Composer adds a list or a personal card and stays open for the next | E2E |
-| FR-65 | Due badge color for each status (green, yellow, red, plain) | Unit, E2E |
+| FR-65 | Due badge color for each status (green, red, plain) | Unit, E2E |
 | FR-66 | Each course gets a palette color; changing it updates every card of that course | API, E2E |
 | FR-67 | Opening a card changes the address to `/c/{id}`; reloading that address reopens it; Back closes it | E2E |
 | FR-68 | Card back shows every listed field for a Canvas card | E2E |
@@ -320,3 +320,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | Quick edit tests marked Phase 5. |
 | 2026-10-25 | Backlog list: FR-31/FR-34 test, TP-06 step 1, and TP-08 step 2 updated. |
 | 2026-10-25 | NEW badge removed from the FR-34 test and TP-08 step 2. |
+| 2026-10-25 | Due soon removed from fixtures and status tests (Phase 5, FR-27). |

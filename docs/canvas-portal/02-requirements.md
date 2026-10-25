@@ -92,7 +92,8 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-20 | The dashboard lists the user's active courses by name and course code. | Must | 1 |
 | FR-21 | The dashboard lists assignments across all courses, sorted by due date, soonest first; assignments with no due date come last. | Must | 1 |
 | FR-22 | Each assignment shows: name, course, due date and time in the user's time zone, points possible, and status. | Must | 1 |
-| FR-23 | Status is one of: *Upcoming*, *Due soon* (within 48 hours), *Overdue*, *Submitted*, *Graded*. | Must | 1 |
+| FR-23 | Status is one of: *Upcoming*, *Overdue*, *Submitted*, *Graded*. | Must | 1 |
+| FR-27 | A *Due soon* status (for example within 48 hours) with a yellow due badge, so close deadlines stand out. | Could | 5 |
 | FR-24 | The user can filter by course and by status, and search by assignment name. | Should | 1 |
 | FR-25 | The user can hide past, completed assignments (on by default). | Should | 1 |
 | FR-26 | Each assignment links to its page in Canvas, opening in a new tab. | Must | 1 |
@@ -120,7 +121,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-62 | The user can drag a list by its header to reorder the lists. | Must | 2 |
 | FR-63 | Clicking a list title edits it in place. Enter or clicking away saves, and Escape cancels. | Must | 2 |
 | FR-64 | An "+ Add another list" control after the last list adds a list. | Could | 5 |
-| FR-65 | Card fronts show: the course as a colored label strip, the title, and badges for the due date, a note (description icon), and, from Phase 5, checklist progress (FR-70). The due date badge is green when submitted or graded, yellow when due soon, red when overdue, and plain otherwise. | Must | 1 (list), 2 (board) |
+| FR-65 | Card fronts show: the course as a colored label strip, the title, and badges for the due date, a note (description icon), and, from Phase 5, checklist progress (FR-70). The due date badge is green when submitted or graded, red when overdue, and plain otherwise (yellow for due soon comes with FR-27 in Phase 5). | Must | 1 (list), 2 (board) |
 | FR-66 | Each course gets a label color automatically. The user can change a course's color and name its label. | Should | 2 |
 | FR-67 | Clicking a card opens its card back in a dialog over the board, which stays visible behind it. The browser address changes to the card's own link, so reloading or sharing the link reopens the card, and Back closes it. | Must | 2 |
 | FR-68 | The card back shows: the title; "in list *name*" (clicking it moves the card); labels; due date; points and status; an "Open in Canvas" button; *Description* (the private note); and *Archive*. Checklists are added in Phase 5 (FR-70). | Must | 2 (3 for notes) |
@@ -207,7 +208,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 ## 6. Open questions
 
 - **Q-1** Does the Team Lead's school allow personal access tokens? (Blocks Phase 1; see R-1.)
-- **Q-2** Should "Due soon" be 48 hours, or configurable?
+- **Q-2** When *Due soon* is added (FR-27, Phase 5), should it be 48 hours, or configurable?
 - **Q-3** Should discussion posts and quizzes appear alongside assignments? Canvas exposes them as assignments in most cases, so the default is yes.
 - ~~**Q-4** Is multi-device sync wanted, or is one browser enough?~~ Answered: yes, the user signs in from anywhere and sees their saved state (D-2).
 - **Q-5** Should the portal support parent (observer) tokens? Canvas returns observed students' data through different options, so the views would need a student picker. Proposed for Phase 5.
@@ -229,3 +230,4 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | 2026-10-25 | Quick edit menu (FR-69) and its `e` shortcut moved to Phase 5, from the Team Lead's review. |
 | 2026-10-25 | Added a *Backlog* list before *To do* for new, unsorted Canvas assignments (FR-31, FR-34), from the Team Lead's review. |
 | 2026-10-25 | NEW badge removed from FR-34; added FR-79 (show new and updated assignments) as a Phase 5 future feature, from the Team Lead's review. |
+| 2026-10-25 | *Due soon* status moved out of FR-23 into new FR-27, a Phase 5 future feature, from the Team Lead's review. |

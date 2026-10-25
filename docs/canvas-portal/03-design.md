@@ -225,9 +225,7 @@ flowchart TD
     D -- no --> Upcoming
     D -- yes --> P{Due date passed?}
     P -- yes --> Overdue
-    P -- no --> H{Due within 48 h?}
-    H -- yes --> DS[Due soon]
-    H -- no --> Upcoming
+    P -- no --> Upcoming
 ```
 
 ## 5. Signing in to the portal (D-7)
@@ -419,7 +417,7 @@ UI uses:
 | Board background | One solid color per board, user can change it later (FR-75); default a deep blue |
 | List | 272 px wide, light gray, 12 px rounded corners, 8 px gap between lists |
 | Card | White, 8 px rounded corners, soft shadow, 8 px padding; label strip at the top in the course color |
-| Due badge | Small pill with a clock icon: green (complete), yellow (due soon), red (overdue), plain (upcoming) |
+| Due badge | Small pill with a clock icon: green (complete), red (overdue), plain (upcoming); yellow (due soon) comes with FR-27 in Phase 5 |
 | Text | System font, 14 px on cards, bold list titles |
 | Card back | Centered dialog about 768 px wide over a dimmed board; main column on the left, action buttons on the right |
 
@@ -484,3 +482,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | FR-38: cards always sorted by due date. Removed the card `position` column; only lists keep positions. |
 | 2026-10-25 | Quick edit menu (FR-69) marked Phase 5. |
 | 2026-10-25 | New assignments go to the Backlog list. |
+| 2026-10-25 | Due soon removed from the status flowchart and badge colors; it is Phase 5 (FR-27). |

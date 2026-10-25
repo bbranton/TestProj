@@ -115,9 +115,9 @@ Each row uses the same label colors and due badges as the cards.
 | Card               | List         | Label      | Due          | Points   |
 |--------------------+--------------+------------+--------------+----------|
 | Lab report 3     ≡ | In progress  | ■ BIO 101  | (◷ Tue 11:59)| 20       |
-|                    |              |            |   yellow     |          |
+|                    |              |            |              |          |
 | Problem set 7      | To do        | ■ MATH 152 | (◷ Wed 9:00) | 10       |
-|                    |              |            |   yellow     |          |
+|                    |              |            |              |          |
 | Essay draft      ≡ | To do        | ■ HIST 210 | (◷ Nov 3)    | 50       |
 | Reading reflection | Backlog      | ■ HIST 210 | none         | 5        |
 +--------------------------------------------------------------------------+
@@ -160,8 +160,8 @@ NFR-3, NFR-31, NFR-34.
   [Hide all] show or hide every course at once. With every course hidden, the
   board says "All courses are hidden" with a Show all link. Hidden cards keep
   their list.
-  ▬▬ label strip in the course color (FR-66). (◷ ...) due badge: yellow due
-  soon, red overdue, green with ✓ when complete (FR-65). ≡ has a description.
+  ▬▬ label strip in the course color (FR-66). (◷ ...) due badge: red
+  overdue, green with ✓ when complete, plain otherwise (FR-65). ≡ has a description.
   The lists are fixed. List title: click to rename (FR-63). Drag a list
   by its header to reorder (FR-62). […] list menu: Move list.
   Adding cards and lists (FR-64, FR-71) and archiving lists (FR-36) are
@@ -191,7 +191,7 @@ the screen.
 |   |                                                                  |   |
 |   | Labels          Due date                       |                 |   |
 |   | [■ BIO 101]     [ ] Tue Oct 28, 11:59 PM       |                 |   |
-|   |                 (Due soon)                     |                 |   |
+|   |                 (Upcoming)                     |                 |   |
 |   | 20 points · Not submitted                      | Actions         |   |
 |   |                                                | [→ Move      ]  |   |
 |   | ≡ Description            private, never sent   | [↗ Open in   ]  |   |
@@ -261,7 +261,7 @@ Requirements: FR-72. A dropdown under the Filter button, opened with `f`.
 | Due date                                 |
 | [ ] No dates                             |
 | [ ] Overdue                    (red)     |
-| [ ] Due in the next day        (yellow)  |
+| [ ] Due in the next day                  |
 | [ ] Due in the next week                 |
 | [ ] Due in the next month                |
 | [ ] Marked as complete         (green)   |
@@ -474,3 +474,4 @@ flowchart TD
 | 2026-10-25 | Quick edit menu (S-7, FR-69) moved to Phase 5; removed the ✎ hover button from S-4. |
 | 2026-10-25 | Added a Backlog list before To do for new, unsorted Canvas assignments: S-4 redrawn, S-3, W-1, W-5, and W-7 updated. |
 | 2026-10-25 | Removed the NEW badge from S-4 and W-5; marking new and updated assignments is now a Phase 5 idea (FR-79). |
+| 2026-10-25 | Due soon removed (Phase 5, FR-27): no yellow badges in S-3, S-4, S-5, or the filter menu. |

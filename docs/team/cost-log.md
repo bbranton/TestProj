@@ -24,3 +24,4 @@ thread re-read on each turn, and is usually most of the cost.
 | Date | PR | Thread | Persona | Threads / PRs / rounds / files | Output | Cache read | Cache write | Cost (USD) | Notes |
 |------|----|--------|---------|--------------------------------|--------|------------|-------------|------------|-------|
 | 2026-10-25 | #10, #11 | Owner | (none; set up the team) | 1 / 2 / ~16 / 27 | 95K | 25.9M | 0.27M | 11.08 | Taken just before merge. Long thread with many small rounds; docs and small scripts only, no app code. |
+| 2026-10-25 | #6 | Owner | Product and QA | 1 / 1 / 4 / 3 | 35K | 6.5M | 0.17M | 3.66 | Taken before merge. Took over #5 from the roadmap thread; four rounds (second pass, business analyst pass, test plan findings, persona policies). Docs only. |

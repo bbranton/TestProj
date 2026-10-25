@@ -13,6 +13,17 @@
 - Never use the project owner's first name anywhere in the repo: files, docs,
   code comments, and commit messages. Refer to them as "Team Lead".
 
+## Team personas
+
+- When asked to act as a persona (Management, Product owner, Architecture,
+  UI/UX, or QA), read its file in [docs/team/personas/](docs/team/personas/)
+  and the [team README](docs/team/README.md) first, and stay inside what it
+  owns.
+- When asked to review or cross-review a doc or PR, follow the
+  [review protocol](docs/team/review-protocol.md): it says which personas
+  review what and how findings are logged.
+- Personas recommend; only the Team Lead approves or merges.
+
 ## Canvas portal phases
 
 - The current phase is **Phase 1** (read-only viewer). The Team Lead

@@ -1,0 +1,45 @@
+# Team personas
+
+These are the roles an agent (or a person) can take on when working in this
+repo. Each persona has a file that says what it owns, what it checks when it
+reviews someone else's work, and what it may not sign off on alone.
+
+| Persona | Owns | File |
+|---------|------|------|
+| Management | Roadmap, phases, scope, priorities | [management.md](personas/management.md) |
+| Product owner | Requirements and acceptance criteria | [product-owner.md](personas/product-owner.md) |
+| Architecture | Design, code structure, data, APIs | [architecture.md](personas/architecture.md) |
+| UI/UX | UI specification, screens, accessibility | [ui-ux.md](personas/ui-ux.md) |
+| QA | Test plan, tests, release checks | [qa.md](personas/qa.md) |
+
+How personas review each other's work is in the
+[review protocol](review-protocol.md).
+
+## Using a persona
+
+Tell the agent which persona to act as, and on what. For example:
+
+- "Act as the QA persona and review `docs/canvas-portal/02-requirements.md`."
+- "Act as the Architecture persona and draft the design for FR-20."
+- "Run a cross-review of PR #12."
+
+An agent acting as a persona:
+
+1. Reads its persona file and the [review protocol](review-protocol.md)
+   before starting.
+2. Stays inside what the persona owns. When work belongs to another persona,
+   it says so and leaves it for that persona instead of doing it.
+3. Starts its review or write-up with the persona's name, so readers know
+   whose view it is, for example "**QA review**".
+4. Follows the rules in [CLAUDE.md](../../CLAUDE.md). Those win over anything
+   in a persona file.
+
+The Team Lead has the final word over every persona. A persona never approves
+or merges a PR; it recommends, and the Team Lead decides.
+
+## Changing the team
+
+To add a persona, copy an existing file, fill in every section, add a row to
+the table above, and add it to the review matrix in the
+[review protocol](review-protocol.md#who-reviews-what). Changes to personas
+or the protocol go through a PR like any other doc.

@@ -76,10 +76,11 @@ The smallest thing that is useful: connect, then see everything that's due.
   FR-14), handling Canvas's paging and rate limits.
 - A read-only board: every assignment is a Trello-style card in the Backlog
   list, sorted by due date, with the course show/hide buttons (FR-20 to
-  FR-23, FR-26, FR-60, FR-65, FR-66, FR-78). Clicking a card opens it in
-  Canvas. Moving
-  cards between lists comes in Phase 2, once accounts can save it.
-- Each assignment links back to its Canvas page (FR-26).
+  FR-23, FR-60, FR-65, FR-66, FR-78). Moving cards between lists comes in
+  Phase 2, once accounts can save it.
+- Clicking a card opens that assignment's own page in Canvas, in a new tab
+  (FR-26). The portal's own card detail view (the card back) is a Phase 5
+  future feature.
 - Clear error messages for a bad token, an expired token, or Canvas being
   unreachable (FR-6, NFR-20).
 - Measure how long a full Canvas load takes with the Team Lead's real
@@ -274,3 +275,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | Backend-to-Canvas sync named the hardest part of the project, from the Team Lead's review: Phase 3 lists the change cases (FR-39, FR-45, Q-7) and TP-15 in its exit criteria; added R-9. |
 | 2026-10-25 | Export (FR-53) moved from Phase 4 to Phase 5. |
 | 2026-10-25 | Whole-plan review: Gantt sections renamed, Phase 1 no longer lists Phase 5 filters (FR-24), Phase 0 adds a Canvas teacher sandbox, D-3 notes the background job and same-site cookie needs, R-4 merged into R-9. |
+| 2026-10-25 | Phase 1: merged the two "opens in Canvas" lines into one clear bullet, from the Team Lead's review. |

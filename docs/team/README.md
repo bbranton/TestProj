@@ -36,8 +36,9 @@ An agent acting as a persona:
 4. Follows the rules in [CLAUDE.md](../../CLAUDE.md). Those win over anything
    in a persona file.
 
-The Team Lead has the final word over every persona. A persona never approves
-or merges a PR; it recommends, and the Team Lead decides.
+The Team Lead has the final say on every decision and every disagreement
+between personas, and confirms which personas review each PR. A persona
+never approves or merges a PR; it recommends, and the Team Lead decides.
 
 ## Changing the team
 

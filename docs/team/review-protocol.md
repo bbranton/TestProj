@@ -3,19 +3,32 @@
 How personas review each other's work. The personas are listed in the
 [team README](README.md).
 
+## The Team Lead has the final say
+
+The Team Lead has the final say on every decision and every disagreement
+between personas. The Team Lead can override any persona, any rule or table
+in this protocol, and the reviewers for any PR. Everything below describes
+the default when the Team Lead hasn't said otherwise.
+
 ## Who reviews what
 
 Every piece of work has one **owner** persona, who writes it and answers its
-findings, and one or more **required reviewers**. An optional reviewer is
-added when the change touches its area. The owner lists the required and
-optional reviewers in the PR description, with a reason for each optional
-one.
+findings. The table below gives the **recommended reviewers** for each kind
+of work. An optional reviewer is recommended when the change touches its
+area. The owner lists the recommended and optional reviewers in the PR
+description, with a reason for each optional one.
+
+Reviews cost real time and tokens, so **the Team Lead confirms the reviewers
+for each PR** before any review starts. The Team Lead can add or drop any
+reviewer, including all of them when the change is small and the Team
+Lead's own review gives enough coverage. The reviewers the Team Lead keeps
+are the PR's **confirmed reviewers**.
 
 Picking optional reviewers follows Management's rule: given the topic or
 the changes, does another persona need to join? Any reviewer can also ask
 for another persona in a finding.
 
-| Work | Owner | Required reviewers | Optional reviewers |
+| Work | Owner | Recommended reviewers | Optional reviewers |
 |------|-------|--------------------|--------------------|
 | Roadmap (`01-roadmap.md`) | Management | Product and QA | Architecture, DevOps |
 | Requirements (`02-requirements.md`) | Product and QA | Architecture, plus Management when a phase changes | UI/UX, Developer |
@@ -68,9 +81,9 @@ the decision to them.
 ## How a review runs
 
 1. **Owner prepares.** The owner opens the PR and lists in its description
-   the requirement IDs it touches and which reviewers are required, from the
-   table above.
-2. **Reviewers review.** Each required reviewer reads the change against its
+   the requirement IDs it touches and the recommended reviewers, from the
+   table above. The Team Lead confirms the reviewers.
+2. **Reviewers review.** Each confirmed reviewer reads the change against its
    checklist and posts one review headed with its persona name, such as
    "**DevOps review**". Reviewers can run in parallel.
 3. **Findings are logged.** Each finding gets an ID and a row in a findings
@@ -79,15 +92,16 @@ the decision to them.
    still changes only what it owns.
 4. **Owner answers.** The owner fixes each finding or replies with why not.
    Findings that need a decision go to the Team Lead.
-5. **Sign-off.** Each required reviewer ends with one verdict:
+5. **Sign-off.** Each confirmed reviewer ends with one verdict:
    - **Recommend** — no open findings from this reviewer.
    - **Recommend with notes** — only minor findings, which the owner may
      fix later.
    - **Changes needed** — at least one finding must be fixed before merge.
 6. **Re-review.** After the owner pushes fixes for a **Changes needed**
    verdict, that reviewer checks the fixes and updates its verdict.
-7. **Team Lead decides.** The PR is ready when every required reviewer's
-   latest verdict is **Recommend** or **Recommend with notes**. The Team Lead approves and merges. A persona never
+7. **Team Lead decides.** The PR is ready when every confirmed reviewer's
+   latest verdict is **Recommend** or **Recommend with notes**. With no
+   confirmed reviewers, the Team Lead's own review is the review. The Team Lead approves and merges. A persona never
    approves or merges.
 
 ## Findings table
@@ -116,10 +130,10 @@ log or decision list.
 
 When asked to "run a cross-review" of a PR or doc, the agent:
 
-1. Finds the owner and required reviewers in the table above, then acts as
+1. Finds the owner and recommended reviewers in the table above, then acts as
    Management to check whether the topic or changes call for any other
    persona, and adds them.
-2. Reviews once per required reviewer, reading that persona's file first and
+2. Reviews once per confirmed reviewer, reading that persona's file first and
    staying inside its checklist.
 3. Posts one review per persona and a single findings table that combines
    them, with no duplicate findings.

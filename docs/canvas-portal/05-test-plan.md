@@ -193,9 +193,11 @@ section 4, and the procedures' **Needs** are in place (for Phase 1, the
 roadmap's prerequisites: the Google OAuth client and the Canvas teacher
 sandbox).
 
-**Exit criteria.** A phase is done when every procedure listed for it
-passes, the results are recorded in section 7, and no open issue fails a
-*Must* requirement of the phase. Later work can break earlier screens, so
+**Exit criteria (test part).** The tests are done for a phase when every
+procedure listed for it passes, the results are recorded in section 7, and
+no open issue fails a *Must* requirement of the phase. Product and QA
+reports this; the Team Lead calls the phase done, after Management's review
+of the roadmap's exit criteria. Later work can break earlier screens, so
 each phase also reruns the earlier procedures for any screen it changed.
 
 | Phase | Procedures |
@@ -503,9 +505,11 @@ device, and a screenshot with any real data hidden. Never paste a token into
 an issue.
 
 Each issue names the requirement the step checks. A failure against a
-*Must* requirement of the current phase blocks the phase sign-off; a
-*Should* or *Could* failure, or a *Close* result in TP-13, is recorded and
-can be fixed later.
+*Must* requirement of the current phase means the phase's test exit
+criteria are not met. A *Should* or *Could* failure, or a *Close* result in
+TP-13, is recorded; Management and the Team Lead decide whether it waits
+for a later phase. A failing test is fixed, never skipped or weakened
+without the Team Lead.
 
 ## 7. Results log
 
@@ -562,4 +566,4 @@ TP-14 timings go in their own table, one row per run:
 | 2026-10-25 | Whole-set review: TP-04 renamed to match its Phase 1 steps, TP-10 starts in Phase 1 with NFR-12, and the unit test example says status mapping. |
 | 2026-10-25 | TP-07 (keyboard only), the NFR-31 and FR-73 automated tests, and the TP-13 shortcut step removed; TP-13 steps renumbered. From the Team Lead's review: keyboard actions are not a requirement. |
 | 2026-10-25 | FR-16 progress test; TP-05 step 2a checks the progress panel on failure; TP-14 reads times from the panel and uses the NFR-2 target. |
-| 2026-10-25 | In-depth QA review after PR #3: added *Procedures by phase* with entry and exit criteria, a Phase column in the coverage table, and failure severity; added Phase 1 tests for FR-1 address checks, FR-4, FR-5, FR-13, FR-20, FR-22 (time zone, override, points and status on cards), FR-26, FR-50, FR-60, FR-66, NFR-10, NFR-11, NFR-14, and NFR-41, Phase 2 tests for NFR-3 and FR-80 drops, and an NFR-2 row of its own; FR-16 test covers rate-limit waits, joining a running Refresh, retry limits, and stuck runs; concurrency tests also run on Postgres; new fixtures; TP-01 signs in, disconnects, and reconnects; the FR-65 test checks that red wins over green; TP-03 checks points and the override open check, and clicks the card instead of a missing ↗; TP-04 puts Phase 1 steps first and checks reload; TP-05 uses Retry refresh and a rate-limit step; TP-08 no longer needs Phase 5 notes or the Archived view; TP-09 drops Ctrl+Enter; TP-10, TP-12, and TP-13 mark their phases correctly (NFR-30 is Phase 1); TP-14 uses Refresh and a timing table; added TP-16 (read-only board, Phase 1) and TP-17 (deployed app, Phase 4); accessibility tests start in Phase 4 and check only screens that exist; tests for board messages, S-2 messages, and an empty account (TP-16 step 10); manual checks for NFR-11 (TP-02), NFR-14 (TP-03), and NFR-41 (TP-05); fixture path matches the repo; "column" now "list". |
+| 2026-10-25 | In-depth QA review after PR #3: added *Procedures by phase* with entry and test exit criteria, a Phase column in the coverage table, and failure severity; added Phase 1 tests for FR-1 address checks, FR-4, FR-5, FR-13, FR-20, FR-22 (time zone, override, points and status on cards), FR-26, FR-50, FR-60, FR-66, NFR-10, NFR-11, NFR-14, and NFR-41, Phase 2 tests for NFR-3 and FR-80 drops, and an NFR-2 row of its own; FR-16 test covers rate-limit waits, joining a running Refresh, retry limits, and stuck runs; concurrency tests also run on Postgres; new fixtures; TP-01 signs in, disconnects, and reconnects; the FR-65 test checks that red wins over green; TP-03 checks points and the override open check, and clicks the card instead of a missing ↗; TP-04 puts Phase 1 steps first and checks reload; TP-05 uses Retry refresh and a rate-limit step; TP-08 no longer needs Phase 5 notes or the Archived view; TP-09 drops Ctrl+Enter; TP-10, TP-12, and TP-13 mark their phases correctly (NFR-30 is Phase 1); TP-14 uses Refresh and a timing table; added TP-16 (read-only board, Phase 1) and TP-17 (deployed app, Phase 4); accessibility tests start in Phase 4 and check only screens that exist; tests for board messages, S-2 messages, and an empty account (TP-16 step 10); manual checks for NFR-11 (TP-02), NFR-14 (TP-03), and NFR-41 (TP-05); fixture path matches the repo; "column" now "list". |

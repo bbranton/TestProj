@@ -10,3 +10,5 @@ Lasting lessons for the Product and QA persona. See the
   in that doc's PR, as in the canvas portal docs review.
 - Keyboard actions are not a requirement (NFR-31 was removed). Tests and
   specs shouldn't use shortcuts like Ctrl+Enter.
+- Mark each test step with the phase it needs. A step that uses a later phase's
+  feature (notes, the Archived view) blocks an earlier phase's exit criteria.

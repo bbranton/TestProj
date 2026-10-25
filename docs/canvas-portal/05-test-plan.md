@@ -78,11 +78,12 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | FR-10, FR-11 | Only active courses and their assignments are returned | API |
 | FR-12 | All 120+ assignments returned from a two-page fixture | API |
 | FR-14 | Second request within 5 minutes makes no Canvas call | API |
-| FR-21 | Sort order: soonest first, no-due-date last | Unit |
+| FR-21, FR-38 | Sort order: soonest first, no-due-date last, ties by name; applies to every list and the table | Unit |
 | FR-23 | Each status from the status flowchart, including the 48-hour edge | Unit |
 | FR-24 | Course, status, and search filters | E2E |
-| FR-32, FR-33 | Drag a card, reload, card is still there | E2E |
-| FR-34 | New fixture assignment appears at bottom of To do | API |
+| FR-32, FR-33, FR-38 | Drag a card to another list; it lands in its due date place; reload, it is still there | E2E |
+| FR-34 | New fixture assignment appears in To do in its due date place, with NEW | API |
+| FR-38 | Changing a fixture assignment's due date moves its card to the new place in the same list | API |
 | FR-35 | Renamed assignment keeps its column and note | API |
 | FR-34, FR-65 | Card marked submitted in Canvas gets a green badge and is not moved | API, E2E |
 | FR-40 to FR-42 | Create, edit, autosave, delete a note | API, E2E |
@@ -182,13 +183,13 @@ steps, and the expected result. Screen IDs refer to the
 
 ### TP-06 Board layout persists and syncs
 
-**Checks:** FR-30 to FR-33, FR-51, FR-60 · **Phase:** 2
+**Checks:** FR-30 to FR-33, FR-38, FR-51, FR-60 · **Phase:** 2
 **Needs:** two devices or two different browsers, same portal account.
 
 | Step | Action | Expected |
 |------|--------|----------|
 | 1 | On device A, open the portal | The board is the home screen, with lists To do, In progress, Done |
-| 2 | Drag two cards to In progress and reorder them | Cards move immediately |
+| 2 | Drag two cards to In progress | Cards move immediately and sit in due date order, earliest at the top |
 | 3 | Reload the page | Same layout |
 | 4 | Sign in on device B | Same layout |
 | 5 | Move a card on device B; reload device A | Device A shows the move |
@@ -205,13 +206,13 @@ steps, and the expected result. Screen IDs refer to the
 
 ### TP-08 Canvas changes reach the board
 
-**Checks:** FR-34, FR-35, FR-45, FR-65 · **Phase:** 2–3
+**Checks:** FR-34, FR-35, FR-38, FR-45, FR-65 · **Phase:** 2–3
 **Needs:** recorded data in local environment, edited between steps.
 
 | Step | Action | Expected |
 |------|--------|----------|
 | 1 | Load the board; put a note on assignment X; move it to In progress | Saved |
-| 2 | Edit the fixture: rename X, add a new assignment Y; refresh | X keeps column and note with new name; Y at bottom of To do with NEW |
+| 2 | Edit the fixture: rename X, add a new assignment Y; refresh | X keeps its list and note, with the new name; Y appears in To do in its due date place, with NEW |
 | 3 | Edit the fixture: mark X submitted; refresh | X's due badge turns green and X stays in In progress |
 | 4 | Edit the fixture: remove X; refresh | X is under Archived with its note |
 
@@ -272,7 +273,7 @@ how it looks, what it takes (clicks or keys), or how it responds.
 | Step | Action in both | Expected in the portal |
 |------|----------------|------------------------|
 | 1 | Look at the board as a whole | Same arrangement: header on top, lists side by side on a colored background, gray lists, white cards with label strips and badges |
-| 2 | Drag a card to another list, slowly | Card lifts and tilts, gap opens where it will land, neighbors slide smoothly |
+| 2 | Drag a card to another list, slowly | Card lifts and tilts, the target list is highlighted, a gap opens at the card's due date spot, neighbors slide smoothly. (Deliberate difference: Trello lets you drop anywhere; the portal keeps due date order, FR-38.) |
 | 3 | Drag a card toward the right edge | Board scrolls automatically |
 | 4 | Drag a list by its header | Lists reorder the same way |
 | 5 | Click a list title and rename it | Edits in place; Enter saves, Escape cancels |
@@ -315,3 +316,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | FR-37 removed: tests now check that a submitted card only changes its badge. |
 | 2026-10-25 | FR-70 checklist tests marked Phase 5. |
 | 2026-10-25 | Adding cards and lists moved to Phase 5 in the automated tests and TP-13. |
+| 2026-10-25 | FR-38 (always sorted by due date): sort tests, TP-06 step 2, TP-08 step 2, and TP-13 step 2 updated. |

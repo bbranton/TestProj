@@ -96,9 +96,10 @@ first.
   (FR-65, FR-66).
 - Clicking a card opens its "card back" in a dialog over the board, with its
   own link (FR-67, FR-68).
-- Drag cards between and within lists with Trello's drag feel, and drag lists
-  to reorder them; keyboard alternative for dragging (FR-32, FR-62, FR-77,
-  NFR-31).
+- Drag cards between lists with Trello's drag feel, and drag lists to reorder
+  them; keyboard alternative for dragging (FR-32, FR-62, FR-77, NFR-31).
+- Cards in every list are always sorted by due date, earliest at the top
+  (FR-38).
 - The board has three fixed lists (To do, In progress, Done) that can be
   renamed by clicking their title (FR-31, FR-63).
 - A row of show/hide buttons under the header, one per course (FR-78).
@@ -198,3 +199,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | Dropped the "Move to Done?" hint (FR-37) from Phase 2. |
 | 2026-10-25 | Checklists (FR-70) moved from Phase 3 to Phase 5. |
 | 2026-10-25 | Adding cards and lists, and archiving lists, moved to Phase 5 as future features (Q-6 answered). |
+| 2026-10-25 | Phase 2 adds FR-38: cards always sorted by due date within each list. |

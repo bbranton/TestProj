@@ -103,9 +103,10 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 |----|-------------|----------|-------|
 | FR-30 | The user can switch between the board and a table view of all assignments (the Phase 1 list). | Must | 2 |
 | FR-31 | The board starts with columns *To do*, *In progress*, *Done*. | Must | 2 |
-| FR-32 | The user can drag a card to another column or another position in the same column. | Must | 2 |
-| FR-33 | The board layout (which column each card is in, and its order) is saved and restored on the next visit. | Must | 2 |
-| FR-34 | Assignments that are new since the last visit appear at the bottom of *To do*. | Must | 2 |
+| FR-32 | The user can drag a card to another list. Cards cannot be reordered by hand within a list (FR-38). | Must | 2 |
+| FR-33 | The board layout (which list each card is in) is saved and restored on the next visit. | Must | 2 |
+| FR-34 | Assignments that are new since the last visit appear in *To do*, in their due date place (FR-38), with a NEW badge. | Must | 2 |
+| FR-38 | Within every list, and in the table view, assignments are always sorted by due date, earliest at the top. Assignments with no due date come last, then by name. A card dropped into a list slots into its due date place, and a changed due date in Canvas moves the card to its new place. | Must | 1 (table), 2 (board) |
 | FR-35 | Cards are matched to assignments by Canvas assignment ID, so a renamed or rescheduled assignment keeps its place. | Must | 2 |
 | FR-36 | The user can archive a list, as in Trello. Its cards go with it and can be restored together. | Could | 5 |
 | FR-37 | *(Removed: no "Move to Done?" hint. The student drags cards to Done; the due badge turning green already shows the assignment is submitted, FR-65.)* | n/a | n/a |
@@ -131,8 +132,8 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-74 | Archived cards (and, from Phase 5, lists) are found under "Archived items" in the board menu, where they can be restored. | Must | 2 |
 | FR-75 | A board menu opens as a panel from the right edge with: board background color, labels, archived items. | Could | 5 |
 | FR-76 | The user can have more than one board. | Could | 5 |
-| FR-77 | Dragging feels like Trello: the card tilts slightly and lifts while dragged, a gray gap shows where it will land, and the board scrolls when the card nears an edge. | Should | 2 |
-| FR-78 | Between the header and the board, a row of show/hide buttons has one button per active course, in the course's label color. Tapping a button hides or shows that course's cards; "Show all" and "Hide all" buttons show or hide every course at once. When every course is hidden, the board says so and offers Show all. Hidden cards keep their list and position. The same choice applies to the table view, and it is saved with the user's account so it follows them between devices. | Must | 2 (1 for the table view) |
+| FR-77 | Dragging feels like Trello: the card tilts slightly and lifts while dragged, the list under it is highlighted and a gray gap shows the due date spot where it will land, and the board scrolls when the card nears an edge. | Should | 2 |
+| FR-78 | Between the header and the board, a row of show/hide buttons has one button per active course, in the course's label color. Tapping a button hides or shows that course's cards; "Show all" and "Hide all" buttons show or hide every course at once. When every course is hidden, the board says so and offers Show all. Hidden cards keep their list. The same choice applies to the table view, and it is saved with the user's account so it follows them between devices. | Must | 2 (1 for the table view) |
 
 ### 4.6 Private notes
 
@@ -223,3 +224,4 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | 2026-10-25 | FR-37 ("Move to Done?" hint) removed, from the Team Lead's review. |
 | 2026-10-25 | Checklists (FR-70) moved to Phase 5, ideas for later, from the Team Lead's review. |
 | 2026-10-25 | FR-36, FR-64, and FR-71 (archive lists, add lists, add personal cards) moved to Phase 5; `n` shortcut dropped; Q-6 answered. From the Team Lead's review. |
+| 2026-10-25 | Added FR-38: cards are always sorted by due date, earliest first, in every list and the table. FR-32, FR-33, FR-34, and FR-77 changed to match: no hand reordering within a list. From the Team Lead's review. |

@@ -129,7 +129,7 @@ Each row uses the same label colors and due badges as the cards.
 
 ### S-4 Board (home screen)
 
-Requirements: FR-31 to FR-35, FR-60 to FR-63, FR-65, FR-66, FR-72 to FR-74, FR-77, FR-78,
+Requirements: FR-31 to FR-35, FR-38, FR-60 to FR-63, FR-65, FR-66, FR-72 to FR-74, FR-77, FR-78,
 NFR-3, NFR-31, NFR-34.
 
 ```text
@@ -155,8 +155,8 @@ NFR-3, NFR-31, NFR-34.
 |  | |                | | +--------------------+                           |
 |  | +----------------+ |                                                  |
 |  | +----------------+ |                                                  |
-|  | | ▬▬ HIST 210    | | <- FR-34: new Canvas assignments land at         |
-|  | | NEW            | |    the bottom of To do                           |
+|  | | ▬▬ HIST 210    | | <- FR-34: new Canvas assignments land in To do   |
+|  | | NEW            | |    in their due date place, with a NEW badge     |
 |  | | Chapter 5 qs   | |                                                  |
 |  | +----------------+ |                           ──scrolls──>           |
 |  |                    |                                                  |
@@ -166,7 +166,7 @@ NFR-3, NFR-31, NFR-34.
   ○ hidden; tapping one hides or shows that course's cards. [Show all] and
   [Hide all] show or hide every course at once. With every course hidden, the
   board says "All courses are hidden" with a Show all link. Hidden cards keep
-  their list and position.
+  their list.
   ▬▬ label strip in the course color (FR-66). (◷ ...) due badge: yellow due
   soon, red overdue, green with ✓ when complete (FR-65). ≡ has a description.
   ✎ is shown on the card the mouse is over and opens S-7.
@@ -174,8 +174,11 @@ NFR-3, NFR-31, NFR-34.
   by its header to reorder (FR-62). […] list menu: Move list.
   Adding cards and lists (FR-64, FR-71) and archiving lists (FR-36) are
   Phase 5 ideas.
-  Cards move between lists only when the student drags them; the portal never
-  moves a card on its own, even when Canvas marks it submitted.
+  Cards in every list are always sorted by due date, earliest at the top
+  (FR-38). Dragging only chooses the list; the card slots into its due date
+  place, which the gray gap shows. Cards move between lists only when the
+  student drags them; the portal never moves a card to another list on its
+  own, even when Canvas marks it submitted.
 ```
 
 ### S-5 Card back
@@ -299,7 +302,7 @@ board.
                           | [Restore]  ≡ note kept             |
                           +------------------------------------+
   Cards for assignments removed from Canvas land here (FR-45).
-  Restore puts a card back at the bottom of its old list.
+  Restore puts a card back in its old list, in its due date place.
 ```
 
 ### Phone layout
@@ -379,7 +382,7 @@ sequenceDiagram
     participant A as Backend
 
     U->>F: Drag "Lab report 3" to In progress
-    F->>F: Card lifts and tilts, a gray gap shows the drop spot
+    F->>F: Card lifts and tilts, the list under it is highlighted,<br/>a gray gap shows its due date spot
     U->>F: Drop
     F->>F: Card settles into place immediately
     F->>A: PATCH /api/board/cards/{id}
@@ -416,8 +419,8 @@ flowchart TD
 ```mermaid
 flowchart TD
     A([Refresh from Canvas]) --> B{For each Canvas assignment}
-    B -- has a card --> C[Keep column and position;<br/>update name and due date shown]
-    B -- no card yet --> D[Add card at bottom of To do<br/>with NEW badge]
+    B -- has a card --> C[Keep its list; update name and due date,<br/>re-sort the list by due date]
+    B -- no card yet --> D[Add card to To do in its due date place,<br/>with NEW badge]
     A --> E{For each card}
     E -- assignment gone from Canvas --> F[Mark card archived;<br/>keep its note]
     E -- submitted in Canvas --> G[Due badge turns green;<br/>card stays where the student put it]
@@ -471,3 +474,4 @@ flowchart TD
 | 2026-10-25 | Removed the "Move to Done?" hint (FR-37) from S-4 and W-5; students drag cards to Done themselves. |
 | 2026-10-25 | Checklists (FR-70) moved to Phase 5: removed checklist badges and the card back checklist section. |
 | 2026-10-25 | Adding cards and lists moved to Phase 5: removed "+ Add a card" and "+ Add another list" from S-4 and the phone layout; W-7 now covers rename and reorder only; W-8 marked Phase 5. |
+| 2026-10-25 | Cards always sorted by due date within each list (FR-38): S-4 notes, S-9 restore, W-3, and W-5 updated. |

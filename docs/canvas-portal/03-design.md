@@ -105,7 +105,6 @@ erDiagram
         int canvas_course_id
         string title "personal cards only"
         datetime due_at "personal cards only"
-        string position
         bool archived
     }
     NOTE {
@@ -151,10 +150,14 @@ Design notes:
   (FR-76) don't need a redesign.
 - **Cards and notes key on `canvas_assignment_id`**, never the assignment name,
   so a renamed or rescheduled assignment keeps its card and note (FR-35).
-- **Card `position` is a sortable string** (a technique called *fractional
-  indexing*: to put a card between "a" and "b", give it "an"). Moving one card
-  then updates one row instead of renumbering the whole list (NFR-3). Lists
-  use the same technique, so they can be dragged too (FR-62).
+- **Cards have no stored position.** Within a list they are always sorted by
+  due date, earliest first, then by name, with no-due-date cards last
+  (FR-38). The order is worked out each time the board loads, so a due date
+  changed in Canvas moves the card automatically. Moving a card only changes
+  its `list_id`, a one-row update (NFR-3).
+- **List `position` is a sortable string** (a technique called *fractional
+  indexing*: to put a list between "a" and "b", give it "an"), so dragging a
+  list updates one row instead of renumbering them all (FR-62).
 - **Checklists** (FR-70) are Phase 5. The `CHECKLIST` and `CHECKLIST_ITEM`
   tables are shown so the model is ready for them, but they are not built
   until then; checklist items will use the same position technique.
@@ -188,12 +191,12 @@ and require a signed-in session except where noted.
 | `GET /api/courses` | Active courses (cached) | FR-10, FR-20 |
 | `GET /api/assignments` | All assignments across active courses, with status | FR-11, FR-21 to FR-23 |
 | `POST /api/refresh` | Bypass the cache and re-fetch from Canvas | FR-13 |
-| `GET /api/board` | Lists and cards with labels and badges, after merging in new or removed assignments | FR-33, FR-34, FR-65 |
+| `GET /api/board` | Lists and cards with labels and badges, cards sorted by due date, after merging in new or removed assignments | FR-33, FR-34, FR-38, FR-65 |
 | `POST /api/board/lists` | Phase 5: add a list at the end | FR-64 |
 | `PATCH /api/board/lists/{id}` | Rename or move (new position) a list; archive and restore in Phase 5 | FR-36, FR-62, FR-63 |
 | `POST /api/board/cards` | Phase 5: add a personal card | FR-71 |
 | `GET /api/board/cards/{id}` | Everything for the card back | FR-67, FR-68 |
-| `PATCH /api/board/cards/{id}` | Move (new list and position), archive, or restore a card | FR-32, FR-33, FR-74 |
+| `PATCH /api/board/cards/{id}` | Move to another list, archive, or restore a card | FR-32, FR-33, FR-74 |
 | `GET /api/board/archived` | Archived lists and cards | FR-74 |
 | `POST`, `PATCH`, `DELETE /api/cards/{id}/checklists/...` | Phase 5: add, rename, check off, reorder, and remove checklists and items | FR-70 |
 | `PATCH /api/labels/{course_id}` | Change a course label's color or name, or hide or show the course | FR-66, FR-78 |
@@ -424,7 +427,7 @@ UI uses:
 
 | Behavior | How it works | Requirements |
 |----------|--------------|--------------|
-| Drag a card | Card lifts and tilts about 4°, a gray gap shows the drop spot, the board auto-scrolls near the edges; position saved with an optimistic update (W-3) | FR-32, FR-77 |
+| Drag a card | Card lifts and tilts about 4°, the list under it is highlighted and a gray gap shows its due date spot in that list, the board auto-scrolls near the edges; the move is saved with an optimistic update (W-3) | FR-32, FR-77 |
 | Drag a list | Grab the list header; other lists slide aside | FR-62 |
 | Scroll the board | Horizontal scrollbar, or drag on empty background | FR-61 |
 | Rename a list | Click the title, it becomes a text box; Enter saves, Escape cancels | FR-63 |
@@ -453,11 +456,11 @@ works without a framework, but there are fewer worked examples to copy from.
 | FR-1 to FR-6 (connect) | Sections 4, 6, 7 |
 | FR-10 to FR-14 (fetch) | Section 6 |
 | FR-20 to FR-26 (view) | Section 4 (status), wireframes |
-| FR-30 to FR-36 (board) | Sections 3, 4, 6 (loading sequence), 9 |
+| FR-30 to FR-38 (board) | Sections 3, 4, 6 (loading sequence), 9 |
 | FR-40 to FR-46 (notes) | Sections 3, 4, 9 |
 | FR-60 to FR-78 (Trello-style, course buttons) | Sections 3, 4, 9 |
 | FR-50 to FR-54 (accounts, data) | Sections 4, 5 |
-| NFR-1 to NFR-3 (performance) | Sections 3 (positions), 6 (caching, parallel fetch) |
+| NFR-1 to NFR-3 (performance) | Sections 3 (sorting, list positions), 6 (caching, parallel fetch) |
 | NFR-10 to NFR-14 (security) | Section 7 |
 | NFR-20, NFR-21 (reliability) | Sections 3, 6 |
 | NFR-30 to NFR-35 (usability, Trello style) | Sections 2, 9, wireframes |
@@ -478,3 +481,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | Course show/hide buttons (FR-78): `hidden` on course labels, toggle bar component, label endpoint. |
 | 2026-10-25 | Checklists (FR-70) marked Phase 5: tables and endpoints kept for later, removed from the Phase 2 component diagram. |
 | 2026-10-25 | Adding cards and lists moved to Phase 5: endpoints marked, composers removed from the component diagram. |
+| 2026-10-25 | FR-38: cards always sorted by due date. Removed the card `position` column; only lists keep positions. |

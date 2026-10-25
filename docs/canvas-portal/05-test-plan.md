@@ -283,7 +283,7 @@ how it looks, what it takes (clicks or keys), or how it responds.
 | 7 | Open a card | Dialog over the dimmed board, same section order; address changes |
 | 8 | Reload, then press Back | Reload reopens the card; Back closes it |
 | 9 | *(Phase 5)* Use the pencil and right-click on a card | Quick edit menu next to the raised card |
-| 10 | Press `f`, filter by a label and by "Due date passed", then `x` | Same behavior; the course row shows the filter is active (deliberate difference: Trello puts Filter in the board header) |
+| 10 | Press `f`, filter by a course and by "Due date passed", then `x` | Same behavior; the course row shows the filter is active (deliberate difference: Trello puts Filter in the board header) |
 | 11 | Try each shortcut in Trello's shortcut list that the portal supports | Same key does the same thing |
 | 12 | Archive a card and restore it from the board menu | Same steps |
 | 13 | Count clicks to open a card, rename a list, and filter by a course | No more than Trello (NFR-35) |

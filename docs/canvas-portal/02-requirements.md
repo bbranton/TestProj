@@ -128,7 +128,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-69 | Hovering a card shows an edit (pencil) button; it and right-click open a quick edit menu: Open card, Move, Change label color, Open in Canvas, Archive. | Could | 5 |
 | FR-70 | A card back can hold one or more checklists of items that can be checked off. The card front shows progress such as 2/5 (2 of 5 items done). | Could | 5 |
 | FR-71 | "+ Add a card" at the bottom of each list creates a personal card that isn't a Canvas assignment. It supports everything a card back has except the Canvas details. | Could | 5 |
-| FR-72 | A Filter button at the start of the course button row (FR-78), under the header, opens a menu that filters cards by label (course), by due date (due date passed, due in the next day, next week, next month, no due date), by Canvas submission state and flags (FR-23), and by keyword. When a filter is on, the course row says so and offers "Clear". | Must | 2 |
+| FR-72 | A Filter button at the start of the course button row (FR-78), under the header, opens a menu that filters cards by course, by due date (due date passed, due in the next day, next week, next month, no due date), by Canvas submission state and flags (FR-23), and by keyword. When a filter is on, the course row says so and offers "Clear". | Must | 2 |
 | FR-73 | Keyboard shortcuts follow Trello's where the action exists, including: arrow keys move between cards, Enter opens a card, Escape closes, `f` filter, `x` clear filters, `?` shows the shortcut list. The final list is checked against Trello's own shortcut page during design. | Should | 2 |
 | FR-74 | Archived cards (and, from Phase 5, lists) are found under "Archived items" in the board menu, where they can be restored. | Must | 2 |
 | FR-75 | A board menu opens as a panel from the right edge with: board background color, labels, archived items. | Could | 5 |
@@ -234,3 +234,4 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | 2026-10-25 | FR-23 now shows only statuses that map to a single Canvas field (submission state plus Late, Missing, Excused flags). Upcoming and Overdue join Due soon in FR-27 as Phase 5 future features. FR-24, FR-25, FR-65, and FR-72 updated to match. From the Team Lead's review. |
 | 2026-10-25 | Hiding assignments (FR-25) moved to Phase 5, from the Team Lead's review. |
 | 2026-10-25 | FR-72: the Filter button sits in the course button row, not the header. |
+| 2026-10-25 | FR-72 filters by course; the UI says "course", not "label". |

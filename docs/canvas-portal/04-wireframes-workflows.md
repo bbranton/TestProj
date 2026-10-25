@@ -191,7 +191,7 @@ the screen.
 |   | ▭ Lab report 3                                              [x]  |   |
 |   |   in list In progress  <- click to move                          |   |
 |   |                                                                  |   |
-|   | Labels          Due date                       |                 |   |
+|   | Course          Due date                       |                 |   |
 |   | [■ BIO 101]     [ ] Tue Oct 28, 11:59 PM       |                 |   |
 |   |                                                |                 |   |
 |   | 20 points · Not submitted                      | Actions         |   |
@@ -272,7 +272,7 @@ course row, opened with `f`.
 | [ ] Not submitted  [ ] Submitted         |
 | [ ] Graded         [ ] Missing  [ ] Late |
 |                                          |
-| Labels                                   |
+| Courses                                  |
 | [ ] ■ BIO 101                            |
 | [ ] ■ HIST 210                           |
 | [ ] ■ MATH 152                           |
@@ -291,7 +291,7 @@ board.
                           | Menu                           [x] |
                           |------------------------------------|
                           | [▤ Archived items]                 |
-                          | [■ Labels]            (Phase 5)    |
+                          | [■ Course colors]     (Phase 5)    |
                           | [▧ Change background] (Phase 5)    |
                           |------------------------------------|
                           | Archived items                     |
@@ -484,3 +484,4 @@ flowchart TD
 | 2026-10-25 | Due soon removed (Phase 5, FR-27): no yellow badges in S-3, S-4, S-5, or the filter menu. |
 | 2026-10-25 | Statuses now come straight from Canvas fields (FR-23): S-4 badge notes, S-5, and the S-8 filter menu updated. |
 | 2026-10-25 | Filter button moved from the header to the start of the course button row (S-3, S-4, phone), from the Team Lead's review. |
+| 2026-10-25 | The filter menu and card back say "Courses"/"Course" instead of "Labels", from the Team Lead's review. |

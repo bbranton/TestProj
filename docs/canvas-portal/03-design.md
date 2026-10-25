@@ -403,7 +403,7 @@ flowchart TD
     Card --> Badges["Label strip, due badge,<br/>description icon"]
     Card --> QuickEdit["QuickEditMenu, Phase 5<br/>pencil or right-click"]
     CardBack --> Desc["Description (note editor)"]
-    CardBack --> Sidebar["Card actions: Move, Labels, Open in Canvas, Archive"]
+    CardBack --> Sidebar["Card actions: Move, Open in Canvas, Archive"]
 ```
 
 ### Visual style

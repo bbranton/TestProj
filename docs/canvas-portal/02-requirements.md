@@ -132,7 +132,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-75 | A board menu opens as a panel from the right edge with: board background color, labels, archived items. | Could | 5 |
 | FR-76 | The user can have more than one board. | Could | 5 |
 | FR-77 | Dragging feels like Trello: the card tilts slightly and lifts while dragged, a gray gap shows where it will land, and the board scrolls when the card nears an edge. | Should | 2 |
-| FR-78 | Between the header and the board, a row of show/hide buttons has one button per active course, in the course's label color. Tapping a button hides or shows that course's cards; a "Show all" button shows every course again. Hidden cards keep their list and position. The same choice applies to the table view, and it is saved with the user's account so it follows them between devices. | Must | 2 (1 for the table view) |
+| FR-78 | Between the header and the board, a row of show/hide buttons has one button per active course, in the course's label color. Tapping a button hides or shows that course's cards; "Show all" and "Hide all" buttons show or hide every course at once. When every course is hidden, the board says so and offers Show all. Hidden cards keep their list and position. The same choice applies to the table view, and it is saved with the user's account so it follows them between devices. | Must | 2 (1 for the table view) |
 
 ### 4.6 Private notes
 
@@ -219,3 +219,4 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | 2026-10-25 | Server storage decided: FR-50 and FR-51 move to Phase 2, FR-52 removed. Added parent (observer) user, test tokens under A-1, A-3 token handling, Q-5. |
 | 2026-10-25 | Trello goal (G-3): added Trello terms, constraint C-4, FR-60 to FR-77, NFR-34, NFR-35, Q-6. FR-30 and FR-36 changed, NFR-33 now follows Trello's phone layout. |
 | 2026-10-25 | Added FR-78, course show/hide buttons, from the Team Lead's review. |
+| 2026-10-25 | FR-78 gains Hide all. |

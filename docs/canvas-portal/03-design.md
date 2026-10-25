@@ -432,7 +432,7 @@ UI uses:
 | Add a card or list | Composer opens in place with the text box focused; Enter adds and keeps the composer open for the next one, as Trello does | FR-64, FR-71 |
 | Open a card | Click, or focus it and press Enter; address changes to `/c/{cardId}` | FR-67 |
 | Quick edit | Pencil on hover, right-click, or `e` | FR-69 |
-| Show or hide a course | Tap its button in the row under the header; the board updates at once and the choice is saved in the background (optimistic update) | FR-78 |
+| Show or hide a course | Tap its button in the row under the header, or Show all / Hide all; the board updates at once and the choice is saved in the background (optimistic update) | FR-78 |
 | Filter | `f` or the Filter button; non-matching cards are hidden and the header shows the filter is active | FR-72 |
 | Keyboard map | Kept in one file and shown by `?`; checked against Trello's shortcut page | FR-73, NFR-31 |
 

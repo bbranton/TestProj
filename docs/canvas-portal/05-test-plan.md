@@ -105,7 +105,7 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | FR-69 | Pencil, right-click, and `e` open the quick edit menu | E2E |
 | FR-70 | Add, check, reorder, and delete checklist items; card front shows progress | API, E2E |
 | FR-72 | Each filter option, combined filters, and Clear | E2E |
-| FR-78 | Tapping a course button hides and shows its cards on board and table; Show all; hidden cards keep their place; choice survives reload and a second session | API, E2E |
+| FR-78 | Tapping a course button hides and shows its cards on board and table; Show all and Hide all; hidden cards keep their place; choice survives reload and a second session | API, E2E |
 | FR-73 | Every shortcut in the keyboard map does its action, and `?` lists them all | E2E |
 | FR-74 | Archive and restore a card and a list | API, E2E |
 | NFR-34 | Visual comparison: screenshots of S-4 and S-5 match approved reference images (Playwright `toHaveScreenshot`) | E2E |
@@ -157,7 +157,7 @@ steps, and the expected result. Screen IDs refer to the
 
 ### TP-04 Filters and search
 
-**Checks:** FR-24, FR-25, FR-78 · **Phase:** 1 (steps 5 and 6 on the board from Phase 2)
+**Checks:** FR-24, FR-25, FR-78 · **Phase:** 1 (steps 5 to 7 on the board from Phase 2)
 
 | Step | Action | Expected |
 |------|--------|----------|
@@ -167,6 +167,7 @@ steps, and the expected result. Screen IDs refer to the
 | 4 | Clear filters; toggle "Hide finished" | Past graded or submitted work hides and shows |
 | 5 | Tap one course's button in the row under the header, then tap it again | Its assignments hide, then come back; the button shows hidden (○) and shown (●) |
 | 6 | Hide two courses, then select Show all | Every course is shown |
+| 7 | Select Hide all | No assignments shown; the page says all courses are hidden and offers Show all |
 
 ### TP-05 Canvas unavailable
 
@@ -310,3 +311,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | First draft. Includes the screenshot rule for UI changes. |
 | 2026-10-25 | Trello goal (G-3): Trello comparison step in the PR checklist, automated tests for FR-60 to FR-77 and NFR-34, TP-13 Trello comparison review; TP-06, TP-07, TP-12 updated. |
 | 2026-10-25 | Course show/hide buttons (FR-78): automated test and TP-04 steps 5 and 6. |
+| 2026-10-25 | Hide all added to FR-78 tests and TP-04 step 7. |

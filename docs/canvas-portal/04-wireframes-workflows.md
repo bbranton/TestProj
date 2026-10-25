@@ -108,7 +108,7 @@ Each row uses the same label colors and due badges as the cards.
 +--------------------------------------------------------------------------+
 | Canvas Portal  My assignments  [ Board |*Table*]   [Filter] [⟳] [⋯] (A)  |
 +--------------------------------------------------------------------------+
-| Courses: [● BIO 101] [● HIST 210] [● MATH 152] [○ ART 120]  [Show all]   |
+| [● BIO 101] [● HIST 210] [● MATH 152] [○ ART 120]  [Show all] [Hide all] |
 +--------------------------------------------------------------------------+
 | [!] Canvas isn't responding. Showing data from 10:42 AM.  <- NFR-20 only |
 +--------------------------------------------------------------------------+
@@ -136,7 +136,7 @@ NFR-3, NFR-31, NFR-34.
 +--------------------------------------------------------------------------+
 | Canvas Portal  My assignments  [*Board*| Table ]   [Filter] [⟳] [⋯] (A)  |
 +--------------------------------------------------------------------------+
-| Courses: [● BIO 101] [● HIST 210] [● MATH 152] [○ ART 120]  [Show all]   |
+| [● BIO 101] [● HIST 210] [● MATH 152] [○ ART 120]  [Show all] [Hide all] |
 +--------------------------------------------------------------------------+
 |  board background color                                                  |
 |  +--------------------+ +--------------------+ +--------------------+    |
@@ -163,8 +163,10 @@ NFR-3, NFR-31, NFR-34.
 |  +--------------------+                                                  |
 +--------------------------------------------------------------------------+
   Course buttons (FR-78): one per active course, in its label color. ● shown,
-  ○ hidden; tapping one hides or shows that course's cards. [Show all] brings
-  every course back. Hidden cards keep their list and position.
+  ○ hidden; tapping one hides or shows that course's cards. [Show all] and
+  [Hide all] show or hide every course at once. With every course hidden, the
+  board says "All courses are hidden" with a Show all link. Hidden cards keep
+  their list and position.
   ▬▬ label strip in the course color (FR-66). (◷ ...) due badge: yellow due
   soon, red overdue, green with ✓ when complete (FR-65). ≡ has a description.
   ✎ is shown here on the card the mouse is over.
@@ -333,7 +335,8 @@ The user swipes sideways between lists, and dots show which list is shown.
 |                            |
 |          ○ ● ○ ○           |
 +----------------------------+
-  The course buttons scroll sideways when they don't fit (FR-78).
+  The course buttons scroll sideways when they don't fit; Show all and Hide
+  all are at the end of the row (FR-78).
   To move a card, press and hold it, then drag it to a screen edge to go
   to the next list, or use Move on the card back.
 ```
@@ -472,3 +475,4 @@ flowchart TD
 | 2026-10-25 | First draft. |
 | 2026-10-25 | Trello goal (G-3): board is home; S-3 becomes Table view; S-4 and S-5 redrawn as Trello board and card back; added S-7 quick edit, S-8 filter, S-9 board menu; Trello-style phone layout; W-7 and W-8 added. |
 | 2026-10-25 | Added the course show/hide button row under the header on S-3, S-4, and the phone layout (FR-78), from the Team Lead's review. |
+| 2026-10-25 | Added Hide all next to Show all on the course button row (FR-78). |

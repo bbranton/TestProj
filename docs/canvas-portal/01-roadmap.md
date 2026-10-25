@@ -88,8 +88,10 @@ TP-14 has a recorded baseline.
 
 This phase does one thing: the student can drag cards between lists, and
 that is saved and kept in sync on every device they use. Board layout is
-stored on the server (D-2), so it needs portal accounts first. Keeping
-devices in sync is the hardest part of the phase and gets the most testing.
+stored on the server (D-2), so it needs portal accounts first. Keeping the
+student's own devices in sync is needed here, but it is the simpler kind of
+sync; keeping the backend in step with Canvas is the hard part and gets
+Phase 3.
 
 - Portal sign-in with Google, so the server knows whose board is whose
   (FR-50, D-7).
@@ -121,12 +123,24 @@ This phase makes loading fast and keeps the portal's copy of Canvas data
 current, so the student never waits on Canvas or has to press Refresh. It
 starts from the TP-14 timings recorded in Phase 1.
 
+Keeping the backend in step with Canvas is the hardest part of the whole
+project and gets the most testing. Teachers create, delete, and change
+assignments at any time; fields such as due dates can be missing at first,
+added later, changed, or cleared again; and a fetch can fail halfway. Every
+one of these cases has a planned outcome in the design (*What can change in
+Canvas*) and a test (TP-15).
+
 - Tune loading, working through the design's list in order: Canvas GraphQL,
   descriptions left out of the main load, refresh on a schedule and by
   urgency, then the Planner API as a fallback (NFR-1, NFR-2, R-3).
 - A background job keeps each student's Canvas data current: new, changed,
   and removed assignments, new due dates and submission states, and course
   changes such as a new term (FR-13, FR-34, FR-35, FR-45, NFR-4).
+- Every kind of Canvas change has a defined result on the board: new,
+  deleted, unpublished and republished, renamed, fields added, changed, or
+  cleared, submission state going forward or back, and courses ending or
+  being dropped (FR-39, FR-45, Q-7).
+- A partial or failed fetch never archives or changes cards (FR-45).
 - Changes the job finds reach the student's open devices through the
   Phase 2 sync (NFR-22).
 - The job stays within Canvas's rate limits and slows down for students who
@@ -134,8 +148,10 @@ starts from the TP-14 timings recorded in Phase 1.
 
 **Exit criteria:** TP-14 meets NFR-1 and NFR-2 on the Team Lead's real
 account, including at a busy time; TP-08 passes with Canvas changes showing
-within 15 minutes and no Refresh (NFR-4); a week of background refreshing
-produces no rate-limit errors and no lost or duplicated cards.
+within 15 minutes and no Refresh (NFR-4); every scenario in TP-15 and its
+automated suite passes; a week of background refreshing against the Team
+Lead's real account produces no rate-limit errors and no lost, duplicated,
+or wrongly archived cards.
 
 ### Phase 4: Polish and deploy
 
@@ -220,6 +236,7 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | R-6 | A school-managed Google account blocks sign-in to outside apps | Student can't sign in | Allow any Google account, so a personal one works; explain this on the sign-in screen. |
 | R-7 | Matching Trello too closely in look (logo, artwork, exact styling) | Trademark or copyright complaint | Copy behavior and layout patterns only; our own name, colors, and icons (C-4). |
 | R-8 | Sync bugs: two devices or two browser tabs disagree, or a card is lost or duplicated | Student stops trusting the board | Phase 2 is only dragging and sync; one row per card enforced by the database; concurrency tests in CI and the TP-06 sync procedure (NFR-22). |
+| R-9 | The backend falls out of step with Canvas: a teacher deletes, changes, or clears something and the board shows stale data, loses a card, or archives one that still exists | Students miss or mistrust deadlines | Phase 3 is dedicated to it; every change case has a planned outcome (design, *What can change in Canvas*); only complete fetches can archive; scenario fixtures replayed in CI and TP-15 against a real account. |
 
 ## Change log
 
@@ -247,3 +264,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | Phase 2 narrowed to accounts, dragging between lists, and sync, from the Team Lead's review; everything else moved to Phase 3. Added D-8 (how devices learn about changes) and R-8 (sync bugs). |
 | 2026-10-25 | R-3 widened to slow Canvas loads, from the Team Lead's experience; Phase 1 now measures load times (TP-14) and fixes them before Phase 2. |
 | 2026-10-25 | Phase 3 is now performance and Canvas sync, from the Team Lead; the card back, notes, label colors, saved course toggles, filter menu, shortcuts, and archiving move to Phase 5. Phase 1 records a TP-14 baseline instead of meeting NFR-2. |
+| 2026-10-25 | Backend-to-Canvas sync named the hardest part of the project, from the Team Lead's review: Phase 3 lists the change cases (FR-39, FR-45, Q-7) and TP-15 in its exit criteria; added R-9. |

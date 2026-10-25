@@ -108,6 +108,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-32 | The user can drag a card to another list. Cards cannot be reordered by hand within a list (FR-38). | Must | 2 |
 | FR-33 | The board layout (which list each card is in) is saved and restored on the next visit. | Must | 2 |
 | FR-34 | Assignments that are new since the last visit appear in *Backlog*, in their due date place (FR-38). When the board is first created, every assignment starts in *Backlog*. | Must | 2 |
+| FR-39 | When a field changes in Canvas, the card shows the new value after the next refresh, and never changes list because of it. This covers a field being added later (such as a due date set after the assignment was created), changed, or cleared (such as a due date removed: the card moves to the end of its list with no due date). It applies to the name, due date, points, description, submission state, and the late, missing, and excused flags, including a state going backward (for example graded back to submitted after a resubmission). | Must | 3 |
 | FR-38 | Within every list, assignments are always sorted by due date, earliest at the top. Assignments with no due date come last, then by name. A card dropped into a list slots into its due date place, and a changed due date in Canvas moves the card to its new place. | Must | 1 |
 | FR-35 | Cards are matched to assignments by Canvas assignment ID, so a renamed or rescheduled assignment keeps its place. | Must | 2 |
 | FR-36 | The user can archive a list, as in Trello. Its cards go with it and can be restored together. | Could | 5 |
@@ -147,7 +148,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-42 | A note is saved when the user presses Save or Ctrl+Enter. If saving fails, the text stays in the box; closing the card with unsaved text warns first. | Must | 5 |
 | FR-43 | A card with notes shows a badge with the number of notes; opening the card shows them all. | Must | 5 |
 | FR-44 | Notes are never sent to Canvas. | Must | 5 |
-| FR-45 | If an assignment disappears from Canvas, its card (and any notes) is marked archived rather than deleted, and leaves the board. Viewing and restoring archived cards comes with FR-74. | Should | 3 |
+| FR-45 | If an assignment disappears from Canvas (deleted or unpublished by the teacher), its card (and any notes) is marked archived rather than deleted, and leaves the board. Only a complete, successful refresh can archive a card; a failed or partial fetch changes nothing. If the assignment comes back (republished), the card returns to its old list. Viewing and restoring archived cards by hand comes with FR-74. | Must | 3 |
 | FR-46 | Notes support simple formatting (bold, lists, links). | Could | 5 |
 
 ### 4.7 Accounts, sync, and data control
@@ -217,6 +218,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 - ~~**Q-4** Is multi-device sync wanted, or is one browser enough?~~ Answered: yes, the user signs in from anywhere and sees their saved state (D-2).
 - **Q-5** Should the portal support parent (observer) tokens? Canvas returns observed students' data through different options, so the views would need a student picker. Proposed for Phase 5.
 - ~~**Q-6** Should personal cards (FR-71) come in Phase 3, or wait until later?~~ Answered: later. Students don't need to create their own cards or lists yet, so FR-64 and FR-71 are Phase 5 future features.
+- **Q-7** When a course ends or the student drops it, should its cards be archived at once, kept until the student hides the course, or kept until the next term starts? (Recommendation: archive when the course leaves Canvas's active list, and bring them back if it returns.)
 
 ## Change log
 
@@ -245,3 +247,4 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | 2026-10-25 | Table view removed (FR-30); the board is the only view and appears read only in Phase 1 (FR-60, FR-65, FR-78). From the Team Lead's review. |
 | 2026-10-25 | Phase 2 is now accounts, dragging, and sync only: FR-28, FR-66 to FR-68, FR-72 to FR-74, FR-78 saving, NFR-34, and NFR-35 move to Phase 3. Added NFR-22 (sync between devices). From the Team Lead's review. |
 | 2026-10-25 | Phase 3 is now performance and Canvas sync, from the Team Lead: FR-24, FR-28, FR-40 to FR-44, FR-46, FR-66 to FR-68, FR-72 to FR-74, FR-78 saving, NFR-21, NFR-34, and NFR-35 move to Phase 5; NFR-2 moves to Phase 3 and NFR-12 to Phase 2; FR-45 reworded; added NFR-4 (Canvas changes appear within 15 minutes). Fixed broken table cells in FR-66, FR-67, FR-72 to FR-74, NFR-34, and NFR-35. |
+| 2026-10-25 | Added FR-39 (fields added, changed, or cleared in Canvas, including states going backward); FR-45 now Must, archives only after a complete refresh, and restores republished assignments; added Q-7 (cards of ended or dropped courses). From the Team Lead's review. |

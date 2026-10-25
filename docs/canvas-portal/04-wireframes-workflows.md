@@ -422,12 +422,16 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A([Refresh from Canvas]) --> B{For each Canvas assignment}
-    B -- has a card --> C[Keep its list; update name and due date,<br/>re-sort the list by due date]
+    A([Refresh from Canvas]) --> Z{Every course and<br/>page arrived?}
+    Z -- no --> Y[Change nothing;<br/>keep last complete data, show warning]
+    Z -- yes --> B{For each Canvas assignment}
+    B -- has a card --> C[Keep its list; show the current fields,<br/>including ones added or cleared]
+    C --> C2[Re-sort by due date;<br/>no due date goes last]
     B -- no card yet --> D[Add card to Backlog<br/>in its due date place]
-    A --> E{For each card}
+    B -- archived card --> R[Bring card back<br/>to its old list]
+    Z -- yes --> E{For each card}
     E -- assignment gone from Canvas --> F[Mark card archived;<br/>keep its notes]
-    E -- submitted in Canvas --> G[Due badge turns green;<br/>card stays where the student put it]
+    E -- state or flags changed --> G[Badge shows the current Canvas value;<br/>card stays where the student put it]
 ```
 
 ### W-6 Disconnect and delete data
@@ -491,3 +495,4 @@ flowchart TD
 | 2026-10-25 | Renaming and reordering lists moved to Phase 5: list menus removed from S-4 and the phone layout, W-7 marked Phase 5, from the Team Lead's review. |
 | 2026-10-25 | Table view (S-3) removed: no view switch in the header, S-2 opens the board, and the board takes over S-3's requirements and Canvas warning banner, from the Team Lead's review. |
 | 2026-10-25 | Card back (S-5), filter menu (S-8), board menu and archive (S-9), and notes (W-4) marked Phase 5; until then clicking a card opens it in Canvas. From the Team Lead. |
+| 2026-10-25 | W-5 now covers partial fetches, fields added or cleared, and republished assignments, from the Team Lead's review. |

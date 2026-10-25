@@ -35,6 +35,12 @@ saved Canvas JSON responses for a made-up student, covering:
 - A course with more than 100 assignments, split over two pages (FR-12)
 - A `403 Rate Limit Exceeded` response followed by success (C-2)
 - A `401 Unauthorized` response (FR-6)
+- **Change sequences** for Phase 3 (FR-39, FR-45): a series of snapshots of
+  the same account over time, replayed one per refresh, covering every row of
+  the design's *What can change in Canvas* table, such as a due date that is
+  empty, then set, then changed, then cleared; an assignment deleted and
+  then republished; a state going graded to submitted; and a fetch cut off
+  after the first page
 
 Fixtures contain no real names or data. When a fixture is recorded from a
 live account, names and IDs are replaced before it is committed.
@@ -99,6 +105,7 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | NFR-10 | Logs captured during a full test run contain no token string | API |
 | NFR-12 | User B gets `404` for every one of user A's cards and notes | API |
 | NFR-1, NFR-2 | Fixture server adds 1 second to every Canvas response: with a warm cache the board answers in under 2 seconds and refreshes in the background; a cold load of 8 courses and 200 assignments finishes in 15 seconds, with courses appearing one at a time | API, E2E |
+| FR-39, FR-45 | Replays every change sequence fixture and checks each card's list, fields, sort place, and archived flag after every step; a cut-off fetch changes nothing; no card is ever deleted | API |
 | NFR-4 | With the background job on and a fixture changed (new assignment, new due date, newly graded), the board shows each change within one job cycle without Refresh; the job backs off when the fixture reports a low rate-limit budget | API |
 | NFR-20 | Canvas down: cached data plus warning banner | API, E2E |
 | NFR-22 | Concurrency: 20 parallel moves of one card leave it in exactly one list; `changes?since=` returns every change once; two parallel board loads with a new assignment create one card; two browser sessions converge within one poll | API, E2E |
@@ -222,7 +229,7 @@ steps, and the expected result. Screen IDs refer to the
 
 ### TP-08 Canvas changes reach the board
 
-**Checks:** FR-34, FR-35, FR-38, FR-45, FR-65, NFR-4 · **Phase:** 2–3 (from Phase 3, also without pressing Refresh)
+**Checks:** FR-34, FR-35, FR-38, FR-45, FR-65, NFR-4 · **Phase:** 2–3 (from Phase 3, also without pressing Refresh; TP-15 covers Phase 3 in depth)
 **Needs:** recorded data in local environment, edited between steps.
 
 | Step | Action | Expected |
@@ -327,6 +334,35 @@ the backend's Canvas timing log.
 
 Record times only, never the token or assignment names, in the results log.
 
+### TP-15 Canvas changes over time
+
+**Checks:** FR-23, FR-34, FR-35, FR-38, FR-39, FR-45, NFR-4, Q-7 · **Phase:** 3
+**Needs:** a Canvas course where the Team Lead can act as teacher (a free
+Canvas account from Instructure works), a student account enrolled in it,
+and the portal with background refresh on.
+
+Run every step as teacher in Canvas, then wait for the background refresh
+(no Refresh button) and check the student's board.
+
+| Step | Teacher does in Canvas | Expected on the student's board |
+|------|------------------------|---------------------------------|
+| 1 | Create assignment A with no due date | A appears in Backlog, at the end |
+| 2 | (Student drags A to To do.) Add a due date to A | A stays in To do and moves to its due date place |
+| 3 | Change A's due date to earlier | A moves up within To do |
+| 4 | Clear A's due date | A moves to the end of To do with no due date |
+| 5 | Rename A and change its points | New name and points; same list |
+| 6 | Create B and C at once | Both in Backlog, in date order, once each |
+| 7 | Delete B | B leaves the board; it is archived, not gone |
+| 8 | Unpublish C, wait one refresh, publish it again | C leaves the board, then returns to its old list |
+| 9 | (Student submits A.) Grade A, then remove the grade | Badge goes Submitted, Graded, then back to Submitted |
+| 10 | Mark A excused, then not excused | Excused tag shows, then goes away |
+| 11 | Give the student their own due date for A (an override) | The student's board shows the student's date |
+| 12 | During a refresh, cut the backend's network for a few seconds | Nothing is archived or changed; the warning banner shows; the next refresh catches up |
+| 13 | Conclude the course | Result matches the Q-7 decision |
+
+After each step, check a second device too: it shows the same thing within
+the NFR-22 time.
+
 ## 6. Reporting a problem
 
 A failed step becomes a GitHub issue that includes the procedure and step
@@ -366,3 +402,4 @@ Copy this table for each phase sign-off.
 | 2026-10-25 | TP-06 gains sync steps 6 to 12 and an NFR-22 concurrency test row, for the Phase 2 focus on dragging and sync. |
 | 2026-10-25 | Added TP-14 (Canvas load timing with the real student account) and a slow-Canvas automated test for NFR-1 and NFR-2. |
 | 2026-10-25 | Phase 3 is performance and Canvas sync: TP-09 and the card back, notes, filter, label, shortcut, and archive tests move to Phase 5; TP-14 is a Phase 1 baseline and must pass in Phase 3; added an NFR-4 background refresh test. |
+| 2026-10-25 | Added TP-15 (Canvas changes over time, run as teacher), change sequence fixtures, and an automated replay test for FR-39 and FR-45, from the Team Lead's review. |

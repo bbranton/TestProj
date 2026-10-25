@@ -431,9 +431,13 @@ on its own schedule.
   minutes for assignments due in the next two weeks, less often for the
   rest, and daily for the course list (to catch a new term or a dropped
   course).
-- **Find what changed:** the job compares the new data with the cached copy,
-  by Canvas ID, and sorts it into new, removed, renamed, new due date, and
-  new submission state.
+- **Find what changed:** the job compares the new data with the last
+  complete copy, by Canvas ID, field by field (see *What can change in
+  Canvas* below).
+- **Only a complete fetch counts:** the job keeps the new data only if every
+  course and every page arrived. A timeout, a rate-limit stop, or an error
+  halfway leaves the previous copy in place, so a missing page can never
+  look like deleted assignments (FR-45).
 - **Apply it to the board** in one database transaction: new assignments
   get a card in Backlog (FR-34), removed ones are marked archived (FR-45),
   and the rest only update what the card shows (FR-35). The board's
@@ -446,6 +450,40 @@ on its own schedule.
 - **Token problems:** if Canvas rejects the token, the job stops for that
   student and the board shows the reconnect message on their next visit
   (FR-6).
+
+### What can change in Canvas (Phase 3, FR-39, FR-45)
+
+Each case below has one planned result. The card's list is the student's
+choice, so no Canvas change ever moves a card to another list.
+
+| In Canvas | On the board | Requirements |
+|-----------|--------------|--------------|
+| Teacher creates an assignment | New card in Backlog, in its due date place | FR-34 |
+| Teacher deletes or unpublishes it | Card is marked archived and leaves the board; notes kept | FR-45 |
+| It is republished, or reappears after a fetch problem | Card comes back in its old list | FR-45 |
+| Name, points, or description changes | Card shows the new value | FR-35, FR-39 |
+| Due date added later (none on an earlier refresh) | Card moves from the end of its list to its due date place | FR-38, FR-39 |
+| Due date changed | Card moves to its new place in the same list | FR-38 |
+| Due date cleared | Card moves to the end of its list, shown with no due date | FR-38, FR-39 |
+| Submission state moves forward (submitted, graded) | Badge updates; card stays put | FR-23, FR-39 |
+| State goes backward (resubmission, grade removed) or a flag is cleared (no longer late, missing, or excused) | Badge shows the current Canvas value; nothing is kept from before | FR-23, FR-39 |
+| Student's own due date differs from the class's (a Canvas *override*) | Card shows the date Canvas gives this student | FR-22 |
+| A new course starts | Its course button and cards appear; cards go to Backlog | FR-34, FR-78 |
+| A course ends or the student drops it | Open question Q-7; recommended: archive its cards, bring them back if it returns | FR-45 |
+| A fetch fails partway | Nothing changes; the last complete data stays, with the warning banner | FR-45, NFR-20 |
+
+Two rules make these safe:
+
+- **Canvas is the source of truth for assignment fields; the student is the
+  source of truth for the card's list.** The portal stores no copy of a
+  Canvas field that could go stale; it shows whatever the last complete
+  fetch said, including "empty".
+- **Missing is not deleted until a complete fetch says so,** and archived is
+  never final: a card is never removed from the database because of Canvas.
+
+Open check for Phase 1: confirm with the Team Lead's real account that the
+`due_at` Canvas returns for a student already includes their override. If
+not, the fetch adds `include[]=overrides` and picks the student's date.
 
 ### Loading sequence
 
@@ -591,7 +629,7 @@ works without a framework, but there are fewer worked examples to copy from.
 | FR-1 to FR-6 (connect) | Sections 4, 6, 7 |
 | FR-10 to FR-14 (fetch) | Section 6 |
 | FR-20 to FR-26 (view) | Section 4 (status), wireframes |
-| FR-30 to FR-38 (board) | Sections 3, 4, 6 (loading sequence), 9 |
+| FR-30 to FR-39 (board, Canvas changes) | Sections 3, 4, 6 (loading sequence, keeping the backend in step, what can change in Canvas), 9 |
 | FR-40 to FR-46 (notes) | Sections 3, 4, 9 |
 | FR-60 to FR-78 (Trello-style, course buttons) | Sections 3, 4, 9 |
 | FR-50 to FR-54 (accounts, data) | Sections 4, 5 |
@@ -632,3 +670,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | Added *Keeping devices in sync* (NFR-22, D-8): `change_seq` on boards and cards, a changes endpoint, last-save-wins, and a unique card rule per assignment. |
 | 2026-10-25 | Added *Making Canvas loads fast*: show cached data and refresh in the background, per-call timing logs, and a fallback order (GraphQL, descriptions on demand, scheduled and tiered refresh, Planner API). |
 | 2026-10-25 | Phase 3 is performance and Canvas sync: tuning list renamed *Phase 3 tuning*, added *Keeping the backend in step with Canvas* (NFR-4); card back, notes, label, and archive endpoints marked Phase 5. |
+| 2026-10-25 | Added *What can change in Canvas* (FR-39, FR-45): one planned result per change case, the two rules behind them, and complete-fetch-only archiving. |

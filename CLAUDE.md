@@ -22,5 +22,8 @@
   Anything marked a later phase in any doc under `docs/canvas-portal/` is out
   of scope, even when the design or UI specification already describes it.
   Ask the Team Lead before building it.
+- The design doc covers Phases 0 to 4 only. Its
+  [Design by phase](docs/canvas-portal/03-design.md#design-by-phase) table
+  says which tables, endpoints, and components each phase builds.
 - Every implementation PR lists the requirement IDs it implements in its
   description.

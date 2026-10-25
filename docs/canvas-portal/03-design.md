@@ -7,6 +7,24 @@ stores, how those parts talk to each other, and how each part meets the
 [requirements](02-requirements.md). It is written so that the frontend
 framework (decision D-1) can still be chosen at the end of the design.
 
+**Scope:** this design covers Phases 0 to 4 only. Phase 5 ideas in the
+requirements and roadmap are not designed here; each gets its design when
+it is moved onto the roadmap. Section 12, *Leave room for later*, lists the
+few choices made now so those ideas stay possible.
+
+### Design by phase
+
+Build only the parts listed for the current phase (see the repo's
+[CLAUDE.md](../../CLAUDE.md)). Each phase adds to the ones before it.
+
+| Phase | Builds |
+|-------|--------|
+| 0 | Repository layout (section 8), empty frontend and backend, CI, the Google OAuth client (section 5) |
+| 1 | Tables `USER`, `CANVAS_CONNECTION`, `BOARD`, `LIST`, `CARD` (without `archived`), `COURSE_LABEL`, `CANVAS_CACHE`; the Phase 1 endpoints in section 4; sign-in (section 5); talking to Canvas, caching, and *Built from the start* (section 6); security (section 7); the board, course buttons, minimize and expand, visual style, and the Phase 1 interactions (section 9) |
+| 2 | Moving cards and *Keeping devices in sync* (section 4): the Phase 2 endpoints, `change_seq`, the unique card rule; dragging (section 9) |
+| 3 | *Phase 3 tuning*, *Bringing the backend in step with Canvas*, and *What can change in Canvas* (section 6); `CARD.archived` |
+| 4 | Deleting all of a user's data (section 4), accessibility checks, deploying (roadmap D-3) |
+
 ## 1. Architecture overview
 
 The portal has three parts that we build, plus Canvas.
@@ -30,13 +48,13 @@ flowchart LR
 | Part | What it does | Qt comparison |
 |------|--------------|---------------|
 | **Frontend** | Draws every screen, handles drag and drop, and calls the backend. It is a *single-page app*: the browser loads it once, then it swaps screens itself without reloading the page. | The QML UI |
-| **Backend API** | Checks who is signed in, stores and returns board and notes, and calls Canvas on the user's behalf. Never sends a Canvas token to the browser. | The C++ model layer, but on a server |
-| **Database** | Stores accounts, encrypted Canvas tokens, board layout, notes, and a short-lived cache of Canvas data. | A persistent store like SQLite behind a model |
+| **Backend API** | Checks who is signed in, stores and returns the board, and calls Canvas on the user's behalf. Never sends a Canvas token to the browser. | The C++ model layer, but on a server |
+| **Database** | Stores accounts, encrypted Canvas tokens, board layout, and the last copy of Canvas data. | A persistent store like SQLite behind a model |
 | **Canvas** | The source of courses and assignments. Read only. | An external web service |
 
 **Why a backend at all:** browsers block the frontend from calling Canvas
-directly (CORS, constraint C-1). Because board and notes must follow the user
-to any device (D-2), we also need a server to store them. One backend covers
+directly (CORS, constraint C-1). Because the board must follow the user
+to any device (D-2), we also need a server to store it. One backend covers
 both.
 
 ## 2. Technology choices
@@ -62,14 +80,11 @@ come from Canvas and are cached, not copied permanently.
 ```mermaid
 erDiagram
     USER ||--o| CANVAS_CONNECTION : has
-    USER ||--o{ BOARD : owns
+    USER ||--o| BOARD : owns
     BOARD ||--o{ LIST : contains
     LIST ||--o{ CARD : contains
-    CARD ||--o{ NOTE : has
-    CARD ||--o{ CHECKLIST : has
-    CHECKLIST ||--o{ CHECKLIST_ITEM : contains
-    USER ||--o{ COURSE_LABEL : colors
-    USER ||--o{ CANVAS_CACHE : caches
+    CANVAS_CONNECTION ||--o{ COURSE_LABEL : colors
+    CANVAS_CONNECTION ||--o{ CANVAS_CACHE : caches
 
     USER {
         uuid id PK
@@ -78,6 +93,7 @@ erDiagram
         datetime created_at
     }
     CANVAS_CONNECTION {
+        uuid id PK
         uuid user_id FK
         string canvas_base_url
         bytes token_encrypted
@@ -87,59 +103,33 @@ erDiagram
     BOARD {
         uuid id PK
         uuid user_id FK
-        string title
-        string background
-        int change_seq
+        int change_seq "Phase 2"
     }
     LIST {
         uuid id PK
         uuid board_id FK
         string title
-        string position
-        bool archived
+        int position
     }
     CARD {
         uuid id PK
         uuid user_id FK
         uuid list_id FK
-        int canvas_assignment_id "empty for personal cards"
-        int canvas_course_id
-        string title "personal cards only"
-        datetime due_at "personal cards only"
-        bool archived
-        int change_seq
-    }
-    NOTE {
-        uuid id PK
-        uuid user_id FK
-        uuid card_id FK
+        uuid connection_id FK
         int canvas_assignment_id
-        text body
-        datetime created_at
-        datetime updated_at
-    }
-    CHECKLIST {
-        uuid id PK
-        uuid card_id FK
-        string title
-        string position
-    }
-    CHECKLIST_ITEM {
-        uuid id PK
-        uuid checklist_id FK
-        string text
-        bool done
-        string position
+        int canvas_course_id
+        bool archived "Phase 3"
+        int change_seq "Phase 2"
     }
     COURSE_LABEL {
         uuid user_id FK
+        uuid connection_id FK
         int canvas_course_id
         string color
-        string name
-        bool hidden
     }
     CANVAS_CACHE {
         uuid user_id FK
+        uuid connection_id FK
         string kind
         json payload
         datetime fetched_at
@@ -149,50 +139,34 @@ erDiagram
 Design notes:
 
 - **Trello's structure:** a board holds lists, lists hold cards (goal G-3).
-  Each user gets one board for now; the `BOARD` table is there so more boards
-  (FR-76) don't need a redesign.
-- **Cards and notes key on `canvas_assignment_id`**, never the assignment name,
-  so a renamed or rescheduled assignment keeps its card and note (FR-35).
+  Each user has one board, which holds the `change_seq` counter used for
+  sync from Phase 2.
+- **Fields are added with their phase.** Columns marked with a phase in the
+  diagram are added by a migration when that phase starts, not before.
+- **Cards key on `canvas_assignment_id`**, never the assignment name,
+  so a renamed or rescheduled assignment keeps its card (FR-35).
 - **Cards have no stored position.** Within a list they are always sorted by
   due date, earliest first, then by name, with no-due-date cards last
   (FR-38). The order is worked out each time the board loads, so a due date
   changed in Canvas moves the card automatically. Moving a card only changes
   its `list_id`, a one-row update (NFR-3).
-- **List `position` is a sortable string** (a technique called *fractional
-  indexing*: to put a list between "a" and "b", give it "an"). Until Phase 5
-  it just holds the fixed order of the four lists; when dragging lists
-  arrives (FR-62), a move updates one row instead of renumbering them all.
-- **Checklists** (FR-70) are Phase 5. The `CHECKLIST` and `CHECKLIST_ITEM`
-  tables are shown so the model is ready for them, but they are not built
-  until then; checklist items will use the same position technique.
-- **Notes work like Trello comments:** a card can have any number, one row
-  each, with `created_at` for the date shown and `updated_at` to mark it
-  "(edited)" (FR-40, FR-41).
-- **The description is not stored as a note.** It is the assignment's
-  `description` field from Canvas, kept only in `CANVAS_CACHE` and shown read
-  only (FR-28).
-- **Notes are separate from cards**, so notes survive if a card is archived
-  or a list is archived (NFR-21). A note also records its
-  `canvas_assignment_id`, so it can be reattached if its card is rebuilt.
-- **One school per user for now.** `USER` has at most one
-  `CANVAS_CONNECTION`. More than one school (FR-55, Phase 5) changes that to
-  many, adds a `connection_id` to `CARD`, `COURSE_LABEL`, and `CANVAS_CACHE`,
-  and makes course and assignment IDs unique only within a connection, since
-  two schools can use the same Canvas ID numbers.
-- **One card per assignment, enforced by the database:** a unique rule on
-  (`user_id`, `canvas_assignment_id`) means two devices loading the board at
+- **Lists are fixed:** the four lists (FR-31) are created with the board,
+  and `position` holds their order, 1 to 4.
+- **One school per user.** `USER` has at most one `CANVAS_CONNECTION`.
+  Cards, course labels, and cached data still record their `connection_id`
+  (see section 12).
+- **One card per assignment, enforced by the database (Phase 2):** a unique
+  rule on (`connection_id`, `canvas_assignment_id`) means two devices loading the board at
   the same moment can't both add a card for a new assignment (NFR-22).
 - **`change_seq`** is a counter on the board that goes up by one with every
   change, and each card records the value from its last change. It lets a
   device ask "what changed since number 41?" (see *Keeping devices in sync*).
-- **Personal cards** (FR-71, Phase 5) are cards with no `canvas_assignment_id`; their
-  title and due date are stored on the card itself.
 - **Course label colors** (FR-66) are stored per user and course, picked
-  automatically from a fixed palette the first time a course appears. The
-  same row stores whether the course is hidden by the show/hide buttons
-  (FR-78), so that choice follows the user between devices.
-- **Archived, not deleted:** if an assignment disappears from Canvas, its card
-  is marked `archived` and its notes stay (FR-45).
+  automatically from a fixed palette the first time a course appears, so a
+  course keeps its color on every device. Which courses are hidden by the
+  show/hide buttons (FR-78) is kept in the browser, not the database.
+- **Archived, not deleted (Phase 3):** if an assignment disappears from
+  Canvas, its card is marked `archived` (FR-45).
 - **Every row has `user_id`**, and every query filters by the signed-in user,
   so one user can never read another's data (NFR-12).
 
@@ -201,33 +175,21 @@ Design notes:
 The frontend talks to the backend through these endpoints. All return JSON
 and require a signed-in session except where noted.
 
-| Method and path | Purpose | Requirements |
-|-----------------|---------|--------------|
-| `GET /api/auth/google/login` | Send the browser to Google's sign-in page (no session needed) | FR-50 |
-| `GET /api/auth/google/callback` | Google sends the user back here; backend checks the result, finds or creates the user, sets the session cookie (no session needed) | FR-50 |
-| `POST /api/auth/logout` | Sign out and clear the session | FR-50 |
-| `GET /api/me` | Current user and whether Canvas is connected | FR-2, FR-5 |
-| `PUT /api/canvas/connection` | Save Canvas URL and token; backend verifies with Canvas first | FR-1, FR-2 |
-| `DELETE /api/canvas/connection` | Disconnect and delete the stored token | FR-4 |
-| `GET /api/courses` | Active courses (cached) | FR-10, FR-20 |
-| `GET /api/assignments` | All assignments across active courses, with Canvas status fields | FR-11, FR-21 to FR-23 |
-| `POST /api/refresh` | Bypass the cache and re-fetch from Canvas | FR-13 |
-| `GET /api/board` | Lists and cards with labels and badges, cards sorted by due date, after merging in new or removed assignments | FR-33, FR-34, FR-38, FR-65 |
-| `POST /api/board/lists` | Phase 5: add a list at the end | FR-64 |
-| `PATCH /api/board/lists/{id}` | Phase 5: rename, move (new position), archive, or restore a list | FR-36, FR-62, FR-63 |
-| `POST /api/board/cards` | Phase 5: add a personal card | FR-71 |
-| `GET /api/board/cards/{id}` | Phase 5: everything for the card back, including the cleaned Canvas description | FR-28, FR-67, FR-68 |
-| `PATCH /api/board/cards/{id}` | Move to another list (archive and restore in Phase 5); returns the new `change_seq` | FR-32, FR-33, FR-74, NFR-22 |
-| `GET /api/board/changes?since={seq}` | Cards changed since that `change_seq`, and the current value | NFR-22 |
-| `GET /api/board/archived` | Phase 5: archived lists and cards | FR-74 |
-| `POST`, `PATCH`, `DELETE /api/cards/{id}/checklists/...` | Phase 5: add, rename, check off, reorder, and remove checklists and items | FR-70 |
-| `PATCH /api/labels/{course_id}` | Phase 5: change a course label's color or name, or hide or show the course | FR-66, FR-78 |
-| `GET /api/board/cards/{id}/notes` | Phase 5: a card's notes, newest first | FR-40, FR-43 |
-| `POST /api/board/cards/{id}/notes` | Phase 5: add a note | FR-40, FR-42 |
-| `PATCH /api/notes/{note_id}` | Phase 5: change a note's text | FR-41 |
-| `DELETE /api/notes/{note_id}` | Phase 5: delete a note | FR-41 |
-| `GET /api/export` | Phase 5: download board and notes as JSON | FR-53 |
-| `DELETE /api/me` | Delete the account and all its data | FR-54 |
+| Method and path | Purpose | Requirements | Phase |
+|-----------------|---------|--------------|-------|
+| `GET /api/auth/google/login` | Send the browser to Google's sign-in page (no session needed) | FR-50 | 1 |
+| `GET /api/auth/google/callback` | Google sends the user back here; backend checks the result, finds or creates the user, sets the session cookie (no session needed) | FR-50 | 1 |
+| `POST /api/auth/logout` | Sign out and clear the session | FR-50 | 1 |
+| `GET /api/me` | Current user and whether Canvas is connected | FR-2, FR-5 | 1 |
+| `PUT /api/canvas/connection` | Save Canvas URL and token; backend verifies with Canvas first | FR-1, FR-2 | 1 |
+| `DELETE /api/canvas/connection` | Disconnect and delete the stored token | FR-4 | 1 |
+| `GET /api/courses` | Active courses (cached) | FR-10, FR-20 | 1 |
+| `GET /api/assignments` | All assignments across active courses, with Canvas status fields | FR-11, FR-21 to FR-23 | 1 |
+| `POST /api/refresh` | Re-fetch from Canvas | FR-13, FR-15 | 1 |
+| `GET /api/board` | Lists and cards with labels and badges, cards sorted by due date, after merging in new assignments | FR-31, FR-34, FR-38, FR-65 | 1 |
+| `PATCH /api/board/cards/{id}` | Move to another list; returns the new `change_seq` | FR-32, FR-33, NFR-22 | 2 |
+| `GET /api/board/changes?since={seq}` | Cards changed since that `change_seq`, and the current value | NFR-22 | 2 |
+| `DELETE /api/me` | Delete the account and all its data | FR-54 | 4 |
 
 The backend only ever sends filtered, portal-shaped data to the frontend. It
 does not pass Canvas responses straight through, and it never includes the
@@ -236,8 +198,7 @@ token.
 ### Keeping devices in sync (NFR-22, D-8)
 
 A student may have the board open on a laptop and a desktop computer at once
-(or a phone, once phones are supported in Phase 5). The
-server's copy is the only real one; each device shows a copy and keeps it
+The server's copy is the only real one; each device shows a copy and keeps it
 up to date.
 
 - **Saving a move:** the device moves the card on screen at once (an
@@ -289,9 +250,7 @@ nothing out itself. Canvas returns these fields on each assignment's
 | `excused` | true or false | An *Excused* tag when true |
 
 The state and the tags can appear together, for example *Graded* with *Late*.
-Statuses that would combine fields or compare with the clock, such as
-*Upcoming*, *Due soon*, and *Overdue*, are Phase 5 (FR-27) and will need their
-own rules for cases that overlap.
+The portal works out no statuses of its own.
 
 ## 5. Signing in to the portal (D-7)
 
@@ -344,10 +303,6 @@ sequenceDiagram
   short Google review.
 - Some school-managed Google accounts block sign-in to outside apps. Students
   can use a personal Google account instead; risk R-6 in the roadmap.
-
-*Log in with Canvas* (OAuth, D-4) would be the
-nicest option, since it signs the user in and connects Canvas in one step,
-but it needs the school to issue a developer key.
 
 After sign-in, the backend sets a **session cookie**: a small value the browser
 sends back automatically with each request so the backend knows who is
@@ -415,9 +370,9 @@ the start, and Phase 3 tuning that starts from the Phase 1 timings
    is a query language for APIs: the caller describes the shape of the data
    it wants, a little like a QML property binding listing only the
    properties it uses.
-2. **Leave descriptions out of the list.** Descriptions are often the
-   largest part of each assignment. With GraphQL they can be skipped in the
-   main load and fetched for one assignment when its card back opens (FR-28).
+2. **Leave descriptions out.** Descriptions are often the largest part of
+   each assignment, and nothing in Phases 1 to 4 shows them, so the load
+   skips them.
 3. **Nearest due dates first.** A Refresh fetches the courses with the
    soonest due dates first, so the cards that matter most update first.
    Nothing is archived until the whole Refresh completes (FR-45).
@@ -449,13 +404,10 @@ the checking (FR-15).
 - **Token problems:** if Canvas rejects the token, the Refresh stops and the
   board shows the reconnect message (FR-6).
 
-**Background sync is a Phase 5 idea (NFR-4).** Leaving it out keeps the
-design much simpler: there is no scheduler or always-running worker to
-build and host, no per-student schedules or shared request budgets, no
-background fetch competing with a student's own Refresh, and the stored
-token is only ever used while the student is there and asking. Everything
-in *What can change in Canvas* below is needed either way, so adding
-background sync later reuses the same Refresh code on a timer.
+**There is no background sync.** Refresh is the only thing that fetches
+from Canvas, so there is no scheduler or always-running worker to build and
+host, and the stored token is only used while the student is there and
+asking.
 
 ### What can change in Canvas (Phase 3, FR-39, FR-45)
 
@@ -465,7 +417,7 @@ choice, so no Canvas change ever moves a card to another list.
 | In Canvas | On the board | Requirements |
 |-----------|--------------|--------------|
 | Teacher creates an assignment | New card in Backlog, in its due date place | FR-34 |
-| Teacher deletes or unpublishes it | Card is marked archived and leaves the board; notes kept | FR-45 |
+| Teacher deletes or unpublishes it | Card is marked archived and leaves the board | FR-45 |
 | It is republished, or reappears after a fetch problem | Card comes back in its old list | FR-45 |
 | Name, points, or description changes | Card shows the new value | FR-35, FR-39 |
 | Due date added later (none on an earlier refresh) | Card moves from the end of its list to its due date place | FR-38, FR-39 |
@@ -532,7 +484,6 @@ sequenceDiagram
 | One user seeing another's data | Every query filters on the session's `user_id`; tests check this for every endpoint | NFR-12 |
 | Writes to Canvas | The Canvas client only implements `GET` | NFR-13 |
 | Trackers | No third-party analytics or scripts | NFR-14 |
-| Harmful code in a Canvas description | Descriptions are HTML written by teachers. Showing HTML from elsewhere could run someone else's script in the portal (called *cross-site scripting*, or XSS). The backend cleans each description with an allow-list HTML cleaner (such as `nh3`) that keeps formatting and links and removes scripts, styles, and event attributes; links open in a new tab | FR-28 |
 | Test tokens | Read from a git-ignored `.env` file in local dev; CI uses recorded sample data instead | A-3, NFR-41 |
 
 ## 8. Repository layout
@@ -556,15 +507,13 @@ docs/canvas-portal/ these documents
 
 ### Screens and links
 
-Like Trello, the board is the home screen and a card opens *over* it rather
-than on a separate page. Each view has its own address, so links, reloads,
-and the Back button behave the way they do in Trello.
+Like Trello, the board is the home screen. Each view has its own address,
+so links, reloads, and the Back button behave the way they do in Trello.
 
 | Address | Shows | Requirements |
 |---------|-------|--------------|
 | `/` | The board (or S-1 / S-2 if not signed in or connected) | FR-60 |
-| `/c/{cardId}` | Phase 5: the board with that card's card back open as a dialog | FR-67 |
-| `/settings` | Settings | FR-4, FR-53, FR-54 |
+| `/settings` | Settings: disconnect Canvas; delete my data from Phase 4 | FR-4, FR-54 |
 
 ### Component structure
 
@@ -573,19 +522,13 @@ is built from these:
 
 ```mermaid
 flowchart TD
-    App --> Header["BoardHeader<br/>board name, Refresh, menu"]
-    App --> Toggles["CourseToggleBar<br/>one show/hide button per course;<br/>Filter button in Phase 5"]
+    App --> Header["BoardHeader<br/>board name, sync time, Refresh, menu"]
+    App --> Toggles["CourseToggleBar<br/>one show/hide button per course,<br/>Show all, Hide all"]
     App --> Board
-    App --> CardBack["CardBackDialog, Phase 5<br/>opens on /c/{cardId}"]
-    App --> BoardMenu["BoardMenu, Phase 5<br/>right-side panel, archived items"]
     Board --> List["List (one per list)"]
-    List --> ListHeader["ListHeader<br/>list title, minimize/expand toggle;<br/>rename and drag in Phase 5"]
+    List --> ListHeader["ListHeader<br/>list title, card count,<br/>minimize/expand toggle"]
     List --> Card["CardFront (one per card)"]
-    Card --> Badges["Label strip, due badge,<br/>notes count"]
-    Card --> QuickEdit["QuickEditMenu, Phase 5<br/>pencil or right-click"]
-    CardBack --> Desc["Description<br/>from Canvas, read only"]
-    CardBack --> Notes["Notes<br/>new note box, dated list"]
-    CardBack --> Sidebar["Card actions: Move, Open in Canvas, Archive"]
+    Card --> Badges["Label strip, due badge,<br/>Canvas state and tags"]
 ```
 
 ### Visual style
@@ -596,37 +539,29 @@ UI uses:
 
 | Element | Style |
 |---------|-------|
-| Board background | One solid color per board, user can change it later (FR-75); default a deep blue |
+| Board background | One solid color, a deep blue |
 | List | Expanded lists share the board's width equally, at least 240 px each; minimized lists are a 40 px strip with the title written vertically and the card count. Light gray, 12 px rounded corners, 8 px gap between lists |
 | Card | White, 8 px rounded corners, soft shadow, 8 px padding; label strip at the top in the course color |
-| Due badge | Small pill with a clock icon: green (Canvas says Submitted or Graded), red (Canvas flags Missing), plain otherwise; yellow (due soon) comes with FR-27 in Phase 5 |
+| Due badge | Small pill with a clock icon: green (Canvas says Submitted or Graded), red (Canvas flags Missing), plain otherwise |
 | Text | System font, 14 px on cards, bold list titles |
-| Card back (Phase 5) | Centered dialog about 768 px wide over a dimmed board; main column on the left, action buttons on the right |
 
 ### Interaction details
 
 | Behavior | How it works | Requirements |
 |----------|--------------|--------------|
-| Drag a card | Card lifts and tilts about 4°, the list under it is highlighted and a gray gap shows its due date spot in that list, the board auto-scrolls near the edges; the move is saved with an optimistic update (W-3) | FR-32, FR-77 |
-| Drag a list (Phase 5) | Grab the list header; other lists slide aside | FR-62 |
+| Drag a card (Phase 2) | Card lifts and tilts about 4°, the list under it is highlighted and a gray gap shows its due date spot in that list, the board auto-scrolls near the edges; the move is saved with an optimistic update (W-3) | FR-32, FR-77 |
 | Minimize or expand a list | [−] or [+] in the list header; the other expanded lists widen or narrow to fill the board, with a short animation. On each load or refresh, empty lists start minimized and the rest expanded; nothing is saved, in the browser or the backend. From Phase 2, dropping a card on an empty minimized list puts it there and expands the list; dropping on a minimized list that already has cards keeps it minimized and shows the new count | FR-80 |
 | Scroll the board | Only when the window is too narrow for the expanded lists (240 px minimum each): horizontal scrollbar, or drag on empty background | FR-61 |
-| Rename a list (Phase 5) | Click the title, it becomes a text box; Enter saves, Escape cancels | FR-63 |
-| Open a card | Click, or focus it and press Enter. Until Phase 5 this opens the assignment in Canvas in a new tab (FR-26); from Phase 5 it opens the card back and the address changes to `/c/{cardId}` | FR-26, FR-67 |
-| Quick edit (Phase 5) | Pencil button (on hover on desktop, always shown on touch screens), right-click, or long press | FR-69, NFR-36 |
-| No hover-only actions (Phase 5) | Anything a hover reveals is also visible or reachable by tap, so phones lose nothing. Earlier phases avoid hover-only designs where it is free | NFR-36 |
-| Show or hide a course | Tap its button in the row under the header, or Show all / Hide all; the board updates at once. Until Phase 5 the choice is kept in this browser; from Phase 5 it is saved with the account in the background (optimistic update) | FR-78 |
-| Filter (Phase 5) | `f` or the Filter button in the course row; non-matching cards are hidden and the course row shows the filter is active | FR-72 |
-| Keyboard map (Phase 5) | Kept in one file and shown by `?`; checked against Trello's shortcut page | FR-73, NFR-31 |
+| Open a card | Click, or focus it and press Enter: the assignment opens in Canvas in a new tab | FR-26 |
+| Show or hide a course | Tap its button in the row under the header, or Show all / Hide all; the board updates at once. The choice is kept in this browser | FR-78 |
+| Move a card by keyboard (Phase 2) | Focus a card, then move it to the next or previous list with the keyboard | NFR-31 |
 
 ## 10. What this means for D-1 (React or Svelte)
 
 Nothing above depends on the framework; the backend and data model are the
-same either way. Through Phase 4, the frontend's hardest parts are the Trello-style board
+same either way. The frontend's hardest parts are the Trello-style board
 (smooth, accessible drag and drop of cards, FR-77 and NFR-31) and keeping
-open devices in step without cards jumping (NFR-22). From Phase 5 come the
-card back dialog with its own address (FR-67) and the notes list (FR-40 to
-FR-42).
+open devices in step without cards jumping (NFR-22).
 
 The Trello goal (G-3) leans toward React. React has the most examples of
 Trello-style boards to learn from, and Pragmatic drag and drop ships extra
@@ -641,14 +576,32 @@ works without a framework, but there are fewer worked examples to copy from.
 | FR-10 to FR-14 (fetch) | Section 6 |
 | FR-20 to FR-26 (view) | Section 4 (status), User Interface Specification |
 | FR-30 to FR-39 (board, Canvas changes) | Sections 3, 4, 6 (loading sequence, keeping the backend in step, what can change in Canvas), 9 |
-| FR-40 to FR-46 (notes) | Sections 3, 4, 9 |
-| FR-60 to FR-78 (Trello-style, course buttons) | Sections 3, 4, 9 |
+| FR-60 to FR-80 (Trello-style, course buttons, lists) | Sections 3, 4, 9 |
 | FR-50 to FR-54 (accounts, data) | Sections 4, 5 |
-| NFR-1 to NFR-4 (performance; NFR-4 is Phase 5) | Sections 3 (sorting, list positions), 6 (caching, parallel fetch, making Canvas loads fast, bringing the backend in step with Canvas) |
+| NFR-1 to NFR-3 (performance) | Sections 3 (sorting, list positions), 6 (caching, parallel fetch, making Canvas loads fast, bringing the backend in step with Canvas) |
 | NFR-10 to NFR-14 (security) | Section 7 |
 | NFR-20 to NFR-22 (reliability, sync) | Sections 3, 4 (keeping devices in sync), 6 |
-| NFR-30 to NFR-35 (usability, Trello style) | Sections 2, 9, User Interface Specification |
+| NFR-30 to NFR-32, NFR-34 (usability, Trello style) | Sections 2, 9, User Interface Specification |
 | NFR-40 to NFR-42 (maintainability) | Sections 7, 8 |
+
+## 12. Leave room for later
+
+Phase 5 ideas aren't designed here, but a few cheap choices now keep them
+possible without reworking what Phases 1 to 4 build:
+
+- **Record the Canvas connection on cards, course labels, and cached data**
+  (`connection_id`). A user has one connection for now, but more than one
+  school (FR-55) then needs no data migration, even though two schools can
+  use the same Canvas ID numbers.
+- **Write Refresh as one self-contained job** that takes a user and does the
+  whole fetch and compare. Background sync (NFR-4) could later run the same
+  job on a timer.
+- **Never delete a card because of Canvas; archive it** (already Phase 3).
+  Anything attached to cards later, such as notes, is then never lost.
+- **Avoid hover-only controls** where it costs nothing, so phone support
+  (NFR-33, NFR-36) needs less rework.
+- **Keep the four lists as rows in `LIST`**, not hard-coded, so renaming or
+  adding lists later is a feature, not a redesign.
 
 ## Open decisions raised here
 
@@ -690,3 +643,4 @@ works without a framework, but there are fewer worked examples to copy from.
 | 2026-10-25 | Minimize interaction: list state is no longer saved; dropping a card on an empty minimized list expands it. |
 | 2026-10-25 | Phones are a Phase 5 platform: the device sync example uses a laptop and a desktop, and the no-hover interaction row is marked Phase 5. |
 | 2026-10-25 | Traceability table refers to the renamed User Interface Specification. |
+| 2026-10-25 | Design now covers Phases 0 to 4 only, from the Team Lead's review: removed Phase 5 tables (notes, checklists), fields, endpoints, routes, components, styles, and interactions; added *Design by phase*, a Phase column in the API table, and section 12, *Leave room for later*. |

@@ -117,8 +117,8 @@ log or decision list.
 ### One thread per reviewer
 
 Each required reviewer runs in **its own thread, started fresh** for that
-review. It reads only its persona file, its notes, this protocol, and the
-PR. It doesn't see the owner's thread or the other reviewers' reviews
+review. It reads only its persona file, its notes, this protocol, the PR,
+and the docs the PR changes or names. It doesn't see the owner's thread or the other reviewers' reviews
 before writing its own. That keeps reviews independent.
 
 - The **owner thread** wrote the PR and is subscribed to it, so it wakes
@@ -129,8 +129,9 @@ before writing its own. That keeps reviews independent.
   and verdict, such as "**DevOps review: Recommend with notes**", with its
   findings as inline comments. All comments post from the Team Lead's
   GitHub account, so the heading is how readers tell personas apart.
-- A reviewer thread is done when its review is posted. It stays open until
-  the PR merges, in case the owner has a question.
+- A reviewer thread stays open until the PR merges or closes, for
+  questions and re-review. The owner messages each reviewer thread when
+  that happens.
 
 One thread playing several personas is only for quick, informal checks
 that the Team Lead asks for. It never counts as a required review.
@@ -161,13 +162,15 @@ reached there is written on the PR before anyone acts on it.
 
 When asked to "run a cross-review" of a PR or doc, the owner thread:
 
-1. Finds the required reviewers in the table above. As Management, it
-   checks whether the topic or changes call for any other persona.
+1. Finds the required reviewers in the table above, and adds optional ones
+   by Management's rule, with a reason for each.
 2. Asks the coordinator for one fresh thread per reviewer, naming the PR
    and the persona.
 3. Waits for the reviews to arrive as PR comments, then answers or fixes
    each finding, following the steps above for any question.
-4. Collects all findings into a single findings table on the PR, without
+4. After pushing fixes for a **Changes needed** verdict, messages that
+   reviewer thread to re-review the fixes and update its verdict.
+5. Collects all findings into a single findings table on the PR, without
    duplicates, with anything that needs the Team Lead at the top.
 
 Reviews are written before any fixes, so they stay independent of them.

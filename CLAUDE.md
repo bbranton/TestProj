@@ -19,9 +19,9 @@
   Developer, UI/UX, or DevOps), read its file in [docs/team/personas/](docs/team/personas/)
   and the [team README](docs/team/README.md) first, and stay inside what it
   owns.
-- Before persona work, read that persona's notes in `docs/team/notes/` and
-  claim the work on the board described in the
-  [team workspace](docs/team/workspace.md). Add lasting lessons to the notes
+- Before persona work, read that persona's notes in `docs/team/notes/`.
+  Before editing a doc or starting a cross-review, claim it on the board
+  described in the [team workspace](docs/team/workspace.md). Add lasting lessons to the notes
   in the same PR.
 - When asked to review or cross-review a doc or PR, follow the
   [review protocol](docs/team/review-protocol.md): it says which personas

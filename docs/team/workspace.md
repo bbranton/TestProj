@@ -3,7 +3,7 @@
 Personas often run in parallel threads that can't see each other. This is
 how they share what they know and avoid stepping on each other's work.
 
-There are two places, for two kinds of information:
+There are three places, for three kinds of information:
 
 | What | Where | Why there |
 |------|-------|-----------|
@@ -54,8 +54,9 @@ Each line is one claim or one note:
 
 Rules:
 
-1. **Claim before you edit a doc or start a review.** If someone else has
-   claimed it, don't start. Tell the Team Lead, or message that thread when
+1. **Claim before you edit a doc or start a cross-review.** The owner
+   thread claims a cross-review; its reviewer threads don't claim anything.
+   If someone else has claimed it, don't start. Tell the Team Lead, or message that thread when
    your work depends on theirs.
 2. **Release when done.** Delete your claim when the PR merges or the work
    stops.

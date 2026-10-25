@@ -314,20 +314,26 @@ decisions are struck through and kept for the record.
 
 ## 6. Risks
 
-| ID | Risk | Effect | Mitigation |
-|----|------|--------|------------|
-| R-1 | The school has turned off personal access tokens | Phase 1 can't connect | Cleared in Phase 0 for the Team Lead's school (A-1). Other schools may still turn tokens off; fallback: a free Canvas account from Instructure for testing, OAuth with the school later (Phase 5). |
-| R-2 | Canvas tokens are powerful; a leak exposes a student's whole account | Privacy harm | Backend never logs tokens, stores them encrypted, and only uses read endpoints (NFR-10, NFR-11). |
-| R-3 | Canvas is slow: in the Team Lead's experience a full load of courses, each with 100+ assignments, can take several minutes, and rate limits slow it further | Students wait or give up | Never make the student wait on Canvas: show the last data at once, refresh only when the student asks, and highlight Refresh when the data is old (FR-15). Measure early with a real account (TP-14 baseline in Phase 1), then in Phase 3 fetch less, in fewer requests, and switch to Canvas GraphQL if needed (see design, *Making Canvas loads fast*). |
-| ~~R-4~~ | ~~Assignments change in Canvas (renamed, deleted, new due date)~~ | ~~Board shows stale or orphaned cards~~ | Merged into R-9. |
-| R-5 | Learning web development alongside building | Slower progress | Small phases, one new technology at a time, docs explain terms. |
-| R-6 | A school-managed Google account blocks sign-in to outside apps | Student can't sign in | Allow any Google account, so a personal one works; explain this on the sign-in screen. |
-| R-7 | Matching Trello too closely in look (logo, artwork, exact styling) | Trademark or copyright complaint | Copy behavior and layout patterns only; our own name, colors, and icons (C-4). |
-| R-8 | Sync bugs: two devices or two browser tabs disagree, or a card is lost or duplicated | Student stops trusting the board | Phase 2 is only dragging and sync; one row per card enforced by the database; concurrency tests in CI and the TP-06 sync procedure (NFR-22). |
-| R-9 | The backend falls out of step with Canvas: a teacher deletes, changes, or clears something and the board shows stale data, loses a card, or archives one that still exists | Students miss or mistrust deadlines | Phase 3 is dedicated to it; every change case has a planned outcome (design, *What can change in Canvas*); only complete fetches can archive; scenario fixtures replayed in CI and TP-15 against a real account. |
-| R-10 | Scope grows faster than it is built: ideas and fixes pile into the current phase, and pull requests touch many documents at once | Phases never finish, and reviews get too big to check | Section 7: new ideas go to Phase 5 by default, a phase's scope is fixed once it starts, and each pull request covers one document or one feature. |
-| R-11 | One person carries every decision, every review, and every test with real accounts | Work stalls while it waits on the Team Lead | Section 8 says which tasks need the Team Lead. Decisions are asked for before the phase that needs them ("Before it starts" in each phase), and CI uses recorded Canvas data, so only the manual passes need a real token. |
-| R-12 | Google's review for publishing the sign-in app takes longer than expected | Phase 4 can't let in students who aren't test users | The app asks only for `openid email profile`, which needs the lightest review. Start publishing early in Phase 4, not at the end. |
+Each risk is rated Low, Medium, or High for how likely it is and how much
+harm it would do, and has an owner: the team persona that watches it and
+carries out its mitigation (see the team personas in `docs/team/`).
+Management keeps this list, rates each risk, and reviews it with the Team
+Lead at every phase boundary.
+
+| ID | Risk | Effect | Likelihood | Impact | Owner | Mitigation |
+|----|------|--------|------------|--------|-------|------------|
+| R-1 | The school has turned off personal access tokens | Phase 1 can't connect | Low | High | Architecture | Cleared in Phase 0 for the Team Lead's school (A-1). Other schools may still turn tokens off; fallback: a free Canvas account from Instructure for testing, OAuth with the school later (Phase 5). |
+| R-2 | Canvas tokens are powerful; a leak exposes a student's whole account | Privacy harm | Low | High | Architecture | Backend never logs tokens, stores them encrypted, and only uses read endpoints (NFR-10, NFR-11). |
+| R-3 | Canvas is slow: in the Team Lead's experience a full load of courses, each with 100+ assignments, can take several minutes, and rate limits slow it further | Students wait or give up | High | Medium | Architecture | Never make the student wait on Canvas: show the last data at once, refresh only when the student asks, and highlight Refresh when the data is old (FR-15). Measure early with a real account (TP-14 baseline in Phase 1), then in Phase 3 fetch less, in fewer requests, and switch to Canvas GraphQL if needed (see design, *Making Canvas loads fast*). |
+| ~~R-4~~ | ~~Assignments change in Canvas (renamed, deleted, new due date)~~ | ~~Board shows stale or orphaned cards~~ | — | — | — | Merged into R-9. |
+| R-5 | Learning web development alongside building | Slower progress | Medium | Medium | Management | Small phases, one new technology at a time, docs explain terms. |
+| R-6 | A school-managed Google account blocks sign-in to outside apps | Student can't sign in | Medium | Medium | UI/UX | Allow any Google account, so a personal one works; explain this on the sign-in screen. |
+| R-7 | Matching Trello too closely in look (logo, artwork, exact styling) | Trademark or copyright complaint | Low | Medium | UI/UX | Copy behavior and layout patterns only; our own name, colors, and icons (C-4). |
+| R-8 | Sync bugs: two devices or two browser tabs disagree, or a card is lost or duplicated | Student stops trusting the board | Medium | High | Developer | Phase 2 is only dragging and sync; one row per card enforced by the database; concurrency tests in CI and the TP-06 sync procedure (NFR-22). |
+| R-9 | The backend falls out of step with Canvas: a teacher deletes, changes, or clears something and the board shows stale data, loses a card, or archives one that still exists | Students miss or mistrust deadlines | High | High | Architecture | Phase 3 is dedicated to it; every change case has a planned outcome (design, *What can change in Canvas*); only complete fetches can archive; scenario fixtures replayed in CI and TP-15 against a real account. |
+| R-10 | Scope grows faster than it is built: ideas and fixes pile into the current phase, and pull requests touch many documents at once | Phases never finish, and reviews get too big to check | High | High | Management | Section 7: new ideas go to Phase 5 by default, a phase's scope is fixed once it starts, and each pull request covers one document or one feature. |
+| R-11 | One person carries every decision, every review, and every test with real accounts | Work stalls while it waits on the Team Lead | High | Medium | Management | Section 8 says which tasks need the Team Lead. Decisions are asked for before the phase that needs them ("Before it starts" in each phase), and CI uses recorded Canvas data, so only the manual passes need a real token. |
+| R-12 | Google's review for publishing the sign-in app takes longer than expected | Phase 4 can't let in students who aren't test users | Medium | Medium | DevOps | The app asks only for `openid email profile`, which needs the lightest review. Start publishing early in Phase 4, not at the end. |
 
 ## 7. Scope control
 
@@ -352,7 +358,7 @@ The plan has grown quickly, so these rules keep each phase finishable:
 | Who | Does |
 |-----|------|
 | Team Lead | Decides open decisions and questions; approves scope changes; reviews and merges every pull request; runs the manual test procedures that need real Canvas accounts or the teacher sandbox; sets up the Google and Canvas accounts in each phase's prerequisites; changes the current phase in CLAUDE.md. |
-| Developer (Claude) | Writes code, tests, and documents in pull requests limited to the current phase; lists the requirement IDs each pull request implements; brings anything outside the current phase to the Team Lead instead of building it. |
+| Team personas (Claude) | Management, Architecture, Developer, DevOps, Product and QA, and UI/UX, as described in `docs/team/`. Each one writes and reviews the documents and code it owns, in pull requests limited to the current phase; lists the requirement IDs each pull request implements; brings anything outside the current phase to the Team Lead instead of building it. |
 
 ## Change log
 
@@ -396,3 +402,4 @@ The plan has grown quickly, so these rules keep each phase finishable:
 | 2026-10-25 | Phase 0 marked done; the Google OAuth client and the Canvas teacher sandbox move to Phase 1 as prerequisites, from the Team Lead. |
 | 2026-10-25 | In-depth review after PR #3: Phase 0 shown as done in the chart and its section; Phase 1 now lists every Phase 1 requirement in the requirements index (adds FR-15, FR-16, FR-34, FR-38, NFR-1, NFR-10, NFR-12 to NFR-14, NFR-30, NFR-41); Phase 2 lists FR-60 and FR-80 drops; Phase 3 no longer claims joining a running Refresh (Phase 1) and needs Q-7 answered first; Phase 4 adds HTTPS, publishing the Google OAuth client, and data deletion to the exit criteria; Phase 5 adds FR-29 and NFR-35; D-3 rules out serverless backends; R-1 marked cleared and R-4 struck through. |
 | 2026-10-25 | Program-management review: section 2 says what each phase gives a student; Phase 1 gets an order of work tied to M1 and M2, and its exit criteria name the test procedures; Phases 2 to 4 list the decisions needed before they start; milestones gain a status, and M5 is renamed "Deployed"; added risks R-10 (scope growth), R-11 (one person carries every decision and test), and R-12 (Google review time); added section 7, *Scope control*, and section 8, *Roles*. Phase 3 tuning no longer lists "nearest due dates first" (it changes nothing when only a complete Refresh updates the board) and notes that GraphQL's `POST` needs a call against NFR-13, to match the design review. |
+| 2026-10-25 | Risks table gains Likelihood, Impact, and Owner columns, with an owner persona for each risk, and Management reviews it at every phase boundary; section 8 names the team personas instead of a single developer. This matches the Management persona's ownership of the risk list. |

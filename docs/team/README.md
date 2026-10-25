@@ -14,7 +14,8 @@ reviews someone else's work, and which decisions it can and cannot make.
 | DevOps | CI, build and install scripts, dependencies, deploys, hosting, top-level README | [devops.md](personas/devops.md) |
 
 How personas review each other's work is in the
-[review protocol](review-protocol.md).
+[review protocol](review-protocol.md). How they share notes, scripts, and
+who's working on what is in the [team workspace](workspace.md).
 
 ## Using a persona
 
@@ -27,8 +28,10 @@ Tell the agent which persona to act as, and on what. For example:
 
 An agent acting as a persona:
 
-1. Reads its persona file and the [review protocol](review-protocol.md)
-   before starting.
+1. Reads its persona file, its notes in [notes/](notes/), and the
+   [review protocol](review-protocol.md) before starting, and checks the
+   [team board](workspace.md#the-board) for work another thread has
+   claimed.
 2. Stays inside what the persona owns. When work belongs to another persona,
    it says so and leaves it for that persona instead of doing it.
 3. Starts its review or write-up with the persona's name, so readers know

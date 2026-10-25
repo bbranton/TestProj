@@ -47,29 +47,34 @@ when its exit criteria are met.
 Settle the open decisions in section 5 and set up the empty project so later
 phases only add features.
 
-- Write the design document and Phase 1 wireframes, then choose the frontend
-  framework (D-1). D-1 is deliberately decided after the design, because the
-  features we focus on may change which framework fits best.
+- Write the design document and the User Interface Specification, then
+  choose the frontend framework (D-1). Done: React.
 - Create a `canvas-portal/` folder in this repo with a `frontend/` and a
-  `backend/` part, each with a "hello" page or endpoint.
-- Create a Google Cloud project and OAuth client for Sign in with Google
-  (D-7), with the Team Lead's Google account as a test user.
-- Add GitHub Actions CI that builds both parts and runs their (empty) test
-  suites on every pull request.
+  `backend/` part, each with a "hello" page or endpoint. Done.
+- Add GitHub Actions CI that builds both parts and runs their tests on every
+  pull request. Done.
 - Confirm the Team Lead's school allows personal access tokens (risk R-1). Done:
   the Team Lead has a student token and a parent (observer) token for testing.
-- Set up a Canvas course where the Team Lead can act as teacher (a free
-  Canvas account from Instructure works), with a test student enrolled. The
-  Phase 3 change tests (TP-15) need it, and it is the safe place to record
-  Canvas responses for the test fixtures.
 
-**Exit criteria:** design and Phase 1 wireframes reviewed; decisions D-1, D-4,
-D-5, and D-6 recorded; CI is green on an empty app;
-a test Canvas account works with a token.
+**Exit criteria:** design and User Interface Specification reviewed;
+decisions D-1, D-4, D-5, and D-6 recorded; CI is green on the skeleton app.
 
 ### Phase 1: Read-only viewer (minimum viable product)
 
 The smallest thing that is useful: connect, then see everything that's due.
+
+**Prerequisites**, done by the Team Lead before development starts:
+
+- Create a Google Cloud project and OAuth client for Sign in with Google
+  (D-7), with the Team Lead's Google account as a test user. The client ID
+  and secret go in the git-ignored `.env`, never in the repo.
+- Set up a Canvas course where the Team Lead can act as teacher (a free
+  Canvas account from Instructure works), with a test student enrolled, and
+  check that a token from it works. It is the safe place to record Canvas
+  responses for the test fixtures, and the Phase 3 change tests (TP-15)
+  need it.
+
+**Work:**
 
 - Sign in with Google, so the server knows whose data is whose (FR-50,
   D-7).
@@ -298,3 +303,4 @@ decisions are struck through and kept for the record.
 | 2026-10-25 | Keyboard alternative and shortcuts removed from G-3, Phase 2, Phase 4, and Phase 5 (NFR-31, FR-73). From the Team Lead's review: keyboard actions are not a requirement. |
 | 2026-10-25 | D-4 (token), D-5 (any school), and D-6 (Python + FastAPI) decided; settled decisions D-2, D-4 to D-7 struck through, from the Team Lead. |
 | 2026-10-25 | D-1 decided: React. |
+| 2026-10-25 | Phase 0 marked done; the Google OAuth client and the Canvas teacher sandbox move to Phase 1 as prerequisites, from the Team Lead. |

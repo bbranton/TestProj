@@ -19,7 +19,7 @@ Build only the parts listed for the current phase (see the repo's
 
 | Phase | Builds |
 |-------|--------|
-| 0 | Repository layout (section 8), empty frontend and backend, CI, the Google OAuth client (section 5) |
+| 0 | Repository layout (section 8), empty frontend and backend, CI |
 | 1 | Tables `USER`, `CANVAS_CONNECTION`, `BOARD`, `LIST`, `CARD` (without `archived`), `COURSE_LABEL`, `CANVAS_CACHE`, `REFRESH_RUN`; the Phase 1 endpoints in section 4; sign-in (section 5); talking to Canvas, caching, *Built from the start*, and *Refresh progress* (section 6); security (section 7); the board, course buttons, minimize and expand, visual style, and the Phase 1 interactions (section 9) |
 | 2 | Moving cards and *Keeping devices in sync* (section 4): the Phase 2 endpoints, `change_seq`, the unique card rule; dragging (section 9) |
 | 3 | *Phase 3 tuning*, *Bringing the backend in step with Canvas*, and *What can change in Canvas* (section 6); `CARD.archived` |
@@ -306,7 +306,7 @@ sequenceDiagram
   `google_sub` column.
 - The Google *client ID* and *client secret* come from a free Google Cloud
   project. The secret lives only in the server's environment settings, never
-  in the repo. Setting this up is a Phase 0 task.
+  in the repo. Setting this up is a Phase 1 prerequisite.
 - While the Google app is in "testing" mode, only Google accounts added as
   test users can sign in. That suits development; publishing it later is a
   short Google review.
@@ -681,3 +681,4 @@ possible without reworking what Phases 1 to 4 build:
 | 2026-10-25 | Keyboard card moves removed (NFR-31). From the Team Lead's review: keyboard actions are not a requirement. |
 | 2026-10-25 | Added *Refresh progress* (FR-16): Refresh runs as a background task tracked in a new `REFRESH_RUN` table, with a progress endpoint and a 30 second request timeout; loading sequence updated. D-6 and D-7 marked decided. |
 | 2026-10-25 | D-1 decided: React with TypeScript and Vite; section 10 now explains the choice. |
+| 2026-10-25 | The Google OAuth client is a Phase 1 prerequisite. |

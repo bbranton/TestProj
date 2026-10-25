@@ -15,7 +15,7 @@
 
 ## Canvas portal phases
 
-- The current phase is **Phase 0** (decisions and setup). The Team Lead
+- The current phase is **Phase 1** (read-only viewer). The Team Lead
   changes this line when a new phase starts.
 - Build only the requirements listed for the current phase in
   [Requirements by phase](docs/canvas-portal/02-requirements.md#requirements-by-phase).

@@ -43,10 +43,10 @@ both.
 
 | Area | Choice | Status | Why |
 |------|--------|--------|-----|
-| Frontend framework | React or Svelte | **Open (D-1)**, after design | See section 9 for how the design affects the choice |
+| Frontend framework | React or Svelte | **Open (D-1)**, after design | See section 10 for how the design affects the choice |
 | Frontend language | TypeScript | Proposed | JavaScript with types; catches mistakes before running, much like C++'s compiler does |
 | Frontend build tool | Vite | Proposed | Fast local dev server; works with React and Svelte |
-| Drag and drop | dnd-kit (React) or svelte-dnd-action (Svelte) | Follows D-1 | Both support keyboard dragging (NFR-31) |
+| Drag and drop | Pragmatic drag and drop (Atlassian), or dnd-kit (React) / svelte-dnd-action (Svelte) | Proposed, follows D-1 | Pragmatic drag and drop is Atlassian's open-source library behind Trello's own drag and drop and works with any framework, which suits G-3. Its keyboard support must be checked against NFR-31; the other two have it built in |
 | Backend | Python 3.12 + FastAPI | Proposed (D-6) | Short, readable code; generates API docs automatically |
 | Canvas client | `httpx` (Python HTTP library) | Proposed | Async requests, so courses can be fetched in parallel (NFR-2) |
 | Database | Postgres in production, SQLite for local dev and tests | Proposed | Postgres is what hosts offer; SQLite needs no setup |
@@ -62,10 +62,13 @@ come from Canvas and are cached, not copied permanently.
 ```mermaid
 erDiagram
     USER ||--o| CANVAS_CONNECTION : has
-    USER ||--o{ BOARD_COLUMN : owns
-    USER ||--o{ CARD : owns
-    USER ||--o{ NOTE : writes
-    BOARD_COLUMN ||--o{ CARD : contains
+    USER ||--o{ BOARD : owns
+    BOARD ||--o{ LIST : contains
+    LIST ||--o{ CARD : contains
+    CARD ||--o| NOTE : "has description"
+    CARD ||--o{ CHECKLIST : has
+    CHECKLIST ||--o{ CHECKLIST_ITEM : contains
+    USER ||--o{ COURSE_LABEL : colors
     USER ||--o{ CANVAS_CACHE : caches
 
     USER {
@@ -81,27 +84,56 @@ erDiagram
         string canvas_user_name
         datetime connected_at
     }
-    BOARD_COLUMN {
+    BOARD {
         uuid id PK
         uuid user_id FK
         string title
-        int position
+        string background
+    }
+    LIST {
+        uuid id PK
+        uuid board_id FK
+        string title
+        string position
+        bool archived
     }
     CARD {
         uuid id PK
         uuid user_id FK
-        uuid column_id FK
-        int canvas_assignment_id
+        uuid list_id FK
+        int canvas_assignment_id "empty for personal cards"
         int canvas_course_id
+        string title "personal cards only"
+        datetime due_at "personal cards only"
         string position
         bool archived
     }
     NOTE {
         uuid id PK
         uuid user_id FK
+        uuid card_id FK
         int canvas_assignment_id
         text body
         datetime updated_at
+    }
+    CHECKLIST {
+        uuid id PK
+        uuid card_id FK
+        string title
+        string position
+    }
+    CHECKLIST_ITEM {
+        uuid id PK
+        uuid checklist_id FK
+        string text
+        bool done
+        string position
+    }
+    COURSE_LABEL {
+        uuid user_id FK
+        int canvas_course_id
+        string color
+        string name
     }
     CANVAS_CACHE {
         uuid user_id FK
@@ -113,13 +145,23 @@ erDiagram
 
 Design notes:
 
+- **Trello's structure:** a board holds lists, lists hold cards (goal G-3).
+  Each user gets one board for now; the `BOARD` table is there so more boards
+  (FR-76) don't need a redesign.
 - **Cards and notes key on `canvas_assignment_id`**, never the assignment name,
   so a renamed or rescheduled assignment keeps its card and note (FR-35).
 - **Card `position` is a sortable string** (a technique called *fractional
   indexing*: to put a card between "a" and "b", give it "an"). Moving one card
-  then updates one row instead of renumbering the whole column (NFR-3).
+  then updates one row instead of renumbering the whole list (NFR-3). Lists
+  and checklist items use the same technique, so they can be dragged too
+  (FR-62).
 - **Notes are separate from cards**, so a note survives if a card is archived
-  or a column is deleted (NFR-21).
+  or a list is archived (NFR-21). A note also records its
+  `canvas_assignment_id`, so it can be reattached if its card is rebuilt.
+- **Personal cards** (FR-71) are cards with no `canvas_assignment_id`; their
+  title and due date are stored on the card itself.
+- **Course label colors** (FR-66) are stored per user and course, picked
+  automatically from a fixed palette the first time a course appears.
 - **Archived, not deleted:** if an assignment disappears from Canvas, its card
   is marked `archived` and its note stays (FR-45).
 - **Every row has `user_id`**, and every query filters by the signed-in user,
@@ -141,9 +183,15 @@ and require a signed-in session except where noted.
 | `GET /api/courses` | Active courses (cached) | FR-10, FR-20 |
 | `GET /api/assignments` | All assignments across active courses, with status | FR-11, FR-21 to FR-23 |
 | `POST /api/refresh` | Bypass the cache and re-fetch from Canvas | FR-13 |
-| `GET /api/board` | Columns and cards, after merging in new or removed assignments | FR-33, FR-34 |
-| `PUT /api/board/columns/{id}` / `POST` / `DELETE` | Rename, add, delete columns | FR-36 |
-| `PATCH /api/board/cards/{id}` | Move a card (new column and position) | FR-32, FR-33 |
+| `GET /api/board` | Lists and cards with labels and badges, after merging in new or removed assignments | FR-33, FR-34, FR-65 |
+| `POST /api/board/lists` | Add a list at the end | FR-64 |
+| `PATCH /api/board/lists/{id}` | Rename, move (new position), archive, or restore a list | FR-36, FR-62, FR-63, FR-74 |
+| `POST /api/board/cards` | Add a personal card | FR-71 |
+| `GET /api/board/cards/{id}` | Everything for the card back | FR-67, FR-68 |
+| `PATCH /api/board/cards/{id}` | Move (new list and position), archive, or restore a card | FR-32, FR-33, FR-74 |
+| `GET /api/board/archived` | Archived lists and cards | FR-74 |
+| `POST`, `PATCH`, `DELETE /api/cards/{id}/checklists/...` | Add, rename, check off, reorder, and remove checklists and items | FR-70 |
+| `PATCH /api/labels/{course_id}` | Change a course label's color or name | FR-66 |
 | `GET /api/notes/{assignment_id}` | Read a note | FR-43 |
 | `PUT /api/notes/{assignment_id}` | Create or replace a note | FR-40 to FR-42 |
 | `DELETE /api/notes/{assignment_id}` | Delete a note | FR-41 |
@@ -282,7 +330,7 @@ sequenceDiagram
     end
     A-->>B: assignments with computed status
     B->>A: GET /api/board
-    A->>D: Load columns and cards
+    A->>D: Load lists and cards
     A->>A: Add cards for new assignments to To do,<br/>archive cards for removed ones
     A-->>B: board
 ```
@@ -316,29 +364,101 @@ canvas-portal/
 docs/canvas-portal/ these documents
 ```
 
-## 9. What this means for D-1 (React or Svelte)
+## 9. Frontend and UI design (Trello-style, goal G-3)
+
+### Screens and links
+
+Like Trello, the board is the home screen and a card opens *over* it rather
+than on a separate page. Each view has its own address, so links, reloads,
+and the Back button behave the way they do in Trello.
+
+| Address | Shows | Requirements |
+|---------|-------|--------------|
+| `/` | The board (or S-1 / S-2 if not signed in or connected) | FR-60 |
+| `/c/{cardId}` | The board with that card's card back open as a dialog | FR-67 |
+| `/table` | Table view of all assignments | FR-30 |
+| `/settings` | Settings | FR-4, FR-53, FR-54 |
+
+### Component structure
+
+A *component* is a reusable piece of UI, like a QML component file. The board
+is built from these:
+
+```mermaid
+flowchart TD
+    App --> Header["BoardHeader<br/>board name, view switch, Filter, Refresh, menu"]
+    App --> Board
+    App --> CardBack["CardBackDialog<br/>opens on /c/{cardId}"]
+    App --> BoardMenu["BoardMenu<br/>right-side panel, archived items"]
+    Board --> List["List (one per list)"]
+    Board --> AddList["AddListButton"]
+    List --> ListHeader["ListHeader<br/>inline rename, list menu, drag handle"]
+    List --> Card["CardFront (one per card)"]
+    List --> AddCard["AddCardComposer"]
+    Card --> Badges["Label strip, due badge,<br/>description icon, checklist progress"]
+    Card --> QuickEdit["QuickEditMenu<br/>pencil or right-click"]
+    CardBack --> Desc["Description (note editor)"]
+    CardBack --> Checklists
+    CardBack --> Sidebar["Card actions: Move, Labels, Open in Canvas, Archive"]
+```
+
+### Visual style
+
+Close to Trello's feel (NFR-34), with our own values (C-4). These are
+starting points for the design tokens, the named colors and sizes the whole
+UI uses:
+
+| Element | Style |
+|---------|-------|
+| Board background | One solid color per board, user can change it later (FR-75); default a deep blue |
+| List | 272 px wide, light gray, 12 px rounded corners, 8 px gap between lists |
+| Card | White, 8 px rounded corners, soft shadow, 8 px padding; label strip at the top in the course color |
+| Due badge | Small pill with a clock icon: green (complete), yellow (due soon), red (overdue), plain (upcoming) |
+| Text | System font, 14 px on cards, bold list titles |
+| Card back | Centered dialog about 768 px wide over a dimmed board; main column on the left, action buttons on the right |
+
+### Interaction details
+
+| Behavior | How it works | Requirements |
+|----------|--------------|--------------|
+| Drag a card | Card lifts and tilts about 4°, a gray gap shows the drop spot, the board auto-scrolls near the edges; position saved with an optimistic update (W-3) | FR-32, FR-77 |
+| Drag a list | Grab the list header; other lists slide aside | FR-62 |
+| Scroll the board | Horizontal scrollbar, or drag on empty background | FR-61 |
+| Rename a list | Click the title, it becomes a text box; Enter saves, Escape cancels | FR-63 |
+| Add a card or list | Composer opens in place with the text box focused; Enter adds and keeps the composer open for the next one, as Trello does | FR-64, FR-71 |
+| Open a card | Click, or focus it and press Enter; address changes to `/c/{cardId}` | FR-67 |
+| Quick edit | Pencil on hover, right-click, or `e` | FR-69 |
+| Filter | `f` or the Filter button; non-matching cards are hidden and the header shows the filter is active | FR-72 |
+| Keyboard map | Kept in one file and shown by `?`; checked against Trello's shortcut page | FR-73, NFR-31 |
+
+## 10. What this means for D-1 (React or Svelte)
 
 Nothing above depends on the framework; the backend and data model are the
-same either way. The frontend's hardest parts are the kanban board
-(accessible drag and drop, NFR-31) and the note editor (autosave, optional
-formatting, FR-42 and FR-46). React has more mature, accessible libraries for
-both. If the board and rich notes stay in scope, that favors React. If they
-shrink, Svelte's simpler style becomes more attractive.
+same either way. The frontend's hardest parts are the Trello-style board
+(smooth, accessible drag and drop of cards and lists, FR-77 and NFR-31), the
+card back dialog with its own address (FR-67), and the note and checklist
+editors (FR-42, FR-70).
 
-## 10. Traceability
+The Trello goal (G-3) leans toward React. React has the most examples of
+Trello-style boards to learn from, and Pragmatic drag and drop ships extra
+React helpers. Svelte can still do all of it, since Pragmatic drag and drop
+works without a framework, but there are fewer worked examples to copy from.
+
+## 11. Traceability
 
 | Requirement group | Covered by |
 |-------------------|------------|
 | FR-1 to FR-6 (connect) | Sections 4, 6, 7 |
 | FR-10 to FR-14 (fetch) | Section 6 |
 | FR-20 to FR-26 (view) | Section 4 (status), wireframes |
-| FR-30 to FR-37 (board) | Sections 3, 4, 6 (loading sequence) |
-| FR-40 to FR-46 (notes) | Sections 3, 4 |
+| FR-30 to FR-37 (board) | Sections 3, 4, 6 (loading sequence), 9 |
+| FR-40 to FR-46 (notes) | Sections 3, 4, 9 |
+| FR-60 to FR-77 (Trello-style) | Sections 3, 4, 9 |
 | FR-50 to FR-54 (accounts, data) | Sections 4, 5 |
 | NFR-1 to NFR-3 (performance) | Sections 3 (positions), 6 (caching, parallel fetch) |
 | NFR-10 to NFR-14 (security) | Section 7 |
 | NFR-20, NFR-21 (reliability) | Sections 3, 6 |
-| NFR-30 to NFR-33 (usability) | Section 2, wireframes |
+| NFR-30 to NFR-35 (usability, Trello style) | Sections 2, 9, wireframes |
 | NFR-40 to NFR-42 (maintainability) | Sections 7, 8 |
 
 ## Open decisions raised here
@@ -352,3 +472,4 @@ shrink, Svelte's simpler style becomes more attractive.
 |------|--------|
 | 2026-10-25 | First draft. |
 | 2026-10-25 | D-7 decided: Sign in with Google. Added auth endpoints and sign-in sequence. |
+| 2026-10-25 | Trello goal (G-3): data model now board, lists, cards, checklists, course labels; new list, card, checklist, and label endpoints; new section 9 on Trello-style UI; D-1 section updated. |

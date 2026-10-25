@@ -10,7 +10,14 @@ requirements*, `NFR`). Each requirement has an ID that the design and test
 documents refer back to.
 
 **In scope:** reading a student's courses and assignments from Canvas,
-showing them, arranging them on a kanban board, and keeping private notes.
+showing them, arranging them on a kanban board that looks and behaves like
+Trello (goal G-3 in the [roadmap](01-roadmap.md#1-project-goals)), and keeping
+private notes.
+
+This document uses Trello's words where they apply: a **board** holds
+**lists** (the columns), lists hold **cards**, and opening a card shows its
+**card back** (the detailed view). Earlier requirements say "column"; it
+means the same as list.
 
 **Out of scope:** submitting work, changing anything in Canvas, teacher or
 admin features, grades analytics (possibly Phase 5).
@@ -49,6 +56,11 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
   time) and limits how fast one token can make requests. The backend must
   follow page links and back off when limited.
 - **C-3** The portal uses only Canvas *read* endpoints.
+- **C-4** "Like Trello" means Trello's layout, interactions, and keyboard
+  habits. The portal does not use the Trello name or logo, Trello's icons,
+  illustrations, or fonts, or copy Trello's stylesheets. Colors and icons are
+  our own, chosen to give a similar feel. (Trello is a trademark of
+  Atlassian.)
 
 ## 4. Functional requirements
 
@@ -89,16 +101,39 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 
 | ID | Requirement | Priority | Phase |
 |----|-------------|----------|-------|
-| FR-30 | The user can switch between list view and board view. | Must | 2 |
+| FR-30 | The user can switch between the board and a table view of all assignments (the Phase 1 list). | Must | 2 |
 | FR-31 | The board starts with columns *To do*, *In progress*, *Done*. | Must | 2 |
 | FR-32 | The user can drag a card to another column or another position in the same column. | Must | 2 |
 | FR-33 | The board layout (which column each card is in, and its order) is saved and restored on the next visit. | Must | 2 |
 | FR-34 | Assignments that are new since the last visit appear at the bottom of *To do*. | Must | 2 |
 | FR-35 | Cards are matched to assignments by Canvas assignment ID, so a renamed or rescheduled assignment keeps its place. | Must | 2 |
-| FR-36 | The user can add, rename, reorder, and delete columns. Deleting a column moves its cards to *To do*. | Could | 2 |
+| FR-36 | The user can archive a list, as in Trello. Its cards go with it and can be restored together. | Should | 2 |
 | FR-37 | When Canvas reports an assignment as submitted and its card is not in *Done*, the card shows a "Submitted, move to Done?" hint. The portal does not move it automatically. | Should | 2 |
 
-### 4.5 Private notes
+### 4.5 Trello-style look and behavior (goal G-3)
+
+| ID | Requirement | Priority | Phase |
+|----|-------------|----------|-------|
+| FR-60 | Once the board exists, it is the home screen, as a Trello board is. | Must | 2 |
+| FR-61 | Lists sit side by side at a fixed width and the board scrolls sideways. Dragging empty board background also scrolls it. | Must | 2 |
+| FR-62 | The user can drag a list by its header to reorder the lists. | Must | 2 |
+| FR-63 | Clicking a list title edits it in place. Enter or clicking away saves, and Escape cancels. | Must | 2 |
+| FR-64 | An "+ Add another list" control after the last list adds a list. | Must | 2 |
+| FR-65 | Card fronts show: the course as a colored label strip, the title, and badges for the due date, a note (description icon), and checklist progress. The due date badge is green when submitted or graded, yellow when due soon, red when overdue, and plain otherwise. | Must | 1 (list), 2 (board) |
+| FR-66 | Each course gets a label color automatically. The user can change a course's color and name its label. | Should | 2 |
+| FR-67 | Clicking a card opens its card back in a dialog over the board, which stays visible behind it. The browser address changes to the card's own link, so reloading or sharing the link reopens the card, and Back closes it. | Must | 2 |
+| FR-68 | The card back shows: the title; "in list *name*" (clicking it moves the card); labels; due date; points and status; an "Open in Canvas" button; *Description* (the private note); *Checklist*; and *Archive*. | Must | 2 (3 for notes and checklist) |
+| FR-69 | Hovering a card shows an edit (pencil) button; it and right-click open a quick edit menu: Open card, Move, Change label color, Open in Canvas, Archive. | Should | 3 |
+| FR-70 | A card back can hold one or more checklists of items that can be checked off. The card front shows progress such as 2/5. | Should | 3 |
+| FR-71 | "+ Add a card" at the bottom of each list creates a personal card that isn't a Canvas assignment. It supports everything a card back has except the Canvas details. | Should | 3 |
+| FR-72 | A Filter menu in the board header filters cards by label (course), by due date (overdue, due in the next day, next week, next month, no due date, complete), and by keyword. When a filter is on, the header says so and offers "Clear". | Must | 2 |
+| FR-73 | Keyboard shortcuts follow Trello's where the action exists, including: arrow keys move between cards, Enter opens a card, Escape closes, `e` quick edit, `f` filter, `x` clear filters, `n` add a card, `?` shows the shortcut list. The final list is checked against Trello's own shortcut page during design. | Should | 2 |
+| FR-74 | Archived cards and lists are found under "Archived items" in the board menu, where they can be restored. | Must | 2 |
+| FR-75 | A board menu opens as a panel from the right edge with: board background color, labels, archived items. | Could | 5 |
+| FR-76 | The user can have more than one board. | Could | 5 |
+| FR-77 | Dragging feels like Trello: the card tilts slightly and lifts while dragged, a gray gap shows where it will land, and the board scrolls when the card nears an edge. | Should | 2 |
+
+### 4.6 Private notes
 
 | ID | Requirement | Priority | Phase |
 |----|-------------|----------|-------|
@@ -110,7 +145,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | FR-45 | If an assignment disappears from Canvas, its note and card move to an *Archived* area rather than being deleted. | Should | 3 |
 | FR-46 | Notes support simple formatting (bold, lists, links). | Could | 3 |
 
-### 4.6 Accounts, sync, and data control
+### 4.7 Accounts, sync, and data control
 
 | ID | Requirement | Priority | Phase |
 |----|-------------|----------|-------|
@@ -154,7 +189,9 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 | NFR-30 | Works in current Chrome, Firefox, Safari, and Edge. | 1 |
 | NFR-31 | Every action, including moving cards, can be done with the keyboard alone. | 2 |
 | NFR-32 | Meets WCAG 2.2 level AA (the standard web accessibility guideline) for contrast, labels, and focus. | 4 |
-| NFR-33 | Usable on a phone-width screen (list view at minimum). | 4 |
+| NFR-33 | Usable on a phone-width screen. As in Trello's mobile layout, one list fills the screen and the user swipes between lists. | 4 |
+| NFR-34 | Visual style is close to Trello's within C-4: a colored board background, light gray lists with rounded corners, white cards with rounded corners and a soft shadow, and compact text. | 2 |
+| NFR-35 | Board actions (open a card, rename a list, add a card) need no more clicks than the same action in Trello. | 2 |
 
 ### 5.5 Maintainability
 
@@ -171,6 +208,7 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 - **Q-3** Should discussion posts and quizzes appear alongside assignments? Canvas exposes them as assignments in most cases, so the default is yes.
 - ~~**Q-4** Is multi-device sync wanted, or is one browser enough?~~ Answered: yes, the user signs in from anywhere and sees their saved state (D-2).
 - **Q-5** Should the portal support parent (observer) tokens? Canvas returns observed students' data through different options, so the views would need a student picker. Proposed for Phase 5.
+- **Q-6** Should personal cards (FR-71) come in Phase 3, or wait until later? They are a big part of how Trello feels, but they are new data the portal owns, not Canvas data.
 
 ## Change log
 
@@ -178,3 +216,4 @@ The *Phase* column matches the [roadmap](01-roadmap.md).
 |------|--------|
 | 2026-10-25 | First draft. |
 | 2026-10-25 | Server storage decided: FR-50 and FR-51 move to Phase 2, FR-52 removed. Added parent (observer) user, test tokens under A-1, A-3 token handling, Q-5. |
+| 2026-10-25 | Trello goal (G-3): added Trello terms, constraint C-4, FR-60 to FR-77, NFR-34, NFR-35, Q-6. FR-30 and FR-36 changed, NFR-33 now follows Trello's phone layout. |

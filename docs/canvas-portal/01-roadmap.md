@@ -2,12 +2,19 @@
 
 **Status:** Draft · **Owner:** Team Lead · **Last updated:** 2026-10-25
 
-## 1. Goal
+## 1. Project goals
 
-Give a student one page that answers "what do I have due, and what am I doing
-about it?" across all their Canvas courses, without changing anything in
-Canvas itself. The portal only *reads* from Canvas. Board layout and notes
-belong to the student and live in the portal.
+| ID | Goal |
+|----|------|
+| G-1 | **One place for everything due.** A student sees what they have due across all their Canvas courses, and what they're doing about it. |
+| G-2 | **Read only toward Canvas.** The portal never changes anything in Canvas. Board layout and notes belong to the student and live in the portal. |
+| G-3 | **Feels like Trello.** The board looks and behaves as much like [Trello](https://trello.com) as we can: lists side by side, cards you drag, a card that opens into a detailed view, colored labels, due date badges, and Trello's keyboard habits. Someone who uses Trello should feel at home without instructions. |
+| G-4 | **Follows the student everywhere.** Signing in on any device or browser shows the same board and notes. |
+| G-5 | **Private and safe.** Canvas tokens and notes are protected and never shared. |
+
+G-3 shapes most of the screen and interaction design. It means copying
+Trello's *patterns* (layout, behaviors, shortcuts), not its name, logo, icons,
+or artwork; see constraint C-4 in the [requirements](02-requirements.md).
 
 ## 2. Phases at a glance
 
@@ -63,7 +70,8 @@ The smallest thing that is useful: connect, then see everything that's due.
 - Backend calls Canvas for active courses and their assignments (FR-10 to
   FR-14), handling Canvas's paging and rate limits.
 - Dashboard shows courses and an upcoming-assignments list sorted by due date,
-  with filters by course and status (FR-20 to FR-25).
+  with filters by course and status, each assignment drawn as a Trello-style
+  card (FR-20 to FR-25, FR-65).
 - Each assignment links back to its Canvas page (FR-26).
 - Clear error messages for a bad token, an expired token, or Canvas being
   unreachable (FR-6, NFR-20).
@@ -81,25 +89,38 @@ first.
 - The user's Canvas connection is saved on the server with their account, so
   signing in on a new device doesn't require pasting the token again (FR-5,
   NFR-11).
-- Board view with columns; default columns are *To do*, *In progress*, *Done*
-  (FR-30, FR-31).
-- Drag cards between and within columns; keyboard alternative for dragging
-  (FR-32, NFR-31).
+- Trello-style board: lists side by side that scroll sideways, default lists
+  *To do*, *In progress*, *Done*; the board becomes the home screen (FR-30,
+  FR-31, FR-60, FR-61).
+- Trello-style cards: course label colors, colored due date badges, note icon
+  (FR-65, FR-66).
+- Clicking a card opens its "card back" in a dialog over the board, with its
+  own link (FR-67, FR-68).
+- Drag cards between and within lists with Trello's drag feel, and drag lists
+  to reorder them; keyboard alternative for dragging (FR-32, FR-62, FR-77,
+  NFR-31).
+- Rename lists by clicking their title; add a list at the end of the board
+  (FR-63, FR-64).
+- Trello-style filter menu and keyboard shortcuts (FR-72, FR-73).
 - New assignments from Canvas land in *To do*; assignments Canvas reports as
   submitted can be suggested for *Done*; cards are matched by Canvas ID (FR-34, FR-35, FR-37).
 - Board layout is saved on the server and restored on any device (FR-33,
   FR-51).
-- Optional: rename, add, and remove columns (FR-36).
+- Archive and restore lists and cards, as in Trello (FR-36, FR-74).
 
 **Exit criteria:** layout survives a page reload and a Canvas refresh without
-losing or duplicating cards, and the same layout appears after signing in on a
-second device.
+losing or duplicating cards, the same layout appears after signing in on a
+second device, and the Trello comparison review (TP-13) passes for the board.
 
 ### Phase 3: Private notes
 
 - Add, edit, and delete a note on any assignment (FR-40 to FR-42).
-- Notes show as an icon on the card and in full on an assignment detail panel
-  (FR-43).
+- Notes are the card's *Description*, as on a Trello card back; a card with a
+  note shows the description icon (FR-43).
+- Checklists inside a card, with progress shown on the card front (FR-70).
+- Quick edit menu on each card (FR-69).
+- Personal cards: "+ Add a card" at the bottom of a list creates a card that
+  isn't a Canvas assignment (FR-71, Q-6).
 - Notes are never sent to Canvas (FR-44, NFR-12).
 
 **Exit criteria:** notes survive reloads and Canvas refreshes, appear on a
@@ -120,7 +141,8 @@ accessibility checks pass.
 - "Log in with Canvas" (OAuth 2) instead of pasting a token (D-4).
 - Calendar view of due dates; reminders.
 - Grades and submission feedback view.
-- Personal tasks that aren't Canvas assignments, on the same board.
+- More than one board, such as one per course or term, as in Trello (FR-76).
+- Board background choices and the board menu sidebar (FR-75).
 - Parent view: a parent (Canvas *observer*) token shows the courses and
   assignments of the students they observe (Q-5).
 
@@ -159,6 +181,7 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | R-4 | Assignments change in Canvas (renamed, deleted, new due date) | Board shows stale or orphaned cards | Match cards by Canvas assignment ID, not name; keep notes on deleted assignments in an "Archived" area (FR-35, FR-45). |
 | R-5 | Learning web development alongside building | Slower progress | Small phases, one new technology at a time, docs explain terms. |
 | R-6 | A school-managed Google account blocks sign-in to outside apps | Student can't sign in | Allow any Google account, so a personal one works; explain this on the sign-in screen. |
+| R-7 | Matching Trello too closely in look (logo, artwork, exact styling) | Trademark or copyright complaint | Copy behavior and layout patterns only; our own name, colors, and icons (C-4). |
 
 ## Change log
 
@@ -167,3 +190,4 @@ These need the Team Lead's call. Each has a recommendation, but nothing is settl
 | 2026-10-25 | First draft. |
 | 2026-10-25 | D-1 postponed; D-2 decided (server storage), so accounts move into Phase 2 and Phase 4 becomes polish and deploy. R-1 cleared with student and parent test tokens. Parent view added to Phase 5. |
 | 2026-10-25 | D-7 decided: Sign in with Google for the MVP. Added Google setup to Phase 0 and risk R-6. |
+| 2026-10-25 | Section 1 becomes Project goals, adding G-3 (feels like Trello). Phases 2 and 3 take on Trello-style board, card back, quick edit, checklists, and personal cards. Added risk R-7. |

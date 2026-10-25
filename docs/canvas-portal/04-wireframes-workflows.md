@@ -11,27 +11,35 @@ Screen IDs (`S-1`, `S-2`, ...) are used by the test procedures.
 
 ## 1. Screen map
 
+The layout follows Trello (goal G-3): the board is home, a card opens as a
+dialog over the board, and menus open in place instead of on new pages.
+
 ```mermaid
 flowchart TD
     S1[S-1 Sign in] --> Q{Canvas connected?}
     Q -- no --> S2[S-2 Connect Canvas]
-    Q -- yes --> S3[S-3 Dashboard: list view]
-    S2 --> S3
-    S3 <--> S4[S-4 Dashboard: board view]
-    S3 --> S5[S-5 Assignment detail and note]
-    S4 --> S5
-    S3 --> S6[S-6 Settings]
-    S4 --> S6
+    Q -- yes --> S4[S-4 Board, home screen]
+    S2 --> S4
+    S4 <--> S3[S-3 Table view]
+    S4 --> S5[S-5 Card back dialog]
+    S3 --> S5
+    S4 --> S7[S-7 Quick edit menu]
+    S4 --> S8[S-8 Filter menu]
+    S4 --> S9[S-9 Board menu and archived items]
+    S4 --> S6[S-6 Settings]
     S6 -- disconnect --> S2
     S6 -- sign out --> S1
 ```
 
-Every dashboard screen shares a top bar:
+Every signed-in screen shares a header bar, like Trello's board header. It
+sits on the board's background color:
 
 ```text
 +--------------------------------------------------------------------------+
-| Canvas Portal      [ List | Board ]      Updated 3 min ago [Refresh]  [⚙] |
+| Canvas Portal  My assignments  [*Board*| Table ]   [Filter] [⟳] [⋯] (A)  |
 +--------------------------------------------------------------------------+
+  [Filter] opens S-8. [⟳] refreshes from Canvas; hovering shows "Updated 3 min
+  ago". [⋯] opens S-9. (A) is the account menu: Settings, Sign out.
 ```
 
 ## 2. Screens
@@ -90,94 +98,112 @@ disconnecting, or when Canvas rejects the saved token.
 
 On success the portal shows "Connected as *Name*" (FR-2) and opens S-3.
 
-### S-3 Dashboard: list view
+### S-3 Table view
 
-Requirements: FR-13, FR-20 to FR-26, NFR-20.
+Requirements: FR-13, FR-20 to FR-26, FR-30, FR-65, NFR-20. In Phase 1 this
+is the only view. From Phase 2 it is the secondary view behind the board.
+Each row uses the same label colors and due badges as the cards.
 
 ```text
 +--------------------------------------------------------------------------+
-| Canvas Portal      [*List*| Board ]      Updated 3 min ago [Refresh]  [⚙] |
+| Canvas Portal  My assignments  [ Board |*Table*]   [Filter] [⟳] [⋯] (A)  |
 +--------------------------------------------------------------------------+
 | [!] Canvas isn't responding. Showing data from 10:42 AM.  <- NFR-20 only |
-+-------------------+------------------------------------------------------+
-| COURSES           | [ Search assignments...   ]  Status: [All      v]    |
-| [x] All courses   | [x] Hide finished                                    |
-| [ ] BIO 101       +------------------------------------------------------+
-| [ ] HIST 210      | DUE SOON                                             |
-| [ ] MATH 152      |  Lab report 3          BIO 101   Tue 11:59 PM  20 pt |
-|                   |                                  [Due soon]   ✎   ↗  |
-|                   |  Problem set 7         MATH 152  Wed 9:00 AM   10 pt |
-|                   |                                  [Due soon]       ↗  |
-|                   | UPCOMING                                             |
-|                   |  Essay draft           HIST 210  Nov 3          50 pt |
-|                   |                                  [Upcoming]   ✎   ↗  |
-|                   | NO DUE DATE                                          |
-|                   |  Reading reflection    HIST 210  —               5 pt |
-|                   |                                  [Upcoming]       ↗  |
-+-------------------+------------------------------------------------------+
-  ✎ = has a note (FR-43)    ↗ = open in Canvas, new tab (FR-26)
-  Clicking a row opens S-5.
++--------------------------------------------------------------------------+
+| Card               | List         | Label      | Due          | Points   |
+|--------------------+--------------+------------+--------------+----------|
+| Lab report 3     ≡ | In progress  | ■ BIO 101  | (◷ Tue 11:59)| 20       |
+|                    |              |            |   yellow     |          |
+| Problem set 7      | To do        | ■ MATH 152 | (◷ Wed 9:00) | 10       |
+|                    |              |            |   yellow     |          |
+| Essay draft      ≡ | To do        | ■ HIST 210 | (◷ Nov 3)    | 50       |
+| Reading reflection | To do        | ■ HIST 210 | none         | 5        |
++--------------------------------------------------------------------------+
+  ≡ = has a description (note), FR-43. ■ = course label color, FR-66.
+  Clicking a row opens S-5. The List column appears from Phase 2.
 ```
 
-### S-4 Dashboard: board view
+### S-4 Board (home screen)
 
-Requirements: FR-30 to FR-37, NFR-3, NFR-31.
+Requirements: FR-31 to FR-37, FR-60 to FR-66, FR-72 to FR-74, FR-77,
+NFR-3, NFR-31, NFR-34.
 
 ```text
 +--------------------------------------------------------------------------+
-| Canvas Portal      [ List |*Board*]      Updated 3 min ago [Refresh]  [⚙] |
+| Canvas Portal  My assignments  [*Board*| Table ]   [Filter] [⟳] [⋯] (A)  |
 +--------------------------------------------------------------------------+
-| Course: [All courses v]                                  [+ Add column]  |
-+------------------------+------------------------+------------------------+
-| To do (3)          […] | In progress (1)    […] | Done (2)           […] |
-+------------------------+------------------------+------------------------+
-| +--------------------+ | +--------------------+ | +--------------------+ |
-| | Problem set 7      | | | Lab report 3     ✎ | | | Quiz 4             | |
-| | MATH 152           | | | BIO 101            | | | BIO 101            | |
-| | Wed 9:00 AM  [Due  | | | Tue 11:59 PM       | | | [Graded]           | |
-| |  soon]             | | | [Due soon]         | | +--------------------+ |
-| +--------------------+ | +--------------------+ |                        |
-| +--------------------+ |                        |                        |
-| | Essay draft      ✎ | |                        |                        |
-| | HIST 210  Nov 3    | |                        |                        |
-| | [Submitted]        | |                        |                        |
-| | Submitted. Move to | |  <- FR-37 hint,        |                        |
-| | Done? [Move]       | |     never automatic    |                        |
-| +--------------------+ |                        |                        |
-| +--------------------+ |                        |                        |
-| | NEW  Chapter 5 qs  | |  <- FR-34 new cards    |                        |
-| | HIST 210  Nov 8    | |     land at bottom     |                        |
-| +--------------------+ |                        |                        |
-+------------------------+------------------------+------------------------+
-| > Archived (1)    <- FR-45: assignments removed from Canvas              |
+|  board background color                                                  |
+|  +--------------------+ +--------------------+ +--------------------+    |
+|  | To do          […] | | In progress    […] | | Done           […] |    |
+|  | +----------------+ | | +----------------+ | | +----------------+ |    |
+|  | | ▬▬ MATH 152    | | | | ▬▬ BIO 101     | | | | ▬▬ BIO 101     | |    |
+|  | | Problem set 7  | | | | Lab report 3   | | | | Quiz 4         | |    |
+|  | | (◷ Wed 9:00) ✎ | | | | (◷ Tue 11:59)  | | | | (◷ Oct 20 ✓)   | |    |
+|  | +----------------+ | | | ≡  ☑ 2/5       | | | +----------------+ |    |
+|  | +----------------+ | | +----------------+ | | + Add a card       |    |
+|  | | ▬▬ HIST 210    | | | ┌ ─ ─ ─ ─ ─ ─ ─ ┐  | +--------------------+    |
+|  | | Essay draft    | | | │   drop gap    │  |                           |
+|  | | (◷ Nov 3) ≡    | | | │   (FR-77)     │  | +--------------------+    |
+|  | | Submitted.     | | | └ ─ ─ ─ ─ ─ ─ ─ ┘  | | + Add another list |    |
+|  | | Move to Done?  | | | + Add a card       | +--------------------+    |
+|  | | [Move]         | | +--------------------+                           |
+|  | +----------------+ |                                                  |
+|  | +----------------+ |                                                  |
+|  | | ▬▬ HIST 210    | | <- FR-34: new Canvas assignments land at         |
+|  | | NEW            | |    the bottom of To do                           |
+|  | | Chapter 5 qs   | |                                                  |
+|  | +----------------+ |                           ──scrolls──>           |
+|  | + Add a card       | <- FR-71: personal card (Phase 3)                |
+|  +--------------------+                                                  |
 +--------------------------------------------------------------------------+
-  […] column menu: Rename, Move left/right, Delete (FR-36)
-  Keyboard: focus a card, Space to pick up, arrows to move, Space to drop,
-  Escape to cancel (NFR-31).
+  ▬▬ label strip in the course color (FR-66). (◷ ...) due badge: yellow due
+  soon, red overdue, green with ✓ when complete (FR-65). ≡ has a description.
+  ✎ is shown here on the card the mouse is over.
+  ☑ 2/5 checklist progress (FR-70). ✎ appears on hover and opens S-7.
+  List title: click to rename (FR-63). Drag a list by its header (FR-62).
+  […] list menu: Add card, Move list, Archive list (FR-36).
+  "Submitted. Move to Done?" hint never moves the card itself (FR-37).
 ```
 
-### S-5 Assignment detail and note
+### S-5 Card back
 
-Requirements: FR-22, FR-26, FR-40 to FR-44, FR-46. Opens as a side panel
-over S-3 or S-4 on wide screens, and as a full screen on phones.
+Requirements: FR-22, FR-26, FR-40 to FR-44, FR-46, FR-67, FR-68, FR-70.
+Opens as a dialog over the dimmed board at `/c/{cardId}`. On phones it fills
+the screen.
 
 ```text
-                              +------------------------------------------+
-                              | Lab report 3                         [x] |
-                              | BIO 101 · Due Tue Oct 28, 11:59 PM       |
-                              | 20 points · [Due soon]                   |
-                              | [ Open in Canvas ↗ ]                     |
-                              +------------------------------------------+
-                              | MY NOTES (private, never sent to Canvas) |
-                              | [B] [I] [•] [link]          <- FR-46     |
-                              | +--------------------------------------+ |
-                              | | Ask Dr. Lee about graph axes.        | |
-                              | | Data is in the shared folder.        | |
-                              | |                                      | |
-                              | +--------------------------------------+ |
-                              | Saved 10:51 AM            <- FR-42       |
-                              |                         [Delete note]    |
-                              +------------------------------------------+
++--------------------------------------------------------------------------+
+| (dimmed board behind)                                                    |
+|   +------------------------------------------------------------------+   |
+|   | ▭ Lab report 3                                              [x]  |   |
+|   |   in list In progress  <- click to move                          |   |
+|   |                                                                  |   |
+|   | Labels          Due date                       | Add to card     |   |
+|   | [■ BIO 101]     [ ] Tue Oct 28, 11:59 PM       | [☑ Checklist]   |   |
+|   |                 (Due soon)                     |                 |   |
+|   | 20 points · Not submitted                      | Actions         |   |
+|   |                                                | [→ Move      ]  |   |
+|   | ≡ Description            private, never sent   | [↗ Open in   ]  |   |
+|   |                          to Canvas             | [   Canvas   ]  |   |
+|   | +------------------------------------------+   | [▤ Archive   ]  |   |
+|   | | Ask Dr. Lee about graph axes.            |   |                 |   |
+|   | | Data is in the shared folder.            |   |                 |   |
+|   | +------------------------------------------+   |                 |   |
+|   | Saved 10:51 AM                     [Edit]      |                 |   |
+|   |                                                |                 |   |
+|   | ☑ Checklist                 2/5   [Delete]     |                 |   |
+|   | [=====-------]  40%                            |                 |   |
+|   | [x] Collect data                               |                 |   |
+|   | [x] Draw graphs                                |                 |   |
+|   | [ ] Write discussion                           |                 |   |
+|   | [ ] Proofread                                  |                 |   |
+|   | [ ] Submit in Canvas                           |                 |   |
+|   | [Add an item]                                  |                 |   |
+|   +------------------------------------------------------------------+   |
++--------------------------------------------------------------------------+
+  The due-date checkbox is display only for Canvas cards: completion comes
+  from Canvas. Personal cards can be checked off. Escape, [x], clicking
+  outside, or the browser's Back button closes the dialog.
 ```
 
 ### S-6 Settings
@@ -201,26 +227,103 @@ Requirements: FR-4, FR-53, FR-54.
 +--------------------------------------------------------------+
 ```
 
+### S-7 Quick edit menu
+
+Requirements: FR-69. Opens from the ✎ button on hover, by right-clicking a
+card, or by pressing `e`. The card is shown raised, with a menu beside it,
+as in Trello.
+
+```text
++--------------------------------------------------------------+
+| (dimmed board)                                               |
+|   +------------------+  +------------------------+           |
+|   | ▬▬ BIO 101       |  | [▭ Open card        ]  |           |
+|   | Lab report 3     |  | [→ Move             ]  |           |
+|   | (◷ Tue 11:59) ≡  |  | [■ Change label color] |           |
+|   | ☑ 2/5            |  | [↗ Open in Canvas   ]  |           |
+|   +------------------+  | [▤ Archive          ]  |           |
+|                         +------------------------+           |
++--------------------------------------------------------------+
+```
+
+### S-8 Filter menu
+
+Requirements: FR-72. A dropdown under the Filter button, opened with `f`.
+
+```text
++------------------------------------------+
+| Filter                               [x] |
+| Keyword                                  |
+| [ Enter a keyword...                 ]   |
+|                                          |
+| Due date                                 |
+| [ ] No dates                             |
+| [ ] Overdue                    (red)     |
+| [ ] Due in the next day        (yellow)  |
+| [ ] Due in the next week                 |
+| [ ] Due in the next month                |
+| [ ] Marked as complete         (green)   |
+|                                          |
+| Labels                                   |
+| [ ] ■ BIO 101                            |
+| [ ] ■ HIST 210                           |
+| [ ] ■ MATH 152                           |
++------------------------------------------+
+  With a filter on, the header shows
+  [Filter · 3 cards match  (x) Clear], and x clears it.
+```
+
+### S-9 Board menu and archived items
+
+Requirements: FR-74, FR-75. A panel that slides in from the right edge of the
+board.
+
+```text
+                          +------------------------------------+
+                          | Menu                           [x] |
+                          |------------------------------------|
+                          | [▤ Archived items]                 |
+                          | [■ Labels]            (Phase 5)    |
+                          | [▧ Change background] (Phase 5)    |
+                          |------------------------------------|
+                          | Archived items                     |
+                          | [Search archive...]  [Cards|Lists] |
+                          | +--------------------------------+ |
+                          | | ▬▬ BIO 101                     | |
+                          | | Old lab (removed from Canvas)  | |
+                          | +--------------------------------+ |
+                          | [Restore]  ≡ note kept             |
+                          +------------------------------------+
+  Cards for assignments removed from Canvas land here (FR-45).
+  Restore puts a card back at the bottom of its old list.
+```
+
 ### Phone layout
 
-Requirement: NFR-33. Courses move into a filter menu, and the list takes the
-full width. The board scrolls sideways one column at a time.
+Requirement: NFR-33. As in Trello's phone layout, one list fills the screen.
+The user swipes sideways between lists, and dots show which list is shown.
 
 ```text
 +----------------------------+
-| Canvas Portal   [⟳]  [⚙]  |
-| [*List*| Board ]           |
-| [Search...]   [Filters v]  |
+| ‹  My assignments  [⚲] [⋯] |
 +----------------------------+
-| DUE SOON                   |
-| Lab report 3            ✎  |
-| BIO 101 · Tue 11:59 PM     |
-| [Due soon]                 |
-|----------------------------|
-| Problem set 7              |
-| MATH 152 · Wed 9:00 AM     |
-| [Due soon]                 |
+| In progress            […] |
+| +------------------------+ |
+| | ▬▬ BIO 101             | |
+| | Lab report 3           | |
+| | (◷ Tue 11:59) ≡ ☑ 2/5  | |
+| +------------------------+ |
+| +------------------------+ |
+| | ▬▬ MATH 152            | |
+| | Problem set 7          | |
+| | (◷ Wed 9:00)           | |
+| +------------------------+ |
+| + Add a card               |
+|                            |
+|          ○ ● ○ ○           |
 +----------------------------+
+  To move a card, press and hold it, then drag it to a screen edge to go
+  to the next list, or use Move on the card back.
 ```
 
 ## 3. Workflows
@@ -239,8 +342,8 @@ flowchart TD
     G --> D
     E -- accepted --> H[Show 'Connected as Name']
     H --> I[Fetch courses and assignments]
-    I --> J[S-3 List view]
-    J --> K[Board created with<br/>every assignment in To do]
+    I --> J[Board created: To do, In progress, Done;<br/>every assignment in To do]
+    J --> K[S-4 Board]
 ```
 
 ### W-2 Daily check
@@ -268,7 +371,9 @@ sequenceDiagram
     participant A as Backend
 
     U->>F: Drag "Lab report 3" to In progress
-    F->>F: Move card on screen immediately
+    F->>F: Card lifts and tilts, a gray gap shows the drop spot
+    U->>F: Drop
+    F->>F: Card settles into place immediately
     F->>A: PATCH /api/board/cards/{id}
     alt saved
         A-->>F: 200 OK
@@ -282,11 +387,11 @@ Moving the card on screen before the server answers is called an
 *optimistic update*. It keeps dragging fast (NFR-3), and the card snaps back
 if the save fails, so the screen never shows a state the server doesn't have.
 
-### W-4 Write a note
+### W-4 Write a note (card description)
 
 ```mermaid
 flowchart TD
-    A([Open assignment S-5]) --> B[Type in note box]
+    A([Open card back S-5]) --> B[Select Description and type]
     B --> C[Wait until 1 s after<br/>the last keystroke]
     C --> D[PUT /api/notes/id]
     D --> E{Saved?}
@@ -321,8 +426,36 @@ flowchart TD
     F --> G[Remove user, token, board,<br/>notes, cache] --> H[S-1 Sign in]
 ```
 
+### W-7 Shape the board (lists)
+
+```mermaid
+flowchart TD
+    A([Board]) --> B{What does the user do?}
+    B -- "+ Add another list" --> C[Type the name, press Enter]
+    C --> D[List added at the end;<br/>composer stays open for another]
+    B -- click list title --> E[Title becomes a text box]
+    E -- Enter or click away --> F[Saved]
+    E -- Escape --> G[Unchanged]
+    B -- drag list header --> H[Other lists slide aside;<br/>drop saves the new order]
+    B -- list menu: Archive list --> I[List and its cards move<br/>to Archived items]
+    I --> J[S-9: Restore brings both back]
+```
+
+### W-8 Add a personal card (Phase 3, Q-6)
+
+```mermaid
+flowchart TD
+    A([+ Add a card at the bottom of a list]) --> B[Text box opens in place]
+    B --> C{Key pressed}
+    C -- Enter --> D[Card added; box stays open<br/>for the next card]
+    D --> B
+    C -- Escape --> E[Box closes; nothing added]
+    D --> F[Open the card to add a due date,<br/>description, or checklist]
+```
+
 ## Change log
 
 | Date | Change |
 |------|--------|
 | 2026-10-25 | First draft. |
+| 2026-10-25 | Trello goal (G-3): board is home; S-3 becomes Table view; S-4 and S-5 redrawn as Trello board and card back; added S-7 quick edit, S-8 filter, S-9 board menu; Trello-style phone layout; W-7 and W-8 added. |

@@ -46,6 +46,9 @@ Every pull request must meet these before merge:
       screenshots of each changed screen, with before and after shots when an
       existing screen changes.** Wide and phone widths for layout changes.
       Store and embed them as the repo's [CLAUDE.md](../../CLAUDE.md) describes.
+- [ ] If the PR changes the board, card back, or menus, it says how the
+      change compares with Trello's behavior (goal G-3), and any deliberate
+      difference is noted.
 - [ ] Screenshots contain no real tokens, names, or course data. Use the
       recorded test data.
 - [ ] Docs in `docs/canvas-portal/` are updated if requirements, design, or
@@ -91,7 +94,21 @@ Edge on a laptop, plus Chrome or Safari on a phone.
 | NFR-12 | User B gets `404` for every one of user A's cards and notes | API |
 | NFR-20 | Canvas down: cached data plus warning banner | API, E2E |
 | NFR-31 | Move a card using only the keyboard | E2E |
-| NFR-32 | axe-core finds no serious issues on S-1 to S-6 | Accessibility |
+| FR-60 | Signed-in, connected user lands on the board | E2E |
+| FR-61, FR-62 | Board scrolls sideways; dragging a list header reorders lists and the order survives reload | E2E |
+| FR-63 | Click a list title, type, Enter saves; Escape cancels | E2E |
+| FR-64, FR-71 | Composer adds a list or a personal card and stays open for the next | E2E |
+| FR-65 | Due badge color for each status (green, yellow, red, plain) | Unit, E2E |
+| FR-66 | Each course gets a palette color; changing it updates every card of that course | API, E2E |
+| FR-67 | Opening a card changes the address to `/c/{id}`; reloading that address reopens it; Back closes it | E2E |
+| FR-68 | Card back shows every listed field for a Canvas card and for a personal card | E2E |
+| FR-69 | Pencil, right-click, and `e` open the quick edit menu | E2E |
+| FR-70 | Add, check, reorder, and delete checklist items; card front shows progress | API, E2E |
+| FR-72 | Each filter option, combined filters, and Clear | E2E |
+| FR-73 | Every shortcut in the keyboard map does its action, and `?` lists them all | E2E |
+| FR-74 | Archive and restore a card and a list | API, E2E |
+| NFR-34 | Visual comparison: screenshots of S-4 and S-5 match approved reference images (Playwright `toHaveScreenshot`) | E2E |
+| NFR-32 | axe-core finds no serious issues on S-1 to S-9 | Accessibility |
 
 ## 5. Manual procedures
 
@@ -161,12 +178,12 @@ steps, and the expected result. Screen IDs refer to the
 
 ### TP-06 Board layout persists and syncs
 
-**Checks:** FR-30 to FR-33, FR-51 · **Phase:** 2
+**Checks:** FR-30 to FR-33, FR-51, FR-60 · **Phase:** 2
 **Needs:** two devices or two different browsers, same portal account.
 
 | Step | Action | Expected |
 |------|--------|----------|
-| 1 | On device A, switch to Board | Columns To do, In progress, Done |
+| 1 | On device A, open the portal | The board is the home screen, with lists To do, In progress, Done |
 | 2 | Drag two cards to In progress and reorder them | Cards move immediately |
 | 3 | Reload the page | Same layout |
 | 4 | Sign in on device B | Same layout |
@@ -179,7 +196,7 @@ steps, and the expected result. Screen IDs refer to the
 | Step | Action | Expected |
 |------|--------|----------|
 | 1 | Using only Tab, reach a card | The card has a visible focus outline |
-| 2 | Press Space, then the right arrow, then Space | Card moves one column right; a screen reader announcement is made |
+| 2 | Press Space, then the right arrow, then Space | Card moves one list right; a screen reader announcement is made |
 | 3 | Pick up a card and press Escape | Card returns to where it was |
 
 ### TP-08 Canvas changes reach the board
@@ -234,9 +251,40 @@ steps, and the expected result. Screen IDs refer to the
 | Step | Action | Expected |
 |------|--------|----------|
 | 1 | Run TP-01, TP-03, and TP-06 in Chrome, Firefox, Safari, and Edge | Same results in each |
-| 2 | On a phone, open S-3, S-4, and S-5 | Phone layout from the wireframes; no sideways scrolling except the board |
+| 2 | On a phone, open S-3, S-4, and S-5 | Phone layout from the wireframes: one list fills the screen and swiping moves between lists |
 | 3 | Zoom the browser to 200% | All text readable; nothing cut off |
 | 4 | Turn on a screen reader (VoiceOver or NVDA) and go through S-3 | Every control is announced with a name |
+
+### TP-13 Trello comparison review
+
+**Checks:** goal G-3, FR-60 to FR-77, NFR-34, NFR-35, C-4 · **Phase:** 2, then
+each later phase
+**Needs:** the portal and a free Trello account side by side, each with a
+board of about three lists and ten cards.
+
+Do each action in Trello first, then in the portal. Record any difference in
+how it looks, what it takes (clicks or keys), or how it responds.
+
+| Step | Action in both | Expected in the portal |
+|------|----------------|------------------------|
+| 1 | Look at the board as a whole | Same arrangement: header on top, lists side by side on a colored background, gray lists, white cards with label strips and badges |
+| 2 | Drag a card to another list, slowly | Card lifts and tilts, gap opens where it will land, neighbors slide smoothly |
+| 3 | Drag a card toward the right edge | Board scrolls automatically |
+| 4 | Drag a list by its header | Lists reorder the same way |
+| 5 | Click a list title and rename it | Edits in place; Enter saves, Escape cancels |
+| 6 | Add a list, then add three cards in a row | Composer stays open after each, as in Trello |
+| 7 | Open a card | Dialog over the dimmed board, same section order; address changes |
+| 8 | Reload, then press Back | Reload reopens the card; Back closes it |
+| 9 | Use the pencil and right-click on a card | Quick edit menu next to the raised card |
+| 10 | Press `f`, filter by a label and by "Overdue", then `x` | Same behavior; header shows the filter is active |
+| 11 | Try each shortcut in Trello's shortcut list that the portal supports | Same key does the same thing |
+| 12 | Archive a card and restore it from the board menu | Same steps |
+| 13 | Count clicks to open a card, rename a list, and add a card | No more than Trello (NFR-35) |
+| 14 | Check for Trello's name, logo, icons, or artwork anywhere | None (C-4) |
+
+Record the result of each step as *Same*, *Close* (small, acceptable
+difference, noted), or *Different* (opens an issue unless it is a
+deliberate, documented difference such as Canvas-only fields).
 
 ## 6. Reporting a problem
 
@@ -257,3 +305,4 @@ Copy this table for each phase sign-off.
 | Date | Change |
 |------|--------|
 | 2026-10-25 | First draft. Includes the screenshot rule for UI changes. |
+| 2026-10-25 | Trello goal (G-3): Trello comparison step in the PR checklist, automated tests for FR-60 to FR-77 and NFR-34, TP-13 Trello comparison review; TP-06, TP-07, TP-12 updated. |

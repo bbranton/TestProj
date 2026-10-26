@@ -350,7 +350,8 @@ show the same fields as the Phase 1 sketch.
   the sketch the lock takes two columns, so that row has one space less.
   Otherwise it shows neither, so open assignments stay uncluttered.
   The card keeps its due date place either way. These lines
-  compare the date with the device's clock when the board is drawn; they
+  compare the date with the device's clock, in UTC, when the board is
+  drawn (FR-22); they
   are dates, not statuses (FR-23).
   Missing cards (# border in the sketch) stand out at a glance in three
   ways at once, so color is never the only signal: a thick red border
@@ -401,8 +402,9 @@ show the same fields as the Phase 1 sketch.
   From Phase 2, [−] in a list header minimizes it to a narrow strip with
   its title and card count; [+] expands it again, and the other lists
   resize (FR-80). The count and whether a list is empty include only
-  the cards on show: not those the filter hides, or those removed from
-  Canvas while they are hidden. Each time the board loads or a Refresh
+  the cards on show: not those of courses hidden with the course
+  buttons, those the filter hides, or those removed from Canvas while
+  they are hidden. Each time the board loads or a Refresh
   finishes, empty lists start minimized and the rest start expanded;
   this state is not saved.
 
@@ -591,7 +593,8 @@ cards on the screen; it never changes them or what Canvas holds.
   the student's notes, and it filters the whole board in place. Matching
   archived cards and cards removed from Canvas show too, grayed out as
   usual, so nothing needs a separate search (FR-81).
-- Due date choices compare the due date with the device's clock, like
+- Due date choices compare the due date with the device's clock, in UTC
+  (FR-22), like
   the start and end date lines on cards (FR-22).
 - Status choices use the same Canvas fields and words as the card front
   (FR-23). Excused joins them in Phase 5.
@@ -904,6 +907,7 @@ flowchart TD
 | 2026-10-26 | Cards removed from Canvas are hidden by default, not for good: from Phase 2 a [◌ Removed from Canvas] button on the course row shows them, grayed out in their lists. From the Team Lead's review. |
 | 2026-10-26 | The [◌ Removed from Canvas] button moves to Phase 2, with dragging, and the S-10 summary says when a Refresh removed cards, from the Team Lead's review. |
 | 2026-10-26 | Cards show when an assignment opens (Canvas "Available from") until it does, and when it closed (Canvas "Until") after that, from Phase 1, from the Team Lead's review. |
+| 2026-10-26 | Checked against the merged requirements (#6): list counts leave out hidden courses' cards again (FR-80), and date comparisons are made in UTC (FR-22). |
 | 2026-10-26 | Showing cards removed from Canvas moves to Phase 1, from the Team Lead: the filter menu's "Show cards removed from Canvas (2)" option and S-10's "2 assignments were removed from Canvas" line with [Show them]. |
 | 2026-10-26 | Phase 1 scope cut by the Team Lead (requirements at da46dff, then the Team Lead's later decision): course buttons stay in Phase 1 as the only course control, so the filter menu has no course checkboxes; the show-removed-cards option moves into the filter menu (Phase 2) and resets on reload; Excused moves to Phase 5; Phase 1 shows only Backlog, at a Trello list's width, and side-by-side lists and minimizing move to Phase 2. S-4's Phase 1 sketch, button IDs, messages, and S-8 updated. |
 | 2026-10-26 | Excused is a tag again, shown alongside Submitted or Not submitted and Graded or Not graded, not in their place; it still makes the badge green and turns off the Missing highlight (FR-65). From the Team Lead's decision on PR #6. |

@@ -42,7 +42,12 @@ When reviewing others' work:
 - [ ] Does it add behavior no requirement asks for?
 - [ ] Do the words match the requirements and the
       [glossary](../../canvas-portal/glossary.md) (names of screens, states,
-      terms)?
+      terms)? Does each state or status word mean only one thing across the
+      requirements, the glossary, and the UI spec?
+- [ ] Does a requirement overlap one that's already there, such as two
+      controls for the same job or two rules for the same data?
+- [ ] Does a requirement name a color, layout, or control? State the need,
+      and let the UI spec set the look.
 - [ ] Are edge cases and failures covered: empty data, errors, timeouts, two
       things at once?
 - [ ] Do two docs disagree about what should happen? Log it as an `X-`
@@ -51,10 +56,36 @@ When reviewing others' work:
       they pass?
 - [ ] Could it expose a Canvas token or student data, or let someone act
       as a student? Raise it yourself, even when Security also reviews.
+- [ ] Does each security NFR take effect by the phase where its risk first
+      appears, such as the first internet-facing deploy?
 
 When reviewing its own requirements before handing them on, also check that
 each one can be tested: vague words ("fast", "easy", "usually") need a
 number or a rule.
+
+## Bringing decisions to the Team Lead
+
+Downstream reviews keep reopening decisions when the Team Lead decides one
+item at a time without seeing what each one pulls along. To prevent that:
+
+- Before asking for a phase move or a requirement change, write a short
+  impact note. It lists the IDs the change pulls along, the docs and
+  sections that change, the tests affected, and any Security effect.
+- Group open questions about the same feature into one decision. Ask it
+  before the downstream docs are reviewed, not during those reviews.
+- When a `Q-` is answered, write the answer into an FR or NFR row and into
+  *Requirements by phase* in the same commit, then mark the question
+  answered. An answer that lives only in the question traces to nothing.
+
+## Owning two docs
+
+The test plan follows the requirements once a decision has settled, in one
+batch per decision, not after every requirements commit. Each batch names
+the requirements commit it matches.
+
+When a review of another doc turns up a change for the requirements or the
+test plan, make it on your own open PR, or batch it into your next one.
+Don't hand it to another thread to make.
 
 ## Decisions
 
@@ -63,7 +94,11 @@ number or a rule.
 - What the app must do and how well (requirements and their wording).
 - How each requirement is tested and what counts as pass or fail.
 - Whether a test passed, and whether a finished feature is accepted.
-- Which phase each requirement should go in, as a proposal to Management.
+
+**Proposes:**
+
+- Which phase each requirement goes in. Management recommends, and the
+  Team Lead decides.
 
 **Does not decide, and defers to:**
 

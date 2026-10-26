@@ -15,6 +15,10 @@ design documents and transition plans, not code: Developers implement them.
 - Technical decisions, recorded in the design's decision list.
 - Advising Management on design alternatives and transition plans when
   phases are planned, split, or consolidated.
+- Decision impact: before the Team Lead decides anything that changes scope
+  or moves work between phases, a short list of what changes in the design,
+  which other docs it reaches, and the rough cost. This lets the Team Lead
+  decide with the facts in hand and batch related decisions.
 - The security design: how tokens, external calls, and user data are
   handled.
 - Raising technical and security risks, and owning their mitigation once
@@ -27,6 +31,23 @@ design documents and transition plans, not code: Developers implement them.
 - Security: tokens, external calls, user data.
 - Each part names the requirement IDs it satisfies.
 - Later phases can be added without a rewrite, but are not built early.
+- Detail only what is being built. The design describes the current phase
+  and the next one in full; later phases get a short sketch. The *Design by
+  phase* table is the only place that assigns a phase, and other sections
+  link to it instead of repeating it. Detailed later-phase text is what has
+  to move each time a phase changes.
+
+## How I work
+
+- One long-running Architecture thread writes the design and reviews other
+  docs, so the same context does both.
+- When a review of another doc finds that the design must change, make the
+  change in my own open design PR, or batch it with other review fallout in
+  one new PR. Don't hand it to another thread.
+- Raise anything under *Needs the Team Lead* as a decision before writing
+  it into the design, not at the end of the PR.
+- Keep design facts and decisions in the design doc. The
+  [notes](../notes/architecture.md) hold lessons about how to work.
 
 ## Review checklist
 
@@ -39,6 +60,10 @@ When reviewing others' work:
       Raise it yourself, even when Security also reviews.
 - [ ] For requirements: is any requirement really a design choice in
       disguise?
+- [ ] Which other docs does this change reach, and does the PR list them?
+- [ ] Has another persona already raised this finding? Check the PR's
+      findings table and the shared findings list, and add to theirs
+      instead of filing a duplicate.
 - [ ] For code: does it follow the design's structure, data model, and
       endpoints? Coding style and low-level detail are the Developer's call.
 

@@ -155,7 +155,8 @@ such as encrypting tokens with Fernet (a new dependency).
   status, and keyword. The filter isn't saved yet and ends on reload
   (FR-24, FR-72).
 - With saved data the board is usable within 2 seconds (NFR-1), and it
-  works in current Chrome, Firefox, Safari, and Edge (NFR-30). On the free
+  works in the current release of Chrome on a laptop or desktop (NFR-30;
+  Firefox, Safari, and Edge are Phase 5). On the free
   test host, NFR-1 is measured once the server is awake: the first load
   after an idle hour can take a few seconds longer while it wakes. NFR-1 is
   checked on the Phase 4 host.
@@ -219,7 +220,7 @@ request stays small.
 assignments Canvas shows. CI is green. These pass:
 
 - TP-01, TP-02, TP-03, and TP-05.
-- TP-01 and TP-03 again in each NFR-30 browser.
+- TP-01 and TP-03 pass in the current release of Chrome (NFR-30).
 - TP-04 steps 5 to 7, and TP-13 steps 1 and 13.
 - TP-10 step 2, for user A's cards, Canvas data, and Refresh logs
   (NFR-12).
@@ -333,8 +334,8 @@ Canvas GraphQL is not used: it is sent as a `POST`, and NFR-13 allows only
 database, and the domain) is decided, with its cost.
 
 - Delete my data (FR-54).
-- Accessibility pass for contrast, labels, and focus (NFR-32), and a final
-  check that every browser still works (NFR-30).
+- Accessibility pass for contrast, 200% zoom, and screen reader labels
+  (NFR-32), and a final check that it still works in Chrome (NFR-30).
 - Move from the free test host to the production host chosen in D-3, on
   the app's domain, and link it from the repo's landing page. The deploy
   setup from Phase 1 carries over: HTTPS (NFR-11), secrets in the host's
@@ -349,7 +350,8 @@ database, and the domain) is decided, with its cost.
 
 **Exit criteria:**
 
-- TP-12 steps 1, 3, and 4 pass on the deployed app, and so does the
+- TP-12 steps 1 (in Chrome only; other browsers are Phase 5), 3, and 4
+  pass on the deployed app, and so does the
   axe-core test for NFR-32.
 - TP-10 step 4 passes, along with the FR-54 API test (every row for the
   user is removed).
@@ -374,6 +376,7 @@ database, and the domain) is decided, with its cost.
 - Rename a list by clicking its title, and drag lists to reorder them
   (FR-63, FR-62).
 - Quick edit menu on each card: pencil button or right-click (FR-69).
+- Firefox, Safari, and Edge support, checked like Chrome (NFR-30).
 - Phone support: a layout for phone-width screens, where one list fills the
   screen and the student swipes between lists, plus nothing that depends on
   hover (NFR-33, NFR-36). The UI details come first, such as how dragging,
@@ -416,7 +419,7 @@ database, and the domain) is decided, with its cost.
 | M2 | Viewer complete | 1 | MVP usable day to day on the private test deploy: Phase 1's exit criteria are met | |
 | M3 | Dragging saves and syncs | 2 | Core organizing feature works on every device | |
 | M4 | Fast loads and Canvas sync | 3 | Board stays current without waiting on Canvas | |
-| M5 | Published | 4 | Any student can sign in and use it from any laptop or desktop browser | |
+| M5 | Published | 4 | Any student can sign in and use it in Chrome on a laptop or desktop | |
 
 ## 5. Open decisions
 
@@ -547,3 +550,4 @@ The plan has grown quickly, so these rules keep each phase finishable:
 | 2026-10-25 | The Team Lead keeps Koyeb for test deploys, with the #25 protections, rather than Render free. |
 | 2026-10-26 | Canvas GraphQL moves to Phase 5, from the Team Lead's answer to Q-10: Phase 3 no longer waits on the GraphQL call and tunes with `GET` calls only; R-2 and R-3 updated. |
 | 2026-10-26 | Phase scope from the Team Lead's review of the UI specification, matching requirements PR #6: Phase 1 adds the filter menu (FR-24, FR-72), availability dates on cards (FR-22, FR-65), and the Canvas ID matching and hidden orphaned cards it already builds (FR-35, FR-45); Phase 2 adds the show/hide control for orphaned cards (FR-45) and the removed count in the Refresh summary (FR-16); Phase 5 keeps only saving the filter, and FR-74 adds deleting an orphaned card. |
+| 2026-10-26 | Browser support is Chrome only until Phase 5, from the Team Lead's answer on requirements PR #6: Phase 1's and Phase 4's checks run in Chrome, M5 says Chrome, and Phase 5 adds Firefox, Safari, and Edge (NFR-30). Phase 4's accessibility pass names NFR-32's criteria (contrast, zoom, screen reader labels) instead of focus. |

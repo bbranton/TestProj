@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Say which GitHub Actions workflows a branch's changes will trigger.
 
-  ci_paths.py [BASE]   compare HEAD with BASE (default origin/master)
+  ci_paths.py [BASE]   compare HEAD with BASE (default origin/develop)
 
 Reads the `paths:` filters in .github/workflows/*.yml. Only the one-line
 form `paths: ["a/**", "b"]` is understood, which is what this repo uses.
@@ -54,14 +54,14 @@ def triggers(path):
 
 
 def main(args):
-    base = args[0] if args else "origin/master"
+    base = args[0] if args else "origin/develop"
     files = changed_files(base)
     print(f"{len(files)} file(s) changed since {base}.")
     for wf in sorted(WORKFLOWS.glob("*.y*ml")):
         for event, globs in triggers(wf).items():
             if event == "workflow_dispatch":
                 continue
-            when = "on this PR" if event == "pull_request" else "on push to master"
+            when = "on this PR" if event == "pull_request" else "on push to develop"
             if globs is None:
                 print(f"  {wf.name}: runs {when} (no paths filter)")
                 continue

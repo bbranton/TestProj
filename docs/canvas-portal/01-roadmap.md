@@ -96,7 +96,7 @@ The smallest thing that is useful: connect, then see everything that's due.
 - Before step 6: create the free Koyeb and Neon accounts for the test
   deploy (D-3), add the test host's address as a redirect URI on the Google
   client, and add the deploy and backup secrets to a GitHub Actions
-  environment that only `master` can use, with the Team Lead as its
+  environment that only `develop` can use, with the Team Lead as its
   required reviewer. Plain repository secrets reach workflows on any
   branch, and every thread pushes branches to this public repo. GitHub
   Actions is a new place secrets live, so the Team Lead sets them (#26).

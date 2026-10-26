@@ -456,6 +456,34 @@ order, with only the first word capitalized: "File upload or text entry".
 | `not_graded` | Not for a grade |
 | Any other value | The value with underscores as spaces, first letter capitalized |
 
+Course label colors (FR-66). Each active course gets the next color in
+this list, in the order Canvas lists the courses, and keeps it as long as
+it stays active. The strip on each card and each course button is filled
+with the color, with the course code in white on top. Every color has at
+least 4.5:1 contrast with white, so the code is readable (WCAG 1.4.3)
+and the strip stands out from the white card (1.4.11). Similar hues are
+kept apart in the order, so courses next to each other differ most.
+
+| Order | Name | Color | Contrast with white |
+|-------|------|-------|---------------------|
+| 1 | Blue | `#1F5FAD` | 6.4:1 |
+| 2 | Orange | `#A34A00` | 5.9:1 |
+| 3 | Purple | `#6B3FA0` | 7.4:1 |
+| 4 | Teal | `#00707A` | 5.8:1 |
+| 5 | Magenta | `#A0306E` | 6.7:1 |
+| 6 | Slate | `#455A64` | 7.2:1 |
+| 7 | Indigo | `#3949AB` | 7.7:1 |
+| 8 | Brown | `#795548` | 6.5:1 |
+
+- Red and green are left out on purpose. They belong to the Missing
+  highlight and the due badge (FR-65), so a course strip never reads as
+  Missing or done.
+- With more than eight courses, the list starts again at Blue. Two
+  courses that share a color are still told apart by the code on the
+  strip, so color is never the only signal (1.4.1).
+- Changing a course's color is Phase 5 (FR-66); until then these are the
+  only colors.
+
 ### S-5 Card back (Phase 5, future feature)
 
 Requirements: FR-22, FR-26, FR-28, FR-40 to FR-44, FR-46, FR-67, FR-68.
@@ -906,6 +934,7 @@ flowchart TD
 | 2026-10-26 | Cards removed from Canvas are hidden by default, not for good: from Phase 2 a [◌ Removed from Canvas] button on the course row shows them, grayed out in their lists. From the Team Lead's review. |
 | 2026-10-26 | The [◌ Removed from Canvas] button moves to Phase 2, with dragging, and the S-10 summary says when a Refresh removed cards, from the Team Lead's review. |
 | 2026-10-26 | Cards show when an assignment opens (Canvas "Available from") until it does, and when it closed (Canvas "Until") after that, from Phase 1, from the Team Lead's review. |
+| 2026-10-26 | Course label colors (FR-66, issue #35): eight colors in a set order, each with at least 4.5:1 contrast with the white course code, no red or green, and repeating after eight. |
 | 2026-10-26 | In Phase 1, Backlog fills the board's width as the only list, from the Team Lead's review. |
 | 2026-10-26 | Checked against the merged requirements (#6): list counts leave out hidden courses' cards again (FR-80), and date comparisons are made in UTC (FR-22). |
 | 2026-10-26 | Showing cards removed from Canvas moves to Phase 1, from the Team Lead: the filter menu's "Show cards removed from Canvas (2)" option and S-10's "2 assignments were removed from Canvas" line with [Show them]. |

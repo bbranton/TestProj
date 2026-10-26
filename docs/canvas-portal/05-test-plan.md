@@ -34,9 +34,18 @@ for made-up students, covering:
 
 - 3 active courses, each with a name and course code, and 1 concluded
   course (must not appear)
-- Assignments in every Canvas submission state (unsubmitted, submitted,
-  graded, pending review), with the late, missing, and excused flags,
-  including one that is both graded and late
+- Every input to the FR-23 status rules:
+  - *Submitted*: `submitted_at` set, and `submitted_at` empty; and one
+    where the assignment's `has_submitted_submissions` is true but this
+    student has no `submitted_at`, which must show *Not submitted*
+  - *Graded*: all four checks true, then each of them false in turn
+    (no submission, `graded_submissions_exist` false,
+    `grade_matches_current_submission` false after a resubmission, and
+    `graded_at` empty)
+  - No submission object at all (*Not submitted* and *Not graded*)
+  - The `late`, `missing`, and `excused` flags, including Late together
+    with Graded, and Missing together with Graded
+  - Submission types: one type, several types, and `on_paper`
 - Assignments with no due date, and two with the same due date, to check
   the sort order (FR-38)
 - A graded quiz and a graded discussion in the assignment list, which show
@@ -55,7 +64,8 @@ for made-up students, covering:
   the same account over time, replayed one per Refresh, covering every row of
   the design's *What can change in Canvas* table, such as a due date that is
   empty, then set, then changed, then cleared; an assignment deleted and
-  then republished; a state going graded to submitted; and a fetch cut off
+  then republished; a *Graded* card going back to *Not graded* after a
+  resubmission; and a fetch cut off
   after the first page
 - *(Phase 5)* An assignment description with formatting, a link, a
   `<script>` tag, and an `onclick` attribute (FR-28)
@@ -127,15 +137,15 @@ checks more than one phase's behavior says which part comes later.
 | 1 | FR-20, NFR-20 | Board messages: the first load still running, a failed first load with Retry refresh, no active courses, and courses with no assignments each show their message instead of an empty board | E2E |
 | 1 | FR-1, FR-2, FR-6 | S-2 shows each of its messages: none on first connect, saved token rejected, entered token rejected, and address unreachable or not `https` | E2E |
 | 1 | FR-21, FR-38 | Sort order: soonest first, no-due-date last, ties by name; applies to every list | Unit |
-| 1 | FR-22 | Due dates show in the browser's time zone, including across a daylight saving change (Playwright `timezoneId`); the override fixture shows the student's date; each card shows the name, course, due date, points, and status | Unit, E2E |
-| 1 | FR-23 | Each Canvas `workflow_state` maps to its label, and the late, missing, and excused flags show as tags, including together with a state | Unit |
+| 1 | FR-22 | Due dates show in the browser's time zone, including across a daylight saving change (Playwright `timezoneId`); the override fixture shows the student's date; each card shows the name, course, due date, points, submission types, and status | Unit, E2E |
+| 1 | FR-23 | Each fixture case above gets the *Submitted*, *Graded*, and *Missing* result the FR-23 rules give, including *Not submitted* when only `has_submitted_submissions` is true, *Not graded* when any one of the four checks fails, and both negatives with no submission; Late and Excused tags show together with Submitted and Graded; every submission type is listed in Canvas's order | Unit |
 | 1 | FR-26 | Clicking a card opens the assignment's Canvas page in a new tab | E2E |
 | 1 | FR-31, FR-34 | The first complete Refresh puts every assignment in Backlog; after a later complete Refresh, a new fixture assignment appears in Backlog in its due date place | API |
 | 1 | FR-38 | Changing a fixture assignment's due date moves its card to the new place in the same list | API |
 | 1 | FR-50 | Without a session, every `/api/` endpoint except the sign-in ones returns `401`; the Google callback rejects a wrong `state` value; the session cookie is `HttpOnly`, `Secure`, and `SameSite=Lax`; a session survives closing the browser; signing out ends the session | API |
 | 1 | FR-60 | Not signed in shows S-1; signed in but not connected shows S-2; signed in and connected lands on the board; in Phase 1 cards can't be dragged | E2E |
 | 1 | FR-61 | The four lists are always Backlog, To do, In progress, Done; expanded lists fill the width; the board scrolls sideways only below 240 px per list, and dragging empty background scrolls it | E2E |
-| 1 | FR-65 | Due badge is green for Submitted or Graded, red for Missing, plain otherwise; red wins when an assignment is both Missing and Graded | Unit, E2E |
+| 1 | FR-65 | Card fronts show the points, submission types, *Submitted* or *Not submitted*, *Graded* or *Not graded*, and any Late or Excused tag; a Missing card is highlighted beyond the badge color; due badge is red for Missing, otherwise green for Submitted or Graded, plain otherwise, so red wins when an assignment is both Missing and Graded | Unit, E2E |
 | 1 | FR-66 | Each course gets a palette color the first time it appears, the same on its button and its cards, and keeps it after a reload and in a second session | API, E2E |
 | 1 | FR-78 | Tapping a course button hides and shows its cards; Show all and Hide all; hidden cards keep their place; the choice survives a reload in the same browser (from Phase 5, also a second session) | E2E |
 | 1 | FR-80 | Minimizing a list widens the others to fill the board, expanding narrows them; on each load or Refresh, empty lists are minimized and the rest expanded, even if the student changed them before reloading; a minimized list shows its card count | E2E |
@@ -160,7 +170,7 @@ checks more than one phase's behavior says which part comes later.
 | 3 | NFR-2 | Fixture server adds 1 second to every Canvas response: a full Refresh of 8 courses and 200 assignments finishes within the NFR-2 target, and progress reports each course as it finishes | API, E2E |
 | 4 | FR-54 | Delete removes every row for the user | API |
 | 4 | NFR-32 | axe-core finds no serious issues on S-1, S-2, S-4, S-6, and S-10 (and S-5, S-7 to S-9 once they exist) | Accessibility |
-| 5 | FR-24 | Course, Canvas state and flag, and search filters | E2E |
+| 5 | FR-24 | Course, status (FR-23), and search filters | E2E |
 | 5 | FR-28 | Card back shows the fixture description; a description with a `<script>` tag and an `onclick` attribute comes back with both removed | Unit, API |
 | 5 | FR-40 to FR-42, FR-44 | Add several notes and get them back newest first with dates; edit one and see it marked edited; delete one after confirming; none of it calls Canvas | API, E2E |
 | 5 | FR-53 | Export contains the board and notes | API |
@@ -255,7 +265,7 @@ sandbox with its test student.
 | 2 | In the portal, open the board | Same courses, by name and course code (no ended ones), and same assignments; graded quizzes and graded discussions are there as ordinary assignments |
 | 3 | Compare due dates | Match, shown in your local time zone |
 | 4 | Compare points | Match |
-| 5 | Check one assignment of each state, and any marked Late, Missing, or Excused | Labels and tags match what Canvas shows on its own assignment page; the due badge is green for Submitted or Graded, red for Missing, plain otherwise |
+| 5 | Check assignments that are not submitted, submitted, graded, resubmitted after grading, on paper, and any marked Late, Missing, or Excused | Each card's *Submitted* or *Not submitted*, *Graded* or *Not graded*, tags, and submission types match the student's own submission on Canvas's assignment page; a resubmitted one shows *Not graded*; Missing cards stand out on the board; the due badge is red for Missing, otherwise green for Submitted or Graded, plain otherwise |
 | 6 | Click any card | Its Canvas page opens in a new tab |
 | 7 | Open the browser's developer tools, Network tab, and reload the board | Every request goes to the portal's own address; none go to analytics, trackers, or other third-party sites (NFR-14) |
 | 8 | In the sandbox, give the test student their own due date for one assignment (an override); connect the portal as that student and select Refresh | The card shows the student's date, not the class's. This answers the design's open check on overrides |
@@ -456,7 +466,7 @@ changed on its own (FR-15).
 | 6 | Create B and C at once | Both in Backlog, in date order, once each |
 | 7 | Delete B | B leaves the board; its card is marked archived in the database, not deleted |
 | 8 | Unpublish C; after the Refresh, publish it again and select Refresh | C leaves the board, then returns to its old list |
-| 9 | (Student submits A.) Grade A, then remove the grade | Badge goes Submitted, Graded, then back to Submitted |
+| 9 | (Student submits A.) Grade A; (student resubmits A); then grade it again | A shows Submitted and Not graded, then Graded, then Not graded after the resubmission, then Graded again |
 | 10 | Mark A excused, then not excused | Excused tag shows, then goes away |
 | 11 | Give the student their own due date for A (an override) | The student's board shows the student's date |
 | 12 | During a Refresh, cut the backend's network for a few seconds | Nothing is archived or changed; the warning banner shows; the next Refresh catches up |
@@ -574,4 +584,4 @@ TP-14 timings go in their own table, one row per run:
 | 2026-10-25 | Whole-set review: TP-04 renamed to match its Phase 1 steps, TP-10 starts in Phase 1 with NFR-12, and the unit test example says status mapping. |
 | 2026-10-25 | TP-07 (keyboard only), the NFR-31 and FR-73 automated tests, and the TP-13 shortcut step removed; TP-13 steps renumbered. From the Team Lead's review: keyboard actions are not a requirement. |
 | 2026-10-25 | FR-16 progress test; TP-05 step 2a checks the progress panel on failure; TP-14 reads times from the panel and uses the NFR-2 target. |
-| 2026-10-25 | In-depth QA review after PR #3: added *Procedures by phase* with entry and test exit criteria, a Phase column in the coverage table, and failure severity; added Phase 1 tests for FR-1 address checks, FR-4, FR-5, FR-13, FR-20, FR-22 (time zone, override, points and status on cards), FR-26, FR-50, FR-60, FR-66, NFR-10, NFR-11, NFR-14, and NFR-41, Phase 2 tests for NFR-3 and FR-80 drops, and an NFR-2 row of its own; FR-16 test covers rate-limit waits, joining a running Refresh, retry limits, and stuck runs; concurrency tests also run on Postgres; new fixtures; TP-01 signs in, disconnects, and reconnects; the FR-65 test checks that red wins over green; TP-03 checks points and the override open check, and clicks the card instead of a missing ↗; TP-04 puts Phase 1 steps first and checks reload; TP-05 uses Retry refresh and a rate-limit step; TP-08 no longer needs Phase 5 notes or the Archived view; TP-09 drops Ctrl+Enter; TP-10, TP-12, and TP-13 mark their phases correctly (NFR-30 is Phase 1); TP-14 uses Refresh and a timing table; TP-15 step 14 checks joining a running Refresh from a second device, and section 7 logs the Phase 3 week of daily Refreshes; added TP-16 (read-only board, Phase 1) and TP-17 (deployed app, Phase 4); accessibility tests start in Phase 4 and check only screens that exist; tests for board messages, S-2 messages, and an empty account (TP-16 step 10); manual checks for NFR-11 (TP-02), NFR-14 (TP-03), and NFR-41 (TP-05); fixture path matches the repo; "column" now "list". |
+| 2026-10-25 | In-depth QA review after PR #3: added *Procedures by phase* with entry and test exit criteria, a Phase column in the coverage table, and failure severity; added Phase 1 tests for FR-1 address checks, FR-4, FR-5, FR-13, FR-20, FR-22 (time zone, override, points and status on cards), FR-26, FR-50, FR-60, FR-66, NFR-10, NFR-11, NFR-14, and NFR-41, Phase 2 tests for NFR-3 and FR-80 drops, and an NFR-2 row of its own; FR-16 test covers rate-limit waits, joining a running Refresh, retry limits, and stuck runs; concurrency tests also run on Postgres; new fixtures; TP-01 signs in, disconnects, and reconnects; the FR-65 test checks that red wins over green; TP-03 checks points and the override open check, and clicks the card instead of a missing ↗; TP-04 puts Phase 1 steps first and checks reload; TP-05 uses Retry refresh and a rate-limit step; TP-08 no longer needs Phase 5 notes or the Archived view; TP-09 drops Ctrl+Enter; TP-10, TP-12, and TP-13 mark their phases correctly (NFR-30 is Phase 1); TP-14 uses Refresh and a timing table; TP-15 step 14 checks joining a running Refresh from a second device, and section 7 logs the Phase 3 week of daily Refreshes; added TP-16 (read-only board, Phase 1) and TP-17 (deployed app, Phase 4); accessibility tests start in Phase 4 and check only screens that exist; tests for board messages, S-2 messages, and an empty account (TP-16 step 10); manual checks for NFR-11 (TP-02), NFR-14 (TP-03), and NFR-41 (TP-05); fixture path matches the repo; status tests and fixtures follow the rewritten FR-23 rules (Submitted from `submitted_at`, Graded from four checks, submission types, no Pending review); "column" now "list". |

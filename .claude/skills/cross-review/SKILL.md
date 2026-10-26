@@ -32,7 +32,7 @@ reviewer.
 6. Post the combined findings table, with anything that needs the Team
    Lead at the top. List each issue the reviewers opened in the PR's
    *Follow-ups opened* section. When the PR merges or closes, tell each reviewer thread,
-   add your row with the `log-cost` skill, and release the claim on the
+   report your cost with the `log-cost` skill, and release the claim on the
    board.
 
 ## As a reviewer thread
@@ -55,7 +55,7 @@ reviewer.
 5. Stay open until the owner says the PR merged or closed. When the owner
    asks a question, answer on the PR comment, then tell the owner thread.
    When asked to re-review, check only the fixes and post your updated
-   verdict. When the owner says the PR is done, look up your usage with the
-   `log-cost` skill and send it to the owner thread to log.
+   verdict. When the owner says the PR is done, report your cost with the
+   `log-cost` skill.
 
 Don't fix findings yourself. The owner does that.

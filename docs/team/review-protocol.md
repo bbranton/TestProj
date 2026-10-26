@@ -44,6 +44,7 @@ for another persona in a finding.
 | Phase exit (moving to the next phase) | Management | Product and QA | Architecture, Developer, UI/UX, DevOps |
 | Client security document (`06-security-overview.md`) | Security | Architecture, DevOps | Product and QA, Management |
 | Team process (`docs/team/`, team skills) | Management | Each persona whose file changes | Any other persona |
+| Cost log (`docs/team/cost-log.md`) | CFO | None | Management |
 
 **Security joins any PR that touches tokens, sign-in, or student data.**
 Whatever its row, a PR that changes how the Canvas token, the session
@@ -85,6 +86,7 @@ outside its area is advice, never sign-off.
 | Screens, layout, wording, accessibility | UI/UX | A new screen or a change to the main flow |
 | CI, build and install scripts, dependency integration, deploys, hosting, secrets | DevOps | Changes to the live app or hosting; a paid service; a new secret store; new access |
 | Whether a weakness is a vulnerability, its severity, and whether it is a potential data breach (any persona can raise one, and Security's view counts most); the wording of the client security document | Security | Accepting a vulnerability instead of fixing it; publishing or changing the client security document; telling anyone outside the team about a suspected leak |
+| What goes in the cost log, and when rows are committed | CFO | Changing the log's columns or how threads report cost |
 | Approving and merging a PR | Team Lead | Always |
 
 Only the persona in **Decided by** makes that decision. Every other persona

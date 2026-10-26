@@ -72,8 +72,8 @@ Removed requirements are not listed.
 - Connecting to Canvas: FR-1, FR-2, FR-3, FR-4, FR-5, FR-6
 - Fetching data from Canvas: FR-10, FR-11, FR-12, FR-13, FR-14, FR-15, FR-16
 - Viewing courses and assignments: FR-20, FR-21, FR-22, FR-23 (all but Excused), FR-24, FR-26
-- Kanban board: FR-31 (Backlog and To do), FR-34, FR-35, FR-38, FR-45 (keeping cards of removed assignments)
-- Trello-style look and behavior: FR-60 (read only), FR-61, FR-65, FR-66, FR-72
+- Kanban board: FR-31 (Backlog), FR-34, FR-35, FR-38, FR-45 (keeping cards of removed assignments)
+- Trello-style look and behavior: FR-60 (read only), FR-65, FR-66, FR-72
 - Accounts, sync, and data control: FR-50
 - Security and privacy: NFR-10, NFR-11, NFR-12, NFR-13, NFR-14
 - Reliability: NFR-20
@@ -83,8 +83,8 @@ Removed requirements are not listed.
 **Phase 2: Dragging and sync**
 
 - Fetching data from Canvas: FR-16 (removed assignments in the summary)
-- Kanban board: FR-31 (In progress and Done), FR-32, FR-33, FR-38 (dropping into the due date place), FR-45 (showing orphaned cards)
-- Trello-style look and behavior: FR-60 (dragging), FR-77, FR-80
+- Kanban board: FR-31 (To do, In progress, and Done), FR-32, FR-33, FR-38 (dropping into the due date place), FR-45 (showing orphaned cards)
+- Trello-style look and behavior: FR-60 (dragging), FR-61, FR-77, FR-78, FR-80
 - Accounts, sync, and data control: FR-51
 - Performance: NFR-1, NFR-3
 - Reliability: NFR-22
@@ -103,7 +103,7 @@ Removed requirements are not listed.
 
 - Viewing courses and assignments: FR-23 (Excused), FR-25, FR-27, FR-28, FR-29
 - Kanban board: FR-36
-- Trello-style look and behavior: FR-62, FR-63, FR-64, FR-65 (Excused), FR-66 (changing colors), FR-67, FR-68, FR-69, FR-70, FR-71, FR-72 (saving the filter), FR-74, FR-75, FR-76, FR-78, FR-79, FR-81
+- Trello-style look and behavior: FR-62, FR-63, FR-64, FR-65 (Excused), FR-66 (changing colors), FR-67, FR-68, FR-69, FR-70, FR-71, FR-72 (saving the filter), FR-74, FR-75, FR-76, FR-78 (saving the choice), FR-79, FR-81
 - Private notes: FR-40, FR-41, FR-42, FR-43, FR-44, FR-46
 - Accounts, sync, and data control: FR-53, FR-55
 - Performance: NFR-4
@@ -186,7 +186,7 @@ Removed requirements are not listed.
 | ID | Requirement | Priority | Phase |
 |----|-------------|----------|-------|
 | FR-30 | *(Removed: there is no table view; the board is the only view. From the Team Lead's review.)* | n/a | n/a |
-| FR-31 | The board has four lists, in this order: *Backlog*, *To do*, *In progress*, *Done*. *Backlog* holds Canvas assignments the student hasn't sorted yet. In Phase 1, when nothing can be moved, *In progress* and *Done* are not shown; the design must let them be added in Phase 2 without rework. | Must | 1 (Backlog and To do), 2 (In progress and Done) |
+| FR-31 | The board has four lists, in this order: *Backlog*, *To do*, *In progress*, *Done*. *Backlog* holds Canvas assignments the student hasn't sorted yet. In Phase 1, when nothing can be moved, only *Backlog* is shown; the design must let the other three lists be added in Phase 2 without rework. | Must | 1 (Backlog), 2 (To do, In progress, and Done) |
 | FR-32 | The user can drag a card to another list. Cards cannot be reordered by hand within a list (FR-38). | Must | 2 |
 | FR-33 | The board layout (which list each card is in) is saved and restored on the next visit. | Must | 2 |
 | FR-34 | Assignments that are new since the last complete Refresh appear in *Backlog*, in their due date place (FR-38). When the board is first created, every assignment starts in *Backlog*. | Must | 1 |
@@ -202,7 +202,7 @@ Removed requirements are not listed.
 | ID | Requirement | Priority | Phase |
 |----|-------------|----------|-------|
 | FR-60 | The board is the home screen and the only view, as a Trello board is. In Phase 1 it is read only: every card sits in Backlog and cannot be dragged. | Must | 1 (read only), 2 (dragging) |
-| FR-61 | Lists sit side by side and share the board's width (from Phase 2, the width of the expanded lists, FR-80). If the window is too narrow for every shown list to be at least 240 px wide, the board scrolls sideways; dragging empty board background also scrolls it. | Must | 1 |
+| FR-61 | Lists sit side by side and share the board's width (from Phase 2, the width of the expanded lists, FR-80). If the window is too narrow for every shown list to be at least 240 px wide, the board scrolls sideways; dragging empty board background also scrolls it. | Must | 2 |
 | FR-62 | The user can drag a list by its header to reorder the lists. | — | 5 |
 | FR-63 | Clicking a list title edits it in place. Enter or clicking away saves, and Escape cancels. | — | 5 |
 | FR-64 | An "+ Add another list" control after the last list adds a list. | — | 5 |
@@ -213,13 +213,13 @@ Removed requirements are not listed.
 | FR-69 | An edit (pencil) button on each card (shown on hover on desktop, always shown on touch screens), right-click, or a long press opens a quick edit menu: Open card, Move, Change label color, Open in Canvas, Archive. | — | 5 |
 | FR-70 | A card back can hold one or more checklists of items that can be checked off. The card front shows progress such as 2/5 (2 of 5 items done). | — | 5 |
 | FR-71 | "+ Add a card" at the bottom of each list creates a personal card that isn't a Canvas assignment. It supports everything a card back has except the Canvas details. | — | 5 |
-| FR-72 | A Filter button under the header opens a menu that filters cards by course (one checkbox per active course, with "All" and "None"), by due date (due date passed, due in the next day, next week, next month, no due date), by the statuses in FR-23, and by keyword. When a filter is on, the button says so and offers "Clear". When the filter hides every course, the board says so and offers Clear. Until Phase 5 the filter is not saved and ends when the page is reloaded. If the course buttons (FR-78) are built, they and the menu's course checkboxes are one setting. | Must | 1, 5 (saving the filter) |
+| FR-72 | A Filter button on a row under the header (the row that also holds the course buttons from Phase 2, FR-78) opens a menu that filters cards by course (one checkbox per active course, with "All" and "None"), by due date (due date passed, due in the next day, next week, next month, no due date), by the statuses in FR-23, and by keyword. When a filter is on, the button says so and offers "Clear". When the filter hides every course, the board says so and offers Clear. Until Phase 5 the filter is not saved and ends when the page is reloaded. From Phase 2 the menu's course checkboxes and the course buttons (FR-78) are one setting, kept as FR-78 says. | Must | 1, 5 (saving the filter) |
 | FR-73 | *(Removed: no keyboard shortcuts. From the Team Lead's review.)* | n/a | n/a |
 | FR-74 | Cards and lists the student archived are shown on the board by an *Archived* option in the filter menu (FR-72), grayed out, each with a way to restore it. They are not listed in a menu, since there can be many. Orphaned cards (whose assignment is gone from Canvas) are not part of this; they are found with FR-45's show/hide control. On a shown orphaned card, the student can permanently delete it, together with its notes, after confirming that it can't be undone. The portal itself never deletes a card (FR-45). | — | 5 |
 | FR-75 | A board menu opens as a panel from the right edge with the board background color and the course label colors. It stays light: long lists such as archived cards are not in it (FR-74). | — | 5 |
 | FR-76 | The user can have more than one board. | — | 5 |
 | FR-77 | Dragging feels like Trello: the card tilts slightly and lifts while dragged, the list under it is highlighted and a gray gap shows the due date spot where it will land, and the board scrolls when the card nears an edge. | Should | 2 |
-| FR-78 | Between the header and the board, a row of show/hide buttons has one button per active course, in the course's label color. Tapping a button hides or shows that course's cards; "Show all" and "Hide all" buttons show or hide every course at once. When every course is hidden, the board says so and offers Show all. Hidden cards keep their list. The choice is saved with the user's account so it follows them between devices. Out of Phase 1 by the Team Lead's scope cut: until then courses are chosen in the filter menu (FR-72). | — | 5 |
+| FR-78 | Between the header and the board, a row of show/hide buttons has one button per active course, in the course's label color. Tapping a button hides or shows that course's cards; "Show all" and "Hide all" buttons show or hide every course at once. When every course is hidden, the board says so and offers Show all. Hidden cards keep their list. The buttons and the filter menu's course checkboxes (FR-72) are one setting. In Phase 2 the choice is kept in the browser, so it survives a reload on that device; from Phase 5 it is saved with the user's account so it follows them between devices. Out of Phase 1 by the Team Lead's scope cut: in Phase 1 the row holds only the Filter button, and courses are chosen in the filter menu. | Must | 2, 5 (saving the choice) |
 | FR-79 | Help the student see which assignments are new or have changed in Canvas (for example a new due date or new instructions) since they last looked, such as with a badge on the card and a way to clear it. | — | 5 |
 | FR-80 | Each list has a minimize/expand toggle in its header. A minimized list shrinks to a narrow strip showing its title and number of cards. Expanded lists share the whole width of the board and resize whenever a list is minimized or expanded. Each time the page loads or reloads, and each time a Refresh finishes, empty lists start minimized and the others start expanded; the minimized or expanded state is not saved. A list's card count, and whether it counts as empty, include only cards that are shown, not cards the filter hides (FR-72). From Phase 2, dropping a card on a minimized list that is empty expands it; dropping on a minimized list that already has cards keeps it minimized and updates its count. | Must | 2 |
 | FR-81 | Search works like Trello's card search: one search box filters the whole board in place, matching each card's name, course, Canvas description, and notes. It includes archived cards and orphaned cards (FR-45, FR-74), which show grayed out where they match. It replaces FR-24's name-only keyword filter. | — | 5 |
@@ -390,3 +390,4 @@ security document must not claim full WCAG AA while this list has entries.
 | 2026-10-26 | Team Lead's answers on PR #6: *Excused* is its own label shown alongside *Submitted* and *Graded*, not in their place (FR-23, FR-65); work handed in on paper shows *Not submitted* by design (FR-23); G-6 now names WCAG 2.2 AA and the four browsers. |
 | 2026-10-26 | Team Lead's Phase 1 scope cuts: the course buttons (FR-78) move to Phase 5 and courses are filtered in the filter menu again (FR-24, FR-72); the orphaned-card toggle moves into the filter menu (FR-45); Excused moves to Phase 5 (FR-23, FR-65); *In progress* and *Done* are not shown in Phase 1 (FR-31), so minimizing lists (FR-80) is Phase 2; NFR-1's 2-second target moves to Phase 2, with a Phase 1 baseline. |
 | 2026-10-26 | Management re-check: the orphaned-card option resets on reload like the rest of the filter (FR-45); FR-61 no longer depends on minimized lists in Phase 1. |
+| 2026-10-26 | Team Lead: Phase 1 shows only *Backlog* (FR-31), so side-by-side lists (FR-61) are Phase 2; the button row under the header stays in Phase 1 with the Filter button, and the course buttons (FR-78) come back in Phase 2, with saving to the account in Phase 5. |

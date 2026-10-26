@@ -147,9 +147,10 @@ such as encrypting tokens with Fernet (a new dependency).
   grayed out (FR-22, FR-65). The Excused status is Phase 5 (FR-23). The
   board has Trello's visual style from the start: colored background,
   light gray rounded lists, and white cards with a soft shadow (NFR-34).
-- A Filter button on the course row filters cards by course, due date,
-  status, and keyword. The filter isn't saved yet and ends on reload
-  (FR-24, FR-72).
+- A Filter button on the course row filters cards by due date, status,
+  and keyword. Courses aren't in the Filter menu: they are shown and
+  hidden only with the course buttons (FR-78). The filter isn't saved yet
+  and ends on reload (FR-24, FR-72).
 - Orphaned cards, whose assignment is gone from Canvas: cards are matched
   to assignments by Canvas ID, and an orphaned card is kept, never
   deleted. It is hidden by default, and a "show cards removed from Canvas"

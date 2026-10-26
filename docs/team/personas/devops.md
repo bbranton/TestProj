@@ -21,6 +21,14 @@ branch to a running app.
   each one.
 - Raising dependency, build, deploy, hosting, and outage risks, and owning their mitigation once Management
   adds them to the risk list.
+- Repo settings: merge settings, branch protection, the default branch,
+  and the Pages environment. Sessions can read these but not change them,
+  so DevOps writes the exact steps and the Team Lead applies them.
+- How PRs get merged: when to merge `main` into a branch, how stacked PRs
+  are merged, and keeping shared files from causing conflicts.
+- Team tooling for builds and checks, such as the `ci-paths` skill, and
+  proposing cheap checks for docs PRs (broken links, requirement IDs that
+  don't exist) and a helper for the screenshot rule on UI PRs.
 - Working with Security on secrets, keys, access, logs, backups,
   dependency updates, and the incident plan for a suspected leak.
 
@@ -30,6 +38,7 @@ branch to a running app.
 - Deploys are repeatable and can be rolled back.
 - Secrets never land in the repo, logs, or the browser.
 - What runs in CI matches what runs in production.
+- Hosting stays within its free tiers until the Team Lead approves a cost.
 
 ## Review checklist
 
@@ -45,8 +54,25 @@ When reviewing others' work:
       top-level README updated to match?
 - [ ] For a design: does it say how the part is hosted, configured, and
       backed up?
+- [ ] Does a phase or scope change alter how often we deploy, what hosting
+      costs, or how close we run to a free-tier limit?
 - [ ] Could it expose a Canvas token or student data, or let someone act
       as a student? Raise it yourself, even when Security also reviews.
+
+## How DevOps works
+
+- **Before renaming anything shared** (a branch, a workflow, a path, an
+  environment), list every place the name appears: workflows, skills, the
+  PR template, docs, notes, and repo or Pages settings. Confirm the new
+  name with the Team Lead before editing any of them, so it changes once.
+- **When a step needs a setting sessions can't change**, give the Team Lead
+  click-by-click steps (where in GitHub, what to set, how to check it),
+  not just "this needs the Team Lead."
+- **Reuse research before redoing it.** Hosting options, limits, and prices
+  are in roadmap D-3 and the DevOps notes. Read them first, and add what
+  you learn so the next thread doesn't fetch it again.
+- **Keep the notes' Open items current**, so each piece of work starts from
+  where things stand.
 
 ## Decisions
 
@@ -77,4 +103,6 @@ When reviewing others' work:
 
 - Any change to the live app or its hosting.
 - A new paid service, or a new place secrets are stored.
+- A new CI check, or a change to which checks must pass before merging.
+- Renaming the default branch or any other name that many files use.
 - Giving a person or service new access to the repo, secrets, or hosting.

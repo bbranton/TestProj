@@ -140,13 +140,20 @@ such as encrypting tokens with Fernet (a new dependency).
 - A read-only board with the four lists Backlog, To do, In progress, and
   Done: when the board is first created, every assignment is a Trello-style
   card in Backlog, sorted by due date, with the course show/hide buttons
-  (FR-20 to FR-23, FR-31, FR-34, FR-38, FR-60, FR-65, FR-66, FR-78). The
+  (FR-20 to FR-23, FR-31, FR-34, FR-35, FR-38, FR-60, FR-65, FR-66,
+  FR-78). Cards show Canvas's availability dates, and a card that hasn't
+  opened yet is grayed out (FR-22, FR-65). Cards are matched to
+  assignments by Canvas ID, and a card whose assignment is gone from Canvas
+  is hidden but kept, never deleted (FR-35, FR-45). The
   board has Trello's visual style from the start: colored background, light
   gray rounded lists, and white cards with a soft shadow (NFR-34).
 - Each list can be minimized or expanded; expanded lists share the full
   width and resize as lists open and close, and empty lists start
   minimized, so in Phase 1 Backlog fills the board (FR-61, FR-80). Moving
   cards between lists comes in Phase 2.
+- A Filter button on the course row filters cards by course, due date,
+  status, and keyword. The filter isn't saved yet and ends on reload
+  (FR-24, FR-72).
 - With saved data the board is usable within 2 seconds (NFR-1), and it
   works in current Chrome, Firefox, Safari, and Edge (NFR-30). On the free
   test host, NFR-1 is measured once the server is awake: the first load
@@ -190,8 +197,9 @@ pull requests, each one usable on its own:
    NFR-20), with `CANVAS_CACHE` and `REFRESH_RUN`, tested against recorded
    Canvas responses (NFR-41). Milestone M1: the Refresh panel's per-course
    counts show the real assignments, so no throwaway list view is built.
-4. The read-only board (FR-20 to FR-23, FR-26, FR-31, FR-34, FR-38, FR-60,
-   FR-61, FR-65, FR-66, FR-78, FR-80, NFR-34), with `BOARD`, `LIST`,
+4. The read-only board (FR-20 to FR-24, FR-26, FR-31, FR-34, FR-35,
+   FR-38, FR-45, FR-60, FR-61, FR-65, FR-66, FR-72, FR-78, FR-80, NFR-34),
+   with `BOARD`, `LIST`,
    `CARD`, and `COURSE_LABEL`.
 5. The Phase 1 checks: NFR-1, NFR-14, NFR-30, the TP-14 baseline, and the
    manual test pass.
@@ -242,8 +250,13 @@ and drop library is chosen (design, section 2).
   within 30 seconds, and no card is ever lost or duplicated (NFR-22, D-8).
   A tab stops polling while it is hidden, so the free database can sleep
   and stay within its monthly compute hours (D-3, R-15).
-- Canvas merge: new assignments land in *Backlog*, cards are matched by
-  Canvas ID, and they move only when the student drags them (FR-34, FR-35).
+- Canvas merge keeps working once cards move: new assignments land in
+  *Backlog*, and a Refresh never moves a card the student placed (FR-34,
+  FR-35, built in Phase 1).
+- Orphaned cards, whose assignment is gone from Canvas: a show/hide control
+  on the course row shows them grayed out in their list, with a count, and
+  hides them by default (FR-45). The Refresh summary says how many
+  assignments were removed and offers to show them (FR-16).
 
 **Exit criteria:** TP-06 passes in full: layout survives reloads and Canvas
 refreshes, two devices open at the same time stay in step, moving the same
@@ -380,9 +393,9 @@ database, and the domain) is decided, with its cost.
   NFR-21).
 - Course label colors chosen by the student (FR-66), and the course
   show/hide choice saved with the account (FR-78).
-- Trello-style filter menu with status filters and search (FR-24, FR-72).
+- Saving the filter choice with the account (FR-72; the filter menu itself is Phase 1).
 - Board actions take no more clicks than in Trello (NFR-35).
-- Archive and restore cards, as in Trello (FR-74).
+- Archive and restore cards, as in Trello, and permanently delete an orphaned card after confirming (FR-74).
 - Export the board and notes as a file (FR-53).
 - Background sync: refresh from Canvas on a schedule, even while the
   student is signed out, so changes appear without pressing Refresh
@@ -533,3 +546,4 @@ The plan has grown quickly, so these rules keep each phase finishable:
 | 2026-10-25 | Security review: Phase 1 lists what must be done before the test deploy goes live (#17, #19, #20, #25, #26), keeps deploy secrets in a `master`-only Actions environment, says where backups and their key live and that restore and migration copies are deleted, and names step 6's security checks. Risks: potential data breaches are marked Critical; R-2 is owned by Security, and R-14 is rated Medium and limited to the Team Lead's own accounts until #16 and #17. Section 8 adds Security. |
 | 2026-10-25 | The Team Lead keeps Koyeb for test deploys, with the #25 protections, rather than Render free. |
 | 2026-10-26 | Canvas GraphQL moves to Phase 5, from the Team Lead's answer to Q-10: Phase 3 no longer waits on the GraphQL call and tunes with `GET` calls only; R-2 and R-3 updated. |
+| 2026-10-26 | Phase scope from the Team Lead's review of the UI specification, matching requirements PR #6: Phase 1 adds the filter menu (FR-24, FR-72), availability dates on cards (FR-22, FR-65), and the Canvas ID matching and hidden orphaned cards it already builds (FR-35, FR-45); Phase 2 adds the show/hide control for orphaned cards (FR-45) and the removed count in the Refresh summary (FR-16); Phase 5 keeps only saving the filter, and FR-74 adds deleting an orphaned card. |

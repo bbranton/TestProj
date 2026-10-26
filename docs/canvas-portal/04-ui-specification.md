@@ -267,6 +267,7 @@ board:
 | | | ▬▬ BIO 101                                 | |                       |
 | | | Lab report 3                               | |                       |
 | | | (◷ Oct 28, 11:59 PM)  20 pts               | |                       |
+| | | Opens Oct 27, 8:00 AM                      | |                       |
 | | | File upload or text entry                  | |                       |
 | | | Not submitted · Not graded                 | |                       |
 | | +--------------------------------------------+ |                       |
@@ -316,6 +317,14 @@ show the same fields as the Phase 1 sketch.
   time in the device's time zone, such as "Oct 28, 11:59 PM". It is red
   when the card is Missing, even if it is also graded; otherwise green
   with ✓ when Submitted or Graded; and plain otherwise.
+  Start and end dates (FR-22): Canvas's "Available from" (`unlock_at`)
+  and "Until" (`lock_at`). Before an assignment opens, the card is
+  slightly grayed and shows a muted line with a lock icon, "Opens Oct 27,
+  8:00 AM", under the due badge. After its Until date, it shows "Closed
+  Nov 10, 11:59 PM". Otherwise it shows neither, so open assignments stay
+  uncluttered. The card keeps its due date place either way. These lines
+  compare the date with the device's clock when the board is drawn; they
+  are dates, not statuses (FR-23).
   Missing cards (# border in the sketch) stand out at a glance in three
   ways at once, so color is never the only signal: a thick red border
   round the whole card, a red "⚠ MISSING" bar across its top, and the
@@ -836,3 +845,4 @@ flowchart TD
 | 2026-10-26 | S-2's token steps ask for an expiry date, and disconnecting reminds the student to delete the token in Canvas (risk R-2), from the Team Lead's review. |
 | 2026-10-26 | Cards removed from Canvas are hidden by default, not for good: from Phase 2 a [◌ Removed from Canvas] button on the course row shows them, grayed out in their lists. From the Team Lead's review. |
 | 2026-10-26 | The [◌ Removed from Canvas] button moves to Phase 2, with dragging, and the S-10 summary says when a Refresh removed cards, from the Team Lead's review. |
+| 2026-10-26 | Cards show when an assignment opens (Canvas "Available from") until it does, and when it closed (Canvas "Until") after that, from Phase 1, from the Team Lead's review. |

@@ -40,6 +40,10 @@
 - `develop` is the default branch and the integration branch. Every PR
   targets `develop`, and a thread may merge its own PR into `develop` once
   its confirmed reviewers recommend it.
+- Still open a PR for every change to `develop`, so the Team Lead can see
+  the diff. Assign the Team Lead, but don't request their review. Merge it
+  yourself and post the PR link in the thread. Review requests to the Team
+  Lead are only for the `develop` → `main` release PR.
 - `main` is what's live. Never open, approve, or merge a PR into `main`.
   Only the Team Lead opens and merges the `develop` → `main` release PR.
 - Never force-push or delete `main` or `develop`.

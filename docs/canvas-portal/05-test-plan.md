@@ -189,7 +189,7 @@ checks more than one phase's behavior says which part comes later.
 | 5 | FR-68 | Card back shows every listed field for a Canvas card | E2E |
 | 5 | FR-69 | Pencil and right-click open the quick edit menu | E2E |
 | 5 | FR-70 | Add, check, reorder, and delete checklist items; card front shows progress | API, E2E |
-| 5 | FR-74, NFR-21 | Archive and restore a card or a list; delete an orphaned archived card (its assignment gone from Canvas): cancelling keeps it, confirming removes the card and its notes; a card whose assignment still exists can't be deleted | API, E2E |
+| 5 | FR-74, NFR-21 | Archive and restore a card or a list; orphaned cards (assignment gone from Canvas) never appear in Archived items; an orphan shown with the FR-45 control can be deleted from the card itself: cancelling keeps it, confirming removes the card and its notes; a card whose assignment still exists can't be deleted | API, E2E |
 | 5 | NFR-4 | With background sync on and a fixture changed (new assignment, new due date, newly graded), the board shows each change within one job cycle without Refresh; the job backs off when the fixture reports a low rate-limit budget | API |
 | 5 | NFR-36 | At phone width with touch emulation (no hover), every control and the sync time are visible and work by tap | E2E |
 
@@ -350,7 +350,7 @@ requirement. The ID is kept so the other procedure numbers don't change.
 | 4 | Edit the fixture: mark X submitted; select Refresh | X's due badge turns green and X stays in In progress |
 | 5 | Edit the fixture: remove Y; select Refresh | The summary says 1 assignment was removed from Canvas and offers to show it; Y isn't on the board; the orphaned-card control shows 1 |
 | 6 | Show orphaned cards; reload; then hide them; put Y back in the fixture and select Refresh | Y shows in Backlog, grayed out and marked as removed from Canvas, and is still shown after the reload; hiding removes it again; once Y is back, it shows normally and the count is 0 |
-| 7 | *(Phase 3)* Edit the fixture: remove X; select Refresh | X leaves the board; its card is marked archived in the database, not deleted (from Phase 5, it is listed under Archived with its notes) |
+| 7 | *(Phase 3)* Edit the fixture: remove X; select Refresh | X leaves the board; its card is marked archived in the database, not deleted (it never appears in Archived items; from Phase 5 its notes are kept) |
 | 8 | *(Phase 3)* Edit the fixture: put X back; select Refresh | X returns to In progress |
 
 ### TP-09 Notes
@@ -427,7 +427,7 @@ how it looks, what it takes (clicks), or how it responds.
 | 8 | *(Phase 5)* Reload, then press Back | Reload reopens the card; Back closes it |
 | 9 | *(Phase 5)* Use the pencil and right-click on a card | Quick edit menu next to the raised card |
 | 10 | Open Filter, filter by a course and by "Due date passed", then Clear | Same behavior; the course row shows the filter is active (deliberate difference: Trello puts Filter in the board header) |
-| 11 | *(Phase 5)* Archive a card and restore it from the board menu | Same steps. In the portal, an archived card whose assignment is gone from Canvas also offers Delete: cancelling keeps it, confirming removes it and its notes |
+| 11 | *(Phase 5)* Archive a card and restore it from the board menu | Same steps. Orphaned cards never show in Archived items; in the portal, an orphan shown with the orphaned-card control offers Delete on the card: cancelling keeps it, confirming removes it and its notes |
 | 12 | *(Phase 5)* Count clicks to open a card and filter by a course | No more than Trello (NFR-35) |
 | 13 | Check for Trello's name, logo, icons, or artwork anywhere | None (C-4) |
 | 14 | Collapse a list in Trello, and minimize one in the portal; then expand it | A similar narrow strip with the list's title and card count; the other lists take up the space (FR-80) |

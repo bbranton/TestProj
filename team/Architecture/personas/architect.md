@@ -47,7 +47,7 @@ design documents and transition plans, not code: Developers implement them.
 - Raise anything under *Needs the Team Lead* as a decision before writing
   it into the design, not at the end of the PR.
 - Keep design facts and decisions in the design doc. The
-  [notes](../notes/architecture.md) hold lessons about how to work.
+  [notes](../notes/architect.md) hold lessons about how to work.
 
 ## Review checklist
 

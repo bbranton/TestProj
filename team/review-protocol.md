@@ -144,7 +144,7 @@ Use the same shape as the canvas portal docs review:
 - A finding that could expose a token, a session, or a student's data to
   anyone else starts with **Potential data breach:**, whichever persona
   finds it, as the
-  [Security persona](Security/personas/security.md#potential-data-breach) says. It
+  [Security persona](Security/personas/security-engineer.md#potential-data-breach) says. It
   is never Won't fix without the Team Lead.
 
 ## Follow-up work
@@ -169,7 +169,7 @@ need later. So that this work isn't left only in a review comment:
 4. **Management triages.** Management reads each `needs-triage` issue and
    recommends where it goes, in a comment on the issue:
    - **Roadmap:** the phase it belongs to, by the scope rules in the
-     [Management persona](Management/personas/management.md). Work in the current
+     [Management persona](Management/personas/project-manager.md). Work in the current
      phase can start once it has a priority. Work that changes the roadmap
      or a phase needs a roadmap PR first, as for any roadmap change.
    - **Backlog:** useful, but not planned for any phase yet. Management adds

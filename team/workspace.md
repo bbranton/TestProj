@@ -16,7 +16,8 @@ There are three places, for three kinds of information:
 Each team has a folder under `team/`, with three subfolders:
 
 - `notes/`: daily notes and important findings.
-- `personas/`: one file for each persona that can work on the team.
+- `personas/`: one file for each persona that can work on the team, named
+  after the job title, such as `architect.md`.
 - `scripts/`: reusable scripts for jobs the team repeats often.
 
 Each team may freely update its own folder as needed, through a PR like
@@ -27,7 +28,8 @@ top of `team/` and other teams' folders are not the team's to change alone.
 ## Persona notes
 
 Each persona has a lasting notes file in its team's `notes/` folder, named
-after the persona, such as `QA/notes/product-qa.md`. Before starting work as
+after its job title like its persona file, such as
+`QA/notes/product-qa-analyst.md`. Before starting work as
 a persona, read its notes. When you learn something the next thread would
 otherwise have to rediscover, add it in the same PR as your work.
 

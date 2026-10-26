@@ -5,7 +5,7 @@ real numbers. The [CFO](personas/cfo.md) owns this file and is the only
 persona that edits it. Every other thread reports its row with the
 [`log-cost` skill](../../.claude/skills/log-cost/SKILL.md), and the CFO
 commits the reported rows in batches. How estimates use the log is in
-[Management's cost plans](../Management/personas/management.md#cost-plans).
+[Management's cost plans](../Management/personas/project-manager.md#cost-plans).
 
 ## Size units
 

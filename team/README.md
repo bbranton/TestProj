@@ -6,32 +6,34 @@ reviews someone else's work, and which decisions it can and cannot make.
 
 | Persona | Owns | File |
 |---------|------|------|
-| Management | Roadmap, phases, scope, priorities, risks | [management.md](Management/personas/management.md) |
-| Product and QA | Requirements, test plan, acceptance | [product-qa.md](QA/personas/product-qa.md) |
-| Architecture | Design docs, transition plans, data, APIs | [architecture.md](Architecture/personas/architecture.md) |
-| UI/UX | UI specification, screens, accessibility | [ui-ux.md](Ui-Ux/personas/ui-ux.md) |
+| Management | Roadmap, phases, scope, priorities, risks | [project-manager.md](Management/personas/project-manager.md) |
+| Product and QA | Requirements, test plan, acceptance | [product-qa-analyst.md](QA/personas/product-qa-analyst.md) |
+| Architecture | Design docs, transition plans, data, APIs | [architect.md](Architecture/personas/architect.md) |
+| UI/UX | UI specification, screens, accessibility | [ui-ux-designer.md](Ui-Ux/personas/ui-ux-designer.md) |
 | Developer | Code, coding standards, bug fixes | [developer.md](Software/personas/developer.md) |
-| DevOps | CI, build and install scripts, dependencies, deploys, hosting, top-level README | [devops.md](DevOps/personas/devops.md) |
-| Security | Security reviews, potential data breach ratings, client security document | [security.md](Security/personas/security.md) |
+| DevOps | CI, build and install scripts, dependencies, deploys, hosting, top-level README | [devops-engineer.md](DevOps/personas/devops-engineer.md) |
+| Security | Security reviews, potential data breach ratings, client security document | [security-engineer.md](Security/personas/security-engineer.md) |
 | CFO | Cost log: the only persona that edits it | [cfo.md](Finance/personas/cfo.md) |
 
 ## Folders
 
-Each team has a folder here with `notes/`, `personas/`, and `scripts/`
-subfolders, as the [team workspace](workspace.md#team-folders) describes.
+Each team is a department, with a folder here holding `notes/`,
+`personas/`, and `scripts/` subfolders. Persona files are named after the
+job title, such as `Architecture/personas/architect.md`. The
+[team workspace](workspace.md#team-folders) says how the folders work.
 Each team may freely update its own folder.
 
-| Team | Personas |
-|------|----------|
-| Architecture | Architecture |
-| DevOps | DevOps |
-| Finance | CFO |
-| Management | Management |
-| QA | Product and QA |
-| Security | Security |
-| Software | Developer |
+| Team | Persona files |
+|------|---------------|
+| Architecture | `architect.md` |
+| DevOps | `devops-engineer.md` |
+| Finance | `cfo.md` |
+| Management | `project-manager.md` |
+| QA | `product-qa-analyst.md` |
+| Security | `security-engineer.md` |
+| Software | `developer.md` |
 | Test | None yet |
-| Ui-Ux | UI/UX |
+| Ui-Ux | `ui-ux-designer.md` |
 
 Files every team shares stay at the top of `team/`: this README, the
 [review protocol](review-protocol.md), and the [team workspace](workspace.md).
@@ -84,9 +86,9 @@ persona:
 - No persona ignores a security risk, or leaves it for another persona to
   catch.
 - Any persona can mark a finding a
-  [potential data breach](Security/personas/security.md#potential-data-breach).
+  [potential data breach](Security/personas/security-engineer.md#potential-data-breach).
   Management treats every one as critical and must-fix.
-- The [Security persona](Security/personas/security.md) is the specialist. On a
+- The [Security persona](Security/personas/security-engineer.md) is the specialist. On a
   security question its view carries the most weight, over the persona
   that owns the work. The owner still makes the fix, and can't decline it
   without the Team Lead.
@@ -96,7 +98,8 @@ persona:
 To add a persona:
 
 1. Copy an existing persona file into the `personas/` folder of the team it
-   works on, and fill in every section. Give it a notes file in that team's
+   works on, name it after the job title (such as `architect.md`), and fill
+   in every section. Give it a notes file in that team's
    `notes/` folder. For a new team, create `team/<Team>/` with `notes/`,
    `personas/`, and `scripts/` subfolders.
 2. Add a row to the tables above, and its name to the persona list in

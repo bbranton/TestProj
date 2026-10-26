@@ -30,7 +30,7 @@ security risks in its own work and in what it reviews, as
 - The incident plan (issue #17): what the team does when a token or student
   data may have leaked, worked out with DevOps. It must be in place before
   any deploy holds a real Canvas token.
-- The security register, in the [Security notes](../notes/security.md#security-register):
+- The security register, in the [Security notes](../notes/security-engineer.md#security-register):
   each open security finding and potential data breach, who owns its fix,
   and which phase step it must be done before (its **go-live gate**).
 - Security briefs for the Team Lead (see [Briefing the Team Lead](#briefing-the-team-lead)).
@@ -51,7 +51,7 @@ whenever it's unsure. The mark starts the finding, and any follow-up issue
 gets the `potential-breach` label. A mark stays until Security has looked
 at it; only Security can clear it, and says why in the finding.
 Management treats every potential data breach as critical and must-fix,
-as the [Management persona](../../Management/personas/management.md#decisions) says.
+as the [Management persona](../../Management/personas/project-manager.md#decisions) says.
 
 Every mark goes in the security register, whoever raised it. When another
 persona has already raised a finding there, link to it instead of raising

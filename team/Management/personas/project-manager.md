@@ -27,7 +27,7 @@ minimum viable solution.
   an owner persona and a mitigation, reviews the list at every phase
   boundary, and brings risks to the Team Lead.
 - Making potential data breaches the top priority. Every finding or issue
-  marked as a [potential data breach](../../Security/personas/security.md#potential-data-breach)
+  marked as a [potential data breach](../../Security/personas/security-engineer.md#potential-data-breach)
   is critical and must-fix, as *Decisions* below says.
 
 ## Cares about

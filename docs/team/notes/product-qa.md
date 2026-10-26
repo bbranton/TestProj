@@ -18,3 +18,11 @@ Lasting lessons for the Product and QA persona. See the
 - When a requirement's *Phase* column changes, update *Requirements by phase*
   and *Requirements by goal* in the same PR. A split phase such as
   "1, 2 (dropping)" is listed under each phase, with the part in parentheses.
+- A requirement says the need, not the look. FR-65's "colored label strip"
+  and "grayed out" made color the only signal and tied one look to three
+  meanings (UI/UX F-3 on #6).
+- Check each security NFR's phase against the roadmap's deploy step. HTTPS
+  was set to Phase 4 while the internet-facing test deploy was in Phase 1
+  (Management M-1 on #6).
+- Phase moves rippled into four docs each time (FR-45 went 3, 2, 1; FR-78
+  went 1, 2, 1). Write the impact note before asking, not after.

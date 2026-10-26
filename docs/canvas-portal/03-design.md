@@ -20,7 +20,7 @@ Build only the parts listed for the current phase (see the repo's
 | Phase | Builds |
 |-------|--------|
 | 0 | Repository layout (section 8), empty frontend and backend, CI |
-| 1 | Tables `USER`, `SESSION`, `CANVAS_CONNECTION`, `BOARD`, `LIST`, `CARD`, `COURSE_LABEL`, `CANVAS_CACHE`, `REFRESH_RUN`, without the columns marked Phase 2 or 3, and with the unique card rule; the Phase 1 endpoints in section 4; sign-in (section 5); talking to Canvas, caching, *Built from the start*, *Refresh progress*, and *Saving a complete Refresh* (section 6); security (section 7); the board, course buttons, minimize and expand, visual style, the Refresh progress panel, and the Phase 1 interactions (section 9) |
+| 1 | Tables `USER`, `SESSION`, `CANVAS_CONNECTION`, `BOARD`, `LIST`, `CARD`, `COURSE_LABEL`, `CANVAS_CACHE`, `REFRESH_RUN`, without the columns marked Phase 2 or 3, and with the unique card rule; the Phase 1 endpoints in section 4; sign-in (section 5); talking to Canvas, caching, *Built from the start*, *Refresh progress*, and *Saving a complete Refresh* (section 6); security (section 7); the board, course buttons, the filter menu, minimize and expand, visual style, the Refresh progress panel, and the Phase 1 interactions (section 9) |
 | 2 | Moving cards and *Keeping devices in sync* (section 4): the Phase 2 endpoints and `change_seq`; dragging (section 9); orphaned cards in the board response, the show/hide control, and the removed count in the Refresh summary (sections 4, 6, and 9) |
 | 3 | *Phase 3 tuning*, *Bringing the backend in step with Canvas*, and *What can change in Canvas* (section 6); `CARD.archived` |
 | 4 | Deleting all of a user's data (section 4), accessibility checks, publishing the Google sign-in app (section 5), deploying (roadmap D-3) |
@@ -687,7 +687,8 @@ flowchart TD
     App --> Header["BoardHeader<br/>board name, sync time, Refresh, account menu"]
     App --> Progress["RefreshPanel (S-10)<br/>per-course progress, summary, Retry"]
     App --> Banner["CanvasWarning<br/>shown when Canvas fails (NFR-20)"]
-    App --> Toggles["CourseToggleBar<br/>one show/hide button per course,<br/>Show all, Hide all,<br/>orphaned cards (Phase 2)"]
+    App --> Toggles["CourseToggleBar<br/>Filter button, one show/hide button per course,<br/>Show all, Hide all,<br/>orphaned cards (Phase 2)"]
+    Toggles --> Filter["FilterMenu (S-8)<br/>keyword, due date, status, courses"]
     App --> Board
     Board --> List["List (one per list)"]
     List --> ListHeader["ListHeader<br/>list title, card count,<br/>minimize/expand toggle"]
@@ -718,6 +719,7 @@ UI uses:
 | Scroll the board | Only when the window is too narrow for the expanded lists (240 px minimum each): horizontal scrollbar, or drag on empty background | FR-61 |
 | Open a card | Click: the assignment opens in Canvas in a new tab | FR-26 |
 | Show or hide a course | Tap its button in the row under the header, or Show all / Hide all; the board updates at once. The choice is kept in this browser | FR-78 |
+| Filter the board | The Filter button starts the course row and opens S-8. Filtering runs in the browser over the cards already loaded: no endpoint, no table, and nothing saved, so a reload clears it. Due date filters compare with the device clock. The options and wording are the UI specification's | FR-24, FR-72 |
 | Show or hide orphaned cards (Phase 2) | A control on the course button row, with how many orphaned cards there are. Hidden by default; the choice is kept in this browser, like the course buttons. The board already holds the orphaned cards, so the change is at once. How the control and a grayed card look is the UI specification's | FR-45 |
 
 ## 10. Why React (D-1)
@@ -743,7 +745,7 @@ designed here (section 12).
 | FR-10 to FR-16 (fetch, Refresh, progress) | Sections 4, 6 |
 | FR-20 to FR-23, FR-26 (view) | Section 4 (status), 9 (open a card), User Interface Specification |
 | FR-31 to FR-35, FR-38, FR-39, FR-45 (board, Canvas changes) | Sections 3, 4, 6 (saving a complete Refresh, bringing the backend in step, what can change in Canvas), 9 |
-| FR-60, FR-61, FR-65, FR-66, FR-77, FR-78, FR-80 (Trello-style, course buttons, lists) | Sections 3, 4, 9 |
+| FR-24, FR-60, FR-61, FR-65, FR-66, FR-72, FR-77, FR-78, FR-80 (Trello-style, filter, course buttons, lists) | Sections 3, 4, 9 |
 | FR-50, FR-51, FR-54 (accounts, data) | Sections 4, 5 |
 | NFR-1 to NFR-3 (performance) | Sections 3 (sorting, list positions), 6 (caching, parallel fetch, making Canvas loads fast) |
 | NFR-10 to NFR-14 (security) | Sections 5 (cookie), 7 |
@@ -839,3 +841,4 @@ What the connect screen says when a student connects a different account
 | 2026-10-26 | Orphaned cards (FR-45, from the Team Lead's review of the UI specification): from Phase 3 the board response includes archived cards flagged `orphaned`, shown from a new `CARD.last_seen` snapshot, and a show/hide control on the course row keeps its choice in the browser. The phase is the Team Lead's call. |
 | 2026-10-26 | Orphaned cards move to Phase 2, from the Team Lead (requirements PR #6, FR-16 and FR-45): `CARD.last_seen` is filled from Phase 1, so a card orphaned then still has its fields; the board returns flagged orphans and the show/hide control arrives in Phase 2; the Refresh run counts newly orphaned cards for the summary; Phase 3 adds archiving on top. |
 | 2026-10-26 | Opens and closes dates (FR-22, FR-65, from the Team Lead's review of the UI specification): assignments carry `unlock_at` and `lock_at`, with the student's override; the frontend shows "Opens …" and "Closed …" against the device clock. |
+| 2026-10-26 | Filter menu (S-8, FR-24, FR-72) moves to Phase 1, from the Team Lead's review of the UI specification: a FilterMenu component that filters loaded cards in the browser, with no endpoint, table, or saved state. |

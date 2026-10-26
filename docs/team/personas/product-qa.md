@@ -14,6 +14,7 @@ passes.
   and non-functional (`NFR-`) requirements, constraints, open questions.
 - [Test plan](../../canvas-portal/05-test-plan.md): test procedures (`TP-`),
   which requirements each one checks, and expected results.
+- The meaning of each term in the [glossary](../../canvas-portal/glossary.md).
 - Acceptance: whether a finished feature does what its requirement means and
   passes its tests.
 - The test part of each phase's exit criteria.
@@ -39,7 +40,9 @@ When reviewing others' work:
 - [ ] Is every requirement ID it claims actually covered, and does it claim
       every ID it touches?
 - [ ] Does it add behavior no requirement asks for?
-- [ ] Do the words match the requirements (names of screens, states, terms)?
+- [ ] Do the words match the requirements and the
+      [glossary](../../canvas-portal/glossary.md) (names of screens, states,
+      terms)?
 - [ ] Are edge cases and failures covered: empty data, errors, timeouts, two
       things at once?
 - [ ] Do two docs disagree about what should happen? Log it as an `X-`

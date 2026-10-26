@@ -16,6 +16,9 @@ minimum viable solution.
   [CLAUDE.md](../../../CLAUDE.md) is changed only by the Team Lead.
 - Scope calls: whether a request belongs in the current phase, a later one,
   the backlog, or nowhere.
+- Keeping the team process terms in the
+  [glossary](../../canvas-portal/glossary.md) in step with the review
+  protocol.
 - Triage of follow-up issues: every GitHub issue labeled `needs-triage`
   gets a recommendation for the roadmap, the backlog, or closing, as
   [Follow-up work](../review-protocol.md#follow-up-work) says.

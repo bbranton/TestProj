@@ -143,8 +143,9 @@ such as encrypting tokens with Fernet (a new dependency).
   due date, with the course show/hide buttons (FR-20 to FR-23, FR-31,
   FR-34, FR-35, FR-38, FR-60, FR-65, FR-66, FR-78). The design leaves room
   to add To do, In progress, and Done in Phase 2 without rework. Cards
-  show Canvas's availability dates, and a card that hasn't opened yet is
-  grayed out (FR-22, FR-65). The Excused status is Phase 5 (FR-23). The
+  show Canvas's availability dates, and a card that hasn't opened yet
+  says when it opens, styled unlike the grayed-out orphaned cards (FR-22,
+  FR-65). The Excused status is Phase 5 (FR-23). The
   board has Trello's visual style from the start: colored background,
   light gray rounded lists, and white cards with a soft shadow (NFR-34).
 - A Filter button on the course row filters cards by due date, status,

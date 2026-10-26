@@ -85,7 +85,12 @@ even though the formal accessibility check (NFR-32) is Phase 4.
 
 - **Color is never the only signal.** A red or green due badge always
   comes with the status text and tags on the card (FR-23), and a green
-  badge also shows ✓. Course buttons show ● or ○ as well as their color.
+  badge also shows ✓. Course buttons show ● or ○ as well as their color
+  (WCAG 1.4.1, NFR-32).
+- **Status messages are announced.** Messages that appear without
+  moving the page, such as the Refresh banner, S-10's progress and
+  summary, and the filter's "3 cards match", are read out by screen
+  readers as they change (WCAG 4.1.3, NFR-32).
 - **Every button has an ID and a label.** The ID is in capitals with
   underscores, such as `REFRESH`, so it stands out in logs, docs, code,
   and tests; the table below lists them. The label is plain words, such
@@ -317,21 +322,26 @@ show the same fields as the Phase 1 sketch.
 | +-------------------+                                                    |
 +--------------------------------------------------------------------------+
   Card fronts (FR-22, FR-23, FR-65), top to bottom: ▬▬ label strip in
-  the course's automatic color (FR-66); the title; the due badge and the
-  points; the submission types, written as in the table below; then
-  "Submitted" or "Not submitted", "Graded" or "Not graded", and a [Late]
-  or [Excused] tag when Canvas sets one. The due badge shows the date and
+  the course's automatic color (FR-66), with the course code, such as
+  "BIO 101"; the title; the due badge and the points; the submission
+  types, written as in the table below; then "Submitted" or "Not
+  submitted", "Graded" or "Not graded", and a [Late] tag when Canvas
+  sets one. An excused assignment shows just "Excused" in place of both
+  states, with a green ✓ badge; Excused wins over Missing, so an excused
+  card never gets the Missing highlight. The due badge shows the date and
   time in the device's time zone, such as "Oct 28, 11:59 PM". It is red
   when the card is Missing, even if it is also graded; otherwise green
-  with ✓ when Submitted or Graded; and plain otherwise.
+  with ✓ when Excused, Submitted, or Graded; and plain otherwise.
   Start and end dates (FR-22): Canvas's "Available from" (`unlock_at`)
-  and "Until" (`lock_at`). Before an assignment opens, the card is
-  slightly grayed and shows a muted line with a lock icon, "🔒 Opens Oct
+  and "Until" (`lock_at`). Before an assignment opens, the card keeps
+  its full colors and shows a muted line with a lock icon, "🔒 Opens Oct
   27, 8:00 AM", under the due badge. After its Until date, it shows
-  "🔒 Closed Nov 10, 11:59 PM". The lock is never the only signal: the
-  words say the same thing for screen readers (alt text "Locked"). In the
-  sketch the lock takes two columns, so that row has one space less. Otherwise it shows neither, so open assignments stay
-  uncluttered. The card keeps its due date place either way. These lines
+  "🔒 Closed Nov 10, 11:59 PM". The card is not grayed out, so it never
+  looks like a card removed from Canvas or an archived card, which are
+  grayed with a dashed border. The lock is never the only signal: the
+  words say the same thing for screen readers (alt text "Locked"). In
+  the sketch the lock takes two columns, so that row has one space less.
+  Otherwise it shows neither, so open assignments stay uncluttered. The card keeps its due date place either way. These lines
   compare the date with the device's clock when the board is drawn; they
   are dates, not statuses (FR-23).
   Missing cards (# border in the sketch) stand out at a glance in three
@@ -377,7 +387,9 @@ show the same fields as the Phase 1 sketch.
   reordered. Renaming (FR-63), dragging lists (FR-62), adding cards and
   lists (FR-64, FR-71), and archiving lists (FR-36) are Phase 5 ideas.
   [−] in a list header minimizes it to a narrow strip with its title and
-  card count; [+] expands it again (FR-80). Expanded lists share the
+  card count; [+] expands it again (FR-80). The count and whether a list
+  is empty include only the cards on show: not those of hidden courses,
+  hidden by the filter, or removed from Canvas while those are hidden. Expanded lists share the
   board's whole width and resize whenever a list is minimized or
   expanded. The board only scrolls sideways if the window is too narrow
   for every expanded list to be at least 240 px wide (FR-61). Each time
@@ -550,11 +562,6 @@ cards on the screen; it never changes them or what Canvas holds.
 | [ ] Submitted      [ ] Not submitted     |
 | [ ] Graded         [ ] Not graded        |
 | [ ] Missing  [ ] Late  [ ] Excused       |
-|                                          |
-| Courses                                  |
-| [ ] ■ BIO 101                            |
-| [ ] ■ HIST 210                           |
-| [ ] ■ MATH 152                           |
 +------------------------------------------+
   With a filter on, the course row shows
   [Filter · 3 cards match  (x) Clear], and x clears it.
@@ -574,9 +581,10 @@ cards on the screen; it never changes them or what Canvas holds.
   the start and end date lines on cards (FR-22).
 - Status choices use the same Canvas fields and words as the card front
   (FR-23).
-- Courses are the same setting as the course buttons: ticking a course
-  here shows it there, and the other way round.
-- Minimized lists count only the cards that match.
+- There is no Courses group: the course buttons on the course row are
+  the only way to show or hide a course (FR-78), and the filter applies
+  on top of them.
+- Minimized lists count only the cards that match (FR-80).
 - The menu closes with [x] or a click outside it. Every choice is a
   real checkbox with a label, so screen readers say whether it is ticked.
 - The filter lasts until it is cleared or the page is reloaded. It is not
@@ -884,6 +892,7 @@ flowchart TD
 | 2026-10-26 | Cards removed from Canvas are hidden by default, not for good: from Phase 2 a [◌ Removed from Canvas] button on the course row shows them, grayed out in their lists. From the Team Lead's review. |
 | 2026-10-26 | The [◌ Removed from Canvas] button moves to Phase 2, with dragging, and the S-10 summary says when a Refresh removed cards, from the Team Lead's review. |
 | 2026-10-26 | Cards show when an assignment opens (Canvas "Available from") until it does, and when it closed (Canvas "Until") after that, from Phase 1, from the Team Lead's review. |
+| 2026-10-26 | Follows the requirements review on PR #6: the course buttons are the only course control, so S-8 drops its Courses group; list counts include only cards on show (FR-80); an excused card shows "Excused" with a green ✓ and never the Missing highlight (FR-23, FR-65, pending the Team Lead); the strip shows the course code; a not-yet-open card is no longer grayed, so it differs from removed and archived cards; status messages are announced (NFR-32). |
 | 2026-10-26 | From Phase 5 the filter menu's keyword becomes a full search like Trello's card search (course, description, notes, archived and removed cards), filtering the whole board; Phase 1 matches assignment names. From the Team Lead's review. |
 | 2026-10-26 | The board menu (S-9) lists no cards, from the Team Lead's review: it holds only course colors and the background. Archived cards and lists are shown on the board with a Phase 5 Archived group in the filter menu, grayed out with [Restore]. |
 | 2026-10-26 | No keyboard shortcuts, from the Team Lead's review: a new convention says every action is clicked or tapped; Escape and Enter removed from S-5, S-8, W-7, and W-8. Saved filters are a future feature. |

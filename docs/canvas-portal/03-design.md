@@ -20,8 +20,8 @@ Build only the parts listed for the current phase (see the repo's
 | Phase | Builds |
 |-------|--------|
 | 0 | Repository layout (section 8), empty frontend and backend, CI |
-| 1 | Tables `USER`, `SESSION`, `CANVAS_CONNECTION`, `BOARD`, `LIST`, `CARD`, `COURSE_LABEL`, `CANVAS_CACHE`, `REFRESH_RUN`, without the columns marked Phase 2 or 3, and with the unique card rule; the Phase 1 endpoints in section 4; sign-in (section 5); talking to Canvas, caching, *Built from the start*, *Refresh progress*, and *Saving a complete Refresh* (section 6); security (section 7); the board with only Backlog shown, course buttons, the filter menu, visual style, the Refresh progress panel, and the Phase 1 interactions (section 9) |
-| 2 | Moving cards and *Keeping devices in sync* (section 4): the Phase 2 endpoints and `change_seq`; dragging, showing To do, In progress, and Done, sharing the width and scrolling sideways, and minimize and expand (section 9); orphaned cards in the board response, their show/hide option in the filter menu, and the removed count in the Refresh summary (sections 4, 6, and 9) |
+| 1 | Tables `USER`, `SESSION`, `CANVAS_CONNECTION`, `BOARD`, `LIST`, `CARD`, `COURSE_LABEL`, `CANVAS_CACHE`, `REFRESH_RUN`, without the columns marked Phase 2 or 3, and with the unique card rule; the Phase 1 endpoints in section 4; sign-in (section 5); talking to Canvas, caching, *Built from the start*, *Refresh progress*, and *Saving a complete Refresh* (section 6); security (section 7); the board with only Backlog shown, course buttons, the filter menu with its orphaned-cards option, the removed count in the Refresh summary, visual style, the Refresh progress panel, and the Phase 1 interactions (section 9) |
+| 2 | Moving cards and *Keeping devices in sync* (section 4): the Phase 2 endpoints and `change_seq`; dragging, showing To do, In progress, and Done, sharing the width and scrolling sideways, and minimize and expand (section 9) |
 | 3 | *Phase 3 tuning*, *Bringing the backend in step with Canvas*, and *What can change in Canvas* (section 6); `CARD.archived` |
 | 4 | Deleting all of a user's data (section 4), accessibility checks, publishing the Google sign-in app (section 5), deploying (roadmap D-3) |
 
@@ -147,7 +147,7 @@ erDiagram
         datetime started_at
         datetime finished_at
         json courses "per-course state, counts, error"
-        int removed_count "Phase 2"
+        int removed_count
     }
     CANVAS_CACHE {
         uuid user_id PK, FK
@@ -212,9 +212,8 @@ Design notes:
   what the card was. So the Refresh copies the fields the card front shows
   (name, course, due date, points, status) into `last_seen` first, and
   clears it if the assignment comes back. A card with `last_seen` set is
-  *orphaned*. Phase 1 only hides orphaned cards, but fills `last_seen`
-  anyway: a card orphaned in Phase 1 could never get its fields back, and
-  Phase 2 shows them (FR-45).
+  *orphaned*. Orphaned cards are hidden by default, and the student can show
+  them from the filter menu (FR-45).
 - **Archived, not deleted (Phase 3):** Phase 3 also marks an orphaned card
   `archived` (FR-45), with the course and change rules in section 6.
 - **Every row has `user_id`**, and every query filters by the signed-in user,
@@ -238,7 +237,7 @@ and require a signed-in session except where noted.
 | `GET /api/assignments` | All assignments across active courses, from the last complete copy, with Canvas status fields, the Canvas link, and when they were fetched; on the very first load it starts a Refresh instead | FR-11, FR-14, FR-15, FR-21 to FR-23, FR-26 | 1 |
 | `POST /api/refresh` | Start a Refresh in the background, or join the one already running; returns at once | FR-13, FR-15, FR-16 | 1 |
 | `GET /api/refresh/latest` | Progress of the running Refresh, or the log of the last one | FR-16 | 1 |
-| `GET /api/board` | Lists and cards with course label colors, cards sorted by due date. Read only: cards are added when a Refresh is saved (section 6). In Phase 1 orphaned cards are left out. From Phase 2 they are included, flagged `orphaned` and shown from `last_seen`, so the frontend can show or hide them without another request | FR-31, FR-34, FR-38, FR-45, FR-65, FR-66 | 1 (2 for orphaned cards) |
+| `GET /api/board` | Lists and cards with course label colors, cards sorted by due date. Read only: cards are added when a Refresh is saved (section 6). Orphaned cards are included, flagged `orphaned` and shown from `last_seen`, so the frontend can show or hide them without another request | FR-31, FR-34, FR-38, FR-45, FR-65, FR-66 | 1 |
 | `PATCH /api/board/cards/{id}` | Move to another list; returns the new `change_seq` | FR-32, FR-33, NFR-22 | 2 |
 | `GET /api/board/changes?since={seq}` | Cards changed since that `change_seq`, and the current value | NFR-22 | 2 |
 | `DELETE /api/me` | Delete the account and all its data from the live database at once; backups age out (section 7) | FR-54 | 4 |
@@ -529,14 +528,14 @@ database transaction:
    On the first Refresh that is every assignment. The unique rule in section
    3 means a card is never added twice.
 3. Fill `last_seen` on each card whose assignment is gone, and clear it on
-   each card whose assignment is back (section 3, FR-45). From Phase 2, the
-   run records how many cards became orphaned, for the summary (FR-16).
+   each card whose assignment is back (section 3, FR-45). The run
+   records how many cards became orphaned, for the summary (FR-16).
 4. Give each new course a `COURSE_LABEL` color (FR-66).
 5. Mark the run *complete*. The header's "Synced" time comes from it (FR-13).
 
 Loading the board never adds or changes cards; it only reads. An orphaned
-card is kept in the database, never deleted. In Phase 1 the board leaves it
-out; from Phase 2 the student can show it (FR-45). Phase 3 adds comparing
+card is kept in the database, never deleted. It is hidden by default, and
+the student can show it (FR-45). Phase 3 adds comparing
 and archiving to this same step (below).
 
 ### Bringing the backend in step with Canvas (Phase 3)
@@ -574,7 +573,7 @@ choice, so no Canvas change ever moves a card to another list.
 | In Canvas | On the board | Requirements |
 |-----------|--------------|--------------|
 | Teacher creates an assignment | New card in Backlog, in its due date place | FR-34 |
-| Teacher deletes or unpublishes it | Card is orphaned (Phase 1) and marked archived (Phase 3). It is hidden unless the student shows orphaned cards (Phase 2); then it stays in its list, grayed out and marked as removed from Canvas | FR-45 |
+| Teacher deletes or unpublishes it | Card is orphaned (Phase 1) and marked archived (Phase 3). It is hidden unless the student shows orphaned cards; then it stays in its list, grayed out and marked as removed from Canvas | FR-45 |
 | It is republished, or reappears after a fetch problem | Card comes back in its old list | FR-45 |
 | Name or points change | Card shows the new value | FR-35, FR-39 |
 | Description changes | Nothing to show until the card back (Phase 5, FR-28) | FR-39 |
@@ -701,7 +700,7 @@ flowchart TD
     App --> Progress["RefreshPanel (S-10)<br/>per-course progress, summary, Retry"]
     App --> Banner["CanvasWarning<br/>shown when Canvas fails (NFR-20)"]
     App --> Row["CourseToggleBar, under the header<br/>Filter button, one show/hide button<br/>per course, Show all, Hide all"]
-    Row --> Filter["FilterMenu (S-8)<br/>keyword, due date, status,<br/>orphaned cards (Phase 2)"]
+    Row --> Filter["FilterMenu (S-8)<br/>keyword, due date, status,<br/>orphaned cards"]
     App --> Board
     Board --> List["List (one per list)"]
     List --> ListHeader["ListHeader<br/>list title, card count,<br/>minimize/expand toggle (Phase 2)"]
@@ -733,7 +732,7 @@ UI uses:
 | Open a card | Click: the assignment opens in Canvas in a new tab | FR-26 |
 | Filter the board | The Filter button, at the start of the course button row, opens S-8. Courses are chosen with the course buttons, not in the menu. Filtering runs in the browser over the cards already loaded: no endpoint, no table, and nothing saved, so a reload clears it. Due date filters compare in UTC with the current time. The options and wording are the UI specification's | FR-24, FR-72 |
 | Show or hide a course | Tap its button on the row under the header, or Show all / Hide all; the board updates at once. The choice is kept in this browser | FR-78 |
-| Show or hide orphaned cards (Phase 2) | An option in the filter menu, with how many orphaned cards there are. Hidden by default, and like the rest of the filter, not saved. The board already holds the orphaned cards, so the change is at once. How the control and a grayed card look is the UI specification's | FR-45 |
+| Show or hide orphaned cards | An option in the filter menu, with how many orphaned cards there are. Hidden by default, and like the rest of the filter, not saved. The board already holds the orphaned cards, so the change is at once. How the control and a grayed card look is the UI specification's | FR-45 |
 
 ## 10. Why React (D-1)
 
@@ -860,3 +859,4 @@ the data side.
 | 2026-10-26 | Every date and time comparison is made in UTC; only display uses the device's time zone (FR-22, from the Team Lead on requirements PR #6). |
 | 2026-10-26 | Phase 1 scope cut, from the Team Lead (requirements PR #6, da46dff): Phase 1 shows only Backlog, with all four list rows still created; the Filter row and menu are Phase 1, with course checkboxes; course buttons (FR-78), width sharing (FR-61), and minimize and expand (FR-80) are Phase 2; the orphaned-cards control is a filter menu option; Excused is Phase 5; NFR-1 is Phase 2, with its baseline from the Phase 1 timing logs. |
 | 2026-10-26 | Course buttons (FR-78) back in Phase 1 as the only course picker, from the Team Lead (requirements PR #6, 58c1c04); the filter menu has no course list; width sharing and sideways scrolling (FR-61) stay Phase 2. |
+| 2026-10-26 | Orphaned-card show/hide option, its count, and the Refresh summary's removed count move to Phase 1, from the Team Lead. |

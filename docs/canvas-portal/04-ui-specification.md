@@ -100,8 +100,8 @@ even though the formal accessibility check (NFR-32) is Phase 4.
 - **Messages say what happened and what to do next,** in plain words,
   with the button that does it, such as [Retry refresh]. They never show
   error codes or the token.
-- **Destructive actions ask first:** disconnecting Canvas and deleting
-  the account.
+- **Destructive actions ask first:** disconnecting Canvas, deleting the
+  account (Phase 4), and from Phase 5 deleting a card or a note (FR-41).
 
 Button IDs for Phases 1 to 4. Later phases add theirs when they are
 planned.
@@ -791,3 +791,4 @@ flowchart TD
 | 2026-10-26 | Card status follows the new FR-23 and FR-65, from the Team Lead's review of the requirements: cards show their submission types (with a table of how each is written), Submitted or Not submitted, Graded or Not graded, and Late or Excused tags; Pending review is gone; Missing cards get a red border and a "⚠ MISSING" bar as well as the red badge; S-5 and S-8 updated to match. |
 | 2026-10-26 | The account menu button is a gear, [⚙], instead of (A), from the Team Lead's review. |
 | 2026-10-26 | Every button has an ID in capitals with underscores for logs, docs, code, and tests, and a plain-words label for screen readers, with a table of Phase 1 to 4 button IDs, from the Team Lead's review. Dates use the device's time zone (FR-22). |
+| 2026-10-26 | Deleting a card or a note (Phase 5) joins the destructive actions that ask first, from the Team Lead's review. |

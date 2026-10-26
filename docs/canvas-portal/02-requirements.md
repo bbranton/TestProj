@@ -78,7 +78,7 @@ Removed requirements are not listed.
 - Performance: NFR-1
 - Security and privacy: NFR-10, NFR-11 (encrypted storage), NFR-12, NFR-13, NFR-14
 - Reliability: NFR-20
-- Usability and accessibility: NFR-30, NFR-34
+- Usability and accessibility: NFR-30 (Chrome), NFR-34
 - Maintainability: NFR-41
 
 **Phase 2: Dragging and sync**
@@ -110,7 +110,7 @@ Removed requirements are not listed.
 - Accounts, sync, and data control: FR-53, FR-55
 - Performance: NFR-4
 - Reliability: NFR-21
-- Usability and accessibility: NFR-33, NFR-35, NFR-36
+- Usability and accessibility: NFR-30 (other browsers), NFR-33, NFR-35, NFR-36
 
 ## 2. Users
 
@@ -223,7 +223,7 @@ Removed requirements are not listed.
 | FR-77 | Dragging feels like Trello: the card tilts slightly and lifts while dragged, the list under it is highlighted and a gray gap shows the due date spot where it will land, and the board scrolls when the card nears an edge. | Should | 2 |
 | FR-78 | Between the header and the board, a row of show/hide buttons has one button per active course, in the course's label color. Tapping a button hides or shows that course's cards; "Show all" and "Hide all" buttons show or hide every course at once. When every course is hidden, the board says so and offers Show all. Hidden cards keep their list. Until Phase 5 the choice is kept in the browser, so it survives a reload on that device; from Phase 5 it is saved with the user's account so it follows them between devices. | Must | 1, 5 (saving the choice) |
 | FR-79 | Help the student see which assignments are new or have changed in Canvas (for example a new due date or new instructions) since they last looked, such as with a badge on the card and a way to clear it. | — | 5 |
-| FR-80 | Each list has a minimize/expand toggle in its header. A minimized list shrinks to a narrow strip showing its title and number of cards. Expanded lists share the whole width of the board and resize whenever a list is minimized or expanded. Each time the board loads or is refreshed, empty lists start minimized and the others start expanded; the minimized or expanded state is not saved. A list's card count, and whether it counts as empty, include only cards that are shown, not cards of courses hidden with FR-78. From Phase 2, dropping a card on a minimized list that is empty expands it; dropping on a minimized list that already has cards keeps it minimized and updates its count. | Must | 1, 2 (dropping) |
+| FR-80 | Each list has a minimize/expand toggle in its header. A minimized list shrinks to a narrow strip showing its title and number of cards. Expanded lists share the whole width of the board and resize whenever a list is minimized or expanded. Each time the page loads or reloads, and each time a Refresh finishes, empty lists start minimized and the others start expanded; the minimized or expanded state is not saved. A list's card count, and whether it counts as empty, include only cards that are shown, not cards of courses hidden with FR-78. From Phase 2, dropping a card on a minimized list that is empty expands it; dropping on a minimized list that already has cards keeps it minimized and updates its count. | Must | 1, 2 (dropping) |
 | FR-81 | Search works like Trello's card search: one search box filters the whole board in place, matching each card's name, course, Canvas description, and notes. It includes archived cards and orphaned cards (FR-45, FR-74), which show grayed out where they match. It replaces FR-24's name-only keyword filter. | — | 5 |
 
 ### 4.6 Private notes
@@ -281,7 +281,7 @@ Removed requirements are not listed.
 
 | ID | Requirement | Phase |
 |----|-------------|-------|
-| NFR-30 | Works in the current release of Chrome, Firefox, Safari, and Edge on a laptop or desktop, checked when each phase is signed off. | 1 |
+| NFR-30 | Works in the current release of Chrome on a laptop or desktop, checked when each phase is signed off. From Phase 5, it also works in the current release of Firefox, Safari, and Edge. | 1 (Chrome), 5 (other browsers) |
 | NFR-31 | *(Removed: keyboard-only use is not a requirement. From the Team Lead's review.)* | n/a |
 | NFR-32 | Meets these WCAG 2.2 level AA criteria (the standard web accessibility guideline): contrast of text and controls (1.4.3, 1.4.11), text readable at 200% zoom (1.4.4), and every control and image has a name a screen reader announces (1.1.1, 2.5.3, 3.3.2, 4.1.2). Keyboard and focus criteria are left out, since keyboard use is not a requirement (NFR-31). | 4 |
 | NFR-33 | Usable on a phone-width screen. As in Trello's mobile layout, one list fills the screen and the user swipes between lists. The UI details are worked out before this is built. | 5 |
@@ -306,7 +306,7 @@ Removed requirements are not listed.
 - **Q-5** Should the portal support parent (observer) tokens? Canvas returns observed students' data through different options, so the views would need a student picker. Proposed for Phase 5.
 - ~~**Q-6** Should personal cards (FR-71) come in Phase 3, or wait until later?~~ Answered: later. Students don't need to create their own cards or lists yet, so FR-64 and FR-71 are Phase 5 future features.
 - **Q-7** *(Needed before Phase 3.)* When a course ends or the student drops it, should its cards be archived at once, kept until the student hides the course, or kept until the next term starts? (Recommendation: archive when the course leaves Canvas's active list, and bring them back if it returns.)
-- **Q-8** *(Needed before Phase 1 is done.)* If a student disconnects and then connects a different Canvas account or school, what happens to the old board? (Recommendation: keep the old account's cards but show only the new account's, starting them in Backlog, and bring the old cards back if the student reconnects the old account. Each card already records its connection. Showing two schools on one board is FR-55, Phase 5.)
+- ~~**Q-8** If a student disconnects and then connects a different Canvas account or school, what happens to the old board?~~ Answered by the Team Lead: the old account's cards are kept but hidden, and the new account's cards start in Backlog. Reconnecting the old account brings its cards back. Once more than one school is supported (FR-55, Phase 5), every account's cards show on one board.
 - ~~**Q-9** Some assignments can't be submitted in Canvas, such as on-paper work. Should the card show their submission type?~~ Answered by the Team Lead: every card shows all of its submission types, plus *Submitted* and *Graded* worked out by the FR-23 rules, and *Missing* cards are highlighted (FR-23, FR-65).
 - ~~**Q-10** NFR-13 and C-3 allow only Canvas `GET` calls, but the design's first Phase 3 speed-up was Canvas GraphQL, which reads through `POST /api/graphql`. Should NFR-13 allow read-only GraphQL queries?~~ Answered by the Team Lead: GraphQL is a possible future feature (Phase 5). Until then NFR-13 and C-3 stay `GET` only, and Phase 3 tuning uses REST.
 - **Q-11** Should the roadmap add a goal for reach, such as "works for every student, whatever their browser or ability", so NFR-30 and NFR-32 trace to a goal?
@@ -369,3 +369,4 @@ Removed requirements are not listed.
 | 2026-10-26 | FR-74's Archived items holds only what the student archived; orphaned cards are found only with FR-45's show/hide control, and are deleted from the card itself (Phase 5). From the Team Lead's review of the UI specification. |
 | 2026-10-26 | FR-74: archived cards and lists are shown on the board through an Archived option in the filter menu, not listed in the board menu; FR-75's menu holds only the background and course colors. From the Team Lead's review of the UI specification. |
 | 2026-10-26 | Added FR-81 (Phase 5): Trello-style search across the whole board, including descriptions, notes, archived and orphaned cards; FR-24's Phase 1 keyword filter matches names across the whole board. From the Team Lead's review of the UI specification. |
+| 2026-10-26 | Team Lead's answers on PR #6: FR-35 is Phase 1; FR-80 resets lists on every page load and every Refresh; hidden courses don't count toward list counts (FR-80); NFR-32 leaves out keyboard and focus; NFR-30 is Chrome only in Phase 1, other browsers in Phase 5; Q-8 answered (old account's cards are hidden). |

@@ -242,12 +242,16 @@ The backend only ever sends filtered, portal-shaped data to the frontend. It
 does not pass Canvas responses straight through, and it never includes the
 token.
 
-**Dates** are sent as Canvas gives them, in UTC (ISO 8601). The frontend
-shows them in the browser's time zone (FR-22), so the backend needs no time
-zone setting. Each assignment carries `due_at`, `unlock_at`, and `lock_at`.
-The frontend compares `unlock_at` and `lock_at` with the device clock, so a
-card turns from "Opens …" to open, or to "Closed …", without a Refresh
-(FR-22, FR-65).
+**Dates** are sent as Canvas gives them, in UTC (ISO 8601), and every
+comparison is made in UTC (FR-22): sorting by due date (backend and
+frontend), the due badge, the "Opens …" and "Closed …" lines, and the due
+date filters. In the browser that means comparing parsed instants such as
+`Date.parse(due_at)` with `Date.now()`, never formatted local strings.
+Only display uses the device's time zone, so the backend needs no time
+zone setting. Each assignment carries `due_at`, `unlock_at`, and
+`lock_at`. The frontend checks `unlock_at` and `lock_at` against the
+current time, so a card turns from "Opens …" to open, or to "Closed …",
+without a Refresh (FR-22, FR-65).
 
 **Errors** all have one shape, `{"error": "<code>", "message": "<text>"}`,
 so the frontend can choose a screen by code without reading the text:
@@ -322,7 +326,7 @@ sends the frontend only the results:
 | *Missing* | `submission.missing` is true. The card is highlighted so it stands out; the UI specification decides how | `submission.missing` |
 | *Late*, *Excused* tags | Shown when the field is true | `submission.late`, `submission.excused` |
 | Submission types | Every entry, in Canvas's order, such as "online upload, on paper" | `submission_types` (on the assignment) |
-| "Opens …" or "Closed …" | Before `unlock_at`, the card is grayed out and says when it opens. After `lock_at`, it says when it closed. Worked out by the frontend against the device clock, since it changes with time, not with Canvas | `unlock_at`, `lock_at` (on the assignment, the student's own dates) |
+| "Opens …" or "Closed …" | Before `unlock_at`, the card is grayed out and says when it opens. After `lock_at`, it says when it closed. Worked out by the frontend against the current time, in UTC, since it changes with time, not with Canvas | `unlock_at`, `lock_at` (on the assignment, the student's own dates) |
 
 With no submission at all, the card shows *Not submitted* and *Not graded*.
 These replace Canvas's `workflow_state`, which the portal no longer reads,
@@ -720,7 +724,7 @@ UI uses:
 | Scroll the board | Only when the window is too narrow for the expanded lists (240 px minimum each): horizontal scrollbar, or drag on empty background | FR-61 |
 | Open a card | Click: the assignment opens in Canvas in a new tab | FR-26 |
 | Show or hide a course | Tap its button in the row under the header, or Show all / Hide all; the board updates at once. The choice is kept in this browser | FR-78 |
-| Filter the board | The Filter button starts the course row and opens S-8. Filtering runs in the browser over the cards already loaded: no endpoint, no table, and nothing saved, so a reload clears it. Due date filters compare with the device clock. The options and wording are the UI specification's | FR-24, FR-72 |
+| Filter the board | The Filter button starts the course row and opens S-8. Filtering runs in the browser over the cards already loaded: no endpoint, no table, and nothing saved, so a reload clears it. Due date filters compare in UTC with the current time. The options and wording are the UI specification's | FR-24, FR-72 |
 | Show or hide orphaned cards (Phase 2) | A control on the course button row, with how many orphaned cards there are. Hidden by default; the choice is kept in this browser, like the course buttons. The board already holds the orphaned cards, so the change is at once. How the control and a grayed card look is the UI specification's | FR-45 |
 
 ## 10. Why React (D-1)
@@ -845,3 +849,4 @@ the data side.
 | 2026-10-26 | Opens and closes dates (FR-22, FR-65, from the Team Lead's review of the UI specification): assignments carry `unlock_at` and `lock_at`, with the student's override; the frontend shows "Opens …" and "Closed …" against the device clock. |
 | 2026-10-26 | Filter menu (S-8, FR-24, FR-72) moves to Phase 1, from the Team Lead's review of the UI specification: a FilterMenu component that filters loaded cards in the browser, with no endpoint, table, or saved state. |
 | 2026-10-26 | Q-8 answered by the Team Lead (requirements PR #6): connecting a different Canvas account keeps the old connection's cards, hidden, and reconnecting it brings them back; `CANVAS_CONNECTION` gains `active`, and a user can have several rows with one active. FR-35 confirmed in Phase 1. |
+| 2026-10-26 | Every date and time comparison is made in UTC; only display uses the device's time zone (FR-22, from the Team Lead on requirements PR #6). |

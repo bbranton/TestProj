@@ -123,6 +123,7 @@ planned.
 | `COURSE_TOGGLE` | Show *course* / Hide *course* | S-4 | [● BIO 101] |
 | `SHOW_ALL_COURSES` | Show all | S-4 | [Show all] |
 | `HIDE_ALL_COURSES` | Hide all | S-4 | [Hide all] |
+| `SHOW_ORPHANS` | Show cards removed from Canvas / Hide cards removed from Canvas | S-4 (Phase 3) | [◌ Removed from Canvas (2)] |
 | `MINIMIZE_LIST` | Minimize *list* | S-4 | [−] |
 | `EXPAND_LIST` | Expand *list* | S-4 | [+] |
 | `OPEN_IN_CANVAS` | *Assignment name*, opens in Canvas | S-4 | The whole card |
@@ -324,9 +325,19 @@ show the same fields as the Phase 1 sketch.
   Cards in every list are always sorted by due date, earliest at the top;
   cards with no due date come last. Cards with the same due date, or no
   due date, are in name order (FR-38). Missing cards keep their place;
-  the highlight is what makes them stand out. A card whose assignment is gone
-  from the last complete Canvas data is hidden but kept (FR-45); from
-  Phase 3 it is archived instead.
+  the highlight is what makes them stand out.
+
+  Cards removed from Canvas (orphaned cards, FR-45): a card whose
+  assignment is gone from the last complete Canvas data is kept, never
+  deleted, and hidden by default. From Phase 3, a [◌ Removed from Canvas
+  (2)] button at the end of the course row shows or hides them, with
+  the count of such cards. It appears only when there is at least one,
+  and the choice is kept in this browser, like the course buttons.
+  Shown, each one stays in its list, in its due date place, grayed out
+  with a dashed border, and says "Removed from Canvas" instead of its
+  status. It can't be opened in Canvas, since the assignment is gone.
+  The screen says "Removed from Canvas", not "orphaned", which is the
+  team's word for it.
 
   Lists: Backlog, To do, In progress, and Done, always in that order
   (FR-31). New assignments from Canvas land in Backlog until the student
@@ -537,8 +548,10 @@ board.
                           | +--------------------------------+ |
                           | [Restore]  [Delete]  ✎ notes kept  |
                           +------------------------------------+
-  Cards for assignments removed from Canvas land here (FR-45). They are
-  archived from Phase 3, but can only be seen here from Phase 5.
+  Cards for assignments removed from Canvas land here (FR-45). From
+  Phase 3 they can already be shown on the board with the
+  [◌ Removed from Canvas] button (S-4); this panel adds searching,
+  restoring, and deleting them.
   An orphaned card is one whose assignment the teacher deleted or
   unpublished in Canvas. Restore puts a card back in its old list, in
   its due date place. Delete removes an orphaned card for good, with its
@@ -727,7 +740,7 @@ flowchart TD
     B -- no card yet --> D[Add card to Backlog<br/>in its due date place]
     B -. archived card, Phase 3 .-> R[Bring card back<br/>to its old list]
     Z -- yes --> E{For each card}
-    E -- assignment gone from Canvas --> F[Card leaves the board but is kept;<br/>from Phase 3 it is marked archived]
+    E -- assignment gone from Canvas --> F[Card is kept and hidden by default;<br/>from Phase 3 it is marked archived<br/>and the student can show it]
     E -- state or flags changed --> G[Badge shows the current Canvas value;<br/>card stays where the student put it]
 ```
 
@@ -812,3 +825,4 @@ flowchart TD
 | 2026-10-26 | Deleting a note or an orphaned card (Phase 5) joins the destructive actions that ask first; S-9 adds Delete for orphaned cards, those whose assignment is gone from Canvas. From the Team Lead's review. |
 | 2026-10-26 | Links to the new [glossary](glossary.md), and screen words follow it, from the Team Lead's review. |
 | 2026-10-26 | S-2's token steps ask for an expiry date, and disconnecting reminds the student to delete the token in Canvas (risk R-2), from the Team Lead's review. |
+| 2026-10-26 | Cards removed from Canvas are hidden by default, not for good: from Phase 3 a [◌ Removed from Canvas] button on the course row shows them, grayed out in their lists. From the Team Lead's review. |

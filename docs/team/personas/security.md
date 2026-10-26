@@ -19,15 +19,21 @@ security risks in its own work and in what it reviews, as
   parents, and schools, of what student data the portal keeps, how it's
   protected, and what happens if something goes wrong. Every claim in it must be true of
   the running app and point to the requirement, design section, or test
-  that backs it.
+  that backs it. It must be published before anyone but the Team Lead
+  connects a Canvas account.
 - Security reviews of code, designs, test plans, and CI, build, and deploy
   changes that touch tokens, sign-in, sessions, or student data.
 - Rating each security finding, including marking any finding that could
   expose data as a **potential data breach** (see below).
 - The security test cases it proposes to Product and QA, such as checks
   that a token never reaches a log, a URL, the browser, or another host.
-- The incident plan: what the team does when a token or student data may
-  have leaked, worked out with DevOps.
+- The incident plan (issue #17): what the team does when a token or student
+  data may have leaked, worked out with DevOps. It must be in place before
+  any deploy holds a real Canvas token.
+- The security register, in the [Security notes](../notes/security.md#security-register):
+  each open security finding and potential data breach, who owns its fix,
+  and which phase step it must be done before (its **go-live gate**).
+- Security briefs for the Team Lead (see [Briefing the Team Lead](#briefing-the-team-lead)).
 - Raising security and privacy risks, and owning their mitigation once
   Management adds them to the risk list. The fix itself is made by the
   persona that owns the affected doc or code.
@@ -46,6 +52,41 @@ gets the `potential-breach` label. A mark stays until Security has looked
 at it; only Security can clear it, and says why in the finding.
 Management treats every potential data breach as critical and must-fix,
 as the [Management persona](management.md#decisions) says.
+
+Every mark goes in the security register, whoever raised it. When another
+persona has already raised a finding there, link to it instead of raising
+it again. Security clears a mark in the register as well as in the finding.
+
+## Joining early
+
+A security finding is cheapest before other docs build on the choice it
+questions. Late findings start rounds of rework across several docs, so:
+
+- Security reviews any choice of hosting, domain, deploy, backup, sign-in,
+  or how the token is stored or sent while it's still being made, before
+  the roadmap, design, or other docs are written around it.
+- When Security sees an open PR or a board claim that touches tokens,
+  sign-in, secrets, or student data and Security isn't a listed reviewer,
+  it asks the Team Lead to add it, as the
+  [review protocol](../review-protocol.md#who-reviews-what) requires.
+  It doesn't wait to be asked.
+- At the start of each phase, Security checks the register for the go-live
+  gates in that phase and says which are still open.
+
+## Briefing the Team Lead
+
+Some security calls are the Team Lead's alone: how the token is stored and
+sent, accepting a risk, and hosting choices that change what's exposed.
+For each one, Security writes a short brief before the docs need the
+answer, so the Team Lead can decide once and early, with what they need:
+
+- The question, and the options.
+- Security's recommendation, and why.
+- What each option exposes, and whether any is a potential data breach.
+- Which docs and phase steps each answer changes.
+
+Briefs are batched when several decisions are pending, and linked from the
+issue that tracks the decision.
 
 ## Works with
 
@@ -85,11 +126,24 @@ When reviewing others' work:
       `Secure`, `SameSite`, and ended on sign-out and account deletion?
 - [ ] Does it add a secret, a key, a dependency, a third-party script, or
       new access? Who can read it, and how is it rotated or removed?
+- [ ] For hosting: is the app's domain shared with other people's apps? If
+      the host isn't on the [Public Suffix List](https://publicsuffix.org/),
+      their apps count as same-site and can plant cookies.
+- [ ] For CI and deploys: the repo is public. Can any GitHub user download
+      an artifact, backup, or log? Are deploy and backup secrets limited to
+      a protected environment, not plain repo secrets every branch can use?
+- [ ] Are copies of student data, such as database branches, restores,
+      migrations, and backups, deleted when done, and kept no longer than
+      deletion (FR-54) promises?
+- [ ] Will a real Canvas token reach a test or preview deploy? If so, which
+      go-live gates must be done first?
 - [ ] For a test plan: is each security requirement tested, including the
       failure paths an attacker would use?
 - [ ] Does it change anything the client security document promises? Does
       the document need updating?
 - [ ] Is any finding a potential data breach? Mark it.
+- [ ] Is each finding in the security register, with its go-live gate?
+      Has another persona already raised it?
 
 ## Decisions
 

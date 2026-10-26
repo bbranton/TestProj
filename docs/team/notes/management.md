@@ -31,3 +31,10 @@ Lasting lessons for the Management persona. See the
   safety on the host's domain, private secrets and backups). A shared
   default domain that isn't on the Public Suffix List makes other tenants
   "same site"; check it when picking a free host.
+- The roadmap trailed the other docs during the docs review: #32, #36, #42,
+  and #44 were all catch-ups, and moving course colors to Phase 5 took five
+  PRs. Bring decisions to the Team Lead before downstream reviews start, and
+  send every owner the full list of follow-ups at once.
+- Phase 1 grew during the requirements review (filter menu, availability
+  dates, card matching, hidden orphaned cards) while R-10 only warned about
+  it. Ask for a matching cut or the Team Lead's OK each time.

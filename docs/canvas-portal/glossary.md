@@ -45,7 +45,8 @@ The portal follows [Trello](https://trello.com)'s words (goal G-3): a
 | Course | One of the student's active Canvas courses. The docs say "course", never "label". | FR-20 |
 | Course button | The button above the lists that shows or hides one course's cards: ● when shown, ○ when hidden. A hidden course's cards keep their list. | FR-78 |
 | Label strip | The colored bar on a card that shows its course, in the course's automatic color. | FR-65, FR-66 |
-| Orphaned card | A card whose assignment the teacher deleted or unpublished in Canvas. Until Phase 3 it is simply not shown, but kept. From Phase 3 it is *archived*: it leaves the board but is kept, and returns to its old list if the assignment comes back. From Phase 5 the student can restore it, or delete it for good, with its notes, from Archived items after confirming. Say "orphaned" or "removed from Canvas" for this, not "missing", which is a [card status](#card-status). | FR-45, FR-74, S-9 |
+| Orphaned card | A card whose assignment the teacher deleted or unpublished in Canvas. The portal keeps it, with its last Canvas details, and never deletes it. It's hidden by default; the filter menu's show/hide option for cards removed from Canvas shows it grayed out in its list. If the assignment comes back, the card returns to its old list. From Phase 3 a complete Refresh marks it archived. From Phase 5 the student can delete a shown orphaned card for good, with its notes, after confirming. Not the same as an [archived card](#the-board), and say "orphaned" or "removed from Canvas" for it, not "missing", which is a [card status](#card-status). | FR-45, FR-74 |
+| Archived card *(Phase 5)* | A card or list the student archived. The filter menu's *Archived* option shows them grayed out, each with a way to restore it. Orphaned cards are never mixed in with them. | FR-74 |
 
 ## Refresh and sync
 

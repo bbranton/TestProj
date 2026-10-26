@@ -1,9 +1,10 @@
 # Cost log
 
 What each thread actually cost, so Management can estimate new work from
-real numbers. Management owns this file; every thread adds its own row.
-How to add a row is in the [`log-cost` skill](../../.claude/skills/log-cost/SKILL.md),
-and how estimates use it is in
+real numbers. The [CFO](personas/cfo.md) owns this file and is the only
+persona that edits it. Every other thread reports its row with the
+[`log-cost` skill](../../.claude/skills/log-cost/SKILL.md), and the CFO
+commits the reported rows in batches. How estimates use the log is in
 [Management's cost plans](personas/management.md#cost-plans).
 
 ## Size units
@@ -46,3 +47,6 @@ thread re-read on each turn, and is usually most of the cost.
 | 2026-10-25 | #9 | Owner | Product and QA (applied after the fact) | 1 / 1 / 5 / 3 | 55K | 6.3M | 0.20M | 4.34 | Taken before merge. Docs-only review of the test plan; rounds were folding in findings from the other doc threads and the team policies, not reviewer comments. |
 | 2026-10-25 | #7 | Owner | Architecture | 1 / 1 / 4 / 3 | 40K | 5.8M | 0.18M | 3.69 | Taken before review, so review rounds are not included. Design doc review, then an architecture pass and a pass to match the persona policies. Docs only. |
 | 2026-10-26 | (this PR) | Owner | Management | 1 / 1 / 0 / 3 | 2.8K | 0.46M | 0.06M | 0.64 | Taken when the PR opened, so later rounds aren't included. Self-review of the last few days of Management work (PRs, reviews, issues, cost log), then persona and notes changes. Docs only. |
+| 2026-10-26 | #53 | Owner | Product and QA | 1 / 1 / 0 / 2 | 11K | 2.04M | 0.08M | 1.23 | Self-review of the last several days, then persona and notes edits. Merged with no review rounds. Docs only. Reported on the board, added by the CFO. |
+| 2026-10-26 | #52 | Owner | Security | 1 / 1 / 0 / 2 | 12K | 2.23M | 0.09M | 1.41 | Self-review of the last several days, then persona and notes edits. Merged with no review rounds. Docs only. Reported on the board, added by the CFO. |
+| 2026-10-26 | #58 | Owner | DevOps | 1 / 1 / 0 / 7 | 8K | 1.71M | 0.06M | 0.96 | Checked the Team Lead's develop branch and main ruleset setup, then pointed CI, ci-paths, and team rules at develop. Merged with no review rounds. Reported on the board, added by the CFO. |

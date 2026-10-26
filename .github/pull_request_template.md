@@ -42,7 +42,7 @@ The Team Lead ticks each reviewer to run, or ticks *Team Lead review only*.
 ## Cost
 
 <!-- For a feature with a cost plan: the plan's estimate. After merge, each
-     thread logs its actual cost with the log-cost skill. Delete this
+     thread reports its actual cost with the log-cost skill. Delete this
      section for small PRs with no plan. -->
 Estimate: 
 

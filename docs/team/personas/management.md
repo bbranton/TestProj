@@ -102,8 +102,10 @@ plan before work starts, and the Team Lead approves it with the plan:
 4. Name the biggest cost risks, such as many review rounds or an unclear
    design, and the cheapest way to cut cost, such as fewer reviewers.
 
-When the feature is done, compare the actual cost with the plan in the
-cost log's notes, so the next estimate is better.
+When the feature is done, compare the actual cost with the plan, so the
+next estimate is better. Management reads the cost log but doesn't edit
+it: the [CFO](cfo.md) owns the log, and Management sends the comparison
+to the CFO to add to the feature's rows.
 
 ## Decisions
 

@@ -33,9 +33,9 @@ Lasting lessons for the DevOps persona. See the
 - The branch rename went `master` to `develop` to `main` across two PRs
   (#29). Confirm a shared name with the Team Lead before editing, and list
   every place it lives first.
-- Many PRs append rows to `cost-log.md`, which causes merge conflicts and
-  extra "Merge main" commits. Keep shared append-only files to one owner
-  thread where possible.
+- Many PRs appending rows to `cost-log.md` caused merge conflicts and
+  extra merge commits, so the CFO is now its only writer. Keep shared
+  append-only files to one owner thread where possible.
 
 ## Open items
 

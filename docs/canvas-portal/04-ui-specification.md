@@ -101,7 +101,8 @@ even though the formal accessibility check (NFR-32) is Phase 4.
   with the button that does it, such as [Retry refresh]. They never show
   error codes or the token.
 - **Destructive actions ask first:** disconnecting Canvas, deleting the
-  account (Phase 4), and from Phase 5 deleting a card or a note (FR-41).
+  account (Phase 4), and from Phase 5 deleting a personal card (FR-71) or
+  a note (FR-41). Canvas cards are never deleted, only archived (FR-45).
 
 Button IDs for Phases 1 to 4. Later phases add theirs when they are
 planned.

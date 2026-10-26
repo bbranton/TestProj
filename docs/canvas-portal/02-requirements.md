@@ -213,10 +213,10 @@ Removed requirements are not listed.
 | FR-68 | The card back shows: the title; "in list *name*" (clicking it moves the card); labels; due date; points and status; an "Open in Canvas" button; *Description*, from Canvas and read only (FR-28); *Notes*, private (FR-40); and *Archive*. Checklists are added in Phase 5 (FR-70). | — | 5 |
 | FR-69 | An edit (pencil) button on each card (shown on hover on desktop, always shown on touch screens), right-click, or a long press opens a quick edit menu: Open card, Move, Change label color, Open in Canvas, Archive. | — | 5 |
 | FR-70 | A card back can hold one or more checklists of items that can be checked off. The card front shows progress such as 2/5 (2 of 5 items done). | — | 5 |
-| FR-71 | "+ Add a card" at the bottom of each list creates a personal card that isn't a Canvas assignment. It supports everything a card back has except the Canvas details. A personal card can be deleted, and deleting asks for confirmation first, as for notes (FR-41). Canvas cards are never deleted, only archived (FR-45). | — | 5 |
+| FR-71 | "+ Add a card" at the bottom of each list creates a personal card that isn't a Canvas assignment. It supports everything a card back has except the Canvas details. | — | 5 |
 | FR-72 | A Filter button at the start of the course button row (FR-78), under the header, opens a menu that filters cards by course, by due date (due date passed, due in the next day, next week, next month, no due date), by the statuses in FR-23, and by keyword. When a filter is on, the course row says so and offers "Clear". | — | 5 |
 | FR-73 | *(Removed: no keyboard shortcuts. From the Team Lead's review.)* | n/a | n/a |
-| FR-74 | Archived cards and lists are found under "Archived items" in the board menu, where they can be restored. | — | 5 |
+| FR-74 | Archived cards and lists are found under "Archived items" in the board menu, where they can be restored. The student can also permanently delete an archived card whose assignment is gone from Canvas (an *orphaned* card), together with its notes, after confirming that it can't be undone. The portal itself never deletes a card (FR-45). | — | 5 |
 | FR-75 | A board menu opens as a panel from the right edge with: board background color, labels, archived items. | — | 5 |
 | FR-76 | The user can have more than one board. | — | 5 |
 | FR-77 | Dragging feels like Trello: the card tilts slightly and lifts while dragged, the list under it is highlighted and a gray gap shows the due date spot where it will land, and the board scrolls when the card nears an edge. | Should | 2 |
@@ -272,7 +272,7 @@ Removed requirements are not listed.
 | ID | Requirement | Phase |
 |----|-------------|-------|
 | NFR-20 | When Canvas is slow, down, or rate limiting, the page keeps showing the last saved data with a message that says Canvas couldn't be reached and the time of the data shown. If there is no saved data yet (the first load), the page says so and offers Retry, never an empty or error page. | 1 |
-| NFR-21 | No user action or Canvas change can silently delete a note. | 5 |
+| NFR-21 | No user action or Canvas change can silently delete a note. Deleting an orphaned card deletes its notes only after the student confirms (FR-74). | 5 |
 | NFR-22 | When the same account is open on more than one device or browser tab, a card moved on one shows in its new list on the others within 30 seconds, without a reload. If the same card is moved on two devices, every device ends up showing the move that reached the server last. A card is never lost or shown twice, even if two devices load the board at the same moment or a save fails. | 2 |
 
 ### 5.4 Usability and accessibility
@@ -358,4 +358,4 @@ Removed requirements are not listed.
 | 2026-10-26 | Users: a student can be enrolled at more than one school, with a pointer to FR-55 (Phase 5). From the Team Lead's review. |
 | 2026-10-26 | FR-23 rewritten from the Team Lead's review: the card shows *Submitted* (from `submission.submitted_at`), *Graded* (from `graded_submissions_exist`, `grade_matches_current_submission`, and `graded_at`), every submission type, and Late and Excused tags, instead of Canvas's `workflow_state`; *Missing* cards are highlighted (FR-65). FR-22, FR-24, FR-27, FR-39, FR-65, and FR-72 follow; Q-9 answered. |
 | 2026-10-26 | Q-10 answered by the Team Lead: Canvas GraphQL is a possible future feature, so NFR-13 and C-3 stay `GET` only. |
-| 2026-10-26 | FR-71: personal cards can be deleted, with confirmation first; Canvas cards are only archived. From the Team Lead's review of the UI specification. |
+| 2026-10-26 | FR-74: the student can permanently delete an orphaned card (its assignment gone from Canvas) and its notes, after confirming; NFR-21 notes this. From the Team Lead's review of the UI specification. |

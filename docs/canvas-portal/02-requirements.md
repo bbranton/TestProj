@@ -115,7 +115,7 @@ Removed requirements are not listed.
 
 | User | Description | Main goal |
 |------|-------------|-----------|
-| Student | Enrolled in one or more Canvas courses at a school | See everything due and plan their work |
+| Student | Enrolled in one or more Canvas courses at one or more schools (connecting more than one school is FR-55, Phase 5) | See everything due and plan their work |
 | Parent (observer) | A Canvas *observer* account linked to one or more students; sees their courses and assignments with limited access | Keep track of a student's work (Phase 5, see Q-5) |
 | Developer (Team Lead) | Builds and runs the portal | Test against real and sample Canvas data |
 
@@ -355,3 +355,4 @@ Removed requirements are not listed.
 | 2026-10-25 | Business analyst review: added *Requirements by goal*, tracing every requirement to a roadmap goal; requirements say "the portal", not "the backend", and FR-10 and FR-11 no longer name Canvas endpoints (the design does); FR-1 covers an unreachable address; FR-20 covers no courses or no assignments; FR-22 uses the device's time zone; FR-50 covers staying signed in and signing out; NFR-1, NFR-14, NFR-20, NFR-30, and NFR-34 have measurable or checkable wording; NFR-2's target is written in before Phase 3; NFR-20 covers a failed first load; added Q-10 (Canvas GraphQL versus GET-only, from the design review) and Q-11 (no goal covers browsers and accessibility). |
 | 2026-10-25 | From the test plan review: NFR-32 names the WCAG criteria it covers and leaves out keyboard and focus criteria (NFR-31 removed); FR-80's card count and "empty" rule count only shown cards, not those of hidden courses (FR-78). |
 | 2026-10-25 | From the roadmap cross-review: FR-16 says a second Refresh joins the running one; FR-54 says data leaves the live app at once and every backup within 30 days, matching the design's backup retention; NFR-11 is split into encrypted storage (Phase 1) and HTTPS when deployed (Phase 4). |
+| 2026-10-26 | Users: a student can be enrolled at more than one school, with a pointer to FR-55 (Phase 5). From the Team Lead's review. |

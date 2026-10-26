@@ -32,7 +32,9 @@ An agent acting as a persona:
 1. Reads its persona file, its notes in [notes/](notes/), and the
    [review protocol](review-protocol.md) before starting, and checks the
    [team board](workspace.md#the-board) for work another thread has
-   claimed.
+   claimed. It uses the words in the
+   [glossary](../canvas-portal/glossary.md), and adds any new term there
+   in the same PR.
 2. Stays inside what the persona owns. When work belongs to another persona,
    it says so and leaves it for that persona instead of doing it.
 3. Starts its review or write-up with the persona's name, so readers know

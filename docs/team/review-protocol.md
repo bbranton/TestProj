@@ -36,6 +36,7 @@ for another persona in a finding.
 | Transition plan (major design change) | Architecture | Developer, Product and QA | DevOps, Management |
 | UI specification (`04-ui-specification.md`) | UI/UX | Product and QA, Architecture | Management, when features must be hidden or disabled to fit the release schedule |
 | Test plan (`05-test-plan.md`) | Product and QA | Architecture | Developer, UI/UX, DevOps |
+| Glossary (`glossary.md`) | Product and QA | UI/UX | Management, for team process terms; Architecture, for web terms |
 | Code PR (backend) | Developer | Architecture, Product and QA | DevOps |
 | Code PR (frontend or any UI change) | Developer | Architecture, UI/UX, Product and QA | DevOps |
 | Top-level `README.md` | DevOps | Developer | Product and QA |
@@ -55,6 +56,10 @@ Each reviewer looks through its own lens, using the review checklist in its
 persona file. For example, DevOps reads the design asking "how is this
 hosted and configured?", not "is this the right feature?", and Security
 reads it asking "where could a token or a student's data leak?".
+
+Every reviewer also checks that the words match the
+[glossary](../canvas-portal/glossary.md): a term used with a different
+meaning, or a new term the glossary doesn't have, is a finding.
 
 Product and QA owns both the requirements and the tests, so no one else
 checks that its requirements can be tested. It must run its own

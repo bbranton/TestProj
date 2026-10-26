@@ -129,7 +129,7 @@ Removed requirements are not listed.
   repository, chat, and screenshots, and are loaded from a local file that git
   ignores.
 - **C-1** Browsers block pages from calling the Canvas API directly from
-  another site (CORS, see the [glossary](README.md#web-terms-used-in-these-docs)).
+  another site (CORS, see the [glossary](glossary.md#web-terms)).
   All Canvas calls go through the portal's backend.
 - **C-2** Canvas returns long lists in pages (for example 10 to 100 items at a
   time) and limits how fast one token can make requests. The backend must

@@ -201,29 +201,34 @@ board:
 |  board background color                                                  |
 | +------------------------------------------------+ +----+ +----+ +----+  |
 | | Backlog                                    [−] | |[+] | |[+] | |[+] |  |
-| | +--------------------------------------------+ | | T  | | I  | | D  |  |
-| | | ▬▬ HIST 210                                | | | o  | | n  | | o  |  |
-| | | Chapter 4 questions                        | | |    | |    | | n  |  |
-| | | (◷ Oct 20, 11:59 PM)  10 pts               | | | d  | | p  | | e  |  |
-| | | Not submitted  [Missing]                   | | | o  | | r  | |    |  |
-| | +--------------------------------------------+ | |    | | o  | | 0  |  |
-| | +--------------------------------------------+ | | 0  | | g  | +----+  |
-| | | ▬▬ BIO 101                                 | | +----+ | r  |         |
-| | | Lab report 2                               | |        | e  |         |
-| | | (✓ Oct 22, 11:59 PM)  20 pts               | |        | s  |         |
-| | | Graded  [Late]                             | |        | s  |         |
-| | +--------------------------------------------+ |        |    |         |
-| | +--------------------------------------------+ |        | 0  |         |
-| | | ▬▬ BIO 101                                 | |        +----+         |
+| | #============================================# | | T  | | I  | | D  |  |
+| | # ⚠ MISSING                                  # | | o  | | n  | | o  |  |
+| | # ▬▬ HIST 210                                # | |    | |    | | n  |  |
+| | # Chapter 4 questions                        # | | d  | | p  | | e  |  |
+| | # (◷ Oct 20, 11:59 PM)  10 pts               # | | o  | | r  | |    |  |
+| | # Text entry                                 # | |    | | o  | | 0  |  |
+| | # Not submitted · Not graded                 # | | 0  | | g  | +----+  |
+| | #============================================# | +----+ | r  |         |
+| | +--------------------------------------------+ |        | e  |         |
+| | | ▬▬ BIO 101                                 | |        | s  |         |
+| | | Lab report 2                               | |        | s  |         |
+| | | (✓ Oct 22, 11:59 PM)  20 pts               | |        |    |         |
+| | | File upload                                | |        | 0  |         |
+| | | Submitted · Graded  [Late]                 | |        +----+         |
+| | +--------------------------------------------+ |                       |
+| | +--------------------------------------------+ |                       |
+| | | ▬▬ BIO 101                                 | |                       |
 | | | Lab report 3                               | |                       |
 | | | (◷ Oct 28, 11:59 PM)  20 pts               | |                       |
-| | | Not submitted                              | |                       |
+| | | File upload or text entry                  | |                       |
+| | | Not submitted · Not graded                 | |                       |
 | | +--------------------------------------------+ |                       |
 | | +--------------------------------------------+ |                       |
 | | | ▬▬ HIST 210                                | |                       |
 | | | Reading reflection                         | |                       |
 | | | (no due date)  15 pts                      | |                       |
-| | | Not submitted                              | |                       |
+| | | On paper                                   | |                       |
+| | | Not submitted · Not graded                 | |                       |
 | | +--------------------------------------------+ |                       |
 | +------------------------------------------------+                       |
 +--------------------------------------------------------------------------+
@@ -256,20 +261,25 @@ show the same fields as the Phase 1 sketch.
 | | +---------------+ | +-------------------+                              |
 | +-------------------+                                                    |
 +--------------------------------------------------------------------------+
-  Card fronts (FR-22, FR-65): ▬▬ label strip in the course's automatic
-  color (FR-66), the title, the due badge, the points, and the Canvas
-  status: the state (Not submitted, Submitted, Graded, Pending review)
-  and a tag for each Late, Missing, or Excused flag (FR-23). The due
-  badge shows the date and time in the student's time zone, such as
-  "Oct 28, 11:59 PM". It is red when Canvas flags Missing, even if the
-  assignment is also graded; otherwise green with ✓ when Submitted or
-  Graded; and plain otherwise. From Phase 5, cards with
+  Card fronts (FR-22, FR-23, FR-65), top to bottom: ▬▬ label strip in
+  the course's automatic color (FR-66); the title; the due badge and the
+  points; the submission types, written as in the table below; then
+  "Submitted" or "Not submitted", "Graded" or "Not graded", and a [Late]
+  or [Excused] tag when Canvas sets one. The due badge shows the date and
+  time in the device's time zone, such as "Oct 28, 11:59 PM". It is red
+  when the card is Missing, even if it is also graded; otherwise green
+  with ✓ when Submitted or Graded; and plain otherwise.
+  Missing cards (# border in the sketch) stand out at a glance in three
+  ways at once, so color is never the only signal: a thick red border
+  round the whole card, a red "⚠ MISSING" bar across its top, and the
+  red due badge. From Phase 5, cards with
   notes also show a ✎ note count (FR-43).
   Clicking a card opens the assignment in Canvas in a new tab (FR-26).
   From Phase 5 it opens the card back (S-5) instead.
   Cards in every list are always sorted by due date, earliest at the top;
   cards with no due date come last. Cards with the same due date, or no
-  due date, are in name order (FR-38). A card whose assignment is gone
+  due date, are in name order (FR-38). Missing cards keep their place;
+  the highlight is what makes them stand out. A card whose assignment is gone
   from the last complete Canvas data is hidden but kept (FR-45); from
   Phase 3 it is archived instead.
 
@@ -316,6 +326,26 @@ Messages on the board:
 | Canvas has no active courses for this account | "Canvas shows no active courses for this account." The course row is empty. |
 | Active courses, but none has assignments | The course buttons show, Backlog is empty, and it says "No assignments in your courses yet." |
 
+How each Canvas submission type is written on a card (FR-23). The words
+follow what Canvas itself shows the student on the assignment page. When
+an assignment has several types, they are joined with "or", in Canvas's
+order, with only the first word capitalized: "File upload or text entry".
+
+| Canvas `submission_types` value | On the card |
+|---------------------------------|-------------|
+| `online_upload` | File upload |
+| `online_text_entry` | Text entry |
+| `online_url` | Website URL |
+| `media_recording` | Media recording |
+| `student_annotation` | Student annotation |
+| `online_quiz` | Quiz |
+| `discussion_topic` | Discussion |
+| `external_tool` | External tool |
+| `on_paper` | On paper |
+| `none` | No submission |
+| `not_graded` | Not for a grade |
+| Any other value | The value with underscores as spaces, first letter capitalized |
+
 ### S-5 Card back (Phase 5, future feature)
 
 Requirements: FR-22, FR-26, FR-28, FR-40 to FR-44, FR-46, FR-67, FR-68.
@@ -332,7 +362,7 @@ the screen.
 |   | Course          Due date                       |                 |   |
 |   | [■ BIO 101]     [ ] Wed Oct 28, 11:59 PM       |                 |   |
 |   |                                                |                 |   |
-|   | 20 points · Not submitted                      | Actions         |   |
+|   | 20 pts · File upload · Not submitted           | Actions         |   |
 |   |                                                | [→ Move      ]  |   |
 |   | ≡ Description           from Canvas, read only | [↗ Open in   ]  |   |
 |   |   Write up the photosynthesis lab using the    | [   Canvas   ]  |   |
@@ -425,10 +455,10 @@ start of the course row.
 | [ ] Due in the next week                 |
 | [ ] Due in the next month                |
 |                                          |
-| Canvas status                            |
-| [ ] Not submitted  [ ] Submitted         |
-| [ ] Graded         [ ] Pending review    |
-| [ ] Late    [ ] Missing    [ ] Excused   |
+| Status                                   |
+| [ ] Submitted      [ ] Not submitted     |
+| [ ] Graded         [ ] Not graded        |
+| [ ] Missing  [ ] Late  [ ] Excused       |
 |                                          |
 | Courses                                  |
 | [ ] ■ BIO 101                            |
@@ -723,4 +753,5 @@ flowchart TD
 | 2026-10-25 | S-4 and the header now show only Phases 1 to 4: the [Filter] button, note counts, and [⋯] board menu are described as Phase 5 additions instead of drawn; S-2's error no longer mentions notes. From the whole-set review. |
 | 2026-10-25 | S-4 no longer lists NFR-31. From the Team Lead's review: keyboard actions are not a requirement. |
 | 2026-10-25 | Added S-10 Refresh progress (FR-16): per-course states, errors and timeouts, a summary, and the last Refresh's log, from the Team Lead's review. |
-| 2026-10-25 | In-depth UI/UX review after PR #3: added *UI by phase* and *Conventions on every screen* (color never the only signal, named icon buttons, one date format, consistent words, helpful messages); S-4 has a Phase 1 sketch, and card fronts show the due date and time, points, and Canvas status, with red winning over green on the due badge (FR-22, FR-65); course buttons show the course name under the code (FR-20); cards of removed assignments are hidden but kept until Phase 3 (FR-45); board messages for a failed Refresh, the first load, no courses, and no assignments; the header's "Synced" time is the last complete Refresh (FR-13), and [⟳] starts a Refresh; S-1 says a personal Google account works (R-6); S-2 lists its messages; S-10 closes without stopping the Refresh and uses ⏸ for rate limits, so ◷ only means a due date; S-6 marks deletion Phase 4; S-8 adds Pending review and Excused; Ctrl+Enter and the `f` key removed (keyboard actions are not a requirement); W-3 marked Phase 2; W-5 marks its Phase 3 parts; W-4 no longer names undesigned Phase 5 endpoints; Oct 28, 2026 is a Wednesday. |
+| 2026-10-25 | In-depth UI/UX review after PR #3: added *UI by phase* and *Conventions on every screen* (color never the only signal, named icon buttons, one date format, consistent words, helpful messages); S-4 has a Phase 1 sketch, and card fronts show the due date and time, points, and Canvas status, with red winning over green on the due badge (FR-22, FR-65); course buttons show the course name under the code (FR-20); cards of removed assignments are hidden but kept until Phase 3 (FR-45); board messages for a failed Refresh, the first load, no courses, and no assignments; the header's "Synced" time is the last complete Refresh (FR-13), and [⟳] starts a Refresh; S-1 says a personal Google account works (R-6); S-2 lists its messages; S-10 closes without stopping the Refresh and uses ⏸ for rate limits, so ◷ only means a due date; S-6 marks deletion Phase 4; S-8 adds Excused; Ctrl+Enter and the `f` key removed (keyboard actions are not a requirement); W-3 marked Phase 2; W-5 marks its Phase 3 parts; W-4 no longer names undesigned Phase 5 endpoints; Oct 28, 2026 is a Wednesday. |
+| 2026-10-26 | Card status follows the new FR-23 and FR-65, from the Team Lead's review of the requirements: cards show their submission types (with a table of how each is written), Submitted or Not submitted, Graded or Not graded, and Late or Excused tags; Pending review is gone; Missing cards get a red border and a "⚠ MISSING" bar as well as the red badge; S-5 and S-8 updated to match. |

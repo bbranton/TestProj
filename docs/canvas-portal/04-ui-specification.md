@@ -101,8 +101,8 @@ even though the formal accessibility check (NFR-32) is Phase 4.
   with the button that does it, such as [Retry refresh]. They never show
   error codes or the token.
 - **Destructive actions ask first:** disconnecting Canvas, deleting the
-  account (Phase 4), and from Phase 5 deleting a personal card (FR-71) or
-  a note (FR-41). Canvas cards are never deleted, only archived (FR-45).
+  account (Phase 4), and from Phase 5 deleting a note (FR-41) or an
+  orphaned card (S-9).
 
 Button IDs for Phases 1 to 4. Later phases add theirs when they are
 planned.
@@ -523,11 +523,16 @@ board.
                           | | ▬▬ BIO 101                     | |
                           | | Old lab (removed from Canvas)  | |
                           | +--------------------------------+ |
-                          | [Restore]  ✎ notes kept            |
+                          | [Restore]  [Delete]  ✎ notes kept  |
                           +------------------------------------+
   Cards for assignments removed from Canvas land here (FR-45). They are
   archived from Phase 3, but can only be seen here from Phase 5.
-  Restore puts a card back in its old list, in its due date place.
+  An orphaned card is one whose assignment the teacher deleted or
+  unpublished in Canvas. Restore puts a card back in its old list, in
+  its due date place. Delete removes an orphaned card for good, with its
+  notes, after asking: "Delete this card and its notes? This can't be
+  undone." The portal never deletes a card on its own (FR-45), and
+  Delete is only offered for cards that are gone from Canvas.
 ```
 
 ### S-10 Refresh progress
@@ -792,4 +797,4 @@ flowchart TD
 | 2026-10-26 | Card status follows the new FR-23 and FR-65, from the Team Lead's review of the requirements: cards show their submission types (with a table of how each is written), Submitted or Not submitted, Graded or Not graded, and Late or Excused tags; Pending review is gone; Missing cards get a red border and a "⚠ MISSING" bar as well as the red badge; S-5 and S-8 updated to match. |
 | 2026-10-26 | The account menu button is a gear, [⚙], instead of (A), from the Team Lead's review. |
 | 2026-10-26 | Every button has an ID in capitals with underscores for logs, docs, code, and tests, and a plain-words label for screen readers, with a table of Phase 1 to 4 button IDs, from the Team Lead's review. Dates use the device's time zone (FR-22). |
-| 2026-10-26 | Deleting a card or a note (Phase 5) joins the destructive actions that ask first, from the Team Lead's review. |
+| 2026-10-26 | Deleting a note or an orphaned card (Phase 5) joins the destructive actions that ask first; S-9 adds Delete for orphaned cards, those whose assignment is gone from Canvas. From the Team Lead's review. |

@@ -267,7 +267,7 @@ board:
 | | | ▬▬ BIO 101                                 | |                       |
 | | | Lab report 3                               | |                       |
 | | | (◷ Oct 28, 11:59 PM)  20 pts               | |                       |
-| | | Opens Oct 27, 8:00 AM                      | |                       |
+| | | 🔒 Opens Oct 27, 8:00 AM                   | |                       |
 | | | File upload or text entry                  | |                       |
 | | | Not submitted · Not graded                 | |                       |
 | | +--------------------------------------------+ |                       |
@@ -319,9 +319,11 @@ show the same fields as the Phase 1 sketch.
   with ✓ when Submitted or Graded; and plain otherwise.
   Start and end dates (FR-22): Canvas's "Available from" (`unlock_at`)
   and "Until" (`lock_at`). Before an assignment opens, the card is
-  slightly grayed and shows a muted line with a lock icon, "Opens Oct 27,
-  8:00 AM", under the due badge. After its Until date, it shows "Closed
-  Nov 10, 11:59 PM". Otherwise it shows neither, so open assignments stay
+  slightly grayed and shows a muted line with a lock icon, "🔒 Opens Oct
+  27, 8:00 AM", under the due badge. After its Until date, it shows
+  "🔒 Closed Nov 10, 11:59 PM". The lock is never the only signal: the
+  words say the same thing for screen readers (alt text "Locked"). In the
+  sketch the lock takes two columns, so that row has one space less. Otherwise it shows neither, so open assignments stay
   uncluttered. The card keeps its due date place either way. These lines
   compare the date with the device's clock when the board is drawn; they
   are dates, not statuses (FR-23).
@@ -846,3 +848,4 @@ flowchart TD
 | 2026-10-26 | Cards removed from Canvas are hidden by default, not for good: from Phase 2 a [◌ Removed from Canvas] button on the course row shows them, grayed out in their lists. From the Team Lead's review. |
 | 2026-10-26 | The [◌ Removed from Canvas] button moves to Phase 2, with dragging, and the S-10 summary says when a Refresh removed cards, from the Team Lead's review. |
 | 2026-10-26 | Cards show when an assignment opens (Canvas "Available from") until it does, and when it closed (Canvas "Until") after that, from Phase 1, from the Team Lead's review. |
+| 2026-10-26 | The S-4 sketch shows the 🔒 lock on the "Opens" line, and the notes quote it on both the "Opens" and "Closed" lines, from the Team Lead's review. |

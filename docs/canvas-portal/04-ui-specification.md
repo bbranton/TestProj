@@ -9,7 +9,8 @@ changed in pull requests. Workflows show how a user moves between screens to
 get something done.
 
 Screen IDs (`S-1`, `S-2`, ...) and workflow IDs (`W-1`, `W-2`, ...) are
-used by the design and the test procedures.
+used by the design and the test procedures. Terms such as board, list,
+card, Refresh, and Missing are defined in the [glossary](glossary.md).
 
 ### UI by phase
 
@@ -96,7 +97,9 @@ even though the formal accessibility check (NFR-32) is Phase 4.
   zone (FR-22): "Oct 28, 11:59 PM", so "Synced Oct 25, 10:42 AM" and a
   due badge read the same way.
 - **One word per idea.** The action is always "Refresh", lists are
-  "lists", and courses are "courses" (not "labels").
+  "lists", and courses are "courses" (not "labels"). Screen words match
+  the [glossary](glossary.md); a new or changed word goes into it in the
+  same PR.
 - **Messages say what happened and what to do next,** in plain words,
   with the button that does it, such as [Retry refresh]. They never show
   error codes or the token.
@@ -798,3 +801,4 @@ flowchart TD
 | 2026-10-26 | The account menu button is a gear, [⚙], instead of (A), from the Team Lead's review. |
 | 2026-10-26 | Every button has an ID in capitals with underscores for logs, docs, code, and tests, and a plain-words label for screen readers, with a table of Phase 1 to 4 button IDs, from the Team Lead's review. Dates use the device's time zone (FR-22). |
 | 2026-10-26 | Deleting a note or an orphaned card (Phase 5) joins the destructive actions that ask first; S-9 adds Delete for orphaned cards, those whose assignment is gone from Canvas. From the Team Lead's review. |
+| 2026-10-26 | Links to the new [glossary](glossary.md), and screen words follow it, from the Team Lead's review. |

@@ -135,31 +135,30 @@ such as encrypting tokens with Fernet (a new dependency).
 - Refresh is manual from the start: the portal fetches only when the
   student selects Refresh or on the very first load, and highlights Refresh
   when the data is more than an hour old (FR-15). Each Refresh shows its
-  progress course by course, with a summary and Retry if anything failed
-  (FR-16).
-- A read-only board with the four lists Backlog, To do, In progress, and
-  Done: when the board is first created, every assignment is a Trello-style
-  card in Backlog, sorted by due date, with the course show/hide buttons
-  (FR-20 to FR-23, FR-31, FR-34, FR-35, FR-38, FR-60, FR-65, FR-66,
-  FR-78). Cards show Canvas's availability dates, and a card that hasn't
-  opened yet is grayed out (FR-22, FR-65). Cards are matched to
-  assignments by Canvas ID, and a card whose assignment is gone from Canvas
-  is hidden but kept, never deleted (FR-35, FR-45). The
-  board has Trello's visual style from the start: colored background, light
-  gray rounded lists, and white cards with a soft shadow (NFR-34).
-- Each list can be minimized or expanded; expanded lists share the full
-  width and resize as lists open and close, and empty lists start
-  minimized, so in Phase 1 Backlog fills the board (FR-61, FR-80). Moving
-  cards between lists comes in Phase 2.
+  progress course by course, with a summary and Retry if anything failed.
+  The summary also says how many assignments were removed from Canvas and
+  offers to show them (FR-16).
+- A read-only board showing only the Backlog list, since nothing can be
+  moved yet: every assignment is a Trello-style card in Backlog, sorted by
+  due date, with the course show/hide buttons (FR-20 to FR-23, FR-31,
+  FR-34, FR-35, FR-38, FR-60, FR-65, FR-66, FR-78). The design leaves room
+  to add To do, In progress, and Done in Phase 2 without rework. Cards
+  show Canvas's availability dates, and a card that hasn't opened yet is
+  grayed out (FR-22, FR-65). The Excused status is Phase 5 (FR-23). The
+  board has Trello's visual style from the start: colored background,
+  light gray rounded lists, and white cards with a soft shadow (NFR-34).
 - A Filter button on the course row filters cards by course, due date,
   status, and keyword. The filter isn't saved yet and ends on reload
   (FR-24, FR-72).
-- With saved data the board is usable within 2 seconds (NFR-1), and it
-  works in the current release of Chrome on a laptop or desktop (NFR-30;
-  Firefox, Safari, and Edge are Phase 5). On the free
-  test host, NFR-1 is measured once the server is awake: the first load
-  after an idle hour can take a few seconds longer while it wakes. NFR-1 is
-  checked on the Phase 4 host.
+- Orphaned cards, whose assignment is gone from Canvas: cards are matched
+  to assignments by Canvas ID, and an orphaned card is kept, never
+  deleted. It is hidden by default, and a "show cards removed from Canvas"
+  option in the Filter menu shows it grayed out (FR-35, FR-45).
+- It works in the current release of Chrome on a laptop or desktop
+  (NFR-30; Firefox, Safari, and Edge are Phase 5). Phase 1 has no load
+  time target: it measures the board's load time for the TP-14 baseline,
+  and a check before Phase 2 decides whether more tuning is needed
+  (NFR-1).
 - Security from the first stored token: tokens never appear in logs,
   errors, or addresses; each user sees only their own data; only Canvas
   read calls; no trackers (NFR-10, NFR-12 to NFR-14).
@@ -199,10 +198,9 @@ pull requests, each one usable on its own:
    Canvas responses (NFR-41). Milestone M1: the Refresh panel's per-course
    counts show the real assignments, so no throwaway list view is built.
 4. The read-only board (FR-20 to FR-24, FR-26, FR-31, FR-34, FR-35,
-   FR-38, FR-45, FR-60, FR-61, FR-65, FR-66, FR-72, FR-78, FR-80, NFR-34),
-   with `BOARD`, `LIST`,
-   `CARD`, and `COURSE_LABEL`.
-5. The Phase 1 checks: NFR-1, NFR-14, NFR-30, the TP-14 baseline, and the
+   FR-38, FR-45, FR-60, FR-65, FR-66, FR-72, FR-78, NFR-34), with
+   `BOARD`, `LIST`, `CARD`, and `COURSE_LABEL`.
+5. The Phase 1 checks: NFR-14, NFR-30, the TP-14 baseline, and the
    manual test pass.
 6. The private test deploy, with CI deploys, rollback, and the nightly
    backup. It goes live only with the Team Lead's OK, once everything in
@@ -224,8 +222,9 @@ assignments Canvas shows. CI is green. These pass:
 - TP-04 steps 5 to 7, and TP-13 steps 1 and 13.
 - TP-10 step 2, for user A's cards, Canvas data, and Refresh logs
   (NFR-12).
-- TP-14 has a recorded baseline, and its steps 3 and 4 pass (NFR-1,
-  FR-15). Step 3 is measured locally or on the awake test deploy.
+- TP-14 has a recorded baseline, including the board's load time, and its
+  step 4 passes (FR-15). With the baseline, Management, Architecture, and
+  the Team Lead decide whether Phase 2 needs tuning to meet NFR-1.
 - The test deploy loads only over HTTPS, a listed test user can sign in
   there, and a rollback and a backup restore have each been tried once.
 
@@ -238,13 +237,22 @@ student's own devices in sync is needed here, but it is the simpler kind of
 sync; keeping the backend in step with Canvas is the hard part and gets
 Phase 3.
 
-**Before it starts:** D-8 (polling or live push) is decided, and the drag
-and drop library is chosen (design, section 2).
+**Before it starts:** D-8 (polling or live push) is decided, the drag
+and drop library is chosen (design, section 2), and the TP-14 baseline
+from Phase 1 has been reviewed to decide whether tuning for NFR-1 is
+needed.
 
+- The board shows all four lists, adding To do, In progress, and Done
+  (FR-31). Each list can be minimized or expanded; expanded lists share
+  the full width, and empty lists start minimized (FR-61, FR-80).
 - The board stops being read only: drag cards between lists with Trello's
   drag feel; cards keep their due date order, and dropping a card on an
   empty minimized list expands it (FR-32, FR-38, FR-60, FR-77, FR-80,
   NFR-3).
+- With saved data the board is usable within 2 seconds (NFR-1). On the
+  free test host this is measured once the server is awake: the first
+  load after an idle hour can take a few seconds longer while it wakes.
+  NFR-1 is checked again on the Phase 4 host.
 - The layout is saved on the server and restored on any device (FR-33,
   FR-51).
 - Sync: a move made on one device appears on the user's other open devices
@@ -254,10 +262,6 @@ and drop library is chosen (design, section 2).
 - Canvas merge keeps working once cards move: new assignments land in
   *Backlog*, and a Refresh never moves a card the student placed (FR-34,
   FR-35, built in Phase 1).
-- Orphaned cards, whose assignment is gone from Canvas: a show/hide control
-  on the course row shows them grayed out in their list, with a count, and
-  hides them by default (FR-45). The Refresh summary says how many
-  assignments were removed and offers to show them (FR-16).
 
 **Exit criteria:** TP-06 passes in full: layout survives reloads and Canvas
 refreshes, two devices open at the same time stay in step, moving the same
@@ -266,7 +270,8 @@ leaves a device showing a move the server doesn't have. The concurrency tests
 for NFR-22 pass, and the drag steps of the Trello comparison review (TP-13
 steps 2 and 3) pass. TP-08 steps 2 and 3 pass (FR-34, FR-35: a renamed
 assignment and a submitted one stay in their list), leaving out step 1's
-note. The NFR-3 timing test passes. It is still to be added to the test
+note. TP-14 step 3 passes (NFR-1), measured locally or on the awake
+test deploy. The NFR-3 timing test passes. It is still to be added to the test
 plan. CI is green. The phase is deployed to the test host with the Team
 Lead's OK: a backup is taken first, and the migration is tried on a copy (a
 Neon branch) before the live database. The copy is deleted afterward.
@@ -397,6 +402,11 @@ database, and the domain) is decided, with its cost.
 - Course label colors chosen by the student (FR-66), and the course
   show/hide choice saved with the account (FR-78).
 - Saving the filter choice with the account (FR-72; the filter menu itself is Phase 1).
+- Trello-style search: one box that searches card names, courses,
+  descriptions, and notes, including archived and orphaned cards (FR-81).
+- The Excused status on cards (FR-23, FR-65).
+- Full WCAG 2.2 A and AA coverage, beyond Phase 4's chosen criteria
+  (NFR-37).
 - Board actions take no more clicks than in Trello (NFR-35).
 - Archive and restore cards, as in Trello, and permanently delete an orphaned card after confirming (FR-74).
 - Export the board and notes as a file (FR-53).
@@ -551,3 +561,4 @@ The plan has grown quickly, so these rules keep each phase finishable:
 | 2026-10-26 | Canvas GraphQL moves to Phase 5, from the Team Lead's answer to Q-10: Phase 3 no longer waits on the GraphQL call and tunes with `GET` calls only; R-2 and R-3 updated. |
 | 2026-10-26 | Phase scope from the Team Lead's review of the UI specification, matching requirements PR #6: Phase 1 adds the filter menu (FR-24, FR-72), availability dates on cards (FR-22, FR-65), and the Canvas ID matching and hidden orphaned cards it already builds (FR-35, FR-45); Phase 2 adds the show/hide control for orphaned cards (FR-45) and the removed count in the Refresh summary (FR-16); Phase 5 keeps only saving the filter, and FR-74 adds deleting an orphaned card. |
 | 2026-10-26 | Browser support is Chrome only until Phase 5, from the Team Lead's answer on requirements PR #6: Phase 1's and Phase 4's checks run in Chrome, M5 says Chrome, and Phase 5 adds Firefox, Safari, and Edge (NFR-30). Phase 4's accessibility pass names NFR-32's criteria (contrast, zoom, screen reader labels) instead of focus. |
+| 2026-10-26 | Phase 1 scope cut, from the Team Lead (requirements #6, 58c1c04): Phase 1 shows only the Backlog list, and the other three lists, minimizing (FR-61, FR-80), and the 2-second target (NFR-1) move to Phase 2, with a check of the TP-14 baseline before Phase 2 starts; Excused moves to Phase 5. Orphaned cards can be shown from the Phase 1 Filter menu, and the Refresh summary's removed count is Phase 1 (FR-16, FR-45). Phase 5 adds Trello-style search (FR-81) and full WCAG coverage (NFR-37). |

@@ -105,7 +105,7 @@ even though the formal accessibility check (NFR-32) is Phase 4.
   error codes or the token.
 - **Destructive actions ask first:** disconnecting Canvas, deleting the
   account (Phase 4), and from Phase 5 deleting a note (FR-41) or an
-  orphaned card (S-9).
+  orphaned card (S-4).
 
 Button IDs for Phases 1 to 4. Later phases add theirs when they are
 planned.
@@ -358,6 +358,14 @@ show the same fields as the Phase 1 sketch.
   would leave them wondering where it went. When a Refresh removes cards,
   its S-10 summary says so, such as "2 assignments were removed from
   Canvas", with [Show them], which turns the button on.
+  This button is the only place to find these cards, in every phase:
+  they never move to the board menu's Archived items (S-9). From Phase
+  5, a shown one has a [Delete] button, which removes it for good, with
+  its notes, after asking: "Delete this card and its notes? This can't
+  be undone." The portal never deletes a card on its own (FR-45), and
+  Delete is only offered for cards that are gone from Canvas. If the
+  teacher republishes the assignment, the card is no longer removed and
+  shows as usual, in the list it was in.
 
   Lists: Backlog, To do, In progress, and Done, always in that order
   (FR-31). New assignments from Canvas land in Backlog until the student
@@ -588,20 +596,15 @@ board.
                           | [Search archive...]  [Cards|Lists] |
                           | +--------------------------------+ |
                           | | ▬▬ BIO 101                     | |
-                          | | Old lab (removed from Canvas)  | |
+                          | | Lab report 1                   | |
                           | +--------------------------------+ |
-                          | [Restore]  [Delete]  ✎ notes kept  |
+                          | [Restore]  ✎ notes kept            |
                           +------------------------------------+
-  Cards for assignments removed from Canvas land here (FR-45). From
-  Phase 2 they can already be shown on the board with the
-  [◌ Removed from Canvas] button (S-4); this panel adds searching,
-  restoring, and deleting them.
-  An orphaned card is one whose assignment the teacher deleted or
-  unpublished in Canvas. Restore puts a card back in its old list, in
-  its due date place. Delete removes an orphaned card for good, with its
-  notes, after asking: "Delete this card and its notes? This can't be
-  undone." The portal never deletes a card on its own (FR-45), and
-  Delete is only offered for cards that are gone from Canvas.
+  Archived items holds the cards and lists the student archived
+  (S-7). Restore puts a card back in its old list, in its due date
+  place. Cards removed from Canvas are not here: the
+  [◌ Removed from Canvas] button on the course row shows them (S-4),
+  and Delete is on the card itself.
 ```
 
 ### S-10 Refresh progress
@@ -787,7 +790,7 @@ flowchart TD
     B -- no card yet --> D[Add card to Backlog<br/>in its due date place]
     B -. archived card, Phase 3 .-> R[Bring card back<br/>to its old list]
     Z -- yes --> E{For each card}
-    E -- assignment gone from Canvas --> F[Card is kept and hidden by default;<br/>from Phase 2 the student can show it;<br/>from Phase 3 it is marked archived]
+    E -- assignment gone from Canvas --> F[Card is kept and hidden by default;<br/>from Phase 2 the student can show it;<br/>from Phase 3 it is marked archived;<br/>never moved to Archived items]
     E -- state or flags changed --> G[Badge shows the current Canvas value;<br/>card stays where the student put it]
 ```
 
@@ -875,5 +878,6 @@ flowchart TD
 | 2026-10-26 | Cards removed from Canvas are hidden by default, not for good: from Phase 2 a [◌ Removed from Canvas] button on the course row shows them, grayed out in their lists. From the Team Lead's review. |
 | 2026-10-26 | The [◌ Removed from Canvas] button moves to Phase 2, with dragging, and the S-10 summary says when a Refresh removed cards, from the Team Lead's review. |
 | 2026-10-26 | Cards show when an assignment opens (Canvas "Available from") until it does, and when it closed (Canvas "Until") after that, from Phase 1, from the Team Lead's review. |
+| 2026-10-26 | Cards removed from Canvas are found only with the [◌ Removed from Canvas] button, never in the board menu's Archived items (S-9); from Phase 5 Delete is on the card itself. From the Team Lead's review. |
 | 2026-10-26 | The filter menu (S-8, FR-24, FR-72) moves to Phase 1, from the Team Lead's review: the [⚲ Filter] button is drawn in the S-4 course row, with button IDs, how choices combine, keyboard and screen reader behavior, and a message when nothing matches. The filter is not saved. |
 | 2026-10-26 | The S-4 sketch shows the 🔒 lock on the "Opens" line, and the notes quote it on both the "Opens" and "Closed" lines, from the Team Lead's review. |

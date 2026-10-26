@@ -85,13 +85,16 @@ even though the formal accessibility check (NFR-32) is Phase 4.
 - **Color is never the only signal.** A red or green due badge always
   comes with the status text and tags on the card (FR-23), and a green
   badge also shows ✓. Course buttons show ● or ○ as well as their color.
-- **Every icon button has a name.** [⟳] is "Refresh from Canvas", [−] and
-  [+] are "Minimize *list*" and "Expand *list*", and [⚙] is "Account
-  menu". Screen readers announce these names, and they make the controls
-  testable.
-- **Dates and times look the same everywhere,** in the student's time
-  zone: "Oct 28, 11:59 PM", so "Synced Oct 25, 10:42 AM" and a due badge
-  read the same way.
+- **Every button has an ID and a label.** The ID is in capitals with
+  underscores, such as `REFRESH`, so it stands out in logs, docs, code,
+  and tests; the table below lists them. The label is plain words, such
+  as "Refresh from Canvas", and is what screen readers announce, since
+  they would read an ID out letter by letter. Icon buttons show only
+  their icon, so the label is their only name. How the ID appears in code,
+  such as a test ID, is the Developer's call.
+- **Dates and times look the same everywhere,** in the device's time
+  zone (FR-22): "Oct 28, 11:59 PM", so "Synced Oct 25, 10:42 AM" and a
+  due badge read the same way.
 - **One word per idea.** The action is always "Refresh", lists are
   "lists", and courses are "courses" (not "labels").
 - **Messages say what happened and what to do next,** in plain words,
@@ -99,6 +102,37 @@ even though the formal accessibility check (NFR-32) is Phase 4.
   error codes or the token.
 - **Destructive actions ask first:** disconnecting Canvas and deleting
   the account.
+
+Button IDs for Phases 1 to 4. Later phases add theirs when they are
+planned.
+
+| ID | Label | Screen | Shown as |
+|----|-------|--------|----------|
+| `SIGN_IN_GOOGLE` | Sign in with Google | S-1 | [G Sign in with Google] |
+| `SHOW_TOKEN` | Show token / Hide token | S-2 | [show] |
+| `TOKEN_HELP` | How do I get a token? | S-2 | > How do I get a token? |
+| `CONNECT_CANVAS` | Connect | S-2 | [Connect] |
+| `REFRESH` | Refresh from Canvas | Header | [⟳] |
+| `SYNC_TIME` | Synced *date and time*, show the Refresh log | Header | Synced Oct 25, 10:42 AM |
+| `ACCOUNT_MENU` | Account menu | Header | [⚙] |
+| `SETTINGS` | Settings | Account menu | Settings |
+| `COURSE_TOGGLE` | Show *course* / Hide *course* | S-4 | [● BIO 101] |
+| `SHOW_ALL_COURSES` | Show all | S-4 | [Show all] |
+| `HIDE_ALL_COURSES` | Hide all | S-4 | [Hide all] |
+| `MINIMIZE_LIST` | Minimize *list* | S-4 | [−] |
+| `EXPAND_LIST` | Expand *list* | S-4 | [+] |
+| `OPEN_IN_CANVAS` | *Assignment name*, opens in Canvas | S-4 | The whole card |
+| `REFRESH_DETAILS` | Details | S-4 banner | [Details] |
+| `SHOW_PROGRESS` | Show progress | S-4 | [Show progress] |
+| `RETRY_REFRESH` | Retry refresh | S-4, S-10 | [Retry refresh] |
+| `CLOSE_REFRESH_PANEL` | Close | S-10 | [x] |
+| `DISCONNECT_CANVAS` | Disconnect Canvas | S-6 | [Disconnect Canvas] |
+| `SIGN_OUT` | Sign out | S-6, account menu | [Sign out] |
+| `DELETE_ACCOUNT` | Delete my account and all data | S-6 (Phase 4) | [Delete my account and all data] |
+
+IDs that name one of several, such as `COURSE_TOGGLE` and `MINIMIZE_LIST`,
+are paired with the course or list they act on, such as
+`COURSE_TOGGLE` for BIO 101.
 
 ## 2. Screens
 
@@ -756,3 +790,4 @@ flowchart TD
 | 2026-10-25 | In-depth UI/UX review after PR #3: added *UI by phase* and *Conventions on every screen* (color never the only signal, named icon buttons, one date format, consistent words, helpful messages); S-4 has a Phase 1 sketch, and card fronts show the due date and time, points, and Canvas status, with red winning over green on the due badge (FR-22, FR-65); course buttons show the course name under the code (FR-20); cards of removed assignments are hidden but kept until Phase 3 (FR-45); board messages for a failed Refresh, the first load, no courses, and no assignments; the header's "Synced" time is the last complete Refresh (FR-13), and [⟳] starts a Refresh; S-1 says a personal Google account works (R-6); S-2 lists its messages; S-10 closes without stopping the Refresh and uses ⏸ for rate limits, so ◷ only means a due date; S-6 marks deletion Phase 4; S-8 adds Excused; Ctrl+Enter and the `f` key removed (keyboard actions are not a requirement); W-3 marked Phase 2; W-5 marks its Phase 3 parts; W-4 no longer names undesigned Phase 5 endpoints; Oct 28, 2026 is a Wednesday. |
 | 2026-10-26 | Card status follows the new FR-23 and FR-65, from the Team Lead's review of the requirements: cards show their submission types (with a table of how each is written), Submitted or Not submitted, Graded or Not graded, and Late or Excused tags; Pending review is gone; Missing cards get a red border and a "⚠ MISSING" bar as well as the red badge; S-5 and S-8 updated to match. |
 | 2026-10-26 | The account menu button is a gear, [⚙], instead of (A), from the Team Lead's review. |
+| 2026-10-26 | Every button has an ID in capitals with underscores for logs, docs, code, and tests, and a plain-words label for screen readers, with a table of Phase 1 to 4 button IDs, from the Team Lead's review. Dates use the device's time zone (FR-22). |

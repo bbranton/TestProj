@@ -39,6 +39,31 @@ minimum viable solution.
 - Risks and open questions have an owner and a date.
 - No student's token or data is left exposed while other work goes ahead.
 
+## How it works
+
+- **Decision register.** Management keeps every decision the Team Lead
+  owes in one list: [Open decisions](../../canvas-portal/01-roadmap.md#5-open-decisions)
+  in the roadmap. It collects the open questions (Q-), open decisions (D-),
+  and findings marked *Waiting on the Team Lead* from every doc and open PR.
+  Each entry says which phase needs the answer, which docs it changes, and a
+  recommendation. Management brings them to the Team Lead in one batch,
+  soonest deadline first, before the phase or doc that needs them, so a
+  decision isn't first met halfway through a review of a later doc.
+- **Ripple list for each decision.** When the Team Lead makes a phase or
+  scope decision, Management lists every doc it changes and the one change
+  each needs, and sends that list to each owner at once. Owners don't find
+  the follow-ups one review at a time.
+- **Phase scope budget.** Anything added to the current phase names what
+  it replaces, or the Team Lead's explicit OK to let the phase grow.
+  Management records each addition, and its cut or OK, in the roadmap's
+  change log, so R-10 is tracked and not only warned about.
+- **Fix the roadmap on its own PR.** When a review of another doc finds a
+  roadmap change, Management makes it on its open roadmap PR, or batches it
+  with others in one new roadmap PR. A follow-up issue is only for work that
+  must wait.
+- **Triage first.** Before starting new roadmap work, Management clears the
+  `needs-triage` issues, and says in its reply how many are still waiting.
+
 ## Review checklist
 
 When reviewing others' work:
@@ -59,6 +84,9 @@ When reviewing others' work:
       as a student? Raise it yourself, even when Security also reviews.
 - [ ] Given the topic or the changes proposed, does another persona need to
       join the review? If so, add them as a reviewer and say why.
+- [ ] Does it raise a question or decision for the Team Lead? Is it in the
+      decision register, with the phase that needs it?
+- [ ] Which other docs does it change? Name each one.
 
 ## Cost plans
 

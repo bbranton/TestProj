@@ -325,10 +325,10 @@ show the same fields as the Phase 1 sketch.
   the course's automatic color (FR-66), with the course code, such as
   "BIO 101"; the title; the due badge and the points; the submission
   types, written as in the table below; then "Submitted" or "Not
-  submitted", "Graded" or "Not graded", and a [Late] tag when Canvas
-  sets one. An excused assignment shows just "Excused" in place of both
-  states, with a green ✓ badge; Excused wins over Missing, so an excused
-  card never gets the Missing highlight. The due badge shows the date and
+  submitted", "Graded" or "Not graded", and a [Late] or [Excused] tag
+  when Canvas sets one, such as "Not submitted · Not graded [Excused]".
+  Excused makes the due badge green with ✓ and wins over Missing, so an
+  excused card never gets the Missing highlight. The due badge shows the date and
   time in the device's time zone, such as "Oct 28, 11:59 PM". It is red
   when the card is Missing, even if it is also graded; otherwise green
   with ✓ when Excused, Submitted, or Graded; and plain otherwise.
@@ -892,6 +892,7 @@ flowchart TD
 | 2026-10-26 | Cards removed from Canvas are hidden by default, not for good: from Phase 2 a [◌ Removed from Canvas] button on the course row shows them, grayed out in their lists. From the Team Lead's review. |
 | 2026-10-26 | The [◌ Removed from Canvas] button moves to Phase 2, with dragging, and the S-10 summary says when a Refresh removed cards, from the Team Lead's review. |
 | 2026-10-26 | Cards show when an assignment opens (Canvas "Available from") until it does, and when it closed (Canvas "Until") after that, from Phase 1, from the Team Lead's review. |
+| 2026-10-26 | Excused is a tag again, shown alongside Submitted or Not submitted and Graded or Not graded, not in their place; it still makes the badge green and turns off the Missing highlight (FR-65). From the Team Lead's decision on PR #6. |
 | 2026-10-26 | Follows the requirements review on PR #6: the course buttons are the only course control, so S-8 drops its Courses group; list counts include only cards on show (FR-80); an excused card shows "Excused" with a green ✓ and never the Missing highlight (FR-23, FR-65, pending the Team Lead); the strip shows the course code; a not-yet-open card is no longer grayed, so it differs from removed and archived cards; status messages are announced (NFR-32). |
 | 2026-10-26 | From Phase 5 the filter menu's keyword becomes a full search like Trello's card search (course, description, notes, archived and removed cards), filtering the whole board; Phase 1 matches assignment names. From the Team Lead's review. |
 | 2026-10-26 | The board menu (S-9) lists no cards, from the Team Lead's review: it holds only course colors and the background. Archived cards and lists are shown on the board with a Phase 5 Archived group in the filter menu, grayed out with [Restore]. |

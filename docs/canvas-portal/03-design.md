@@ -20,8 +20,8 @@ Build only the parts listed for the current phase (see the repo's
 | Phase | Builds |
 |-------|--------|
 | 0 | Repository layout (section 8), empty frontend and backend, CI |
-| 1 | Tables `USER`, `SESSION`, `CANVAS_CONNECTION`, `BOARD`, `LIST`, `CARD`, `COURSE_LABEL`, `CANVAS_CACHE`, `REFRESH_RUN`, without the columns marked Phase 2 or 3, and with the unique card rule; the Phase 1 endpoints in section 4; sign-in (section 5); talking to Canvas, caching, *Built from the start*, *Refresh progress*, and *Saving a complete Refresh* (section 6); security (section 7); the board with only Backlog shown, the Filter row and menu, visual style, the Refresh progress panel, and the Phase 1 interactions (section 9) |
-| 2 | Moving cards and *Keeping devices in sync* (section 4): the Phase 2 endpoints and `change_seq`; dragging, showing To do, In progress, and Done, sharing the width, course buttons, and minimize and expand (section 9); orphaned cards in the board response, their show/hide option in the filter menu, and the removed count in the Refresh summary (sections 4, 6, and 9) |
+| 1 | Tables `USER`, `SESSION`, `CANVAS_CONNECTION`, `BOARD`, `LIST`, `CARD`, `COURSE_LABEL`, `CANVAS_CACHE`, `REFRESH_RUN`, without the columns marked Phase 2 or 3, and with the unique card rule; the Phase 1 endpoints in section 4; sign-in (section 5); talking to Canvas, caching, *Built from the start*, *Refresh progress*, and *Saving a complete Refresh* (section 6); security (section 7); the board with only Backlog shown, course buttons, the filter menu, visual style, the Refresh progress panel, and the Phase 1 interactions (section 9) |
+| 2 | Moving cards and *Keeping devices in sync* (section 4): the Phase 2 endpoints and `change_seq`; dragging, showing To do, In progress, and Done, sharing the width and scrolling sideways, and minimize and expand (section 9); orphaned cards in the board response, their show/hide option in the filter menu, and the removed count in the Refresh summary (sections 4, 6, and 9) |
 | 3 | *Phase 3 tuning*, *Bringing the backend in step with Canvas*, and *What can change in Canvas* (section 6); `CARD.archived` |
 | 4 | Deleting all of a user's data (section 4), accessibility checks, publishing the Google sign-in app (section 5), deploying (roadmap D-3) |
 
@@ -203,10 +203,10 @@ Design notes:
   device ask "what changed since number 41?" (see *Keeping devices in sync*).
 - **Course label colors** (FR-66) are stored per user and course, picked
   automatically from a fixed palette the first time a course appears, so a
-  course keeps its color on every device. Which courses are shown is one
-  setting for the filter's course checkboxes (FR-72) and, from Phase 2, the
-  course buttons (FR-78). It is never in the database before Phase 5: in
-  Phase 1 it resets on reload, and from Phase 2 it is kept in the browser.
+  course keeps its color on every device. Which courses the course buttons
+  hide (FR-78) is kept in the browser, not the database, until Phase 5. The
+  course buttons are the only way to choose courses; the filter menu has no
+  course list (FR-72).
 - **Orphaned cards keep what they were (Phase 1).** When a complete
   Refresh no longer has a card's assignment, the new Canvas copy can't say
   what the card was. So the Refresh copies the fields the card front shows
@@ -584,7 +584,7 @@ choice, so no Canvas change ever moves a card to another list.
 | Submission state moves forward (submitted, graded) | Badge updates; card stays put | FR-23, FR-39 |
 | State goes backward (resubmission, grade removed) or a flag is cleared (no longer late, missing, or excused) | Badge shows the current Canvas value; nothing is kept from before | FR-23, FR-39 |
 | Student's own due date differs from the class's (a Canvas *override*) | Card shows the date Canvas gives this student | FR-22 |
-| A new course starts | It appears in the filter's course list (and, from Phase 2, as a course button) and its cards go to Backlog | FR-34, FR-72, FR-78 |
+| A new course starts | Its course button appears and its cards go to Backlog | FR-34, FR-78 |
 | A course ends or the student drops it | Open question Q-7; recommended: archive its cards, bring them back if it returns | FR-45 |
 | A fetch fails partway | Nothing changes; the last complete data stays, with the warning banner | FR-45, NFR-20 |
 
@@ -700,8 +700,8 @@ flowchart TD
     App --> Header["BoardHeader<br/>board name, sync time, Refresh, account menu"]
     App --> Progress["RefreshPanel (S-10)<br/>per-course progress, summary, Retry"]
     App --> Banner["CanvasWarning<br/>shown when Canvas fails (NFR-20)"]
-    App --> Row["FilterRow, under the header<br/>Filter button; course buttons,<br/>Show all, Hide all (Phase 2)"]
-    Row --> Filter["FilterMenu (S-8)<br/>keyword, due date, status, courses,<br/>orphaned cards (Phase 2)"]
+    App --> Row["CourseToggleBar, under the header<br/>Filter button, one show/hide button<br/>per course, Show all, Hide all"]
+    Row --> Filter["FilterMenu (S-8)<br/>keyword, due date, status,<br/>orphaned cards (Phase 2)"]
     App --> Board
     Board --> List["List (one per list)"]
     List --> ListHeader["ListHeader<br/>list title, card count,<br/>minimize/expand toggle (Phase 2)"]
@@ -731,8 +731,8 @@ UI uses:
 | Minimize or expand a list (Phase 2) | [−] or [+] in the list header; the other expanded lists widen or narrow to fill the board, with a short animation. On each load or refresh, empty lists start minimized and the rest expanded; nothing is saved, in the browser or the backend. From Phase 2, dropping a card on an empty minimized list puts it there and expands the list; dropping on a minimized list that already has cards keeps it minimized and shows the new count | FR-80 |
 | Scroll the board (Phase 2) | Only when the window is too narrow for the expanded lists (240 px minimum each): horizontal scrollbar, or drag on empty background | FR-61 |
 | Open a card | Click: the assignment opens in Canvas in a new tab | FR-26 |
-| Filter the board | The Filter button, on the row under the header, opens S-8, which also chooses which courses show (one checkbox per course, with All and None). Filtering runs in the browser over the cards already loaded: no endpoint, no table, and nothing saved, so a reload clears it. Due date filters compare in UTC with the current time. The options and wording are the UI specification's | FR-24, FR-72 |
-| Show or hide a course (Phase 2) | Tap its button on the row under the header, or Show all / Hide all; the board updates at once. The buttons and the filter's course checkboxes are one setting, kept in this browser | FR-78, FR-72 |
+| Filter the board | The Filter button, at the start of the course button row, opens S-8. Courses are chosen with the course buttons, not in the menu. Filtering runs in the browser over the cards already loaded: no endpoint, no table, and nothing saved, so a reload clears it. Due date filters compare in UTC with the current time. The options and wording are the UI specification's | FR-24, FR-72 |
+| Show or hide a course | Tap its button on the row under the header, or Show all / Hide all; the board updates at once. The choice is kept in this browser | FR-78 |
 | Show or hide orphaned cards (Phase 2) | An option in the filter menu, with how many orphaned cards there are. Hidden by default, and like the rest of the filter, not saved. The board already holds the orphaned cards, so the change is at once. How the control and a grayed card look is the UI specification's | FR-45 |
 
 ## 10. Why React (D-1)
@@ -859,3 +859,4 @@ the data side.
 | 2026-10-26 | Q-8 answered by the Team Lead (requirements PR #6): connecting a different Canvas account keeps the old connection's cards, hidden, and reconnecting it brings them back; `CANVAS_CONNECTION` gains `active`, and a user can have several rows with one active. FR-35 confirmed in Phase 1. |
 | 2026-10-26 | Every date and time comparison is made in UTC; only display uses the device's time zone (FR-22, from the Team Lead on requirements PR #6). |
 | 2026-10-26 | Phase 1 scope cut, from the Team Lead (requirements PR #6, da46dff): Phase 1 shows only Backlog, with all four list rows still created; the Filter row and menu are Phase 1, with course checkboxes; course buttons (FR-78), width sharing (FR-61), and minimize and expand (FR-80) are Phase 2; the orphaned-cards control is a filter menu option; Excused is Phase 5; NFR-1 is Phase 2, with its baseline from the Phase 1 timing logs. |
+| 2026-10-26 | Course buttons (FR-78) back in Phase 1 as the only course picker, from the Team Lead (requirements PR #6, 58c1c04); the filter menu has no course list; width sharing and sideways scrolling (FR-61) stay Phase 2. |

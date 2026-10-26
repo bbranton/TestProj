@@ -24,11 +24,11 @@ requirements index wins.
 
 | Phase | Screens and workflows |
 |-------|-----------------------|
-| 1 | Header, S-1, S-2, S-4 (read only), S-6 (disconnect and sign out), S-10; W-1, W-2, and W-5's complete-fetch check and new cards in Backlog |
+| 1 | Header, S-1, S-2, S-4 (read only), S-6 (disconnect and sign out), S-8, S-10; W-1, W-2, and W-5's complete-fetch check and new cards in Backlog |
 | 2 | Dragging cards on S-4, and its button that shows cards removed from Canvas; W-3 |
 | 3 | W-5's archiving and returning cards (FR-45) |
 | 4 | S-6 and W-6's account deletion (FR-54) |
-| 5 | S-5, S-7, S-8, S-9, the phone layout, S-6 and W-6's export; W-4, W-7, W-8 |
+| 5 | S-5, S-7, S-9, the phone layout, S-6 and W-6's export; W-4, W-7, W-8 |
 
 ## 1. Screen map
 
@@ -43,7 +43,7 @@ flowchart TD
     S2 --> S4
     S4 -.-> S5[S-5 Card back dialog, Phase 5]
     S4 -.-> S7[S-7 Quick edit menu, Phase 5]
-    S4 -.-> S8[S-8 Filter menu, Phase 5]
+    S4 --> S8[S-8 Filter menu]
     S4 -.-> S9[S-9 Board menu and archived items, Phase 5]
     S4 --> S6[S-6 Settings]
     S4 --> S10[S-10 Refresh progress]
@@ -120,6 +120,9 @@ planned.
 | `SYNC_TIME` | Synced *date and time*, show the Refresh log | Header | Synced Oct 25, 10:42 AM |
 | `ACCOUNT_MENU` | Account menu | Header | [⚙] |
 | `SETTINGS` | Settings | Account menu | Settings |
+| `FILTER` | Filter | S-4 | [⚲ Filter] |
+| `CLOSE_FILTER` | Close filter | S-8 | [x] |
+| `CLEAR_FILTER` | Clear filter | S-4, S-8 | (x) Clear |
 | `COURSE_TOGGLE` | Show *course* / Hide *course* | S-4 | [● BIO 101] |
 | `SHOW_ALL_COURSES` | Show all | S-4 | [Show all] |
 | `HIDE_ALL_COURSES` | Hide all | S-4 | [Hide all] |
@@ -243,7 +246,7 @@ board:
 +--------------------------------------------------------------------------+
 | Canvas Portal  My assignments          Synced Oct 25, 10:42 AM  [⟳] [⚙]  |
 +--------------------------------------------------------------------------+
-| [● BIO 101] [● HIST 210] [● MATH 152]  [Show all] [Hide all]             |
+| [⚲ Filter] [● BIO 101] [● HIST 210] [● MATH 152]  [Show all] [Hide all]  |
 +--------------------------------------------------------------------------+
 |  board background color                                                  |
 | +------------------------------------------------+ +----+ +----+ +----+  |
@@ -290,7 +293,7 @@ show the same fields as the Phase 1 sketch.
 +--------------------------------------------------------------------------+
 | Canvas Portal  My assignments          Synced Oct 25, 10:42 AM  [⟳] [⚙]  |
 +--------------------------------------------------------------------------+
-| [● BIO 101] [● HIST 210] [● MATH 152]  [Show all] [Hide all]             |
+| [⚲ Filter] [● BIO 101] [● HIST 210] [● MATH 152]  [Show all] [Hide all]  |
 +--------------------------------------------------------------------------+
 |  board background color                                                  |
 | +-------------------+ +-------------------+ +-------------------+ +----+ |
@@ -377,8 +380,8 @@ show the same fields as the Phase 1 sketch.
   [Show all] and [Hide all] show or hide every course at once. With every
   course hidden, the board says "All courses are hidden" with a Show all
   link. Hidden cards keep their list. Until Phase 5 the choice is kept in
-  this browser. From Phase 5, a [Filter] button starts the course row and
-  opens S-8 (FR-72).
+  this browser. The [⚲ Filter] button starts the course row and opens
+  the filter menu, S-8 (FR-24, FR-72).
 
   Dragging (Phase 2, FR-32, FR-77): dragging only chooses the list; the
   card slots into its due date place, which the gray gap shows. Dropping
@@ -512,10 +515,11 @@ with a menu beside it, as in Trello.
 +--------------------------------------------------------------+
 ```
 
-### S-8 Filter menu (Phase 5, future feature)
+### S-8 Filter menu
 
-Requirements: FR-24, FR-72. A dropdown under the Filter button at the
-start of the course row.
+Requirements: FR-24, FR-72, from Phase 1. A dropdown under the
+[⚲ Filter] button at the start of the course row. Filtering only hides
+cards on the screen; it never changes them or what Canvas holds.
 
 ```text
 +------------------------------------------+
@@ -543,6 +547,29 @@ start of the course row.
   With a filter on, the course row shows
   [Filter · 3 cards match  (x) Clear], and x clears it.
 ```
+
+- Choices in one group widen the filter, and groups narrow it: ticking
+  Submitted and Missing shows cards that are either, and adding BIO 101
+  keeps only those in BIO 101.
+- Keyword matches the assignment name as the student types, ignoring
+  capitals (FR-24).
+- Due date choices compare the due date with the device's clock, like
+  the start and end date lines on cards (FR-22).
+- Status choices use the same Canvas fields and words as the card front
+  (FR-23).
+- Courses are the same setting as the course buttons: ticking a course
+  here shows it there, and the other way round.
+- Minimized lists count only the cards that match.
+- The menu closes with [x], Esc, or a click outside it, and focus goes
+  back to the [⚲ Filter] button. Every choice is a real checkbox with a
+  label, so screen readers say whether it is ticked.
+- The filter lasts until it is cleared or the page is reloaded. It is not
+  saved, so a forgotten filter never hides a new assignment the next day.
+  The "3 cards match" line keeps it visible while it is on.
+
+| When | Message |
+|------|---------|
+| No cards match | "No cards match this filter." with a Clear filter link, in place of the lists' cards |
 
 ### S-9 Board menu and archived items (Phase 5, future feature)
 
@@ -848,4 +875,5 @@ flowchart TD
 | 2026-10-26 | Cards removed from Canvas are hidden by default, not for good: from Phase 2 a [◌ Removed from Canvas] button on the course row shows them, grayed out in their lists. From the Team Lead's review. |
 | 2026-10-26 | The [◌ Removed from Canvas] button moves to Phase 2, with dragging, and the S-10 summary says when a Refresh removed cards, from the Team Lead's review. |
 | 2026-10-26 | Cards show when an assignment opens (Canvas "Available from") until it does, and when it closed (Canvas "Until") after that, from Phase 1, from the Team Lead's review. |
+| 2026-10-26 | The filter menu (S-8, FR-24, FR-72) moves to Phase 1, from the Team Lead's review: the [⚲ Filter] button is drawn in the S-4 course row, with button IDs, how choices combine, keyboard and screen reader behavior, and a message when nothing matches. The filter is not saved. |
 | 2026-10-26 | The S-4 sketch shows the 🔒 lock on the "Opens" line, and the notes quote it on both the "Opens" and "Closed" lines, from the Team Lead's review. |

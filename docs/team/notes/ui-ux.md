@@ -14,3 +14,7 @@ Lasting lessons for the UI/UX persona. See the
   error states. Reviews kept finding states that only a workflow mentioned.
 - Check that example dates in sketches fall on the weekday shown. "Tue Oct
   28" slipped into the spec, and Oct 28, 2026 is a Wednesday.
+- When a screen moves to another phase, update the *UI by phase* table,
+  the screen map, the button ID table, and every sketch that draws its
+  entry point in the same change, then tell Product and QA so the
+  requirement's phase matches.

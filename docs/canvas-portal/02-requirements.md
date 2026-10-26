@@ -91,7 +91,7 @@ Removed requirements are not listed.
 
 **Phase 3: Performance and Canvas sync**
 
-- Kanban board: FR-39, FR-45 (archiving)
+- Kanban board: FR-39, FR-45 (archiving, showing orphaned cards)
 - Performance: NFR-2
 
 **Phase 4: Polish and deploy**
@@ -196,7 +196,7 @@ Removed requirements are not listed.
 | FR-37 | *(Removed: no "Move to Done?" hint. The student drags cards to Done; the due badge turning green already shows the assignment is submitted, FR-65.)* | n/a | n/a |
 | FR-38 | Within every list, assignments are always sorted by due date, earliest at the top, and assignments with no due date come last. Cards with the same due date, and cards with no due date, are in name order. A changed due date in Canvas moves the card to its new place. From Phase 2, a card dropped into a list slots into its due date place. | Must | 1, 2 (dropping) |
 | FR-39 | When a field changes in Canvas, the card shows the new value after the next refresh, and never changes list because of it. This covers a field being added later (such as a due date set after the assignment was created), changed, or cleared (such as a due date removed: the card moves to the end of its list with no due date). It applies to the name, due date, points, submission types, every Canvas field the FR-23 rules use, and so the statuses worked out from them (and, once the card back shows it, the description, FR-28), including a status going backward (for example *Graded* back to *Not graded* after a resubmission). | Must | 3 |
-| FR-45 | If an assignment disappears from Canvas (deleted or unpublished by the teacher), its card is marked archived rather than deleted, and leaves the board. Only a complete, successful refresh can archive a card; a failed or partial fetch changes nothing. If the assignment comes back (republished), the card returns to its old list. Viewing and restoring archived cards by hand comes with FR-74. Until Phase 3, a card whose assignment is missing from the last complete copy of Canvas data (FR-14) is not shown, but it is kept, never deleted. | Must | 1 (keeping cards), 3 (archiving) |
+| FR-45 | If an assignment disappears from Canvas (deleted or unpublished by the teacher), its card is marked archived rather than deleted, and is hidden from the board unless the student shows it (below). Only a complete, successful refresh can archive a card; a failed or partial fetch changes nothing. If the assignment comes back (republished), the card returns to its old list. Viewing and restoring archived cards by hand comes with FR-74. Until Phase 3, a card whose assignment is missing from the last complete copy of Canvas data (FR-14) is not shown, but it is kept, never deleted. From Phase 3, a show/hide control on the course button row (FR-78) shows or hides these *orphaned* cards, with how many there are. They are hidden by default, and the choice is kept in the browser, like the course buttons. A shown orphaned card stays in its list, grayed out and marked as removed from Canvas. | Must | 1 (keeping cards), 3 (archiving, showing orphaned cards) |
 
 ### 4.5 Trello-style look and behavior (goal G-3)
 
@@ -359,3 +359,4 @@ Removed requirements are not listed.
 | 2026-10-26 | FR-23 rewritten from the Team Lead's review: the card shows *Submitted* (from `submission.submitted_at`), *Graded* (from `graded_submissions_exist`, `grade_matches_current_submission`, and `graded_at`), every submission type, and Late and Excused tags, instead of Canvas's `workflow_state`; *Missing* cards are highlighted (FR-65). FR-22, FR-24, FR-27, FR-39, FR-65, and FR-72 follow; Q-9 answered. |
 | 2026-10-26 | Q-10 answered by the Team Lead: Canvas GraphQL is a possible future feature, so NFR-13 and C-3 stay `GET` only. |
 | 2026-10-26 | FR-74: the student can permanently delete an orphaned card (its assignment gone from Canvas) and its notes, after confirming; NFR-21 notes this. From the Team Lead's review of the UI specification. |
+| 2026-10-26 | FR-45: from Phase 3, a show/hide control for orphaned cards (assignment gone from Canvas), hidden by default and kept in the browser; shown ones stay in their list, grayed out. From the Team Lead's review of the UI specification; the phase is the Team Lead's call. |

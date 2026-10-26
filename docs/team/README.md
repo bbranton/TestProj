@@ -12,6 +12,7 @@ reviews someone else's work, and which decisions it can and cannot make.
 | UI/UX | UI specification, screens, accessibility | [ui-ux.md](personas/ui-ux.md) |
 | Developer | Code, coding standards, bug fixes | [developer.md](personas/developer.md) |
 | DevOps | CI, build and install scripts, dependencies, deploys, hosting, top-level README | [devops.md](personas/devops.md) |
+| Security | Security reviews, potential data breach ratings, client security document | [security.md](personas/security.md) |
 
 How personas review each other's work is in the
 [review protocol](review-protocol.md). How they share notes, scripts, and
@@ -42,6 +43,25 @@ An agent acting as a persona:
 The Team Lead has the final say on every decision and every disagreement
 between personas, and confirms which personas review each PR. A persona
 never approves or merges a PR; it recommends, and the Team Lead decides.
+
+## Security is everyone's job
+
+Security is the most critical and risky part of the product, because the
+portal holds students' Canvas tokens and data. So it isn't left to one
+persona:
+
+- Every persona checks its own work, and everything it reviews, for
+  security and privacy risks, and raises each one it sees, even outside
+  its own area and even when Security is also reviewing.
+- No persona ignores a security risk, or leaves it for another persona to
+  catch.
+- Any persona can mark a finding a
+  [potential data breach](personas/security.md#potential-data-breach).
+  Management treats every one as critical and must-fix.
+- The [Security persona](personas/security.md) is the specialist. On a
+  security question its view carries the most weight, over the persona
+  that owns the work. The owner still makes the fix, and can't decline it
+  without the Team Lead.
 
 ## Changing the team
 

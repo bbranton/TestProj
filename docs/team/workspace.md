@@ -42,7 +42,7 @@ standard library, so they run anywhere without installing anything.
 fills in every new PR's description with the sections the
 [review protocol](review-protocol.md) needs: requirement IDs, the owner, the
 recommended reviewers for the Team Lead to confirm, verdicts, findings,
-testing, and screenshots. Keep its sections in step with the protocol.
+follow-up issues, testing, and screenshots. Keep its sections in step with the protocol.
 
 ## The board
 
@@ -59,7 +59,12 @@ Each line is one claim or one note:
 ```
 - [claim] Architecture · editing 03-design.md for FR-20 · PR #12 · 2026-10-25
 - [note] DevOps → Architecture · new backend env var CANVAS_TIMEOUT needs a default · 2026-10-25
+- [posting] DevOps · review of PR #12 · 2026-10-25 21:30
 ```
+
+A `[posting]` line holds the PR's one GitHub draft review while a reviewer
+posts, as [Posting reviews one at a time](review-protocol.md#posting-reviews-one-at-a-time)
+says.
 
 Rules:
 

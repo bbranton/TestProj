@@ -296,19 +296,25 @@ sequenceDiagram
 
 ### Assignment status
 
-The portal shows status exactly as Canvas reports it (FR-23) and works
-nothing out itself. Canvas returns these fields on each assignment's
-`submission`:
+The card's status follows the rules in FR-23, from the Team Lead's review.
+The backend reads these Canvas fields (the assignment's own fields, and its
+`submission`, from `include[]=submission`) and works out two values, then
+sends the frontend only the results:
 
-| Canvas field | Values | Shown as |
-|--------------|--------|----------|
-| `workflow_state` | `unsubmitted`, `submitted`, `graded`, `pending_review` | The state: *Not submitted*, *Submitted*, *Graded*, *Pending review* |
-| `late` | true or false | A *Late* tag when true |
-| `missing` | true or false | A *Missing* tag when true, and a red due badge |
-| `excused` | true or false | An *Excused* tag when true |
+| Shown on the card | Rule | Canvas fields |
+|-------------------|------|---------------|
+| *Submitted* or *Not submitted* | Submitted when `submission.submitted_at` has a date. Canvas's `has_submitted_submissions` is not used: it is not the same check | `submission.submitted_at` |
+| *Graded* or *Not graded* | Graded only when all four hold: a submission exists, `graded_submissions_exist` is true, `submission.grade_matches_current_submission` is true, and `submission.graded_at` has a date | `graded_submissions_exist` (on the assignment), `submission.grade_matches_current_submission`, `submission.graded_at` |
+| *Missing* | `submission.missing` is true. The card is highlighted so it stands out; the UI specification decides how | `submission.missing` |
+| *Late*, *Excused* tags | Shown when the field is true | `submission.late`, `submission.excused` |
+| Submission types | Every entry, in Canvas's order, such as "online upload, on paper" | `submission_types` (on the assignment) |
 
-The state and the tags can appear together, for example *Graded* with *Late*.
-The portal works out no statuses of its own.
+With no submission at all, the card shows *Not submitted* and *Not graded*.
+These replace Canvas's `workflow_state`, which the portal no longer reads,
+so *Pending review* does not appear. The two worked-out values are rules on
+Canvas fields only; statuses that compare with the clock, such as *Due
+soon*, stay Phase 5 (FR-27). The rules live in one backend function with a
+unit test per row, so a Canvas quirk is fixed in one place.
 
 ## 5. Signing in to the portal (D-7)
 
@@ -431,24 +437,17 @@ the start, and Phase 3 tuning that starts from the Phase 1 timings
 
 **Phase 3 tuning**, starting from the TP-14 baseline, in this order:
 
-1. **Canvas GraphQL.** Canvas also has a GraphQL API (`POST /api/graphql`),
-   where one request names exactly the fields wanted. A single query can
-   return every active course's assignments with only the fields the board
-   shows (name, due date, points, Canvas link, submission state, and the
-   late, missing, and excused flags), which replaces dozens of REST calls.
-   *GraphQL* is a query language for APIs: the caller describes the shape of
-   the data it wants, a little like a QML property binding listing only the
-   properties it uses. **Needs the Team Lead's call before it is built:**
-   GraphQL reads are sent with `POST`, but NFR-13 and C-3 allow only `GET`.
-   Using it means allowing `POST /api/graphql` for queries only, with the
-   client refusing any request that holds a `mutation`, and changing the
-   requirement and the GET-only test to match.
-2. **Leave descriptions out.** Descriptions are often the largest part of
+1. **Leave descriptions out.** Descriptions are often the largest part of
    each assignment, and nothing in Phases 1 to 4 shows them, so the load
    skips them.
-3. **Planner API** (`/api/v1/planner/items`), which lists due items across
-   all courses in one paged `GET` list. It has fewer fields, so it's a
-   fallback if GraphQL is not available at the school or not allowed.
+2. **Planner API** (`/api/v1/planner/items`), which lists due items across
+   all courses in one paged `GET` list. It has fewer fields, so before
+   using it, check that it carries every field the FR-23 rules need; if not,
+   it can only narrow which courses to fetch in full.
+
+Canvas GraphQL was considered and left out: its reads are sent with
+`POST`, and the portal stays `GET` only (NFR-13, C-3). The Team Lead
+answered Q-10: it may come back as a Phase 5 idea (section 12).
 
 Fetching the courses with the nearest due dates first was considered and
 left out: only a complete Refresh replaces the data (FR-14), so the order
@@ -619,7 +618,7 @@ sequenceDiagram
 | Token in an address | The token is sent only in the body of `PUT /api/canvas/connection` and in the `Authorization` header to Canvas, never in a URL | NFR-10 |
 | Other sites acting as the user | Session cookie is `SameSite=Lax`, and no `GET` endpoint changes data (section 5) | NFR-12 |
 | One user seeing another's data | Every query filters on the session's `user_id`; tests check this for every endpoint | NFR-12 |
-| Writes to Canvas | The Canvas client only implements `GET` (see the GraphQL note in *Phase 3 tuning*) | NFR-13 |
+| Writes to Canvas | The Canvas client only implements `GET` | NFR-13 |
 | A Canvas address that points somewhere else | The student types the Canvas address, and the server then calls it, so a bad address could make the server call machines on its own network. The address must be `https`, must resolve only to public internet addresses, and is checked again on every call | NFR-11, NFR-12 |
 | Token sent to the wrong host | The client sends the token only to the saved Canvas host. It does not follow redirects, or paging `Link` URLs, that lead to another host; that course fails instead | NFR-10 |
 | Trackers | No third-party analytics or scripts | NFR-14 |
@@ -676,7 +675,7 @@ flowchart TD
     Board --> List["List (one per list)"]
     List --> ListHeader["ListHeader<br/>list title, card count,<br/>minimize/expand toggle"]
     List --> Card["CardFront (one per card)"]
-    Card --> Badges["Label strip, due badge,<br/>Canvas state and tags"]
+    Card --> Badges["Label strip, due badge, points,<br/>Submitted, Graded, tags,<br/>submission types"]
 ```
 
 ### Visual style
@@ -690,7 +689,7 @@ UI uses:
 | Board background | One solid color, a deep blue |
 | List | Expanded lists share the board's width equally, at least 240 px each; minimized lists are a 40 px strip with the title written vertically and the card count. Light gray, 12 px rounded corners, 8 px gap between lists |
 | Card | White, 8 px rounded corners, soft shadow, 8 px padding; label strip at the top in the course color |
-| Due badge | Small pill with a clock icon: green (Canvas says Submitted or Graded), red (Canvas flags Missing, even when also Graded), plain otherwise |
+| Due badge | Small pill with a clock icon: green when Submitted or Graded (FR-23 rules), red when Missing, even when also Graded, plain otherwise. A Missing card is also highlighted as the UI specification says |
 | Text | System font, 14 px on cards, bold list titles |
 
 ### Interaction details
@@ -752,6 +751,9 @@ possible without reworking what Phases 1 to 4 build:
   (NFR-33, NFR-36) needs less rework.
 - **Keep the four lists as rows in `LIST`**, not hard-coded, so renaming or
   adding lists later is a feature, not a redesign.
+- **Keep every Canvas call inside the Canvas client.** Canvas GraphQL (a
+  Phase 5 idea, Q-10) would then be a change to one module, if `POST`
+  queries are ever allowed.
 
 ## Open decisions raised here
 
@@ -770,8 +772,6 @@ adds a dependency or changes how the Canvas token is stored or sent:
 - **The token goes only to the saved Canvas host**, never through a
   redirect or paging link to another host, and only to `https` public
   addresses (section 7).
-- **Canvas GraphQL** reads through `POST` (Phase 3 tuning), which NFR-13
-  doesn't allow today.
 
 What the connect screen says when a student connects a different account
 (Q-8) is for Product and QA and UI/UX; section 3 gives the data side.
@@ -817,3 +817,4 @@ What the connect screen says when a student connects a different account
 | 2026-10-25 | Architecture review: server-side sessions (new `SESSION` table), Fernet token encryption, and the in-process Refresh task in the technology table; one error shape with codes for each screen; dates sent in UTC; security rows for Canvas addresses that point elsewhere and for never sending the token to another host; Phase 1 settings listed. Matched to requirements PR #6: until Phase 3 a card with no Canvas data is hidden, not deleted (FR-45); the different-account check is Q-8; a Missing badge stays red when also Graded (FR-65). |
 | 2026-10-25 | Matched to the team personas: proposals that need the Team Lead (a new dependency, token storage or sending) are listed under *Open decisions raised here*; testing, CI, hosting, and screen choices are left to the personas that own them. |
 | 2026-10-25 | From the roadmap cross-review (X-24, X-25): the portal runs as one backend instance, with Refresh state in the database; backups are kept at most 30 days, so a deleted account leaves every copy within 30 days. |
+| 2026-10-26 | From the Team Lead's review of requirements PR #6: *Assignment status* now follows FR-23's rules (Submitted from `submitted_at`; Graded from four checks; Missing highlighted; submission types listed; `workflow_state` no longer read). Canvas GraphQL dropped from Phase 3 tuning, since NFR-13 stays `GET` only (Q-10); it may return as a Phase 5 idea. |

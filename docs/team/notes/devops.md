@@ -25,3 +25,21 @@ Lasting lessons for the DevOps persona. See the
   deploys, the Team Lead wants a release plan: `develop` for next-phase
   work, `main` for what's live, and a tag at each release so a patch can
   branch from it (#30).
+- Hosting research lives in roadmap D-3, R-13, and R-15: test deploys run
+  on Koyeb free plus Neon free (Render free is the fallback), and paid
+  production hosting is about $13 to $14 a month plus a domain. Read these
+  before any new hosting research; it cost about 20 web fetches in #4.
+- The branch rename went `master` to `develop` to `main` across two PRs
+  (#29). Confirm a shared name with the Team Lead before editing, and list
+  every place it lives first.
+- Many PRs append rows to `cost-log.md`, which causes merge conflicts and
+  extra "Merge main" commits. Keep shared append-only files to one owner
+  thread where possible.
+
+## Open items
+
+- Release plan after Phase 1 deploys: `develop`, `main`, and release tags (#30).
+- Docs PRs have no checks. Proposed: a link and requirement-ID check, and a
+  screenshot helper for UI PRs. Needs the Team Lead's OK before building.
+- Phase 1 test deploy (Koyeb plus Neon, nightly encrypted backup) not set
+  up yet; see roadmap Phase 1 step 6.

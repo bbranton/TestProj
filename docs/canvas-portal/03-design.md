@@ -20,10 +20,10 @@ Build only the parts listed for the current phase (see the repo's
 | Phase | Builds |
 |-------|--------|
 | 0 | Repository layout (section 8), empty frontend and backend, CI |
-| 1 | Tables `USER`, `CANVAS_CONNECTION`, `BOARD`, `LIST`, `CARD` (without `archived`), `COURSE_LABEL`, `CANVAS_CACHE`, `REFRESH_RUN`; the Phase 1 endpoints in section 4; sign-in (section 5); talking to Canvas, caching, *Built from the start*, and *Refresh progress* (section 6); security (section 7); the board, course buttons, minimize and expand, visual style, and the Phase 1 interactions (section 9) |
-| 2 | Moving cards and *Keeping devices in sync* (section 4): the Phase 2 endpoints, `change_seq`, the unique card rule; dragging (section 9) |
+| 1 | Tables `USER`, `SESSION`, `CANVAS_CONNECTION`, `BOARD`, `LIST`, `CARD`, `CANVAS_CACHE`, `REFRESH_RUN`, without the columns marked Phase 2 or 3, and with the unique card rule; the Phase 1 endpoints in section 4; sign-in (section 5); talking to Canvas, caching, *Built from the start*, *Refresh progress*, and *Saving a complete Refresh* (section 6); security (section 7); the board with only Backlog shown, course buttons, the filter menu with its orphaned-cards option, the removed count in the Refresh summary, visual style, the Refresh progress panel, and the Phase 1 interactions (section 9) |
+| 2 | Moving cards and *Keeping devices in sync* (section 4): the Phase 2 endpoints and `change_seq`; dragging, showing To do, In progress, and Done, sharing the width and scrolling sideways, and minimize and expand (section 9) |
 | 3 | *Phase 3 tuning*, *Bringing the backend in step with Canvas*, and *What can change in Canvas* (section 6); `CARD.archived` |
-| 4 | Deleting all of a user's data (section 4), accessibility checks, deploying (roadmap D-3) |
+| 4 | Deleting all of a user's data (section 4), accessibility checks, publishing the Google sign-in app (section 5), deploying (roadmap D-3) |
 
 ## 1. Architecture overview
 
@@ -67,9 +67,12 @@ both.
 | Drag and drop | Pragmatic drag and drop (Atlassian), or dnd-kit | Proposed, chosen in Phase 2 | Pragmatic drag and drop is Atlassian's open-source library behind Trello's own drag and drop and works with any framework, which suits G-3. |
 | Backend | Python 3.12 + FastAPI | **Decided (D-6)** | Short, readable code; generates API docs automatically |
 | Canvas client | `httpx` (Python HTTP library) | Proposed | Async requests, so courses can be fetched in parallel (NFR-2) |
-| Database | Postgres in production, SQLite for local dev and tests | Proposed | Postgres is what hosts offer; SQLite needs no setup |
+| Database | Postgres in production, SQLite for local dev and tests | Proposed | Postgres is what hosts offer; SQLite needs no setup. SQLite locks the whole file on every write, so concurrency tests on SQLite say little about Postgres. How NFR-22 is tested is Product and QA's call, and CI is DevOps's |
 | Database access | SQLAlchemy + Alembic | Proposed | Python models for tables; Alembic tracks schema changes over time ("migrations") |
 | Portal sign-in | Sign in with Google (OAuth 2 / OpenID Connect) via the Authlib Python library | **Decided for MVP (D-7)** | No passwords to store; see section 5 |
+| Sessions | Server-side `SESSION` rows, looked up by a random ID in the cookie | Proposed | Sign out and account deletion end the session at once, which a self-contained signed cookie can't do |
+| Token encryption | Fernet, from the `cryptography` Python library | Proposed; needs the Team Lead (new dependency, token storage) | Authenticated encryption in one call; `MultiFernet` lets the key be replaced later without losing stored tokens |
+| Background Refresh | An `asyncio` task inside the one server process | Proposed | Nothing extra to build; it needs a host that keeps one server process running, which DevOps weighs when choosing the host (roadmap D-3) |
 | Hosting | See roadmap D-3 | Open | |
 
 ## 3. Data model
@@ -79,12 +82,12 @@ come from Canvas and are cached, not copied permanently.
 
 ```mermaid
 erDiagram
-    USER ||--o| CANVAS_CONNECTION : has
+    USER ||--o{ CANVAS_CONNECTION : has
     USER ||--o| BOARD : owns
     USER ||--o| REFRESH_RUN : runs
+    USER ||--o{ SESSION : "signs in with"
     BOARD ||--o{ LIST : contains
     LIST ||--o{ CARD : contains
-    CANVAS_CONNECTION ||--o{ COURSE_LABEL : colors
     CANVAS_CONNECTION ||--o{ CANVAS_CACHE : caches
 
     USER {
@@ -93,13 +96,20 @@ erDiagram
         string email
         datetime created_at
     }
+    SESSION {
+        string id PK "random, in the cookie"
+        uuid user_id FK
+        datetime expires_at
+    }
     CANVAS_CONNECTION {
         uuid id PK
         uuid user_id FK
         string canvas_base_url
-        bytes token_encrypted
+        int canvas_user_id
+        bytes token_encrypted "empty after disconnect"
         string canvas_user_name
         datetime connected_at
+        bool active "one per user"
     }
     BOARD {
         uuid id PK
@@ -108,6 +118,7 @@ erDiagram
     }
     LIST {
         uuid id PK
+        uuid user_id FK
         uuid board_id FK
         string title
         int position
@@ -120,25 +131,21 @@ erDiagram
         int canvas_assignment_id
         int canvas_course_id
         bool archived "Phase 3"
+        json last_seen "Canvas fields when orphaned"
         int change_seq "Phase 2"
     }
-    COURSE_LABEL {
-        uuid user_id FK
-        uuid connection_id FK
-        int canvas_course_id
-        string color
-    }
     REFRESH_RUN {
-        uuid user_id FK
+        uuid user_id PK, FK
         string state "running, complete, incomplete"
         datetime started_at
         datetime finished_at
         json courses "per-course state, counts, error"
+        int removed_count
     }
     CANVAS_CACHE {
-        uuid user_id FK
-        uuid connection_id FK
-        string kind
+        uuid user_id PK, FK
+        uuid connection_id PK, FK
+        string kind PK "courses or assignments"
         json payload
         datetime fetched_at
     }
@@ -157,24 +164,50 @@ Design notes:
   due date, earliest first, then by name, with no-due-date cards last
   (FR-38). The order is worked out each time the board loads, so a due date
   changed in Canvas moves the card automatically. Moving a card only changes
-  its `list_id`, a one-row update (NFR-3).
-- **Lists are fixed:** the four lists (FR-31) are created with the board,
-  and `position` holds their order, 1 to 4.
-- **One school per user.** `USER` has at most one `CANVAS_CONNECTION`.
-  Cards, course labels, and cached data still record their `connection_id`
-  (see section 12).
-- **One card per assignment, enforced by the database (Phase 2):** a unique
-  rule on (`connection_id`, `canvas_assignment_id`) means two devices loading the board at
-  the same moment can't both add a card for a new assignment (NFR-22).
+  its `list_id` and, from Phase 2, the board's `change_seq`, a small update
+  (NFR-3).
+- **Lists are fixed:** the board and its four lists (FR-31) are created
+  when the user first signs in, and `position` holds their order, 1 to 4.
+  In Phase 1, when nothing can be moved, the frontend shows only Backlog.
+  The other three rows already exist, so Phase 2 shows them with no
+  migration.
+- **One active school per user.** A user has at most one *active*
+  `CANVAS_CONNECTION`, and the board shows only the active connection's
+  cards and cached data. Each of those records its
+  `connection_id` (see section 12).
+- **Disconnecting keeps the connection row.** Disconnect (FR-4) empties
+  `token_encrypted` but keeps the row, so cards and cached data keep pointing at it and the board survives (FR-6). Reconnecting with
+  the same Canvas address and Canvas user (`canvas_user_id`, from
+  `/api/v1/users/self`) puts the new token in the same row.
+- **Connecting a different account keeps the old one's cards (Q-8).** When
+  the student connects a different Canvas address or Canvas user, the old
+  row is made inactive and its token emptied, and a new active row is
+  added. The old cards and cache stay in the database, hidden.
+  Reconnecting the old account later makes its row active again, and its
+  cards come back in the lists they were in. Deleting the account (FR-54)
+  removes every connection row and everything under it.
+- **One card per assignment, enforced by the database (FR-35):** a unique
+  rule on (`connection_id`, `canvas_assignment_id`) means a card can never be added
+  twice for one assignment, even if two saves race (NFR-22). It costs nothing
+  to add with the first migration in Phase 1, when cards are first created.
 - **`change_seq`** is a counter on the board that goes up by one with every
   change, and each card records the value from its last change. It lets a
   device ask "what changed since number 41?" (see *Keeping devices in sync*).
-- **Course label colors** (FR-66) are stored per user and course, picked
-  automatically from a fixed palette the first time a course appears, so a
-  course keeps its color on every device. Which courses are hidden by the
-  show/hide buttons (FR-78) is kept in the browser, not the database.
-- **Archived, not deleted (Phase 3):** if an assignment disappears from
-  Canvas, its card is marked `archived` (FR-45).
+- **No course colors until Phase 5.** Every card's label strip and every
+  course button uses the same neutral color (FR-66 is Phase 5), so Phases 1
+  to 4 store no color. Which courses the course buttons
+  hide (FR-78) is kept in the browser, not the database, until Phase 5. The
+  course buttons are the only way to choose courses; the filter menu has no
+  course list (FR-72).
+- **Orphaned cards keep what they were (Phase 1).** When a complete
+  Refresh no longer has a card's assignment, the new Canvas copy can't say
+  what the card was. So the Refresh copies the fields the card front shows
+  (name, course, due date, points, status) into `last_seen` first, and
+  clears it if the assignment comes back. A card with `last_seen` set is
+  *orphaned*. Orphaned cards are hidden by default, and the student can show
+  them from the filter menu (FR-45).
+- **Archived, not deleted (Phase 3):** Phase 3 also marks an orphaned card
+  `archived` (FR-45), with the course and change rules in section 6.
 - **Every row has `user_id`**, and every query filters by the signed-in user,
   so one user can never read another's data (NFR-12).
 
@@ -185,29 +218,53 @@ and require a signed-in session except where noted.
 
 | Method and path | Purpose | Requirements | Phase |
 |-----------------|---------|--------------|-------|
+| `GET /api/health` | Answers `{"status": "ok"}` so CI and the host can check the server is up (no session needed) | NFR-40 | 0 |
 | `GET /api/auth/google/login` | Send the browser to Google's sign-in page (no session needed) | FR-50 | 1 |
-| `GET /api/auth/google/callback` | Google sends the user back here; backend checks the result, finds or creates the user, sets the session cookie (no session needed) | FR-50 | 1 |
+| `GET /api/auth/google/callback` | Google sends the user back here; backend checks the result, finds or creates the user (and, for a new user, their board and four lists), sets the session cookie (no session needed) | FR-50, FR-31 | 1 |
 | `POST /api/auth/logout` | Sign out and clear the session | FR-50 | 1 |
 | `GET /api/me` | Current user and whether Canvas is connected | FR-2, FR-5 | 1 |
-| `PUT /api/canvas/connection` | Save Canvas URL and token; backend verifies with Canvas first | FR-1, FR-2 | 1 |
-| `DELETE /api/canvas/connection` | Disconnect and delete the stored token | FR-4 | 1 |
-| `GET /api/courses` | Active courses (cached) | FR-10, FR-20 | 1 |
-| `GET /api/assignments` | All assignments across active courses, with Canvas status fields | FR-11, FR-21 to FR-23 | 1 |
+| `PUT /api/canvas/connection` | Save Canvas URL and token, encrypted; backend verifies with Canvas first | FR-1, FR-2, FR-5, NFR-11 | 1 |
+| `DELETE /api/canvas/connection` | Disconnect: delete the stored token, keep the board (section 3) | FR-4 | 1 |
+| `GET /api/courses` | Active courses, from the last complete copy | FR-10, FR-14, FR-20 | 1 |
+| `GET /api/assignments` | All assignments across active courses, from the last complete copy, with Canvas status fields, the Canvas link, and when they were fetched; on the very first load it starts a Refresh instead | FR-11, FR-14, FR-15, FR-21 to FR-23, FR-26 | 1 |
 | `POST /api/refresh` | Start a Refresh in the background, or join the one already running; returns at once | FR-13, FR-15, FR-16 | 1 |
 | `GET /api/refresh/latest` | Progress of the running Refresh, or the log of the last one | FR-16 | 1 |
-| `GET /api/board` | Lists and cards with labels and badges, cards sorted by due date, after merging in new assignments | FR-31, FR-34, FR-38, FR-65 | 1 |
+| `GET /api/board` | Lists and cards, cards sorted by due date. Read only: cards are added when a Refresh is saved (section 6). Orphaned cards are included, flagged `orphaned` and shown from `last_seen`, so the frontend can show or hide them without another request | FR-31, FR-34, FR-38, FR-45, FR-65 | 1 |
 | `PATCH /api/board/cards/{id}` | Move to another list; returns the new `change_seq` | FR-32, FR-33, NFR-22 | 2 |
 | `GET /api/board/changes?since={seq}` | Cards changed since that `change_seq`, and the current value | NFR-22 | 2 |
-| `DELETE /api/me` | Delete the account and all its data | FR-54 | 4 |
+| `DELETE /api/me` | Delete the account and all its data from the live database at once; backups age out (section 7) | FR-54 | 4 |
 
 The backend only ever sends filtered, portal-shaped data to the frontend. It
 does not pass Canvas responses straight through, and it never includes the
 token.
 
+**Dates** are sent as Canvas gives them, in UTC (ISO 8601), and every
+comparison is made in UTC (FR-22): sorting by due date (backend and
+frontend), the due badge, the "Opens …" and "Closed …" lines, and the due
+date filters. In the browser that means comparing parsed instants such as
+`Date.parse(due_at)` with `Date.now()`, never formatted local strings.
+Only display uses the device's time zone, so the backend needs no time
+zone setting. Each assignment carries `due_at`, `unlock_at`, and
+`lock_at`. The frontend checks `unlock_at` and `lock_at` against the
+current time, so a card turns from "Opens …" to open, or to "Closed …",
+without a Refresh (FR-22, FR-65).
+
+**Errors** all have one shape, `{"error": "<code>", "message": "<text>"}`,
+so the frontend can choose a screen by code without reading the text:
+
+| Code | HTTP status | Frontend shows (screens from the UI specification) |
+|------|-------------|----------------|
+| `not_signed_in` | 401 | S-1 Sign in |
+| `canvas_not_connected` | 409 | S-2 Connect Canvas |
+| `canvas_token_rejected` | 409 | S-2 with the reconnect message (FR-6) |
+| `canvas_unreachable` | 502 | The warning banner with the last data (NFR-20) |
+| `canvas_address_invalid` | 400 | "Couldn't reach that Canvas address" on S-2 (W-1) |
+| `not_found` | 404 | Nothing; also what another user's IDs return (NFR-12) |
+
 ### Keeping devices in sync (NFR-22, D-8)
 
-A student may have the board open on a laptop and a desktop computer at once
-The server's copy is the only real one; each device shows a copy and keeps it
+A student may have the board open on a laptop and a desktop computer, or
+in two browser tabs, at once. The server's copy is the only real one; each device shows a copy and keeps it
 up to date.
 
 - **Saving a move:** the device moves the card on screen at once (an
@@ -219,15 +276,21 @@ up to date.
   `GET /api/board/changes?since=41` with the last number it knows. The server
   returns the cards changed since then, and the device moves them. A device
   that was asleep or offline catches up the same way.
+- **Seeing a Refresh from another device:** the changes answer also carries
+  the time of the last complete Refresh. When it is newer than the one the
+  device shows, the device reloads assignments and the board, so new cards
+  and changed due dates or badges appear too, not only moves. A Refresh
+  stamps every card it adds (and, from Phase 3, archives) with a new
+  `change_seq`.
 - **Two moves of the same card:** the last save to reach the server wins.
   The other device sees the winning list on its next check, so every device
   ends up the same. For one person's board this is simpler than asking which
   move to keep.
 - **Drag in progress:** a change that arrives while the student is dragging
   waits until the drop, so cards never jump under the pointer.
-- **Canvas refresh on two devices:** adding cards for new assignments relies
-  on the unique rule in section 3, so a second device's attempt just finds
-  the card already there.
+- **Refresh on two devices:** only one Refresh runs at a time per student
+  (section 6), and the unique rule in section 3 means a card is never added
+  twice.
 
 ```mermaid
 sequenceDiagram
@@ -247,19 +310,27 @@ sequenceDiagram
 
 ### Assignment status
 
-The portal shows status exactly as Canvas reports it (FR-23) and works
-nothing out itself. Canvas returns these fields on each assignment's
-`submission`:
+The card's status follows the rules in FR-23, from the Team Lead's review.
+The backend reads these Canvas fields (the assignment's own fields, and its
+`submission`, from `include[]=submission`) and works out two values, then
+sends the frontend only the results:
 
-| Canvas field | Values | Shown as |
-|--------------|--------|----------|
-| `workflow_state` | `unsubmitted`, `submitted`, `graded`, `pending_review` | The state: *Not submitted*, *Submitted*, *Graded*, *Pending review* |
-| `late` | true or false | A *Late* tag when true |
-| `missing` | true or false | A *Missing* tag when true, and a red due badge |
-| `excused` | true or false | An *Excused* tag when true |
+| Shown on the card | Rule | Canvas fields |
+|-------------------|------|---------------|
+| *Submitted* or *Not submitted* | Submitted when `submission.submitted_at` has a date. Canvas's `has_submitted_submissions` is not used: it is not the same check | `submission.submitted_at` |
+| *Graded* or *Not graded* | Graded only when all four hold: a submission exists, `graded_submissions_exist` is true, `submission.grade_matches_current_submission` is true, and `submission.graded_at` has a date | `graded_submissions_exist` (on the assignment), `submission.grade_matches_current_submission`, `submission.graded_at` |
+| *Missing* | `submission.missing` is true. The card is highlighted so it stands out; the UI specification decides how | `submission.missing` |
+| *Late* tag | Shown when the field is true | `submission.late` |
+| *Excused* (Phase 5) | Shown as its own label when the field is true | `submission.excused` |
+| Submission types | Every entry, in Canvas's order, such as "online upload, on paper" | `submission_types` (on the assignment) |
+| "Opens …" or "Closed …" | Before `unlock_at`, the card is grayed out and says when it opens. After `lock_at`, it says when it closed. Worked out by the frontend against the current time, in UTC, since it changes with time, not with Canvas | `unlock_at`, `lock_at` (on the assignment, the student's own dates) |
 
-The state and the tags can appear together, for example *Graded* with *Late*.
-The portal works out no statuses of its own.
+With no submission at all, the card shows *Not submitted* and *Not graded*.
+These replace Canvas's `workflow_state`, which the portal no longer reads,
+so *Pending review* does not appear. The two worked-out values are rules on
+Canvas fields only; statuses that compare with the clock, such as *Due
+soon*, stay Phase 5 (FR-27). The rules live in one backend function with a
+unit test per row, so a Canvas quirk is fixed in one place.
 
 ## 5. Signing in to the portal (D-7)
 
@@ -302,21 +373,27 @@ sequenceDiagram
 - The backend asks Google only for the `openid email profile` scopes: who the
   user is, nothing from their Google Drive or Gmail.
 - Users are matched by Google's stable user ID (the `sub` value), not by
-  email, since an email address can change. The `USER` table gains a
-  `google_sub` column.
+  email, since an email address can change. The `USER` table's
+  `google_sub` column holds it.
 - The Google *client ID* and *client secret* come from a free Google Cloud
   project. The secret lives only in the server's environment settings, never
   in the repo. Setting this up is a Phase 1 prerequisite.
 - While the Google app is in "testing" mode, only Google accounts added as
-  test users can sign in. That suits development; publishing it later is a
-  short Google review.
+  test users can sign in. That suits development. Publishing it, so any
+  student can sign in (D-5), is a short Google review and part of Phase 4.
 - Some school-managed Google accounts block sign-in to outside apps. Students
   can use a personal Google account instead; risk R-6 in the roadmap.
 
 After sign-in, the backend sets a **session cookie**: a small value the browser
 sends back automatically with each request so the backend knows who is
-asking. The cookie is `HttpOnly` (page scripts can't read it), `Secure` (HTTPS
-only), and `SameSite=Lax` (other sites can't trigger requests with it).
+asking. The cookie holds only a random session ID; the `SESSION` row says
+whose it is. A session lasts 30 days. Signing out deletes the row, and
+deleting the account deletes all of the user's sessions. The cookie is `HttpOnly` (page scripts can't read it), `Secure` (HTTPS
+only), and `SameSite=Lax` (the browser leaves it off requests that other
+sites start, except a plain link to the portal). Because a link can still
+carry it, no `GET` endpoint changes the board or the account. The one
+exception is the first-load Refresh that `GET /api/assignments` starts,
+which runs only when the student has no data yet (FR-15).
 
 ## 6. Talking to Canvas
 
@@ -334,8 +411,10 @@ only), and `SameSite=Lax` (other sites can't trigger requests with it).
   when more results exist. The client keeps following it until there is none.
 - **Rate limits (C-2):** Canvas reports remaining budget in the
   `X-Rate-Limit-Remaining` header and answers `403` with "Rate Limit Exceeded"
-  when it runs out. The client fetches at most 4 courses at once and waits and
-  retries with increasing delays when limited.
+  when it runs out. The client fetches at most 4 courses at once, fewer when
+  the remaining budget runs low, and waits and retries with increasing delays
+  when limited. After 5 tries a course fails with "Canvas rate limit", so a
+  Refresh always ends.
 - **Last complete copy (FR-14):** results are stored in `CANVAS_CACHE`. A
   page load always gets that copy at once and never fetches from Canvas,
   except on the very first load when there is no copy yet (FR-15). Only
@@ -355,47 +434,55 @@ the start, and Phase 3 tuning that starts from the Phase 1 timings
   returns it at once, with the time it was fetched. Only the first ever
   load waits for Canvas, with the progress panel open (FR-16).
 - **Refresh only when asked (FR-15).** The portal never starts a fetch on
-  its own. The header always shows the last sync time ("Synced Oct 25,
-  10:42 AM", FR-13). When the data is more than an hour old, the frontend
-  also highlights the Refresh button. While a Refresh runs, the board stays usable, the button
-  shows progress, and the page checks back until it finishes.
-- **Show results as they arrive.** Courses fill in one by one instead of
-  the page staying empty (NFR-2).
+  its own. The header always shows the time of the last complete Refresh
+  ("Synced Oct 25, 10:42 AM", FR-13). When that is more than an hour ago,
+  the frontend also highlights the Refresh button. While a Refresh runs, the
+  board stays usable, the button shows progress, and the page checks back
+  until it finishes.
+- **Show progress as courses arrive.** The progress panel (S-10) fills in
+  course by course (FR-16, NFR-2). The board itself changes once, when the
+  whole Refresh is saved, because only a complete copy replaces the last
+  one (FR-14).
 - **Fewer, larger requests.** `per_page=100` on every list, and up to 4
-  courses fetched at once, raised or lowered by watching
-  `X-Rate-Limit-Remaining`.
-- **Skip what can't change.** Only active courses are fetched; concluded
-  courses are never refetched.
+  courses fetched at once (see *Paging, rate limits, and caching*).
+- **Skip what isn't needed.** Only active courses are fetched; concluded
+  courses never are.
 - **Measure every call.** The backend logs each Canvas request's endpoint
   (without the token, NFR-10), page count, and time taken, so slow spots show
-  up in numbers, not guesses.
+  up in numbers, not guesses. The same logs, plus how long `GET /api/board`
+  takes, give the Phase 1 TP-14 baseline that NFR-1 (Phase 2) is set
+  against.
 
 **Phase 3 tuning**, starting from the TP-14 baseline, in this order:
 
-1. **Canvas GraphQL.** Canvas also has a GraphQL API (`POST /api/graphql`),
-   where one request names exactly the fields wanted. A single query can
-   return every active course's assignments with only name, due date,
-   points, and submission state, which replaces dozens of REST calls. *GraphQL*
-   is a query language for APIs: the caller describes the shape of the data
-   it wants, a little like a QML property binding listing only the
-   properties it uses.
-2. **Leave descriptions out.** Descriptions are often the largest part of
+1. **Leave descriptions out.** Descriptions are often the largest part of
    each assignment, and nothing in Phases 1 to 4 shows them, so the load
    skips them.
-3. **Nearest due dates first.** A Refresh fetches the courses with the
-   soonest due dates first, so the cards that matter most update first.
-   Nothing is archived until the whole Refresh completes (FR-45).
-4. **Planner API** (`/api/v1/planner/items`), which lists due items across
-   all courses in one paged list. It has fewer fields, so it's a fallback if
-   GraphQL is not available at the school.
+2. **Planner API** (`/api/v1/planner/items`), which lists due items across
+   all courses in one paged `GET` list. It has fewer fields, so before
+   using it, check that it carries every field the FR-23 rules need; if not,
+   it can only narrow which courses to fetch in full.
+
+Canvas GraphQL was considered and left out: its reads are sent with
+`POST`, and the portal stays `GET` only (NFR-13, C-3). The Team Lead
+answered Q-10: it may come back as a Phase 5 idea (section 12).
+
+Fetching the courses with the nearest due dates first was considered and
+left out: only a complete Refresh replaces the data (FR-14), so the order
+courses arrive in changes nothing the student sees on the board.
 
 ### Refresh progress (FR-16)
 
-A Refresh can take minutes, so it runs as a background task on the server
-and reports as it goes.
+A Refresh can take minutes, so it runs as a background task inside the
+server process and reports as it goes. The host must keep that process
+running between requests (roadmap D-3).
 
-- `POST /api/refresh` starts the task and returns at once. If a Refresh is
-  already running for this student, it returns that one instead.
+- `POST /api/refresh` starts the task and returns at once.
+- **One Refresh at a time per student.** If a Refresh is already running,
+  for example one started from another device, `POST /api/refresh` returns
+  that one instead of starting another. The check is one conditional update
+  of the student's `REFRESH_RUN` row ("set to running unless it already
+  is"), so it holds even if two requests arrive together.
 - The task keeps one `REFRESH_RUN` row per student up to date: the overall
   state, and for each course its state (not started, fetching with page
   number, waiting on a rate limit, done, failed), assignment and page
@@ -407,31 +494,62 @@ and reports as it goes.
   Error text is passed through the same filter as logs, so it never holds
   the token (NFR-10).
 - If any course failed, the run ends *incomplete* and the saved data is not
-  replaced (FR-14); the student can retry.
+  replaced (FR-14); the student can retry. On the very first load there is
+  no saved data, so the board shows no cards yet and S-10 offers Retry.
+- **Token problems (FR-6):** if Canvas answers `401`, the Refresh stops at
+  once, the run ends incomplete, and the frontend shows S-2 with the
+  reconnect message. The board and saved data are kept.
+- **A server restart mid-Refresh:** when the server starts, any run still
+  marked *running* is marked *incomplete* ("interrupted"), so the student is
+  never stuck waiting on a Refresh that no longer exists.
+- **One backend instance.** The portal runs as a single backend process.
+  All Refresh state is already in the database (`REFRESH_RUN`), so any
+  request can join or report on a run, but the task itself lives in that one
+  process, and the restart rule above assumes no other process is running a
+  Refresh. Running more than one instance later would need a heartbeat on
+  `REFRESH_RUN` instead of the restart rule. That is a design change, not a
+  hosting setting.
+
+### Saving a complete Refresh (FR-14, FR-34)
+
+When every course and every page has arrived, the Refresh saves it in one
+database transaction:
+
+1. Replace the `CANVAS_CACHE` copy with the new data, with its time.
+2. Add a card in Backlog for every assignment that has no card yet (FR-34).
+   On the first Refresh that is every assignment. The unique rule in section
+   3 means a card is never added twice.
+3. Fill `last_seen` on each card whose assignment is gone, and clear it on
+   each card whose assignment is back (section 3, FR-45). The run
+   records how many cards became orphaned, for the summary (FR-16).
+4. Mark the run *complete*. The header's "Synced" time comes from it (FR-13).
+
+Loading the board never adds or changes cards; it only reads. An orphaned
+card is kept in the database, never deleted. It is hidden by default, and
+the student can show it (FR-45). Phase 3 adds comparing
+and archiving to this same step (below).
 
 ### Bringing the backend in step with Canvas (Phase 3)
 
 Canvas can't tell the portal when something changes, so each Refresh does
-the checking (FR-15).
+the checking (FR-15). Phase 1 already gives each Refresh the pieces this
+builds on: one Refresh at a time, rate limit back-off, and saving only a
+complete copy. Phase 3 adds:
 
-- **One Refresh at a time per student.** A Refresh started from a second
-  device while one is running joins the running one.
 - **Find what changed:** the Refresh compares the new data with the last
   complete copy, by Canvas ID, field by field (see *What can change in
   Canvas* below).
-- **Only a complete fetch counts:** the Refresh keeps the new data only if every
-  course and every page arrived. A timeout, a rate-limit stop, or an error
-  halfway leaves the previous copy in place, so a missing page can never
-  look like deleted assignments (FR-45).
-- **Apply it to the board** in one database transaction: new assignments
-  get a card in Backlog (FR-34), removed ones are marked archived (FR-45),
-  and the rest only update what the card shows (FR-35). The board's
-  `change_seq` goes up, so the student's open devices pick the changes up on
-  their next check (NFR-22).
-- **Stay within the rate limit:** the Refresh backs off when
-  `X-Rate-Limit-Remaining` runs low (C-2).
-- **Token problems:** if Canvas rejects the token, the Refresh stops and the
-  board shows the reconnect message (FR-6).
+- **Only a complete fetch counts:** a timeout, a rate-limit stop, or an
+  error halfway leaves the previous copy in place, so a missing page can
+  never look like deleted assignments (FR-45).
+- **Apply it to the board** in the same transaction as *Saving a complete
+  Refresh*: new assignments get a card in Backlog (FR-34), removed ones are
+  marked archived (FR-45), and the rest only update what the card shows
+  (FR-35, FR-39). Every card added or archived gets a new `change_seq`, so
+  the student's open devices pick the changes up on their next check
+  (NFR-22).
+- **Tested under load:** TP-14 and TP-15 check that a Refresh stays within
+  the rate limit and that a second device's Refresh joins the running one.
 
 **There is no background sync.** Refresh is the only thing that fetches
 from Canvas, so there is no scheduler or always-running worker to build and
@@ -446,16 +564,17 @@ choice, so no Canvas change ever moves a card to another list.
 | In Canvas | On the board | Requirements |
 |-----------|--------------|--------------|
 | Teacher creates an assignment | New card in Backlog, in its due date place | FR-34 |
-| Teacher deletes or unpublishes it | Card is marked archived and leaves the board | FR-45 |
+| Teacher deletes or unpublishes it | Card is orphaned (Phase 1) and marked archived (Phase 3). It is hidden unless the student shows orphaned cards; then it stays in its list, grayed out and marked as removed from Canvas | FR-45 |
 | It is republished, or reappears after a fetch problem | Card comes back in its old list | FR-45 |
-| Name, points, or description changes | Card shows the new value | FR-35, FR-39 |
+| Name or points change | Card shows the new value | FR-35, FR-39 |
+| Description changes | Nothing to show until the card back (Phase 5, FR-28) | FR-39 |
 | Due date added later (none on an earlier refresh) | Card moves from the end of its list to its due date place | FR-38, FR-39 |
 | Due date changed | Card moves to its new place in the same list | FR-38 |
 | Due date cleared | Card moves to the end of its list, shown with no due date | FR-38, FR-39 |
 | Submission state moves forward (submitted, graded) | Badge updates; card stays put | FR-23, FR-39 |
 | State goes backward (resubmission, grade removed) or a flag is cleared (no longer late, missing, or excused) | Badge shows the current Canvas value; nothing is kept from before | FR-23, FR-39 |
 | Student's own due date differs from the class's (a Canvas *override*) | Card shows the date Canvas gives this student | FR-22 |
-| A new course starts | Its course button and cards appear; cards go to Backlog | FR-34, FR-78 |
+| A new course starts | Its course button appears and its cards go to Backlog | FR-34, FR-78 |
 | A course ends or the student drops it | Open question Q-7; recommended: archive its cards, bring them back if it returns | FR-45 |
 | A fetch fails partway | Nothing changes; the last complete data stays, with the warning banner | FR-45, NFR-20 |
 
@@ -469,8 +588,9 @@ Two rules make these safe:
   never final: a card is never removed from the database because of Canvas.
 
 Open check for Phase 1: confirm with the Team Lead's real account that the
-`due_at` Canvas returns for a student already includes their override. If
-not, the fetch adds `include[]=overrides` and picks the student's date.
+`due_at`, `unlock_at`, and `lock_at` Canvas returns for a student already
+include their override. If not, the fetch adds `include[]=overrides` and
+picks the student's dates.
 
 ### Loading sequence
 
@@ -499,13 +619,12 @@ sequenceDiagram
             B->>A: GET /api/refresh/latest, about once a second
             A-->>B: per-course progress
         end
-        A->>D: Save to cache only if every course arrived
+        A->>D: If every course arrived: save the copy and<br/>add cards to Backlog in one transaction
         B->>A: GET /api/assignments
     end
     A-->>B: assignments with Canvas status fields
     B->>A: GET /api/board
-    A->>D: Load lists and cards
-    A->>A: Add cards for new assignments to Backlog,<br/>archive cards for removed ones (Phase 3)
+    A->>D: Load lists and cards (read only)
     A-->>B: board
 ```
 
@@ -516,25 +635,35 @@ sequenceDiagram
 | Token theft from the database | Tokens are encrypted with a key held only in the server's environment settings, not in the database or the repo | NFR-11 |
 | Token leaking through logs | A logging filter removes `Authorization` headers and any field named `token`; error messages never include request headers | NFR-10 |
 | Token reaching the browser | No endpoint returns the token; after saving, the frontend only knows "connected as *name*" | NFR-10 |
+| Token in an address | The token is sent only in the body of `PUT /api/canvas/connection` and in the `Authorization` header to Canvas, never in a URL | NFR-10 |
+| Other sites acting as the user | Session cookie is `SameSite=Lax`, and no `GET` endpoint changes data (section 5) | NFR-12 |
 | One user seeing another's data | Every query filters on the session's `user_id`; tests check this for every endpoint | NFR-12 |
 | Writes to Canvas | The Canvas client only implements `GET` | NFR-13 |
+| A Canvas address that points somewhere else | The student types the Canvas address, and the server then calls it, so a bad address could make the server call machines on its own network. The address must be `https`, must resolve only to public internet addresses, and is checked again on every call | NFR-11, NFR-12 |
+| Token sent to the wrong host | The client sends the token only to the saved Canvas host. It does not follow redirects, or paging `Link` URLs, that lead to another host; that course fails instead | NFR-10 |
 | Trackers | No third-party analytics or scripts | NFR-14 |
+| Deleted accounts in backups | Deleting an account removes its rows from the live database at once. Database backups are kept for at most 30 days, so a deleted account, and its encrypted token, are gone from every copy within 30 days. Backups are encrypted by the host. How backups are taken is DevOps's call; the 30-day limit is the design's | FR-54, NFR-11 |
 | Test tokens | Read from a git-ignored `.env` file in local dev; CI uses recorded sample data instead | A-3, NFR-41 |
 
 ## 8. Repository layout
 
 ```text
 canvas-portal/
+  README.md         how to run both parts locally (NFR-42)
   backend/
     app/            FastAPI app: routes, Canvas client, database models
-    migrations/     Alembic schema changes
-    tests/          pytest tests and recorded Canvas sample data
+    migrations/     Alembic schema changes (from Phase 1)
+    tests/          pytest tests
+      fixtures/     recorded Canvas sample data (NFR-41)
     pyproject.toml
   frontend/
-    src/            screens and components
-    tests/          component tests and browser tests
+    src/            screens and components, each with its Vitest test
+                    beside it (App.tsx and App.test.tsx)
+    e2e/            Playwright browser tests (from Phase 1)
     package.json
-  .env.example      lists settings; the real .env is git-ignored
+  .env.example      lists settings; the real .env is git-ignored. Phase 1
+                    adds DATABASE_URL, SESSION_SECRET (signs the OAuth
+                    "state"), and TOKEN_ENCRYPTION_KEY
 docs/canvas-portal/ these documents
 ```
 
@@ -553,17 +682,21 @@ so links, reloads, and the Back button behave the way they do in Trello.
 ### Component structure
 
 A *component* is a reusable piece of UI, like a QML component file. The board
-is built from these:
+is built from these. The sign-in (S-1), connect (S-2), and settings (S-6)
+screens are single components of their own:
 
 ```mermaid
 flowchart TD
-    App --> Header["BoardHeader<br/>board name, sync time, Refresh, menu"]
-    App --> Toggles["CourseToggleBar<br/>one show/hide button per course,<br/>Show all, Hide all"]
+    App --> Header["BoardHeader<br/>board name, sync time, Refresh, account menu"]
+    App --> Progress["RefreshPanel (S-10)<br/>per-course progress, summary, Retry"]
+    App --> Banner["CanvasWarning<br/>shown when Canvas fails (NFR-20)"]
+    App --> Row["CourseToggleBar, under the header<br/>Filter button, one show/hide button<br/>per course, Show all, Hide all"]
+    Row --> Filter["FilterMenu (S-8)<br/>keyword, due date, status,<br/>orphaned cards"]
     App --> Board
     Board --> List["List (one per list)"]
-    List --> ListHeader["ListHeader<br/>list title, card count,<br/>minimize/expand toggle"]
+    List --> ListHeader["ListHeader<br/>list title, card count,<br/>minimize/expand toggle (Phase 2)"]
     List --> Card["CardFront (one per card)"]
-    Card --> Badges["Label strip, due badge,<br/>Canvas state and tags"]
+    Card --> Badges["Label strip, due badge, points,<br/>Submitted, Graded, tags,<br/>submission types"]
 ```
 
 ### Visual style
@@ -575,9 +708,9 @@ UI uses:
 | Element | Style |
 |---------|-------|
 | Board background | One solid color, a deep blue |
-| List | Expanded lists share the board's width equally, at least 240 px each; minimized lists are a 40 px strip with the title written vertically and the card count. Light gray, 12 px rounded corners, 8 px gap between lists |
-| Card | White, 8 px rounded corners, soft shadow, 8 px padding; label strip at the top in the course color |
-| Due badge | Small pill with a clock icon: green (Canvas says Submitted or Graded), red (Canvas flags Missing), plain otherwise |
+| List | From Phase 2, expanded lists share the board's width equally, at least 240 px each, and minimized lists are a 40 px strip with the title written vertically and the card count. Light gray, 12 px rounded corners, 8 px gap between lists |
+| Card | White, 8 px rounded corners, soft shadow, 8 px padding; label strip at the top in one neutral color until course colors arrive in Phase 5 (FR-66) |
+| Due badge | Small pill with a clock icon: green when Submitted or Graded (FR-23 rules), red when Missing, even when also Graded, plain otherwise. A Missing card is also highlighted as the UI specification says |
 | Text | System font, 14 px on cards, bold list titles |
 
 ### Interaction details
@@ -585,10 +718,12 @@ UI uses:
 | Behavior | How it works | Requirements |
 |----------|--------------|--------------|
 | Drag a card (Phase 2) | Card lifts and tilts about 4°, the list under it is highlighted and a gray gap shows its due date spot in that list, the board auto-scrolls near the edges; the move is saved with an optimistic update (W-3) | FR-32, FR-77 |
-| Minimize or expand a list | [−] or [+] in the list header; the other expanded lists widen or narrow to fill the board, with a short animation. On each load or refresh, empty lists start minimized and the rest expanded; nothing is saved, in the browser or the backend. From Phase 2, dropping a card on an empty minimized list puts it there and expands the list; dropping on a minimized list that already has cards keeps it minimized and shows the new count | FR-80 |
-| Scroll the board | Only when the window is too narrow for the expanded lists (240 px minimum each): horizontal scrollbar, or drag on empty background | FR-61 |
+| Minimize or expand a list (Phase 2) | [−] or [+] in the list header; the other expanded lists widen or narrow to fill the board, with a short animation. On each load or refresh, empty lists start minimized and the rest expanded; nothing is saved, in the browser or the backend. From Phase 2, dropping a card on an empty minimized list puts it there and expands the list; dropping on a minimized list that already has cards keeps it minimized and shows the new count | FR-80 |
+| Scroll the board (Phase 2) | Only when the window is too narrow for the expanded lists (240 px minimum each): horizontal scrollbar, or drag on empty background | FR-61 |
 | Open a card | Click: the assignment opens in Canvas in a new tab | FR-26 |
-| Show or hide a course | Tap its button in the row under the header, or Show all / Hide all; the board updates at once. The choice is kept in this browser | FR-78 |
+| Filter the board | The Filter button, at the start of the course button row, opens S-8. Courses are chosen with the course buttons, not in the menu. Filtering runs in the browser over the cards already loaded: no endpoint, no table, and nothing saved, so a reload clears it. Due date filters compare in UTC with the current time. The options and wording are the UI specification's | FR-24, FR-72 |
+| Show or hide a course | Tap its button on the row under the header, or Show all / Hide all; the board updates at once. The choice is kept in this browser | FR-78 |
+| Show or hide orphaned cards | An option in the filter menu, with how many orphaned cards there are. Hidden by default, and like the rest of the filter, not saved. The board already holds the orphaned cards, so the change is at once. How the control and a grayed card look is the UI specification's | FR-45 |
 
 ## 10. Why React (D-1)
 
@@ -604,26 +739,29 @@ examples to copy from.
 
 ## 11. Traceability
 
-| Requirement group | Covered by |
-|-------------------|------------|
-| FR-1 to FR-6 (connect) | Sections 4, 6, 7 |
-| FR-10 to FR-14 (fetch) | Section 6 |
-| FR-20 to FR-26 (view) | Section 4 (status), User Interface Specification |
-| FR-30 to FR-39 (board, Canvas changes) | Sections 3, 4, 6 (loading sequence, keeping the backend in step, what can change in Canvas), 9 |
-| FR-60 to FR-80 (Trello-style, course buttons, lists) | Sections 3, 4, 9 |
-| FR-50 to FR-54 (accounts, data) | Sections 4, 5 |
-| NFR-1 to NFR-3 (performance) | Sections 3 (sorting, list positions), 6 (caching, parallel fetch, making Canvas loads fast, bringing the backend in step with Canvas) |
-| NFR-10 to NFR-14 (security) | Section 7 |
-| NFR-20 to NFR-22 (reliability, sync) | Sections 3, 4 (keeping devices in sync), 6 |
-| NFR-30 to NFR-32, NFR-34 (usability, Trello style) | Sections 2, 9, User Interface Specification |
-| NFR-40 to NFR-42 (maintainability) | Sections 7, 8 |
+This lists the Phase 0 to 4 requirements. Phase 5 requirements are not
+designed here (section 12).
+
+| Requirements | Covered by |
+|--------------|------------|
+| FR-1 to FR-6 (connect) | Sections 3 (disconnecting keeps the connection row), 4, 6 (token problems), 7 |
+| FR-10 to FR-16 (fetch, Refresh, progress) | Sections 4, 6 |
+| FR-20 to FR-23, FR-26 (view) | Section 4 (status), 9 (open a card), User Interface Specification |
+| FR-31 to FR-35, FR-38, FR-39, FR-45 (board, Canvas changes) | Sections 3, 4, 6 (saving a complete Refresh, bringing the backend in step, what can change in Canvas), 9 |
+| FR-24, FR-60, FR-61, FR-65, FR-72, FR-77, FR-78, FR-80 (Trello-style, filter, course buttons, lists) | Sections 3, 4, 9 |
+| FR-50, FR-51, FR-54 (accounts, data) | Sections 4, 5 |
+| NFR-1 to NFR-3 (performance) | Sections 3 (sorting, list positions), 6 (caching, parallel fetch, making Canvas loads fast) |
+| NFR-10 to NFR-14 (security) | Sections 5 (cookie), 7 |
+| NFR-20, NFR-22 (reliability, sync) | Sections 3, 4 (keeping devices in sync), 6 |
+| NFR-30, NFR-32, NFR-34 (browsers, accessibility, Trello style) | Sections 2, 9, User Interface Specification |
+| NFR-40 to NFR-42 (maintainability) | Sections 4 (health check), 7, 8 |
 
 ## 12. Leave room for later
 
 Phase 5 ideas aren't designed here, but a few cheap choices now keep them
 possible without reworking what Phases 1 to 4 build:
 
-- **Record the Canvas connection on cards, course labels, and cached data**
+- **Record the Canvas connection on cards and cached data**
   (`connection_id`). A user has one connection for now, but more than one
   school (FR-55) then needs no data migration, even though two schools can
   use the same Canvas ID numbers.
@@ -636,6 +774,13 @@ possible without reworking what Phases 1 to 4 build:
   (NFR-33, NFR-36) needs less rework.
 - **Keep the four lists as rows in `LIST`**, not hard-coded, so renaming or
   adding lists later is a feature, not a redesign.
+- **Course colors (FR-66)** later need a table keyed by user, connection,
+  and Canvas course ID, so a course keeps its color on every device. Cards
+  already carry `canvas_course_id` and `connection_id`, so nothing built
+  before then changes.
+- **Keep every Canvas call inside the Canvas client.** Canvas GraphQL (a
+  Phase 5 idea, Q-10) would then be a change to one module, if `POST`
+  queries are ever allowed.
 
 ## Open decisions raised here
 
@@ -644,6 +789,20 @@ possible without reworking what Phases 1 to 4 build:
 
 - ~~**D-7** How users sign in to the portal (section 5).~~ Decided: Sign in
   with Google for the MVP.
+
+Proposed in this design and waiting on the Team Lead, because each one
+adds a dependency or changes how the Canvas token is stored or sent:
+
+- **Token encryption with Fernet** (`cryptography` library), section 2.
+- **Disconnect keeps the connection row** with the token emptied, so the
+  board survives (section 3).
+- **The token goes only to the saved Canvas host**, never through a
+  redirect or paging link to another host, and only to `https` public
+  addresses (section 7).
+
+What the connect screen says when a student connects a different account
+(Q-8, answered: old cards are kept, hidden) is for UI/UX; section 3 gives
+the data side.
 
 ## Change log
 
@@ -682,3 +841,18 @@ possible without reworking what Phases 1 to 4 build:
 | 2026-10-25 | Added *Refresh progress* (FR-16): Refresh runs as a background task tracked in a new `REFRESH_RUN` table, with a progress endpoint and a 30 second request timeout; loading sequence updated. D-6 and D-7 marked decided. |
 | 2026-10-25 | D-1 decided: React with TypeScript and Vite; section 10 now explains the choice. |
 | 2026-10-25 | The Google OAuth client is a Phase 1 prerequisite. |
+| 2026-10-25 | In-depth review after PR #3: cards are added when a complete Refresh is saved (new *Saving a complete Refresh*, Phase 1), so loading the board only reads; the unique card rule moves to Phase 1; one Refresh at a time, token problems, and rate-limit retries are Phase 1 (*Bringing the backend in step* keeps only Phase 3 work); the board changes once per complete Refresh while S-10 shows progress (FR-14, NFR-2); a restart marks a stuck Refresh incomplete; disconnecting keeps the connection row so the board survives (FR-4, FR-6), with an open check for connecting a different account; a Refresh on another device reaches open devices through the changes endpoint; GraphQL needs a call on NFR-13 (it uses `POST`); nearest-due-first dropped; description changes have nothing to show before Phase 5; keys on `COURSE_LABEL`, `CANVAS_CACHE`, `REFRESH_RUN`, `user_id` on `LIST`, `canvas_user_id` on the connection; health endpoint and fuller requirement IDs in the API table; cookie and token-in-URL rows in security; repository layout matches the skeleton; refresh panel and warning banner in the component diagram; traceability lists only Phase 0 to 4 IDs. |
+| 2026-10-25 | Architecture review: server-side sessions (new `SESSION` table), Fernet token encryption, and the in-process Refresh task in the technology table; one error shape with codes for each screen; dates sent in UTC; security rows for Canvas addresses that point elsewhere and for never sending the token to another host; Phase 1 settings listed. Matched to requirements PR #6: until Phase 3 a card with no Canvas data is hidden, not deleted (FR-45); the different-account check is Q-8; a Missing badge stays red when also Graded (FR-65). |
+| 2026-10-25 | Matched to the team personas: proposals that need the Team Lead (a new dependency, token storage or sending) are listed under *Open decisions raised here*; testing, CI, hosting, and screen choices are left to the personas that own them. |
+| 2026-10-25 | From the roadmap cross-review (X-24, X-25): the portal runs as one backend instance, with Refresh state in the database; backups are kept at most 30 days, so a deleted account leaves every copy within 30 days. |
+| 2026-10-26 | From the Team Lead's review of requirements PR #6: *Assignment status* now follows FR-23's rules (Submitted from `submitted_at`; Graded from four checks; Missing highlighted; submission types listed; `workflow_state` no longer read). Canvas GraphQL dropped from Phase 3 tuning, since NFR-13 stays `GET` only (Q-10); it may return as a Phase 5 idea. |
+| 2026-10-26 | Orphaned cards (FR-45, from the Team Lead's review of the UI specification): from Phase 3 the board response includes archived cards flagged `orphaned`, shown from a new `CARD.last_seen` snapshot, and a show/hide control on the course row keeps its choice in the browser. The phase is the Team Lead's call. |
+| 2026-10-26 | Orphaned cards move to Phase 2, from the Team Lead (requirements PR #6, FR-16 and FR-45): `CARD.last_seen` is filled from Phase 1, so a card orphaned then still has its fields; the board returns flagged orphans and the show/hide control arrives in Phase 2; the Refresh run counts newly orphaned cards for the summary; Phase 3 adds archiving on top. |
+| 2026-10-26 | Opens and closes dates (FR-22, FR-65, from the Team Lead's review of the UI specification): assignments carry `unlock_at` and `lock_at`, with the student's override; the frontend shows "Opens …" and "Closed …" against the device clock. |
+| 2026-10-26 | Filter menu (S-8, FR-24, FR-72) moves to Phase 1, from the Team Lead's review of the UI specification: a FilterMenu component that filters loaded cards in the browser, with no endpoint, table, or saved state. |
+| 2026-10-26 | Q-8 answered by the Team Lead (requirements PR #6): connecting a different Canvas account keeps the old connection's cards, hidden, and reconnecting it brings them back; `CANVAS_CONNECTION` gains `active`, and a user can have several rows with one active. FR-35 confirmed in Phase 1. |
+| 2026-10-26 | Every date and time comparison is made in UTC; only display uses the device's time zone (FR-22, from the Team Lead on requirements PR #6). |
+| 2026-10-26 | Phase 1 scope cut, from the Team Lead (requirements PR #6, da46dff): Phase 1 shows only Backlog, with all four list rows still created; the Filter row and menu are Phase 1, with course checkboxes; course buttons (FR-78), width sharing (FR-61), and minimize and expand (FR-80) are Phase 2; the orphaned-cards control is a filter menu option; Excused is Phase 5; NFR-1 is Phase 2, with its baseline from the Phase 1 timing logs. |
+| 2026-10-26 | Course buttons (FR-78) back in Phase 1 as the only course picker, from the Team Lead (requirements PR #6, 58c1c04); the filter menu has no course list; width sharing and sideways scrolling (FR-61) stay Phase 2. |
+| 2026-10-26 | Orphaned-card show/hide option, its count, and the Refresh summary's removed count move to Phase 1, from the Team Lead. |
+| 2026-10-26 | Course colors (FR-66) postponed to Phase 5, from the Team Lead: `COURSE_LABEL` removed from the Phase 1 tables and the data model; strips and course buttons use one neutral color; section 12 notes the later table. |

@@ -141,7 +141,9 @@ such as encrypting tokens with Fernet (a new dependency).
 - A read-only board showing only the Backlog list, since nothing can be
   moved yet: every assignment is a Trello-style card in Backlog, sorted by
   due date, with the course show/hide buttons (FR-20 to FR-23, FR-31,
-  FR-34, FR-35, FR-38, FR-60, FR-65, FR-66, FR-78). The design leaves room
+  FR-34, FR-35, FR-38, FR-60, FR-65, FR-78). Every course gets the same
+  neutral label strip, with the course code telling courses apart; course
+  colors are Phase 5 (FR-66). The design leaves room
   to add To do, In progress, and Done in Phase 2 without rework. Cards
   show Canvas's availability dates, and a card that hasn't opened yet
   says when it opens, styled unlike the grayed-out orphaned cards (FR-22,
@@ -200,7 +202,7 @@ pull requests, each one usable on its own:
    Canvas responses (NFR-41). Milestone M1: the Refresh panel's per-course
    counts show the real assignments, so no throwaway list view is built.
 4. The read-only board (FR-20 to FR-24, FR-26, FR-31, FR-34, FR-35,
-   FR-38, FR-45, FR-60, FR-65, FR-66, FR-72, FR-78, NFR-34), with
+   FR-38, FR-45, FR-60, FR-65, FR-72, FR-78, NFR-34), with
    `BOARD`, `LIST`, `CARD`, and `COURSE_LABEL`.
 5. The Phase 1 checks: NFR-14, NFR-30, the TP-14 baseline, and the
    manual test pass.
@@ -401,8 +403,10 @@ database, and the domain) is decided, with its cost.
 - Private notes: dated, comment-style notes on any assignment, like the
   comments on a Trello card, never sent to Canvas (FR-40 to FR-44, FR-46,
   NFR-21).
-- Course label colors chosen by the student (FR-66), and the course
-  show/hide choice saved with the account (FR-78).
+- Course label colors: an automatic color for each course, then colors
+  chosen by the student (FR-66). Until then every course has the same
+  neutral strip.
+- The course show/hide choice saved with the account (FR-78).
 - Saving the filter choice with the account (FR-72; the filter menu itself is Phase 1).
 - Trello-style search: one box that searches card names, courses,
   descriptions, and notes, including archived and orphaned cards (FR-81).
@@ -564,3 +568,4 @@ The plan has grown quickly, so these rules keep each phase finishable:
 | 2026-10-26 | Phase scope from the Team Lead's review of the UI specification, matching requirements PR #6: Phase 1 adds the filter menu (FR-24, FR-72), availability dates on cards (FR-22, FR-65), and the Canvas ID matching and hidden orphaned cards it already builds (FR-35, FR-45); Phase 2 adds the show/hide control for orphaned cards (FR-45) and the removed count in the Refresh summary (FR-16); Phase 5 keeps only saving the filter, and FR-74 adds deleting an orphaned card. |
 | 2026-10-26 | Browser support is Chrome only until Phase 5, from the Team Lead's answer on requirements PR #6: Phase 1's and Phase 4's checks run in Chrome, M5 says Chrome, and Phase 5 adds Firefox, Safari, and Edge (NFR-30). Phase 4's accessibility pass names NFR-32's criteria (contrast, zoom, screen reader labels) instead of focus. |
 | 2026-10-26 | Phase 1 scope cut, from the Team Lead (requirements #6, 58c1c04): Phase 1 shows only the Backlog list, and the other three lists, minimizing (FR-61, FR-80), and the 2-second target (NFR-1) move to Phase 2, with a check of the TP-14 baseline before Phase 2 starts; Excused moves to Phase 5. Orphaned cards can be shown from the Phase 1 Filter menu, and the Refresh summary's removed count is Phase 1 (FR-16, FR-45). Phase 5 adds Trello-style search (FR-81) and full WCAG coverage (NFR-37). |
+| 2026-10-26 | Course label colors (FR-66), automatic and student-chosen, move to Phase 5, from the Team Lead's review of the UI specification. Phase 1 uses one neutral strip with the course code. |

@@ -243,7 +243,10 @@ token.
 
 **Dates** are sent as Canvas gives them, in UTC (ISO 8601). The frontend
 shows them in the browser's time zone (FR-22), so the backend needs no time
-zone setting.
+zone setting. Each assignment carries `due_at`, `unlock_at`, and `lock_at`.
+The frontend compares `unlock_at` and `lock_at` with the device clock, so a
+card turns from "Opens …" to open, or to "Closed …", without a Refresh
+(FR-22, FR-65).
 
 **Errors** all have one shape, `{"error": "<code>", "message": "<text>"}`,
 so the frontend can choose a screen by code without reading the text:
@@ -318,6 +321,7 @@ sends the frontend only the results:
 | *Missing* | `submission.missing` is true. The card is highlighted so it stands out; the UI specification decides how | `submission.missing` |
 | *Late*, *Excused* tags | Shown when the field is true | `submission.late`, `submission.excused` |
 | Submission types | Every entry, in Canvas's order, such as "online upload, on paper" | `submission_types` (on the assignment) |
+| "Opens …" or "Closed …" | Before `unlock_at`, the card is grayed out and says when it opens. After `lock_at`, it says when it closed. Worked out by the frontend against the device clock, since it changes with time, not with Canvas | `unlock_at`, `lock_at` (on the assignment, the student's own dates) |
 
 With no submission at all, the card shows *Not submitted* and *Not graded*.
 These replace Canvas's `workflow_state`, which the portal no longer reads,
@@ -581,8 +585,9 @@ Two rules make these safe:
   never final: a card is never removed from the database because of Canvas.
 
 Open check for Phase 1: confirm with the Team Lead's real account that the
-`due_at` Canvas returns for a student already includes their override. If
-not, the fetch adds `include[]=overrides` and picks the student's date.
+`due_at`, `unlock_at`, and `lock_at` Canvas returns for a student already
+include their override. If not, the fetch adds `include[]=overrides` and
+picks the student's dates.
 
 ### Loading sequence
 
@@ -833,3 +838,4 @@ What the connect screen says when a student connects a different account
 | 2026-10-26 | From the Team Lead's review of requirements PR #6: *Assignment status* now follows FR-23's rules (Submitted from `submitted_at`; Graded from four checks; Missing highlighted; submission types listed; `workflow_state` no longer read). Canvas GraphQL dropped from Phase 3 tuning, since NFR-13 stays `GET` only (Q-10); it may return as a Phase 5 idea. |
 | 2026-10-26 | Orphaned cards (FR-45, from the Team Lead's review of the UI specification): from Phase 3 the board response includes archived cards flagged `orphaned`, shown from a new `CARD.last_seen` snapshot, and a show/hide control on the course row keeps its choice in the browser. The phase is the Team Lead's call. |
 | 2026-10-26 | Orphaned cards move to Phase 2, from the Team Lead (requirements PR #6, FR-16 and FR-45): `CARD.last_seen` is filled from Phase 1, so a card orphaned then still has its fields; the board returns flagged orphans and the show/hide control arrives in Phase 2; the Refresh run counts newly orphaned cards for the summary; Phase 3 adds archiving on top. |
+| 2026-10-26 | Opens and closes dates (FR-22, FR-65, from the Team Lead's review of the UI specification): assignments carry `unlock_at` and `lock_at`, with the student's override; the frontend shows "Opens …" and "Closed …" against the device clock. |

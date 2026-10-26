@@ -12,7 +12,7 @@
 **Owner:** <!-- the persona that wrote this PR -->
 
 Recommended reviewers, from *Who reviews what* in
-[the review protocol](../blob/develop/docs/team/review-protocol.md#who-reviews-what).
+[the review protocol](../blob/main/docs/team/review-protocol.md#who-reviews-what).
 The Team Lead ticks each reviewer to run, or ticks *Team Lead review only*.
 
 <!-- One line per reviewer, with why. Add optional reviewers the same way.

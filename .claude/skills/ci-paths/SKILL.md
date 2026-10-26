@@ -8,12 +8,12 @@ description: Show which GitHub Actions workflows the current branch's changes wi
 Mostly used by the DevOps persona. Run from the repo root:
 
 ```sh
-python3 .claude/skills/ci-paths/ci_paths.py            # against origin/develop
+python3 .claude/skills/ci-paths/ci_paths.py            # against origin/main
 python3 .claude/skills/ci-paths/ci_paths.py origin/x   # against another base
 ```
 
 It lists each workflow in `.github/workflows/` and whether it runs on the PR
-and on the push to develop, with the first changed file that matched.
+and on the push to main, with the first changed file that matched.
 
 When a PR changes app code but no workflow runs, that's a finding: either
 the paths filter is wrong or the code is in the wrong place. A docs-only PR

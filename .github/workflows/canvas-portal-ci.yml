@@ -4,7 +4,7 @@ on:
   pull_request:
     paths: ["canvas-portal/**", ".github/workflows/canvas-portal-ci.yml"]
   push:
-    branches: [develop]
+    branches: [main]
     paths: ["canvas-portal/**", ".github/workflows/canvas-portal-ci.yml"]
 
 permissions:

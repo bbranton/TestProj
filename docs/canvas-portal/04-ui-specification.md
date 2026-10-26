@@ -250,10 +250,9 @@ NFR-3. The sketches show Phases 1 to
 The board is the only view. In Phase 1 it is read only: every card is in
 Backlog, which is the only list shown. Dragging, the other three lists
 side by side, and minimizing lists arrive in Phase 2 (FR-31, FR-60,
-FR-61, FR-80). Backlog keeps a Trello list's width
-(about 300 px) at the left of the board, not the whole width, so cards
-stay easy to read and the other lists can join it in Phase 2 without
-changing it. The row under the header holds the [⚲ Filter] button and
+FR-61, FR-80). As the only list, Backlog fills the
+board's width, and its cards stretch with it. In Phase 2 it shares the
+width with the other lists (FR-61), so nothing else about it changes. The row under the header holds the [⚲ Filter] button and
 the course buttons (FR-72, FR-78). This is the Phase 1 board:
 
 ```text
@@ -263,39 +262,39 @@ the course buttons (FR-72, FR-78). This is the Phase 1 board:
 | [⚲ Filter] [● BIO 101] [● HIST 210] [● MATH 152]  [Show all] [Hide all]  |
 +--------------------------------------------------------------------------+
 |  board background color                                                  |
-| +----------------------------------+                                     |
-| | Backlog                          |                                     |
-| | #==============================# |                                     |
-| | # ⚠ MISSING                    # |                                     |
-| | # ▬▬ HIST 210                  # |                                     |
-| | # Chapter 4 questions          # |                                     |
-| | # (◷ Oct 20, 11:59 PM)  10 pts # |                                     |
-| | # Text entry                   # |                                     |
-| | # Not submitted · Not graded   # |                                     |
-| | #==============================# |                                     |
-| | +------------------------------+ |                                     |
-| | | ▬▬ BIO 101                   | |                                     |
-| | | Lab report 2                 | |                                     |
-| | | (✓ Oct 22, 11:59 PM)  20 pts | |                                     |
-| | | File upload                  | |                                     |
-| | | Submitted · Graded  [Late]   | |                                     |
-| | +------------------------------+ |                                     |
-| | +------------------------------+ |                                     |
-| | | ▬▬ BIO 101                   | |                                     |
-| | | Lab report 3                 | |                                     |
-| | | (◷ Oct 28, 11:59 PM)  20 pts | |                                     |
-| | | 🔒 Opens Oct 27, 8:00 AM     | |                                     |
-| | | File upload or text entry    | |                                     |
-| | | Not submitted · Not graded   | |                                     |
-| | +------------------------------+ |                                     |
-| | +------------------------------+ |                                     |
-| | | ▬▬ HIST 210                  | |                                     |
-| | | Reading reflection           | |                                     |
-| | | (no due date)  15 pts        | |                                     |
-| | | On paper                     | |                                     |
-| | | Not submitted · Not graded   | |                                     |
-| | +------------------------------+ |                                     |
-| +----------------------------------+                                     |
+| +----------------------------------------------------------------------+ |
+| | Backlog                                                              | |
+| | #==================================================================# | |
+| | # ⚠ MISSING                                                        # | |
+| | # ▬▬ HIST 210                                                      # | |
+| | # Chapter 4 questions                                              # | |
+| | # (◷ Oct 20, 11:59 PM)  10 pts                                     # | |
+| | # Text entry                                                       # | |
+| | # Not submitted · Not graded                                       # | |
+| | #==================================================================# | |
+| | +------------------------------------------------------------------+ | |
+| | | ▬▬ BIO 101                                                       | | |
+| | | Lab report 2                                                     | | |
+| | | (✓ Oct 22, 11:59 PM)  20 pts                                     | | |
+| | | File upload                                                      | | |
+| | | Submitted · Graded  [Late]                                       | | |
+| | +------------------------------------------------------------------+ | |
+| | +------------------------------------------------------------------+ | |
+| | | ▬▬ BIO 101                                                       | | |
+| | | Lab report 3                                                     | | |
+| | | (◷ Oct 28, 11:59 PM)  20 pts                                     | | |
+| | | 🔒 Opens Oct 27, 8:00 AM                                         | | |
+| | | File upload or text entry                                        | | |
+| | | Not submitted · Not graded                                       | | |
+| | +------------------------------------------------------------------+ | |
+| | +------------------------------------------------------------------+ | |
+| | | ▬▬ HIST 210                                                      | | |
+| | | Reading reflection                                               | | |
+| | | (no due date)  15 pts                                            | | |
+| | | On paper                                                         | | |
+| | | Not submitted · Not graded                                       | | |
+| | +------------------------------------------------------------------+ | |
+| +----------------------------------------------------------------------+ |
 +--------------------------------------------------------------------------+
 ```
 
@@ -907,6 +906,7 @@ flowchart TD
 | 2026-10-26 | Cards removed from Canvas are hidden by default, not for good: from Phase 2 a [◌ Removed from Canvas] button on the course row shows them, grayed out in their lists. From the Team Lead's review. |
 | 2026-10-26 | The [◌ Removed from Canvas] button moves to Phase 2, with dragging, and the S-10 summary says when a Refresh removed cards, from the Team Lead's review. |
 | 2026-10-26 | Cards show when an assignment opens (Canvas "Available from") until it does, and when it closed (Canvas "Until") after that, from Phase 1, from the Team Lead's review. |
+| 2026-10-26 | In Phase 1, Backlog fills the board's width as the only list, from the Team Lead's review. |
 | 2026-10-26 | Checked against the merged requirements (#6): list counts leave out hidden courses' cards again (FR-80), and date comparisons are made in UTC (FR-22). |
 | 2026-10-26 | Showing cards removed from Canvas moves to Phase 1, from the Team Lead: the filter menu's "Show cards removed from Canvas (2)" option and S-10's "2 assignments were removed from Canvas" line with [Show them]. |
 | 2026-10-26 | Phase 1 scope cut by the Team Lead (requirements at da46dff, then the Team Lead's later decision): course buttons stay in Phase 1 as the only course control, so the filter menu has no course checkboxes; the show-removed-cards option moves into the filter menu (Phase 2) and resets on reload; Excused moves to Phase 5; Phase 1 shows only Backlog, at a Trello list's width, and side-by-side lists and minimizing move to Phase 2. S-4's Phase 1 sketch, button IDs, messages, and S-8 updated. |

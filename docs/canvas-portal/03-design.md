@@ -82,7 +82,7 @@ come from Canvas and are cached, not copied permanently.
 
 ```mermaid
 erDiagram
-    USER ||--o| CANVAS_CONNECTION : has
+    USER ||--o{ CANVAS_CONNECTION : has
     USER ||--o| BOARD : owns
     USER ||--o| REFRESH_RUN : runs
     USER ||--o{ SESSION : "signs in with"
@@ -110,6 +110,7 @@ erDiagram
         bytes token_encrypted "empty after disconnect"
         string canvas_user_name
         datetime connected_at
+        bool active "one per user"
     }
     BOARD {
         uuid id PK
@@ -174,17 +175,24 @@ Design notes:
   (NFR-3).
 - **Lists are fixed:** the board and its four lists (FR-31) are created
   when the user first signs in, and `position` holds their order, 1 to 4.
-- **One school per user.** `USER` has at most one `CANVAS_CONNECTION`.
-  Cards, course labels, and cached data still record their `connection_id`
-  (see section 12).
+- **One active school per user.** A user has at most one *active*
+  `CANVAS_CONNECTION`, and the board shows only the active connection's
+  cards, course labels, and cached data. Each of those records its
+  `connection_id` (see section 12).
 - **Disconnecting keeps the connection row.** Disconnect (FR-4) empties
   `token_encrypted` but keeps the row, so cards, course labels, and cached
   data keep pointing at it and the board survives (FR-6). Reconnecting with
   the same Canvas address and Canvas user (`canvas_user_id`, from
-  `/api/v1/users/self`) puts the new token in the same row. Connecting a
-  different school or Canvas user is an open check, below.
-- **One card per assignment, enforced by the database:** a unique rule on
-  (`connection_id`, `canvas_assignment_id`) means a card can never be added
+  `/api/v1/users/self`) puts the new token in the same row.
+- **Connecting a different account keeps the old one's cards (Q-8).** When
+  the student connects a different Canvas address or Canvas user, the old
+  row is made inactive and its token emptied, and a new active row is
+  added. The old cards, labels, and cache stay in the database, hidden.
+  Reconnecting the old account later makes its row active again, and its
+  cards come back in the lists they were in. Deleting the account (FR-54)
+  removes every connection row and everything under it.
+- **One card per assignment, enforced by the database (FR-35):** a unique
+  rule on (`connection_id`, `canvas_assignment_id`) means a card can never be added
   twice for one assignment, even if two saves race (NFR-22). It costs nothing
   to add with the first migration in Phase 1, when cards are first created.
 - **`change_seq`** is a counter on the board that goes up by one with every
@@ -206,13 +214,6 @@ Design notes:
   `archived` (FR-45), with the course and change rules in section 6.
 - **Every row has `user_id`**, and every query filters by the signed-in user,
   so one user can never read another's data (NFR-12).
-
-Open check for Phase 1 (requirements Q-8): what happens when a student who
-already has a board connects a different school or Canvas user? Recommended: the connect screen
-warns that the board will start over, and on confirming, the old cards,
-labels, and cache are deleted with the old connection row. Until more than
-one school is supported (FR-55), this keeps one board from mixing two
-accounts.
 
 ## 4. Backend API
 
@@ -794,7 +795,8 @@ adds a dependency or changes how the Canvas token is stored or sent:
   addresses (section 7).
 
 What the connect screen says when a student connects a different account
-(Q-8) is for Product and QA and UI/UX; section 3 gives the data side.
+(Q-8, answered: old cards are kept, hidden) is for UI/UX; section 3 gives
+the data side.
 
 ## Change log
 
@@ -842,3 +844,4 @@ What the connect screen says when a student connects a different account
 | 2026-10-26 | Orphaned cards move to Phase 2, from the Team Lead (requirements PR #6, FR-16 and FR-45): `CARD.last_seen` is filled from Phase 1, so a card orphaned then still has its fields; the board returns flagged orphans and the show/hide control arrives in Phase 2; the Refresh run counts newly orphaned cards for the summary; Phase 3 adds archiving on top. |
 | 2026-10-26 | Opens and closes dates (FR-22, FR-65, from the Team Lead's review of the UI specification): assignments carry `unlock_at` and `lock_at`, with the student's override; the frontend shows "Opens …" and "Closed …" against the device clock. |
 | 2026-10-26 | Filter menu (S-8, FR-24, FR-72) moves to Phase 1, from the Team Lead's review of the UI specification: a FilterMenu component that filters loaded cards in the browser, with no endpoint, table, or saved state. |
+| 2026-10-26 | Q-8 answered by the Team Lead (requirements PR #6): connecting a different Canvas account keeps the old connection's cards, hidden, and reconnecting it brings them back; `CANVAS_CONNECTION` gains `active`, and a user can have several rows with one active. FR-35 confirmed in Phase 1. |

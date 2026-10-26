@@ -20,7 +20,7 @@ Build only the parts listed for the current phase (see the repo's
 | Phase | Builds |
 |-------|--------|
 | 0 | Repository layout (section 8), empty frontend and backend, CI |
-| 1 | Tables `USER`, `SESSION`, `CANVAS_CONNECTION`, `BOARD`, `LIST`, `CARD`, `COURSE_LABEL`, `CANVAS_CACHE`, `REFRESH_RUN`, without the columns marked Phase 2 or 3, and with the unique card rule; the Phase 1 endpoints in section 4; sign-in (section 5); talking to Canvas, caching, *Built from the start*, *Refresh progress*, and *Saving a complete Refresh* (section 6); security (section 7); the board with only Backlog shown, course buttons, the filter menu with its orphaned-cards option, the removed count in the Refresh summary, visual style, the Refresh progress panel, and the Phase 1 interactions (section 9) |
+| 1 | Tables `USER`, `SESSION`, `CANVAS_CONNECTION`, `BOARD`, `LIST`, `CARD`, `CANVAS_CACHE`, `REFRESH_RUN`, without the columns marked Phase 2 or 3, and with the unique card rule; the Phase 1 endpoints in section 4; sign-in (section 5); talking to Canvas, caching, *Built from the start*, *Refresh progress*, and *Saving a complete Refresh* (section 6); security (section 7); the board with only Backlog shown, course buttons, the filter menu with its orphaned-cards option, the removed count in the Refresh summary, visual style, the Refresh progress panel, and the Phase 1 interactions (section 9) |
 | 2 | Moving cards and *Keeping devices in sync* (section 4): the Phase 2 endpoints and `change_seq`; dragging, showing To do, In progress, and Done, sharing the width and scrolling sideways, and minimize and expand (section 9) |
 | 3 | *Phase 3 tuning*, *Bringing the backend in step with Canvas*, and *What can change in Canvas* (section 6); `CARD.archived` |
 | 4 | Deleting all of a user's data (section 4), accessibility checks, publishing the Google sign-in app (section 5), deploying (roadmap D-3) |
@@ -88,7 +88,6 @@ erDiagram
     USER ||--o{ SESSION : "signs in with"
     BOARD ||--o{ LIST : contains
     LIST ||--o{ CARD : contains
-    CANVAS_CONNECTION ||--o{ COURSE_LABEL : colors
     CANVAS_CONNECTION ||--o{ CANVAS_CACHE : caches
 
     USER {
@@ -135,12 +134,6 @@ erDiagram
         json last_seen "Canvas fields when orphaned"
         int change_seq "Phase 2"
     }
-    COURSE_LABEL {
-        uuid user_id PK, FK
-        uuid connection_id PK, FK
-        int canvas_course_id PK
-        string color
-    }
     REFRESH_RUN {
         uuid user_id PK, FK
         string state "running, complete, incomplete"
@@ -180,17 +173,16 @@ Design notes:
   migration.
 - **One active school per user.** A user has at most one *active*
   `CANVAS_CONNECTION`, and the board shows only the active connection's
-  cards, course labels, and cached data. Each of those records its
+  cards and cached data. Each of those records its
   `connection_id` (see section 12).
 - **Disconnecting keeps the connection row.** Disconnect (FR-4) empties
-  `token_encrypted` but keeps the row, so cards, course labels, and cached
-  data keep pointing at it and the board survives (FR-6). Reconnecting with
+  `token_encrypted` but keeps the row, so cards and cached data keep pointing at it and the board survives (FR-6). Reconnecting with
   the same Canvas address and Canvas user (`canvas_user_id`, from
   `/api/v1/users/self`) puts the new token in the same row.
 - **Connecting a different account keeps the old one's cards (Q-8).** When
   the student connects a different Canvas address or Canvas user, the old
   row is made inactive and its token emptied, and a new active row is
-  added. The old cards, labels, and cache stay in the database, hidden.
+  added. The old cards and cache stay in the database, hidden.
   Reconnecting the old account later makes its row active again, and its
   cards come back in the lists they were in. Deleting the account (FR-54)
   removes every connection row and everything under it.
@@ -201,9 +193,9 @@ Design notes:
 - **`change_seq`** is a counter on the board that goes up by one with every
   change, and each card records the value from its last change. It lets a
   device ask "what changed since number 41?" (see *Keeping devices in sync*).
-- **Course label colors** (FR-66) are stored per user and course, picked
-  automatically from a fixed palette the first time a course appears, so a
-  course keeps its color on every device. Which courses the course buttons
+- **No course colors until Phase 5.** Every card's label strip and every
+  course button uses the same neutral color (FR-66 is Phase 5), so Phases 1
+  to 4 store no color. Which courses the course buttons
   hide (FR-78) is kept in the browser, not the database, until Phase 5. The
   course buttons are the only way to choose courses; the filter menu has no
   course list (FR-72).
@@ -237,7 +229,7 @@ and require a signed-in session except where noted.
 | `GET /api/assignments` | All assignments across active courses, from the last complete copy, with Canvas status fields, the Canvas link, and when they were fetched; on the very first load it starts a Refresh instead | FR-11, FR-14, FR-15, FR-21 to FR-23, FR-26 | 1 |
 | `POST /api/refresh` | Start a Refresh in the background, or join the one already running; returns at once | FR-13, FR-15, FR-16 | 1 |
 | `GET /api/refresh/latest` | Progress of the running Refresh, or the log of the last one | FR-16 | 1 |
-| `GET /api/board` | Lists and cards with course label colors, cards sorted by due date. Read only: cards are added when a Refresh is saved (section 6). Orphaned cards are included, flagged `orphaned` and shown from `last_seen`, so the frontend can show or hide them without another request | FR-31, FR-34, FR-38, FR-45, FR-65, FR-66 | 1 |
+| `GET /api/board` | Lists and cards, cards sorted by due date. Read only: cards are added when a Refresh is saved (section 6). Orphaned cards are included, flagged `orphaned` and shown from `last_seen`, so the frontend can show or hide them without another request | FR-31, FR-34, FR-38, FR-45, FR-65 | 1 |
 | `PATCH /api/board/cards/{id}` | Move to another list; returns the new `change_seq` | FR-32, FR-33, NFR-22 | 2 |
 | `GET /api/board/changes?since={seq}` | Cards changed since that `change_seq`, and the current value | NFR-22 | 2 |
 | `DELETE /api/me` | Delete the account and all its data from the live database at once; backups age out (section 7) | FR-54 | 4 |
@@ -530,8 +522,7 @@ database transaction:
 3. Fill `last_seen` on each card whose assignment is gone, and clear it on
    each card whose assignment is back (section 3, FR-45). The run
    records how many cards became orphaned, for the summary (FR-16).
-4. Give each new course a `COURSE_LABEL` color (FR-66).
-5. Mark the run *complete*. The header's "Synced" time comes from it (FR-13).
+4. Mark the run *complete*. The header's "Synced" time comes from it (FR-13).
 
 Loading the board never adds or changes cards; it only reads. An orphaned
 card is kept in the database, never deleted. It is hidden by default, and
@@ -718,7 +709,7 @@ UI uses:
 |---------|-------|
 | Board background | One solid color, a deep blue |
 | List | From Phase 2, expanded lists share the board's width equally, at least 240 px each, and minimized lists are a 40 px strip with the title written vertically and the card count. Light gray, 12 px rounded corners, 8 px gap between lists |
-| Card | White, 8 px rounded corners, soft shadow, 8 px padding; label strip at the top in the course color |
+| Card | White, 8 px rounded corners, soft shadow, 8 px padding; label strip at the top in one neutral color until course colors arrive in Phase 5 (FR-66) |
 | Due badge | Small pill with a clock icon: green when Submitted or Graded (FR-23 rules), red when Missing, even when also Graded, plain otherwise. A Missing card is also highlighted as the UI specification says |
 | Text | System font, 14 px on cards, bold list titles |
 
@@ -757,7 +748,7 @@ designed here (section 12).
 | FR-10 to FR-16 (fetch, Refresh, progress) | Sections 4, 6 |
 | FR-20 to FR-23, FR-26 (view) | Section 4 (status), 9 (open a card), User Interface Specification |
 | FR-31 to FR-35, FR-38, FR-39, FR-45 (board, Canvas changes) | Sections 3, 4, 6 (saving a complete Refresh, bringing the backend in step, what can change in Canvas), 9 |
-| FR-24, FR-60, FR-61, FR-65, FR-66, FR-72, FR-77, FR-78, FR-80 (Trello-style, filter, course buttons, lists) | Sections 3, 4, 9 |
+| FR-24, FR-60, FR-61, FR-65, FR-72, FR-77, FR-78, FR-80 (Trello-style, filter, course buttons, lists) | Sections 3, 4, 9 |
 | FR-50, FR-51, FR-54 (accounts, data) | Sections 4, 5 |
 | NFR-1 to NFR-3 (performance) | Sections 3 (sorting, list positions), 6 (caching, parallel fetch, making Canvas loads fast) |
 | NFR-10 to NFR-14 (security) | Sections 5 (cookie), 7 |
@@ -770,7 +761,7 @@ designed here (section 12).
 Phase 5 ideas aren't designed here, but a few cheap choices now keep them
 possible without reworking what Phases 1 to 4 build:
 
-- **Record the Canvas connection on cards, course labels, and cached data**
+- **Record the Canvas connection on cards and cached data**
   (`connection_id`). A user has one connection for now, but more than one
   school (FR-55) then needs no data migration, even though two schools can
   use the same Canvas ID numbers.
@@ -783,6 +774,10 @@ possible without reworking what Phases 1 to 4 build:
   (NFR-33, NFR-36) needs less rework.
 - **Keep the four lists as rows in `LIST`**, not hard-coded, so renaming or
   adding lists later is a feature, not a redesign.
+- **Course colors (FR-66)** later need a table keyed by user, connection,
+  and Canvas course ID, so a course keeps its color on every device. Cards
+  already carry `canvas_course_id` and `connection_id`, so nothing built
+  before then changes.
 - **Keep every Canvas call inside the Canvas client.** Canvas GraphQL (a
   Phase 5 idea, Q-10) would then be a change to one module, if `POST`
   queries are ever allowed.
@@ -860,3 +855,4 @@ the data side.
 | 2026-10-26 | Phase 1 scope cut, from the Team Lead (requirements PR #6, da46dff): Phase 1 shows only Backlog, with all four list rows still created; the Filter row and menu are Phase 1, with course checkboxes; course buttons (FR-78), width sharing (FR-61), and minimize and expand (FR-80) are Phase 2; the orphaned-cards control is a filter menu option; Excused is Phase 5; NFR-1 is Phase 2, with its baseline from the Phase 1 timing logs. |
 | 2026-10-26 | Course buttons (FR-78) back in Phase 1 as the only course picker, from the Team Lead (requirements PR #6, 58c1c04); the filter menu has no course list; width sharing and sideways scrolling (FR-61) stay Phase 2. |
 | 2026-10-26 | Orphaned-card show/hide option, its count, and the Refresh summary's removed count move to Phase 1, from the Team Lead. |
+| 2026-10-26 | Course colors (FR-66) postponed to Phase 5, from the Team Lead: `COURSE_LABEL` removed from the Phase 1 tables and the data model; strips and course buttons use one neutral color; section 12 notes the later table. |

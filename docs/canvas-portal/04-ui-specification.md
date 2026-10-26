@@ -24,8 +24,8 @@ requirements index wins.
 
 | Phase | Screens and workflows |
 |-------|-----------------------|
-| 1 | Header, S-1, S-2, S-4 (read only), S-6 (disconnect and sign out), S-8, S-10; W-1, W-2, and W-5's complete-fetch check and new cards in Backlog |
-| 2 | On S-4: dragging cards, the To do, In progress, and Done lists side by side, and minimizing lists; in S-8, the option that shows cards removed from Canvas; W-3 |
+| 1 | Header, S-1, S-2, S-4 (read only), S-6 (disconnect and sign out), S-8 with its option that shows cards removed from Canvas, S-10; W-1, W-2, and W-5's complete-fetch check, new cards in Backlog, and showing removed cards |
+| 2 | On S-4: dragging cards, the To do, In progress, and Done lists side by side, and minimizing lists; W-3 |
 | 3 | W-5's archiving and returning cards (FR-45) |
 | 4 | S-6 and W-6's account deletion (FR-54) |
 | 5 | S-5, S-7, S-9, the Excused tag on S-4, the phone layout, S-6 and W-6's export; W-4, W-7, W-8 |
@@ -135,7 +135,7 @@ planned.
 | `COURSE_TOGGLE` | Show *course* / Hide *course* | S-4 | [● BIO 101] |
 | `SHOW_ALL_COURSES` | Show all | S-4 | [Show all] |
 | `HIDE_ALL_COURSES` | Hide all | S-4 | [Hide all] |
-| `SHOW_ORPHANS` | Show cards removed from Canvas | S-8 (Phase 2) | [ ] Show cards removed from Canvas (2) |
+| `SHOW_ORPHANS` | Show cards removed from Canvas | S-8 | [ ] Show cards removed from Canvas (2) |
 | `MINIMIZE_LIST` | Minimize *list* | S-4 (Phase 2) | [−] |
 | `EXPAND_LIST` | Expand *list* | S-4 (Phase 2) | [+] |
 | `OPEN_IN_CANVAS` | *Assignment name*, opens in Canvas | S-4 | The whole card |
@@ -143,7 +143,7 @@ planned.
 | `SHOW_PROGRESS` | Show progress | S-4 | [Show progress] |
 | `RETRY_REFRESH` | Retry refresh | S-4, S-10 | [Retry refresh] |
 | `CLOSE_REFRESH_PANEL` | Close | S-10 | [x] |
-| `SHOW_REMOVED_CARDS` | Show cards removed from Canvas | S-10 (Phase 2) | [Show them] |
+| `SHOW_REMOVED_CARDS` | Show cards removed from Canvas | S-10 | [Show them] |
 | `DISCONNECT_CANVAS` | Disconnect Canvas | S-6 | [Disconnect Canvas] |
 | `SIGN_OUT` | Sign out | S-6, account menu | [Sign out] |
 | `DELETE_ACCOUNT` | Delete my account and all data | S-6 (Phase 4) | [Delete my account and all data] |
@@ -366,7 +366,7 @@ show the same fields as the Phase 1 sketch.
 
   Cards removed from Canvas (orphaned cards, FR-45): a card whose
   assignment is gone from the last complete Canvas data is kept, never
-  deleted, and hidden by default. From Phase 2, a "Show cards removed
+  deleted, and hidden by default. A "Show cards removed
   from Canvas (2)" checkbox in the filter menu (S-8) shows or hides them,
   with the count of such cards. It appears only when there is at least
   one. Like the rest of the filter, it ends when the page is reloaded,
@@ -375,10 +375,9 @@ show the same fields as the Phase 1 sketch.
   with a dashed border, and says "Removed from Canvas" instead of its
   status. It can't be opened in Canvas, since the assignment is gone.
   The screen says "Removed from Canvas", not "orphaned", which is the
-  team's word for it. It comes in Phase 2, with dragging, because a
-  student may already have moved the card or started the work, and the
-  teacher's change is out of their control: a card that just vanished
-  would leave them wondering where it went. When a Refresh removes cards,
+  team's word for it. It is in Phase 1 because the teacher's change is
+  out of the student's control: a card that just vanished, perhaps one
+  they had started, would leave them wondering where it went. When a Refresh removes cards,
   its S-10 summary says so, such as "2 assignments were removed from
   Canvas", with [Show them], which ticks that checkbox.
   That checkbox is the only place to find these cards, in every phase:
@@ -551,7 +550,7 @@ with a menu beside it, as in Trello.
 
 ### S-8 Filter menu
 
-Requirements: FR-24, FR-72, from Phase 1; FR-45's option from Phase 2.
+Requirements: FR-24, FR-45 (showing removed cards), FR-72, from Phase 1.
 A dropdown under the [⚲ Filter] button, on its own row under the header. Filtering only hides
 cards on the screen; it never changes them or what Canvas holds.
 
@@ -573,7 +572,7 @@ cards on the screen; it never changes them or what Canvas holds.
 | [ ] Graded         [ ] Not graded        |
 | [ ] Missing        [ ] Late              |
 |                                          |
-| Removed from Canvas (Phase 2)            |
+| Removed from Canvas                      |
 | [ ] Show cards removed from Canvas (2)   |
 +------------------------------------------+
   With a filter on, the button reads
@@ -664,8 +663,8 @@ the header, over the board.
   214 assignments in 1:42", or, if any course failed, "Refresh incomplete:
   1 course failed. Still showing data from Oct 25, 10:42 AM" with
   [Retry refresh]. Only a complete Refresh replaces the saved data (FR-14).
-  From Phase 2, when a complete Refresh finds assignments gone from
-  Canvas, the summary adds "2 assignments were removed from Canvas" with
+  When a complete Refresh finds assignments gone from Canvas, the
+  summary adds "2 assignments were removed from Canvas" with
   [Show them], which shows those cards on the board (S-4).
   The log of the last Refresh stays available from the "Synced" time until
   the next Refresh starts.
@@ -803,7 +802,8 @@ flowchart TD
 
 Phase 1 builds the complete-fetch check, showing the current fields,
 adding new assignments to Backlog, and hiding (not deleting) cards whose
-assignments are gone (FR-14, FR-34, FR-35, FR-38, FR-45). Archiving cards
+assignments are gone (FR-14, FR-34, FR-35, FR-38, FR-45), with the filter option that shows
+them and the Refresh summary's count of removed assignments. Archiving cards
 and bringing them back come in Phase 3 (FR-39, FR-45).
 
 ```mermaid
@@ -816,7 +816,7 @@ flowchart TD
     B -- no card yet --> D[Add card to Backlog<br/>in its due date place]
     B -. archived card, Phase 3 .-> R[Bring card back<br/>to its old list]
     Z -- yes --> E{For each card}
-    E -- assignment gone from Canvas --> F[Card is kept and hidden by default;<br/>from Phase 2 the student can show it;<br/>from Phase 3 it is marked archived;<br/>never listed with archived cards]
+    E -- assignment gone from Canvas --> F[Card is kept and hidden by default;<br/>the student can show it;<br/>from Phase 3 it is marked archived;<br/>never listed with archived cards]
     E -- state or flags changed --> G[Badge shows the current Canvas value;<br/>card stays where the student put it]
 ```
 
@@ -904,6 +904,7 @@ flowchart TD
 | 2026-10-26 | Cards removed from Canvas are hidden by default, not for good: from Phase 2 a [◌ Removed from Canvas] button on the course row shows them, grayed out in their lists. From the Team Lead's review. |
 | 2026-10-26 | The [◌ Removed from Canvas] button moves to Phase 2, with dragging, and the S-10 summary says when a Refresh removed cards, from the Team Lead's review. |
 | 2026-10-26 | Cards show when an assignment opens (Canvas "Available from") until it does, and when it closed (Canvas "Until") after that, from Phase 1, from the Team Lead's review. |
+| 2026-10-26 | Showing cards removed from Canvas moves to Phase 1, from the Team Lead: the filter menu's "Show cards removed from Canvas (2)" option and S-10's "2 assignments were removed from Canvas" line with [Show them]. |
 | 2026-10-26 | Phase 1 scope cut by the Team Lead (requirements at da46dff, then the Team Lead's later decision): course buttons stay in Phase 1 as the only course control, so the filter menu has no course checkboxes; the show-removed-cards option moves into the filter menu (Phase 2) and resets on reload; Excused moves to Phase 5; Phase 1 shows only Backlog, at a Trello list's width, and side-by-side lists and minimizing move to Phase 2. S-4's Phase 1 sketch, button IDs, messages, and S-8 updated. |
 | 2026-10-26 | Excused is a tag again, shown alongside Submitted or Not submitted and Graded or Not graded, not in their place; it still makes the badge green and turns off the Missing highlight (FR-65). From the Team Lead's decision on PR #6. |
 | 2026-10-26 | Follows the requirements review on PR #6: the course buttons are the only course control, so S-8 drops its Courses group; list counts include only cards on show (FR-80); an excused card shows "Excused" with a green ✓ and never the Missing highlight (FR-23, FR-65, pending the Team Lead); the strip shows the course code; a not-yet-open card is no longer grayed, so it differs from removed and archived cards; status messages are announced (NFR-32). |

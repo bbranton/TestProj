@@ -213,7 +213,7 @@ Removed requirements are not listed.
 | FR-68 | The card back shows: the title; "in list *name*" (clicking it moves the card); labels; due date; points and status; an "Open in Canvas" button; *Description*, from Canvas and read only (FR-28); *Notes*, private (FR-40); and *Archive*. Checklists are added in Phase 5 (FR-70). | — | 5 |
 | FR-69 | An edit (pencil) button on each card (shown on hover on desktop, always shown on touch screens), right-click, or a long press opens a quick edit menu: Open card, Move, Change label color, Open in Canvas, Archive. | — | 5 |
 | FR-70 | A card back can hold one or more checklists of items that can be checked off. The card front shows progress such as 2/5 (2 of 5 items done). | — | 5 |
-| FR-71 | "+ Add a card" at the bottom of each list creates a personal card that isn't a Canvas assignment. It supports everything a card back has except the Canvas details. | — | 5 |
+| FR-71 | "+ Add a card" at the bottom of each list creates a personal card that isn't a Canvas assignment. It supports everything a card back has except the Canvas details. A personal card can be deleted, and deleting asks for confirmation first, as for notes (FR-41). Canvas cards are never deleted, only archived (FR-45). | — | 5 |
 | FR-72 | A Filter button at the start of the course button row (FR-78), under the header, opens a menu that filters cards by course, by due date (due date passed, due in the next day, next week, next month, no due date), by the statuses in FR-23, and by keyword. When a filter is on, the course row says so and offers "Clear". | — | 5 |
 | FR-73 | *(Removed: no keyboard shortcuts. From the Team Lead's review.)* | n/a | n/a |
 | FR-74 | Archived cards and lists are found under "Archived items" in the board menu, where they can be restored. | — | 5 |
@@ -358,3 +358,4 @@ Removed requirements are not listed.
 | 2026-10-26 | Users: a student can be enrolled at more than one school, with a pointer to FR-55 (Phase 5). From the Team Lead's review. |
 | 2026-10-26 | FR-23 rewritten from the Team Lead's review: the card shows *Submitted* (from `submission.submitted_at`), *Graded* (from `graded_submissions_exist`, `grade_matches_current_submission`, and `graded_at`), every submission type, and Late and Excused tags, instead of Canvas's `workflow_state`; *Missing* cards are highlighted (FR-65). FR-22, FR-24, FR-27, FR-39, FR-65, and FR-72 follow; Q-9 answered. |
 | 2026-10-26 | Q-10 answered by the Team Lead: Canvas GraphQL is a possible future feature, so NFR-13 and C-3 stay `GET` only. |
+| 2026-10-26 | FR-71: personal cards can be deleted, with confirmation first; Canvas cards are only archived. From the Team Lead's review of the UI specification. |

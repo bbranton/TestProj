@@ -18,3 +18,6 @@ Lasting lessons for the UI/UX persona. See the
   the screen map, the button ID table, and every sketch that draws its
   entry point in the same change, then tell Product and QA so the
   requirement's phase matches.
+- The Team Lead wants no keyboard interactions: every action is a click
+  or tap. Don't design Esc, Enter, or shortcut keys; rely on real browser
+  controls so Tab and screen readers still work.

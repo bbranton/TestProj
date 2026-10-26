@@ -103,6 +103,10 @@ even though the formal accessibility check (NFR-32) is Phase 4.
 - **Messages say what happened and what to do next,** in plain words,
   with the button that does it, such as [Retry refresh]. They never show
   error codes or the token.
+- **Mouse and touch, not keyboard shortcuts:** every action is a button
+  or link the student clicks or taps, and no key does anything special.
+  Buttons and checkboxes are real browser controls, so the browser's own
+  Tab key and screen readers still reach them without extra design.
 - **Destructive actions ask first:** disconnecting Canvas, deleting the
   account (Phase 4), and from Phase 5 deleting a note (FR-41) or an
   orphaned card (S-4).
@@ -474,7 +478,7 @@ the screen.
   (FR-40). Clicking "Write a note..." opens the box with a [Save] button
   (FR-42). Edit and Delete work on one note at a time, an
   edited note says "(edited)", and Delete asks first (FR-41, NFR-21).
-  Escape, [x], clicking outside, or the browser's Back button closes the
+  [x], clicking outside, or the browser's Back button closes the
   dialog.
 ```
 
@@ -568,11 +572,11 @@ cards on the screen; it never changes them or what Canvas holds.
 - Courses are the same setting as the course buttons: ticking a course
   here shows it there, and the other way round.
 - Minimized lists count only the cards that match.
-- The menu closes with [x], Esc, or a click outside it, and focus goes
-  back to the [⚲ Filter] button. Every choice is a real checkbox with a
-  label, so screen readers say whether it is ticked.
+- The menu closes with [x] or a click outside it. Every choice is a
+  real checkbox with a label, so screen readers say whether it is ticked.
 - The filter lasts until it is cleared or the page is reloaded. It is not
   saved, so a forgotten filter never hides a new assignment the next day.
+  Saved filters are a future feature (Phase 5).
   The "3 cards match" line keeps it visible while it is on.
 
 | When | Message |
@@ -816,8 +820,8 @@ FR-63), and adding and archiving lists, are Phase 5 ideas.
 flowchart TD
     A([Board]) --> B{What does the user do?}
     B -- click list title --> E[Title becomes a text box]
-    E -- Enter or click away --> F[Saved]
-    E -- Escape --> G[Unchanged]
+    E -- click away --> F[Saved]
+    E -- click x --> G[Unchanged]
     B -- drag list header --> H[Other lists slide aside;<br/>drop saves the new order]
 ```
 
@@ -826,10 +830,10 @@ flowchart TD
 ```mermaid
 flowchart TD
     A([+ Add a card at the bottom of a list]) --> B[Text box opens in place]
-    B --> C{Key pressed}
-    C -- Enter --> D[Card added; box stays open<br/>for the next card]
+    B --> C{What does the user click?}
+    C -- Add card --> D[Card added; box stays open<br/>for the next card]
     D --> B
-    C -- Escape --> E[Box closes; nothing added]
+    C -- x --> E[Box closes; nothing added]
     D --> F[Open the card to add a due date<br/>or notes]
 ```
 
@@ -878,6 +882,7 @@ flowchart TD
 | 2026-10-26 | Cards removed from Canvas are hidden by default, not for good: from Phase 2 a [◌ Removed from Canvas] button on the course row shows them, grayed out in their lists. From the Team Lead's review. |
 | 2026-10-26 | The [◌ Removed from Canvas] button moves to Phase 2, with dragging, and the S-10 summary says when a Refresh removed cards, from the Team Lead's review. |
 | 2026-10-26 | Cards show when an assignment opens (Canvas "Available from") until it does, and when it closed (Canvas "Until") after that, from Phase 1, from the Team Lead's review. |
+| 2026-10-26 | No keyboard shortcuts, from the Team Lead's review: a new convention says every action is clicked or tapped; Escape and Enter removed from S-5, S-8, W-7, and W-8. Saved filters are a future feature. |
 | 2026-10-26 | Cards removed from Canvas are found only with the [◌ Removed from Canvas] button, never in the board menu's Archived items (S-9); from Phase 5 Delete is on the card itself. From the Team Lead's review. |
 | 2026-10-26 | The filter menu (S-8, FR-24, FR-72) moves to Phase 1, from the Team Lead's review: the [⚲ Filter] button is drawn in the S-4 course row, with button IDs, how choices combine, keyboard and screen reader behavior, and a message when nothing matches. The filter is not saved. |
 | 2026-10-26 | The S-4 sketch shows the 🔒 lock on the "Opens" line, and the notes quote it on both the "Opens" and "Closed" lines, from the Team Lead's review. |

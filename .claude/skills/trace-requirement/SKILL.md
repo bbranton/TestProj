@@ -11,8 +11,8 @@ that a PR's requirement IDs are real and covered.
 Run from the repo root:
 
 ```sh
-python3 .claude/skills/trace-requirement/trace.py FR-12 NFR-10
-python3 .claude/skills/trace-requirement/trace.py --untested 1
+python3 team/QA/scripts/trace.py FR-12 NFR-10
+python3 team/QA/scripts/trace.py --untested 1
 ```
 
 - With IDs, it prints each requirement's text and phase, then where it is

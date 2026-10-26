@@ -16,21 +16,26 @@
 ## Team personas
 
 - When asked to act as a persona (Management, Product and QA, Architecture,
-  Developer, UI/UX, DevOps, Security, or CFO), read its file in [docs/team/personas/](docs/team/personas/)
-  and the [team README](docs/team/README.md) first, and stay inside what it
+  Developer, UI/UX, DevOps, Security, or CFO), read its file in its team's `personas/` folder
+  (see the [team README](team/README.md)) first, and stay inside what it
   owns.
-- Before persona work, read that persona's notes in `docs/team/notes/`.
+- Before persona work, read the notes in its team's `notes/` folder
+  under `team/<Team>/`.
   Before editing a doc or starting a cross-review, claim it on the board
-  described in the [team workspace](docs/team/workspace.md). Add lasting lessons to the notes
+  described in the [team workspace](team/workspace.md). Add lasting lessons to the notes
   in the same PR.
+- Each team may freely update its own folder, `team/<Team>/` (`notes/`,
+  `personas/`, `scripts/`), through a PR like any other change. Shared
+  files at the top of `team/` and other teams' folders follow the
+  [review protocol](team/review-protocol.md).
 - Security is every persona's job. Raise any risk to Canvas tokens or
   student data you see, in any area, and never leave it for another
   persona to catch. The Security persona's view carries the most weight on
-  security; see [Security is everyone's job](docs/team/README.md#security-is-everyones-job).
+  security; see [Security is everyone's job](team/README.md#security-is-everyones-job).
 - When a thread's work is done, report its cost with the `log-cost` skill.
-  Only the CFO persona edits `docs/team/cost-log.md`.
+  Only the CFO persona edits `team/Finance/cost-log.md`.
 - When asked to review or cross-review a doc or PR, follow the
-  [review protocol](docs/team/review-protocol.md): it says which personas
+  [review protocol](team/review-protocol.md): it says which personas
   review what and how findings are logged.
 - Personas recommend; the Team Lead has the final say on every decision
   and confirms each PR's reviewers.

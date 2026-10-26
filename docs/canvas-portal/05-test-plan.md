@@ -145,13 +145,13 @@ checks more than one phase's behavior says which part comes later.
 | 1 | FR-13 | The header shows "Synced" with the date and time of the last complete Refresh; an incomplete Refresh leaves it unchanged | E2E |
 | 1 | FR-14, FR-15 | Loading the board with saved data makes no Canvas call, however old the data; the first ever load fetches; Refresh fetches; data over an hour old comes back flagged so the frontend highlights Refresh | API, E2E |
 | 1 | FR-16 | Fixture with one slow course and one that times out: progress reports each course's state in order; the rate-limit fixture shows a course waiting on the rate limit, then done; the run ends incomplete, the saved data is unchanged, and no error text holds the token; the log is still returned after the run ends; a second `POST /api/refresh` while one is running joins it instead of starting another; rate-limit retries stop after 5 tries and the course is marked failed; after a server restart, a run left *running* is marked incomplete | API, E2E |
-| 1 | FR-20, NFR-20 | Board messages: the first load still running, a failed first load with Retry refresh, no active courses, courses with no assignments, and a filter that hides every course (with Clear, FR-72) each show their message instead of an empty board | E2E |
+| 1 | FR-20, NFR-20 | Board messages: the first load still running, a failed first load with Retry refresh, no active courses, courses with no assignments, and every course hidden by the course buttons (with Show all, FR-78) each show their message instead of an empty board | E2E |
 | 1 | FR-1, FR-2, FR-6 | S-2 shows each of its messages: none on first connect, saved token rejected, entered token rejected, and address unreachable or not `https` | E2E |
 | 1 | FR-21, FR-38 | Sort order: soonest first, no-due-date last, ties by name; applies to every list | Unit |
 | 1 | FR-22 | Due dates show in the browser's time zone, including across a daylight saving change (Playwright `timezoneId`); every comparison (sort order, the due badge, *Opens* and *Closed*) is made in UTC, so the fall-back fixture sorts by UTC and the results don't change when the browser's time zone does; the override fixture shows the student's date; each card shows the name, course, due date, points, submission types, and status | Unit, E2E |
 | 1 | FR-22, FR-65 | With the browser clock set by Playwright: before `unlock_at` the card is grayed out and says *Opens* with the date and time; after `lock_at` it says *Closed* with the date and time; between them, or with both empty, it shows neither; the override fixture uses the student's dates; the card keeps its due date place in every case | Unit, E2E |
 | 1 | FR-23 | Each fixture case above gets the *Submitted*, *Graded*, and *Missing* result the FR-23 rules give, including *Not submitted* when only `has_submitted_submissions` is true, *Submitted* and *Not graded* for `pending_review`, *Not graded* when any one of the four checks fails, and both negatives with no submission; on-paper or no-submission work shows *Not submitted* and *Not graded*, then *Not submitted* and *Graded* once graded; a Late tag shows together with Submitted and Graded; every submission type is listed in Canvas's order | Unit |
-| 1 | FR-24, FR-72 | The Filter button under the header opens a menu with one checkbox per active course, plus All and None; course choices, each due date option (due date passed, next day, next week, next month, no due date) with the browser clock set by Playwright, each FR-23 status, and the keyword (matching assignment names across every list) each filter the cards, alone and combined; the button says a filter is on and Clear ends it; a filter that hides every course shows the board's message with Clear; a reload ends the filter (from Phase 5, it is saved) | E2E |
+| 1 | FR-24, FR-72 | The Filter button at the start of the course row opens a menu with no course option (the course buttons are the only course control); each due date option (due date passed, next day, next week, next month, no due date) with the browser clock set by Playwright, each FR-23 status, and the keyword (matching assignment names across every list) each filter the cards, alone, combined, and together with hidden courses; the button says a filter is on and Clear ends it; a reload ends the filter (from Phase 5, it is saved) | E2E |
 | 1 | FR-26 | Clicking a card opens the assignment's Canvas page in a new tab | E2E |
 | 1 | FR-31, FR-34 | In Phase 1 the board shows only Backlog (To do, In progress, and Done from Phase 2); the first complete Refresh puts every assignment in Backlog; after a later complete Refresh, a new fixture assignment appears in Backlog in its due date place | API, E2E |
 | 1 | FR-35 | A renamed or rescheduled assignment keeps the same card, matched by Canvas ID, and is never added twice, even when two board loads or Refreshes run at once; from Phase 2 it also keeps its list (from Phase 5, its notes) | API |
@@ -160,7 +160,8 @@ checks more than one phase's behavior says which part comes later.
 | 1 | FR-50 | Without a session, every `/api/` endpoint except the sign-in ones returns `401`; the Google callback rejects a wrong `state` value; the session cookie is `HttpOnly`, `Secure`, and `SameSite=Lax`; a session survives closing the browser; signing out ends the session | API |
 | 1 | FR-60 | Not signed in shows S-1; signed in but not connected shows S-2; signed in and connected lands on the board; in Phase 1 cards can't be dragged | E2E |
 | 1 | FR-65 | Card fronts show the course code on a strip in the course's color, the points, submission types, *Submitted* or *Not submitted*, *Graded* or *Not graded*, and any Late tag; a Missing card is highlighted beyond the badge color; a not-yet-open card looks different from orphaned and (from Phase 5) archived cards; due badge is red for Missing, otherwise green for Submitted or Graded, plain otherwise, so red wins when an assignment is both Missing and Graded | Unit, E2E |
-| 1 | FR-66 | Each course gets a palette color the first time it appears, the same on all its cards, and keeps it after a reload and in a second session | API, E2E |
+| 1 | FR-66 | Each course gets a palette color the first time it appears, the same on its button and all its cards, and keeps it after a reload and in a second session | API, E2E |
+| 1 | FR-78 | Tapping a course button hides and shows its cards; Show all and Hide all; hidden cards keep their list; the choice survives a reload in the same browser | E2E |
 | 1 | NFR-10 | Logs, error messages, API responses, and page addresses captured during a full test run contain no token string | API, E2E |
 | 1 | NFR-11 | The stored connection row doesn't hold the token in plain text, and it decrypts only with the key from the environment; outside `localhost`, the backend answers plain HTTP only with a redirect to HTTPS | API |
 | 1 | NFR-12 | Two users with different fixtures: every endpoint returns only the signed-in user's connection, courses, assignments, board, and Refresh log; from Phase 2, requests naming the other user's card IDs return `404` | API |
@@ -175,7 +176,6 @@ checks more than one phase's behavior says which part comes later.
 | 2 | FR-16, FR-45 | A complete Refresh that finds assignments gone from Canvas says how many in its summary and offers to show them; choosing that shows the orphaned cards | E2E |
 | 2 | FR-51 | Same user, two browser sessions, see the same board | E2E |
 | 2 | FR-61 | The lists share the board's width; the board scrolls sideways only below 240 px per list, and dragging empty background scrolls it | E2E |
-| 2 | FR-78 | Course buttons under the header hide and show each course's cards; Show all and Hide all; hidden cards keep their list; the buttons and the filter's course checkboxes are one setting; the choice survives a reload in the same browser | E2E |
 | 2 | FR-80 | Minimizing a list widens the others to fill the board, expanding narrows them; on each load or Refresh, empty lists are minimized and the rest expanded, even if the student changed them before reloading; a minimized list shows its card count, which leaves out cards of hidden courses and cards the filter hides; dropping a card on an empty minimized list expands it; dropping on a minimized list that has cards keeps it minimized and raises its count | E2E |
 | 2 | NFR-1 | With the 8-course, 200-assignment fixture saved and the fixture server adding 1 second to every Canvas response, the board is usable in under 2 seconds and makes no Canvas call | E2E |
 | 2 | NFR-3 | With the server's answer delayed by 1 second, a dropped card shows in its new list within 100 ms | E2E |
@@ -231,7 +231,7 @@ each phase also reruns the earlier procedures for any screen it changed.
 | Phase | Procedures |
 |-------|------------|
 | 1 | TP-01, TP-02, TP-03, TP-04, TP-05, TP-10 (steps 1 to 3), TP-12 (step 1), TP-13 (steps 1, 10, 13), TP-14 (baseline), TP-16, TP-17 (step 1, if there is a test deploy) |
-| 2 | TP-04 (steps 9 to 11), TP-06, TP-08 (steps 1 to 6), TP-10 (step 4), TP-13 (steps 2, 3, 14), TP-14 (step 3 must meet NFR-1) |
+| 2 | TP-06, TP-08 (steps 1 to 6), TP-10 (step 4), TP-13 (steps 2, 3, 14), TP-14 (step 3 must meet NFR-1) |
 | 3 | TP-08 (steps 7 and 8), TP-14 (must meet NFR-2), TP-15, and the week of daily Refreshes in section 7 |
 | 4 | TP-10 (step 6), TP-12 (steps 3 to 5), TP-17 |
 | 5 | TP-09, TP-11, and the steps marked Phase 5 in the others |
@@ -292,26 +292,23 @@ sandbox with its test student.
 | 8 | In the sandbox, give the test student their own due date for one assignment (an override); connect the portal as that student and select Refresh | The card shows the student's date, not the class's. This answers the design's open check on overrides |
 | 9 | In the sandbox, rename an assignment and change its due date; select Refresh | The same card shows the new name and moves to its new due date place; no second card appears |
 
-### TP-04 Filters and search
+### TP-04 Course buttons, filters, and search
 
-**Checks:** FR-24, FR-72, FR-78 (Phase 2) · **Phase:** 1 (steps 9 to 11 from
-Phase 2)
-**Needs:** connected account with at least three courses; a second device
-for step 11.
+**Checks:** FR-24, FR-72, FR-78 · **Phase:** 1
+**Needs:** connected account with at least three courses; a second device.
 
 | Step | Action | Expected |
 |------|--------|----------|
-| 1 | Open Filter under the header | The menu has one checkbox per active course, with All and None, plus due date, status, and keyword options |
-| 2 | Clear one course's checkbox, then tick it again | That course's cards hide, then come back; the Filter button says a filter is on and offers Clear |
-| 3 | Select None | No cards are shown; the board says the filter hides every course and offers Clear |
-| 4 | Select All, then filter by Not submitted | Only *Not submitted* cards by the FR-23 rules |
-| 5 | Type part of an assignment name | Cards narrow as you type, across every list |
-| 6 | Filter by "Due in the next week", then by "No due date" | Only cards due within the next week, then only cards with no due date |
-| 7 | Clear the filters | Every card is shown again |
-| 8 | Set a filter, then reload | The filter is gone and every card is shown (from Phase 5, the filter is kept) |
-| 9 | *(Phase 2)* Tap one course's button in the row under the header, then tap it again | Its cards hide, then come back; the button shows hidden (○) and shown (●); the filter's checkbox for that course follows; the cards come back in the lists they were in |
-| 10 | *(Phase 2)* Hide two courses, then select Show all; then select Hide all | Every course is shown; then no cards are shown, and the board says all courses are hidden and offers Show all |
-| 11 | *(Phase 2)* Hide one course, then reload; open the portal on the second device | The course is still hidden after the reload; the second device shows every course, since the choice is kept per browser until Phase 5 (from Phase 5, it is hidden there too) |
+| 1 | Tap one course's button in the row under the header, then tap it again | Its cards hide, then come back; the button shows hidden (○) and shown (●). From Phase 2, the cards come back in the lists they were in |
+| 2 | Hide two courses, then select Show all | Every course is shown |
+| 3 | Select Hide all | No cards shown; the board says all courses are hidden and offers Show all |
+| 4 | Hide one course, then reload; open the portal on the second device | After the reload the course is still hidden; the second device shows every course, since the choice is kept per browser until Phase 5 (from Phase 5, it is hidden there too) |
+| 5 | Open Filter at the start of the course row | The menu has due date, status, and keyword options, but no course option |
+| 6 | Filter by Not submitted, then hide one course with its button | Only *Not submitted* cards by the FR-23 rules, then only those of the shown courses; the Filter button says a filter is on and offers Clear |
+| 7 | Type part of an assignment name | Cards narrow as you type |
+| 8 | Filter by "Due in the next week", then by "No due date" | Only cards due within the next week, then only cards with no due date |
+| 9 | Clear the filters | Every card of the shown courses is shown again |
+| 10 | Set a filter, then reload | The filter is gone (from Phase 5, the filter is kept); hidden courses stay hidden |
 
 ### TP-05 Canvas unavailable
 
@@ -449,7 +446,7 @@ how it looks, what it takes (clicks), or how it responds.
 | 7 | *(Phase 5)* Open a card | Dialog over the dimmed board, same section order; address changes |
 | 8 | *(Phase 5)* Reload, then press Back | Reload reopens the card; Back closes it |
 | 9 | *(Phase 5)* Use the pencil and right-click on a card | Quick edit menu next to the raised card |
-| 10 | Open Filter, filter by one course and by "Due date passed", then Clear | Same filter behavior; the Filter button shows the filter is active |
+| 10 | Open Filter, filter by "Due date passed", then Clear; then choose one course (in Trello by Filter, in the portal with the course buttons) | Same filter behavior; the Filter button shows the filter is active (deliberate differences: Trello puts Filter in the board header, and the portal picks courses with the course buttons) |
 | 11 | *(Phase 5)* Archive a card, then restore it (in the portal, from the filter menu's Archived option) | The card is shown grayed out with Restore, and Restore puts it back (deliberate difference: Trello keeps archived items in its board menu). Orphaned cards never show under Archived; in the portal, an orphan shown with the orphaned-card control offers Delete on the card: cancelling keeps it, confirming removes it and its notes |
 | 12 | *(Phase 5)* Count clicks to open a card and filter by a course | No more than Trello (NFR-35) |
 | 13 | Check for Trello's name, logo, icons, or artwork anywhere | None (C-4) |
@@ -512,7 +509,7 @@ the NFR-22 time.
 
 ### TP-16 Read-only board
 
-**Checks:** FR-21, FR-31, FR-34, FR-38, FR-60, FR-65, FR-66 ·
+**Checks:** FR-21, FR-31, FR-34, FR-38, FR-60, FR-65, FR-66, FR-78 ·
 **Phase:** 1 (TP-06 takes over the board in Phase 2)
 **Needs:** connected student account with at least three courses and some
 assignments with no due date; a second device.
@@ -521,7 +518,7 @@ assignments with no due date; a second device.
 |------|--------|----------|
 | 1 | Open the board | Only Backlog is shown, filling the board; To do, In progress, and Done aren't shown |
 | 2 | Read down Backlog | Cards from every course together, in due date order, earliest at the top; cards with no due date at the end, by name |
-| 3 | Look at each course's cards | All of a course's cards share its label color, and each card's strip shows its course code |
+| 3 | Look at each course's button and cards | Each course's button and all its cards share its label color, and each card's strip shows its course code |
 | 4 | Try to drag a card | The card doesn't move |
 | 5 | Reload, then open the board on the second device | Same layout; each course has the same color on both devices |
 | 6 | Connect the portal as the sandbox's test student after removing them from every course, then after adding them to a course with no assignments | The board says there are no active courses, then that there are no assignments, instead of showing empty lists |
@@ -615,4 +612,4 @@ TP-14 timings go in their own table, one row per run:
 | 2026-10-25 | Whole-set review: TP-04 renamed to match its Phase 1 steps, TP-10 starts in Phase 1 with NFR-12, and the unit test example says status mapping. |
 | 2026-10-25 | TP-07 (keyboard only), the NFR-31 and FR-73 automated tests, and the TP-13 shortcut step removed; TP-13 steps renumbered. From the Team Lead's review: keyboard actions are not a requirement. |
 | 2026-10-25 | FR-16 progress test; TP-05 step 2a checks the progress panel on failure; TP-14 reads times from the panel and uses the NFR-2 target. |
-| 2026-10-25 | In-depth QA review after PR #3: added *Procedures by phase* with entry and test exit criteria, a Phase column in the coverage table, and failure severity; added Phase 1 tests for FR-1 address checks, FR-4, FR-5, FR-13, FR-20, FR-22 (time zone, override, points and status on cards), FR-26, FR-50, FR-60, FR-66, NFR-10, NFR-11, NFR-14, and NFR-41, Phase 2 tests for NFR-3 and FR-80 drops, and an NFR-2 row of its own; FR-16 test covers rate-limit waits, joining a running Refresh, retry limits, and stuck runs; concurrency tests also run on Postgres; new fixtures; TP-01 signs in, disconnects, reconnects, and connects a different Canvas account (Q-8); FR-35 is Phase 1 (TP-03 step 9); NFR-30 is Chrome only until Phase 5; hidden courses and filtered-out cards don't count toward list counts; courses are chosen only with the course buttons; Phase 1 scope cut: only Backlog is shown, the filter menu chooses courses (course buttons and FR-61 in Phase 2, FR-80 and NFR-1 in Phase 2, Excused in Phase 5), and the orphan option resets on reload; Excused is its own label, beside Submitted and Graded; on-paper work stays Not submitted by design; NFR-11 HTTPS is checked on every deploy; date comparisons are checked in UTC (FR-22); `pending_review` fixture; NFR-37 full WCAG audit in Phase 5; NFR-32 checks name each WCAG criterion, with a grayscale step; the FR-65 test checks that red wins over green; TP-03 checks points and the override open check, and clicks the card instead of a missing ↗; TP-04 checks course buttons and the Phase 1 filter menu (FR-24, FR-72), including that a reload ends the filter; TP-05 uses Retry refresh and a rate-limit step; TP-08 no longer needs Phase 5 notes or the Archived view; TP-09 drops Ctrl+Enter; TP-10, TP-12, and TP-13 mark their phases correctly (NFR-30 is Phase 1); TP-14 uses Refresh and a timing table; FR-45 tests cover hidden cards in Phase 1 and the orphaned-card control and the Refresh summary's removed count in Phase 2 (TP-08 steps 5 and 6, also checked in TP-15 steps 7 and 8); TP-15 step 14 checks joining a running Refresh from a second device, and section 7 logs the Phase 3 week of daily Refreshes; added TP-16 (read-only board, Phase 1) and TP-17 (deployed app, Phase 4); accessibility tests start in Phase 4 and check only screens that exist; tests for board messages, S-2 messages, and an empty account (TP-16 step 6); manual checks for NFR-11 (TP-02), NFR-14 (TP-03), and NFR-41 (TP-05); fixture path matches the repo; availability date tests (*Opens* and *Closed*, TP-03 step 4, TP-15 step 5); status tests and fixtures follow the rewritten FR-23 rules (Submitted from `submitted_at`, Graded from four checks, submission types, no Pending review); "column" now "list". |
+| 2026-10-25 | In-depth QA review after PR #3: added *Procedures by phase* with entry and test exit criteria, a Phase column in the coverage table, and failure severity; added Phase 1 tests for FR-1 address checks, FR-4, FR-5, FR-13, FR-20, FR-22 (time zone, override, points and status on cards), FR-26, FR-50, FR-60, FR-66, NFR-10, NFR-11, NFR-14, and NFR-41, Phase 2 tests for NFR-3 and FR-80 drops, and an NFR-2 row of its own; FR-16 test covers rate-limit waits, joining a running Refresh, retry limits, and stuck runs; concurrency tests also run on Postgres; new fixtures; TP-01 signs in, disconnects, reconnects, and connects a different Canvas account (Q-8); FR-35 is Phase 1 (TP-03 step 9); NFR-30 is Chrome only until Phase 5; hidden courses and filtered-out cards don't count toward list counts; courses are chosen only with the course buttons; Phase 1 scope cut: only Backlog is shown, the course buttons stay in Phase 1 as the only course control (FR-61, FR-80, and NFR-1 in Phase 2, Excused in Phase 5), and the orphan option resets on reload; Excused is its own label, beside Submitted and Graded; on-paper work stays Not submitted by design; NFR-11 HTTPS is checked on every deploy; date comparisons are checked in UTC (FR-22); `pending_review` fixture; NFR-37 full WCAG audit in Phase 5; NFR-32 checks name each WCAG criterion, with a grayscale step; the FR-65 test checks that red wins over green; TP-03 checks points and the override open check, and clicks the card instead of a missing ↗; TP-04 checks course buttons and the Phase 1 filter menu (FR-24, FR-72), including that a reload ends the filter; TP-05 uses Retry refresh and a rate-limit step; TP-08 no longer needs Phase 5 notes or the Archived view; TP-09 drops Ctrl+Enter; TP-10, TP-12, and TP-13 mark their phases correctly (NFR-30 is Phase 1); TP-14 uses Refresh and a timing table; FR-45 tests cover hidden cards in Phase 1 and the orphaned-card control and the Refresh summary's removed count in Phase 2 (TP-08 steps 5 and 6, also checked in TP-15 steps 7 and 8); TP-15 step 14 checks joining a running Refresh from a second device, and section 7 logs the Phase 3 week of daily Refreshes; added TP-16 (read-only board, Phase 1) and TP-17 (deployed app, Phase 4); accessibility tests start in Phase 4 and check only screens that exist; tests for board messages, S-2 messages, and an empty account (TP-16 step 6); manual checks for NFR-11 (TP-02), NFR-14 (TP-03), and NFR-41 (TP-05); fixture path matches the repo; availability date tests (*Opens* and *Closed*, TP-03 step 4, TP-15 step 5); status tests and fixtures follow the rewritten FR-23 rules (Submitted from `submitted_at`, Graded from four checks, submission types, no Pending review); "column" now "list". |

@@ -458,10 +458,10 @@ through and kept for the record.
 
 Each risk is rated Low, Medium, or High for how likely it is and how much
 harm it would do, and has an owner: the team persona that watches it and
-carries out its mitigation (see the [team personas](../team/README.md)).
+carries out its mitigation (see the [team personas](../../team/README.md)).
 Management keeps this list, rates each risk, assigns its owner, and reviews
 it with the Team Lead at every phase boundary. A risk that is a
-[potential data breach](../team/personas/security.md#potential-data-breach)
+[potential data breach](../../team/Security/personas/security.md#potential-data-breach)
 is marked **Critical**: it is must-fix, its mitigations come first in the
 current phase and are done before the next deploy, and only the Team Lead
 can delay one. Accepting a risk instead of
@@ -514,7 +514,7 @@ The plan has grown quickly, so these rules keep each phase finishable:
 | Who | Does |
 |-----|------|
 | Team Lead | Has the final say on every decision and disagreement; decides open decisions and questions; OKs each phase's test deploy; approves every roadmap and scope change; confirms each pull request's reviewers, and approves and merges every pull request; runs the manual test procedures that need real Canvas accounts or the teacher sandbox; sets up the Google and Canvas accounts in each phase's prerequisites; changes the current phase in CLAUDE.md. |
-| Team personas (Claude) | Management, Product and QA, Architecture, UI/UX, Developer, DevOps, and Security, as described in the [team README](../team/README.md) and the [review protocol](../team/review-protocol.md). Each one writes the documents and code it owns and reviews others' work when the Team Lead confirms it, in pull requests limited to the current phase; recommends but never approves or merges; lists the requirement IDs each pull request implements; brings anything outside the current phase to the Team Lead instead of building it. |
+| Team personas (Claude) | Management, Product and QA, Architecture, UI/UX, Developer, DevOps, and Security, as described in the [team README](../../team/README.md) and the [review protocol](../../team/review-protocol.md). Each one writes the documents and code it owns and reviews others' work when the Team Lead confirms it, in pull requests limited to the current phase; recommends but never approves or merges; lists the requirement IDs each pull request implements; brings anything outside the current phase to the Team Lead instead of building it. |
 
 ## Change log
 

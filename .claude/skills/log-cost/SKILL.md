@@ -1,12 +1,12 @@
 ---
 name: log-cost
-description: Report what this thread cost to the CFO, from the session's own usage data, so it lands in docs/team/cost-log.md. Use when a thread's PR merges or closes, when a reviewer thread finishes, or when asked what a thread cost.
+description: Report what this thread cost to the CFO, from the session's own usage data, so it lands in team/Finance/cost-log.md. Use when a thread's PR merges or closes, when a reviewer thread finishes, or when asked what a thread cost.
 ---
 
 # Report a thread's cost
 
-Only the [CFO persona](../../../docs/team/personas/cfo.md) edits
-`docs/team/cost-log.md`. Every other thread reports its row and doesn't
+Only the [CFO persona](../../../team/Finance/personas/cfo.md) edits
+`team/Finance/cost-log.md`. Every other thread reports its row and doesn't
 open a cost-log PR or add rows to its own PR.
 
 1. Look up this session's usage: call the `get_session` tool of the
@@ -15,12 +15,12 @@ open a cost-log PR or add rows to its own PR.
    `cache_write_tokens`, `input_tokens`, and `cost_usd`. If the tool isn't
    available, say so and don't guess.
 2. Count the size units, as defined in
-   [the cost log](../../../docs/team/cost-log.md#size-units): threads, PRs,
+   [the cost log](../../../team/Finance/cost-log.md#size-units): threads, PRs,
    review rounds, and files changed.
 3. Write the row in the log's column order, with a note for anything that
    made the cost unusual, such as a long thread, CI failures, or a design
    change partway through.
-4. Report it: add a note to the [team board](../../../docs/team/workspace.md#the-board),
+4. Report it: add a note to the [team board](../../../team/workspace.md#the-board),
    in this form, and message the CFO thread if one is open:
 
    ```
@@ -35,5 +35,5 @@ its last row and say so in the notes.
 
 Collect the `[cost]` notes from the board and any rows sent to you, and
 add them all in one PR, as the
-[CFO persona](../../../docs/team/personas/cfo.md#how-it-works) says. Add
+[CFO persona](../../../team/Finance/personas/cfo.md#how-it-works) says. Add
 your own row with them. After the PR merges, delete the notes it added.

@@ -69,6 +69,7 @@ one helps.
 | Database | Structured storage on the server, shared across the user's devices. SQLite (one file) or Postgres (a database server). |
 | Kanban | A board of columns (such as To do, Doing, Done) with cards you drag between them. |
 | Trello terms | The portal follows [Trello](https://trello.com)'s words: a *board* holds *lists* (columns), lists hold *cards*, and opening a card shows its *card back*. |
+| Orphaned card | A card whose Canvas assignment is gone, because the teacher deleted or unpublished it. The portal keeps the card and never deletes it. It's hidden by default, and the Filter menu's "show cards removed from Canvas" option shows it grayed out (FR-45, Phase 1). If the assignment comes back, the card returns to its list. From Phase 3 a complete Refresh marks it archived, and in Phase 5 the student can delete it permanently (FR-74). |
 | Dialog (modal) | A box that opens over the page and must be closed before using the page behind it, like a QML `Dialog`. The card back (a Phase 5 idea) would be one. |
 | Component | A reusable piece of UI, like a QML component file. React and Svelte are both built around components. |
 | Deploy / hosting | Putting the app on a server on the internet so others can open it. |

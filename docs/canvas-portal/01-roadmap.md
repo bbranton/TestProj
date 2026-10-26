@@ -151,7 +151,7 @@ such as encrypting tokens with Fernet (a new dependency).
   and keyword. Courses aren't in the Filter menu: they are shown and
   hidden only with the course buttons (FR-78). The filter isn't saved yet
   and ends on reload (FR-24, FR-72).
-- Orphaned cards, whose assignment is gone from Canvas: cards are matched
+- [Orphaned cards](README.md#web-terms-used-in-these-docs), whose assignment is gone from Canvas: cards are matched
   to assignments by Canvas ID, and an orphaned card is kept, never
   deleted. It is hidden by default, and a "show cards removed from Canvas"
   option in the Filter menu shows it grayed out (FR-35, FR-45).

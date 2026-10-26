@@ -25,7 +25,7 @@ requirements index wins.
 | Phase | Screens and workflows |
 |-------|-----------------------|
 | 1 | Header, S-1, S-2, S-4 (read only), S-6 (disconnect and sign out), S-8, S-10; W-1, W-2, and W-5's complete-fetch check and new cards in Backlog |
-| 2 | On S-4: dragging cards, the To do, In progress, and Done lists side by side, minimizing lists, and the course buttons; in S-8, the option that shows cards removed from Canvas; W-3 |
+| 2 | On S-4: dragging cards, the To do, In progress, and Done lists side by side, and minimizing lists; in S-8, the option that shows cards removed from Canvas; W-3 |
 | 3 | W-5's archiving and returning cards (FR-45) |
 | 4 | S-6 and W-6's account deletion (FR-54) |
 | 5 | S-5, S-7, S-9, the Excused tag on S-4, the phone layout, S-6 and W-6's export; W-4, W-7, W-8 |
@@ -132,12 +132,9 @@ planned.
 | `FILTER` | Filter | S-4 | [⚲ Filter] |
 | `CLOSE_FILTER` | Close filter | S-8 | [x] |
 | `CLEAR_FILTER` | Clear filter | S-4, S-8 | (x) Clear |
-| `FILTER_COURSE` | *Course code and name* | S-8 | [✓] ■ BIO 101 |
-| `FILTER_ALL_COURSES` | All courses | S-8 | All |
-| `FILTER_NO_COURSES` | No courses | S-8 | None |
-| `COURSE_TOGGLE` | Show *course* / Hide *course* | S-4 (Phase 2) | [● BIO 101] |
-| `SHOW_ALL_COURSES` | Show all | S-4 (Phase 2) | [Show all] |
-| `HIDE_ALL_COURSES` | Hide all | S-4 (Phase 2) | [Hide all] |
+| `COURSE_TOGGLE` | Show *course* / Hide *course* | S-4 | [● BIO 101] |
+| `SHOW_ALL_COURSES` | Show all | S-4 | [Show all] |
+| `HIDE_ALL_COURSES` | Hide all | S-4 | [Hide all] |
 | `SHOW_ORPHANS` | Show cards removed from Canvas | S-8 (Phase 2) | [ ] Show cards removed from Canvas (2) |
 | `MINIMIZE_LIST` | Minimize *list* | S-4 (Phase 2) | [−] |
 | `EXPAND_LIST` | Expand *list* | S-4 (Phase 2) | [+] |
@@ -245,25 +242,25 @@ kept so the other screen numbers don't change.
 ### S-4 Board (home screen)
 
 Requirements: FR-13 to FR-16, FR-20 to FR-23, FR-26, FR-31, FR-34, FR-35,
-FR-38, FR-45 (keeping cards), FR-60, FR-65, FR-66, FR-72, NFR-1,
-NFR-20, NFR-34. From Phase 2: FR-32, FR-33, FR-61, FR-77, FR-78, FR-80,
+FR-38, FR-45 (keeping cards), FR-60, FR-65, FR-66, FR-72, FR-78,
+NFR-1, NFR-20, NFR-34. From Phase 2: FR-32, FR-33, FR-61, FR-77, FR-80,
 NFR-3. The sketches show Phases 1 to
 4 only.
 
 The board is the only view. In Phase 1 it is read only: every card is in
 Backlog, which is the only list shown. Dragging, the other three lists
-side by side, minimizing lists, and the course buttons arrive in Phase 2
-(FR-31, FR-60, FR-61, FR-78, FR-80). Backlog keeps a Trello list's width
+side by side, and minimizing lists arrive in Phase 2 (FR-31, FR-60,
+FR-61, FR-80). Backlog keeps a Trello list's width
 (about 300 px) at the left of the board, not the whole width, so cards
 stay easy to read and the other lists can join it in Phase 2 without
-changing it. The row under the header holds only the [⚲ Filter] button
-(FR-72). This is the Phase 1 board:
+changing it. The row under the header holds the [⚲ Filter] button and
+the course buttons (FR-72, FR-78). This is the Phase 1 board:
 
 ```text
 +--------------------------------------------------------------------------+
 | Canvas Portal  My assignments          Synced Oct 25, 10:42 AM  [⟳] [⚙]  |
 +--------------------------------------------------------------------------+
-| [⚲ Filter]                                                               |
+| [⚲ Filter] [● BIO 101] [● HIST 210] [● MATH 152]  [Show all] [Hide all]  |
 +--------------------------------------------------------------------------+
 |  board background color                                                  |
 | +----------------------------------+                                     |
@@ -410,15 +407,15 @@ show the same fields as the Phase 1 sketch.
   finishes, empty lists start minimized and the rest start expanded;
   this state is not saved.
 
-  Courses: in Phase 1 the student chooses which courses to see with the
-  course checkboxes in the filter menu (S-8, FR-72), opened by the
-  [⚲ Filter] button. From Phase 2, course buttons (FR-78) join the
-  [⚲ Filter] button on its row: one per active course in its label
-  color, with ● shown or ○ hidden, and [Show all] and [Hide all]. With
-  every course hidden, the board says "All courses are hidden" with a
-  Show all link. The buttons and the filter's course checkboxes are one
-  setting: changing either changes both. In Phase 2 the choice is kept
-  in this browser; from Phase 5 it is saved with the account.
+  Course buttons (FR-78) are the only way to choose which courses to
+  see. They follow the [⚲ Filter] button on its row: one per active
+  course in its label color, with ● shown or ○ hidden, and [Show all]
+  and [Hide all]. Each shows the course code and, below it in smaller
+  text, the course name, shortened with "..." when long (FR-20); the
+  sketches show only the codes. With every course hidden, the board says
+  "All courses are hidden" with a Show all link. Hidden cards keep their
+  list. Until Phase 5 the choice is kept in this browser; from Phase 5
+  it is saved with the account.
 
   Dragging (Phase 2, FR-32, FR-77): dragging only chooses the list; the
   card slots into its due date place, which the gray gap shows. Dropping
@@ -436,9 +433,8 @@ Messages on the board:
 | A Refresh fails or stops partway (NFR-20) | A warning banner between the filter row and the lists: "Couldn't refresh from Canvas. Showing data from Oct 25, 10:42 AM." with [Details], which opens S-10. It stays until a Refresh completes. |
 | First load still running and S-10 closed | "Loading your assignments from Canvas..." with [Show progress], which reopens S-10. |
 | First load failed, so there is no data at all | "Couldn't load your assignments from Canvas." with [Retry refresh] and [Details]. |
-| Canvas has no active courses for this account | "Canvas shows no active courses for this account." The filter menu lists no courses. |
-| Active courses, but none has assignments | Backlog is empty and says "No assignments in your courses yet." |
-| The filter hides every course | "No courses are selected in the filter." with a Clear filter link. |
+| Canvas has no active courses for this account | "Canvas shows no active courses for this account." There are no course buttons. |
+| Active courses, but none has assignments | The course buttons show, Backlog is empty, and it says "No assignments in your courses yet." |
 
 How each Canvas submission type is written on a card (FR-23). The words
 follow what Canvas itself shows the student on the assignment page. When
@@ -577,11 +573,6 @@ cards on the screen; it never changes them or what Canvas holds.
 | [ ] Graded         [ ] Not graded        |
 | [ ] Missing        [ ] Late              |
 |                                          |
-| Courses                     All · None   |
-| [✓] ■ BIO 101   Intro to Biology         |
-| [✓] ■ HIST 210  Modern World History     |
-| [✓] ■ MATH 152  Calculus II              |
-|                                          |
 | Removed from Canvas (Phase 2)            |
 | [ ] Show cards removed from Canvas (2)   |
 +------------------------------------------+
@@ -590,12 +581,10 @@ cards on the screen; it never changes them or what Canvas holds.
 ```
 
 - Choices in one group widen the filter, and groups narrow it: ticking
-  Submitted and Missing shows cards that are either, and unticking every
-  course but BIO 101 keeps only those in BIO 101.
-- Courses start all ticked, with one checkbox per active course showing
-  its code, label color, and name, shortened with "..." when long
-  (FR-20). All ticks every course and None unticks them. Hidden cards
-  keep their list.
+  Submitted and Missing shows cards that are either, and adding "Due in
+  the next week" keeps only those of them due in the next week.
+- There is no Courses group: the course buttons are the only way to
+  show or hide a course (FR-78), and the filter applies on top of them.
 - Keyword matches the assignment name as the student types, ignoring
   capitals (FR-24).
   From Phase 5 the keyword becomes a full search, like Trello's card
@@ -614,8 +603,6 @@ cards on the screen; it never changes them or what Canvas holds.
   saved, so a forgotten filter never hides a new assignment the next day.
   Saved filters are a future feature (Phase 5).
   The "3 cards match" on the button keeps it visible while it is on.
-  From Phase 2, the course checkboxes are the exception: they share the
-  course buttons' setting, which is kept in this browser (FR-78).
 
 | When | Message |
 |------|---------|
@@ -917,7 +904,7 @@ flowchart TD
 | 2026-10-26 | Cards removed from Canvas are hidden by default, not for good: from Phase 2 a [◌ Removed from Canvas] button on the course row shows them, grayed out in their lists. From the Team Lead's review. |
 | 2026-10-26 | The [◌ Removed from Canvas] button moves to Phase 2, with dragging, and the S-10 summary says when a Refresh removed cards, from the Team Lead's review. |
 | 2026-10-26 | Cards show when an assignment opens (Canvas "Available from") until it does, and when it closed (Canvas "Until") after that, from Phase 1, from the Team Lead's review. |
-| 2026-10-26 | Phase 1 scope cut by the Team Lead (requirements at da46dff): course buttons move to Phase 2, so Phase 1 chooses courses with checkboxes in the filter menu, and the row under the header holds only [⚲ Filter]; the show-removed-cards option moves into the filter menu (Phase 2) and resets on reload; Excused moves to Phase 5; Phase 1 shows only Backlog, at a Trello list's width, and side-by-side lists and minimizing move to Phase 2. S-4's Phase 1 sketch, button IDs, messages, and S-8 updated. |
+| 2026-10-26 | Phase 1 scope cut by the Team Lead (requirements at da46dff, then the Team Lead's later decision): course buttons stay in Phase 1 as the only course control, so the filter menu has no course checkboxes; the show-removed-cards option moves into the filter menu (Phase 2) and resets on reload; Excused moves to Phase 5; Phase 1 shows only Backlog, at a Trello list's width, and side-by-side lists and minimizing move to Phase 2. S-4's Phase 1 sketch, button IDs, messages, and S-8 updated. |
 | 2026-10-26 | Excused is a tag again, shown alongside Submitted or Not submitted and Graded or Not graded, not in their place; it still makes the badge green and turns off the Missing highlight (FR-65). From the Team Lead's decision on PR #6. |
 | 2026-10-26 | Follows the requirements review on PR #6: the course buttons are the only course control, so S-8 drops its Courses group; list counts include only cards on show (FR-80); an excused card shows "Excused" with a green ✓ and never the Missing highlight (FR-23, FR-65, pending the Team Lead); the strip shows the course code; a not-yet-open card is no longer grayed, so it differs from removed and archived cards; status messages are announced (NFR-32). |
 | 2026-10-26 | From Phase 5 the filter menu's keyword becomes a full search like Trello's card search (course, description, notes, archived and removed cards), filtering the whole board; Phase 1 matches assignment names. From the Team Lead's review. |

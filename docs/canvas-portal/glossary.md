@@ -45,7 +45,7 @@ The portal follows [Trello](https://trello.com)'s words (goal G-3): a
 | Course | One of the student's active Canvas courses. The docs say "course", never "label". | FR-20 |
 | Course button | The button above the lists that shows or hides one course's cards: ● when shown, ○ when hidden. A hidden course's cards keep their list. | FR-78 |
 | Label strip | The colored bar on a card that shows its course, in the course's automatic color. | FR-65, FR-66 |
-| Archived card *(Phase 3)* | A card whose assignment was removed from Canvas. It leaves the board but is kept. Before Phase 3 such a card is simply not shown. Say "removed from Canvas" for this, not "missing", which is a [card status](#card-status). | FR-45 |
+| Orphaned card | A card whose assignment the teacher deleted or unpublished in Canvas. Until Phase 3 it is simply not shown, but kept. From Phase 3 it is *archived*: it leaves the board but is kept, and returns to its old list if the assignment comes back. From Phase 5 the student can restore it, or delete it for good, with its notes, from Archived items after confirming. Say "orphaned" or "removed from Canvas" for this, not "missing", which is a [card status](#card-status). | FR-45, FR-74, S-9 |
 
 ## Refresh and sync
 
@@ -136,4 +136,4 @@ These come up often in the docs. Each has a Qt comparison where one helps.
 
 | Date | Change |
 |------|--------|
-| 2026-10-26 | Created from the README's "Web terms used in these docs" table, from the Team Lead's review of PR #8. Added the board, Refresh, card status, screen, document, and team process terms. |
+| 2026-10-26 | Created from the README's "Web terms used in these docs" table, from the Team Lead's review of PR #8. Added the board (including orphaned cards, from the Team Lead's review of PR #8), Refresh, card status, screen, document, and team process terms. |

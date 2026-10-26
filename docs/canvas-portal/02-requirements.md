@@ -29,7 +29,7 @@ requirement names one only where it sets the scope.
 
 Every requirement serves one of the project goals in the
 [roadmap](01-roadmap.md#1-project-goals), except the maintainability
-requirements, which serve the developer, and the two listed under *No goal yet*.
+requirements, which serve the developer.
 
 | Goal | Requirements |
 |------|--------------|
@@ -38,7 +38,7 @@ requirements, which serve the developer, and the two listed under *No goal yet*.
 | G-3 Feels like Trello | FR-32, FR-36, FR-60 to FR-81, NFR-3, NFR-33 to NFR-36 |
 | G-4 Follows the student everywhere | FR-5, FR-33, FR-35, FR-50, FR-51, FR-53, NFR-22 |
 | G-5 Private and safe | FR-4, FR-54, NFR-10 to NFR-14, NFR-21 |
-| No goal yet | NFR-30 (browsers), NFR-32 (accessibility): no roadmap goal says the portal works for every student whatever their browser or ability. See Q-11. |
+| G-6 Any student can use it (Phase 5 goal, from the Team Lead's Q-11 answer; the roadmap adds it in #36) | NFR-30, NFR-32, NFR-37 |
 | Developer | NFR-40 to NFR-42 |
 
 ### Priority and phase
@@ -109,7 +109,7 @@ Removed requirements are not listed.
 - Accounts, sync, and data control: FR-53, FR-55
 - Performance: NFR-4
 - Reliability: NFR-21
-- Usability and accessibility: NFR-30 (other browsers), NFR-33, NFR-35, NFR-36
+- Usability and accessibility: NFR-30 (other browsers), NFR-33, NFR-35, NFR-36, NFR-37
 
 ## 2. Users
 
@@ -173,7 +173,7 @@ Removed requirements are not listed.
 |----|-------------|----------|-------|
 | FR-20 | The board lists the user's active courses by name and course code. If the user has no active courses, or no assignments, the board says so instead of showing empty lists. | Must | 1 |
 | FR-21 | The board shows the assignments of every active course together, in the order FR-38 sets. | Must | 1 |
-| FR-22 | Each assignment shows: name, course, due date and time in the time zone of the device being used, points possible, submission types, and status (FR-23). The due date is the one Canvas gives this student, including a date set just for them (a Canvas *override*). Each assignment also has Canvas's availability dates for this student, *Available from* (`unlock_at`) and *Until* (`lock_at`, after which the student can't submit), either of which can be empty. | Must | 1 |
+| FR-22 | Each assignment shows: name, course, due date and time shown in the time zone of the device being used, points possible, submission types, and status (FR-23). The due date is the one Canvas gives this student, including a date set just for them (a Canvas *override*). Each assignment also has Canvas's availability dates for this student, *Available from* (`unlock_at`) and *Until* (`lock_at`, after which the student can't submit), either of which can be empty. Every comparison of dates and times, such as sorting by due date, the due badge, and the *Opens* and *Closed* lines (FR-65), is made in UTC, so the result is the same whatever time zone the device or server is set to. Only the display uses the device's time zone. | Must | 1 |
 | FR-23 | Each card's status is worked out by these rules from the student's own Canvas submission (`submission`) and the assignment, with nothing compared to the clock (clock-based statuses are FR-27). **Submitted** when `submission.submitted_at` has a date, otherwise *Not submitted*; Canvas's `has_submitted_submissions` is not used, because it says whether anyone in the class has submitted, not this student. **Graded** when all four hold: there is a submission, the assignment's `graded_submissions_exist` is true, `submission.grade_matches_current_submission` is true, and `submission.graded_at` has a date; otherwise *Not graded*, so a resubmission after grading shows *Not graded* until it is graded again. **Missing** when `submission.missing` is true. **Excused** when `submission.excused` is true: the card shows *Excused* in place of *Submitted* or *Not submitted* and *Graded* or *Not graded*, and it wins over *Missing*. **Late** tag when `submission.late` is true; it can appear together with Submitted and Graded. **Submission types**: every type in the assignment's `submission_types` list, in Canvas's order, such as `online_upload` and `online_text_entry`, or `on_paper`; the UI Specification sets how each is written. With no submission at all, the card shows *Not submitted* and *Not graded*. | Must | 1 |
 | FR-24 | The user can filter cards by the statuses in FR-23 and by a keyword that matches assignment names across the whole board, using the filter menu in FR-72. Courses are shown and hidden only with the course buttons (FR-78), not the filter. From Phase 5 a full search replaces the keyword (FR-81). | Must | 1 |
 | FR-25 | The user can hide assignments, for example those Canvas reports as *Graded* or *Excused*. | — | 5 |
@@ -282,11 +282,27 @@ Removed requirements are not listed.
 |----|-------------|-------|
 | NFR-30 | Works in the current release of Chrome on a laptop or desktop, checked when each phase is signed off. From Phase 5, it also works in the current release of Firefox, Safari, and Edge. | 1 (Chrome), 5 (other browsers) |
 | NFR-31 | *(Removed: keyboard-only use is not a requirement. From the Team Lead's review.)* | n/a |
-| NFR-32 | Meets these WCAG 2.2 level AA criteria (the standard web accessibility guideline): contrast of text and controls (1.4.3, 1.4.11), text readable at 200% zoom (1.4.4), every control and image has a name a screen reader announces (1.1.1, 2.5.3, 3.3.2, 4.1.2), color is never the only way meaning is shown (1.4.1), and messages that change without a reload, such as Refresh progress, the Canvas warning, and the filter's match count, are announced (4.1.3). This is not full WCAG AA, which also needs keyboard access. Keyboard and focus criteria are left out, since keyboard use is not a requirement (NFR-31). | 4 |
+| NFR-32 | Meets these WCAG 2.2 level AA criteria (the standard web accessibility guideline): contrast of text and controls (1.4.3, 1.4.11), text readable at 200% zoom (1.4.4), every control and image has a name a screen reader announces (1.1.1, 2.5.3, 3.3.2, 4.1.2), color is never the only way meaning is shown (1.4.1), and messages that change without a reload, such as Refresh progress, the Canvas warning, and the filter's match count, are announced (4.1.3). This is not full WCAG AA, which also needs keyboard access. Keyboard and focus criteria are left out, since keyboard use is not a requirement (NFR-31). Every criterion the portal does not meet is listed in *Variances from WCAG 2.2 AA* below. | 4 |
 | NFR-33 | Usable on a phone-width screen. As in Trello's mobile layout, one list fills the screen and the user swipes between lists. The UI details are worked out before this is built. | 5 |
 | NFR-34 | Visual style is close to Trello's within C-4: a colored board background, light gray lists with rounded corners, white cards with rounded corners and a soft shadow, and compact text. Checked against approved reference screenshots and the Trello comparison review (TP-13). | 1 |
 | NFR-35 | Board actions (open a card, show or hide a course, filter) need no more clicks than the same action in Trello. | 5 |
 | NFR-36 | Nothing depends on hovering. Once phones are supported, every action and every piece of information can be reached by tapping. Hover can add a shortcut on desktop, but never the only way. Earlier phases avoid hover-only designs where it costs nothing, so phone support needs less rework. | 5 |
+| NFR-37 | Meets every WCAG 2.2 level A and AA criterion (full coverage), closing each variance listed below. | 5 |
+
+#### Variances from WCAG 2.2 AA
+
+Until NFR-37 is built, the portal knowingly differs from WCAG 2.2 level AA in
+the ways listed here. Any PR that leaves out another criterion, or meets one
+listed here, updates this list in the same PR. Release notes and the client
+security document must not claim full WCAG AA while this list has entries.
+
+| Criteria | Variance | Why |
+|----------|----------|-----|
+| 2.1.1 Keyboard, 2.1.2 No keyboard trap, 2.1.4 Character key shortcuts | Not every action can be done with the keyboard alone; dragging cards (FR-60) needs a mouse or touch. | Keyboard use is not a requirement (NFR-31), by the Team Lead's decision. |
+| 2.4.3 Focus order, 2.4.7 Focus visible, 2.4.11 Focus not obscured | Focus order and the visible focus outline are not designed or tested. | Same as above. |
+| 2.5.7 Dragging movements | Moving a card may need dragging, with no single-tap or click alternative. | Same as above; from Phase 2, when dragging is built. |
+| 1.3.4 Orientation, 1.4.10 Reflow | The board is not checked at phone width until NFR-33 (Phase 5). | Phone layout is a Phase 5 idea. |
+| All other criteria not named in NFR-32 | Not checked, so they may or may not be met. | NFR-32 covers only the criteria it names. |
 
 ### 5.5 Maintainability
 
@@ -308,7 +324,7 @@ Removed requirements are not listed.
 - ~~**Q-8** If a student disconnects and then connects a different Canvas account or school, what happens to the old board?~~ Answered by the Team Lead: the old account's cards are kept but hidden, and the new account's cards start in Backlog. Reconnecting the old account brings its cards back. Once more than one school is supported (FR-55, Phase 5), every account's cards show on one board.
 - ~~**Q-9** Some assignments can't be submitted in Canvas, such as on-paper work. Should the card show their submission type?~~ Answered by the Team Lead: every card shows all of its submission types, plus *Submitted* and *Graded* worked out by the FR-23 rules, and *Missing* cards are highlighted (FR-23, FR-65).
 - ~~**Q-10** NFR-13 and C-3 allow only Canvas `GET` calls, but the design's first Phase 3 speed-up was Canvas GraphQL, which reads through `POST /api/graphql`. Should NFR-13 allow read-only GraphQL queries?~~ Answered by the Team Lead: GraphQL is a possible future feature (Phase 5). Until then NFR-13 and C-3 stay `GET` only, and Phase 3 tuning uses REST.
-- **Q-11** Should the roadmap add a goal for reach, such as "works for every student, whatever their browser or ability", so NFR-30 and NFR-32 trace to a goal?
+- ~~**Q-11** Should the roadmap add a goal for reach, such as "works for every student, whatever their browser or ability", so NFR-30 and NFR-32 trace to a goal?~~ Answered by the Team Lead: accessibility is a Phase 5 goal (G-6). Full WCAG AA is NFR-37, Phase 5.
 
 ## Change log
 
@@ -371,3 +387,4 @@ Removed requirements are not listed.
 | 2026-10-26 | Team Lead's answers on PR #6: FR-35 is Phase 1; FR-80 resets lists on every page load and every Refresh; hidden courses don't count toward list counts (FR-80); NFR-32 leaves out keyboard and focus; NFR-30 is Chrome only in Phase 1, other browsers in Phase 5; Q-8 answered (old account's cards are hidden). |
 | 2026-10-26 | UI/UX review: courses are chosen only with the course buttons, not the filter (FR-24, FR-72), and filtered-out cards don't count in FR-80; *Excused* replaces Submitted and Graded and turns the badge green (FR-23, FR-65); the card shows the course code, not color alone, and the not-yet-open look is left to the UI Specification (FR-65); NFR-32 adds 1.4.1 and 4.1.3; FR-16 says "not started"; FR-24 says "keyword". Security review: NFR-11 stays all Phase 1, with HTTPS on every deployed copy, including the test deploy. |
 | 2026-10-26 | Management and Architecture reviews on PR #6: FR-4 now states the Q-8 answer (a different account's cards stay hidden until it is reconnected); FR-35 and NFR-22 name two Refreshes at once, not two loads; FR-45 keeps every card-front field. |
+| 2026-10-26 | Team Lead's answers on PR #6: date and time comparisons are made in UTC, and display uses the device's time zone (FR-22); *Submitted* and *Not graded* replace *Pending review* (confirmed); full WCAG 2.2 AA is NFR-37, Phase 5, and *Variances from WCAG 2.2 AA* lists every criterion not yet met; Q-11 answered: accessibility is goal G-6, for Phase 5. |

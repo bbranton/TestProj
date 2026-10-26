@@ -122,8 +122,9 @@ the decision to them.
    verdict, that reviewer checks the fixes and updates its verdict.
 7. **Team Lead decides.** The PR is ready when every confirmed reviewer's
    latest verdict is **Recommend** or **Recommend with notes**. With no
-   confirmed reviewers, the Team Lead's own review is the review. The Team Lead approves and merges. A persona never
-   approves or merges.
+   confirmed reviewers, the Team Lead's own review is the review. The owner
+   thread may then merge the PR into `develop`. Only the Team Lead merges
+   into `main`, through the `develop` → `main` release PR.
 
 ## Findings table
 

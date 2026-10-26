@@ -151,7 +151,7 @@ Removed requirements are not listed.
 | FR-1 | The user can enter their school's Canvas address and a personal access token. If the address can't be reached, the portal says so and keeps what the user typed. | Must | 1 |
 | FR-2 | The portal checks the token by fetching the user's Canvas profile and shows their name on success. | Must | 1 |
 | FR-3 | The connect screen explains, with steps, how to create a token in Canvas. | Should | 1 |
-| FR-4 | The user can disconnect, which removes the token from the portal. The board is kept, so reconnecting the same Canvas account brings it back (see Q-8 for a different account). | Must | 1 |
+| FR-4 | The user can disconnect, which removes the token from the portal. The board is kept, so reconnecting the same Canvas account brings it back. If the user then connects a different Canvas account, the old account's cards are kept but hidden, and the new account's cards start in Backlog; reconnecting the old account shows its cards again in the lists they were in. | Must | 1 |
 | FR-5 | The portal remembers the connection between visits until the user disconnects. The connection is stored with the user's portal account, so it works on any device they sign in from. | Must | 1 |
 | FR-6 | If Canvas rejects the token (wrong, expired, or revoked), the portal shows a message saying the token no longer works and returns to the connect screen without losing the board layout. | Must | 1 |
 
@@ -370,3 +370,4 @@ Removed requirements are not listed.
 | 2026-10-26 | Added FR-81 (Phase 5): Trello-style search across the whole board, including descriptions, notes, archived and orphaned cards; FR-24's Phase 1 keyword filter matches names across the whole board. From the Team Lead's review of the UI specification. |
 | 2026-10-26 | Team Lead's answers on PR #6: FR-35 is Phase 1; FR-80 resets lists on every page load and every Refresh; hidden courses don't count toward list counts (FR-80); NFR-32 leaves out keyboard and focus; NFR-30 is Chrome only in Phase 1, other browsers in Phase 5; Q-8 answered (old account's cards are hidden). |
 | 2026-10-26 | UI/UX review: courses are chosen only with the course buttons, not the filter (FR-24, FR-72), and filtered-out cards don't count in FR-80; *Excused* replaces Submitted and Graded and turns the badge green (FR-23, FR-65); the card shows the course code, not color alone, and the not-yet-open look is left to the UI Specification (FR-65); NFR-32 adds 1.4.1 and 4.1.3; FR-16 says "not started"; FR-24 says "keyword". Security review: NFR-11 stays all Phase 1, with HTTPS on every deployed copy, including the test deploy. |
+| 2026-10-26 | Management review on PR #6: FR-4 now states the Q-8 answer (a different account's cards stay hidden until it is reconnected). |

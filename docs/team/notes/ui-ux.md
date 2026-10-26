@@ -21,3 +21,12 @@ Lasting lessons for the UI/UX persona. See the
 - The Team Lead wants no keyboard interactions: every action is a click
   or tap. Don't design Esc, Enter, or shortcut keys; rely on real browser
   controls so Tab and screen readers still work.
+- Button IDs are CAPS_WITH_UNDERSCORES, such as `REFRESH`, for logs, docs,
+  code, and tests. The label a screen reader announces stays plain words.
+- Keep menus light. A long list of cards belongs on the board behind a
+  filter, never in a menu. The Team Lead set this for archived and
+  orphaned cards.
+- Emoji such as 🔒 take two columns in text sketches. Drop a space of
+  padding so the box borders still line up.
+- A README only describes what's in its folder. Product terms go in the
+  [glossary](../../canvas-portal/glossary.md).

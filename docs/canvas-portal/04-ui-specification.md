@@ -189,9 +189,10 @@ disconnecting, or when Canvas rejects the saved token.
 |    1. In Canvas, open Account, then Settings.                |
 |    2. Under Approved Integrations, choose                    |
 |       New Access Token.                                      |
-|    3. Enter a purpose such as "Canvas Portal"                |
-|       and generate it. If you set an expiry date,            |
-|       you will need a new token after it.                    |
+|    3. Enter a purpose such as "Canvas Portal".               |
+|       Set an expiry date, such as the end of                 |
+|       the term, so a lost token stops working.               |
+|       Then generate it.                                      |
 |    4. Copy the token and paste it here. Canvas               |
 |       only shows it once.                                    |
 |                                                              |
@@ -199,12 +200,18 @@ disconnecting, or when Canvas rejects the saved token.
 +--------------------------------------------------------------+
 ```
 
+The token steps ask the student to give the token an expiry date, which
+limits the harm if it ever leaks (risk R-2). When it expires, Canvas
+rejects it and S-2 opens with the "no longer accepts your saved token"
+message, so the student makes a new one.
+
 The message at the top depends on why S-2 is shown. Each keeps what the
 student typed in the address field:
 
 | When | Message |
 |------|---------|
-| First connection, or after disconnecting | None |
+| First connection | None |
+| After disconnecting (risk R-2) | "Disconnected. To be safe, also delete the token in Canvas: Account, Settings, Approved Integrations." |
 | Canvas rejects the saved token during a Refresh (FR-6) | "Canvas no longer accepts your saved token. Please create a new one. Your board is safe." |
 | Canvas rejects the token just entered | "Canvas did not accept this token." |
 | The address can't be reached, isn't a Canvas site, or doesn't start with `https://` | "Couldn't reach that Canvas address. Check that it starts with https://." |
@@ -451,6 +458,8 @@ Requirements: FR-4, FR-50, FR-53 (Phase 5), FR-54 (Phase 4).
 | Account                                                      |
 |   Signed in as alex@example.com        [ Sign out ]          |
 +--------------------------------------------------------------+
+  After disconnecting, S-2 reminds the student to also delete the token
+  in Canvas, under Account, Settings, Approved Integrations (risk R-2).
   Disconnect Canvas and Delete my account both ask to confirm first
   (W-6). Until Phase 4, "Your data" is not shown.
 ```
@@ -802,3 +811,4 @@ flowchart TD
 | 2026-10-26 | Every button has an ID in capitals with underscores for logs, docs, code, and tests, and a plain-words label for screen readers, with a table of Phase 1 to 4 button IDs, from the Team Lead's review. Dates use the device's time zone (FR-22). |
 | 2026-10-26 | Deleting a note or an orphaned card (Phase 5) joins the destructive actions that ask first; S-9 adds Delete for orphaned cards, those whose assignment is gone from Canvas. From the Team Lead's review. |
 | 2026-10-26 | Links to the new [glossary](glossary.md), and screen words follow it, from the Team Lead's review. |
+| 2026-10-26 | S-2's token steps ask for an expiry date, and disconnecting reminds the student to delete the token in Canvas (risk R-2), from the Team Lead's review. |

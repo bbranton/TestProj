@@ -44,7 +44,7 @@ flowchart TD
     S4 -.-> S5[S-5 Card back dialog, Phase 5]
     S4 -.-> S7[S-7 Quick edit menu, Phase 5]
     S4 --> S8[S-8 Filter menu]
-    S4 -.-> S9[S-9 Board menu and archived items, Phase 5]
+    S4 -.-> S9[S-9 Board menu, Phase 5]
     S4 --> S6[S-6 Settings]
     S4 --> S10[S-10 Refresh progress]
     S10 -- Canvas rejects the token --> S2
@@ -363,7 +363,7 @@ show the same fields as the Phase 1 sketch.
   its S-10 summary says so, such as "2 assignments were removed from
   Canvas", with [Show them], which turns the button on.
   This button is the only place to find these cards, in every phase:
-  they never move to the board menu's Archived items (S-9). From Phase
+  they are never listed with archived cards (S-9). From Phase
   5, a shown one has a [Delete] button, which removes it for good, with
   its notes, after asking: "Delete this card and its notes? This can't
   be undone." The portal never deletes a card on its own (FR-45), and
@@ -583,33 +583,30 @@ cards on the screen; it never changes them or what Canvas holds.
 |------|---------|
 | No cards match | "No cards match this filter." with a Clear filter link, in place of the lists' cards |
 
-### S-9 Board menu and archived items (Phase 5, future feature)
+### S-9 Board menu (Phase 5, future feature)
 
-Requirements: FR-74, FR-75. A panel that slides in from the right edge of the
-board.
+Requirements: FR-75. A small menu under the [⋯] button, holding only
+board settings. It never lists cards, since a student may have many.
 
 ```text
-                          +------------------------------------+
-                          | Menu                           [x] |
-                          |------------------------------------|
-                          | [▤ Archived items]                 |
-                          | [■ Course colors]                  |
-                          | [▧ Change background]              |
-                          |------------------------------------|
-                          | Archived items                     |
-                          | [Search archive...]  [Cards|Lists] |
-                          | +--------------------------------+ |
-                          | | ▬▬ BIO 101                     | |
-                          | | Lab report 1                   | |
-                          | +--------------------------------+ |
-                          | [Restore]  ✎ notes kept            |
-                          +------------------------------------+
-  Archived items holds the cards and lists the student archived
-  (S-7). Restore puts a card back in its old list, in its due date
-  place. Cards removed from Canvas are not here: the
-  [◌ Removed from Canvas] button on the course row shows them (S-4),
-  and Delete is on the card itself.
+                          +------------------------+
+                          | Board              [x] |
+                          |------------------------|
+                          | [■ Course colors]      |
+                          | [▧ Change background]  |
+                          +------------------------+
 ```
+
+Archived cards and lists (FR-74) are found the way cards removed from
+Canvas are: on the board itself, with a filter. From Phase 5 the filter
+menu (S-8) ends with an Archived group, "[ ] Show archived cards" and
+"[ ] Show archived lists". Shown, an archived card stays in its old list,
+in its due date place, grayed out with a dashed border and a [Restore]
+button; an archived list appears grayed out after Done, with [Restore]
+in its header. The keyword filter finds an archived card by name, so a
+long archive needs no separate search. Restore puts it back as it was,
+with its notes. Cards removed from Canvas have their own
+[◌ Removed from Canvas] button (S-4).
 
 ### S-10 Refresh progress
 
@@ -794,7 +791,7 @@ flowchart TD
     B -- no card yet --> D[Add card to Backlog<br/>in its due date place]
     B -. archived card, Phase 3 .-> R[Bring card back<br/>to its old list]
     Z -- yes --> E{For each card}
-    E -- assignment gone from Canvas --> F[Card is kept and hidden by default;<br/>from Phase 2 the student can show it;<br/>from Phase 3 it is marked archived;<br/>never moved to Archived items]
+    E -- assignment gone from Canvas --> F[Card is kept and hidden by default;<br/>from Phase 2 the student can show it;<br/>from Phase 3 it is marked archived;<br/>never listed with archived cards]
     E -- state or flags changed --> G[Badge shows the current Canvas value;<br/>card stays where the student put it]
 ```
 
@@ -882,6 +879,7 @@ flowchart TD
 | 2026-10-26 | Cards removed from Canvas are hidden by default, not for good: from Phase 2 a [◌ Removed from Canvas] button on the course row shows them, grayed out in their lists. From the Team Lead's review. |
 | 2026-10-26 | The [◌ Removed from Canvas] button moves to Phase 2, with dragging, and the S-10 summary says when a Refresh removed cards, from the Team Lead's review. |
 | 2026-10-26 | Cards show when an assignment opens (Canvas "Available from") until it does, and when it closed (Canvas "Until") after that, from Phase 1, from the Team Lead's review. |
+| 2026-10-26 | The board menu (S-9) lists no cards, from the Team Lead's review: it holds only course colors and the background. Archived cards and lists are shown on the board with a Phase 5 Archived group in the filter menu, grayed out with [Restore]. |
 | 2026-10-26 | No keyboard shortcuts, from the Team Lead's review: a new convention says every action is clicked or tapped; Escape and Enter removed from S-5, S-8, W-7, and W-8. Saved filters are a future feature. |
 | 2026-10-26 | Cards removed from Canvas are found only with the [◌ Removed from Canvas] button, never in the board menu's Archived items (S-9); from Phase 5 Delete is on the card itself. From the Team Lead's review. |
 | 2026-10-26 | The filter menu (S-8, FR-24, FR-72) moves to Phase 1, from the Team Lead's review: the [⚲ Filter] button is drawn in the S-4 course row, with button IDs, how choices combine, keyboard and screen reader behavior, and a message when nothing matches. The filter is not saved. |

@@ -59,7 +59,7 @@ sits on the board's background color:
 
 ```text
 +--------------------------------------------------------------------------+
-| Canvas Portal  My assignments          Synced Oct 25, 10:42 AM  [⟳] (A)  |
+| Canvas Portal  My assignments          Synced Oct 25, 10:42 AM  [⟳] [⚙]  |
 +--------------------------------------------------------------------------+
   "Synced ..." always shows the date and time of the last complete
   Refresh, with nothing hidden behind hover (FR-13). A Refresh that fails
@@ -69,12 +69,12 @@ sits on the board's background color:
   spins and the board stays usable; selecting [⟳] or the "Synced" time
   then opens S-10 with the Refresh's progress. When no Refresh is
   running, the "Synced" time opens the last Refresh's log in S-10.
-  (A) is the account menu: Settings, Sign out. Selecting "My assignments"
+  [⚙] opens the account menu: Settings, Sign out. Selecting "My assignments"
   goes back to the board from any screen.
-  From Phase 5, a [⋯] board menu button before (A) opens S-9.
+  From Phase 5, a [⋯] board menu button before [⚙] opens S-9.
 ```
 
-S-2 has a smaller header with only "Canvas Portal" and (A), so the student
+S-2 has a smaller header with only "Canvas Portal" and [⚙], so the student
 can still sign out, since there is no board or sync time to show yet.
 
 ### Conventions on every screen
@@ -86,7 +86,7 @@ even though the formal accessibility check (NFR-32) is Phase 4.
   comes with the status text and tags on the card (FR-23), and a green
   badge also shows ✓. Course buttons show ● or ○ as well as their color.
 - **Every icon button has a name.** [⟳] is "Refresh from Canvas", [−] and
-  [+] are "Minimize *list*" and "Expand *list*", and (A) is "Account
+  [+] are "Minimize *list*" and "Expand *list*", and [⚙] is "Account
   menu". Screen readers announce these names, and they make the controls
   testable.
 - **Dates and times look the same everywhere,** in the student's time
@@ -194,7 +194,7 @@ board:
 
 ```text
 +--------------------------------------------------------------------------+
-| Canvas Portal  My assignments          Synced Oct 25, 10:42 AM  [⟳] (A)  |
+| Canvas Portal  My assignments          Synced Oct 25, 10:42 AM  [⟳] [⚙]  |
 +--------------------------------------------------------------------------+
 | [● BIO 101] [● HIST 210] [● MATH 152]  [Show all] [Hide all]             |
 +--------------------------------------------------------------------------+
@@ -240,7 +240,7 @@ show the same fields as the Phase 1 sketch.
 
 ```text
 +--------------------------------------------------------------------------+
-| Canvas Portal  My assignments          Synced Oct 25, 10:42 AM  [⟳] (A)  |
+| Canvas Portal  My assignments          Synced Oct 25, 10:42 AM  [⟳] [⚙]  |
 +--------------------------------------------------------------------------+
 | [● BIO 101] [● HIST 210] [● MATH 152]  [Show all] [Hide all]             |
 +--------------------------------------------------------------------------+
@@ -755,3 +755,4 @@ flowchart TD
 | 2026-10-25 | Added S-10 Refresh progress (FR-16): per-course states, errors and timeouts, a summary, and the last Refresh's log, from the Team Lead's review. |
 | 2026-10-25 | In-depth UI/UX review after PR #3: added *UI by phase* and *Conventions on every screen* (color never the only signal, named icon buttons, one date format, consistent words, helpful messages); S-4 has a Phase 1 sketch, and card fronts show the due date and time, points, and Canvas status, with red winning over green on the due badge (FR-22, FR-65); course buttons show the course name under the code (FR-20); cards of removed assignments are hidden but kept until Phase 3 (FR-45); board messages for a failed Refresh, the first load, no courses, and no assignments; the header's "Synced" time is the last complete Refresh (FR-13), and [⟳] starts a Refresh; S-1 says a personal Google account works (R-6); S-2 lists its messages; S-10 closes without stopping the Refresh and uses ⏸ for rate limits, so ◷ only means a due date; S-6 marks deletion Phase 4; S-8 adds Excused; Ctrl+Enter and the `f` key removed (keyboard actions are not a requirement); W-3 marked Phase 2; W-5 marks its Phase 3 parts; W-4 no longer names undesigned Phase 5 endpoints; Oct 28, 2026 is a Wednesday. |
 | 2026-10-26 | Card status follows the new FR-23 and FR-65, from the Team Lead's review of the requirements: cards show their submission types (with a table of how each is written), Submitted or Not submitted, Graded or Not graded, and Late or Excused tags; Pending review is gone; Missing cards get a red border and a "⚠ MISSING" bar as well as the red badge; S-5 and S-8 updated to match. |
+| 2026-10-26 | The account menu button is a gear, [⚙], instead of (A), from the Team Lead's review. |

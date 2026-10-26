@@ -569,7 +569,7 @@ cards on the screen; it never changes them or what Canvas holds.
   search: it also matches the course, the assignment's description, and
   the student's notes, and it filters the whole board in place. Matching
   archived cards and cards removed from Canvas show too, grayed out as
-  usual, so nothing needs a separate search.
+  usual, so nothing needs a separate search (FR-81).
 - Due date choices compare the due date with the device's clock, like
   the start and end date lines on cards (FR-22).
 - Status choices use the same Canvas fields and words as the card front

@@ -565,6 +565,11 @@ cards on the screen; it never changes them or what Canvas holds.
   keeps only those in BIO 101.
 - Keyword matches the assignment name as the student types, ignoring
   capitals (FR-24).
+  From Phase 5 the keyword becomes a full search, like Trello's card
+  search: it also matches the course, the assignment's description, and
+  the student's notes, and it filters the whole board in place. Matching
+  archived cards and cards removed from Canvas show too, grayed out as
+  usual, so nothing needs a separate search.
 - Due date choices compare the due date with the device's clock, like
   the start and end date lines on cards (FR-22).
 - Status choices use the same Canvas fields and words as the card front
@@ -603,8 +608,8 @@ menu (S-8) ends with an Archived group, "[ ] Show archived cards" and
 "[ ] Show archived lists". Shown, an archived card stays in its old list,
 in its due date place, grayed out with a dashed border and a [Restore]
 button; an archived list appears grayed out after Done, with [Restore]
-in its header. The keyword filter finds an archived card by name, so a
-long archive needs no separate search. Restore puts it back as it was,
+in its header. The Phase 5 full search in the filter menu finds archived
+cards too, so a long archive needs no separate search. Restore puts it back as it was,
 with its notes. Cards removed from Canvas have their own
 [◌ Removed from Canvas] button (S-4).
 
@@ -879,6 +884,7 @@ flowchart TD
 | 2026-10-26 | Cards removed from Canvas are hidden by default, not for good: from Phase 2 a [◌ Removed from Canvas] button on the course row shows them, grayed out in their lists. From the Team Lead's review. |
 | 2026-10-26 | The [◌ Removed from Canvas] button moves to Phase 2, with dragging, and the S-10 summary says when a Refresh removed cards, from the Team Lead's review. |
 | 2026-10-26 | Cards show when an assignment opens (Canvas "Available from") until it does, and when it closed (Canvas "Until") after that, from Phase 1, from the Team Lead's review. |
+| 2026-10-26 | From Phase 5 the filter menu's keyword becomes a full search like Trello's card search (course, description, notes, archived and removed cards), filtering the whole board; Phase 1 matches assignment names. From the Team Lead's review. |
 | 2026-10-26 | The board menu (S-9) lists no cards, from the Team Lead's review: it holds only course colors and the background. Archived cards and lists are shown on the board with a Phase 5 Archived group in the filter menu, grayed out with [Restore]. |
 | 2026-10-26 | No keyboard shortcuts, from the Team Lead's review: a new convention says every action is clicked or tapped; Escape and Enter removed from S-5, S-8, W-7, and W-8. Saved filters are a future feature. |
 | 2026-10-26 | Cards removed from Canvas are found only with the [◌ Removed from Canvas] button, never in the board menu's Archived items (S-9); from Phase 5 Delete is on the card itself. From the Team Lead's review. |

@@ -32,6 +32,8 @@ When reviewing others' work:
       waits for?
 - [ ] For a UI PR: are there screenshots of each changed page, including
       phone width?
+- [ ] Could a screen, message, or screenshot show a token or another
+      student's data? Raise it yourself, even when Security also reviews.
 
 ## Decisions
 
@@ -49,6 +51,9 @@ When reviewing others' work:
 - What data and endpoints a screen uses → Architecture.
 - How a screen is coded → Developer.
 - Whether the UI passes its tests → Product and QA.
+- How severe a security weakness is → Security. Security's view on a
+  security question carries the most weight. UI/UX still raises every
+  security risk it sees.
 
 **Needs the Team Lead:**
 

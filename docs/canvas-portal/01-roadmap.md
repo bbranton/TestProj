@@ -276,16 +276,13 @@ Canvas*) and a test (TP-15).
 
 - Q-7 in the requirements (what happens to the cards of an ended or dropped
   course) is answered.
-- The Team Lead decides whether Canvas GraphQL may be used. It reads data
-  but is sent as a `POST`, and NFR-13 allows only `GET` calls to Canvas
-  (see the design's
-  [Open decisions raised here](03-design.md#open-decisions-raised-here)).
-  If the answer is no, tuning goes straight to leaving descriptions out and
-  the Planner API, which are both `GET`.
 
-- Tune Refresh, working through the design's list in order: Canvas
-  GraphQL if the Team Lead approves it, descriptions left out of the main
-  load, then the Planner API as a fallback (NFR-1, NFR-2, R-3).
+Canvas GraphQL is not used: it is sent as a `POST`, and NFR-13 allows only
+`GET` calls to Canvas. The Team Lead made it a Phase 5 idea (Q-10).
+
+- Tune Refresh, working through the design's list in order, skipping
+  GraphQL: descriptions left out of the main load, then the Planner API as
+  a fallback (NFR-1, NFR-2, R-3).
 - Each Refresh brings in every change: new, changed, and removed
   assignments, new due dates and submission states, and course changes
   such as a new term (FR-13, FR-34, FR-35, FR-45).
@@ -352,6 +349,8 @@ database, and the domain) is decided, with its cost.
 ### Phase 5: Later ideas (not committed)
 
 - "Log in with Canvas" (OAuth 2) instead of pasting a token (D-4).
+- Canvas GraphQL for faster loads. It is sent as a `POST`, so it needs the
+  Team Lead to relax NFR-13 for read-only queries first (Q-10).
 - Calendar view of due dates; reminders.
 - Grades and submission feedback view.
 - Quizzes and discussions as their own kinds of item, with their own
@@ -440,8 +439,8 @@ Lead.
 | ID | Risk | Effect | Likelihood | Impact | Owner | Mitigation |
 |----|------|--------|------------|--------|-------|------------|
 | R-1 | A student's school has turned off personal access tokens | Students at that school can't connect | Medium | Medium | Architecture | Cleared for the Team Lead's school in Phase 0 (A-1), but D-5 opens the portal to any school. The connect screen's error says tokens may be turned off at the student's school (FR-6), and OAuth stays the Phase 5 path (D-4). |
-| R-2 | Canvas tokens are powerful; a leak exposes a student's whole account | Privacy harm | Low | High, **Critical** | Security, with Architecture making the design fixes | The backend never logs tokens (NFR-10), stores them encrypted with a key held only in the server's settings (NFR-11), never returns them to the browser, shows each user only their own data (NFR-12), and only uses Canvas read calls (NFR-13; "read-only queries" if the Team Lead approves GraphQL). Students are told to give the token an expiry and to delete it in Canvas when they leave (#21). |
-| R-3 | Canvas is slow: in the Team Lead's experience a full load of courses, each with 100+ assignments, can take several minutes, and rate limits slow it further | Students wait or give up | High | Medium | Architecture | Never make the student wait on Canvas: show the last data at once, refresh only when the student asks, and highlight Refresh when the data is old (FR-15). Measure early with a real account (TP-14 baseline in Phase 1), then in Phase 3 fetch less, in fewer requests, and switch to Canvas GraphQL if needed and the Team Lead approves it against NFR-13 (see design, *Making Canvas loads fast*). |
+| R-2 | Canvas tokens are powerful; a leak exposes a student's whole account | Privacy harm | Low | High, **Critical** | Security, with Architecture making the design fixes | The backend never logs tokens (NFR-10), stores them encrypted with a key held only in the server's settings (NFR-11), never returns them to the browser, shows each user only their own data (NFR-12), and only uses Canvas read calls (NFR-13: `GET` only). Students are told to give the token an expiry and to delete it in Canvas when they leave (#21). |
+| R-3 | Canvas is slow: in the Team Lead's experience a full load of courses, each with 100+ assignments, can take several minutes, and rate limits slow it further | Students wait or give up | High | Medium | Architecture | Never make the student wait on Canvas: show the last data at once, refresh only when the student asks, and highlight Refresh when the data is old (FR-15). Measure early with a real account (TP-14 baseline in Phase 1), then in Phase 3 fetch less, in fewer requests, using `GET` calls only (see design, *Making Canvas loads fast*). Canvas GraphQL is a Phase 5 idea (Q-10). |
 | ~~R-4~~ | ~~Assignments change in Canvas (renamed, deleted, new due date)~~ | ~~Board shows stale or orphaned cards~~ | — | — | — | Merged into R-9. |
 | R-5 | Learning web development alongside building | Slower progress | Medium | Medium | Management | Small phases, one new technology at a time, docs explain terms. |
 | R-6 | A school-managed Google account blocks sign-in to outside apps | Student can't sign in | Medium | Medium | UI/UX | Allow any Google account, so a personal one works; explain this on the sign-in screen. |
@@ -533,3 +532,4 @@ The plan has grown quickly, so these rules keep each phase finishable:
 | 2026-10-25 | Deploy at the end of every phase, from the Team Lead: Phases 1 to 3 end with a private deploy to a free test host (Koyeb free plus Neon free, decided in D-3), with HTTPS, secrets, CI deploys and rollback, and a nightly encrypted backup set up in Phase 1 (new step 6 and exit criterion). NFR-1 is measured once the test server is awake and checked on the Phase 4 host. Phase 2 pauses polling in hidden tabs. Phase 4 becomes "Polish and publish" and M5 "Published". R-13 now starts in Phase 4; added R-14 (tokens on a live server from Phase 1) and R-15 (a free tier changes or runs out). |
 | 2026-10-25 | Security review: Phase 1 lists what must be done before the test deploy goes live (#17, #19, #20, #25, #26), keeps deploy secrets in a `master`-only Actions environment, says where backups and their key live and that restore and migration copies are deleted, and names step 6's security checks. Risks: potential data breaches are marked Critical; R-2 is owned by Security, and R-14 is rated Medium and limited to the Team Lead's own accounts until #16 and #17. Section 8 adds Security. |
 | 2026-10-25 | The Team Lead keeps Koyeb for test deploys, with the #25 protections, rather than Render free. |
+| 2026-10-26 | Canvas GraphQL moves to Phase 5, from the Team Lead's answer to Q-10: Phase 3 no longer waits on the GraphQL call and tunes with `GET` calls only; R-2 and R-3 updated. |

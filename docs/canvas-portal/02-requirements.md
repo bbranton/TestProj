@@ -83,7 +83,8 @@ Removed requirements are not listed.
 
 **Phase 2: Dragging and sync**
 
-- Kanban board: FR-32, FR-33, FR-38 (dropping into the due date place)
+- Fetching data from Canvas: FR-16 (removed assignments in the summary)
+- Kanban board: FR-32, FR-33, FR-38 (dropping into the due date place), FR-45 (showing orphaned cards)
 - Trello-style look and behavior: FR-60 (dragging), FR-77, FR-80 (dropping on a minimized list)
 - Accounts, sync, and data control: FR-51
 - Performance: NFR-3
@@ -91,7 +92,7 @@ Removed requirements are not listed.
 
 **Phase 3: Performance and Canvas sync**
 
-- Kanban board: FR-39, FR-45 (archiving, showing orphaned cards)
+- Kanban board: FR-39, FR-45 (archiving)
 - Performance: NFR-2
 
 **Phase 4: Polish and deploy**
@@ -165,7 +166,7 @@ Removed requirements are not listed.
 | FR-13 | The user can refresh data on demand. The header always shows the date and time of the last complete Refresh, such as "Synced Oct 25, 10:42 AM". | Must | 1 |
 | FR-14 | The portal keeps the last complete copy of the student's Canvas data and shows it on every load, so opening the board never waits on Canvas. | Must | 1 |
 | FR-15 | The portal fetches from Canvas only when the student selects Refresh, or on the very first load when there is no data yet. It never starts a fetch on its own. When the data is more than an hour old, the Refresh button is highlighted. | Must | 1 |
-| FR-16 | Every Refresh, including the first load, shows its progress: how many courses are done out of the total, and for each course whether it is waiting, being fetched, waiting on a Canvas rate limit, done (with its number of assignments), or failed (with the reason, such as a timeout or an error from Canvas). When the Refresh ends, a summary says what was synced; if anything failed, it says the previous data was kept and offers Retry. The log of the last Refresh can be reopened until the next one starts. Only one Refresh runs at a time for a student: selecting Refresh while one is running, on any device, joins it and shows its progress. | Must | 1 |
+| FR-16 | Every Refresh, including the first load, shows its progress: how many courses are done out of the total, and for each course whether it is waiting, being fetched, waiting on a Canvas rate limit, done (with its number of assignments), or failed (with the reason, such as a timeout or an error from Canvas). When the Refresh ends, a summary says what was synced; if anything failed, it says the previous data was kept and offers Retry. The log of the last Refresh can be reopened until the next one starts. From Phase 2, when a complete Refresh finds assignments gone from Canvas, the summary says how many and offers to show them (FR-45). Only one Refresh runs at a time for a student: selecting Refresh while one is running, on any device, joins it and shows its progress. | Must | 1, 2 (removed assignments in the summary) |
 
 ### 4.3 Viewing courses and assignments
 
@@ -196,7 +197,7 @@ Removed requirements are not listed.
 | FR-37 | *(Removed: no "Move to Done?" hint. The student drags cards to Done; the due badge turning green already shows the assignment is submitted, FR-65.)* | n/a | n/a |
 | FR-38 | Within every list, assignments are always sorted by due date, earliest at the top, and assignments with no due date come last. Cards with the same due date, and cards with no due date, are in name order. A changed due date in Canvas moves the card to its new place. From Phase 2, a card dropped into a list slots into its due date place. | Must | 1, 2 (dropping) |
 | FR-39 | When a field changes in Canvas, the card shows the new value after the next refresh, and never changes list because of it. This covers a field being added later (such as a due date set after the assignment was created), changed, or cleared (such as a due date removed: the card moves to the end of its list with no due date). It applies to the name, due date, points, submission types, every Canvas field the FR-23 rules use, and so the statuses worked out from them (and, once the card back shows it, the description, FR-28), including a status going backward (for example *Graded* back to *Not graded* after a resubmission). | Must | 3 |
-| FR-45 | If an assignment disappears from Canvas (deleted or unpublished by the teacher), its card is marked archived rather than deleted, and is hidden from the board unless the student shows it (below). Only a complete, successful refresh can archive a card; a failed or partial fetch changes nothing. If the assignment comes back (republished), the card returns to its old list. Viewing and restoring archived cards by hand comes with FR-74. Until Phase 3, a card whose assignment is missing from the last complete copy of Canvas data (FR-14) is not shown, but it is kept, never deleted. From Phase 3, a show/hide control on the course button row (FR-78) shows or hides these *orphaned* cards, with how many there are. They are hidden by default, and the choice is kept in the browser, like the course buttons. A shown orphaned card stays in its list, grayed out and marked as removed from Canvas. | Must | 1 (keeping cards), 3 (archiving, showing orphaned cards) |
+| FR-45 | If an assignment disappears from Canvas (deleted or unpublished by the teacher), its card is marked archived rather than deleted, and is hidden from the board unless the student shows it (below). Only a complete, successful refresh can archive a card; a failed or partial fetch changes nothing. If the assignment comes back (republished), the card returns to its old list. Viewing and restoring archived cards by hand comes with FR-74. Until Phase 3, a card whose assignment is missing from the last complete copy of Canvas data (FR-14) is not shown, but it is kept, never deleted. From Phase 2, a show/hide control on the course button row (FR-78) shows or hides these *orphaned* cards, with how many there are. They are hidden by default, and the choice is kept in the browser, like the course buttons. A shown orphaned card stays in its list, grayed out and marked as removed from Canvas. | Must | 1 (keeping cards), 2 (showing orphaned cards), 3 (archiving) |
 
 ### 4.5 Trello-style look and behavior (goal G-3)
 
@@ -360,3 +361,4 @@ Removed requirements are not listed.
 | 2026-10-26 | Q-10 answered by the Team Lead: Canvas GraphQL is a possible future feature, so NFR-13 and C-3 stay `GET` only. |
 | 2026-10-26 | FR-74: the student can permanently delete an orphaned card (its assignment gone from Canvas) and its notes, after confirming; NFR-21 notes this. From the Team Lead's review of the UI specification. |
 | 2026-10-26 | FR-45: from Phase 3, a show/hide control for orphaned cards (assignment gone from Canvas), hidden by default and kept in the browser; shown ones stay in their list, grayed out. From the Team Lead's review of the UI specification; the phase is the Team Lead's call. |
+| 2026-10-26 | The Team Lead moved FR-45's show/hide control for orphaned cards to Phase 2, since a student may have dragged one to a list and would be confused if it vanished; FR-16's Refresh summary says how many assignments were removed from Canvas and offers to show them (Phase 2). |

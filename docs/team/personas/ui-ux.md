@@ -8,6 +8,8 @@ Decides what each screen looks like and how a user moves through the app.
 
 - [UI specification](../../canvas-portal/04-ui-specification.md): screens,
   states (empty, loading, error), wording, and flows.
+- Keeping the screen words in the [glossary](../../canvas-portal/glossary.md)
+  in step with the UI specification.
 - Accessibility and layout at phone and desktop widths.
 - The screenshots in UI PRs, which [CLAUDE.md](../../../CLAUDE.md) requires.
 - Raising usability and accessibility risks, and owning their mitigation once Management

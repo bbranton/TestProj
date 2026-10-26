@@ -17,6 +17,10 @@ and a change log at the bottom, so it can grow as the project does.
 | 4 | [User Interface Specification](04-ui-specification.md) | What each screen looks like and how a user moves through it | Draft |
 | 5 | [Test procedures](05-test-plan.md) | How each requirement is checked, step by step | Draft |
 
+The [glossary](glossary.md) explains the words these documents use: the
+board and its lists, Refresh, card statuses, IDs, the team's review terms,
+and web terms for readers coming from Qt.
+
 ## How these documents work together
 
 Every requirement has an ID such as `FR-12`. The design names the requirement
@@ -47,29 +51,8 @@ flowchart LR
   [CLAUDE.md](../../CLAUDE.md). The [test procedures](05-test-plan.md) make
   this a review step.
 - The project owner is called "Team Lead" in the repo; no personal names.
+- A term is defined once, in the [glossary](glossary.md), and other
+  documents link to it. A PR that adds or changes a term updates the
+  glossary too.
 - Open decisions are marked **DECISION** with an ID (`D-1`, `D-2`, ...) and are
   collected in the roadmap until they are settled.
-
-## Web terms used in these docs
-
-These come up often. They are explained here once, with a Qt comparison where
-one helps.
-
-| Term | Meaning |
-|------|---------|
-| Frontend | The code that runs in the browser and draws the page. Comparable to the QML layer of a Qt app. |
-| Backend | A program that runs on a server, not in the browser. Comparable to the C++ side of a Qt app, but on another machine reached over the network. |
-| API | A set of URLs a program can call to get or change data. Canvas has a REST API: you request `https://school.instructure.com/api/v1/courses` and get JSON back. |
-| JSON | The text format APIs use for data, like `{"name": "Biology", "id": 42}`. |
-| REST | A common style of API where each URL is a thing (a course, an assignment) and HTTP verbs say what to do with it: `GET` reads, `POST` creates, `PUT`/`PATCH` changes, `DELETE` removes. |
-| CORS | "Cross-Origin Resource Sharing". A browser rule: a page from site A may only call site B's API if site B explicitly allows it. Canvas does not allow arbitrary sites, which is why this project needs its own backend. |
-| Access token | A long secret string that acts like a password for an API. Canvas lets a user generate a *personal access token* in their account settings. |
-| OAuth | The "Log in with ..." flow. The user signs in on Canvas itself and Canvas hands the app a token. Needs the school to register the app. |
-| Local storage | A small key-value store inside the browser, private to one site on one device. Like `QSettings`, but per browser. |
-| Database | Structured storage on the server, shared across the user's devices. SQLite (one file) or Postgres (a database server). |
-| Kanban | A board of columns (such as To do, Doing, Done) with cards you drag between them. |
-| Trello terms | The portal follows [Trello](https://trello.com)'s words: a *board* holds *lists* (columns), lists hold *cards*, and opening a card shows its *card back*. |
-| Dialog (modal) | A box that opens over the page and must be closed before using the page behind it, like a QML `Dialog`. The card back (a Phase 5 idea) would be one. |
-| Component | A reusable piece of UI, like a QML component file. React and Svelte are both built around components. |
-| Deploy / hosting | Putting the app on a server on the internet so others can open it. |
-| CI | "Continuous integration": GitHub Actions running builds and tests on every push. |

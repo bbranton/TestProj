@@ -41,11 +41,20 @@ for another persona in a finding.
 | Top-level `README.md` | DevOps | Developer | Product and QA |
 | CI, build, install, dependency, deploy, or hosting change | DevOps | Developer | Architecture, Product and QA |
 | Phase exit (moving to the next phase) | Management | Product and QA | Architecture, Developer, UI/UX, DevOps |
+| Client security document (`06-security-overview.md`) | Security | Architecture, DevOps | Product and QA, Management |
 | Team process (`docs/team/`, team skills) | Management | Each persona whose file changes | Any other persona |
+
+**Security joins any PR that touches tokens, sign-in, or student data.**
+Whatever its row, a PR that changes how the Canvas token, the session
+cookie, sign-in, secrets, or student data (Canvas data, the board, or
+accounts) is stored, sent, shown, logged, tested, or backed up has
+Security as a recommended reviewer. The owner says which of these it
+touches.
 
 Each reviewer looks through its own lens, using the review checklist in its
 persona file. For example, DevOps reads the design asking "how is this
-hosted and configured?", not "is this the right feature?".
+hosted and configured?", not "is this the right feature?", and Security
+reads it asking "where could a token or a student's data leak?".
 
 Product and QA owns both the requirements and the tests, so no one else
 checks that its requirements can be tested. It must run its own
@@ -63,13 +72,14 @@ outside its area is advice, never sign-off.
 |----------|------------|-------------------------|
 | Business goals | Team Lead | Always |
 | Priorities and scope within the approved roadmap; recommends phases, timelines, and features hidden for a release | Management | Every change to the roadmap or its phases; adding or dropping a goal |
-| The risk list: rating each risk and assigning its owner | Management | Accepting a risk instead of reducing it; a mitigation that changes scope or timeline |
+| The risk list: rating each risk and assigning its owner. A potential data breach is always critical and must-fix | Management | Accepting a risk instead of reducing it; a mitigation that changes scope or timeline |
 | What a feature must do | Product and QA | Adding, removing, or moving a requirement between phases |
 | How it's tested, and whether tests pass | Product and QA | Calling a phase done; removing or weakening a test |
-| Design: structure, data, APIs, technology, security | Architecture | A new dependency, service, or data store; how the Canvas token is stored or sent; starting a transition plan |
+| Design: structure, data, APIs, technology, security design | Architecture | A new dependency, service, or data store; how the Canvas token is stored or sent; starting a transition plan |
 | Writing code, coding standards, bug fixes | Developer | Approving and merging every PR; design changes go to Architecture |
 | Screens, layout, wording, accessibility | UI/UX | A new screen or a change to the main flow |
 | CI, build and install scripts, dependency integration, deploys, hosting, secrets | DevOps | Changes to the live app or hosting; a paid service; a new secret store; new access |
+| Whether a weakness is a vulnerability, its severity, and whether it is a potential data breach (any persona can raise one, and Security's view counts most); the wording of the client security document | Security | Accepting a vulnerability instead of fixing it; publishing or changing the client security document; telling anyone outside the team about a suspected leak |
 | Approving and merging a PR | Team Lead | Always |
 
 Only the persona in **Decided by** makes that decision. Every other persona
@@ -87,11 +97,15 @@ the decision to them.
    table above. The Team Lead confirms the reviewers.
 2. **Reviewers review.** Each confirmed reviewer reads the change against its
    checklist and posts one review headed with its persona name, such as
-   "**DevOps review**". Reviewers can run in parallel.
+   "**DevOps review**". Reviewers can write their reviews in parallel, but
+   they post them one at a time, as
+   [Posting reviews one at a time](#posting-reviews-one-at-a-time) says.
 3. **Findings are logged.** Each finding gets an ID and a row in a findings
    table (format below). A finding that needs a change in a different doc
    names that doc under **Fix in**, and is fixed in that doc's PR, so each PR
-   still changes only what it owns.
+   still changes only what it owns. Work the reviewer finds that is outside
+   this PR becomes a GitHub issue, as
+   [Follow-up work](#follow-up-work) says.
 4. **Owner answers.** The owner fixes each finding or replies with why not.
    Findings that need a decision go to the Team Lead.
 5. **Sign-off.** Each confirmed reviewer ends with one verdict:
@@ -116,16 +130,65 @@ Use the same shape as the canvas portal docs review:
 
 - **#** is unique within the review (`F-1`, `F-2`, ...). Findings that span
   several docs use `X-` IDs.
-- **Status** is one of Open, Fixed in #PR, Won't fix (with the reason),
-  or Waiting on the Team Lead.
+- **Status** is one of Open, Fixed in #PR, Moved to #issue, Won't fix
+  (with the reason), or Waiting on the Team Lead.
+- A finding that could expose a token, a session, or a student's data to
+  anyone else starts with **Potential data breach:**, whichever persona
+  finds it, as the
+  [Security persona](personas/security.md#potential-data-breach) says. It
+  is never Won't fix without the Team Lead.
+
+## Follow-up work
+
+A reviewer often spots work that the PR causes or uncovers but shouldn't
+do itself, such as a doc that is now out of date or a test the change will
+need later. So that this work isn't left only in a review comment:
+
+1. **The reviewer opens an issue.** Before posting its review, the reviewer
+   opens a GitHub issue for each piece of follow-up work. The issue says
+   what is needed and why, links the PR, and gets two labels: the
+   `persona: <name>` label of the persona that owns the work (from the
+   [team README](README.md)) and `needs-triage`. A reviewer opens issues for
+   any area, not only its own; the label says whose work it is. A
+   potential data breach also gets `potential-breach`.
+2. **The review names it.** The finding goes in the findings table with
+   **Status** "Moved to #issue". Follow-ups don't block the PR, and they
+   don't change the reviewer's verdict.
+3. **The owner lists it.** The owner adds each issue to the PR's
+   *Follow-ups opened* section before the Team Lead merges, so the Team
+   Lead sees everything the PR leaves for later.
+4. **Management triages.** Management reads each `needs-triage` issue and
+   recommends where it goes, in a comment on the issue:
+   - **Roadmap:** the phase it belongs to, by the scope rules in the
+     [Management persona](personas/management.md). Work in the current
+     phase can start once it has a priority. Work that changes the roadmap
+     or a phase needs a roadmap PR first, as for any roadmap change.
+   - **Backlog:** useful, but not planned for any phase yet. Management adds
+     the `backlog` label.
+   - **Close:** a duplicate or not needed, with the reason.
+
+   A `potential-breach` issue is never backlog or a later phase: Management
+   recommends it as critical, to be fixed first in the current phase and
+   before the next deploy.
+
+   Management then removes `needs-triage`.
+5. **The Team Lead sets priority.** The Team Lead confirms or changes
+   Management's recommendation and sets the issue's priority. Nobody starts
+   work on an issue until the Team Lead has.
+
+A finding the PR must fix before merge is a finding on the PR, not an
+issue. Only work that would make the PR bigger than its job becomes an
+issue.
 
 ## Disagreements
 
 When an owner and a reviewer disagree, each states its case in one or two
 sentences in the findings table, and the finding is marked **Waiting on the
 Team Lead**. Personas do not overrule each other. Inside its own area the
-owning persona's view counts most, but a disagreement still goes to the
-Team Lead. The Team Lead's decision is recorded in the doc's change
+owning persona's view counts most, except on security, where Security's
+view counts most, as
+[Security is everyone's job](README.md#security-is-everyones-job) says. A
+disagreement still goes to the Team Lead. The Team Lead's decision is recorded in the doc's change
 log or decision list.
 
 ## Running reviews with agents
@@ -148,12 +211,32 @@ the other reviewers' reviews before writing its own. That keeps reviews independ
   and verdict, such as "**DevOps review: Recommend with notes**", with its
   findings as inline comments. All comments post from the Team Lead's
   GitHub account, so the heading is how readers tell personas apart.
+- Reviewer threads post their reviews **one at a time**, as the next
+  section says.
 - A reviewer thread stays open until the PR merges or closes, for
   questions and re-review. The owner messages each reviewer thread when
   that happens.
 
 One thread playing several personas is only for quick, informal checks
 that the Team Lead asks for. It never counts as a confirmed review.
+
+### Posting reviews one at a time
+
+GitHub keeps only one draft (pending) review per account on a PR, and every
+reviewer thread posts from the Team Lead's account. Two reviewers posting at
+the same time add their comments to the same draft, and their findings get
+mixed into one review, as happened on PR #4. So reviewers write their
+reviews in parallel but post them one after another:
+
+1. Write the whole review, with its inline comments, before touching
+   GitHub.
+2. Check the [team board](workspace.md#the-board) for a `[posting]` line on
+   the same PR. If there is one, wait for it to go before posting. A
+   `[posting]` line older than an hour is stale and can be removed.
+3. Add your own line, such as
+   `- [posting] DevOps · review of PR #12 · 2026-10-25 21:30`, then create
+   the draft review, add the comments, and submit it.
+4. Delete your `[posting]` line as soon as the review is submitted.
 
 ### Questions and discussion between threads
 

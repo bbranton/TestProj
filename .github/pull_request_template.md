@@ -12,10 +12,12 @@
 **Owner:** <!-- the persona that wrote this PR -->
 
 Recommended reviewers, from *Who reviews what* in
-[the review protocol](../blob/master/docs/team/review-protocol.md#who-reviews-what).
+[the review protocol](../blob/main/docs/team/review-protocol.md#who-reviews-what).
 The Team Lead ticks each reviewer to run, or ticks *Team Lead review only*.
 
-<!-- One line per reviewer, with why. Add optional reviewers the same way. -->
+<!-- One line per reviewer, with why. Add optional reviewers the same way.
+     Add Security when the PR touches tokens, sign-in, secrets, or student
+     data, and say which. -->
 - [ ] Persona: reason
 - [ ] Team Lead review only
 
@@ -29,6 +31,13 @@ The Team Lead ticks each reviewer to run, or ticks *Team Lead review only*.
 
 | # | Found by | Fix in | Finding | Status |
 |---|----------|--------|---------|--------|
+
+## Follow-ups opened
+
+<!-- Each GitHub issue reviewers opened for work outside this PR, with its
+     persona label. "None" when there are none. See "Follow-up work" in
+     the review protocol. -->
+- None
 
 ## Cost
 

@@ -71,9 +71,9 @@ Removed requirements are not listed.
 
 - Connecting to Canvas: FR-1, FR-2, FR-3, FR-4, FR-5, FR-6
 - Fetching data from Canvas: FR-10, FR-11, FR-12, FR-13, FR-14, FR-15, FR-16
-- Viewing courses and assignments: FR-20, FR-21, FR-22, FR-23, FR-26
+- Viewing courses and assignments: FR-20, FR-21, FR-22, FR-23, FR-24, FR-26
 - Kanban board: FR-31, FR-34, FR-35, FR-38, FR-45 (keeping cards of removed assignments)
-- Trello-style look and behavior: FR-60 (read only), FR-61, FR-65, FR-66, FR-78, FR-80
+- Trello-style look and behavior: FR-60 (read only), FR-61, FR-65, FR-66, FR-72, FR-78, FR-80
 - Accounts, sync, and data control: FR-50
 - Performance: NFR-1
 - Security and privacy: NFR-10, NFR-11 (encrypted storage), NFR-12, NFR-13, NFR-14
@@ -103,9 +103,9 @@ Removed requirements are not listed.
 
 **Phase 5: Later ideas (not committed)**
 
-- Viewing courses and assignments: FR-24, FR-25, FR-27, FR-28, FR-29
+- Viewing courses and assignments: FR-25, FR-27, FR-28, FR-29
 - Kanban board: FR-36
-- Trello-style look and behavior: FR-62, FR-63, FR-64, FR-66 (changing colors), FR-67, FR-68, FR-69, FR-70, FR-71, FR-72, FR-74, FR-75, FR-76, FR-78 (saving the choice), FR-79
+- Trello-style look and behavior: FR-62, FR-63, FR-64, FR-66 (changing colors), FR-67, FR-68, FR-69, FR-70, FR-71, FR-72 (saving the filter), FR-74, FR-75, FR-76, FR-78 (saving the choice), FR-79
 - Private notes: FR-40, FR-41, FR-42, FR-43, FR-44, FR-46
 - Accounts, sync, and data control: FR-53, FR-55
 - Performance: NFR-4
@@ -176,7 +176,7 @@ Removed requirements are not listed.
 | FR-21 | The board shows the assignments of every active course together, in the order FR-38 sets. | Must | 1 |
 | FR-22 | Each assignment shows: name, course, due date and time in the time zone of the device being used, points possible, submission types, and status (FR-23). The due date is the one Canvas gives this student, including a date set just for them (a Canvas *override*). Each assignment also has Canvas's availability dates for this student, *Available from* (`unlock_at`) and *Until* (`lock_at`, after which the student can't submit), either of which can be empty. | Must | 1 |
 | FR-23 | Each card's status is worked out by these rules from the student's own Canvas submission (`submission`) and the assignment, with nothing compared to the clock (clock-based statuses are FR-27). **Submitted** when `submission.submitted_at` has a date, otherwise *Not submitted*; Canvas's `has_submitted_submissions` is not used, because it says whether anyone in the class has submitted, not this student. **Graded** when all four hold: there is a submission, the assignment's `graded_submissions_exist` is true, `submission.grade_matches_current_submission` is true, and `submission.graded_at` has a date; otherwise *Not graded*, so a resubmission after grading shows *Not graded* until it is graded again. **Missing** when `submission.missing` is true. **Late** and **Excused** tags when `submission.late` or `submission.excused` is true; tags can appear together with Submitted and Graded. **Submission types**: every type in the assignment's `submission_types` list, in Canvas's order, such as `online_upload` and `online_text_entry`, or `on_paper`; the UI Specification sets how each is written. With no submission at all, the card shows *Not submitted* and *Not graded*. | Must | 1 |
-| FR-24 | The user can filter by course, by the statuses in FR-23, and search by assignment name. | — | 5 |
+| FR-24 | The user can filter by course, by the statuses in FR-23, and search by assignment name, using the filter menu in FR-72. | Must | 1 |
 | FR-25 | The user can hide assignments, for example those Canvas reports as *Graded* or *Excused*. | — | 5 |
 | FR-26 | Each assignment links to its page in Canvas, opening in a new tab. | Must | 1 |
 | FR-27 | Statuses the portal works out by comparing with the clock, beyond the FR-23 rules, such as *Upcoming*, *Due soon* (for example within 48 hours, with a yellow badge), and *Overdue*. They need clear rules for cases that overlap. | — | 5 |
@@ -215,7 +215,7 @@ Removed requirements are not listed.
 | FR-69 | An edit (pencil) button on each card (shown on hover on desktop, always shown on touch screens), right-click, or a long press opens a quick edit menu: Open card, Move, Change label color, Open in Canvas, Archive. | — | 5 |
 | FR-70 | A card back can hold one or more checklists of items that can be checked off. The card front shows progress such as 2/5 (2 of 5 items done). | — | 5 |
 | FR-71 | "+ Add a card" at the bottom of each list creates a personal card that isn't a Canvas assignment. It supports everything a card back has except the Canvas details. | — | 5 |
-| FR-72 | A Filter button at the start of the course button row (FR-78), under the header, opens a menu that filters cards by course, by due date (due date passed, due in the next day, next week, next month, no due date), by the statuses in FR-23, and by keyword. When a filter is on, the course row says so and offers "Clear". | — | 5 |
+| FR-72 | A Filter button at the start of the course button row (FR-78), under the header, opens a menu that filters cards by course, by due date (due date passed, due in the next day, next week, next month, no due date), by the statuses in FR-23, and by keyword. When a filter is on, the course row says so and offers "Clear". Until Phase 5 the filter is not saved and ends when the page is reloaded; saving it comes with FR-78's saving. | Must | 1, 5 (saving the filter) |
 | FR-73 | *(Removed: no keyboard shortcuts. From the Team Lead's review.)* | n/a | n/a |
 | FR-74 | Archived cards and lists are found under "Archived items" in the board menu, where they can be restored. The student can also permanently delete an archived card whose assignment is gone from Canvas (an *orphaned* card), together with its notes, after confirming that it can't be undone. The portal itself never deletes a card (FR-45). | — | 5 |
 | FR-75 | A board menu opens as a panel from the right edge with: board background color, labels, archived items. | — | 5 |
@@ -364,3 +364,4 @@ Removed requirements are not listed.
 | 2026-10-26 | The Team Lead moved FR-45's show/hide control for orphaned cards to Phase 2, since a student may have dragged one to a list and would be confused if it vanished; FR-16's Refresh summary says how many assignments were removed from Canvas and offers to show them (Phase 2). |
 | 2026-10-26 | FR-22 adds Canvas's availability dates (`unlock_at`, `lock_at`); FR-65 grays a card that hasn't opened yet and says *Opens* or *Closed*, as date lines rather than statuses; FR-39 covers them. Phase 1, from the Team Lead's review of the UI specification. |
 | 2026-10-26 | FR-45: a hidden card keeps its last Canvas details from Phase 1, so it can be shown later (Phase 2). |
+| 2026-10-26 | The filters (FR-24) and the filter menu (FR-72) move from Phase 5 to Phase 1 as Must, from the Team Lead's review of the UI specification: needed for usability. Until Phase 5 the filter is not saved across reloads. |

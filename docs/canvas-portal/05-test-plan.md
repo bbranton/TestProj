@@ -183,7 +183,7 @@ checks more than one phase's behavior says which part comes later.
 | 5 | FR-69 | Pencil and right-click open the quick edit menu | E2E |
 | 5 | FR-70 | Add, check, reorder, and delete checklist items; card front shows progress | API, E2E |
 | 5 | FR-72 | Each filter option, combined filters, and Clear | E2E |
-| 5 | FR-74 | Archive and restore a card or a list | API, E2E |
+| 5 | FR-74, NFR-21 | Archive and restore a card or a list; delete an orphaned archived card (its assignment gone from Canvas): cancelling keeps it, confirming removes the card and its notes; a card whose assignment still exists can't be deleted | API, E2E |
 | 5 | NFR-4 | With background sync on and a fixture changed (new assignment, new due date, newly graded), the board shows each change within one job cycle without Refresh; the job backs off when the fixture reports a low rate-limit budget | API |
 | 5 | NFR-36 | At phone width with touch emulation (no hover), every control and the sync time are visible and work by tap | E2E |
 
@@ -417,7 +417,7 @@ how it looks, what it takes (clicks), or how it responds.
 | 8 | *(Phase 5)* Reload, then press Back | Reload reopens the card; Back closes it |
 | 9 | *(Phase 5)* Use the pencil and right-click on a card | Quick edit menu next to the raised card |
 | 10 | *(Phase 5)* Open Filter, filter by a course and by "Due date passed", then Clear | Same behavior; the course row shows the filter is active (deliberate difference: Trello puts Filter in the board header) |
-| 11 | *(Phase 5)* Archive a card and restore it from the board menu | Same steps |
+| 11 | *(Phase 5)* Archive a card and restore it from the board menu | Same steps. In the portal, an archived card whose assignment is gone from Canvas also offers Delete: cancelling keeps it, confirming removes it and its notes |
 | 12 | *(Phase 5)* Count clicks to open a card and filter by a course | No more than Trello (NFR-35) |
 | 13 | Check for Trello's name, logo, icons, or artwork anywhere | None (C-4) |
 | 14 | Collapse a list in Trello, and minimize one in the portal; then expand it | A similar narrow strip with the list's title and card count; the other lists take up the space (FR-80) |

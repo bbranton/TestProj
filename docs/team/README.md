@@ -43,8 +43,10 @@ An agent acting as a persona:
    in a persona file.
 
 The Team Lead has the final say on every decision and every disagreement
-between personas, and confirms which personas review each PR. A persona
-never approves or merges a PR; it recommends, and the Team Lead decides.
+between personas, and confirms which personas review each PR. A persona recommends, and the
+Team Lead decides. A thread may merge its own PR into `develop` once its
+confirmed reviewers recommend it, but never approves or merges anything into
+`main`; see [Branches](../../CLAUDE.md#branches).
 
 ## Security is everyone's job
 

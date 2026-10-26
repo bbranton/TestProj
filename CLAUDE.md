@@ -31,8 +31,17 @@
 - When asked to review or cross-review a doc or PR, follow the
   [review protocol](docs/team/review-protocol.md): it says which personas
   review what and how findings are logged.
-- Personas recommend; the Team Lead has the final say on every decision,
-  confirms each PR's reviewers, and is the only one who approves or merges.
+- Personas recommend; the Team Lead has the final say on every decision
+  and confirms each PR's reviewers.
+
+## Branches
+
+- `develop` is the default branch and the integration branch. Every PR
+  targets `develop`, and a thread may merge its own PR into `develop` once
+  its confirmed reviewers recommend it.
+- `main` is what's live. Never open, approve, or merge a PR into `main`.
+  Only the Team Lead opens and merges the `develop` → `main` release PR.
+- Never force-push or delete `main` or `develop`.
 
 ## Canvas portal phases
 

@@ -254,3 +254,15 @@
   except the budget also allows the Team Lead's OK to let the phase grow
   instead of naming a cut; noted as a minor finding.
 - No new decision.
+
+## Review UI layout changes going to the Team Lead (#91)
+
+- Reviewed the review protocol's change for #91: layout changes join new
+  screens and main-flow changes as Team Lead decisions; the UI/UX
+  designer still decides wording and accessibility alone.
+- Findings: the architect's persona still says the UI/UX designer "makes
+  the call" on how a screen looks, and "a layout change" has no line
+  between a change that needs the Team Lead and a detail inside the spec.
+- Updated this persona's *Does not decide* line for the UI/UX designer to
+  say layout changes still need the Team Lead.
+- No new decision: #91 carries out the Team Lead's comment on #76.

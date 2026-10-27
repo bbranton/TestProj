@@ -22,7 +22,7 @@ if given, narrows what each persona looks at.
    in parallel, each told the window, the topic, and the retro's date (the
    day it was called). A full retro is about eleven threads (each persona,
    the project manager, and the note's reviewer), roughly $12 to $20 from
-   recent [cost log](/team/Management/cost-log.md) rows, so the Team Lead
+   recent cost log rows (`/mnt/project-files/costs/cost-log.md`), so the Team Lead
    can name fewer personas to save cost.
 2. When every persona has replied, start a project manager thread to
    combine the feedback.
@@ -31,9 +31,9 @@ if given, narrows what each persona looks at.
 ## As a persona
 
 1. Read your persona file and notes, then gather evidence from the window:
-   your daily logs, the PRs and reviews you took part in, and your `[cost]`
-   rows on the [team board](/team/workspace.md#the-board) and in the
-   [cost log](/team/Management/cost-log.md). Also read the
+   your daily logs, the PRs and reviews you took part in, and your rows in
+   the cost log (`/mnt/project-files/costs/cost-log.md`) plus any of your
+   row files beside it that aren't logged yet. Also read the
    [process ideas](/team/workspace.md#process-ideas) file, and take up any
    idea in your area that the evidence supports.
 2. Write about five bullets in all, under three headings: **What worked**,

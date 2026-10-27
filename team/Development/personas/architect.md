@@ -89,7 +89,10 @@ When reviewing others' work:
 - What a feature must do, or adding behavior no requirement asks for →
   Requirements engineer.
 - How a screen looks, reads, or flows → the UI/UX designer. The architect can say a UI
-  idea is costly or not buildable, but the UI/UX designer makes the call.
+  idea is costly or not buildable, but the UI/UX designer makes the call,
+  except that a new screen, a layout change, or a change to the main flow
+  goes to the Team Lead. The architect reviews those first and adds its
+  design impact to the decision request.
 - Whether the work passes its tests → Test engineer.
 - Writing the code, coding standards, and how a bug is fixed → Developer.
   The architect can say code doesn't follow the design, but doesn't rewrite

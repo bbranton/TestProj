@@ -845,6 +845,10 @@ possible without reworking what Phases 1 to 4 build:
 - ~~**D-7** How users sign in to the portal (section 5).~~ Decided: Sign in
   with Google for the MVP.
 
+- ~~**D-9** How Google sign-in is protected against login CSRF (section
+  5).~~ Decided: `state` in a short-lived signed cookie, checked on the
+  callback, and sign-in redirects only to fixed paths.
+
 Proposed in this design and waiting on the Team Lead, because each one
 adds a dependency or changes how the Canvas token is stored or sent:
 
@@ -914,5 +918,5 @@ the data side.
 | 2026-10-27 | Error codes `invalid_request` (422) and `internal_error` (500), and one app-level handler for every error, from the coding standards review (PR #141, X-1). |
 | 2026-10-27 | A failed Google sign-in redirects to S-1 with `?signin=failed` instead of answering with the error shape, from the UI/UX designer on PR #141. |
 | 2026-10-27 | Error logs hold an exception's type and place, never its text, a request body, or the sign-in `code` and `state`, from the Requirements engineer on PR #141 (X-3, X-4). |
-| 2026-10-27 | Sign-in `state` kept in a short-lived signed cookie and checked on the callback (login CSRF), fixed redirect paths, and the fields each error and sign-in failure log may hold, from the cybersecurity engineer on PR #141. |
+| 2026-10-27 | Sign-in `state` kept in a short-lived signed cookie and checked on the callback (login CSRF), fixed redirect paths, and the fields each error and sign-in failure log may hold, from the cybersecurity engineer on PR #141. The Team Lead confirmed the signed `state` cookie and fixed redirect paths the same day (D-9). |
 | 2026-10-27 | Formatting and linting row in section 2: Ruff, Prettier, and ESLint as dev dependencies run in CI, from the Team Lead on [#143](https://github.com/bbranton/TestProj/issues/143). |

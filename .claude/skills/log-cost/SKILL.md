@@ -5,10 +5,8 @@ description: Report what this thread cost to the CFO, from the session's own usa
 
 # Report a thread's cost
 
-Report your row to the [CFO persona](/team/Management/personas/cfo.md)
-instead of opening a cost-log PR or adding rows to your own PR. The CFO adds
-reported rows to `team/Management/cost-log.md` in batches, so parallel PRs
-don't conflict on the log.
+Report your row to the CFO instead of adding it to the cost log yourself,
+as the [CFO persona](/team/Management/personas/cfo.md#role) says.
 
 1. Look up this session's usage: call the `get_session` tool of the
    `claude-code-remote` server with no `session_id`. The numbers are under
@@ -46,11 +44,11 @@ thread reports its own row when the PR merges, and its notes say
 
 ## Checking cost mid-thread
 
-The same lookup as step 1 tells an owner thread when it's near the
-hand-off check of about $10: read `external_metadata.usage.cost_usd`.
-Don't report a row for a mid-thread check. If there's no `cost_usd`,
-count Team Lead rounds instead, as the workspace rule says, and tell the
-Team Lead the cost can't be read when you ask about a hand-off.
+The same lookup as step 1 gives an owner thread its cost for the
+hand-off check in [One thread per PR](/team/workspace.md#one-thread-per-pr):
+read `external_metadata.usage.cost_usd`. Don't report a row for a
+mid-thread check. If there's no `cost_usd`, follow that section's rule for
+when the cost can't be read.
 
 ## As the CFO
 

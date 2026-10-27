@@ -1,5 +1,8 @@
 # TestProj
-a project to test github features
+
+A Software Factory: a team of AI personas, and the products it builds.
+[FACTORY.md](/FACTORY.md) says what the factory is for and how we'll show
+it works.
 
 Starting a new project like this one? See
 [Set up a new project like this one](/SETUP-NEW-PROJECT.md).

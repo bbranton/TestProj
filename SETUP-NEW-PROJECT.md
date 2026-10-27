@@ -111,9 +111,10 @@ catches up on every merge.
 
 ## 6. Copy the team files
 
-Copy `CLAUDE.md`, `team/`, `.claude/skills/`, and
+Copy `CLAUDE.md`, `FACTORY.md`, `team/`, `.claude/skills/`, and
 `.github/pull_request_template.md` into the new repo in one PR into
-`develop`. The cost log, persona notes, and daily logs are in the Library,
+`develop`. Rewrite `FACTORY.md`'s goal, layout, and stages for the new
+repo. The cost log, persona notes, and daily logs are in the Library,
 not the repo. Start the
 [security register](/team/QA/security-register.md) with its heading,
 intro, and an empty table.

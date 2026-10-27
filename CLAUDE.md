@@ -59,8 +59,10 @@
   the diff. Assign the Team Lead, but don't request their review. Merge it
   yourself and post the PR link in the thread. Review requests to the Team
   Lead are only for the `develop` → `main` release PR.
-- `main` is what's live. Never open, approve, or merge a PR into `main`.
-  Only the Team Lead opens and merges the `develop` → `main` release PR.
+- `main` is what's live. The only PR into `main` is the `develop` → `main`
+  release PR. Any persona may open it when asked, assigning the Team Lead
+  and summarizing everything merged since `main`. Never approve or merge
+  it: only the Team Lead merges into `main`.
 - Never force-push or delete `main` or `develop`.
 
 ## Canvas portal phases

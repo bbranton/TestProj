@@ -21,3 +21,14 @@
   files) plus one per other area, and "Every PR has at least one."
   Committed to the #82 branch, as *Fixes by another persona* says.
 - No decisions made; the PR carries out the Team Lead's decision.
+
+## Review of PR #88: the Team Lead decides where each deferred finding goes
+
+- Reviewed the one changed sentence in the requirements engineer persona
+  file, and the *Roadmap backlog* glossary row, against `develop@1a3f31f`.
+  No requirement IDs touched.
+- F-1, fixed on the PR branch: "a backlog item" could be read as the
+  portal's *Backlog* list, so the sentence now says *roadmap backlog* and
+  links the glossary; it also says to flag the finding, names "the PR's
+  owner", links *Follow-up work*, and is wrapped like the rest of the file.
+- No decisions made; the PR carries out the Team Lead's decision.

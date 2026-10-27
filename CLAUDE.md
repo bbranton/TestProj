@@ -33,7 +33,7 @@ Architect, Developer, UI/UX designer, DevOps engineer, Cybersecurity
 engineer, and CFO.
 
 Personas recommend; the Team Lead has the final say on every decision,
-including any PR's reviewers.
+and can add or drop a PR's reviewers at any time.
 
 ### Rule index
 

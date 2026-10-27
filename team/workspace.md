@@ -48,6 +48,9 @@ The folder keeps no history, and the last write wins, so treat it like the
 - **No secrets:** never write a Canvas token, cookie, secret, or student
   data in a notes file or daily log. Link to the evidence instead.
 
+A session outside this project, such as the Team Lead's local clone, can't
+see the notes folder. It works from the repo and says that it had no notes.
+
 A lasting note is one or two lines: the rule, then why. Notes that turn out wrong
 are deleted, not left with a correction. A note that every persona needs
 belongs in [CLAUDE.md](/CLAUDE.md) instead.

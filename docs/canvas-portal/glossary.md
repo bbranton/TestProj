@@ -109,7 +109,7 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 | Finding | One problem a reviewer raises, with an ID such as `F-1`, or `X-1` when the fix is in another doc. |
 | Verdict | A reviewer's sign-off: Recommend, Recommend with notes, or Changes needed. |
 | Potential data breach | A finding that could expose a token, a session, or a student's data to anyone else. Always critical and must-fix. |
-| Retro | A team retrospective the Team Lead calls. Each persona writes short feedback, and the project manager combines it into a note in `team/retros/`, with a decision request for each suggested change, as the `retro` skill says. |
+| Retro | A team retrospective: a look back, called by the Team Lead, at how well the personas work together. Each persona writes short feedback, and the project manager combines it into a note in `team/retros/`, with a decision request for each suggested change, as the [`retro` skill](/.claude/skills/retro/SKILL.md) says. |
 | Team board | The shared file where threads claim work and leave handoff notes, as the [team workspace](/team/workspace.md#the-board) says. Not the portal's board. |
 | Roadmap backlog | The list in the [roadmap](/docs/canvas-portal/01-roadmap.md#9-backlog) of work a review found outside the current phase or too big for its PR, and that the Team Lead chose to put there instead of fixing it now or opening a GitHub issue, with `B-` IDs. The project manager keeps it and reviews it with the Team Lead at each phase boundary. Not the Backlog list. |
 

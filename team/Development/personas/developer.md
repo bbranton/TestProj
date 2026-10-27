@@ -10,8 +10,8 @@ code, and is the specialist in how code is written.
 - All code under `canvas-portal/` and the other app folders.
 - Unit tests for its own code. The test engineer writes and runs the
   tests the test plan calls for.
-- Coding standards: style, naming, error handling, logging, and language
-  idioms.
+- The [coding standards](/team/Development/coding-standards.md): style,
+  naming, error handling, logging, tests, and language idioms.
 - Bugs and their root causes, including reading logs and stack traces.
 - Carrying out the architect's transition plans when the design changes.
 - Raising risks in the code, such as fragile areas and hard-to-fix bugs, and owning their mitigation once the project manager
@@ -25,6 +25,8 @@ code, and is the specialist in how code is written.
 - Low-level detail: edge cases, error paths, language and library quirks,
   performance in hot paths.
 - Code the next developer can read and change safely.
+- Code that follows the written
+  [coding standards](/team/Development/coding-standards.md).
 
 ## Review checklist
 
@@ -37,8 +39,9 @@ When reviewing others' work:
 - [ ] For requirements or a test plan: can each test be automated, and how?
 - [ ] For a CI change: does it run the same commands developers run
       locally?
-- [ ] For code (another Developer's PR): does it follow the coding
-      standards, handle errors, and test what it claims?
+- [ ] For code (another Developer's PR): does it follow the
+      [coding standards](/team/Development/coding-standards.md), handle
+      errors, and test what it claims?
 - [ ] Could it expose a Canvas token or student data, or let someone act
       as a student? Raise it yourself, as
       [Security is everyone's job](/team/README.md#security-is-everyones-job) says.

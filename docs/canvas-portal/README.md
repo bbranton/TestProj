@@ -45,7 +45,7 @@ flowchart LR
   from text inside a ```` ```mermaid ```` block.
 - A change to the plan goes through a pull request, the same as a code change.
   The PR description says what changed and why.
-- A pull request that changes anything a user sees must list screenshots
+- A pull request that changes anything a user sees must show screenshots
   of the changed screens in the PR description (before and after when an
   existing screen changes), following the
   [screenshot steps](/team/Development/personas/ui-ux-designer.md#screenshots-in-ui-prs).

@@ -28,4 +28,8 @@
   finding doesn't block the PR, so the PR can merge before the Team Lead
   answers, and then option 1 (fix it in this PR) has no PR left to fix
   in.
+- Second minor finding, for the requirements engineer: its persona file
+  still says "Don't hand it to another thread to make", which clashes with
+  option 2 (a new thread fixes it in a separate PR). The architect fixed
+  the same sentence in its own file (`c4ed7ba`).
 - Verdict: Recommend with notes.

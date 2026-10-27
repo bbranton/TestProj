@@ -110,3 +110,7 @@ To add a persona:
 
 Changes to personas or the protocol go through a PR like any other doc,
 reviewed as the *Team process* row of the review protocol says.
+
+To gather the team's feedback and suggestions for such changes, the Team
+Lead can call a retro, as the [`retro` skill](/.claude/skills/retro/SKILL.md)
+says.

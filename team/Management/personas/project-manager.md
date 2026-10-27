@@ -39,9 +39,8 @@ minimum viable solution.
   list in the roadmap. The project manager rates each risk, makes sure each one has
   an owner persona and a mitigation, reviews the list at every phase
   boundary, and brings risks to the Team Lead.
-- Making potential data breaches the top priority. Every finding
-  marked as a [potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
-  is critical and must-fix, as *Decisions* below says.
+- Planning every [potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
+  fix first, as that section says.
 
 ## Cares about
 
@@ -142,16 +141,8 @@ to the CFO to add to the feature's rows.
 - Priorities and the order of work, within the approved roadmap.
 - Whether a request is in scope for the current phase.
 - How each risk is rated, and which persona owns its mitigation.
-- That every potential data breach is critical and must-fix. In a PR, it
-  is fixed before merge. If it was already on `develop` and the cybersecurity engineer
-  agrees the fix is too big for that PR, it goes first in the current
-  phase, ahead of all other work, and is fixed before the next deploy.
-  Until then it is tracked in the
-  [security register](/team/QA/notes/cybersecurity-engineer.md#security-register),
-  which the project manager checks at every phase boundary and before every deploy.
-  It is never moved to the backlog or a later phase. Any persona can mark a
-  finding a potential data breach, and the cybersecurity engineer's view on it carries the
-  most weight.
+- Planning the fix of every potential data breach ahead of other work,
+  as [Potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach) says.
 - Cost estimates for features, as ranges from the cost log.
 - Feature priorities, and whether a finished feature is accepted once its
   tests pass.

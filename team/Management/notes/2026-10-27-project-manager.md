@@ -431,3 +431,17 @@
   covers phase and scope decisions, close in name to the new ripple check.
   No change needed now.
 - No new decision: #96 is already answered.
+
+## Link the project manager's files to the breach rule (#113)
+
+- On the cybersecurity engineer's PR #113 (#97, PR 1 of 5), changed the
+  project manager's files to link to
+  [Potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
+  instead of restating it: the review protocol (*Who decides what*,
+  *Findings table*, *Follow-up work*), the team README (*Security is
+  everyone's job*), the project manager persona (*Owns*, *Decisions*), the
+  project manager notes, and the `cross-review` skill's reviewer step 3.
+  Kept "Delaying the fix of a potential data breach" under *Needs the Team
+  Lead*, since it names a Team Lead call rather than restating the rule.
+- Wording follows the cybersecurity engineer's proposed text on the PR.
+- No new decision: the Team Lead answered it on #97.

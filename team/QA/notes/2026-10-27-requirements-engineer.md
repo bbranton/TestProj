@@ -90,12 +90,15 @@
   Added a change log entry citing #97.
 - Reviewed the whole PR against the glossary and the requirements. No
   requirement IDs touched. Verdict: Changes needed.
-- F-1, for the project manager: the ripple check skipped
+- Agreed with the DevOps engineer's X-1, for the project manager, and
+  asked for it in this PR: the ripple check skipped
   `docs/canvas-portal/` apart from the glossary, and the roadmap's risk
   list (section 8) still restates the rule: must-fix, mitigations first in
   the current phase and before the next deploy, only the Team Lead can
   delay one. The roadmap backlog intro (section 9) restates where one is
   tracked instead of linking the home.
+- Kept the glossary's "what counts" sentence (project manager N-1): a
+  glossary says what a term means, and the narrower wording was the bug.
 - Lesson for the notes: a ripple check for a rule that the docs also
   state covers `docs/` too, not only `team/` and the glossary.
 - No decisions made; the PR carries out the Team Lead's decision on #97.

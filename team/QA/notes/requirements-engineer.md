@@ -25,4 +25,4 @@ Lasting lessons for the requirements engineer persona. See the
   keep in step (Ripple check on #112).
 - A ripple check covers every folder that might state the rule, `docs/`
   included. PR #113's check skipped the roadmap, which still restated the
-  breach rule (F-1 on #113).
+  breach rule (DevOps X-1 on #113).

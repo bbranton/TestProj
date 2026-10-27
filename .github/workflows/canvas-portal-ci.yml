@@ -41,13 +41,14 @@ jobs:
       - name: Install
         id: install
         run: pip install -e ".[dev]"
-      # Ruff, pinned in pyproject.toml. Fails on unformatted code or a lint
-      # problem; `ruff format .` and `ruff check --fix .` fix most locally.
-      - name: Format and lint
+      # Ruff, pinned in pyproject.toml. `ruff format .` and
+      # `ruff check --fix .` fix most problems locally.
+      - name: Format
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
-        run: |
-          ruff format --check .
-          ruff check .
+        run: ruff format --check .
+      - name: Lint
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: ruff check .
       - name: Test
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: pytest
@@ -69,11 +70,12 @@ jobs:
         run: npm ci
       # Prettier and ESLint, from package.json. `npm run format` fixes
       # formatting locally; ESLint problems are fixed by hand.
-      - name: Format and lint
+      - name: Format
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
-        run: |
-          npm run format:check
-          npm run lint
+        run: npm run format:check
+      - name: Lint
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm run lint
       - name: Test
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npm test

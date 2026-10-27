@@ -49,8 +49,8 @@ checks above before pushing. To fix formatting:
   its rules, including React hooks and no `console.*`, are in
   `frontend/eslint.config.js`.
 
-Ruff is pinned to one version, because a new version can format code
-differently. The frontend's `typescript` dev dependency is the TypeScript 6
+Ruff and Prettier are pinned to one version, because a new version can
+format code differently. The frontend's `typescript` dev dependency is the TypeScript 6
 API package, which ESLint's TypeScript parser needs; the app still builds
 with TypeScript 7, installed as `typescript7`.
 

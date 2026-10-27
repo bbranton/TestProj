@@ -77,3 +77,18 @@
   manager's *ripple list* for phase and scope decisions, so the row now
   says it isn't that.
 - No decisions made; the PR carries out the Team Lead's decision.
+
+## Glossary fix and review of PR #113: one home for the breach rule
+
+- Fixed the *Potential data breach* glossary row on the PR branch. The
+  meaning left out acting as the student, so it was narrower than the
+  rule's home in the
+  [cybersecurity engineer persona](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach).
+  It now uses the home's words for what counts and links the home for how
+  one is marked and handled. "Always critical and must-fix" is dropped
+  from the row, since that is part of the rule and lives only in the home.
+  Added a change log entry citing #97.
+- Reviewed the PR's changes to the cybersecurity engineer persona and
+  notes against the glossary and the requirements. No requirement IDs
+  touched.
+- No decisions made; the PR carries out the Team Lead's decision on #97.

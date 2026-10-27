@@ -16,6 +16,10 @@ reviews someone else's work, and which decisions it can and cannot make.
 | Security (cybersecurity engineer, QA team) | Security reviews, potential data breach ratings, client security document | [cybersecurity-engineer.md](QA/personas/cybersecurity-engineer.md) |
 | CFO | Cost log: adds reported rows in batches | [cfo.md](Management/personas/cfo.md) |
 
+*Management* is a department. When a doc names Management as a persona,
+it means the project manager. *Security* is another name for the
+cybersecurity engineer, who works in the QA department.
+
 ## Folders
 
 Each team is a department, with a folder here holding `notes/`,

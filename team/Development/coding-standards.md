@@ -134,16 +134,19 @@ Both:
   [design's security table](/docs/canvas-portal/03-design.md#7-security)
   and NFR-10 say. Log IDs, not student data such as names or assignment
   text.
-- **Never log a request body, a validation error's input values, or the
-  Google sign-in `code` and `state` values,** including in a stack trace.
-  The token filter removes headers and fields named `token`, not free text
-  inside an exception message, so the app-level handler logs the exception
-  type and where it happened, not text that could hold what was sent.
+- **Never log a request body, a validation error's input values, the
+  Google sign-in `code` and `state` values, or Google's tokens.**
+  Exception text and stack traces count as log output. The token filter
+  removes headers and fields named `token`, not free text inside an
+  exception message, so the app-level handler logs the exception type and
+  where it happened, not text that could hold what was sent.
 - **Keep the Canvas token out of every URL, query string, and browser
   store.** Send it only in the body of `PUT /api/canvas/connection` and in
   the `Authorization` header to the saved Canvas host. In the frontend,
   clear it from component state once that request returns, and never put
-  it in `localStorage`, `sessionStorage`, or the URL. These carry out
+  it in `localStorage`, `sessionStorage`, the URL, or a request library's
+  cache. Give the token field `autocomplete="off"`, so form autofill and
+  password managers don't keep it. These carry out
   NFR-10 and the design's security table: a URL ends up in history,
   server logs, and the `Referer` header.
 - **Log each Canvas call's endpoint, page count, and time taken,** as
@@ -173,6 +176,10 @@ writes:
   data in `canvas-portal/backend/tests/fixtures/`, as NFR-41 and the
   [repository layout](/docs/canvas-portal/03-design.md#8-repository-layout)
   say. The folder arrives in Phase 1.
+- **Clean recorded sample data before committing it.** Drop the
+  `Authorization` header, and replace real names, courses, emails, and
+  Canvas IDs with made-up ones. The repo is public, so a fixture is
+  published the moment it's pushed.
 - **Test one behavior per test, and keep tests independent.** A failing
   test then names the broken behavior, and tests can run in any order.
 - **Find frontend elements by role and name,** such as

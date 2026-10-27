@@ -372,3 +372,27 @@
 - The owner fixed F-1 to F-5 in `ab79936`; re-checked at `33a3f79` and
   changed the verdict to Recommend.
 - No new decision: the retro's decisions wait on the Team Lead.
+
+## Carry out #96: ripple check for process rules
+
+- Added *Ripple check for process rules* to `team/review-protocol.md`
+  (rule 8 and step 1 of *How a review runs*), a step for the owner and
+  reviewer in the `cross-review` skill, the Ripple check term in the
+  glossary's team process terms, and a pointer in `CLAUDE.md`. The DevOps
+  engineer adds the *Files that state this rule* line to the PR template.
+- Ran the ripple check on this rule itself: the files above are every
+  place that states the PR author's steps.
+
+### Decision: a PR that changes a process rule fixes every copy
+
+- **Date:** 2026-10-27
+- **Decided by:** Team Lead
+- **Options:** ripple check in the PR (owner finds and fixes every file
+  that states the rule, and lists them); list only, with reviewers
+  checking; no change.
+- **Recommendation:** the ripple check in the PR, the process version of
+  a requirement's impact note, to stop follow-up PRs for stale wording.
+- **Outcome:** as recommended.
+- **Links:** [#96](https://github.com/bbranton/TestProj/issues/96),
+  [process retro](/team/retros/2026-10-27-process.md),
+  [ripple check](/team/review-protocol.md#ripple-check-for-process-rules)

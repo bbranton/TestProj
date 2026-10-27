@@ -106,6 +106,7 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 | Reviewers | The personas a PR's author picks: a peer from the owner's own persona (for a team thread, the persona that owns most of the changed files), plus one for each other area the PR touches, as the [review protocol](/team/review-protocol.md#who-reviews-what) says. Every PR has at least one. The Team Lead can change them. |
 | Decision request | A question for the Team Lead, with options, a recommendation, and the docs it changes, in the project manager's decision register or a `decision` issue. PRs only carry out answered requests; see the [review protocol](/team/review-protocol.md#decisions-are-separate-from-merging). |
 | Cross-review | A review where each reviewer runs in its own fresh thread. |
+| Ripple check | Before review, a PR that changes a process rule searches the team files, skills, `CLAUDE.md`, the PR template, and this glossary for the rule, fixes every copy in the same PR, and lists those files in its description, as the [review protocol](/team/review-protocol.md#ripple-check-for-process-rules) says. |
 | Finding | One problem a reviewer raises, with an ID such as `F-1`, or `X-1` when the fix is in another doc. |
 | Verdict | A reviewer's sign-off: Recommend, Recommend with notes, or Changes needed. |
 | Potential data breach | A finding that could expose a token, a session, or a student's data to anyone else. Always critical and must-fix. |
@@ -140,3 +141,4 @@ These come up often in the docs. Each has a Qt comparison where one helps.
 |------|--------|
 | 2026-10-26 | Created from the README's "Web terms used in these docs" table, from the Team Lead's review of PR #8. Added the board (including orphaned cards, from the Team Lead's review of PR #8), Refresh, card status, screen, document, and team process terms. |
 | 2026-10-27 | Added Retro to the team process terms, with the `retro` skill. |
+| 2026-10-27 | Added Ripple check to the team process terms, from the Team Lead's answer on #96. |

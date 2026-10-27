@@ -24,6 +24,8 @@ Everything below is the default when the Team Lead hasn't said otherwise.
 6. **The author picks reviewers by what the PR touches.** Reviews are
    quick, and the author pushes fixes right away.
 7. **Close out.** Log the decision, report the cost, and end the thread.
+8. **A rule change fixes every copy.** A PR that changes a process rule
+   runs a [ripple check](#ripple-check-for-process-rules) first.
 
 ## Two levels of review
 
@@ -77,6 +79,26 @@ That is why a persona can merge into `develop` without the Team Lead.
   where work outside the PR's scope goes, is the exception: it doesn't
   stop the PR unless the owner recommends fixing it in this PR, as
   [Follow-up work](#follow-up-work) says.
+
+### Ripple check for process rules
+
+The same rule is often stated in several files, so a PR that changes a
+process rule finds and fixes every copy before review (Team Lead,
+[#96](https://github.com/bbranton/TestProj/issues/96)):
+
+1. Search `team/`, `.claude/skills/`, `CLAUDE.md`, the PR template
+   (`.github/pull_request_template.md`), and the
+   [glossary](/docs/canvas-portal/glossary.md) for the rule's key words.
+   Skip daily logs and retro notes: they record what was true that day.
+2. Fix every file that still states the old rule in the same PR. The
+   persona that owns each file fixes it, as
+   [Fixes by another persona](#fixes-by-another-persona) says, and joins
+   the reviewers.
+3. List every file that states the rule under *Files that state this
+   rule* in the PR description, including the ones that needed no change.
+
+A reviewer who finds a file still stating the old rule logs it as a
+finding on the PR.
 
 ### Keeping the Team Lead informed
 
@@ -168,7 +190,8 @@ what it defers and to whom, and what needs the Team Lead.
 
 1. **Owner prepares.** The owner merges `develop` into its branch, opens
    the PR, and fills in the PR template: requirement IDs, reviewers, and
-   why.
+   why. A PR that changes a process rule runs the
+   [ripple check](#ripple-check-for-process-rules) first.
 2. **Reviewers review.** Each reviewer reads the change against its
    checklist and posts one review headed with its persona and verdict,
    such as "**DevOps engineer review: Changes needed**".

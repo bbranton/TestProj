@@ -76,9 +76,16 @@ That is why a persona can merge into `develop` without the Team Lead.
   A GitHub issue is one answer the Team Lead can pick, not where the
   question is asked.
 - **The register is the record.** The project manager records each
-  request, with a link to where it was asked, and then its answer in the
-  [decision register](/docs/canvas-portal/01-roadmap.md#5-open-decisions).
-  A GitHub issue labeled `decision`, when there is one, is also a record
+  request, with a link to where it was asked, and then its answer in one
+  of two registers (Team Lead, 2026-10-27,
+  [TD-22](/team/decision-register.md)): a decision about how the team
+  works, such as process, reviews, threads, notes, or team structure, in
+  the [team decision register](/team/decision-register.md); a decision
+  about a product, such as its scope, phases, design, hosting, or
+  security, in that product's register, for the Canvas portal
+  [Product decisions](/docs/canvas-portal/01-roadmap.md#5-product-decisions)
+  in its roadmap. A decision that is both goes in each, and each entry
+  links to the other. A GitHub issue labeled `decision`, when there is one, is also a record
   of the request and its answer. Only after an answer do the owners make
   their edits, citing the decision.
 - **A PR that needs a new decision stops.** The owner raises a decision

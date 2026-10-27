@@ -438,14 +438,22 @@ database, and the domain) is decided, with its cost.
 | M4 | Fast loads and Canvas sync | 3 | Board stays current without waiting on Canvas | |
 | M5 | Published | 4 | Any student can sign in and use it in Chrome on a laptop or desktop | |
 
-## 5. Open decisions
+## 5. Product decisions
+
+This section is the project manager's register of the Canvas portal's
+decisions: its scope, phases, design, hosting, and security. Decisions
+about how the team works are in the
+[team decision register](/team/decision-register.md) instead, as
+[Decisions are separate from merging](/team/review-protocol.md#decisions-are-separate-from-merging)
+says. D-10 to D-12 were team decisions and moved there as TD-19 to TD-21;
+their IDs aren't reused here.
 
 Open decisions need the Team Lead's call; each has a recommendation, from
 the DevOps engineer for D-3 and from the architect for D-8. Settled decisions are struck
 through and kept for the record.
 
-This section is the project manager's decision register. It records each
-decision and its answer; it isn't where the Team Lead is asked. A
+The register records each decision and its answer; it isn't where the
+Team Lead is asked. A
 [decision request](/team/review-protocol.md#decisions-are-separate-from-merging)
 goes to the Team Lead right away, where it came up.
 
@@ -460,9 +468,6 @@ goes to the Team Lead right away, where it came up.
 | ~~D-7~~ | ~~How users sign in to the portal~~ | **Sign in with Google**, **email magic link**, **username and password**, or a **hosted auth service** (see [design](/docs/canvas-portal/03-design.md#5-signing-in-to-the-portal-d-7)) | **Decided** (Team Lead, 2026-10-25): Sign in with Google for the MVP. | Done |
 | D-8 | How other open devices learn about a move (NFR-22) | **Polling** (each device asks "anything new?" every 30 seconds and when its window comes back into focus; simple, works on any host) or **live push** (the server tells devices instantly over a WebSocket or server-sent events; faster, but more to build and host) | Polling for Phase 2; live push only if 30 seconds feels slow in practice. See [design](/docs/canvas-portal/03-design.md#keeping-devices-in-sync-nfr-22-d-8). | Start of Phase 2 |
 | ~~D-9~~ | ~~How Google sign-in is protected against login CSRF (NFR-12)~~ | **A server-side `state` list only** (the earlier design, which left login CSRF open because `state` wasn't tied to the browser) or **`state` in a short-lived signed `HttpOnly`, `Secure`, `SameSite=Lax` cookie**, checked on the callback (see [design section 5](/docs/canvas-portal/03-design.md#5-signing-in-to-the-portal-d-7) and its [security table](/docs/canvas-portal/03-design.md#7-security)) | **Decided** (Team Lead, 2026-10-27): the signed cookie, and sign-in redirects only to fixed paths on the portal. The cybersecurity engineer raised it as X-6 and proposed the fix, and the architect wrote it into the design, in [#141](https://github.com/bbranton/TestProj/pull/141); the Team Lead confirmed it in a project thread, recorded in [#154](https://github.com/bbranton/TestProj/pull/154)'s *Decisions*. | Done |
-| ~~D-10~~ | ~~Whether the ripple check also checks the sentence around each link to a rule's home~~ | **Add the context check** to step 2 of the [ripple check](/team/review-protocol.md#ripple-check-for-process-rules) or **leave it a search for copies only** | **Decided** (Team Lead, 2026-10-27, on [#132](https://github.com/bbranton/TestProj/pull/132#discussion_r4390719040)): add the context check, as the project manager recommended. Carried out in [#148](https://github.com/bbranton/TestProj/pull/148). | Done |
-| ~~D-11~~ | ~~What the ripple check searches~~ | **Every `.md` file in the repo**, including `docs/canvas-portal/` and the top-level `README.md`, `FACTORY.md`, and `SETUP-NEW-PROJECT.md`, or **only `team/`, `.claude/skills/`, `CLAUDE.md`, the PR template, and the glossary** | **Decided** (Team Lead, 2026-10-27): every `.md` file, still skipping retro notes and the Library daily logs. Asked on [#132](https://github.com/bbranton/TestProj/pull/132#discussion_r4390976436); the Team Lead answered in a project thread, recorded in [#155](https://github.com/bbranton/TestProj/pull/155)'s *Decisions*. Carried out in [#155](https://github.com/bbranton/TestProj/pull/155); the rule is in the [ripple check](/team/review-protocol.md#ripple-check-for-process-rules). | Done |
-| ~~D-12~~ | ~~Who fixes a file with no owner that a rule change touches~~ | **The PR's owner** fixes files that have no owner in [Who reviews what](/team/review-protocol.md#who-reviews-what), such as `FACTORY.md`, `SETUP-NEW-PROJECT.md`, and `docs/canvas-portal/README.md`, or **leave them for someone else** | **Decided** (Team Lead, 2026-10-27): the PR's owner. Asked as F-2, a deferred finding on [#155](https://github.com/bbranton/TestProj/pull/155); the Team Lead answered in a project thread, recorded in [#156](https://github.com/bbranton/TestProj/pull/156)'s *Decisions*. Being carried out in [#156](https://github.com/bbranton/TestProj/pull/156); the rule is in the [ripple check](/team/review-protocol.md#ripple-check-for-process-rules). | Done |
 
 ## 6. Risks
 
@@ -526,7 +531,7 @@ The plan has grown quickly, so these rules keep each phase finishable:
 
 | Who | Does |
 |-----|------|
-| Team Lead | Has the final say, as [Team personas](/CLAUDE.md#team-personas) says, and answers the [open decisions](#5-open-decisions) and every [decision request](/team/review-protocol.md#decisions-are-separate-from-merging); OKs each phase's test deploy; approves every roadmap and scope change; merges the `develop` → `main` release pull request, as [Branches](/CLAUDE.md#branches) says; runs the manual test procedures that need real Canvas accounts or the teacher sandbox; sets up the Google and Canvas accounts in each phase's prerequisites; changes the current phase in CLAUDE.md. |
+| Team Lead | Has the final say, as [Team personas](/CLAUDE.md#team-personas) says, and answers the [product decisions](#5-product-decisions) and every [decision request](/team/review-protocol.md#decisions-are-separate-from-merging); OKs each phase's test deploy; approves every roadmap and scope change; merges the `develop` → `main` release pull request, as [Branches](/CLAUDE.md#branches) says; runs the manual test procedures that need real Canvas accounts or the teacher sandbox; sets up the Google and Canvas accounts in each phase's prerequisites; changes the current phase in CLAUDE.md. |
 | Team personas (Claude) | Project manager, Requirements engineer, Test engineer, Architect, UI/UX designer, Developer, DevOps engineer, Cybersecurity engineer, and CFO, as described in the [team README](/team/README.md) and the [review protocol](/team/review-protocol.md). Each one writes the documents and code it owns and reviews others' work when a pull request touches its area, in small pull requests limited to the current phase; merges its own pull requests into `develop` but never approves or merges into `main`, as [Branches](/CLAUDE.md#branches) says; lists the requirement IDs each pull request implements and brings anything outside the current phase to the Team Lead, as [Canvas portal phases](/CLAUDE.md#canvas-portal-phases) says. |
 
 ## 9. Backlog
@@ -604,3 +609,4 @@ never goes here, as that section says.
 | 2026-10-27 | The Team Lead and team personas rows in section 8 link to CLAUDE.md for the final say, branches, and phases instead of restating them. From the Team Lead's answer on #97. |
 | 2026-10-27 | Section 5 is a record of decisions and their answers, not where the Team Lead is asked: each decision request goes to the Team Lead right away, where it came up. From the Team Lead, on #132. |
 | 2026-10-27 | D-9 (sign-in `state` in a signed cookie, against login CSRF), D-10 (the ripple check's context check), D-11 (the ripple check searches every Markdown file), and D-12 (the PR's owner fixes files with no owner) added to section 5 as settled, from the Team Lead. |
+| 2026-10-27 | Section 5 is renamed *Product decisions* and holds only the Canvas portal's decisions. D-10 to D-12, about the team's process, moved to the new [team decision register](/team/decision-register.md) as TD-19 to TD-21, from the Team Lead. |

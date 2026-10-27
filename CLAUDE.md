@@ -60,7 +60,7 @@ without a persona.
   [Potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach).
 - What each persona decides: the *Decisions* section of its persona file,
   summarized in [Who decides what](/team/review-protocol.md#who-decides-what).
-- Decision requests:
+- Decision requests, and which decision register records each answer:
   [Decisions are separate from merging](/team/review-protocol.md#decisions-are-separate-from-merging).
 - Who reviews a PR: [Who reviews what](/team/review-protocol.md#who-reviews-what).
 - Wording-only changes to another persona's file:

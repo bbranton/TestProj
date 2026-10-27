@@ -111,7 +111,7 @@ Stage 3 they're how teams are compared, so they need no fixed targets.
 |---------|---------|--------|
 | Quick | Time from brief to merged feature, and to release | PR and release times |
 | Efficient | Cost per feature, and for the whole product | Cost log rows, matched to features by each PR's requirement IDs |
-| Efficient | Share of spend on product vs process | Cost log's product-or-process column (not yet measured: a CFO PR adds it) |
+| Efficient | Share of spend on product vs process | Cost log's [*Product or Process*](/team/Management/personas/cfo.md#columns) column |
 | Efficient | Team Lead touches: decision requests, review comments, questions answered | GitHub and threads |
 | High quality | Acceptance tests passed (Stage 3) | Benchmark tests |
 | High quality | Bugs found after merge | Issues labeled bug |

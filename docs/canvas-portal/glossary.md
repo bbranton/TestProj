@@ -100,19 +100,19 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 
 | Term | Meaning |
 |------|---------|
-| Team Lead | The project owner. Has the final say on every decision, and is the only one who approves or merges the `develop` → `main` release PR. |
+| Team Lead | The project owner, who has the final say, as [Team personas](/CLAUDE.md#team-personas) and [Branches](/CLAUDE.md#branches) say. |
 | Persona | A role an agent takes on, such as the UI/UX designer or the cybersecurity engineer, with its own area and review checklist. The list is in the [team README](/team/README.md). |
 | Owner | The persona that writes a piece of work and answers its findings. |
-| Reviewers | The personas a PR's author picks: a peer from the owner's own persona (for a team thread, the persona that owns most of the changed files), plus one for each other area the PR touches, as the [review protocol](/team/review-protocol.md#who-reviews-what) says. Every PR has at least one. The Team Lead can change them. |
-| Decision request | A question for the Team Lead, with options, a recommendation, and the docs it changes, in the project manager's decision register or a `decision` issue. PRs only carry out answered requests; see the [review protocol](/team/review-protocol.md#decisions-are-separate-from-merging). |
-| Cross-review | A review where each reviewer runs in its own fresh thread. |
-| Ripple check | A search, before review, for every file that states a process rule a PR changes. The owner of each file fixes it in the same PR, and the PR lists those files in its description, as the [review protocol](/team/review-protocol.md#ripple-check-for-process-rules) says. Not the project manager's ripple list, which follows a phase or scope decision through the docs. |
-| Finding | One problem a reviewer raises, with an ID such as `F-1`, or `X-1` when the fix is in another doc. |
-| Verdict | A reviewer's sign-off: Recommend, Recommend with notes, or Changes needed. |
+| Reviewers | The personas that review a PR, picked as [Who reviews what](/team/review-protocol.md#who-reviews-what) says. |
+| Decision request | A question for the Team Lead, raised as [Decisions are separate from merging](/team/review-protocol.md#decisions-are-separate-from-merging) says. |
+| Cross-review | A review where each reviewer runs in its own fresh thread, as [One thread per reviewer](/team/review-protocol.md#one-thread-per-reviewer) says. |
+| Ripple check | A search, before review, for every file that states a process rule a PR changes, run as the [review protocol](/team/review-protocol.md#ripple-check-for-process-rules) says. Not the project manager's ripple list, which follows a phase or scope decision through the docs. |
+| Finding | One problem a reviewer raises, with an ID such as `F-1`, logged as the [findings table](/team/review-protocol.md#findings-table) says. |
+| Verdict | A reviewer's sign-off: Recommend, Recommend with notes, or Changes needed, as [How a review runs](/team/review-protocol.md#how-a-review-runs) says. |
 | Potential data breach | A finding that could let anyone other than the student see that student's Canvas token, session, or Canvas data, or let anyone act as the student. It is marked and handled as [Potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach) says. |
-| Retro | A team retrospective: a look back, called by the Team Lead, at how well the personas work together. Each persona writes short feedback, and the project manager combines it into a note in `team/retros/`, with a decision request for each suggested change, as the [`retro` skill](/.claude/skills/retro/SKILL.md) says. |
+| Retro | A team retrospective: a look back, called by the Team Lead, at how well the personas work together, run as the [`retro` skill](/.claude/skills/retro/SKILL.md) says. |
 | Team board | The shared file where threads claim work and leave handoff notes, as the [team workspace](/team/workspace.md#the-board) says. Not the portal's board. |
-| Roadmap backlog | The list in the [roadmap](/docs/canvas-portal/01-roadmap.md#9-backlog) of work a review found outside the current phase or too big for its PR, and that the Team Lead chose to put there instead of fixing it now or opening a GitHub issue, with `B-` IDs. The project manager keeps it and reviews it with the Team Lead at each phase boundary. Not the Backlog list. |
+| Roadmap backlog | The list in the [roadmap](/docs/canvas-portal/01-roadmap.md#9-backlog) of review findings the Team Lead parked for later, with `B-` IDs, as [Follow-up work](/team/review-protocol.md#follow-up-work) says. Not the Backlog list. |
 
 ## Web terms
 
@@ -143,3 +143,4 @@ These come up often in the docs. Each has a Qt comparison where one helps.
 | 2026-10-27 | Added Retro to the team process terms, with the `retro` skill. |
 | 2026-10-27 | Added Ripple check to the team process terms, from the Team Lead's answer on #96. |
 | 2026-10-27 | Potential data breach now matches the rule's one home, including acting as the student, and links to it instead of restating the handling, from the Team Lead's answer on #97. |
+| 2026-10-27 | Team process terms define the term in one line and link to the rule's home instead of restating it: Team Lead, Reviewers, Decision request, Cross-review, Ripple check, Finding, Verdict, Retro, and Roadmap backlog (#97, PR 4). |

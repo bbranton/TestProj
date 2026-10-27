@@ -105,3 +105,17 @@
 - Re-review: X-1 fixed by the project manager in `189d31f`, which links
   the roadmap's step 6 gate list, risk list, and backlog intro to the home.
   Verdict now Recommend.
+
+## Glossary links to rule homes on PR #122 (#97, PR 4)
+
+- Applied the drafted glossary change on the PR branch. Each team process
+  term now says what it is in one line and links the rule's home instead
+  of restating it: Team Lead, Reviewers, Decision request, Cross-review,
+  Ripple check, Finding, Verdict, Retro, and Roadmap backlog.
+- The Team Lead row, left over from #120, now links
+  [Team personas](/CLAUDE.md#team-personas) and
+  [Branches](/CLAUDE.md#branches) for the final say and the release PR.
+- Checked that every linked heading exists in `team/review-protocol.md`,
+  `CLAUDE.md`, and the roadmap.
+- Added a change log row citing #97. No requirement IDs touched.
+- No decisions made; the PR carries out the Team Lead's decision on #97.

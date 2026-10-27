@@ -47,9 +47,9 @@ github.com:
 2. **Ruleset on `main`** (Settings > Rules > Rulesets > New branch
    ruleset), with no bypass: *Restrict deletions*, *Block force pushes*,
    *Require a pull request before merging*.
-3. **Merge settings** (Settings > General > Pull Requests): turn on
-   *Automatically delete head branches*, and set merge commits to use the
-   PR title and description.
+3. **Merge settings:** as the
+   [DevOps engineer notes](/team/Development/notes/devops-engineer.md)
+   record them.
 4. **Pages**, if the project has a website: Settings > Pages > Source:
    *GitHub Actions*.
 5. **Security** (Settings > Code security): turn on secret scanning,
@@ -104,6 +104,14 @@ catches up on every merge.
 Copy `CLAUDE.md`, `team/`, `.claude/skills/`, and
 `.github/pull_request_template.md` into the new repo in one PR into
 `develop`. Leave out the daily logs and cost-log rows, and start each
-persona's notes file and the glossary empty. Then search for `TestProj`,
+persona's notes file empty, except for the
+[Security register](/team/QA/notes/cybersecurity-engineer.md#security-register)
+heading, intro, and empty table.
+
+The process also lives in two docs under `docs/canvas-portal/`. Start a
+roadmap with empty *Open decisions*, *Risks*, *Backlog*, and *Change log*
+sections, as in [01-roadmap.md](/docs/canvas-portal/01-roadmap.md), copy
+the [glossary](/docs/canvas-portal/glossary.md)'s layout with no terms,
+and update the links that point at `docs/canvas-portal/`. Then search for `TestProj`,
 `bbranton`, `canvas`, `FR-`, and `student`, and change each hit for the
 new product.

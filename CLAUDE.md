@@ -30,7 +30,8 @@ including any PR's reviewers.
 
 Each team rule is stated once, in its home. This list names each rule and
 links to the home, which says what to do. Read the home before you act on
-a rule.
+a rule. The security and breach rules apply to every thread, with or
+without a persona.
 
 - Acting as a persona: [Using a persona](/team/README.md#using-a-persona).
 - Persona notes: [Persona notes](/team/workspace.md#persona-notes).

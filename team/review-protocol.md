@@ -138,8 +138,9 @@ that changes a process rule finds and fixes every copy before review (Team Lead,
 3. List every file that states the rule under *Files that state this
    rule* in the PR description, including the ones that needed no change.
 
-A reviewer who finds a file still stating the old rule, or a rule restated
-outside its home, logs it as a finding on the PR.
+A reviewer who finds a file still stating the old rule, a rule restated
+outside its home, or a link to the home whose sentence no longer matches
+the rule logs it as a finding on the PR.
 
 ### Keeping the Team Lead informed
 

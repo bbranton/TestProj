@@ -38,8 +38,7 @@ if given, narrows what each persona looks at.
    **What got in the way**, and **One suggested change**. Link each bullet to
    its evidence: a PR, a review, a log entry, or a cost row. The suggestion
    names the file it would change, and is a recommendation, not an edit.
-   Link to evidence; never quote a Canvas token, cookie, secret, or student
-   data.
+   Never quote a Canvas token, cookie, secret, or student data.
 3. Save it as `/mnt/project-files/retros/<retro date>/<persona>.md`, with the
    persona's file name, such as `devops-engineer.md`. It isn't in the repo,
    so it needs no PR. Reply in your thread with a one-line summary.
@@ -61,8 +60,9 @@ if given, narrows what each persona looks at.
    As in the feedback, link evidence and never quote a Canvas token,
    cookie, secret, or student data.
 3. Raise one decision request per suggestion, as a GitHub issue labeled
-   `decision`, with your recommendation and the files it changes. Open a PR with the note, reviewed as the
-   [review protocol](/team/review-protocol.md#who-reviews-what) says.
+   `decision`, with your recommendation and the files it changes. Open a
+   PR with the note, reviewed as the [review protocol](/team/review-protocol.md#who-reviews-what)
+   says.
 4. Once the Team Lead answers, the persona that owns each file makes an
    approved change in its own PR, citing the decision. List those PRs under
    the suggestion in the next retro's note, so it can check whether they

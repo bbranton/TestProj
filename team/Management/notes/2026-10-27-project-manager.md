@@ -301,3 +301,17 @@
 - The owner fixed F-1 to F-3 in `d044ac7` and `a1795b4`; re-checked and
   changed the verdict to Recommend.
 - No new decision: #94 carries out the Team Lead's approval.
+
+## Combine the process retro (team/retros/2026-10-27-process.md)
+
+- Combined all nine personas' process feedback into
+  [the retro note](/team/retros/2026-10-27-process.md), following the
+  `retro` skill. Used the retro date `2026-10-27-process` so it doesn't
+  collide with the docs retro run the same day.
+- First retro, so nothing earlier to check.
+- Raised seven decision requests, all recommended: #95 fresh thread per
+  PR, #96 ripple check on rule changes, #97 one place for the potential
+  data breach rule, #98 batch process changes during Phase 1, #99 notify
+  for wording-only persona changes, #100 docs check in CI, #102 daily CFO
+  batch thread.
+- No decision was made here: each waits on the Team Lead.

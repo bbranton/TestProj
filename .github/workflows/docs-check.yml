@@ -25,5 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false  # the job never pushes
       - name: Check links and requirement IDs
         run: python3 team/Development/scripts/docs_check.py

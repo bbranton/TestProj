@@ -520,3 +520,32 @@
 - Shared-files review: **Recommend**. Ripple check found no other file
   that gives the batch's timing; the rest say "in batches" or link to the
   CFO persona.
+
+## Give the review protocol, workspace, and README rules one home (#97, PR 2)
+
+- Carried out PR 2 of the #97 rollout from `develop@7cb311b`.
+- Review protocol: added *A rule is stated only in its home* and the list
+  of rule homes to the *Ripple check*, and step 2 now replaces a copy
+  with a link. *Who reviews what* is the one home of the peer reviewer
+  rule; *Two levels of review* links to it instead of restating it. The
+  release PR, security weight, thread starting, and close-out lines link
+  to CLAUDE.md, the team README, and the workspace.
+- Workspace and team README: review routing, the cost log, and the Team
+  Lead's say now link to their homes.
+- Cost log: the project manager persona's *Cost plans* no longer says the
+  CFO "owns the log"; it links to the CFO persona's *Role*, which gives
+  the merge-conflict reason from #72.
+- Left for later PRs in the series: the other persona files (PR 3), the
+  glossary, skills, and PR template (PR 4), and CLAUDE.md (PR 5). The
+  roadmap's stakeholder row restates the Team Lead's say; noted for PR 5.
+  Searching `docs/canvas-portal/` in the ripple check waits on the Team
+  Lead's answer.
+- Reviews: cybersecurity engineer Recommend; CFO Recommend with notes
+  (F-1 fixed in `fef0b0d`); project manager peer Recommend with notes.
+  Peer F-1 to F-3 fixed: *The rules in short* links to Branches for the
+  release PR, the intro credits CLAUDE.md only with the final say, and
+  *Who decides what* says it is a summary of the persona files'
+  *Decisions*. For PR 5: CLAUDE.md *Branches* should say the Team Lead is
+  the release PR's only reviewer, and *Team personas* still restates the
+  security weight.
+- No new decision: #97 is already answered and logged in #113.

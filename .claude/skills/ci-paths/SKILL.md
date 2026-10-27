@@ -17,4 +17,4 @@ and on push to the branches each workflow names, with the first changed file tha
 
 When a PR changes app code but no workflow runs, that's a finding: either
 the paths filter is wrong or the code is in the wrong place. A docs-only PR
-running no CI is expected.
+running only the docs check is expected.

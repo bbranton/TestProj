@@ -130,9 +130,9 @@ plan before work starts, and the Team Lead approves it with the plan:
    design, and the cheapest way to cut cost, such as fewer reviewers.
 
 When the feature is done, compare the actual cost with the plan, so the
-next estimate is better. The project manager reads the cost log but doesn't edit
-it: the [CFO](/team/Management/personas/cfo.md) owns the log, and the project manager sends the comparison
-to the CFO to add to the feature's rows.
+next estimate is better. The project manager sends the comparison to the
+CFO to add to the feature's rows, since the CFO writes the log, as
+[the CFO persona](/team/Management/personas/cfo.md#role) says.
 
 ## Decisions
 

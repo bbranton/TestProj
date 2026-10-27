@@ -21,15 +21,8 @@ Each team has a folder under `team/`, with three subfolders:
   after the job title, such as `architect.md`.
 - `scripts/`: reusable scripts for jobs the team repeats often.
 
-Each persona may update its own files in its team's folder (its persona
-file, notes, and daily log) through a PR like any other change, reviewed
-only by a peer from its own persona; see the *Only your own persona's
-area* row of the [review protocol](/team/review-protocol.md#who-reviews-what). Another persona's
-files, even in the same team, are reviewed as
-[Who reviews what](/team/review-protocol.md#who-reviews-what) says, and a team script
-or skill gets a review from the other personas who use it. Shared files at
-the top of `team/` and other teams' folders are not a persona's to change
-alone.
+Changes to these folders go through a PR like any other change, reviewed
+as [Who reviews what](/team/review-protocol.md#who-reviews-what) says.
 
 ## Persona notes
 
@@ -90,7 +83,7 @@ it, and the `SKILL.md` says how to run it.
 |-------|--------------|----------------|
 | `trace-requirement` | Finds a requirement ID in the design, UI spec, test plan, and code; lists requirements with no test. Script: [`QA/scripts/trace.py`](/team/QA/scripts/trace.py) | Requirements engineer, Test engineer, Developer |
 | `ci-paths` | Says which workflows a branch's changes will trigger. Script: [`Development/scripts/ci_paths.py`](/team/Development/scripts/ci_paths.py) | DevOps engineer |
-| `log-cost` | Reports a thread's real token use and cost to the CFO, who adds it to the [cost log](/team/Management/cost-log.md) | Every thread, when its work is done |
+| `log-cost` | Reports a thread's real token use and cost to the CFO for the [cost log](/team/Management/cost-log.md), as the [CFO persona](/team/Management/personas/cfo.md#role) says | Every thread, when its work is done |
 | `cross-review` | Steps for the owner and for each fresh reviewer thread in a cross-review | Owner and reviewer threads |
 | `retro` | Steps for a team retro the Team Lead calls: each persona's feedback, and the project manager's note in `team/retros/` | Coordinator, every persona, project manager |
 

@@ -255,8 +255,9 @@ review uncovers goes one of two ways:
       for work that belongs in a later phase.
 
    The finding is **Waiting on the Team Lead** and is listed in the PR's
-   *Deferred findings* section. Unless the Team Lead picks option 1, it
-   doesn't block the PR or change the verdict. When the Team Lead answers,
+   *Deferred findings* section. It doesn't block the PR or change the
+   verdict, so the PR may merge before the answer comes; if the Team Lead
+   then picks option 1, the fix goes in a separate PR, as in option 2. When the Team Lead answers,
    the owner carries it out: fixes it here, asks for the new thread, opens
    the issue, or lists the item for the project manager, and updates the
    status. If the owner's thread has ended, the project manager does it.

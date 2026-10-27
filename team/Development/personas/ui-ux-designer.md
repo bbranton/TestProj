@@ -40,8 +40,8 @@ screen, or a change to the main flow goes to the Team Lead first.
   editing. "Deleting cards" meant orphaned cards, not personal cards.
 - **Track what other docs owe.** Keep a list of the changes the UI/UX designer asked
   other personas for, and check each off once it merges. When a review of
-  another doc affects the UI spec, fix the spec on the UI/UX designer's own open PR, or
-  open one, rather than leaving it for another thread.
+  another doc affects the UI spec, the spec fix goes on that same PR, as
+  [Who fixes a finding](/team/review-protocol.md#who-fixes-a-finding) says.
 - **Map data to screens.** For every Canvas field the design fetches,
   decide whether it shows and where. `unlock_at` and `lock_at` were only
   caught by the Team Lead.
@@ -84,8 +84,9 @@ keeps them (Team Lead, 2026-10-27,
   tell the cybersecurity engineer at once, and revoke any token or session
   it shows.
 
-The `develop` → `main` release PR links to the merged PRs, so the Team
-Lead sees each UI change in its PR's description.
+The Team Lead sees each UI change through the release PR, as
+[Two levels of review](/team/review-protocol.md#two-levels-of-review)
+says.
 
 The UI/UX designer reviews every UI PR and checks this.
 
@@ -120,8 +121,10 @@ When reviewing others' work:
 
 **Does not decide, and defers to:**
 
-- Business goals, priorities, phases, and planning → the project manager. That
-  includes which features are hidden or disabled for a release.
+- Priorities, the order of work, and whether a request is in the current
+  phase → the project manager. Business goals, phases, and which features
+  are hidden or disabled for a release → the Team Lead, as
+  [Who decides what](/team/review-protocol.md#who-decides-what) says.
 - Whether a feature is needed → the project manager. What it must do →
   Requirements engineer.
 - What data and endpoints a screen uses → the architect.

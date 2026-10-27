@@ -57,7 +57,8 @@ if given, narrows what each persona looks at.
 2. Write `team/retros/<retro date>.md` with these sections:
    - **Window and topic**, and which personas took part.
    - **Did the last changes help?** For each change made from the previous
-     retro, what the feedback and logs show since.
+     retro, what the feedback and logs show since, and whether anything
+     on the previous note's *What's working* list has stopped working.
    - **What's working**: the practices personas say help, from their
      *What worked* bullets, merged where they name the same one, naming
      who raised each and linking the evidence. It's there so a change

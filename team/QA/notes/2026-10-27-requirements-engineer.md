@@ -60,3 +60,20 @@
   retro feedback goes in its daily log. A point on keeping tokens and
   student data out of the feedback was already fixed in d044ac7.
 - No decisions made; the PR carries out the Team Lead's decision.
+
+## Review of PR #112: ripple check for process rules
+
+- Reviewed the new *Ripple check* glossary row and its change log entry
+  against `develop@94262eb`. The row sits with the team process terms,
+  links the new protocol section, and the change log row cites #96. No
+  requirement IDs touched.
+- F-1, fixed on the PR branch: the meaning described steps instead of
+  saying what the term is, and repeated the protocol's list of places to
+  search, which would itself need a ripple check whenever that list
+  changes. It also left out that each file's owner makes the fix. It now
+  says what the check is, who fixes each file, and links the protocol for
+  the rest.
+- F-2, fixed on the PR branch: "ripple check" sits close to the project
+  manager's *ripple list* for phase and scope decisions, so the row now
+  says it isn't that.
+- No decisions made; the PR carries out the Team Lead's decision.

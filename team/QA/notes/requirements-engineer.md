@@ -20,3 +20,6 @@ Lasting lessons for the requirements engineer persona. See the
 - Phase moves rippled into four docs each time (FR-45 went 3, 2, 1; FR-78
   went 1, 2, 1). Write the impact note before asking, not after.
 - Keyboard actions are not a requirement (NFR-31 was removed).
+- A glossary meaning says what a term is, and links the rule for the
+  details. Listing a rule's steps in the glossary makes one more copy to
+  keep in step (Ripple check on #112).

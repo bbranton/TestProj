@@ -13,13 +13,15 @@
 
 **Based on:** `develop@<sha>` <!-- merge develop in before asking for review -->
 
-Reviewers: each persona whose area this PR touches, from *Who reviews what*
-in [the review protocol](../blob/develop/team/review-protocol.md#who-reviews-what).
-"None" when it touches only the owner persona's area.
+Reviewers: a peer from the owner's own persona, plus each other persona
+whose area this PR touches, from *Who reviews what* in
+[the review protocol](../blob/develop/team/review-protocol.md#who-reviews-what).
+Never "None": every PR has at least the peer.
 
 <!-- One line per reviewer, with why. Security always reviews anything
      touching tokens, sign-in, secrets, student data, hosting, or deploys;
      say which. Assign the Team Lead, but don't request their review. -->
+- Peer (owner's persona): precaution, every PR
 - Persona: reason
 
 ### Verdicts

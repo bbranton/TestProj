@@ -15,13 +15,12 @@ reviewer.
    another thread already claimed this review, stop and say so. Otherwise
    claim it.
 2. Merge `develop` into the branch. Pick the reviewers from the
-   protocol's *Who reviews what* table: each persona whose area the PR
-   touches. Fill in the *Persona review* section of the PR template with
+   protocol's *Who reviews what* table: a peer from your own persona,
+   plus each other persona whose area the PR touches. Fill in the *Persona review* section of the PR template with
    a reason for each.
 3. Send the coordinator the PR and its reviewers. The coordinator starts a
-   fresh thread for each one. Don't write the reviews yourself. When the PR
-   touches only your own persona's area and no "always" rule applies, it
-   has no reviewers: merge it.
+   fresh thread for each one. Don't write the reviews yourself. Every PR has
+   at least the peer reviewer; never merge without one.
 4. Answer or fix each finding as it arrives. For a question back to a
    reviewer, ask on the PR comment, then message that reviewer thread with
    the link. After two rounds without agreement, mark the finding

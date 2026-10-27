@@ -30,9 +30,11 @@ Everything below is the default when the Team Lead hasn't said otherwise.
 (see [Who reviews what](#who-reviews-what)), and assigns the Team Lead
 without requesting their review, so the Team Lead sees the diff. Once every
 reviewer's latest verdict is **Recommend** or **Recommend with notes**, the
-owner thread merges the PR itself and posts the link in its thread. A PR
-that touches only its owner persona's area needs no reviewers and is
-merged straight away. A persona's area is its own files in its team folder
+owner thread merges the PR itself and posts the link in its thread.
+Every PR has at least one reviewer: a fresh thread of the owner's own
+persona reviews it as a peer, as a precaution, even when the PR touches
+only the owner's area. When the owner isn't a persona, the peer is the
+persona that owns most of the changed files. A persona's area is its own files in its team folder
 (its persona file, notes, and daily log) and the docs it owns in
 [Who reviews what](#who-reviews-what). Teams hold several personas, so a
 change to another persona's files in the same team folder is reviewed by
@@ -96,8 +98,9 @@ avoid clashes, never as the source of truth.
 
 ## Who reviews what
 
-The author picks the reviewers. The rule: **each persona whose area the PR
-touches reviews it**, except the author. The author lists the reviewers in
+The author picks the reviewers. The rule: **a peer reviewer from the
+author's own persona, plus each other persona whose area the PR
+touches.** The peer runs in a fresh thread, like every reviewer. The author lists the reviewers in
 the PR description, with one line each on why. Any reviewer can ask for
 another persona in a finding, and the Team Lead can add or drop reviewers
 at any time.
@@ -115,8 +118,8 @@ at any time.
 | Shared files at the top of `team/`, or another team's folder | Each persona whose file changes, plus Management | Management |
 | Another persona's files in your own team's folder | That persona | That persona |
 | A team script or its skill (see [Team skills](workspace.md#team-skills)) | The other personas who use it | The team whose `scripts/` folder holds it |
-| Only your own persona's area: its persona file, notes, and daily log, or a doc it owns in this table | None | That persona |
-| The cost log (`team/Management/cost-log.md`) | None | CFO, who adds reported rows in batches |
+| Only your own persona's area: its persona file, notes, and daily log, or a doc it owns in this table | The peer reviewer only | That persona |
+| The cost log (`team/Management/cost-log.md`) | The peer reviewer (CFO) only | CFO, who adds reported rows in batches |
 
 A code PR always has the Test engineer as a reviewer, since every change
 needs a test. A PR that changes a phase or a priority always has

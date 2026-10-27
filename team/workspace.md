@@ -21,9 +21,9 @@ Each team has a folder under `team/`, with three subfolders:
   after the job title, such as `architect.md`.
 - `scripts/`: reusable scripts for jobs the team repeats often.
 
-Each persona may freely update its own files in its team's folder (its
-persona file, notes, and daily log), through a PR like any other change;
-see the *Only your own persona's area* row of the
+Each persona may update its own files in its team's folder (its persona
+file, notes, and daily log) through a PR like any other change, reviewed
+only by a peer from its own persona; see the *Only your own persona's area* row of the
 [review protocol](review-protocol.md#who-reviews-what). Another persona's
 files, even in the same team, get that persona's review, and a team script
 or skill gets a review from the other personas who use it. Shared files at

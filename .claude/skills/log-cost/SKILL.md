@@ -40,7 +40,7 @@ its row before asking for the new thread. Its work on the PR isn't done,
 so start the notes with `Hand-off 1 of the PR` (2, 3, ... for later
 hand-offs) and count only the rounds and files this thread did. The fresh
 thread reports its own row when the PR merges, and its notes say
-`After hand-off`. The CFO adds the rows for one PR together.
+`After hand-off`.
 
 ## Checking cost mid-thread
 
@@ -52,7 +52,5 @@ when the cost can't be read.
 
 ## As the CFO
 
-Collect the `[cost]` notes from the board and any rows sent to you, and
-add them all in one PR, as the
-[CFO persona](/team/Management/personas/cfo.md#how-it-works) says. Add
-your own row with them. After the PR merges, delete the notes it added.
+Batch the reported rows as the
+[CFO persona](/team/Management/personas/cfo.md#how-it-works) says.

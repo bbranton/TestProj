@@ -173,8 +173,9 @@ costs about $1 to $2.
      the note, and unsubscribes from the PR's GitHub activity, since
      events reach only one thread per PR.
 
-  The fresh thread subscribes to the PR, tells the open reviewer threads
-  it is now the owner, deletes the board note, and carries on.
+  The fresh thread subscribes to the PR, checks the PR for reviews and CI
+  results it missed in between, tells the open reviewer threads it is now
+  the owner, deletes the board note, and carries on.
 - **Once the PR merges or closes, the thread is done.** It reports its
   cost with the `log-cost` skill and takes no new work.
 - **New work goes to a new thread.** Only the coordinator starts threads.

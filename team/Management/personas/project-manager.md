@@ -118,7 +118,7 @@ plan before work starts, and the Team Lead approves it with the plan:
    reviewers it needs.
 2. Size it in the [size units](/team/Management/personas/cfo.md#size-units).
 3. Find the closest past rows in the cost log, in the Library at
-   `/mnt/project-files/costs/cost-log.md`, and scale from them. Give a
+   Library: `costs/cost-log.md`, and scale from them. Give a
    low and a high cost, and a confidence (low, medium, or high). Until the
    log has about five comparable rows, confidence is low.
 4. Name the biggest cost risks, such as many review rounds or an unclear

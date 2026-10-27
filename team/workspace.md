@@ -30,12 +30,12 @@ as [Who reviews what](/team/review-protocol.md#who-reviews-what) says.
 
 ## Persona notes
 
-Persona notes and daily logs live in `/mnt/project-files/notes/`, in the
+Persona notes and daily logs live in Library: `notes/`, in the
 project's shared files, not in the repo (Team Lead, 2026-10-27,
 [#127](https://github.com/bbranton/TestProj/issues/127)). They need no PR.
 
 Each persona has a lasting notes file there, named after its job title
-like its persona file, such as `/mnt/project-files/notes/test-engineer.md`.
+like its persona file, such as Library: `notes/test-engineer.md`.
 Before starting work as a persona, read its notes. When you learn something
 the next thread would otherwise have to rediscover, add it while you work.
 Only threads of that persona change its notes file.
@@ -58,7 +58,7 @@ belongs in [CLAUDE.md](/CLAUDE.md) instead.
 ## Daily notes
 
 Each thread keeps its own daily log for each day it works, in
-`/mnt/project-files/notes/daily/`, named
+Library: `notes/daily/`, named
 `YYYY-MM-DD-<persona>-<pr>.md` with the persona's file name and the PR it
 works on, such as `2026-10-28-devops-engineer-pr130.md`. A thread with no
 PR uses its issue number or a short task name instead.
@@ -125,7 +125,7 @@ verdicts, findings, deferred findings, testing, and screenshots. Keep its sectio
 
 ## The board
 
-The board is `/mnt/project-files/team/board.md`, in the project's shared
+The board is Library: `team/board.md`, in the project's shared
 files. It isn't in the repo, so updating it needs no PR. Every thread in the
 project can read and write it. The file keeps no history, and the last write
 wins, so:
@@ -169,7 +169,7 @@ the same doc instead.
 Process changes wait for the next [retro](/.claude/skills/retro/SKILL.md),
 not a PR of their own (Team Lead, 2026-10-27,
 [#98](https://github.com/bbranton/TestProj/issues/98)). When an idea
-comes up, any thread adds it to `/mnt/project-files/retros/process-ideas.md`,
+comes up, any thread adds it to Library: `retros/process-ideas.md`,
 in the project's shared files. It isn't in the repo, so it needs no PR,
 and the Team Lead can read it in the project's Library at any time.
 

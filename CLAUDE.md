@@ -11,6 +11,15 @@
   hasn't been tested.
 - The one exception is the PR template, whose links show on the PR page and
   so use `../blob/develop/...`.
+- **Library paths start with `Library:`** (Team Lead, 2026-10-27). The
+  Library is the project's shared files, outside the repo. Write a path
+  there as `Library:` and then the path from the Library's root as code
+  text, such as Library: `costs/cost-log.md`. Never make it a link, and
+  never start it with `/`, so it can't be mistaken for a repo path. So: a
+  link is in the repo, and `Library:` is in the Library. In a project
+  thread the Library is the folder `/mnt/project-files/`, so Library:
+  `costs/cost-log.md` is `/mnt/project-files/costs/cost-log.md`; a session
+  outside the project can't open it.
 
 ## Naming
 
@@ -33,6 +42,7 @@ links to the home, which says what to do. Read the home before you act on
 a rule. The security and breach rules apply to every thread, with or
 without a persona.
 
+- Repo and Library paths: [Links](/CLAUDE.md#links).
 - Acting as a persona: [Using a persona](/team/README.md#using-a-persona).
 - Persona notes: [Persona notes](/team/workspace.md#persona-notes).
 - Claiming work: [The board](/team/workspace.md#the-board).

@@ -47,12 +47,14 @@ github.com:
 2. **Ruleset on `main`** (Settings > Rules > Rulesets > New branch
    ruleset), with no bypass: *Restrict deletions*, *Block force pushes*,
    *Require a pull request before merging*.
-3. **Merge settings** (Settings > General > Pull Requests): turn on
-   *Automatically delete head branches*, and set merge commits to use the
-   PR title and description.
+3. **Merge settings:** as the
+   [DevOps engineer notes](/team/Development/notes/devops-engineer.md)
+   record them.
 4. **Pages**, if the project has a website: Settings > Pages > Source:
    *GitHub Actions*.
-5. **Labels:** create `decision` and one `persona: <job-title>` label per
+5. **Security** (Settings > Code security): turn on secret scanning,
+   push protection, and Dependabot alerts.
+6. **Labels:** create `decision` and one `persona: <job-title>` label per
    persona, with a color and description. Threads can't rename or delete
    labels, so do any later relabeling here too.
 
@@ -68,21 +70,30 @@ files, not the repo. Create `team/board.md` there with `## Claims` and
    `~/dev/<owner>/<Repo>/develop`. Each is a full clone, not a worktree.
 2. Ask the coordinator for a thread named, for example, "Set up local
    <Repo> clone", and ask it to work on your computer. Approve the Remote
-   Control prompt for the parent folder, such as `~/dev/<owner>`.
-3. Ask it to clone over SSH:
+   Control prompt for `~/dev/<owner>/<Repo>` only, not a parent folder, so
+   the thread can't read your other repos.
+3. Ask it to clone. For a public repo, use HTTPS, which needs no
+   credentials:
 
    ```sh
-   git clone git@github.com:<owner>/<repo>.git ~/dev/<owner>/<Repo>/main
-   git clone -b develop git@github.com:<owner>/<repo>.git ~/dev/<owner>/<Repo>/develop
+   git clone https://github.com/<owner>/<repo>.git ~/dev/<owner>/<Repo>/main
+   git clone -b develop https://github.com/<owner>/<repo>.git ~/dev/<owner>/<Repo>/develop
    ```
 
-   If you already clone other repos over SSH, git needs no more setup.
-   The `gh` command isn't installed and isn't needed.
+   For a private repo, add a read-only deploy key for that one repo
+   (Settings > Deploy keys) and clone over SSH with it, rather than your
+   own SSH key, which can push to every repo you own. The `gh` command
+   isn't needed.
 4. Give it the standing OK in that thread, in these words: "you have my
    standing OK to run `git fetch` and `git pull --ff-only` on `develop`
    when asked". Anything else still needs your OK each time.
 5. Put the thread's title and the `develop` path into the last project
    instruction from step 2.
+
+The Remote Control session runs as your own user, with your local
+credentials. The standing OK is an instruction to Claude, not a technical
+limit, so keep secrets such as `.env` files and tokens out of the approved
+folder.
 
 Don't edit files in the `develop` folder by hand, so every pull
 fast-forwards. Pulls wait while your computer is offline, and one pull
@@ -93,6 +104,14 @@ catches up on every merge.
 Copy `CLAUDE.md`, `team/`, `.claude/skills/`, and
 `.github/pull_request_template.md` into the new repo in one PR into
 `develop`. Leave out the daily logs and cost-log rows, and start each
-persona's notes file and the glossary empty. Then search for `TestProj`,
+persona's notes file empty, except for the
+[Security register](/team/QA/notes/cybersecurity-engineer.md#security-register)
+heading, intro, and empty table.
+
+The process also lives in two docs under `docs/canvas-portal/`. Start a
+roadmap with empty *Open decisions*, *Risks*, *Backlog*, and *Change log*
+sections, as in [01-roadmap.md](/docs/canvas-portal/01-roadmap.md), copy
+the [glossary](/docs/canvas-portal/glossary.md)'s layout with no terms,
+and update the links that point at `docs/canvas-portal/`. Then search for `TestProj`,
 `bbranton`, `canvas`, `FR-`, and `student`, and change each hit for the
 new product.

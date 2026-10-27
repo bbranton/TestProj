@@ -36,3 +36,20 @@
 - Read the new scope-budget paragraph in *Follow-up work*: it changes no
   breach handling, since a potential data breach never goes through the
   four options.
+
+## Security review of PR #92 (setup guide for a new project)
+
+- Reviewed `SETUP-NEW-PROJECT.md` at `4e51648`, after the owner refocused
+  it at the Team Lead's ask on setup done outside the repo. Sent four
+  early points on the first version; the owner folded all of them in
+  before this review: the Remote Control approval covers only the repo's
+  folder, a public repo is cloned over HTTPS with no credentials (a
+  private one with a read-only deploy key), the guide says the standing OK
+  is an instruction and not a technical limit, and the GitHub step turns
+  on secret scanning, push protection, and Dependabot alerts.
+- Verdict Recommend with notes: name the folder in the standing OK's
+  words, and optionally set Actions' default token to read-only. No
+  potential data breach, and no register row needed.
+- Added the Team Lead's local clone to the threat picture in the
+  cybersecurity engineer notes.
+

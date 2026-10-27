@@ -42,7 +42,8 @@ must be in these instructions or in the repo.
 Threads can read these settings but can't change them, so you set them on
 github.com:
 
-1. **Branches:** create `develop` from `main`, and make `develop` the
+1. **Branches:** create the repo with a README, so `main` has a first
+   commit. Then create `develop` from `main`, and make `develop` the
    default branch (Settings > General).
 2. **Ruleset on `main`** (Settings > Rules > Rulesets > New branch
    ruleset), with no bypass: *Restrict deletions*, *Block force pushes*,
@@ -51,7 +52,9 @@ github.com:
    [DevOps engineer notes](/team/Development/notes/devops-engineer.md)
    record them.
 4. **Pages**, if the project has a website: Settings > Pages > Source:
-   *GitHub Actions*.
+   *GitHub Actions*. Then, since `develop` is the default branch, add
+   `main` under Settings > Environments > github-pages > Deployment
+   branches and tags, or the first deploy from `main` fails.
 5. **Security** (Settings > Code security): turn on secret scanning,
    push protection, and Dependabot alerts. Under Settings > Actions >
    General, check that *Workflow permissions* is *Read repository
@@ -68,8 +71,8 @@ files, not the repo. Create `team/board.md` there with `## Claims` and
 
 ## 5. Set up the local clone
 
-1. Make a folder per branch, such as `~/dev/<owner>/<Repo>/main` and
-   `~/dev/<owner>/<Repo>/develop`. Each is a full clone, not a worktree.
+1. Make only `~/dev/<owner>/<Repo>`. The clones in step 3 create its
+   `main` and `develop` folders, each a full clone, not a worktree.
 2. Ask the coordinator for a thread named, for example, "Set up local
    <Repo> clone", and ask it to work on your computer. Approve the Remote
    Control prompt for `~/dev/<owner>/<Repo>` only, not a parent folder, so
@@ -114,6 +117,12 @@ The process also lives in two docs under `docs/canvas-portal/`. Start a
 roadmap with empty *Open decisions*, *Risks*, *Backlog*, and *Change log*
 sections, as in [01-roadmap.md](/docs/canvas-portal/01-roadmap.md), copy
 the [glossary](/docs/canvas-portal/glossary.md)'s layout with no terms,
-and update the links that point at `docs/canvas-portal/`. Then search for `TestProj`,
+and update the links that point at `docs/canvas-portal/`.
+
+Don't copy `.github/workflows/`, since workflows depend on the product.
+Write new ones using this repo's as the pattern, and deploy only from
+`main`.
+
+Then search for `TestProj`,
 `bbranton`, `canvas`, `FR-`, and `student`, and change each hit for the
 new product.

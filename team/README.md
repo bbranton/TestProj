@@ -11,8 +11,8 @@ reviews someone else's work, and which decisions it can and cannot make.
 | Test engineer | Test plan, writing and running tests, test results | [test-engineer.md](QA/personas/test-engineer.md) |
 | Architecture | Design docs, transition plans, data, APIs | [architect.md](Architecture/personas/architect.md) |
 | UI/UX | UI specification, screens, accessibility | [ui-ux-designer.md](Ui-Ux/personas/ui-ux-designer.md) |
-| Developer | Code, coding standards, bug fixes | [developer.md](Software/personas/developer.md) |
-| DevOps | CI, build and install scripts, dependencies, deploys, hosting, top-level README | [devops-engineer.md](DevOps/personas/devops-engineer.md) |
+| Developer | Code, coding standards, bug fixes | [developer.md](Development/personas/developer.md) |
+| DevOps | CI, build and install scripts, dependencies, deploys, hosting, top-level README | [devops-engineer.md](Development/personas/devops-engineer.md) |
 | Security | Security reviews, potential data breach ratings, client security document | [cybersecurity-engineer.md](QA/personas/cybersecurity-engineer.md) |
 | CFO | Cost log: the only persona that edits it | [cfo.md](Management/personas/cfo.md) |
 
@@ -27,10 +27,9 @@ Each team may freely update its own folder.
 | Team | Persona files |
 |------|---------------|
 | Architecture | `architect.md` |
-| DevOps | `devops-engineer.md` |
+| Development | `developer.md`, `devops-engineer.md` |
 | Management | `project-manager.md`, `cfo.md` |
 | QA | `requirements-engineer.md`, `test-engineer.md`, `cybersecurity-engineer.md` |
-| Software | `developer.md` |
 | Ui-Ux | `ui-ux-designer.md` |
 
 Files every team shares stay at the top of `team/`: this README, the

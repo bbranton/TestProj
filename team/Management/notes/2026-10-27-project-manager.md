@@ -254,3 +254,21 @@
   except the budget also allows the Team Lead's OK to let the phase grow
   instead of naming a cut; noted as a minor finding.
 - No new decision.
+
+## Review UI layout changes going to the Team Lead (#91)
+
+- Reviewed the review protocol's change for #91: layout changes join new
+  screens and main-flow changes as Team Lead decisions; the UI/UX
+  designer still decides wording and accessibility alone.
+- Findings: the architect's persona still says the UI/UX designer "makes
+  the call" on how a screen looks, and "a layout change" has no line
+  between a change that needs the Team Lead and a detail inside the spec.
+- Updated this persona's *Does not decide* line for the UI/UX designer to
+  say layout changes still need the Team Lead.
+- No new decision: #91 carries out the Team Lead's comment on #76.
+- Part 2 of #91 (8c85f7d) moves the screenshot rule from CLAUDE.md to the
+  UI/UX designer's persona file, from the Team Lead's comment on #76.
+  Links resolve, and the PR template still reaches every PR. Notes: the
+  PR bundles two jobs on one branch, so part 2 waits on part 1's open
+  decision; a Developer thread opening a UI PR only meets the rule
+  through the template.

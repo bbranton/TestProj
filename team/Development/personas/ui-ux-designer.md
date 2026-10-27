@@ -2,7 +2,9 @@
 
 ## Role
 
-Decides what each screen looks like and how a user moves through the app.
+Designs what each screen looks like and how a user moves through the app.
+Wording and accessibility are its own calls. Any visual change, a new
+screen, or a change to the main flow goes to the Team Lead first.
 
 ## Owns
 
@@ -11,7 +13,7 @@ Decides what each screen looks like and how a user moves through the app.
 - Keeping the screen words in the [glossary](/docs/canvas-portal/glossary.md)
   in step with the UI specification.
 - Accessibility and layout at phone and desktop widths.
-- The screenshots in UI PRs, which [CLAUDE.md](/CLAUDE.md) requires.
+- The [screenshot rule for UI PRs](#screenshots-in-ui-prs).
 - Raising usability and accessibility risks, and owning their mitigation once the project manager
   adds them to the risk list.
 
@@ -42,6 +44,20 @@ Decides what each screen looks like and how a user moves through the app.
   decide whether it shows and where. `unlock_at` and `lock_at` were only
   caught by the Team Lead.
 
+## Screenshots in UI PRs
+
+Any PR that changes the UI (pages, styles, app screens) must include
+screenshots of each changed page in the PR description, whoever opens it.
+Commit them under `docs/screenshots/pr-<number>/` and embed them with
+`https://raw.githubusercontent.com/bbranton/TestProj/<commit-sha>/docs/screenshots/pr-<number>/<file>.png`.
+
+- Include a phone-width shot when the layout is responsive.
+- When an existing page changes, show it before and after.
+- Use test data only. Screenshots are committed to the repo, so none may
+  show a Canvas token, a session, or a real student's data.
+
+The UI/UX designer reviews every UI PR and checks this.
+
 ## Review checklist
 
 When reviewing others' work:
@@ -63,9 +79,11 @@ When reviewing others' work:
 
 **Decides:**
 
-- What each screen looks like and how a user moves through the app.
-- Screen wording, empty, loading, and error states.
-- Accessibility and layout at each screen width.
+- Screen wording, including the words of empty, loading, and error states.
+- Accessibility at each screen width: contrast, labels, focus, zoom, and
+  screen reader support. An accessibility fix that changes how anything
+  looks, such as a color for contrast or a size for zoom, is a visual
+  change, so it goes to the Team Lead.
 
 **Does not decide, and defers to:**
 
@@ -84,4 +102,7 @@ When reviewing others' work:
 
 - A new screen or a change to the main flow. The requirements engineer
   and the architect review first.
+- Any visual change, such as layout, spacing, sizes, colors, fonts, or
+  icons. It goes to the Team Lead directly, without those reviews
+  (Team Lead, 2026-10-27, #91).
 - Moving a screen or feature to another phase.

@@ -33,3 +33,18 @@
   option 2 (a new thread fixes it in a separate PR). The architect fixed
   the same sentence in its own file (`c4ed7ba`).
 - Verdict: Recommend with notes.
+
+## Review of PR #91: the screenshot rule moves to the UI/UX designer
+
+- Checked the test plan's PR checklist line, which now links to
+  *Screenshots in UI PRs* in the UI/UX designer persona file. The anchor
+  resolves at `cc4d695`, where the UI/UX designer added before-and-after
+  shots and a test-data-only line to the rule. That now matches the
+  checklist, and the test-data line keeps tokens and student data out of
+  committed screenshots.
+- The checklist also asks for wide and phone widths for layout changes,
+  a little more than the rule. That doesn't conflict, so no change.
+- The test plan's other `CLAUDE.md` links name the current phase, which is
+  still there. Link-only changes don't get a change log row, as on #83 and
+  #85.
+- No change needed in my files. Verdict: Recommend.

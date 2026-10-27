@@ -53,3 +53,15 @@
 - Reviewed the whole PR against `develop@94262eb`. Docs only: `ci-paths`
   says no workflow runs. Verdict below, posted on the PR.
 - No new decision: this carries out #96.
+
+## Breach rule link and review (PR #113, #97 PR 1)
+
+- Carries out the Team Lead's #97 decision in the file the DevOps
+  engineer owns: *Does not decide* in the DevOps engineer persona now links
+  "potential data breach" to its one home in the cybersecurity engineer
+  persona. Nothing else in the file restated the rule.
+- Reviewed the whole PR against `develop@c2a78b5`. Docs only: `ci-paths`
+  says no workflow runs. Found one more file that restates the rule,
+  outside the PR's ripple check scope: the roadmap's risk list and
+  backlog (X-1). Verdict posted on the PR.
+- No new decision: this carries out #97.

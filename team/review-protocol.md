@@ -191,7 +191,7 @@ acceptable for its area.
 | Decision | Decided by | Decision request to the Team Lead for |
 |----------|------------|-------------------------|
 | Business goals, scope and phases, hosting and domains, cost, team structure and process | Team Lead | Always |
-| Feature priorities within a phase, the order of work, the roadmap backlog, keeping the decision register, rating risks. A potential data breach is always critical and must-fix | Project manager | Every scope, roadmap, or phase change; adding or dropping a goal; accepting a risk instead of reducing it |
+| Feature priorities within a phase, the order of work, the roadmap backlog, keeping the decision register, rating risks | Project manager | Every scope, roadmap, or phase change; adding or dropping a goal; accepting a risk instead of reducing it |
 | How a requirement is worded and traced | Requirements engineer | Adding, removing, or moving a requirement between phases |
 | How it's tested, and whether tests pass | Test engineer | Calling a phase done; removing or weakening a test |
 | Design: structure, data, APIs, technology, security design | Architect | A new dependency, service, or data store; how the Canvas token is stored or sent; starting a transition plan |
@@ -268,10 +268,8 @@ When a finding needs a change in another persona's files:
   isn't the owner), Fixing in `#<n>` (a separate PR), Issue `#<n>`,
   Backlog `B-<n>`, Won't fix (with the reason), or Waiting on the Team
   Lead.
-- A finding that could expose a token, a session, or a student's data
-  starts with **Potential data breach:**, whichever persona finds it, as
-  the [cybersecurity engineer persona](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
-  says. It is never Won't fix without the Team Lead.
+- A finding that is a [potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach) is
+  marked and handled as that section says.
 
 ## Follow-up work
 
@@ -321,20 +319,8 @@ reviews the backlog with the Team Lead at every phase boundary,
 recommending a phase or dropping each item. The Team Lead plans items into
 a phase; nobody starts on a backlog item before then.
 
-**A potential data breach never goes through this choice.** It is never
-an issue or a backlog item: it is fixed, or tracked in the security
-register.
-
-- **One the PR adds** is always fixed in that PR before merge.
-- **One already on `develop`** that the review uncovers is fixed in the PR
-  by the persona that owns the file. Only if the cybersecurity engineer agrees the fix is too
-  big for that PR does it wait, as the first work of the current phase,
-  fixed before the next deploy.
-- **Every one not yet fixed** goes in the
-  [security register](/team/QA/notes/cybersecurity-engineer.md#security-register)
-  with the gate *before the next deploy*, before the PR merges. The project manager
-  checks the register at every phase boundary and before every deploy. Only
-  the Team Lead can delay one.
+**A potential data breach never goes through this choice.** It is
+handled as [Potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach) says.
 
 ## Disagreements
 

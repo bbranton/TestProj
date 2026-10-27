@@ -89,8 +89,8 @@ persona:
 - No persona ignores a security risk, or leaves it for another persona to
   catch.
 - Any persona can mark a finding a
-  [potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach).
-  The project manager treats every one as critical and must-fix.
+  [potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach),
+  which is then handled as that section says.
 - The [cybersecurity engineer persona](/team/QA/personas/cybersecurity-engineer.md) is the specialist. On a
   security question its view carries the most weight, over the persona
   that owns the work. The owner still makes the fix, and can't decline it

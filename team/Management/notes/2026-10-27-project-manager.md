@@ -432,6 +432,36 @@
   No change needed now.
 - No new decision: #96 is already answered.
 
+## Link the project manager's files to the breach rule (#113)
+
+- On the cybersecurity engineer's PR #113 (#97, PR 1 of 5), changed the
+  project manager's files to link to
+  [Potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
+  instead of restating it: the review protocol (*Who decides what*,
+  *Findings table*, *Follow-up work*), the team README (*Security is
+  everyone's job*), the project manager persona (*Owns*, *Decisions*), the
+  project manager notes, and the `cross-review` skill's reviewer step 3.
+  Kept "Delaying the fix of a potential data breach" under *Needs the Team
+  Lead*, since it names a Team Lead call rather than restating the rule.
+- Wording follows the cybersecurity engineer's proposed text on the PR.
+- No new decision: the Team Lead answered it on #97.
+
+## Review the breach rule's one home (#113)
+
+- Shared-files review at `9c7b18a`, against `develop@c2a78b5`:
+  **Recommend with notes**.
+- Re-ran the ripple check on the branch: outside the home and the
+  security register intro, every mention links to
+  *Potential data breach* or only names the term.
+- F-1 (minor): the PR description still lists the other owners' changes
+  as still to come.
+- N-1 (optional): the glossary repeats the home's "what counts" sentence.
+- X-1 (DevOps engineer): the roadmap still restated the rule in the risk
+  list intro and the backlog intro. Both now link to the home, and the
+  step 6 gate list links the term too. My ripple check had skipped
+  `docs/`, since the ripple check's search list names only the glossary
+  there.
+
 ## Notify, not review, for wording-only persona file changes (#99)
 
 - Added *Wording-only changes notify the persona* to the review

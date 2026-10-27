@@ -69,7 +69,8 @@ When to delete them:
   it closes.
 - A merged PR: the `develop` → `main` release PR lists the folders of the
   UI PRs it ships, so the Team Lead can see what goes live. Once it merges
-  into `main`, the thread that opened it deletes those folders.
+  into `main`, the thread that opened it deletes those folders, or the
+  project manager if that thread has ended.
 
 The UI/UX designer reviews every UI PR and checks this.
 

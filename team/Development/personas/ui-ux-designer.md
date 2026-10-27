@@ -100,6 +100,8 @@ When reviewing others' work:
 
 **Needs the Team Lead:**
 
-- A new screen, a layout change, or a change to the main flow. The
-  requirements engineer and the architect review first.
+- A new screen or a change to the main flow. The requirements engineer
+  and the architect review first.
+- Any layout change, spacing and sizes included. It goes to the Team Lead
+  directly, without those reviews (Team Lead, 2026-10-27, #91).
 - Moving a screen or feature to another phase.

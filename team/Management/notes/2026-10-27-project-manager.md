@@ -301,3 +301,28 @@
 - The owner fixed F-1 to F-3 in `d044ac7` and `a1795b4`; re-checked and
   changed the verdict to Recommend.
 - No new decision: #94 carries out the Team Lead's approval.
+
+## Combine the docs retro (PR to come)
+
+- Combined the nine personas' docs retro feedback into
+  [the 2026-10-27 docs retro note](/team/retros/2026-10-27-docs.md). The
+  process retro ran the same day, so this one saved under
+  `2026-10-27-docs` and the other under `2026-10-27-process`.
+- Main themes: requirements moved while the downstream docs were
+  reviewed, and the design, UI spec, and test plan merged with no
+  reviewers.
+- Raised six decision requests, #101 and #103 to #107, one per
+  suggestion.
+
+### Decision: how to raise the docs retro's suggestions
+
+- **Date:** 2026-10-27
+- **Decided by:** Project manager
+- **Options:** one issue per persona's suggestion (nine), or merge the
+  ones that ask for the same change
+- **Recommendation:** merge: the requirements engineer's, UI/UX
+  designer's, and CFO's ordering and freeze ideas became S-1, and the
+  test engineer's, developer's, and architect's review ideas became S-2,
+  so the Team Lead answers six questions instead of nine. The CFO's
+  fresh-thread and cost-row points went to the process retro.
+- **Links:** #101, #103, #104, #105, #106, #107

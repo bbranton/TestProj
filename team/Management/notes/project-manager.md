@@ -69,3 +69,9 @@ Lasting lessons for the project manager persona. See the
   prose headers of other personas' files (such as the cost log's intro)
   match. Grep for the old name outside change logs, daily logs, and old
   finding IDs, and check the labels on open issues (#83).
+- Two retros called on the same day collide on the `retro` skill's
+  paths, which are named by date alone. Give each a suffix, such as
+  `2026-10-27-docs` and `2026-10-27-process`, for both the feedback folder
+  and the note. When combining, merge suggestions that ask for the same
+  change into one decision request, and send points outside the retro's
+  topic to the other retro (2026-10-27).

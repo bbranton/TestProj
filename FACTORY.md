@@ -37,17 +37,22 @@ experiment.
 
 ## Stages
 
+Stages are the factory's; phases are a product's roadmap, as each
+product's glossary says.
+
 ### Stage 1: One full product, end to end
 
-Build the Canvas portal from brief to live, using the current process and
+Build the Canvas portal from brief to release, using the current process and
 refining it as we go: through Phase 1 at least, with Phase 4 as a stretch
 goal.
 
 - **Record, don't judge yet.** Record the [scorecard](#scorecard) for every
   feature, but set no targets. This stage gives us the baseline.
-- **Process changes are allowed** throughout, each logged with its reason,
-  as the team does today.
-- **Done when** the product is live, the Team Lead is happy with the
+- **Process changes are allowed** throughout, each logged with its reason
+  as [Daily notes](/team/workspace.md#daily-notes) says.
+- **Done when** the Canvas portal meets Phase 1's exit criteria (roadmap
+  milestone [M2](/docs/canvas-portal/01-roadmap.md#4-milestones)) on its
+  test deploy and is released to `main`, the Team Lead is happy with the
   process, and the process is frozen as **version 1**: a git tag on
   `develop`, so later runs can name exactly which process they used.
 
@@ -86,8 +91,8 @@ Once the process is stable, improve it in small steps.
 
 Each experiment is recorded in the repo, with the process version (tag)
 each team ran, the brief, the change, every run's scorecard, and the
-result, so anyone can repeat it. Where those records go is settled before
-the first experiment.
+result, so anyone can repeat it. The Team Lead decides where those records
+go, on the project manager's recommendation, before Stage 3 starts.
 
 ## Scorecard
 
@@ -96,17 +101,19 @@ Stage 3 they're how teams are compared, so they need no fixed targets.
 
 | Quality | Measure | Source |
 |---------|---------|--------|
-| Quick | Time from brief to merged feature, and to live | PR and deploy times |
-| Efficient | Cost per feature, and for the whole product | Cost log |
-| Efficient | Share of spend on product vs process | Cost log's product-or-process column |
+| Quick | Time from brief to merged feature, and to release | PR and release times |
+| Efficient | Cost per feature, and for the whole product | Cost log rows, matched to features by each PR's requirement IDs |
+| Efficient | Share of spend on product vs process | Cost log's product-or-process column (not yet measured: a CFO PR adds it) |
 | Efficient | Team Lead touches: decision requests, review comments, questions answered | GitHub and threads |
 | High quality | Acceptance tests passed (Stage 3) | Benchmark tests |
 | High quality | Bugs found after merge | Issues labeled bug |
 | High quality | Review rounds before merge | PR history |
 | Maintainable | Change test: a fresh thread makes a set change cold; its time, cost, and whether it passes | A timed, costed task |
-| Maintainable | Lint clean, test coverage of new code | CI |
+| Maintainable | Lint clean, test coverage of new code | CI (coverage not yet measured) |
+
+The project manager records the scorecard for each feature when it
+merges, and copies each stage's totals into the repo when the stage ends.
 
 The raw cost rows stay in the Library (Library: `costs/`), as the
 [CFO persona](/team/Management/personas/cfo.md#role) says. Each stage's
-scorecard totals are copied into the repo at the end of the stage, so the
-results keep their history.
+totals are in the repo, so the results keep their history.

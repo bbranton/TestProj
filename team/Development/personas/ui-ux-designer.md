@@ -67,7 +67,9 @@ When reviewing others' work:
 
 - Screen wording, including the words of empty, loading, and error states.
 - Accessibility at each screen width: contrast, labels, focus, zoom, and
-  screen reader support.
+  screen reader support. An accessibility fix that moves, resizes, or
+  rearranges anything on a screen is a layout change, so it goes to the
+  Team Lead.
 
 **Does not decide, and defers to:**
 

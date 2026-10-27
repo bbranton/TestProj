@@ -123,8 +123,11 @@ answer, so the Team Lead can decide once and early, with what they need:
 - What each option exposes, and whether any is a potential data breach.
 - Which docs and phase steps each answer changes.
 
-Briefs are batched when several decisions are pending, and linked from the
-issue that tracks the decision.
+Each brief goes with its decision request, which is asked right away, as
+[Decisions are separate from merging](/team/review-protocol.md#decisions-are-separate-from-merging)
+says. The request's entry in the
+[decision register](/docs/canvas-portal/01-roadmap.md#5-open-decisions)
+links to the brief.
 
 ## Works with
 

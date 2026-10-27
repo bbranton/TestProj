@@ -52,8 +52,12 @@ if given, narrows what each persona looks at.
 ## As the project manager
 
 1. Read every persona's file in Library: `retros/<retro date>/`,
-   the previous note in `team/retros/`, and the
-   [process ideas](/team/workspace.md#process-ideas) folder.
+   the previous note in `team/retros/`, the
+   [process ideas](/team/workspace.md#process-ideas) folder, and the
+   disagreement files in Library: `disagreements/` dated in the window,
+   plus any the previous note listed as open, as
+   [Logging a disagreement](/team/review-protocol.md#logging-a-disagreement)
+   says.
 2. Write `team/retros/<retro date>.md` with these sections:
    - **Window and topic**, and which personas took part.
    - **Did the last changes help?** For each change made from the previous
@@ -66,6 +70,11 @@ if given, narrows what each persona looks at.
      [PR #132](https://github.com/bbranton/TestProj/pull/132#discussion_r4390626234)).
    - **Themes**: points raised by more than one persona, grouped, naming
      who raised each and linking the evidence.
+   - **Disagreements**: how many there were in the window and how each
+     ended (agreed, owner, reviewer, Team Lead, or open), and any pattern:
+     the same pair of personas, the same kind of point, or many rounds
+     before an outcome. Name each file by its Library path, or say there
+     were none.
    - **Suggestions**: each suggested change, merged where personas
      suggested the same thing, with a link to its decision request. Add
      any idea from the process ideas folder that no persona took up, naming
@@ -74,12 +83,15 @@ if given, narrows what each persona looks at.
 
    As in the feedback, link evidence and never quote a Canvas token,
    cookie, secret, or student data.
-3. Raise one decision request per suggestion, as a GitHub issue labeled
-   both `decision` and `retrospective`, so the Team Lead can find a
-   retro's requests apart from the rest (Team Lead, 2026-10-27,
-   [PR #132](https://github.com/bbranton/TestProj/pull/132)). Give it your
-   recommendation, the files it changes, and what under *What's working*
-   it would change or remove. Open a
+3. Ask the Team Lead one decision request per suggestion, right away in
+   your thread, as
+   [Decisions are separate from merging](/team/review-protocol.md#decisions-are-separate-from-merging)
+   says. Give it your recommendation, the files it changes, and what under
+   *What's working* it would change or remove. Record each one in a GitHub
+   issue labeled both `decision` and `retrospective`, so the Team Lead can
+   find a retro's requests apart from the rest (Team Lead, 2026-10-27,
+   [PR #132](https://github.com/bbranton/TestProj/pull/132)), and link the
+   issue from the suggestion. Open a
    PR with the note, reviewed as the [review protocol](/team/review-protocol.md#who-reviews-what)
    says. Once it merges, clear the ideas it covered, as
    [Process ideas](/team/workspace.md#process-ideas) says.

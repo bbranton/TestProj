@@ -13,8 +13,8 @@ otherwise.
    and merged by their owner. The `develop` → `main` release PR is the
    Team Lead's alone, as [Branches](/CLAUDE.md#branches) says.
 2. **The Team Lead decides; PRs carry out decisions.** Every real
-   decision goes to the Team Lead as a decision request, answered before
-   anyone edits a doc for it.
+   decision goes to the Team Lead right away as a decision request,
+   answered before anyone edits a doc for it.
 3. **Each persona fixes its own files.** A finding is fixed in the PR it
    was found in, by the persona that owns the file, which may be the
    owner or a reviewer. No persona edits another persona's files.
@@ -54,15 +54,29 @@ That is why a persona can merge into `develop` without the Team Lead.
 - **What an owner decides alone:** details inside its own area that no
   other doc depends on, such as a requirement's wording, a test case, or a
   screen's wording. When in doubt, it's a decision request.
-- **A decision request** states the question, the options, a
-  recommendation, and the docs it changes. Each persona whose area it
-  affects adds its impact: which of its files change, and how. Requests go
-  in the project manager's
-  [decision register](/docs/canvas-portal/01-roadmap.md#5-open-decisions)
-  or in a GitHub issue labeled `decision`.
-- **The Team Lead answers in batches.** The project manager keeps the register and
-  brings it to the Team Lead. Only after an answer do the owners make their
-  edits, each in its own PR, citing the decision.
+- **A decision request** states the question, what the problem is and
+  why it came up, the options, a recommendation, and the docs it changes.
+  Each persona whose area it affects adds its impact: which of its files
+  change, and how.
+- **Ask the Team Lead right away** (Team Lead, 2026-10-27, on
+  [#132](https://github.com/bbranton/TestProj/pull/132)). The persona that
+  raises a request asks the Team Lead as soon as it comes up, in the
+  thread that raised it. When there is no thread, the coordinator asks in
+  the project chat.
+  The Team Lead can then ask follow-up or clarifying questions there, and
+  the persona answers them in the same place. Don't hold a request to
+  batch it, or leave it only in a file or an issue: a question that isn't
+  asked right away may never be seen.
+- **The Team Lead's answer can be anything:** one of the options, a fix
+  right now, a GitHub issue for later, or a request for more information.
+  A GitHub issue is one answer the Team Lead can pick, not where the
+  question is asked.
+- **The register is the record.** The project manager records each
+  request, with a link to where it was asked, and then its answer in the
+  [decision register](/docs/canvas-portal/01-roadmap.md#5-open-decisions).
+  A GitHub issue labeled `decision`, when there is one, is also a record
+  of the request and its answer. Only after an answer do the owners make
+  their edits, citing the decision.
 - **A PR that needs a new decision stops.** The owner raises a decision
   request and waits for the answer before going on. A finding that needs
   one is marked **Waiting on the Team Lead**. A deferred finding, asking
@@ -300,11 +314,10 @@ review uncovers goes one of two ways:
 1. **This PR, when it's in the current phase.** The persona that owns the
    file fixes it here, as [Who fixes a finding](#who-fixes-a-finding) says.
 2. **The Team Lead decides, when it's outside the current phase or too big
-   for this PR.** The owner sends the Team Lead one decision request for
-   that finding, in the
-   [decision register](/docs/canvas-portal/01-roadmap.md#5-open-decisions)
-   with a link to the finding, giving these four options and a
-   recommendation:
+   for this PR.** The owner asks the Team Lead right away, as
+   [Decisions are separate from merging](#decisions-are-separate-from-merging)
+   says, with one decision request for that finding that links to it and
+   gives these four options and a recommendation:
    1. **Fix it now in this PR**, even though it's outside the phase or
       bigger than the PR was meant to be. The persona that owns the file
       fixes it here, and the status becomes Fixed in `<sha>`.
@@ -346,12 +359,54 @@ handled as [Potential data breach](/team/QA/personas/cybersecurity-engineer.md#p
 ## Disagreements
 
 When an owner and a reviewer disagree, each states its case in one or two
-sentences in the findings table, and the finding is marked **Waiting on the
-Team Lead**. Personas don't overrule each other. Inside its own area the
+sentences in the findings table, and they try to settle it between them.
+Personas don't overrule each other. Inside its own area the
 owner's view counts most, except on security, as
 [Security is everyone's job](/team/README.md#security-is-everyones-job)
 says. After two rounds on the same point without agreement, the owner
-marks the finding **Waiting on the Team Lead**.
+marks the finding **Waiting on the Team Lead**, the only point where a
+disagreement goes to the Team Lead (Team Lead, 2026-10-27, F-2 on
+[#137](https://github.com/bbranton/TestProj/pull/137)).
+
+### Logging a disagreement
+
+Every disagreement between an owner and a reviewer gets a short summary
+in the Library, even when the two settle it without the Team Lead, so the
+team can see how often it happens and spot patterns at each
+[retro](/.claude/skills/retro/SKILL.md) (Team Lead, 2026-10-27, on
+[#132](https://github.com/bbranton/TestProj/pull/132#discussion_r4391121374)).
+
+- **When:** as soon as the owner disagrees with a finding, or a reviewer
+  disagrees with the owner's reply to one.
+- **Who:** the owner thread writes the file and keeps it up to date until
+  the disagreement ends. It needs no PR.
+- **Where:** one file per disagreement, Library:
+  `disagreements/<date>-pr<number>-<reviewer>-<finding>.md`, with the
+  day it started, the PR, the reviewer persona's file name, and the
+  finding's ID in lower case, such as
+  `2026-10-27-pr134-cybersecurity-engineer-f-2.md`. The reviewer is in the
+  name because finding IDs are unique only within one review.
+- **What:** the form below. A **round** is one reply from each side on
+  the same point. The **outcome** is one of **agreed** (both settled on a
+  third way), **owner** (the reviewer accepted the owner's view),
+  **reviewer** (the owner made the change), **Team Lead** (with what the
+  Team Lead decided), or **open** (not settled when the PR merged or
+  closed).
+- **No secrets:** never write a Canvas token, cookie, secret, or student
+  data in it. Link to the finding instead.
+
+```markdown
+# PR #<number> <finding>: <the point, in a few words>
+
+- **Personas:** <owner persona> (owner), <reviewer persona> (reviewer)
+- **Point:** what the finding asked for, in one sentence
+- **Reviewer's case:** one sentence
+- **Owner's case:** one sentence
+- **Outcome:** agreed / owner / reviewer / Team Lead / open, and what
+  was done
+- **Rounds:** <number>
+- **Links:** the finding, and the decision request if there was one
+```
 
 ## Running reviews with agents
 
@@ -403,7 +458,8 @@ is written on the PR before anyone acts on it.
 - **Before merging,** the owner adds a `### Decision:` entry for each
   decision to the *Decisions* section of the PR description, in the format
   in [Daily notes](/team/workspace.md#daily-notes), and any lasting lesson to
-  its [notes](/team/workspace.md#persona-notes).
+  its [notes](/team/workspace.md#persona-notes), and brings each of the
+  PR's [disagreement files](#logging-a-disagreement) up to date.
 - **After the PR merges or closes,** the owner releases its claim on the
   [board](/team/workspace.md#the-board), and every thread that worked on the PR
   reports its cost and ends, as

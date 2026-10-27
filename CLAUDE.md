@@ -33,7 +33,8 @@ Architect, Developer, UI/UX designer, DevOps engineer, Cybersecurity
 engineer, and CFO.
 
 Personas recommend; the Team Lead has the final say on every decision,
-including any PR's reviewers.
+and can add or drop a PR's reviewers at any time, as
+[Who reviews what](/team/review-protocol.md#who-reviews-what) says.
 
 ### Rule index
 
@@ -66,6 +67,8 @@ without a persona.
   [Wording-only changes notify the persona](/team/review-protocol.md#wording-only-changes-notify-the-persona).
 - Running a review or cross-review:
   [How a review runs](/team/review-protocol.md#how-a-review-runs).
+- Disagreements, and logging each one in the Library:
+  [Disagreements](/team/review-protocol.md#disagreements).
 - Each persona edits only its own files:
   [Who fixes a finding](/team/review-protocol.md#who-fixes-a-finding).
 - Work outside the phase or the PR:

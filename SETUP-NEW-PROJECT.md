@@ -66,10 +66,10 @@ github.com:
 ## 4. Create the board
 
 The [board](/team/workspace.md#the-board) is in the project's shared
-files, not the repo. Create `team/board.md` there with `## Claims` and
+files, not the repo. Create Library: `team/board.md` with `## Claims` and
 `## Notes` headings.
 
-Also create `costs/` there, holding `cost-log.md` with the header row from
+Also create Library: `costs/`, holding `cost-log.md` with the header row from
 the CFO persona's [Columns](/team/Management/personas/cfo.md#columns) and
 an empty `logged/` folder. The
 [CFO persona](/team/Management/personas/cfo.md#role) says how it's used.

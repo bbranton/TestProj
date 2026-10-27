@@ -56,7 +56,7 @@
   what it is for, and named the `retro` skill without linking it, unlike
   the other team process rows. It now says it is a look back at how well
   the personas work together and links the skill.
-- F-2 and F-3 (optional) for the owner, in the skill: keep tokens and
-  student data out of the feedback files, and say whether retro feedback
-  goes in the persona's daily log.
+- F-2 (optional) for the owner, in the skill: say whether a persona's
+  retro feedback goes in its daily log. A point on keeping tokens and
+  student data out of the feedback was already fixed in d044ac7.
 - No decisions made; the PR carries out the Team Lead's decision.

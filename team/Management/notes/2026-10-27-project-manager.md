@@ -601,3 +601,31 @@
 
 - Added *Process ideas* to the team workspace, pointed the `retro` skill
   at the file, and created the file in the shared files.
+
+## Link the glossary, skills, and PR template to rule homes (#97, PR 4)
+
+- Carried out PR 4 of the #97 rollout from `develop@8dd2205`, as the
+  project manager owner thread, since it owns most of the changed files.
+- The `cross-review` skill keeps its steps but links to the review
+  protocol for each rule: who reviews, one thread per reviewer, questions
+  between threads, disagreements, fixes by another persona, follow-up
+  work, and close out. It no longer restates the peer rule, the four
+  follow-up options, the two-rounds rule, or the reading list.
+- The PR template's *Persona review* links to *Who reviews what* and *Two
+  levels of review* instead of restating the peer rule, the cybersecurity
+  engineer's triggers, and "assign the Team Lead". *Deferred findings*
+  and *Screenshots* link to their homes too.
+- The glossary (requirements engineer) and the `log-cost` skill (CFO) are
+  committed by their own personas.
+- The `retro` skill is left alone: #121 (#98) is editing it.
+- No new decision: #97 is already answered and logged in #113.
+- Reviews: CFO Recommend (F-1, `log-cost` restated the CFO's *How it
+  works*, fixed by the CFO in `0469fb5`). Requirements engineer Recommend
+  (F-1 and F-2 in the glossary, fixed by the requirements engineer in
+  `4e348c7`; X-1, "decision request" in `cross-review` step 6, fixed in
+  `191b99f`). Project manager peer Recommend with notes (F-1, link the
+  merge condition, fixed in `de17564`). Cybersecurity engineer Recommend
+  with notes (F-1, a template cue to name the "always" row, fixed here).
+- For PR 5: "assign the Team Lead, don't request review" is stated in both
+  CLAUDE.md *Branches* and the protocol's *Two levels of review*. Pick one
+  home (PM peer F-2 on #122).

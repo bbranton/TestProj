@@ -14,68 +14,69 @@ reviewer.
 1. Check the [team board](/team/workspace.md#the-board). If
    another thread already claimed this review, stop and say so. Otherwise
    claim it.
-2. Merge `develop` into the branch. Pick the reviewers from the
-   protocol's *Who reviews what* table: a peer from your own persona (or,
-   for a team thread with no persona, the persona that owns most of the
-   changed files), plus each other persona whose area the PR touches. Fill
-   in the *Persona review* section of the PR template with a reason for
-   each. If the PR changes a process rule, run the
-   [ripple check](/team/review-protocol.md#ripple-check-for-process-rules)
-   first: every file that states the rule is fixed in this PR by its owner
-   and listed in the PR description.
-3. Send the coordinator the PR and its reviewers. The coordinator starts a
-   fresh thread for each one. Don't write the reviews yourself. Every PR has
-   at least the peer reviewer; never merge without one.
-4. Answer or fix each finding as it arrives. For a question back to a
-   reviewer, ask on the PR comment, then message that reviewer thread with
-   the link. After two rounds without agreement, mark the finding
-   **Waiting on the Team Lead**. For a finding in another persona's files,
-   ask that persona's thread to commit the fix to this branch, as
-   [Fixes by another persona](/team/review-protocol.md#fixes-by-another-persona)
-   says, and pull before your next push.
+2. Merge `develop` into the branch. If the PR changes a process rule, run
+   the [ripple check](/team/review-protocol.md#ripple-check-for-process-rules)
+   first. Pick the reviewers as
+   [Who reviews what](/team/review-protocol.md#who-reviews-what) says, and
+   fill in the *Persona review* section of the PR template with a reason
+   for each.
+3. Send the coordinator the PR and its reviewers, as
+   [One thread per reviewer](/team/review-protocol.md#one-thread-per-reviewer)
+   says. Don't write the reviews yourself.
+4. Answer or fix each finding as it arrives, as
+   [How a review runs](/team/review-protocol.md#how-a-review-runs) says.
+   For a question back to a reviewer, follow
+   [Questions between threads](/team/review-protocol.md#questions-between-threads).
+   For a disagreement, follow
+   [Disagreements](/team/review-protocol.md#disagreements). For a finding
+   in another persona's files, follow
+   [Fixes by another persona](/team/review-protocol.md#fixes-by-another-persona),
+   and pull before your next push.
 5. After pushing fixes for a **Changes needed** verdict, message that
    reviewer thread to re-review.
 6. Post the combined findings table, with anything that needs the Team
-   Lead at the top. For each finding outside the current phase or too big
-   for this PR, send the Team Lead a decision request (fix it in this PR,
-   fix it now in a separate PR, a GitHub issue, or the roadmap backlog) and
-   list it in the PR's *Deferred findings* section,
-   as [Follow-up work](/team/review-protocol.md#follow-up-work) says. Add
-   your `### Decision:` log entries.
-   When every verdict is Recommend or Recommend with notes, merge into
-   `develop`. Then tell each reviewer thread, release the claim on the
-   board, and report your cost with the `log-cost` skill.
+   Lead at the top. Send the Team Lead a decision request for each finding
+   outside the current phase or too big for this PR, and list it in the
+   PR's *Deferred findings* section, as
+   [Follow-up work](/team/review-protocol.md#follow-up-work) says.
+7. Merge into `develop` once
+   [How a review runs](/team/review-protocol.md#how-a-review-runs) allows
+   it, and close out, as [Close out](/team/review-protocol.md#close-out)
+   says. Tell each
+   reviewer thread when the PR merges or closes.
 
 ## As a reviewer thread
 
-1. Read only your persona file, your persona's notes and recent daily logs
-   in your team's `notes/` folder, the review protocol, the PR, and the docs
-   on `develop` that the PR changes or names. Cite `develop@<sha>`. Don't read the owner's thread or the other
-   reviews before writing yours.
+1. Read only what
+   [One thread per reviewer](/team/review-protocol.md#one-thread-per-reviewer)
+   lists, from `develop`, and cite `develop@<sha>`, as
+   [Read from `develop`](/team/review-protocol.md#read-from-develop) says.
 2. Use the team skills where they fit: `trace-requirement` for requirement
    IDs and test coverage, `ci-paths` for whether CI runs.
-3. Log every problem you find as a finding on this PR, naming in *Fix in*
-   the persona whose file needs the change. When the PR changes a process
-   rule, check the files it lists under *Files that state this rule*, and
-   log any other file still stating the old rule. Don't open GitHub issues
-   yourself. Say so when a fix is outside the current phase or too big for
-   this PR: the owner asks the Team Lead where it goes. Handle a
+3. Log every problem you find as a finding on this PR, in the
+   [findings table](/team/review-protocol.md#findings-table), naming in
+   *Fix in* the persona whose file needs the change, as
+   [Who fixes a finding](/team/review-protocol.md#who-fixes-a-finding)
+   says. When the PR changes a process rule, check it as the
+   [ripple check](/team/review-protocol.md#ripple-check-for-process-rules)
+   says. Don't open GitHub issues yourself: say when a fix is outside the
+   current phase or too big for this PR, and the owner handles it as
+   [Follow-up work](/team/review-protocol.md#follow-up-work) says. Handle a
    [potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
-   as that section says. See
-   [Who fixes a finding](/team/review-protocol.md#who-fixes-a-finding).
-4. Post one PR review headed with your persona and verdict, such as
-   "**DevOps engineer review: Changes needed**", with findings as inline comments.
+   as that section says.
+4. Post one PR review headed with your persona and verdict, as
+   [How a review runs](/team/review-protocol.md#how-a-review-runs) says,
+   with findings as inline comments.
    Write it fully first, then post it only while you hold the `[posting]`
    line for this PR on the board, as
    [Posting reviews one at a time](/team/review-protocol.md#posting-reviews-one-at-a-time)
    says.
-5. Stay open until the owner says the PR merged or closed. When the owner
-   asks a question, answer on the PR comment, then tell the owner thread.
-   When asked to re-review, check only the fixes and post your updated
-   verdict. When the owner says the PR is done, report your cost with the
-   `log-cost` skill.
+5. Stay open until the owner says the PR merged or closed. Answer the
+   owner's questions as
+   [Questions between threads](/team/review-protocol.md#questions-between-threads)
+   says. When asked to re-review, check only the fixes and post your
+   updated verdict. When the owner says the PR is done, report your cost
+   with the `log-cost` skill.
 
-Fix findings only in your own persona's files, committed to the PR's branch
-as [Fixes by another persona](/team/review-protocol.md#fixes-by-another-persona)
-says. Never edit another persona's files: the persona that owns each file
-fixes it.
+To fix a finding in your own persona's files, follow
+[Fixes by another persona](/team/review-protocol.md#fixes-by-another-persona).

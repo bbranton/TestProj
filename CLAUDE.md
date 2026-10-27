@@ -31,7 +31,8 @@
   Any persona can read any log. Record decisions in the format in
   [Daily notes](team/workspace.md#daily-notes).
 - Every PR has at least one reviewer: a fresh thread of the owner's own
-  persona reviews it as a peer. A PR that touches only its owner persona's
+  persona reviews it as a peer (for a team thread with no persona, the
+  persona that owns most of the changed files). A PR that touches only its owner persona's
   area (its persona file, notes, and daily log, and the docs it owns) needs
   only that peer, unless an "always" rule in the
   [review protocol](team/review-protocol.md) applies. Another persona's

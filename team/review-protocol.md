@@ -34,9 +34,9 @@ owner thread merges the PR itself and posts the link in its thread.
 Every PR has at least one reviewer: a fresh thread of the owner's own
 persona reviews it as a peer, as a precaution, even when the PR touches
 only the owner's area. When the owner isn't a persona, the peer is the
-persona that owns most of the changed files. A persona's area is its own files in its team folder
-(its persona file, notes, and daily log) and the docs it owns in
-[Who reviews what](#who-reviews-what). Teams hold several personas, so a
+persona that owns most of the changed files. A persona's area is its own
+files in its team folder (its persona file, notes, and daily log) and the
+docs it owns in [Who reviews what](#who-reviews-what). Teams hold several personas, so a
 change to another persona's files in the same team folder is reviewed by
 that persona, and a team script or skill by the other personas who use it.
 The "always" rules below still apply: a code PR always has the Test
@@ -100,8 +100,10 @@ avoid clashes, never as the source of truth.
 
 The author picks the reviewers. The rule: **a peer reviewer from the
 author's own persona, plus each other persona whose area the PR
-touches.** The peer runs in a fresh thread, like every reviewer. The author lists the reviewers in
-the PR description, with one line each on why. Any reviewer can ask for
+touches.** The peer runs in a fresh thread, like every reviewer. When the
+author isn't a persona, the peer is the persona that owns most of the
+changed files. The author lists the reviewers in the PR description, with
+one line each on why. Any reviewer can ask for
 another persona in a finding, and the Team Lead can add or drop reviewers
 at any time.
 

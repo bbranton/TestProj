@@ -49,7 +49,7 @@ screen, or a change to the main flow goes to the Team Lead first.
 Any PR that changes the UI (pages, styles, app screens) must show
 screenshots of each changed page in its description, whoever opens it.
 They're committed to the PR's branch for the review, then removed before
-it merges, so they're never in `develop`'s files, though its history
+it merges, so they're never in `develop`'s files, though git history
 keeps them (Team Lead, 2026-10-27,
 [#129](https://github.com/bbranton/TestProj/issues/129)).
 
@@ -64,6 +64,9 @@ keeps them (Team Lead, 2026-10-27,
    commit that added it:
    `https://raw.githubusercontent.com/bbranton/TestProj/<commit-sha>/docs/screenshots/pr-<number>/<file>.png`.
    A link that names a commit keeps working after the file is removed.
+   Give each image alt text naming the page and width, such as
+   `![Landing page, phone width](...)`, and one line under it on what
+   changed.
 4. As the PR's last commit before merging, remove
    `docs/screenshots/pr-<number>/`. Check that the description still
    shows every image.

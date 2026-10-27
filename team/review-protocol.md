@@ -120,13 +120,18 @@ Older copies are being replaced with links, one owner at a time. A PR
 that changes a process rule finds and fixes every copy before review (Team Lead,
 [#96](https://github.com/bbranton/TestProj/issues/96)):
 
-1. Change the rule in its home. Search `team/`, `.claude/skills/`,
-   `CLAUDE.md`, the PR template (`.github/pull_request_template.md`), and
-   the [glossary](/docs/canvas-portal/glossary.md) for the rule's key
-   words and for links to its heading. Skip retro notes and the daily
-   logs in the Library: they record what was true that day. When a
-   persona's notes in the Library restate the rule, leave that persona a
-   board `[note]` to fix them.
+1. Change the rule in its home. Search every Markdown (`.md`) file in
+   the repo for the rule's key words and for links to its heading. That
+   includes `team/`, `.claude/skills/`, the PR template
+   (`.github/pull_request_template.md`), the product docs in
+   `docs/canvas-portal/`, and the top-level `CLAUDE.md`, `README.md`,
+   `FACTORY.md`, and `SETUP-NEW-PROJECT.md` (Team Lead, 2026-10-27, on
+   [#132](https://github.com/bbranton/TestProj/pull/132)). Skip retro
+   notes and the daily logs in the Library: they record what was true
+   that day. When a persona's notes in the Library restate the rule,
+   leave that persona a board `[note]` to fix them. The owner of a
+   product doc fixes and reviews only the files that the rule change
+   touches, not the whole PR.
 2. Fix every file that still states the old rule in the same PR, by
    replacing the copy with a link to the home, and fix any link the change
    breaks. For each link to the rule's home, check that the sentence

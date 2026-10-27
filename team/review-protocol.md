@@ -38,7 +38,9 @@ owner thread merges the PR itself and posts the link in its thread.
 **`develop` → `main`.** This is a batched release of what's on `develop`.
 Who opens and merges it is in [Branches](/CLAUDE.md#branches).
 Its summary groups everything merged since `main` by area, with links to
-the merged PRs and to the screenshots of any UI change.
+the merged PRs and the Library paths of the screenshots of any UI change,
+as [Screenshots in UI PRs](/team/Development/personas/ui-ux-designer.md#screenshots-in-ui-prs)
+says.
 
 ## Decisions are separate from merging
 

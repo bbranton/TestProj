@@ -53,7 +53,9 @@ github.com:
 4. **Pages**, if the project has a website: Settings > Pages > Source:
    *GitHub Actions*.
 5. **Security** (Settings > Code security): turn on secret scanning,
-   push protection, and Dependabot alerts.
+   push protection, and Dependabot alerts. Under Settings > Actions >
+   General, check that *Workflow permissions* is *Read repository
+   contents*.
 6. **Labels:** create `decision` and one `persona: <job-title>` label per
    persona, with a color and description. Threads can't rename or delete
    labels, so do any later relabeling here too.
@@ -85,8 +87,8 @@ files, not the repo. Create `team/board.md` there with `## Claims` and
    own SSH key, which can push to every repo you own. The `gh` command
    isn't needed.
 4. Give it the standing OK in that thread, in these words: "you have my
-   standing OK to run `git fetch` and `git pull --ff-only` on `develop`
-   when asked". Anything else still needs your OK each time.
+   standing OK to run `git fetch` and `git pull --ff-only` on `develop` in
+   `~/dev/<owner>/<Repo>/develop` when asked". Anything else still needs your OK each time.
 5. Put the thread's title and the `develop` path into the last project
    instruction from step 2.
 

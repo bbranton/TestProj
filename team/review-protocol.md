@@ -192,7 +192,7 @@ current phase, by whichever persona owns the file:
   same PR, as [Fixes by another persona](#fixes-by-another-persona) says.
   That persona joins the PR's reviewers if it wasn't one.
 - **Outside the current phase, or too big for this PR:** the Team Lead
-  decides whether it becomes a GitHub issue or a backlog item, as
+  decides whether it becomes a GitHub issue or a roadmap backlog item, as
   [Follow-up work](#follow-up-work) says.
 
 A fix that needs a new decision, such as moving a requirement between

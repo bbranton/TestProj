@@ -45,7 +45,7 @@ design documents and transition plans, not code: Developers implement them.
   commit the design change to that PR's branch, as
   [Fixes by another persona](/team/review-protocol.md#fixes-by-another-persona)
   says. If it's outside the current phase or too big for that PR, the owner
-  asks the Team Lead whether it becomes a GitHub issue or a backlog item.
+  asks the Team Lead whether it becomes a GitHub issue or a roadmap backlog item.
   Don't hand it to another thread.
 - Raise anything under *Needs the Team Lead* as a decision before writing
   it into the design, not at the end of the PR.

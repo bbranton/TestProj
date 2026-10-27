@@ -3,15 +3,15 @@
 How personas review each other's work. The personas are listed in the
 [team README](/team/README.md).
 
-Everything below is the default when the Team Lead hasn't said otherwise.
-The Team Lead can override any rule here, including the reviewers on any
-PR, as [CLAUDE.md](/CLAUDE.md#team-personas) says.
+The Team Lead has the final say, as [CLAUDE.md](/CLAUDE.md#team-personas)
+says, so everything below is the default when the Team Lead hasn't said
+otherwise.
 
 ## The rules in short
 
 1. **Two levels of review.** PRs into `develop` are reviewed by personas
-   and merged by their owner. The `develop` → `main` release PR is
-   reviewed and merged only by the Team Lead.
+   and merged by their owner. The `develop` → `main` release PR is the
+   Team Lead's alone, as [Branches](/CLAUDE.md#branches) says.
 2. **The Team Lead decides; PRs carry out decisions.** Every real
    decision goes to the Team Lead as a decision request, answered before
    anyone edits a doc for it.
@@ -36,7 +36,7 @@ reviewer's latest verdict is **Recommend** or **Recommend with notes**, the
 owner thread merges the PR itself and posts the link in its thread.
 
 **`develop` → `main`.** This is a batched release of what's on `develop`.
-Who opens, reviews, and merges it is in [Branches](/CLAUDE.md#branches).
+Who opens and merges it is in [Branches](/CLAUDE.md#branches).
 Its summary groups everything merged since `main` by area, with links to
 the merged PRs and to the screenshots of any UI change.
 
@@ -214,8 +214,9 @@ acceptable for its area.
 | Merging a PR into `develop` | The PR's owner, once its reviewers recommend it | Never: the PR only carries out decisions already made |
 | Approving and merging the `develop` → `main` release PR | Team Lead | Always |
 
-Each persona file has a **Decisions** section listing what it decides,
-what it defers and to whom, and what needs the Team Lead.
+This table is a summary. Each persona file's **Decisions** section is the
+home of what it decides, what it defers and to whom, and what needs the
+Team Lead, and wins where the two differ.
 
 ## How a review runs
 

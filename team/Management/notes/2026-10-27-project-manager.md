@@ -524,4 +524,12 @@
   roadmap's stakeholder row restates the Team Lead's say; noted for PR 5.
   Searching `docs/canvas-portal/` in the ripple check waits on the Team
   Lead's answer.
+- Reviews: cybersecurity engineer Recommend; CFO Recommend with notes
+  (F-1 fixed in `fef0b0d`); project manager peer Recommend with notes.
+  Peer F-1 to F-3 fixed: *The rules in short* links to Branches for the
+  release PR, the intro credits CLAUDE.md only with the final say, and
+  *Who decides what* says it is a summary of the persona files'
+  *Decisions*. For PR 5: CLAUDE.md *Branches* should say the Team Lead is
+  the release PR's only reviewer, and *Team personas* still restates the
+  security weight.
 - No new decision: #97 is already answered and logged in #113.

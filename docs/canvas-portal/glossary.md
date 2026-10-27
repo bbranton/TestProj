@@ -94,7 +94,7 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 | Future feature | A Phase 5 idea. The docs may sketch it, but nobody builds it until the Team Lead plans it into a phase. |
 | Requirement ID | `FR-` for a functional requirement (what the app does) and `NFR-` for a non-functional one (how well it does it), in the [requirements](/docs/canvas-portal/02-requirements.md). |
 | Must, Should, Could | A requirement's priority: required for its phase, expected but not blocking, or nice to have. |
-| Other IDs | `G-` a goal, `D-` a decision, and `B-` a backlog item (roadmap); `A-` an assumption, `C-` a constraint, and `Q-` an open question (requirements); `S-` a screen (UI specification); `TP-` a test procedure (test plan). |
+| Other IDs | `G-` a goal, `D-` a product decision, and `B-` a backlog item (roadmap); `A-` an assumption, `C-` a constraint, and `Q-` an open question (requirements); `S-` a screen (UI specification); `TP-` a test procedure (test plan); `TD-` a team decision ([team decision register](/team/decision-register.md)). |
 | Traceability | The chain from each requirement to the design part that builds it and the test that checks it, by requirement ID. |
 
 ## Team process
@@ -147,3 +147,4 @@ These come up often in the docs. Each has a Qt comparison where one helps.
 | 2026-10-27 | Team process terms define the term in one line and link to the rule's home instead of restating it: Team Lead, Reviewers, Decision request, Cross-review, Ripple check, Finding, Verdict, Retro, and Roadmap backlog (#97, PR 4). |
 | 2026-10-27 | Added General error message to the screen words, for the design's `invalid_request` and `internal_error` codes (PR #141, X-1). |
 | 2026-10-27 | General error message says what the term is and links the UI specification for its words, instead of restating them (PR #141, F-11). |
+| 2026-10-27 | Other IDs adds `TD-`, a team decision in the team decision register, and `D-` is now a product decision, from the Team Lead's split of the decision registers (TD-22). |

@@ -1,6 +1,6 @@
-# Security notes
+# Cybersecurity engineer notes
 
-Lasting lessons for the Security persona. See the
+Lasting lessons for the cybersecurity engineer persona. See the
 [team workspace](../../workspace.md#persona-notes) for how notes work.
 
 - The Canvas token is the most harmful thing to leak: a personal access
@@ -12,12 +12,12 @@ Lasting lessons for the Security persona. See the
 - The design's security table is section 7 of
   [03-design.md](../../../docs/canvas-portal/03-design.md#7-security); the
   security requirements are NFR-10 to NFR-14. Start a review there.
-- Joining late is what costs most: on the roadmap review (#4) Security
+- Joining late is what costs most: on the roadmap review (#4) the cybersecurity engineer
   came in after the hosting choice, and three findings were potential data
   breaches. Review hosting, deploy, and token choices while they're made.
-- Check the review-protocol rule on every token-touching PR: Security was
-  missing from the requirements review (#6) until Management and
-  Architecture flagged it, and both raised the same NFR-11 finding.
+- Check the review-protocol rule on every token-touching PR: the cybersecurity engineer was
+  missing from the requirements review (#6) until the project manager and
+  the architect flagged it, and both raised the same NFR-11 finding.
 
 ## Current threat picture
 
@@ -34,7 +34,7 @@ Update this when hosting, the repo, or where real tokens live changes.
 
 Open security findings and potential data breaches. **Gate** is the phase
 step the item must be done before. Clear a row only when it's fixed, and
-say where. A **Proposed** gate isn't in the roadmap yet; Management
+say where. A **Proposed** gate isn't in the roadmap yet; the project manager
 decides it. Review follow-ups don't become GitHub issues any more (Team
 Lead, 2026-10-27, PR #80), so a potential data breach that isn't fixed
 in the PR it was found in is tracked only here: add its row before that
@@ -42,13 +42,13 @@ PR merges. The rows below that link issues are from before the change.
 
 | Item | Potential data breach | Owner | Gate | Status |
 |------|-----------------------|-------|------|--------|
-| #25 Session cookie and writes on Koyeb's shared domain | Yes | Architecture | Phase 1 step 6 | Open |
-| #26 Deploy secrets and backups private on a public repo | Yes | DevOps | Phase 1 step 6 | Open |
-| #17 Incident plan | No | Security | Phase 1 step 6 | Open |
-| #19 Key and session secret storage and rotation | No | DevOps | Phase 1 step 6 | Open |
-| #20 Secret scanning and dependency alerts | No | DevOps | Phase 1 step 6 | Open |
-| #46 Team Lead decisions on token storage and sending | No | Architecture (Security briefs) | Phase 1 step 2 | Open |
-| #18 Output escaping and a Content-Security-Policy | No | Architecture | Proposed: Phase 1 step 6 | Open |
+| #25 Session cookie and writes on Koyeb's shared domain | Yes | Architect | Phase 1 step 6 | Open |
+| #26 Deploy secrets and backups private on a public repo | Yes | DevOps engineer | Phase 1 step 6 | Open |
+| #17 Incident plan | No | Cybersecurity engineer | Phase 1 step 6 | Open |
+| #19 Key and session secret storage and rotation | No | DevOps engineer | Phase 1 step 6 | Open |
+| #20 Secret scanning and dependency alerts | No | DevOps engineer | Phase 1 step 6 | Open |
+| #46 Team Lead decisions on token storage and sending | No | Architect (Security briefs) | Phase 1 step 2 | Open |
+| #18 Output escaping and a Content-Security-Policy | No | Architect | Proposed: Phase 1 step 6 | Open |
 | #22 Tests for reused session cookies and HTML in Canvas text | No | Test engineer | Proposed: Phase 1 exit | Open |
 | #21 Token expiry and deleting the token in Canvas | No | Requirements engineer | Proposed: Phase 1 step 6 | Open |
-| #16 Client security document | No | Security | Anyone but the Team Lead connects | Open |
+| #16 Client security document | No | Cybersecurity engineer | Anyone but the Team Lead connects | Open |

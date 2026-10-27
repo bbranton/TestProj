@@ -13,10 +13,10 @@ docs read clearly. It is not in scope until its phase starts, as the
 
 - **The requirements engineer owns what each term means.** A meaning changes in the
   same PR as the requirement it comes from.
-- **UI/UX keeps the screen words in step.** The exact words on screen
+- **The UI/UX designer keeps the screen words in step.** The exact words on screen
   live in the [UI specification](04-ui-specification.md). A PR that changes
   a screen word changes its entry here too.
-- **Management keeps the team process terms in step** with the
+- **The project manager keeps the team process terms in step** with the
   [review protocol](../../team/review-protocol.md) and the
   [team README](../../team/README.md).
 - **Every persona checks the glossary** before naming something new in a
@@ -101,16 +101,16 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 | Term | Meaning |
 |------|---------|
 | Team Lead | The project owner. Has the final say on every decision, and is the only one who approves or merges the `develop` → `main` release PR. |
-| Persona | A role an agent takes on, such as UI/UX or Security, with its own area and review checklist. The list is in the [team README](../../team/README.md). |
+| Persona | A role an agent takes on, such as the UI/UX designer or the cybersecurity engineer, with its own area and review checklist. The list is in the [team README](../../team/README.md). |
 | Owner | The persona that writes a piece of work and answers its findings. |
 | Reviewers | The personas a PR's author picks: a peer from the owner's own persona (for a team thread, the persona that owns most of the changed files), plus one for each other area the PR touches, as the [review protocol](../../team/review-protocol.md#who-reviews-what) says. Every PR has at least one. The Team Lead can change them. |
-| Decision request | A question for the Team Lead, with options, a recommendation, and the docs it changes, in Management's decision register or a `decision` issue. PRs only carry out answered requests; see the [review protocol](../../team/review-protocol.md#decisions-are-separate-from-merging). |
+| Decision request | A question for the Team Lead, with options, a recommendation, and the docs it changes, in the project manager's decision register or a `decision` issue. PRs only carry out answered requests; see the [review protocol](../../team/review-protocol.md#decisions-are-separate-from-merging). |
 | Cross-review | A review where each reviewer runs in its own fresh thread. |
 | Finding | One problem a reviewer raises, with an ID such as `F-1`, or `X-1` when the fix is in another doc. |
 | Verdict | A reviewer's sign-off: Recommend, Recommend with notes, or Changes needed. |
 | Potential data breach | A finding that could expose a token, a session, or a student's data to anyone else. Always critical and must-fix. |
 | Team board | The shared file where threads claim work and leave handoff notes, as the [team workspace](../../team/workspace.md#the-board) says. Not the portal's board. |
-| Roadmap backlog | The list in the [roadmap](01-roadmap.md#9-backlog) of work a review found outside the current phase or too big for its PR, with `B-` IDs. Management keeps it and reviews it with the Team Lead at each phase boundary. Not the Backlog list. |
+| Roadmap backlog | The list in the [roadmap](01-roadmap.md#9-backlog) of work a review found outside the current phase or too big for its PR, with `B-` IDs. The project manager keeps it and reviews it with the Team Lead at each phase boundary. Not the Backlog list. |
 
 ## Web terms
 

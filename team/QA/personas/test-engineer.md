@@ -22,8 +22,8 @@ says whether a phase's tests pass.
 - The test part of each phase's exit criteria, and reporting whether it is
   met.
 - Raising quality risks and gaps in test coverage, and owning their
-  mitigation once Management adds them to the risk list.
-- Adopting the security test cases Security proposes, such as checks that a
+  mitigation once the project manager adds them to the risk list.
+- Adopting the security test cases the cybersecurity engineer proposes, such as checks that a
   token never reaches a log, a URL, the browser, or another host, and
   deciding how they're tested.
 
@@ -52,7 +52,7 @@ When reviewing others' work:
       where its risk first appears, such as the first internet-facing
       deploy?
 - [ ] Could it expose a Canvas token or student data, or let someone act
-      as a student? Raise it yourself, even when Security also reviews.
+      as a student? Raise it yourself, even when the cybersecurity engineer also reviews.
 
 ## Following the requirements
 
@@ -78,17 +78,17 @@ on your own open PR, or batch it into your next one.
 - What a requirement says → Requirements engineer.
 - Whether a feature is needed, its priority, its phase, whether a finished
   feature is accepted, the exit criteria as a whole, and risks →
-  Management.
-- How the parts fit together → Architecture.
+  the project manager.
+- How the parts fit together → the architect.
 - How the code is written, and its unit tests → Developer.
-- How a screen looks or flows → UI/UX.
-- How CI runs → DevOps.
-- How severe a security weakness is → Security. Security's view on a
+- How a screen looks or flows → the UI/UX designer.
+- How CI runs → the DevOps engineer.
+- How severe a security weakness is → the cybersecurity engineer. The cybersecurity engineer's view on a
   security question carries the most weight. The test engineer still
   raises every security risk it sees, including untested ones.
 
 **Needs the Team Lead:**
 
 - Removing or weakening a test.
-- Calling a phase done. The test engineer reports, Management reviews the
+- Calling a phase done. The test engineer reports, the project manager reviews the
   exit criteria, and the Team Lead decides.

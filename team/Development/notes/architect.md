@@ -1,6 +1,6 @@
-# Architecture notes
+# Architect notes
 
-Lasting lessons for the Architecture persona. See the
+Lasting lessons for the architect persona. See the
 [team workspace](../../workspace.md#persona-notes) for how notes work. Design
 facts and decisions belong in the [design](../../../docs/canvas-portal/03-design.md),
 not here.
@@ -14,5 +14,5 @@ not here.
   it in one batch with the other changes from that review. One commit per
   upstream change made design PR #7 run to 21 commits.
 - Before filing a review finding, read the findings already posted on the
-  PR. On requirements PR #6, Management and Architecture filed the same Q-8
+  PR. On requirements PR #6, the project manager and the architect filed the same Q-8
   finding.

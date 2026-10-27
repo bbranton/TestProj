@@ -444,6 +444,11 @@ Open decisions need the Team Lead's call; each has a recommendation, from
 the DevOps engineer for D-3 and from the architect for D-8. Settled decisions are struck
 through and kept for the record.
 
+This section is the project manager's decision register. It records each
+decision and its answer; it isn't where the Team Lead is asked. A
+[decision request](/team/review-protocol.md#decisions-are-separate-from-merging)
+goes to the Team Lead right away, where it came up.
+
 | ID | Decision | Options | Recommendation | Needed by |
 |----|----------|---------|----------------|-----------|
 | ~~D-1~~ | ~~Frontend framework~~ | **React** (largest ecosystem, most tutorials, mature drag-and-drop libraries such as dnd-kit) or **Svelte** (less code, closer to QML's declarative feel, smaller community) | **Decided** (Team Lead, 2026-10-25): React, with TypeScript and Vite. React has the most Trello-style board examples and the best support from Pragmatic drag and drop. | Done |
@@ -593,3 +598,4 @@ never goes here, as that section says.
 | 2026-10-27 | The Team Lead's options for such a finding are four: fix it now in the same pull request, fix it now in a separate pull request by a new thread, a GitHub issue, or the section 9 backlog. From the Team Lead. |
 | 2026-10-27 | The potential data breach rule is no longer restated in the step 6 gate list, the risk list, or the backlog: each links to its one home in the cybersecurity engineer persona. From the Team Lead's answer on #97. |
 | 2026-10-27 | The Team Lead and team personas rows in section 8 link to CLAUDE.md for the final say, branches, and phases instead of restating them. From the Team Lead's answer on #97. |
+| 2026-10-27 | Section 5 is a record of decisions and their answers, not where the Team Lead is asked: each decision request goes to the Team Lead right away, where it came up. From the Team Lead, on #132. |

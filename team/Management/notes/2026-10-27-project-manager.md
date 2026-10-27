@@ -1,6 +1,6 @@
 # 2026-10-27 · Management (project manager)
 
-## Rewrite the review protocol (PR to follow)
+## Rewrite the review protocol (#71)
 
 - Rewrote `team/review-protocol.md` around seven rules from the Team Lead's
   discussion with the coordinator.
@@ -20,7 +20,7 @@
   (UI → UI/UX, tokens, secrets, hosting, or deploys → Security), reviews are
   quick, and the author fixes right away. The Team Lead only reviews and
   merges the `develop` → `main` release.
-- **Links:** `team/review-protocol.md`
+- **Links:** #71, `team/review-protocol.md`
 
 ### Decision: Small, focused PRs instead of one open PR per persona
 
@@ -32,7 +32,7 @@
   `develop` quickly
 - **Outcome:** as recommended; smaller, focused PRs are preferred over
   sprawling ones
-- **Links:** `team/review-protocol.md#small-focused-prs`
+- **Links:** #71, `team/review-protocol.md#small-focused-prs`
 
 ### Decision: The Team Lead decides through decision requests, not PR approvals
 
@@ -47,4 +47,4 @@
   decisions already made, so owners merge into `develop` themselves. The
   coordinator tells the Team Lead in real time when a PR merges or a
   request is raised.
-- **Links:** `team/review-protocol.md#decisions-are-separate-from-merging`
+- **Links:** #71, `team/review-protocol.md#decisions-are-separate-from-merging`

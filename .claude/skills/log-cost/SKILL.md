@@ -17,7 +17,8 @@ yourself, as the [CFO persona](/team/Management/personas/cfo.md#role) says.
    don't guess.
 2. Count the [size units](/team/Management/personas/cfo.md#size-units):
    threads, PRs, review rounds, and files changed.
-3. Write the row in the [column order](/team/Management/personas/cfo.md#columns).
+3. Write the row in the [column order](/team/Management/personas/cfo.md#columns),
+   tagging the work *Product* or *Process* as that section says.
 4. Save it as a new row file in the project's Library, named as the CFO
    persona's [How it works](/team/Management/personas/cfo.md#how-it-works)
    says, such as

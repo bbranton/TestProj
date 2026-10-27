@@ -157,8 +157,8 @@ are paired with the course or list they act on, such as
 When the portal itself fails, not Canvas or the student, the backend
 answers `invalid_request` or `internal_error`
 ([Backend API](/docs/canvas-portal/03-design.md#4-backend-api)). The
-student can't fix it, so every screen shows the same general error
-message: it starts "Something went wrong in the portal", says what didn't
+student can't fix it, so every screen shows a general error message
+that starts "Something went wrong in the portal", says what didn't
 happen, and says what to try. It never shows the code or the backend's
 `message` text.
 
@@ -168,12 +168,14 @@ already used:
 
 | What failed | Where it shows | Message |
 |-------------|----------------|---------|
-| Signing in (S-1) | S-1's sign-in message | "Sign-in didn't finish. Try again, or use a personal Google account." (S-1's own message, since the student can't tell the cause) |
 | Connecting Canvas (S-2) | The message at the top of S-2, keeping what the student typed in the address field | "Something went wrong in the portal, so Canvas isn't connected yet. Select Connect to try again." |
 | Loading the board (S-4), with no board on screen yet | In place of the lists, like S-4's other messages | "Something went wrong in the portal, so your board didn't load. Reload the page to try again." |
 | Starting or following a Refresh (S-4, S-10) | The warning banner's place on S-4, and S-10's top line when it's open; the board keeps the last complete copy | "Something went wrong in the portal, so the Refresh didn't finish. Showing data from Oct 25, 10:42 AM." with [Retry refresh]. It stays until a Refresh completes. |
 | Disconnecting Canvas or signing out (S-6) | Under the button that was selected; Canvas stays connected, or the student stays signed in | "Something went wrong in the portal, so Canvas is still connected. Try again." or "Something went wrong in the portal, so you're still signed in. Try again." |
 
+A failed sign-in never answers with these codes. It goes back to S-1 and
+shows S-1's sign-in message
+([design section 5](/docs/canvas-portal/03-design.md#5-signing-in-to-the-portal-d-7)).
 Signing out from the account menu shows its message in the warning
 banner's place on S-4, since the menu has closed. Like the other status
 messages, these are read out by screen readers when they appear.
@@ -959,7 +961,7 @@ flowchart TD
 | 2026-10-26 | Links to the new [glossary](/docs/canvas-portal/glossary.md), and screen words follow it, from the Team Lead's review. |
 | 2026-10-26 | S-2's token steps ask for an expiry date, and disconnecting reminds the student to delete the token in Canvas (risk R-2), from the Team Lead's review. |
 | 2026-10-26 | Cards removed from Canvas are hidden by default, not for good: from Phase 2 a [◌ Removed from Canvas] button on the course row shows them, grayed out in their lists. From the Team Lead's review. |
-| 2026-10-27 | Added the *General error message* for the design's `invalid_request` and `internal_error` codes: where it shows on S-1, S-2, S-4, S-6, and S-10, in each screen's existing message place, with no new screen or button (PR #141, X-1). |
+| 2026-10-27 | Added the *General error message* for the design's `invalid_request` and `internal_error` codes: where it shows on S-2, S-4, S-6, and S-10, in each screen's existing message place, with no new screen or button (PR #141, X-1). A failed sign-in goes back to S-1 with its own message instead (PR #141, X-2). |
 | 2026-10-26 | The [◌ Removed from Canvas] button moves to Phase 2, with dragging, and the S-10 summary says when a Refresh removed cards, from the Team Lead's review. |
 | 2026-10-26 | Cards show when an assignment opens (Canvas "Available from") until it does, and when it closed (Canvas "Until") after that, from Phase 1, from the Team Lead's review. |
 | 2026-10-26 | Course label colors move to Phase 5, from the Team Lead: until then every course uses the neutral Slate strip with its code in white. |

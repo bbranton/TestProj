@@ -8,8 +8,8 @@
 # When it runs: on every pull request, and on pushes to main and develop,
 # but only when files under canvas-portal/ or this workflow change. Docs-only
 # PRs get no checks from it; the ci-paths skill says whether a branch
-# triggers it. It only tests and builds: it deploys nothing and uses no
-# secrets.
+# triggers it. It only tests and builds: it deploys nothing, uses no
+# secrets, and its automatic GitHub token can only read the repo.
 
 name: Canvas portal CI
 

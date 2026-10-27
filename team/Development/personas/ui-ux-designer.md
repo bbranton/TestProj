@@ -37,10 +37,9 @@ screen, or a change to the main flow goes to the Team Lead first.
 - **Ask when an ask is short or unclear.** Restate it and check before
   editing. "Deleting cards" meant orphaned cards, not personal cards.
 - **Track what other docs owe.** Keep a list of the changes the UI/UX designer asked
-  other personas for, and check each off once it merges. A review of
-  another doc that affects the UI spec is handled as
-  [Fixes by another persona](/team/review-protocol.md#fixes-by-another-persona)
-  says.
+  other personas for, and check each off once it merges. When a review of
+  another doc affects the UI spec, the spec fix goes on that same PR, as
+  [Who fixes a finding](/team/review-protocol.md#who-fixes-a-finding) says.
 - **Map data to screens.** For every Canvas field the design fetches,
   decide whether it shows and where. `unlock_at` and `lock_at` were only
   caught by the Team Lead.

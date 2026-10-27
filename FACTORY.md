@@ -53,8 +53,16 @@ goal.
 - **Done when** the Canvas portal meets Phase 1's exit criteria (roadmap
   milestone [M2](/docs/canvas-portal/01-roadmap.md#4-milestones)) on its
   test deploy and is released to `main`, the Team Lead is happy with the
-  process, and the process is frozen as **version 1**: a git tag on
-  `develop`, so later runs can name exactly which process they used.
+  process, and the process is frozen as **version 1**: an annotated git
+  tag `process-v1` on `develop`, so later runs can name exactly which
+  process they used. Process tags start with `process-`, so they can't be
+  mistaken for product release tags on `main`.
+
+A process version is the repo at its tag (`CLAUDE.md`, `team/`,
+`.claude/skills/`, `.github/`) plus a copy of the persona notes taken when
+it's tagged, since the Library keeps no history. How the notes are copied,
+or whether A/B runs start with empty notes instead, is decided when Stage 1
+ends.
 
 ### Stage 2, if needed: A second product
 

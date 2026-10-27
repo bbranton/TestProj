@@ -5,17 +5,20 @@
 #   - frontend: installs the frontend with npm ci, runs its tests, and
 #     builds it, so a change that breaks the build fails here.
 #
-# When it runs: on every pull request, and on pushes to main and develop,
-# but only when files under canvas-portal/ or this workflow change. Docs-only
-# PRs get no checks from it; the ci-paths skill says whether a branch
-# triggers it. It only tests and builds: it deploys nothing, uses no
-# secrets, and its automatic GitHub token can only read the repo.
+# When it runs: on pushes to main and develop when files under
+# canvas-portal/ or this workflow change. On a pull request it always
+# starts, because backend and frontend are required checks on develop and
+# a required check that never reports blocks the merge. Its changes job
+# then skips backend and frontend unless the PR touches those same paths,
+# and GitHub counts a skipped job as passing. The ci-paths skill says
+# whether a branch's jobs run. It only tests and builds: it deploys
+# nothing, uses no secrets, and its automatic GitHub token can only read
+# the repo.
 
 name: Canvas portal CI
 
 on:
   pull_request:
-    paths: ["canvas-portal/**", ".github/workflows/canvas-portal-ci.yml"]
   push:
     branches: [main, develop]
     paths: ["canvas-portal/**", ".github/workflows/canvas-portal-ci.yml"]
@@ -24,7 +27,31 @@ permissions:
   contents: read
 
 jobs:
+  # Says whether backend and frontend should run. The paths it checks must
+  # match the push paths filter above.
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      portal: ${{ steps.diff.outputs.portal }}
+    steps:
+      - uses: actions/checkout@v4
+        if: github.event_name == 'pull_request'
+        with:
+          fetch-depth: 2  # the PR's merge commit and the base it merges into
+          persist-credentials: false  # the job never pushes
+      - id: diff
+        run: |
+          if [ "$GITHUB_EVENT_NAME" != pull_request ]; then
+            echo "portal=true" >> "$GITHUB_OUTPUT"  # the push filter already matched
+          elif git diff --name-only HEAD^1 HEAD | grep -qE '^(canvas-portal/|\.github/workflows/canvas-portal-ci\.yml$)'; then
+            echo "portal=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "portal=false" >> "$GITHUB_OUTPUT"
+          fi
+
   backend:
+    needs: changes
+    if: needs.changes.outputs.portal == 'true'
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -40,6 +67,8 @@ jobs:
         run: pytest
 
   frontend:
+    needs: changes
+    if: needs.changes.outputs.portal == 'true'
     runs-on: ubuntu-latest
     defaults:
       run:

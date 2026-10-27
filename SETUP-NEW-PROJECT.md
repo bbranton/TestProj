@@ -45,9 +45,13 @@ github.com:
 1. **Branches:** create the repo with a README, so `main` has a first
    commit. Then create `develop` from `main`, and make `develop` the
    default branch (Settings > General).
-2. **Ruleset on `main`** (Settings > Rules > Rulesets > New branch
-   ruleset), with no bypass: *Restrict deletions*, *Block force pushes*,
-   *Require a pull request before merging*.
+2. **Rulesets** (Settings > Rules > Rulesets > New branch ruleset). One
+   on `main`, with no bypass: *Restrict deletions*, *Block force pushes*,
+   *Require a pull request before merging*. One on `develop` with
+   *Require status checks to pass* and the checks `docs`, `backend`, and
+   `frontend` from GitHub Actions, so a PR only merges once its CI
+   passes. Add the checks after each has run once, since GitHub only
+   offers check names it has seen.
 3. **Merge settings:** as the
    DevOps engineer notes record them, in the project's shared files
    (Library: `notes/devops-engineer.md`).

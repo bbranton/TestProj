@@ -83,7 +83,7 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 | Screen ID | An ID for each screen, such as `S-4` for the board. | [UI specification](/docs/canvas-portal/04-ui-specification.md) |
 | Button ID | A name for a button in capitals with underscores, such as `REFRESH`, used in logs, docs, code, and tests. The full list is in the [UI specification's conventions](/docs/canvas-portal/04-ui-specification.md#conventions-on-every-screen). | UI specification |
 | Label | A button's name in plain words, such as "Refresh from Canvas". Screen readers announce it, and icon buttons have no other name. | UI specification |
-| General error message | What a screen shows when the portal itself fails, not Canvas or the student: "Something went wrong in the portal", what didn't happen, and what to try. It never shows an error code. | [UI specification](/docs/canvas-portal/04-ui-specification.md#general-error-message) |
+| General error message | What a screen shows when the portal itself fails, not Canvas or the student. It never shows an error code. Its words on each screen are in the UI specification. | [UI specification](/docs/canvas-portal/04-ui-specification.md#general-error-message) |
 | Dialog (modal) | A box that opens over the page and must be closed before using the page behind it, like a QML `Dialog`. The card back *(Phase 5)* is one. | S-5 |
 
 ## Document terms
@@ -146,3 +146,4 @@ These come up often in the docs. Each has a Qt comparison where one helps.
 | 2026-10-27 | Potential data breach now matches the rule's one home, including acting as the student, and links to it instead of restating the handling, from the Team Lead's answer on #97. |
 | 2026-10-27 | Team process terms define the term in one line and link to the rule's home instead of restating it: Team Lead, Reviewers, Decision request, Cross-review, Ripple check, Finding, Verdict, Retro, and Roadmap backlog (#97, PR 4). |
 | 2026-10-27 | Added General error message to the screen words, for the design's `invalid_request` and `internal_error` codes (PR #141, X-1). |
+| 2026-10-27 | General error message says what the term is and links the UI specification for its words, instead of restating them (PR #141, F-11). |

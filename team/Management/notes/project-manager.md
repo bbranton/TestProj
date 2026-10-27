@@ -33,10 +33,14 @@ Lasting lessons for the project manager persona. See the
 - Issues opened under the old follow-up rule stay open until done (Team
   Lead, 2026-10-27), so check open issues as well as the roadmap backlog
   when planning.
-- A potential data breach never goes on the backlog: it is fixed in the
-  PR, or first in the current phase and before the next deploy, tracked in
-  the cybersecurity engineer's register meanwhile. Check that register at every phase
-  boundary and before every deploy. Only the Team Lead can delay one.
+- Check the cybersecurity engineer's
+  [security register](/team/QA/notes/cybersecurity-engineer.md#security-register)
+  at every phase boundary and before every deploy; breach handling is in
+  [Potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach).
+- The roadmap applies team rules too (risk ratings, the backlog, step 6
+  gates), but the ripple check's search list leaves out `docs/` apart
+  from the glossary. When a ripple check covers a rule the project manager
+  uses, search `01-roadmap.md` as well (#113, X-1).
 - Before any deploy that puts real tokens online, the roadmap lists its
   go-live conditions (incident plan, key handling, secret scanning, cookie
   safety on the host's domain, private secrets and backups). A shared
@@ -69,3 +73,26 @@ Lasting lessons for the project manager persona. See the
   prose headers of other personas' files (such as the cost log's intro)
   match. Grep for the old name outside change logs, daily logs, and old
   finding IDs, and check the labels on open issues (#83).
+- Two retros called on the same day collide on the `retro` skill's
+  paths, which are named by date alone. Give each a suffix, such as
+  `2026-10-27-docs` and `2026-10-27-process`, for both the feedback folder
+  and the note. When combining, merge suggestions that ask for the same
+  change into one decision request, and send points outside the retro's
+  topic to the other retro (2026-10-27).
+- A process rule lives in several files, and #86, #88, #89, and #91 each
+  found one still stating the old rule. Run the
+  [ripple check](/team/review-protocol.md#ripple-check-for-process-rules)
+  on every process PR, and bring the owners of the matching files in
+  before review, not after (Team Lead, 2026-10-27, #96).
+- Each team rule has one home, listed in the
+  [ripple check](/team/review-protocol.md#ripple-check-for-process-rules),
+  and other files link to it (Team Lead, 2026-10-27, #97). When writing
+  any team file, link to the home instead of summarizing the rule: even a
+  one-line summary drifts, as the project manager's old "the CFO owns the
+  log" line did after #72.
+- A persona whose persona file changes only in wording or a link is
+  notified with a board `[note]`, not made a reviewer, as
+  [Wording-only changes](/team/review-protocol.md#wording-only-changes-notify-the-persona)
+  says (Team Lead, 2026-10-27, #99). The test engineer had reviewed #88,
+  #89, and #91 for one sentence or link each, at about $1 a thread. List
+  notified personas in the PR description so the peer can check them.

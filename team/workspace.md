@@ -21,14 +21,8 @@ Each team has a folder under `team/`, with three subfolders:
   after the job title, such as `architect.md`.
 - `scripts/`: reusable scripts for jobs the team repeats often.
 
-Each persona may update its own files in its team's folder (its persona
-file, notes, and daily log) through a PR like any other change, reviewed
-only by a peer from its own persona; see the *Only your own persona's
-area* row of the [review protocol](/team/review-protocol.md#who-reviews-what). Another persona's
-files, even in the same team, get that persona's review, and a team script
-or skill gets a review from the other personas who use it. Shared files at
-the top of `team/` and other teams' folders are not a persona's to change
-alone.
+Changes to these folders go through a PR like any other change, reviewed
+as [Who reviews what](/team/review-protocol.md#who-reviews-what) says.
 
 ## Persona notes
 
@@ -89,7 +83,7 @@ it, and the `SKILL.md` says how to run it.
 |-------|--------------|----------------|
 | `trace-requirement` | Finds a requirement ID in the design, UI spec, test plan, and code; lists requirements with no test. Script: [`QA/scripts/trace.py`](/team/QA/scripts/trace.py) | Requirements engineer, Test engineer, Developer |
 | `ci-paths` | Says which workflows a branch's changes will trigger. Script: [`Development/scripts/ci_paths.py`](/team/Development/scripts/ci_paths.py) | DevOps engineer |
-| `log-cost` | Reports a thread's real token use and cost to the CFO, who adds it to the [cost log](/team/Management/cost-log.md) | Every thread, when its work is done |
+| `log-cost` | Reports a thread's real token use and cost to the CFO for the [cost log](/team/Management/cost-log.md), as the [CFO persona](/team/Management/personas/cfo.md#role) says | Every thread, when its work is done |
 | `cross-review` | Steps for the owner and for each fresh reviewer thread in a cross-review | Owner and reviewer threads |
 | `retro` | Steps for a team retro the Team Lead calls: each persona's feedback, and the project manager's note in `team/retros/` | Coordinator, every persona, project manager |
 
@@ -102,9 +96,9 @@ standard library, so they run anywhere without installing anything.
 
 [`.github/pull_request_template.md`](/.github/pull_request_template.md)
 fills in every new PR's description with the sections the
-[review protocol](/team/review-protocol.md) needs: requirement IDs, the owner, the
-reviewers the author picked and why, verdicts, findings,
-deferred findings, testing, and screenshots. Keep its sections in step with the protocol.
+[review protocol](/team/review-protocol.md) needs: the files that state a changed process
+rule, requirement IDs, the owner, the reviewers the author picked and why,
+verdicts, findings, deferred findings, testing, and screenshots. Keep its sections in step with the protocol.
 
 ## The board
 
@@ -139,8 +133,56 @@ Rules:
 3. **Stale claims.** A claim older than two days with no open PR can be
    removed by anyone. Say so in your thread.
 4. **Notes are for handoffs**, such as advice or a question for whoever
-   picks up a persona next. The persona it's for deletes the note once
+   picks up a persona next, or a
+   [wording-only change](/team/review-protocol.md#wording-only-changes-notify-the-persona)
+   to its persona file. The persona it's for deletes the note once
    handled. Anything lasting moves into that persona's notes file.
 
 A session outside this project has no board. It should check open PRs for
 the same doc instead.
+
+## One thread per PR
+
+Every PR gets its own fresh owner thread (Team Lead, 2026-10-27,
+[#95](https://github.com/bbranton/TestProj/issues/95)). Long, reused
+threads were most of the team's bill, and a fresh thread for one small PR
+costs about $1 to $2.
+
+- **A thread carries one PR to the end.** Its review rounds, fixes, and
+  daily log entries stay in that thread.
+- **At about $10, ask the Team Lead about a hand-off.** After each Team
+  Lead round, an owner thread checks its cost as the `log-cost` skill's
+  *Checking cost mid-thread* says. Once it passes about $10, it asks the
+  Team Lead whether now is a good time to hand off; there's no hard cap,
+  and the Team Lead may say carry on. If `get_session` has no
+  `external_metadata.usage.cost_usd`, ask after about four Team Lead
+  rounds instead, and say the thread can't read its cost. On a yes, the
+  thread:
+  1. adds a hand-off note to its persona's daily log and pushes it to the
+     PR branch: the PR and branch, what's done, what's left, open
+     findings, decisions waiting on the Team Lead, and the files to read
+     first;
+  2. leaves a board `[note]` for the next thread of its persona that
+     points to that log entry, and hands over its board claim;
+  3. reports its cost with the `log-cost` skill;
+  4. asks the coordinator for a fresh thread of the same persona, linking
+     the note, and unsubscribes from the PR's GitHub activity, since
+     events reach only one thread per PR.
+
+  The fresh thread subscribes to the PR, checks the PR for reviews and CI
+  results it missed in between, tells the open reviewer threads it is now
+  the owner, deletes the board note, and carries on.
+- **Once the PR merges or closes, the thread is done.** It reports its
+  cost with the `log-cost` skill and takes no new work.
+- **New work goes to a new thread.** Only the coordinator starts threads.
+  The coordinator also starts the CFO's daily batch thread, as
+  [Daily batch thread](/team/Management/personas/cfo.md#daily-batch-thread)
+  says. When the Team Lead asks a thread for work outside its PR, or follow-up
+  work after its PR has merged, the thread asks the coordinator for a
+  fresh thread of the persona that owns the work, attaching the Team
+  Lead's message, and tells the Team Lead in one line. The new thread
+  starts from the persona's notes, its daily log, and the PR, not from the
+  old thread.
+- **Reviewers already work this way:** each reviewer is a fresh thread, as
+  the [review protocol](/team/review-protocol.md#one-thread-per-reviewer)
+  says.

@@ -31,15 +31,37 @@ PRs, not to restrict who may edit it.
   messages the CFO thread when one is open, instead of adding rows to its
   own PR.
 - **Batch the rows.** The CFO commits every pending `[cost]` note in one
-  PR, about once a day or when a doc PR merges, not once per report. One
-  open cost-log PR at a time: new rows go onto it while it's open.
+  PR, in the [daily batch thread](#daily-batch-thread), not once per
+  report. One open cost-log PR at a time: new rows go onto it while it's
+  open.
 - **Check, then commit.** Before adding a row, check it has every column,
   uses the size units, and isn't already in the log. A reused thread logs
-  only the change since its last row. Ask the reporting thread about
+  only the change since its last row. Two or more owner rows for one PR
+  are expected after a hand-off when their notes say so; add them
+  together. Ask the reporting thread about
   anything that looks wrong instead of guessing.
 - **Clear the board.** After the PR merges, delete the `[cost]` notes it
   added, and only those.
 - **Own row too.** The CFO logs its own cost in the same batch PR.
+
+## Daily batch thread
+
+The CFO can't start itself, so each day the
+[board](/team/workspace.md#the-board) has `[cost]` notes, the coordinator
+starts one fresh CFO thread for them (Team Lead, 2026-10-27,
+[#102](https://github.com/bbranton/TestProj/issues/102)). If a cost-log PR
+from an earlier day is still open, the coordinator messages that PR's CFO
+thread to add the new notes instead.
+
+The batch PR's description lists the rows that need a look, with the
+thread each came from:
+
+- rows whose counts don't follow the
+  [size units](/team/Management/cost-log.md#size-units);
+- rows that say `n/a`, and why.
+
+Then the thread works as [How it works](#how-it-works) says, and ends once
+its PR has merged and it has cleared its notes from the board.
 
 ## Review checklist
 

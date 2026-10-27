@@ -60,3 +60,48 @@
   retro feedback goes in its daily log. A point on keeping tokens and
   student data out of the feedback was already fixed in d044ac7.
 - No decisions made; the PR carries out the Team Lead's decision.
+
+## Review of PR #112: ripple check for process rules
+
+- Reviewed the new *Ripple check* glossary row and its change log entry
+  against `develop@94262eb`. The row sits with the team process terms,
+  links the new protocol section, and the change log row cites #96. No
+  requirement IDs touched.
+- F-1, fixed on the PR branch: the meaning described steps instead of
+  saying what the term is, and repeated the protocol's list of places to
+  search, which would itself need a ripple check whenever that list
+  changes. It also left out that each file's owner makes the fix. It now
+  says what the check is, who fixes each file, and links the protocol for
+  the rest.
+- F-2, fixed on the PR branch: "ripple check" sits close to the project
+  manager's *ripple list* for phase and scope decisions, so the row now
+  says it isn't that.
+- No decisions made; the PR carries out the Team Lead's decision.
+
+## Glossary fix and review of PR #113: one home for the breach rule
+
+- Fixed the *Potential data breach* glossary row on the PR branch. The
+  meaning left out acting as the student, so it was narrower than the
+  rule's home in the
+  [cybersecurity engineer persona](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach).
+  It now uses the home's words for what counts and links the home for how
+  one is marked and handled. "Always critical and must-fix" is dropped
+  from the row, since that is part of the rule and lives only in the home.
+  Added a change log entry citing #97.
+- Reviewed the whole PR against the glossary and the requirements. No
+  requirement IDs touched. Verdict: Changes needed.
+- Agreed with the DevOps engineer's X-1, for the project manager, and
+  asked for it in this PR: the ripple check skipped
+  `docs/canvas-portal/` apart from the glossary, and the roadmap's risk
+  list (section 8) still restates the rule: must-fix, mitigations first in
+  the current phase and before the next deploy, only the Team Lead can
+  delay one. The roadmap backlog intro (section 9) restates where one is
+  tracked instead of linking the home.
+- Kept the glossary's "what counts" sentence (project manager N-1): a
+  glossary says what a term means, and the narrower wording was the bug.
+- Lesson for the notes: a ripple check for a rule that the docs also
+  state covers `docs/` too, not only `team/` and the glossary.
+- No decisions made; the PR carries out the Team Lead's decision on #97.
+- Re-review: X-1 fixed by the project manager in `189d31f`, which links
+  the roadmap's step 6 gate list, risk list, and backlog intro to the home.
+  Verdict now Recommend.

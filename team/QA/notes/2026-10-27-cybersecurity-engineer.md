@@ -53,3 +53,35 @@
 - Added the Team Lead's local clone to the threat picture in the
   cybersecurity engineer notes.
 
+
+## One home for the potential data breach rule (#97, PR 1 of 5)
+
+- Made the *Potential data breach* section of the cybersecurity engineer
+  persona the rule's only home: what counts, the **Potential data breach:**
+  marker, never Won't fix without the Team Lead, critical and must-fix,
+  only the Team Lead can delay it, fix timing, never deferred, and the
+  project manager's register checks. It no longer points back to the
+  project manager persona for "critical and must-fix", which was the loop
+  #97 found.
+- The security register intro in the cybersecurity engineer notes now
+  links to that section instead of restating it.
+- The other copies (review protocol, team README, project manager and
+  DevOps engineer personas, `cross-review` skill, glossary) are each
+  changed by the persona that owns the file, on this PR's branch.
+
+### Decision: state each team rule once, in its home file, and make CLAUDE.md an index
+
+- **Date:** 2026-10-27
+- **Decided by:** Team Lead
+- **Options:** 1, one `team/rules.md` for every rule; 2, each rule stated
+  once in its owner's file, with every other file linking to it; 3,
+  CLAUDE.md as a one-line-per-rule index, on top of 1 or 2; 4, a CI check
+  for copied rule text
+- **Recommendation:** 2 plus 3, holding 4, since 2 keeps each rule with
+  the persona who decides it and 3 keeps CLAUDE.md from silently losing
+  rules
+- **Outcome:** 2 plus 3, as recommended. 4 not adopted for now. The
+  widened decision replaces #97's original question, and rolls out in
+  five PRs, the breach rule first
+- **Links:** [#97 decision](https://github.com/bbranton/TestProj/issues/97#issuecomment-6440241457),
+  [Potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach)

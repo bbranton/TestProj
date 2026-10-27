@@ -302,6 +302,43 @@
   changed the verdict to Recommend.
 - No new decision: #94 carries out the Team Lead's approval.
 
+## Combine the docs retro (#109)
+
+- Combined the nine personas' docs retro feedback into
+  [the 2026-10-27 docs retro note](/team/retros/2026-10-27-docs.md). The
+  process retro ran the same day, so this one saved under
+  `2026-10-27-docs` and the other under `2026-10-27-process`.
+- Main themes: requirements moved while the downstream docs were
+  reviewed, and the design, UI spec, and test plan merged with no
+  reviewers.
+- Raised six decision requests, #101 and #103 to #107, one per
+  suggestion.
+
+### Decision: how to raise the docs retro's suggestions
+
+- **Date:** 2026-10-27
+- **Decided by:** Project manager
+- **Options:** one issue per persona's suggestion (nine), or merge the
+  ones that ask for the same change
+- **Recommendation:** merge: the requirements engineer's, UI/UX
+  designer's, and CFO's ordering and freeze ideas became S-1, and the
+  test engineer's, developer's, and architect's review ideas became S-2,
+  so the Team Lead answers six questions instead of nine. The CFO's
+  fresh-thread and cost-row points went to the process retro.
+- **Links:** #101, #103, #104, #105, #106, #107
+
+## Peer review of the docs retro note (#109)
+
+- Checked the note against all nine feedback files and decision issues
+  #101 and #103 to #107. Every suggestion maps to one issue; the CFO's
+  fresh-thread and cost-row points are in the process retro (#102).
+- Fixed three attribution and evidence gaps in the note: the developer
+  didn't raise the scope churn theme, the UI/UX designer raised the gaps
+  that reached the Team Lead, and the open potential data breaches #25
+  and #26 now show in the security theme.
+- Left for the owner: S-2 and #103 drop the UI spec from the developer's
+  ask and name no UI spec reviewer. Verdict Recommend with notes.
+
 ## Combine the process retro (team/retros/2026-10-27-process.md)
 
 - Combined all nine personas' process feedback into
@@ -335,3 +372,180 @@
 - The owner fixed F-1 to F-5 in `ab79936`; re-checked at `33a3f79` and
   changed the verdict to Recommend.
 - No new decision: the retro's decisions wait on the Team Lead.
+
+## Carry out #95: one thread per PR
+
+- Added *One thread per PR* to `team/workspace.md` and a pointer in
+  `CLAUDE.md`. The architect's "one long-running architect thread" line
+  goes in the architect's own PR.
+
+### Decision: fresh thread per PR, with a $10 hand-off check
+
+- **Date:** 2026-10-27
+- **Decided by:** Team Lead
+- **Options:** fresh thread per PR plus a hard hand-off cap (about four
+  Team Lead rounds or $10); fresh thread per PR only; no change.
+- **Recommendation:** the hard cap, to stop long threads driving the bill.
+- **Outcome:** fresh thread per PR with no hard cap. Instead, an owner
+  thread past about $10 asks the Team Lead whether now is a good time to
+  hand off, and writes a hand-off note if so.
+- **Links:** [#95](https://github.com/bbranton/TestProj/issues/95),
+  [process retro](/team/retros/2026-10-27-process.md)
+
+## Carry out #96: ripple check for process rules
+
+- Added *Ripple check for process rules* to `team/review-protocol.md`
+  (rule 8 and step 1 of *How a review runs*), a step for the owner and
+  reviewer in the `cross-review` skill, the Ripple check term in the
+  glossary's team process terms, and a pointer in `CLAUDE.md`. The DevOps
+  engineer adds the *Files that state this rule* line to the PR template.
+- Ran the ripple check on this rule itself: the files above are every
+  place that states the PR author's steps.
+
+### Decision: a PR that changes a process rule fixes every copy
+
+- **Date:** 2026-10-27
+- **Decided by:** Team Lead
+- **Options:** ripple check in the PR (owner finds and fixes every file
+  that states the rule, and lists them); list only, with reviewers
+  checking; no change.
+- **Recommendation:** the ripple check in the PR, the process version of
+  a requirement's impact note, to stop follow-up PRs for stale wording.
+- **Outcome:** as recommended.
+- **Links:** [#96](https://github.com/bbranton/TestProj/issues/96),
+  [process retro](/team/retros/2026-10-27-process.md),
+  [ripple check](/team/review-protocol.md#ripple-check-for-process-rules)
+
+## Review the ripple check PR (#112)
+
+- Peer review of the ripple check for #96 at `0aef974`, against
+  `develop@94262eb`: **Recommend with notes**.
+- The rule's text is sound and matches the Team Lead's answer. Re-ran the
+  ripple check on the rule: no other file in `team/`, `.claude/skills/`,
+  `CLAUDE.md`, the PR template, or the glossary restates the owner's
+  steps. The DevOps engineer's template heading matches step 3 word for
+  word, and the branch merges cleanly with `develop`.
+- F-1 (minor): *Based on* in the PR description still says `8faa950`;
+  the branch now has `develop@94262eb`.
+- N-1 (optional): the project manager's "Ripple list for each decision"
+  covers phase and scope decisions, close in name to the new ripple check.
+  No change needed now.
+- No new decision: #96 is already answered.
+
+## Link the project manager's files to the breach rule (#113)
+
+- On the cybersecurity engineer's PR #113 (#97, PR 1 of 5), changed the
+  project manager's files to link to
+  [Potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
+  instead of restating it: the review protocol (*Who decides what*,
+  *Findings table*, *Follow-up work*), the team README (*Security is
+  everyone's job*), the project manager persona (*Owns*, *Decisions*), the
+  project manager notes, and the `cross-review` skill's reviewer step 3.
+  Kept "Delaying the fix of a potential data breach" under *Needs the Team
+  Lead*, since it names a Team Lead call rather than restating the rule.
+- Wording follows the cybersecurity engineer's proposed text on the PR.
+- No new decision: the Team Lead answered it on #97.
+
+## Review the breach rule's one home (#113)
+
+- Shared-files review at `9c7b18a`, against `develop@c2a78b5`:
+  **Recommend with notes**.
+- Re-ran the ripple check on the branch: outside the home and the
+  security register intro, every mention links to
+  *Potential data breach* or only names the term.
+- F-1 (minor): the PR description still lists the other owners' changes
+  as still to come.
+- N-1 (optional): the glossary repeats the home's "what counts" sentence.
+- X-1 (DevOps engineer): the roadmap still restated the rule in the risk
+  list intro and the backlog intro. Both now link to the home, and the
+  step 6 gate list links the term too. My ripple check had skipped
+  `docs/`, since the ripple check's search list names only the glossary
+  there.
+
+## Notify, not review, for wording-only persona file changes (#99)
+
+- Added *Wording-only changes notify the persona* to the review
+  protocol's *Who reviews what*, as the rule's one home per #97, and
+  linked to it from *Two levels of review*, the two *Who reviews what*
+  rows for another persona's files, the team README's *Folders*, and the
+  workspace's *Team folders* and board rule 4.
+- From the peer review: the team README's step 1 for a persona thread now
+  checks the board for `[note]` lines addressed to it, so a notified
+  persona sees the change, and notified personas go under *Persona
+  review* in the PR description, so the PR template needn't change.
+- Ripple check: `CLAUDE.md`, the PR template, and the `cross-review` skill
+  send readers to the review protocol's *Who reviews what* for reviewers,
+  where the exception now lives, so they needed no change. No glossary
+  term covers it.
+
+### Decision: notify, not review, for wording-only persona file changes
+
+- **Date:** 2026-10-27
+- **Decided by:** Team Lead
+- **Options:** 1, notify the persona with a board `[note]`, keeping the
+  security "always" rule; 2, no change, every persona whose file changes
+  reviews
+- **Recommendation:** 1, with the PR's peer reviewer judging whether a
+  change is wording-only, and the persona reviewing if in doubt
+- **Outcome:** 1, as recommended
+- **Links:** [#99](https://github.com/bbranton/TestProj/issues/99),
+  [process retro](/team/retros/2026-10-27-process.md),
+  [Wording-only changes](/team/review-protocol.md#wording-only-changes-notify-the-persona)
+
+## Peer review of PR #114 (#99)
+
+- Peer review at `0facf70`, against `develop@c2a78b5`: **Changes needed**.
+- F-1: the workspace's *Team folders* still stated the old rule and was
+  missing from *Files that state this rule*. F-2: nothing told a persona
+  thread to read board `[note]` lines left for it. F-3: the *Who reviews
+  what* rows for another persona's files didn't point to the exception,
+  though the `cross-review` skill sends owners to the table. F-4
+  (optional): say where notified personas go in the PR description.
+- All four are in the project manager's own files; no other reviewer
+  needed. Fixed in `84d9890` and the next commit.
+- No new decision: #99 is already answered.
+
+## Link the workspace to the CFO's daily batch thread (#102)
+
+- On the CFO's PR #116, added one line to the workspace's *One thread per
+  PR*, after "Only the coordinator starts threads.": it links to the CFO
+  persona's
+  [Daily batch thread](/team/Management/personas/cfo.md#daily-batch-thread)
+  and doesn't restate the rule, per #97.
+- Left the hunks PR #114 changes (*Team folders*, board rule 4) alone.
+- No new decision: the Team Lead answered it on #102.
+
+## Review the CFO's daily batch thread (#116)
+
+- Shared-files review: **Recommend**. Ripple check found no other file
+  that gives the batch's timing; the rest say "in batches" or link to the
+  CFO persona.
+
+## Give the review protocol, workspace, and README rules one home (#97, PR 2)
+
+- Carried out PR 2 of the #97 rollout from `develop@7cb311b`.
+- Review protocol: added *A rule is stated only in its home* and the list
+  of rule homes to the *Ripple check*, and step 2 now replaces a copy
+  with a link. *Who reviews what* is the one home of the peer reviewer
+  rule; *Two levels of review* links to it instead of restating it. The
+  release PR, security weight, thread starting, and close-out lines link
+  to CLAUDE.md, the team README, and the workspace.
+- Workspace and team README: review routing, the cost log, and the Team
+  Lead's say now link to their homes.
+- Cost log: the project manager persona's *Cost plans* no longer says the
+  CFO "owns the log"; it links to the CFO persona's *Role*, which gives
+  the merge-conflict reason from #72.
+- Left for later PRs in the series: the other persona files (PR 3), the
+  glossary, skills, and PR template (PR 4), and CLAUDE.md (PR 5). The
+  roadmap's stakeholder row restates the Team Lead's say; noted for PR 5.
+  Searching `docs/canvas-portal/` in the ripple check waits on the Team
+  Lead's answer.
+- Reviews: cybersecurity engineer Recommend; CFO Recommend with notes
+  (F-1 fixed in `fef0b0d`); project manager peer Recommend with notes.
+  Peer F-1 to F-3 fixed: *The rules in short* links to Branches for the
+  release PR, the intro credits CLAUDE.md only with the final say, and
+  *Who decides what* says it is a summary of the persona files'
+  *Decisions*. For PR 5: CLAUDE.md *Branches* should say the Team Lead is
+  the release PR's only reviewer, and *Team personas* still restates the
+  security weight.
+- No new decision: #97 is already answered and logged in #113.

@@ -1,6 +1,6 @@
 ---
 name: log-cost
-description: Report what this thread cost to the CFO, from the session's own usage data, so it lands in team/Management/cost-log.md. Use when a thread's PR merges or closes, when a reviewer thread finishes, or when asked what a thread cost.
+description: Report what this thread cost to the CFO, from the session's own usage data, so it lands in team/Management/cost-log.md. Use when a thread's PR merges or closes, when an owner thread hands off, when a reviewer thread finishes, or when asked what a thread cost.
 ---
 
 # Report a thread's cost
@@ -14,7 +14,9 @@ don't conflict on the log.
    `claude-code-remote` server with no `session_id`. The numbers are under
    `external_metadata.usage`: `output_tokens`, `cache_read_tokens`,
    `cache_write_tokens`, `input_tokens`, and `cost_usd`. If the tool isn't
-   available, say so and don't guess.
+   available, or the session has no `external_metadata.usage` (many
+   don't), write `n/a` in the number columns, say why in the notes, and
+   don't guess.
 2. Count the size units, as defined in
    [the cost log](/team/Management/cost-log.md#size-units): threads, PRs,
    review rounds, and files changed.
@@ -31,6 +33,24 @@ don't conflict on the log.
 Usage is the whole session so far. Report it once, when the thread's work
 is done. If a thread is reused for later work, report only the change since
 its last row and say so in the notes.
+
+## At a hand-off
+
+An owner thread that hands its PR to a fresh thread, as
+[One thread per PR](/team/workspace.md#one-thread-per-pr) says, reports
+its row before asking for the new thread. Its work on the PR isn't done,
+so start the notes with `Hand-off 1 of the PR` (2, 3, ... for later
+hand-offs) and count only the rounds and files this thread did. The fresh
+thread reports its own row when the PR merges, and its notes say
+`After hand-off`. The CFO adds the rows for one PR together.
+
+## Checking cost mid-thread
+
+The same lookup as step 1 tells an owner thread when it's near the
+hand-off check of about $10: read `external_metadata.usage.cost_usd`.
+Don't report a row for a mid-thread check. If there's no `cost_usd`,
+count Team Lead rounds instead, as the workspace rule says, and tell the
+Team Lead the cost can't be read when you ask about a hand-off.
 
 ## As the CFO
 

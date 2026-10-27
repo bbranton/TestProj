@@ -39,3 +39,83 @@
   disabled `develop` ruleset left over.
 - F-1 to F-4 fixed in `f1be7de` by the owner. Re-checked the fixes:
   verdict now Recommend.
+
+## PR template line and review for the ripple check (PR #112)
+
+- Carries out the Team Lead's answer on #96 in the file the DevOps
+  engineer owns: added *Files that state this rule* under *Summary* in
+  `.github/pull_request_template.md`. It asks the author to list every
+  file that states a changed process rule, including ones that needed no
+  change, or write "None: no process rule changes". Left blank on
+  purpose, so a rule-changing PR can't pass with a default "None".
+- The template's link uses `../blob/develop/...`, as CLAUDE.md says for
+  the PR template.
+- Reviewed the whole PR against `develop@94262eb`. Docs only: `ci-paths`
+  says no workflow runs. Verdict below, posted on the PR.
+- No new decision: this carries out #96.
+
+## Breach rule link and review (PR #113, #97 PR 1)
+
+- Carries out the Team Lead's #97 decision in the file the DevOps
+  engineer owns: *Does not decide* in the DevOps engineer persona now links
+  "potential data breach" to its one home in the cybersecurity engineer
+  persona. Nothing else in the file restated the rule.
+- Reviewed the whole PR against `develop@c2a78b5`. Docs only: `ci-paths`
+  says no workflow runs. Found one more file that restates the rule,
+  outside the PR's ripple check scope: the roadmap's risk list and
+  backlog (X-1). Verdict posted on the PR.
+- No new decision: this carries out #97.
+
+## Docs check in CI (#100)
+
+- Carries out the Team Lead's answer on
+  [#100](https://github.com/bbranton/TestProj/issues/100): added
+  `.github/workflows/docs-check.yml`, which runs
+  `team/Development/scripts/docs_check.py` on every PR and on pushes to
+  `main` and `develop`.
+- The script checks every tracked `.md` file: repo links written from the
+  root, relative, or as the PR template's `../blob/develop/...` form must
+  name a file that exists, and a `#fragment` must match a heading. Every
+  FR and NFR ID in `docs/canvas-portal/` outside a change log must be
+  defined in `02-requirements.md`. Standard library only, no secrets.
+- No paths filter, since renaming or deleting any file can break a link.
+- Starts green on `develop`: 49 files, 0 problems. A test copy with a
+  missing file, a missing heading, and an undefined ID failed with all
+  three.
+- Updated the files that said docs PRs run no checks: DevOps notes (and
+  Open items), the DevOps persona's *Owns*, and the `ci-paths` skill.
+- Not done: making the check required before merge. That is a repo
+  setting, and a change to which checks must pass, so it needs the Team
+  Lead.
+
+### Decision: add a docs check to CI for links and requirement IDs
+
+- **Date:** 2026-10-27
+- **Decided by:** Team Lead
+- **Options:** 1, add `docs-check.yml` backed by a script in
+  `team/Development/scripts/`; 2, no change, reviewers keep checking links
+  by hand
+- **Recommendation:** 1: it costs $0, needs no secrets, and replaces
+  manual link checks on every docs PR
+- **Outcome:** 1, as recommended
+- **Links:** [#100](https://github.com/bbranton/TestProj/issues/100),
+  [process retro](/team/retros/2026-10-27-process.md)
+
+## Review fixes on PR #115
+
+- Cybersecurity engineer F-1: `persist-credentials: false` on checkout,
+  since the job never pushes (`5b77fd0`).
+- Requirements engineer F-1 and N-1: removed requirements no longer count
+  as defined outside `02-requirements.md`, and IDs with a letter suffix
+  such as `FR-12a` are reported (`ef632ba`).
+- Test engineer F-1: a heading with inline code, such as *Read from
+  `develop`*, got the wrong anchor, because inline code was stripped
+  before reading headings. Anchors now keep it.
+- Test engineer F-2: added `test_docs_check.py` (13 cases, standard
+  library), which the workflow runs before the check. Reverting the F-1
+  fix makes a test fail.
+- DevOps engineer peer F-1 was the same anchor bug, fixed above. Peer
+  F-2: a backtick fence inside a `~~~` block, or the other way round,
+  flipped code mode and hid the rest of the file. A fence now closes only
+  on the marker that opened it, with a test (14 cases now). The docstring
+  says reference-style links and percent-encoded paths aren't checked.

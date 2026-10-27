@@ -3,15 +3,15 @@
 How personas review each other's work. The personas are listed in the
 [team README](/team/README.md).
 
-The Team Lead has the final say on every decision and every disagreement,
-and can override any rule here, including the reviewers on any PR.
-Everything below is the default when the Team Lead hasn't said otherwise.
+The Team Lead has the final say, as [CLAUDE.md](/CLAUDE.md#team-personas)
+says, so everything below is the default when the Team Lead hasn't said
+otherwise.
 
 ## The rules in short
 
 1. **Two levels of review.** PRs into `develop` are reviewed by personas
-   and merged by their owner. The `develop` → `main` release PR is
-   reviewed and merged only by the Team Lead.
+   and merged by their owner. The `develop` → `main` release PR is the
+   Team Lead's alone, as [Branches](/CLAUDE.md#branches) says.
 2. **The Team Lead decides; PRs carry out decisions.** Every real
    decision goes to the Team Lead as a decision request, answered before
    anyone edits a doc for it.
@@ -24,6 +24,8 @@ Everything below is the default when the Team Lead hasn't said otherwise.
 6. **The author picks reviewers by what the PR touches.** Reviews are
    quick, and the author pushes fixes right away.
 7. **Close out.** Log the decision, report the cost, and end the thread.
+8. **A rule change fixes every copy.** A PR that changes a process rule
+   runs a [ripple check](#ripple-check-for-process-rules) first.
 
 ## Two levels of review
 
@@ -32,23 +34,11 @@ Everything below is the default when the Team Lead hasn't said otherwise.
 without requesting their review, so the Team Lead sees the diff. Once every
 reviewer's latest verdict is **Recommend** or **Recommend with notes**, the
 owner thread merges the PR itself and posts the link in its thread.
-Every PR has at least one reviewer: a fresh thread of the owner's own
-persona reviews it as a peer, as a precaution, even when the PR touches
-only the owner's area. When the owner isn't a persona, the peer is the
-persona that owns most of the changed files. A persona's area is its own
-files in its team folder (its persona file, notes, and daily log) and the
-docs it owns in [Who reviews what](#who-reviews-what). Teams hold several personas, so a
-change to another persona's files in the same team folder is reviewed by
-that persona, and a team script or skill by the other personas who use it.
-The "always" rules below still apply: a code PR always has the Test
-engineer, and anything touching the cybersecurity engineer's area always has the cybersecurity engineer.
 
 **`develop` → `main`.** This is a batched release of what's on `develop`.
-Any persona may open it: it assigns the Team Lead and
-summarizes everything merged since `main`, grouped by area, with links to
-the merged PRs and to the screenshots of any UI change. The Team Lead is
-its only reviewer and the only one who merges it. No persona approves or
-merges a PR into `main`.
+Who opens and merges it is in [Branches](/CLAUDE.md#branches).
+Its summary groups everything merged since `main` by area, with links to
+the merged PRs and to the screenshots of any UI change.
 
 ## Decisions are separate from merging
 
@@ -78,6 +68,48 @@ That is why a persona can merge into `develop` without the Team Lead.
   stop the PR unless the owner recommends fixing it in this PR, as
   [Follow-up work](#follow-up-work) says.
 
+### Ripple check for process rules
+
+**A rule is stated only in its home.** Each team rule is stated once, in
+the file of the persona or doc that owns it, under a stable heading. Every
+other file links to that heading instead of restating it (Team Lead,
+[#97](https://github.com/bbranton/TestProj/issues/97)). The homes:
+
+- Reviews, decisions, findings, and follow-up work: this protocol.
+- Team folders, notes, daily logs, skills, the PR template, the board, and
+  threads: the [team workspace](/team/workspace.md).
+- Security is everyone's job: the
+  [team README](/team/README.md#security-is-everyones-job).
+- Potential data breach: the
+  [cybersecurity engineer persona](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach).
+- Cost reporting and the cost log: the
+  [CFO persona](/team/Management/personas/cfo.md#role).
+- Screenshots in UI PRs: the
+  [UI/UX designer persona](/team/Development/personas/ui-ux-designer.md#screenshots-in-ui-prs).
+- What each persona decides: the *Decisions* section of its persona file.
+- Links, naming, branches, phases, and the Team Lead's final say:
+  [CLAUDE.md](/CLAUDE.md).
+
+Older copies are being replaced with links, one owner at a time. A PR
+that changes a process rule finds and fixes every copy before review (Team Lead,
+[#96](https://github.com/bbranton/TestProj/issues/96)):
+
+1. Change the rule in its home. Search `team/`, `.claude/skills/`,
+   `CLAUDE.md`, the PR template (`.github/pull_request_template.md`), and
+   the [glossary](/docs/canvas-portal/glossary.md) for the rule's key
+   words and for links to its heading. Skip daily logs and retro notes:
+   they record what was true that day.
+2. Fix every file that still states the old rule in the same PR, by
+   replacing the copy with a link to the home, and fix any link the change
+   breaks. The persona that owns each file fixes it, as
+   [Fixes by another persona](#fixes-by-another-persona) says, and joins
+   the reviewers.
+3. List every file that states the rule under *Files that state this
+   rule* in the PR description, including the ones that needed no change.
+
+A reviewer who finds a file still stating the old rule, or a rule restated
+outside its home, logs it as a finding on the PR.
+
 ### Keeping the Team Lead informed
 
 The coordinator tells the Team Lead in real time, in the project chat,
@@ -104,9 +136,12 @@ avoid clashes, never as the source of truth.
 
 The author picks the reviewers. The rule: **a peer reviewer from the
 author's own persona, plus each other persona whose area the PR
-touches.** The peer runs in a fresh thread, like every reviewer. When the
-author isn't a persona, the peer is the persona that owns most of the
-changed files. The author lists the reviewers in the PR description, with
+touches.** Every PR has at least the peer, as a precaution, even when it
+touches only the owner's area. The peer runs in a fresh thread, like every
+reviewer. When the author isn't a persona, the peer is the persona that
+owns most of the changed files. A persona's area is its own files in its
+team folder (its persona file, notes, and daily log) and the docs it owns
+in the table below. The author lists the reviewers in the PR description, with
 one line each on why. Any reviewer can ask for
 another persona in a finding, and the Team Lead can add or drop reviewers
 at any time.
@@ -121,11 +156,11 @@ at any time.
 | App code | Developer | Developer |
 | CI, build, install scripts, repo settings, or the top-level `README.md` | DevOps engineer | DevOps engineer |
 | Canvas tokens, sign-in, the session cookie, secrets, student data, hosting, or deploys; the client security document (`06-security-overview.md`) | Cybersecurity engineer, always | Cybersecurity engineer |
-| Shared files at the top of `team/`, or another team's folder | Each persona whose file changes, plus the project manager | Project manager |
-| Another persona's files in your own team's folder | That persona | That persona |
+| Shared files at the top of `team/`, or another team's folder | Each persona whose file changes, plus the project manager (a board note instead, for a [wording-only change](#wording-only-changes-notify-the-persona) to a persona file) | Project manager |
+| Another persona's files in your own team's folder | That persona (a board note instead, for a [wording-only change](#wording-only-changes-notify-the-persona) to a persona file) | That persona |
 | A team script or its skill (see [Team skills](/team/workspace.md#team-skills)) | The other personas who use it | The team whose `scripts/` folder holds it |
 | Only your own persona's area: its persona file, notes, and daily log, or a doc it owns in this table | The peer reviewer only | That persona |
-| The cost log (`team/Management/cost-log.md`) | The peer reviewer (CFO) only | CFO, who adds reported rows in batches |
+| The cost log (`team/Management/cost-log.md`) | The peer reviewer (CFO) only | CFO, as its [*Role*](/team/Management/personas/cfo.md#role) says |
 
 A code PR always has the Test engineer as a reviewer, since every change
 needs a test. A PR that changes a phase or a priority always has
@@ -133,9 +168,27 @@ the project manager.
 
 Each reviewer looks through its own lens, using the review checklist in its
 persona file, and checks that the words match the
-[glossary](/docs/canvas-portal/glossary.md). Security is still everyone's
-job: any reviewer raises any token or student-data risk it sees, as
+[glossary](/docs/canvas-portal/glossary.md). Every reviewer also checks
+for security risks, as
 [Security is everyone's job](/team/README.md#security-is-everyones-job) says.
+
+### Wording-only changes notify the persona
+
+When a PR changes another persona's persona file only in wording or a
+link, without changing what that persona does, decides, or reviews, that
+persona is notified instead of made a reviewer (Team Lead, 2026-10-27,
+[#99](https://github.com/bbranton/TestProj/issues/99)):
+
+- The owner leaves that persona a `[note]` on the
+  [board](/team/workspace.md#the-board) naming the PR and the change, and
+  lists it under *Persona review* in the PR description as
+  `- Notified: <persona>: <change>`.
+- The persona reads the change at its next own thread, fixes anything it
+  disagrees with in its own PR, and deletes the note.
+- The PR's peer reviewer judges whether each such change is wording-only.
+  If in doubt, the persona reviews.
+- The "always" rules above still apply, so a change touching the
+  cybersecurity engineer's area always has the cybersecurity engineer.
 
 ## Who decides what
 
@@ -149,7 +202,7 @@ acceptable for its area.
 | Decision | Decided by | Decision request to the Team Lead for |
 |----------|------------|-------------------------|
 | Business goals, scope and phases, hosting and domains, cost, team structure and process | Team Lead | Always |
-| Feature priorities within a phase, the order of work, the roadmap backlog, keeping the decision register, rating risks. A potential data breach is always critical and must-fix | Project manager | Every scope, roadmap, or phase change; adding or dropping a goal; accepting a risk instead of reducing it |
+| Feature priorities within a phase, the order of work, the roadmap backlog, keeping the decision register, rating risks | Project manager | Every scope, roadmap, or phase change; adding or dropping a goal; accepting a risk instead of reducing it |
 | How a requirement is worded and traced | Requirements engineer | Adding, removing, or moving a requirement between phases |
 | How it's tested, and whether tests pass | Test engineer | Calling a phase done; removing or weakening a test |
 | Design: structure, data, APIs, technology, security design | Architect | A new dependency, service, or data store; how the Canvas token is stored or sent; starting a transition plan |
@@ -161,14 +214,16 @@ acceptable for its area.
 | Merging a PR into `develop` | The PR's owner, once its reviewers recommend it | Never: the PR only carries out decisions already made |
 | Approving and merging the `develop` → `main` release PR | Team Lead | Always |
 
-Each persona file has a **Decisions** section listing what it decides,
-what it defers and to whom, and what needs the Team Lead.
+This table is a summary. Each persona file's **Decisions** section is the
+home of what it decides, what it defers and to whom, and what needs the
+Team Lead, and wins where the two differ.
 
 ## How a review runs
 
 1. **Owner prepares.** The owner merges `develop` into its branch, opens
    the PR, and fills in the PR template: requirement IDs, reviewers, and
-   why.
+   why. A PR that changes a process rule runs the
+   [ripple check](#ripple-check-for-process-rules) first.
 2. **Reviewers review.** Each reviewer reads the change against its
    checklist and posts one review headed with its persona and verdict,
    such as "**DevOps engineer review: Changes needed**".
@@ -225,10 +280,8 @@ When a finding needs a change in another persona's files:
   isn't the owner), Fixing in `#<n>` (a separate PR), Issue `#<n>`,
   Backlog `B-<n>`, Won't fix (with the reason), or Waiting on the Team
   Lead.
-- A finding that could expose a token, a session, or a student's data
-  starts with **Potential data breach:**, whichever persona finds it, as
-  the [cybersecurity engineer persona](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
-  says. It is never Won't fix without the Team Lead.
+- A finding that is a [potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach) is
+  marked and handled as that section says.
 
 ## Follow-up work
 
@@ -278,28 +331,17 @@ reviews the backlog with the Team Lead at every phase boundary,
 recommending a phase or dropping each item. The Team Lead plans items into
 a phase; nobody starts on a backlog item before then.
 
-**A potential data breach never goes through this choice.** It is never
-an issue or a backlog item: it is fixed, or tracked in the security
-register.
-
-- **One the PR adds** is always fixed in that PR before merge.
-- **One already on `develop`** that the review uncovers is fixed in the PR
-  by the persona that owns the file. Only if the cybersecurity engineer agrees the fix is too
-  big for that PR does it wait, as the first work of the current phase,
-  fixed before the next deploy.
-- **Every one not yet fixed** goes in the
-  [security register](/team/QA/notes/cybersecurity-engineer.md#security-register)
-  with the gate *before the next deploy*, before the PR merges. The project manager
-  checks the register at every phase boundary and before every deploy. Only
-  the Team Lead can delay one.
+**A potential data breach never goes through this choice.** It is
+handled as [Potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach) says.
 
 ## Disagreements
 
 When an owner and a reviewer disagree, each states its case in one or two
 sentences in the findings table, and the finding is marked **Waiting on the
 Team Lead**. Personas don't overrule each other. Inside its own area the
-owner's view counts most, except on security, where the cybersecurity engineer's counts
-most. After two rounds on the same point without agreement, the owner
+owner's view counts most, except on security, as
+[Security is everyone's job](/team/README.md#security-is-everyones-job)
+says. After two rounds on the same point without agreement, the owner
 marks the finding **Waiting on the Team Lead**.
 
 ## Running reviews with agents
@@ -310,9 +352,9 @@ marks the finding **Waiting on the Team Lead**.
   persona file, its own notes and recent daily logs, this protocol, the
   PR, and the docs on `develop` that the PR changes or names. It doesn't
   see the owner's thread or other reviews before writing its own.
-- Only the coordinator starts threads. The owner sends the coordinator the
-  PR and its reviewers, and the coordinator starts one thread per
-  reviewer.
+- The owner sends the coordinator the PR and its reviewers, and the
+  coordinator starts one thread per reviewer, as
+  [One thread per PR](/team/workspace.md#one-thread-per-pr) says.
 - The owner thread is subscribed to the PR and wakes on every comment. It
   never reviews its own PR as another persona.
 - All comments post from the Team Lead's GitHub account, so the review
@@ -353,4 +395,5 @@ is written on the PR before anyone acts on it.
   notes.
 - **After the PR merges or closes,** the owner releases its claim on the
   [board](/team/workspace.md#the-board), and every thread that worked on the PR
-  reports its cost to the CFO with the `log-cost` skill and ends.
+  reports its cost and ends, as
+  [One thread per PR](/team/workspace.md#one-thread-per-pr) says.

@@ -549,3 +549,34 @@
   the release PR's only reviewer, and *Team personas* still restates the
   security weight.
 - No new decision: #97 is already answered and logged in #113.
+
+## Link persona files to rule homes (#97, PR 3)
+
+- Carried out PR 3 of the #97 rollout from `develop@c5aac0e`, as the
+  project manager owner thread.
+- In all seven persona files that had it, the security line in
+  *Decisions* and the review checklist now links to
+  [Security is everyone's job](/team/README.md#security-is-everyones-job)
+  instead of restating the cybersecurity engineer's weight and "raise it
+  yourself". The cybersecurity engineer persona's *Role* and *Decides* link
+  there too.
+- The requirements engineer, test engineer, architect, and project manager
+  link to [Who fixes a finding](/team/review-protocol.md#who-fixes-a-finding)
+  instead of restating how a fix in another persona's PR goes.
+- Also relinked: the developer's release PR line to Branches, the
+  project manager's and architect's UI deferral to the UI/UX designer's
+  *Decisions*, the DevOps engineer's screenshot helper to the screenshot
+  rule, and the project manager's phase line, backlog, and reviewer lines
+  to CLAUDE.md and the review protocol. The CFO persona needed no change.
+- Other personas' files changed only in links and wording, so they get a
+  board `[note]` under #99, except the cybersecurity engineer, which
+  reviews because the PR touches *Security is everyone's job*.
+- Left for PR 4 and PR 5: the glossary's Team Lead row, CLAUDE.md's
+  *Team personas* and *Branches*, and the roadmap's stakeholder row still
+  restate the security weight, the reviewer say, or the release PR.
+- No new decision: #97 is already answered and logged in #113.
+- Reviews: cybersecurity engineer Recommend. Project manager peer
+  Changes needed, both fixed: F-1, the test engineer's security line read
+  as deferring untested risks, so it again says the test engineer still
+  raises them; F-2, the project manager's checklist no longer lists part
+  of the cybersecurity engineer's triggers and points to its row instead.

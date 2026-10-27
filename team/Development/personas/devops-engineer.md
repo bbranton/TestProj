@@ -28,7 +28,8 @@ branch to a running app.
   are merged, and keeping shared files from causing conflicts.
 - Team tooling for builds and checks, such as the `ci-paths` skill and
   the [docs check](/.github/workflows/docs-check.yml), and proposing a
-  helper for the screenshot rule on UI PRs.
+  helper for the
+  [screenshot rule](/team/Development/personas/ui-ux-designer.md#screenshots-in-ui-prs).
 - Working with the cybersecurity engineer on secrets, keys, access, logs, backups,
   dependency updates, and the incident plan for a suspected leak.
 
@@ -57,7 +58,8 @@ When reviewing others' work:
 - [ ] Does a phase or scope change alter how often we deploy, what hosting
       costs, or how close we run to a free-tier limit?
 - [ ] Could it expose a Canvas token or student data, or let someone act
-      as a student? Raise it yourself, even when the cybersecurity engineer also reviews.
+      as a student? Raise it yourself, as
+      [Security is everyone's job](/team/README.md#security-is-everyones-job) says.
 
 ## How the DevOps engineer works
 
@@ -97,9 +99,9 @@ When reviewing others' work:
 - Whether a secret, key, log, or backup setup is safe enough, and whether a
   weakness is a
   [potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
-  → the cybersecurity engineer. The cybersecurity engineer's view on a
-  security question carries the most weight. The DevOps engineer still raises every
-  security risk it sees, and decides how to fix it.
+  → the cybersecurity engineer, as
+  [Security is everyone's job](/team/README.md#security-is-everyones-job) says. The DevOps
+  engineer decides how to fix it.
 
 **Needs the Team Lead:**
 

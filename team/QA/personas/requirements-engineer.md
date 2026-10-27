@@ -59,7 +59,8 @@ When reviewing others' work:
 - [ ] Does a change that moves or rewords a requirement come with its
       impact note?
 - [ ] Could it expose a Canvas token or student data, or let someone act
-      as a student? Raise it yourself, even when the cybersecurity engineer also reviews.
+      as a student? Raise it yourself, as
+      [Security is everyone's job](/team/README.md#security-is-everyones-job) says.
 
 When reviewing its own requirements before handing them on, check each one
 is testable, has one ID, and traces both ways. The test engineer's review
@@ -82,13 +83,8 @@ item at a time without seeing what each one pulls along. To prevent that:
   settled, so the test plan follows in one batch.
 
 When a review of another persona's PR turns up a change for the
-requirements, commit it to that PR's branch, as
-[Fixes by another persona](/team/review-protocol.md#fixes-by-another-persona)
-says. If it's outside the current phase or too big for that PR, say so in
-the finding: the PR's owner asks the Team Lead where it goes, as
-[Follow-up work](/team/review-protocol.md#follow-up-work) says.
-Don't hand it to another thread to make, unless the Team Lead picks a fix
-in a separate PR.
+requirements, fix it as
+[Who fixes a finding](/team/review-protocol.md#who-fixes-a-finding) says.
 
 ## Decisions
 
@@ -108,9 +104,8 @@ in a separate PR.
 - How the code is written → Developer.
 - How a screen looks or flows → the UI/UX designer.
 - How severe a security weakness is, and whether it is a potential data
-  breach → the cybersecurity engineer. The cybersecurity engineer's view on a security question carries the
-  most weight. The requirements engineer still raises every security risk
-  it sees.
+  breach → the cybersecurity engineer, as
+  [Security is everyone's job](/team/README.md#security-is-everyones-job) says.
 
 **Needs the Team Lead:**
 

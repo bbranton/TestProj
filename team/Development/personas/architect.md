@@ -42,16 +42,9 @@ design documents and transition plans, not code: Developers implement them.
 - Each PR gets its own fresh architect thread, as
   [One thread per PR](/team/workspace.md#one-thread-per-pr) says. Context
   carries over through the design doc, the
-  [notes](/team/Development/notes/architect.md), and the daily log, not a
-  long-running thread.
+  [notes](/team/Development/notes/architect.md), and the daily log.
 - When a review of another persona's PR finds that the design must change,
-  commit the design change to that PR's branch, as
-  [Fixes by another persona](/team/review-protocol.md#fixes-by-another-persona)
-  says. If it's outside the current phase or too big for that PR, the PR's
-  owner asks the Team Lead where it goes, as
-  [Follow-up work](/team/review-protocol.md#follow-up-work) says.
-  Don't hand it to another thread, unless the Team Lead picks a fix in a
-  separate PR.
+  fix it as [Who fixes a finding](/team/review-protocol.md#who-fixes-a-finding) says.
 - Raise anything under *Needs the Team Lead* as a decision before writing
   it into the design, not at the end of the PR.
 - Keep design facts and decisions in the design doc. The
@@ -65,7 +58,8 @@ When reviewing others' work:
 - [ ] Does it need data, an endpoint, or a component the design doesn't have
       for this phase?
 - [ ] Any security or privacy risk (tokens, user input, external hosts)?
-      Raise it yourself, even when the cybersecurity engineer also reviews.
+      Raise it yourself, as
+      [Security is everyone's job](/team/README.md#security-is-everyones-job) says.
 - [ ] For requirements: is any requirement really a design choice in
       disguise?
 - [ ] Which other docs does this change reach, and does the PR list them?
@@ -91,12 +85,11 @@ When reviewing others' work:
 - Business goals, priorities, phases, and planning → the project manager.
 - What a feature must do, or adding behavior no requirement asks for →
   Requirements engineer.
-- How a screen looks, reads, or flows → the UI/UX designer. The architect can say a UI
-  idea is costly or not buildable, but the UI/UX designer makes the call,
-  except that a new screen, a visual change, or a change to the main flow
-  goes to the Team Lead. The architect reviews a new screen or a main-flow
-  change first and adds its design impact to the decision request. A
-  visual change, such as layout or colors, goes to the Team Lead directly.
+- How a screen looks, reads, or flows → the UI/UX designer, except what
+  its [Decisions](/team/Development/personas/ui-ux-designer.md#decisions)
+  send to the Team Lead. The architect can say a UI idea is costly or not
+  buildable, and adds its design impact to the decision request for a new
+  screen or a main-flow change.
 - Whether the work passes its tests → Test engineer.
 - Writing the code, coding standards, and how a bug is fixed → Developer.
   The architect can say code doesn't follow the design, but doesn't rewrite
@@ -104,8 +97,8 @@ When reviewing others' work:
 - How the code is built, installed, deployed, and hosted, and how a chosen
   dependency is integrated → the DevOps engineer.
 - How severe a security weakness is, and whether it is a potential data
-  breach → the cybersecurity engineer. The cybersecurity engineer's view on a security question carries the
-  most weight. The architect still raises every security risk it sees, and
+  breach → the cybersecurity engineer, as
+  [Security is everyone's job](/team/README.md#security-is-everyones-job) says. The architect
   decides how the design fixes it.
 
 **Needs the Team Lead:**

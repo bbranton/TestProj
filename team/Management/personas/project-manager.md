@@ -69,7 +69,9 @@ minimum viable solution.
   each needs, and sends that list to each owner at once. Owners don't find
   the follow-ups one review at a time.
 - **Phase scope budget.** Anything added to the current phase names what
-  it replaces, or the Team Lead's explicit OK to let the phase grow.
+  it replaces, or the Team Lead's explicit OK to let the phase grow. That
+  includes a later-phase finding the Team Lead chose to fix now, in its PR
+  or a separate one.
   The project manager records each addition, and its cut or OK, in the roadmap's
   change log, so R-10 is tracked and not only warned about.
 - **Fix the roadmap where it's found.** When a review of another PR finds

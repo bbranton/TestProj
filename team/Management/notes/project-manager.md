@@ -19,9 +19,11 @@ Lasting lessons for the project manager persona. See the
 - Before planning the next piece of work, add the deferred findings the
   Team Lead sent to the backlog, so reviewer follow-ups don't sit unread.
   Each finding outside the current phase or too big for its PR is its own
-  decision request: the Team Lead picks a GitHub issue or the backlog
-  (2026-10-27, #88). Issues alone had left too many loose ends, and the
-  backlog alone parked work without the Team Lead's say.
+  decision request: the Team Lead picks fix it in this PR, fix it now in
+  a separate PR, a GitHub issue, or the backlog (2026-10-27, #88, #89).
+  Issues alone had left too many loose ends, and the backlog alone parked
+  work without the Team Lead's say. A later-phase finding fixed now grows
+  the current phase, so log it under the phase scope budget.
 - Price hosting per phase, not only for the final deploy. The Team Lead
   wants $0 until real users arrive, so test deploys use free tiers (D-3)
   and the paid host waits for Phase 4. Ask the DevOps engineer to research free options

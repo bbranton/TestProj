@@ -205,3 +205,15 @@
   file tools, and don't state the untested Obsidian behavior as fact.
 - No new decision: #85 carries out the Team Lead's "Switch all links now"
   pick on #76.
+
+## Review the "each persona fixes its own files" wording (#86)
+
+- Reviewed #86 as the peer and the shared-files reviewer. It removes the
+  last "only the owner fixes" wording, matching *Who fixes a finding* and
+  *Fixes by another persona* from #80.
+- Findings: the new rule 3 says "No one edits another persona's files",
+  which is broader than before and would rule out team threads such as
+  #83's and #85's, which edited every persona's files under the Team
+  Lead's decisions; "No persona" keeps the old scope. And step 4's "minor
+  findings the owner may fix later" still names the owner as the fixer.
+- No new decision: #86 carries out #80.

@@ -90,6 +90,9 @@ Lasting lessons for the project manager persona. See the
   any team file, link to the home instead of summarizing the rule: even a
   one-line summary drifts, as the project manager's old "the CFO owns the
   log" line did after #72.
+- CLAUDE.md's [rule index](/CLAUDE.md#rule-index) names each team rule
+  in a few words and links to its home (#97, PR 5). Keep each line a name,
+  not a summary, so the index can't drift from the home.
 - A persona whose persona file changes only in wording or a link is
   notified with a board `[note]`, not made a reviewer, as
   [Wording-only changes](/team/review-protocol.md#wording-only-changes-notify-the-persona)

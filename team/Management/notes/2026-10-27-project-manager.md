@@ -298,4 +298,6 @@
 - Fixed in this persona's files: the team README's stale *Team process*
   row link and its list of shared `team/` contents, and a *Retros* line in
   this persona's *How it works*.
+- The owner fixed F-1 to F-3 in `d044ac7` and `a1795b4`; re-checked and
+  changed the verdict to Recommend.
 - No new decision: #94 carries out the Team Lead's approval.

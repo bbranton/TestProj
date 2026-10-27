@@ -441,11 +441,10 @@ database, and the domain) is decided, with its cost.
 ## 5. Product decisions
 
 This section is the project manager's register of the Canvas portal's
-decisions: its scope, phases, design, hosting, and security. Decisions
-about how the team works are in the
-[team decision register](/team/decision-register.md) instead, as
-[Decisions are separate from merging](/team/review-protocol.md#decisions-are-separate-from-merging)
-says. D-10 to D-12 were team decisions and moved there as TD-19 to TD-21;
+decisions. Decisions about how the team works are in the
+[team decision register](/team/decision-register.md) instead. Which
+register a decision goes in is in
+[Decisions are separate from merging](/team/review-protocol.md#decisions-are-separate-from-merging). D-10 to D-12 were team decisions and moved there as TD-19 to TD-21;
 their IDs aren't reused here.
 
 Open decisions need the Team Lead's call; each has a recommendation, from

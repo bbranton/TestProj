@@ -79,7 +79,8 @@ That is why a persona can merge into `develop` without the Team Lead.
   request, with a link to where it was asked, and then its answer in one
   of two registers (Team Lead, 2026-10-27,
   [TD-22](/team/decision-register.md)): a decision about how the team
-  works, such as process, reviews, threads, notes, or team structure, in
+  works, such as process, reviews, threads, notes, costs, or team
+  structure, in
   the [team decision register](/team/decision-register.md); a decision
   about a product, such as its scope, phases, design, hosting, or
   security, in that product's register, for the Canvas portal
@@ -248,7 +249,7 @@ acceptable for its area.
 | Decision | Decided by | Decision request to the Team Lead for |
 |----------|------------|-------------------------|
 | Business goals, scope and phases, hosting and domains, cost, team structure and process | Team Lead | Always |
-| Feature priorities within a phase, the order of work, the roadmap backlog, keeping the decision register, rating risks | Project manager | Every scope, roadmap, or phase change; adding or dropping a goal; accepting a risk instead of reducing it |
+| Feature priorities within a phase, the order of work, the roadmap backlog, keeping the team and product decision registers, rating risks | Project manager | Every scope, roadmap, or phase change; adding or dropping a goal; accepting a risk instead of reducing it |
 | How a requirement is worded and traced | Requirements engineer | Adding, removing, or moving a requirement between phases |
 | How it's tested, and whether tests pass | Test engineer | Calling a phase done; removing or weakening a test |
 | Design: structure, data, APIs, technology, security design | Architect | A new dependency, service, or data store; how the Canvas token is stored or sent; starting a transition plan |

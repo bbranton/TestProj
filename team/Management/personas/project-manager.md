@@ -163,17 +163,17 @@ what each option costs to build.
 
 **Does not decide, and defers to:**
 
-- How a requirement is worded and traced → Requirements engineer.
+- How a requirement is worded and traced → the requirements engineer.
 - How the parts fit together: technology, data, APIs, security →
   the architect.
-- How the code is written → Developer.
+- How the code is written → the developer.
 - How anything looks or flows: screens, layout, wording, accessibility →
   the UI/UX designer.
-- How something is tested, and whether it passes → Test engineer.
+- How something is tested, and whether it passes → the test engineer.
 - How CI, deploys, and hosting work → the DevOps engineer.
-- How severe a security weakness is → the cybersecurity engineer. The cybersecurity engineer's view on a
-  security question carries the most weight. The project manager still raises every
-  security risk it sees.
+- How severe a security weakness is → the cybersecurity engineer. Its view
+  on a security question carries the most weight. The project manager
+  still raises every security risk it sees.
 
 **Needs the Team Lead:**
 

@@ -56,3 +56,7 @@ Lasting lessons for the project manager persona. See the
 - When a persona is split or renamed, relabel its open issues in the same
   pass. Setting a missing label on an issue creates it, grey and with no
   description, so give it a color and description afterward if they matter.
+- A persona rename isn't done until the `persona:` issue labels and the
+  prose headers of other personas' files (such as the cost log's intro)
+  match. Grep for the old name outside change logs, daily logs, and old
+  finding IDs, and check the labels on open issues (#83).

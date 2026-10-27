@@ -100,16 +100,17 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 
 | Term | Meaning |
 |------|---------|
-| Team Lead | The project owner. Has the final say on every decision, and is the only one who approves or merges a PR. |
+| Team Lead | The project owner. Has the final say on every decision, and is the only one who approves or merges the `develop` → `main` release PR. |
 | Persona | A role an agent takes on, such as UI/UX or Security, with its own area and review checklist. The list is in the [team README](../../team/README.md). |
 | Owner | The persona that writes a piece of work and answers its findings. |
-| Recommended, optional, and confirmed reviewers | Who the [review protocol](../../team/review-protocol.md#who-reviews-what) suggests for a PR, who joins when the change touches their area, and who the Team Lead keeps. |
-| Cross-review | A review where each confirmed reviewer runs in its own fresh thread. |
+| Reviewers | The personas a PR's author picks, one for each area the PR touches, as the [review protocol](../../team/review-protocol.md#who-reviews-what) says. The Team Lead can change them. |
+| Decision request | A question for the Team Lead, with options, a recommendation, and the docs it changes, in Management's decision register or a `decision` issue. PRs only carry out answered requests; see the [review protocol](../../team/review-protocol.md#decisions-are-separate-from-merging). |
+| Cross-review | A review where each reviewer runs in its own fresh thread. |
 | Finding | One problem a reviewer raises, with an ID such as `F-1`, or `X-1` when the fix is in another doc. |
 | Verdict | A reviewer's sign-off: Recommend, Recommend with notes, or Changes needed. |
 | Potential data breach | A finding that could expose a token, a session, or a student's data to anyone else. Always critical and must-fix. |
 | Team board | The shared file where threads claim work and leave handoff notes, as the [team workspace](../../team/workspace.md#the-board) says. Not the portal's board. |
-| Follow-up issue | A GitHub issue for work a review uncovered outside the PR, labeled with its persona and `needs-triage` until Management triages it. |
+| Follow-up issue | A GitHub issue for work a review uncovered outside the PR, labeled with its department and `needs-triage` until Management triages it. |
 | `backlog` label | An issue label for work that's useful but not planned into a phase. Not the Backlog list. |
 
 ## Web terms

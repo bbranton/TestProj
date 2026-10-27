@@ -6,14 +6,14 @@ reviews someone else's work, and which decisions it can and cannot make.
 
 | Persona | Owns | File |
 |---------|------|------|
-| Management | Roadmap, phases, scope, product priorities, acceptance, risks | [project-manager.md](Management/personas/project-manager.md) |
+| Management (project manager) | Roadmap, phases, scope, product priorities, acceptance, risks | [project-manager.md](Management/personas/project-manager.md) |
 | Requirements engineer | Requirements, glossary meanings, traceability, impact notes | [requirements-engineer.md](QA/personas/requirements-engineer.md) |
 | Test engineer | Test plan, writing and running tests, test results | [test-engineer.md](QA/personas/test-engineer.md) |
 | Architecture | Design docs, transition plans, data, APIs | [architect.md](Development/personas/architect.md) |
 | UI/UX | UI specification, screens, accessibility | [ui-ux-designer.md](Development/personas/ui-ux-designer.md) |
 | Developer | Code, coding standards, bug fixes | [developer.md](Development/personas/developer.md) |
 | DevOps | CI, build and install scripts, dependencies, deploys, hosting, top-level README | [devops-engineer.md](Development/personas/devops-engineer.md) |
-| Security | Security reviews, potential data breach ratings, client security document | [cybersecurity-engineer.md](QA/personas/cybersecurity-engineer.md) |
+| Security (cybersecurity engineer, QA team) | Security reviews, potential data breach ratings, client security document | [cybersecurity-engineer.md](QA/personas/cybersecurity-engineer.md) |
 | CFO | Cost log: the only persona that edits it | [cfo.md](Management/personas/cfo.md) |
 
 ## Folders
@@ -22,7 +22,8 @@ Each team is a department, with a folder here holding `notes/`,
 `personas/`, and `scripts/` subfolders. Persona files are named after the
 job title, such as `Development/personas/architect.md`. The
 [team workspace](workspace.md#team-folders) says how the folders work.
-Each team may freely update its own folder.
+Each team may freely update its own folder, except the cost log, which
+only the CFO edits.
 
 | Team | Persona files |
 |------|---------------|
@@ -65,9 +66,9 @@ An agent acting as a persona:
    in a persona file.
 
 The Team Lead has the final say on every decision and every disagreement
-between personas, and confirms which personas review each PR. A persona recommends, and the
-Team Lead decides. A thread may merge its own PR into `develop` once its
-confirmed reviewers recommend it, but never approves or merges anything into
+between personas, and can change the reviewers a PR's author picked. A
+persona recommends, and the Team Lead decides. A thread may merge its own
+PR into `develop` once its reviewers recommend it, but never approves or merges anything into
 `main`; see [Branches](../CLAUDE.md#branches).
 
 ## Security is everyone's job
@@ -100,7 +101,7 @@ To add a persona:
    `personas/`, and `scripts/` subfolders.
 2. Add a row to the tables above, and its name to the persona list in
    [CLAUDE.md](../CLAUDE.md).
-3. Add it to both tables in the [review protocol](review-protocol.md), and
+3. Add it to the tables in the [review protocol](review-protocol.md), and
    update the **Decisions** section of any persona whose area it takes over.
 
 Changes to personas or the protocol go through a PR like any other doc,

@@ -22,7 +22,8 @@ Each team has a folder under `team/`, with three subfolders:
 - `scripts/`: reusable scripts for jobs the team repeats often.
 
 Each team may freely update its own folder as needed, through a PR like
-any other change; see the *A team's own folder* row of the
+any other change, except the [cost log](Management/cost-log.md), which only
+the CFO edits; see the *A team's own folder* row of the
 [review protocol](review-protocol.md#who-reviews-what). Shared files at the
 top of `team/` and other teams' folders are not the team's to change alone.
 
@@ -98,7 +99,7 @@ standard library, so they run anywhere without installing anything.
 [`.github/pull_request_template.md`](../.github/pull_request_template.md)
 fills in every new PR's description with the sections the
 [review protocol](review-protocol.md) needs: requirement IDs, the owner, the
-recommended reviewers for the Team Lead to confirm, verdicts, findings,
+reviewers the author picked and why, verdicts, findings,
 follow-up issues, testing, and screenshots. Keep its sections in step with the protocol.
 
 ## The board

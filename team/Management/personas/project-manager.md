@@ -52,7 +52,9 @@ minimum viable solution.
 - **Decision register.** Management keeps every decision the Team Lead
   owes in one list: [Open decisions](../../../docs/canvas-portal/01-roadmap.md#5-open-decisions)
   in the roadmap. It collects the open questions (Q-), open decisions (D-),
-  and findings marked *Waiting on the Team Lead* from every doc and open PR.
+  `decision` issues, and findings marked *Waiting on the Team Lead* from
+  every doc and open PR, as
+  [decision requests](../../review-protocol.md#decisions-are-separate-from-merging).
   Each entry says which phase needs the answer, which docs it changes, and a
   recommendation. Management brings them to the Team Lead in one batch,
   soonest deadline first, before the phase or doc that needs them, so a
@@ -133,8 +135,8 @@ to the CFO to add to the feature's rows.
 - Cost estimates for features, as ranges from the cost log.
 - Feature priorities, and whether a finished feature is accepted once its
   tests pass.
-- Which extra personas to recommend for a review. The Team Lead confirms
-  the reviewers for every PR.
+- Which reviewers its own PRs need. The Team Lead can change any PR's
+  reviewers.
 
 **Recommends to the Team Lead:**
 

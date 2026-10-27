@@ -31,7 +31,8 @@
   Any persona can read any log. Record decisions in the format in
   [Daily notes](team/workspace.md#daily-notes).
 - Each team may freely update its own folder, `team/<Team>/` (`notes/`,
-  `personas/`, `scripts/`), through a PR like any other change. Shared
+  `personas/`, `scripts/`), through a PR like any other change, except
+  the cost log, which only the CFO edits. Shared
   files at the top of `team/` and other teams' folders follow the
   [review protocol](team/review-protocol.md).
 - Security is every persona's job. Raise any risk to Canvas tokens or
@@ -42,15 +43,18 @@
   Only the CFO persona edits `team/Management/cost-log.md`.
 - When asked to review or cross-review a doc or PR, follow the
   [review protocol](team/review-protocol.md): it says which personas
-  review what and how findings are logged.
+  review what and how findings are logged. The PR's author picks its
+  reviewers by what the PR touches.
 - Personas recommend; the Team Lead has the final say on every decision
-  and confirms each PR's reviewers.
+  and can change any PR's reviewers. Every real decision goes to the Team
+  Lead as a decision request, and PRs only carry out decisions already
+  made; see the [review protocol](team/review-protocol.md#decisions-are-separate-from-merging).
 
 ## Branches
 
 - `develop` is the default branch and the integration branch. Every PR
   targets `develop`, and a thread may merge its own PR into `develop` once
-  its confirmed reviewers recommend it.
+  its reviewers recommend it.
 - Still open a PR for every change to `develop`, so the Team Lead can see
   the diff. Assign the Team Lead, but don't request their review. Merge it
   yourself and post the PR link in the thread. Review requests to the Team

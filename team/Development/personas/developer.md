@@ -72,7 +72,7 @@ When reviewing others' work:
 
 **Needs the Team Lead:**
 
-- Approving and merging every PR. The Developer recommends; only the Team
-  Lead approves.
+- Approving and merging the `develop` → `main` release PR. The Developer
+  merges its own PRs into `develop` once their reviewers recommend them.
 - Anything else that needs the Team Lead goes through the persona that owns
   it, such as Architecture for a new dependency.

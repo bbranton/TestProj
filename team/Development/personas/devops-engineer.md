@@ -24,7 +24,7 @@ branch to a running app.
 - Repo settings: merge settings, branch protection, the default branch,
   and the Pages environment. Sessions can read these but not change them,
   so DevOps writes the exact steps and the Team Lead applies them.
-- How PRs get merged: when to merge `main` into a branch, how stacked PRs
+- How PRs get merged: when to merge `develop` into a branch, how stacked PRs
   are merged, and keeping shared files from causing conflicts.
 - Team tooling for builds and checks, such as the `ci-paths` skill, and
   proposing cheap checks for docs PRs (broken links, requirement IDs that

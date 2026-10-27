@@ -41,3 +41,9 @@ Lasting lessons for the Management persona. See the
 - Skill scripts in `team/<Team>/scripts/` find the repo root with
   `parents[3]`, the same depth they had in `.claude/skills/<name>/`. Keep
   scripts at that depth, or fix `ROOT` when moving one.
+- Finding decisions by approving PRs didn't work for the Team Lead. Raise
+  every real decision as a separate decision request, and keep PRs to
+  carrying out answered ones.
+- Reviewers come from what a PR touches, not from the kind of doc: each
+  persona whose area changes reviews it. The Team Lead found Team Lead
+  confirmation of every PR's reviewers too slow once PRs were small.

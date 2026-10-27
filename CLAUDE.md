@@ -85,7 +85,9 @@ without a persona.
   says.
 - `main` is what's live. The only PR into `main` is the `develop` → `main`
   release PR. Any persona may open it, assigning the Team Lead
-  and summarizing everything merged since `main`. The Team Lead is its
+  and summarizing everything merged since `main`, as
+  [Two levels of review](/team/review-protocol.md#two-levels-of-review)
+  says. The Team Lead is its
   only reviewer: never approve or merge it. Only the Team Lead merges
   into `main`.
 - Never force-push or delete `main` or `develop`.

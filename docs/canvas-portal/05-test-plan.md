@@ -97,10 +97,10 @@ Every pull request must meet these before merge:
       accessibility tests too.
 - [ ] New or changed behavior has tests that name the requirement IDs they
       check, such as `test_fr23_missing_flag`.
-- [ ] **If the PR changes anything a user sees, the PR description includes
+- [ ] **If the PR changes anything a user sees, the PR description lists
       screenshots of each changed screen, with before and after shots when an
       existing screen changes.** Wide and phone widths for layout changes.
-      Store and embed them as
+      Store and list them as
       [Screenshots in UI PRs](/team/Development/personas/ui-ux-designer.md#screenshots-in-ui-prs) describes.
 - [ ] If the PR changes the board or its menus, it says how the change
       compares with Trello's behavior (goal G-3), and any deliberate
@@ -111,7 +111,13 @@ Every pull request must meet these before merge:
       screens changed.
 
 E2E tests save screenshots of each screen as they run (Playwright's
-`page.screenshot`), so the PR screenshots can come straight from a CI run.
+`page.screenshot`), so the PR screenshots can be copied from a CI run into
+the Library.
+
+The NFR-34 reference images are test files, not PR screenshots. They are
+committed with the E2E tests, because CI compares against them, and they
+show only recorded test data, like every fixture. The Library rule for PR
+screenshots doesn't apply to them.
 
 ## 3. Test environments
 

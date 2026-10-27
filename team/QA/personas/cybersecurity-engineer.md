@@ -31,7 +31,7 @@ The cybersecurity engineer is the specialist, not the only check, as
 - The incident plan (issue #17): what the team does when a token or student
   data may have leaked, worked out with the DevOps engineer. It must be in place before
   any deploy holds a real Canvas token.
-- The security register, in the [cybersecurity engineer notes](/team/QA/notes/cybersecurity-engineer.md#security-register):
+- The [security register](/team/QA/security-register.md):
   each open security finding and potential data breach, who owns its fix,
   and which phase step it must be done before (its **go-live gate**).
 - Security briefs for the Team Lead (see [Briefing the Team Lead](#briefing-the-team-lead)).
@@ -79,7 +79,7 @@ a later phase:
 A potential data breach is never deferred: it never becomes a GitHub
 issue or a roadmap backlog item, and never goes through the Team Lead's
 four options in [Follow-up work](/team/review-protocol.md#follow-up-work).
-The [security register](/team/QA/notes/cybersecurity-engineer.md#security-register)
+The [security register](/team/QA/security-register.md)
 is where one that isn't fixed yet is tracked, and the project manager
 checks it at every phase boundary and before every deploy. The
 `potential-breach` label is no longer used.

@@ -47,7 +47,8 @@ design documents and transition plans, not code: Developers implement them.
   says. If it's outside the current phase or too big for that PR, the PR's
   owner asks the Team Lead where it goes, as
   [Follow-up work](/team/review-protocol.md#follow-up-work) says.
-  Don't hand it to another thread.
+  Don't hand it to another thread, unless the Team Lead picks a fix in a
+  separate PR.
 - Raise anything under *Needs the Team Lead* as a decision before writing
   it into the design, not at the end of the PR.
 - Keep design facts and decisions in the design doc. The

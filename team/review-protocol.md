@@ -61,7 +61,7 @@ That is why a persona can merge into `develop` without the Team Lead.
   that costs money or changes the deploy, and team structure and process.
 - **What an owner decides alone:** details inside its own area that no
   other doc depends on, such as a requirement's wording, a test case, or a
-  layout detail within the spec. When in doubt, it's a decision request.
+  screen's wording. When in doubt, it's a decision request.
 - **A decision request** states the question, the options, a
   recommendation, and the docs it changes. Each persona whose area it
   affects adds its impact: which of its files change, and how. Requests go
@@ -154,7 +154,7 @@ acceptable for its area.
 | How it's tested, and whether tests pass | Test engineer | Calling a phase done; removing or weakening a test |
 | Design: structure, data, APIs, technology, security design | Architect | A new dependency, service, or data store; how the Canvas token is stored or sent; starting a transition plan |
 | Writing code, coding standards, bug fixes | Developer | Design changes go to the architect first |
-| Screens, layout, wording, accessibility | UI/UX designer | A new screen or a change to the main flow |
+| Screens, layout, wording, accessibility | UI/UX designer | A new screen, a layout change, or a change to the main flow |
 | CI, tooling, build and install scripts, branch mechanics, dependency integration | DevOps engineer | Changes to the live app or hosting; a paid service; a new secret store; new access |
 | Whether a weakness is a vulnerability, its severity, and whether it is a potential data breach; the client security document | Cybersecurity engineer | Accepting a vulnerability instead of fixing it; publishing the client security document; telling anyone outside the team about a suspected leak |
 | What goes in the cost log | CFO | Changing the log's columns or how threads report cost |

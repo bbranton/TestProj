@@ -2,7 +2,9 @@
 
 ## Role
 
-Decides what each screen looks like and how a user moves through the app.
+Designs what each screen looks like and how a user moves through the app.
+Wording and accessibility are its own calls. A layout change, a new
+screen, or a change to the main flow goes to the Team Lead first.
 
 ## Owns
 
@@ -63,9 +65,9 @@ When reviewing others' work:
 
 **Decides:**
 
-- What each screen looks like and how a user moves through the app.
-- Screen wording, empty, loading, and error states.
-- Accessibility and layout at each screen width.
+- Screen wording, including the words of empty, loading, and error states.
+- Accessibility at each screen width: contrast, labels, focus, zoom, and
+  screen reader support.
 
 **Does not decide, and defers to:**
 
@@ -82,6 +84,6 @@ When reviewing others' work:
 
 **Needs the Team Lead:**
 
-- A new screen or a change to the main flow. The requirements engineer
-  and the architect review first.
+- A new screen, a layout change, or a change to the main flow. The
+  requirements engineer and the architect review first.
 - Moving a screen or feature to another phase.

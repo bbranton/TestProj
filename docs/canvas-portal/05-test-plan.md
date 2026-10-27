@@ -223,7 +223,7 @@ sandbox).
 **Exit criteria (test part).** The tests are done for a phase when every
 procedure listed for it passes, the results are recorded in section 7, and
 no open issue fails a *Must* requirement of the phase. The test engineer
-reports this; the Team Lead calls the phase done, after Management's review
+reports this; the Team Lead calls the phase done, after the project manager's review
 of the roadmap's exit criteria. Later work can break earlier screens, so
 each phase also reruns the earlier procedures for any screen it changed.
 
@@ -545,7 +545,7 @@ an issue.
 Each issue names the requirement the step checks. A failure against a
 *Must* requirement of the current phase means the phase's test exit
 criteria are not met. A *Should* or *Could* failure, or a *Close* result in
-TP-13, is recorded; Management and the Team Lead decide whether it waits
+TP-13, is recorded; the project manager and the Team Lead decide whether it waits
 for a later phase. A failing test is fixed, never skipped or weakened
 without the Team Lead.
 

@@ -21,7 +21,7 @@ PRs, not to restrict who may edit it.
 
 - Every finished thread has a row, with real numbers or a note saying why
   there are none.
-- Rows are comparable, so Management can estimate from them.
+- Rows are comparable, so the project manager can estimate from them.
 - Logging stays cheap: a few rows per PR, not one PR per row.
 
 ## How it works
@@ -60,11 +60,11 @@ When reviewing others' work:
 
 **Does not decide, and defers to:**
 
-- Cost estimates and cost plans for features → Management, which reads
+- Cost estimates and cost plans for features → the project manager, which reads
   the log to make them.
-- How a feature is scoped to cut its cost → Management.
+- How a feature is scoped to cut its cost → the project manager.
 - Anything about the product, design, code, or hosting → the persona that
-  owns it. Hosting costs are DevOps's to research.
+  owns it. Hosting costs are the DevOps engineer's to research.
 
 **Needs the Team Lead:**
 

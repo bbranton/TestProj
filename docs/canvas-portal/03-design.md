@@ -67,12 +67,12 @@ both.
 | Drag and drop | Pragmatic drag and drop (Atlassian), or dnd-kit | Proposed, chosen in Phase 2 | Pragmatic drag and drop is Atlassian's open-source library behind Trello's own drag and drop and works with any framework, which suits G-3. |
 | Backend | Python 3.12 + FastAPI | **Decided (D-6)** | Short, readable code; generates API docs automatically |
 | Canvas client | `httpx` (Python HTTP library) | Proposed | Async requests, so courses can be fetched in parallel (NFR-2) |
-| Database | Postgres in production, SQLite for local dev and tests | Proposed | Postgres is what hosts offer; SQLite needs no setup. SQLite locks the whole file on every write, so concurrency tests on SQLite say little about Postgres. How NFR-22 is tested is the test engineer's call, and CI is DevOps's |
+| Database | Postgres in production, SQLite for local dev and tests | Proposed | Postgres is what hosts offer; SQLite needs no setup. SQLite locks the whole file on every write, so concurrency tests on SQLite say little about Postgres. How NFR-22 is tested is the test engineer's call, and CI is the DevOps engineer's |
 | Database access | SQLAlchemy + Alembic | Proposed | Python models for tables; Alembic tracks schema changes over time ("migrations") |
 | Portal sign-in | Sign in with Google (OAuth 2 / OpenID Connect) via the Authlib Python library | **Decided for MVP (D-7)** | No passwords to store; see section 5 |
 | Sessions | Server-side `SESSION` rows, looked up by a random ID in the cookie | Proposed | Sign out and account deletion end the session at once, which a self-contained signed cookie can't do |
 | Token encryption | Fernet, from the `cryptography` Python library | Proposed; needs the Team Lead (new dependency, token storage) | Authenticated encryption in one call; `MultiFernet` lets the key be replaced later without losing stored tokens |
-| Background Refresh | An `asyncio` task inside the one server process | Proposed | Nothing extra to build; it needs a host that keeps one server process running, which DevOps weighs when choosing the host (roadmap D-3) |
+| Background Refresh | An `asyncio` task inside the one server process | Proposed | Nothing extra to build; it needs a host that keeps one server process running, which the DevOps engineer weighs when choosing the host (roadmap D-3) |
 | Hosting | See roadmap D-3 | Open | |
 
 ## 3. Data model
@@ -642,7 +642,7 @@ sequenceDiagram
 | A Canvas address that points somewhere else | The student types the Canvas address, and the server then calls it, so a bad address could make the server call machines on its own network. The address must be `https`, must resolve only to public internet addresses, and is checked again on every call | NFR-11, NFR-12 |
 | Token sent to the wrong host | The client sends the token only to the saved Canvas host. It does not follow redirects, or paging `Link` URLs, that lead to another host; that course fails instead | NFR-10 |
 | Trackers | No third-party analytics or scripts | NFR-14 |
-| Deleted accounts in backups | Deleting an account removes its rows from the live database at once. Database backups are kept for at most 30 days, so a deleted account, and its encrypted token, are gone from every copy within 30 days. Backups are encrypted by the host. How backups are taken is DevOps's call; the 30-day limit is the design's | FR-54, NFR-11 |
+| Deleted accounts in backups | Deleting an account removes its rows from the live database at once. Database backups are kept for at most 30 days, so a deleted account, and its encrypted token, are gone from every copy within 30 days. Backups are encrypted by the host. How backups are taken is the DevOps engineer's call; the 30-day limit is the design's | FR-54, NFR-11 |
 | Test tokens | Read from a git-ignored `.env` file in local dev; CI uses recorded sample data instead | A-3, NFR-41 |
 
 ## 8. Repository layout
@@ -801,7 +801,7 @@ adds a dependency or changes how the Canvas token is stored or sent:
   addresses (section 7).
 
 What the connect screen says when a student connects a different account
-(Q-8, answered: old cards are kept, hidden) is for UI/UX; section 3 gives
+(Q-8, answered: old cards are kept, hidden) is for the UI/UX designer; section 3 gives
 the data side.
 
 ## Change log

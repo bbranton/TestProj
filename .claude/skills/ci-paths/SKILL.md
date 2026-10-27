@@ -5,7 +5,7 @@ description: Show which GitHub Actions workflows the current branch's changes wi
 
 # Check which CI runs
 
-Mostly used by the DevOps persona. Run from the repo root:
+Mostly used by the DevOps engineer persona. Run from the repo root:
 
 ```sh
 python3 team/Development/scripts/ci_paths.py       # against origin/develop

@@ -88,7 +88,7 @@ it, and the `SKILL.md` says how to run it.
 | Skill | What it does | Mostly used by |
 |-------|--------------|----------------|
 | `trace-requirement` | Finds a requirement ID in the design, UI spec, test plan, and code; lists requirements with no test. Script: [`QA/scripts/trace.py`](QA/scripts/trace.py) | Requirements engineer, Test engineer, Developer |
-| `ci-paths` | Says which workflows a branch's changes will trigger. Script: [`Development/scripts/ci_paths.py`](Development/scripts/ci_paths.py) | DevOps |
+| `ci-paths` | Says which workflows a branch's changes will trigger. Script: [`Development/scripts/ci_paths.py`](Development/scripts/ci_paths.py) | DevOps engineer |
 | `log-cost` | Reports a thread's real token use and cost to the CFO, who adds it to the [cost log](Management/cost-log.md) | Every thread, when its work is done |
 | `cross-review` | Steps for the owner and for each fresh reviewer thread in a cross-review | Owner and reviewer threads |
 
@@ -118,9 +118,9 @@ wins, so:
 Each line is one claim or one note:
 
 ```
-- [claim] Architecture · editing 03-design.md for FR-20 · PR #12 · 2026-10-25
-- [note] DevOps → Architecture · new backend env var CANVAS_TIMEOUT needs a default · 2026-10-25
-- [posting] DevOps · review of PR #12 · 2026-10-25 21:30
+- [claim] Architect · editing 03-design.md for FR-20 · PR #12 · 2026-10-25
+- [note] DevOps engineer → Architect · new backend env var CANVAS_TIMEOUT needs a default · 2026-10-25
+- [posting] DevOps engineer · review of PR #12 · 2026-10-25 21:30
 ```
 
 A `[posting]` line holds the PR's one GitHub draft review while a reviewer

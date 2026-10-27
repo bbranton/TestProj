@@ -260,16 +260,21 @@ so the frontend can choose a screen by code without reading the text:
 | `canvas_unreachable` | 502 | The warning banner with the last data (NFR-20) |
 | `canvas_address_invalid` | 400 | "Couldn't reach that Canvas address" on S-2 (W-1) |
 | `not_found` | 404 | Nothing; also what another user's IDs return (NFR-12) |
-| `invalid_request` | 422 | The UI specification's general error message. The portal's own frontend never sends one, so it means a bug |
+| `invalid_request` | 422 | The UI specification's general error message. The portal's own frontend never sends one, so it means a bug (NFR-10) |
 | `internal_error` | 500 | The UI specification's general error message |
 
 One app-level exception handler turns every error into this shape,
 including FastAPI's own: an `HTTPException`, a request it can't read
 (`RequestValidationError`, as `invalid_request`), and any other exception
-(as `internal_error`, logged with its stack trace). The `message` for
-these two is fixed text. It never echoes the request or the exception's
-text, because FastAPI's default 422 answer repeats the input it rejected,
-which for `PUT /api/canvas/connection` would be the token (NFR-10).
+(as `internal_error`). The `message` for these two is fixed text. It
+never echoes the request or the exception's text, because FastAPI's
+default 422 answer repeats the input it rejected, which for
+`PUT /api/canvas/connection` would be the token (NFR-10). The handler's
+log goes through the token filter and holds only the exception's type
+and where it happened (file, line, and the endpoint), never its message
+text, a validation error's input values, or a request body: the filter
+removes headers and fields named `token`, not free text inside an
+exception.
 The two sign-in endpoints are the exception: the browser goes to them
 directly, not the frontend's code, so they never answer with this shape
 (section 5).
@@ -388,7 +393,8 @@ sequenceDiagram
   frontend's code, so a JSON error would show as raw text. When either
   fails for any reason (the student cancels, Google answers with an error,
   the `state` doesn't match, the code exchange fails, or anything
-  unexpected), the backend logs it and redirects to the sign-in page with
+  unexpected), the backend logs what failed, without the `code` and
+  `state` values or Google's answer, and redirects to the sign-in page with
   `?signin=failed`, and S-1 shows its sign-in message. The address carries
   only that fixed value: no error code, Google's error text, or the `code`
   and `state` values.
@@ -655,7 +661,7 @@ sequenceDiagram
 | Concern | Design | Requirements |
 |---------|--------|--------------|
 | Token theft from the database | Tokens are encrypted with a key held only in the server's environment settings, not in the database or the repo | NFR-11 |
-| Token leaking through logs | A logging filter removes `Authorization` headers and any field named `token`; error messages never include request headers | NFR-10 |
+| Token leaking through logs | A logging filter removes `Authorization` headers and any field named `token`; error messages never include request headers; error logs hold an exception's type and place, never its text, a request body, or the sign-in `code` and `state` (section 4) | NFR-10 |
 | Token reaching the browser | No endpoint returns the token; after saving, the frontend only knows "connected as *name*" | NFR-10 |
 | Token in an address | The token is sent only in the body of `PUT /api/canvas/connection` and in the `Authorization` header to Canvas, never in a URL | NFR-10 |
 | Other sites acting as the user | Session cookie is `SameSite=Lax`, and no `GET` endpoint changes data (section 5) | NFR-12 |
@@ -880,3 +886,4 @@ the data side.
 | 2026-10-26 | Course colors (FR-66) postponed to Phase 5, from the Team Lead: `COURSE_LABEL` removed from the Phase 1 tables and the data model; strips and course buttons use one neutral color; section 12 notes the later table. |
 | 2026-10-27 | Error codes `invalid_request` (422) and `internal_error` (500), and one app-level handler for every error, from the coding standards review (PR #141, X-1). |
 | 2026-10-27 | A failed Google sign-in redirects to S-1 with `?signin=failed` instead of answering with the error shape, from the UI/UX designer on PR #141. |
+| 2026-10-27 | Error logs hold an exception's type and place, never its text, a request body, or the sign-in `code` and `state`, from the Requirements engineer on PR #141 (X-3, X-4). |

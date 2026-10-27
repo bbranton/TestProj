@@ -21,8 +21,9 @@ teams (departments), not personas.
 
 ## Folders
 
-Each team is a department, with a folder here holding `notes/`,
-`personas/`, and `scripts/` subfolders. Persona files are named after the
+Each team is a department, with a folder here holding `personas/` and
+`scripts/` subfolders. Persona notes and daily logs are in the project's
+shared files, not the repo. Persona files are named after the
 job title, such as `Development/personas/architect.md`. The
 [team workspace](/team/workspace.md#team-folders) says how the folders work,
 and [Who reviews what](/team/review-protocol.md#who-reviews-what) says who
@@ -55,8 +56,10 @@ Tell the agent which persona to act as, and on what. For example:
 
 An agent acting as a persona:
 
-1. Reads its persona file, its lasting notes and recent
-   [daily logs](/team/workspace.md#daily-notes) in its team's `notes/` folder, and the
+1. Reads its persona file, its [lasting notes](/team/workspace.md#persona-notes)
+   (Library: `notes/<persona>.md`) and recent
+   [daily logs](/team/workspace.md#daily-notes)
+   (Library: `notes/daily/`), and the
    [review protocol](/team/review-protocol.md) before starting, and checks the
    [team board](/team/workspace.md#the-board) for work another thread has
    claimed and for `[note]` lines addressed to it. It uses the words in the
@@ -99,9 +102,9 @@ To add a persona:
 
 1. Copy an existing persona file into the `personas/` folder of the team it
    works on, name it after the job title (such as `architect.md`), and fill
-   in every section. Give it a notes file in that team's
-   `notes/` folder. For a new team, create `team/<Team>/` with `notes/`,
-   `personas/`, and `scripts/` subfolders.
+   in every section. Give it a notes file in the project's
+   [notes folder](/team/workspace.md#persona-notes). For a new team, create
+   `team/<Team>/` with `personas/` and `scripts/` subfolders.
 2. Add a row to the tables above, and its name to the persona list in
    [CLAUDE.md](/CLAUDE.md).
 3. Add it to the tables in the [review protocol](/team/review-protocol.md), and

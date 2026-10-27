@@ -49,8 +49,8 @@ github.com:
    ruleset), with no bypass: *Restrict deletions*, *Block force pushes*,
    *Require a pull request before merging*.
 3. **Merge settings:** as the
-   [DevOps engineer notes](/team/Development/notes/devops-engineer.md)
-   record them.
+   DevOps engineer notes record them, in the project's shared files
+   (Library: `notes/devops-engineer.md`).
 4. **Pages**, if the project has a website: Settings > Pages > Source:
    *GitHub Actions*. Then, since `develop` is the default branch, add
    `main` under Settings > Environments > github-pages > Deployment
@@ -66,10 +66,10 @@ github.com:
 ## 4. Create the board
 
 The [board](/team/workspace.md#the-board) is in the project's shared
-files, not the repo. Create `team/board.md` there with `## Claims` and
+files, not the repo. Create Library: `team/board.md` with `## Claims` and
 `## Notes` headings.
 
-Also create `costs/` there, holding `cost-log.md` with the header row from
+Also create Library: `costs/`, holding `cost-log.md` with the header row from
 the CFO persona's [Columns](/team/Management/personas/cfo.md#columns) and
 an empty `logged/` folder. The
 [CFO persona](/team/Management/personas/cfo.md#role) says how it's used.
@@ -113,10 +113,10 @@ catches up on every merge.
 
 Copy `CLAUDE.md`, `team/`, `.claude/skills/`, and
 `.github/pull_request_template.md` into the new repo in one PR into
-`develop`. Leave out the daily logs (the cost log is in the Library, not
-the repo), and start each persona's notes file empty, except for the
-[Security register](/team/QA/notes/cybersecurity-engineer.md#security-register)
-heading, intro, and empty table.
+`develop`. The cost log, persona notes, and daily logs are in the Library,
+not the repo. Start the
+[security register](/team/QA/security-register.md) with its heading,
+intro, and an empty table.
 
 The process also lives in two docs under `docs/canvas-portal/`. Start a
 roadmap with empty *Open decisions*, *Risks*, *Backlog*, and *Change log*

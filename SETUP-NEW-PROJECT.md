@@ -124,7 +124,7 @@ not the repo. Start the
 intro, and an empty table.
 
 The process also lives in two docs under `docs/canvas-portal/`. Start a
-roadmap with empty *Open decisions*, *Risks*, *Backlog*, and *Change log*
+roadmap with empty *Product decisions*, *Risks*, *Backlog*, and *Change log*
 sections, as in [01-roadmap.md](/docs/canvas-portal/01-roadmap.md), copy
 the [glossary](/docs/canvas-portal/glossary.md)'s layout with no terms,
 and update the links that point at `docs/canvas-portal/`.

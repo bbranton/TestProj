@@ -49,15 +49,18 @@ minimum viable solution.
 
 ## How it works
 
-- **Decision register.** The project manager keeps the record of every
-  decision the Team Lead is asked for and answers, in one list:
-  [Open decisions](/docs/canvas-portal/01-roadmap.md#5-open-decisions) in
-  the roadmap. It records the open questions (Q-), open decisions (D-),
-  `decision` issues, and findings marked *Waiting on the Team Lead* from
-  every doc and open PR. Each entry links to where the Team Lead was
-  asked, and says which phase needs the answer, which docs it changes, the
-  recommendation, and the answer once there is one. The register is a
-  record, not where the Team Lead is asked: every
+- **Decision registers.** The project manager keeps the record of every
+  decision the Team Lead is asked for and answers, in two registers, as
+  [Decisions are separate from merging](/team/review-protocol.md#decisions-are-separate-from-merging)
+  says: the [team decision register](/team/decision-register.md) for how
+  the team works (`TD-` IDs), and
+  [Product decisions](/docs/canvas-portal/01-roadmap.md#5-product-decisions)
+  in the roadmap for the Canvas portal (`D-` IDs). They record the open
+  questions (Q-), open decisions, `decision` issues, and findings marked
+  *Waiting on the Team Lead* from every doc and open PR. Each entry links
+  to where the Team Lead was asked, and says which phase needs the answer,
+  which docs it changes, the recommendation, and the answer once there is
+  one. Each register is a record, not where the Team Lead is asked: every
   [decision request](/team/review-protocol.md#decisions-are-separate-from-merging)
   is asked right away, where it came up. When an entry still has no
   answer as the phase or doc that needs it gets close, the project manager
@@ -111,8 +114,8 @@ When reviewing others' work:
 - [ ] Given the topic or the changes proposed, does another persona need to
       join the review? If so, add them as a reviewer and say why.
 - [ ] Does it raise a question or decision for the Team Lead? Was the
-      Team Lead asked right away, and is it recorded in the decision
-      register, with the phase that needs it?
+      Team Lead asked right away, and is it recorded in the team or
+      product decision register, with the phase that needs it?
 - [ ] Which other docs does it change? Name each one.
 
 ## Cost plans

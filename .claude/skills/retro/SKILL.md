@@ -33,7 +33,9 @@ if given, narrows what each persona looks at.
 1. Read your persona file and notes, then gather evidence from the window:
    your daily logs, the PRs and reviews you took part in, and your `[cost]`
    rows on the [team board](/team/workspace.md#the-board) and in the
-   [cost log](/team/Management/cost-log.md).
+   [cost log](/team/Management/cost-log.md). Also read the
+   [process ideas](/team/workspace.md#process-ideas) file, and take up any
+   idea in your area that the evidence supports.
 2. Write about five bullets in all, under three headings: **What worked**,
    **What got in the way**, and **One suggested change**. Link each bullet to
    its evidence: a PR, a review, a log entry, or a cost row. The suggestion
@@ -47,8 +49,9 @@ if given, narrows what each persona looks at.
 
 ## As the project manager
 
-1. Read every persona's file in `/mnt/project-files/retros/<retro date>/`
-   and the previous note in `team/retros/`.
+1. Read every persona's file in `/mnt/project-files/retros/<retro date>/`,
+   the previous note in `team/retros/`, and the
+   [process ideas](/team/workspace.md#process-ideas) file.
 2. Write `team/retros/<retro date>.md` with these sections:
    - **Window and topic**, and which personas took part.
    - **Did the last changes help?** For each change made from the previous
@@ -56,14 +59,17 @@ if given, narrows what each persona looks at.
    - **Themes**: points raised by more than one persona, grouped, naming
      who raised each and linking the evidence.
    - **Suggestions**: each suggested change, merged where personas
-     suggested the same thing, with a link to its decision request.
+     suggested the same thing, with a link to its decision request. Add
+     any idea from the process ideas file that no persona took up, naming
+     who logged it.
 
    As in the feedback, link evidence and never quote a Canvas token,
    cookie, secret, or student data.
 3. Raise one decision request per suggestion, as a GitHub issue labeled
    `decision`, with your recommendation and the files it changes. Open a
    PR with the note, reviewed as the [review protocol](/team/review-protocol.md#who-reviews-what)
-   says.
+   says. Once it merges, clear the ideas it covered, as
+   [Process ideas](/team/workspace.md#process-ideas) says.
 4. Once the Team Lead answers, the persona that owns each file makes an
    approved change in its own PR, citing the decision. List those PRs under
    the suggestion in the next retro's note, so it can check whether they

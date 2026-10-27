@@ -84,3 +84,9 @@ Lasting lessons for the project manager persona. See the
   [ripple check](/team/review-protocol.md#ripple-check-for-process-rules)
   on every process PR, and bring the owners of the matching files in
   before review, not after (Team Lead, 2026-10-27, #96).
+- A persona whose persona file changes only in wording or a link is
+  notified with a board `[note]`, not made a reviewer, as
+  [Wording-only changes](/team/review-protocol.md#wording-only-changes-notify-the-persona)
+  says (Team Lead, 2026-10-27, #99). The test engineer had reviewed #88,
+  #89, and #91 for one sentence or link each, at about $1 a thread. List
+  notified personas in the PR description so the peer can check them.

@@ -103,5 +103,6 @@ When reviewing others' work:
 - A new screen or a change to the main flow. The requirements engineer
   and the architect review first.
 - Any visual change, such as layout, spacing, sizes, colors, fonts, or
-  icons. It goes to the Team Lead directly, without those reviews (Team Lead, 2026-10-27, #91).
+  icons. It goes to the Team Lead directly, without those reviews
+  (Team Lead, 2026-10-27, #91).
 - Moving a screen or feature to another phase.

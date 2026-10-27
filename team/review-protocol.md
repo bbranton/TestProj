@@ -45,7 +45,7 @@ for another persona in a finding.
 | Client security document (`06-security-overview.md`) | Security | Architecture, DevOps | Requirements engineer, Management |
 | Team process (shared files at the top of `team/`, team skills) | Management | Each persona whose file changes | Any other persona |
 | A team's own folder (`team/<Team>/`) | That team | None | Any persona the team asks |
-| Cost log (`team/Finance/cost-log.md`) | CFO | None | Management |
+| Cost log (`team/Management/cost-log.md`) | CFO | None | Management |
 
 **Security joins any PR that touches tokens, sign-in, or student data.**
 Whatever its row, a PR that changes how the Canvas token, the session

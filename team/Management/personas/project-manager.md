@@ -105,7 +105,7 @@ plan before work starts, and the Team Lead approves it with the plan:
 
 1. Break the work into PRs, and for each PR list the owner thread and the
    recommended reviewers.
-2. Size it in the units from the [cost log](../../Finance/cost-log.md#size-units).
+2. Size it in the units from the [cost log](../cost-log.md#size-units).
 3. Find the closest past rows in the cost log and scale from them. Give a
    low and a high cost, and a confidence (low, medium, or high). Until the
    log has about five comparable rows, confidence is low.
@@ -114,7 +114,7 @@ plan before work starts, and the Team Lead approves it with the plan:
 
 When the feature is done, compare the actual cost with the plan, so the
 next estimate is better. Management reads the cost log but doesn't edit
-it: the [CFO](../../Finance/personas/cfo.md) owns the log, and Management sends the comparison
+it: the [CFO](cfo.md) owns the log, and Management sends the comparison
 to the CFO to add to the feature's rows.
 
 ## Decisions

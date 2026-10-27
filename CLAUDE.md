@@ -33,7 +33,7 @@
   persona to catch. The Security persona's view carries the most weight on
   security; see [Security is everyone's job](team/README.md#security-is-everyones-job).
 - When a thread's work is done, report its cost with the `log-cost` skill.
-  Only the CFO persona edits `team/Finance/cost-log.md`.
+  Only the CFO persona edits `team/Management/cost-log.md`.
 - When asked to review or cross-review a doc or PR, follow the
   [review protocol](team/review-protocol.md): it says which personas
   review what and how findings are logged.

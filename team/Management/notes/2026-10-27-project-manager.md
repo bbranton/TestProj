@@ -315,3 +315,21 @@
   for wording-only persona changes, #100 docs check in CI, #102 daily CFO
   batch thread.
 - No decision was made here: each waits on the Team Lead.
+
+## Review the process retro note (#108)
+
+- Peer review of `team/retros/2026-10-27-process.md` against the `retro`
+  skill and all nine feedback files: **Changes needed**.
+- All seven suggestions map one to one to decision requests #95 to #100
+  and #102, each with a recommendation and the files it changes. #101 is
+  the docs retro's S-1.
+- F-1 to F-4 are attribution and coverage fixes: process churn was raised
+  by eight personas, not nine (the DevOps engineer didn't); the
+  cybersecurity engineer's counterpoint that one reused thread stayed
+  cheap for small reviews; the architect's fixes were on #88, #89, and
+  #91; and two missing points (the cost log for planning, the UI/UX
+  designer's #54 self-review). F-5, an unlinked claim, is optional.
+- Lesson: when combining feedback, check each "raised by" list against
+  the files, one persona at a time, rather than from memory of the
+  themes.
+- No new decision: the retro's decisions wait on the Team Lead.

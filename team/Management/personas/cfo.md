@@ -50,7 +50,7 @@ Library files keep no history and the last write wins.
   Library: `costs/logged/`. The logged files are the only backup:
   if the table is ever lost or changed by mistake, rebuild it from them.
   The rows from before the move to the Library are in
-  `logged/2026-10-27-migrated-from-repo-and-board.md`.
+  Library: `costs/logged/2026-10-27-migrated-from-repo-and-board.md`.
 - **No secrets.** Never write a Canvas token, cookie, secret, or student
   data in a row file or the table. Anyone in the project can read them.
   If one is found, handle it as a

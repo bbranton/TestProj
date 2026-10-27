@@ -9,7 +9,7 @@ the log has one writer and no merge conflicts.
 
 ## Owns
 
-- [`team/Finance/cost-log.md`](../cost-log.md): its rows, columns, size units,
+- [`team/Management/cost-log.md`](../cost-log.md): its rows, columns, size units,
   and notes.
 - The [`log-cost` skill](../../../.claude/skills/log-cost/SKILL.md): how
   threads look up and report their cost.

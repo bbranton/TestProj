@@ -14,7 +14,7 @@ reviews someone else's work, and which decisions it can and cannot make.
 | Developer | Code, coding standards, bug fixes | [developer.md](Software/personas/developer.md) |
 | DevOps | CI, build and install scripts, dependencies, deploys, hosting, top-level README | [devops-engineer.md](DevOps/personas/devops-engineer.md) |
 | Security | Security reviews, potential data breach ratings, client security document | [security-engineer.md](Security/personas/security-engineer.md) |
-| CFO | Cost log: the only persona that edits it | [cfo.md](Finance/personas/cfo.md) |
+| CFO | Cost log: the only persona that edits it | [cfo.md](Management/personas/cfo.md) |
 
 ## Folders
 
@@ -28,8 +28,7 @@ Each team may freely update its own folder.
 |------|---------------|
 | Architecture | `architect.md` |
 | DevOps | `devops-engineer.md` |
-| Finance | `cfo.md` |
-| Management | `project-manager.md` |
+| Management | `project-manager.md`, `cfo.md` |
 | QA | `requirements-engineer.md`, `test-engineer.md` |
 | Security | `security-engineer.md` |
 | Software | `developer.md` |
@@ -37,7 +36,7 @@ Each team may freely update its own folder.
 
 Files every team shares stay at the top of `team/`: this README, the
 [review protocol](review-protocol.md), and the [team workspace](workspace.md).
-The [cost log](Finance/cost-log.md) is in the Finance folder, since only the
+The [cost log](Management/cost-log.md) is in the Management folder, since only the
 CFO edits it.
 
 How personas review each other's work is in the

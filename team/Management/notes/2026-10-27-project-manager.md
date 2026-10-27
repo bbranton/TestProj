@@ -283,4 +283,6 @@
   list, though the review protocol and persona files link to them.
 - One minor note for the DevOps engineer peer: the merge settings step
   restates the DevOps engineer notes.
+- The owner fixed all three in `da26f94`; re-checked at `868dbe9` and
+  changed the verdict to Recommend.
 - No decision was raised.

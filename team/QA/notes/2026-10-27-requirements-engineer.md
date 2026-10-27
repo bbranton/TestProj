@@ -12,3 +12,12 @@
   written as both "Backlog" and "Backlog B-n" in the review protocol.
   X-2: roadmap section 7 leaves out "too big for its pull request".
 - No decisions made; the PR carries out the Team Lead's decision.
+
+## Glossary fix on PR #82: every PR has a peer reviewer
+
+- Management's X-1 on #82: *Reviewers* said "one for each area the PR
+  touches", which gave an own-area PR none. Reworded it to a same-persona
+  peer (for a team thread, the persona that owns most of the changed
+  files) plus one per other area, and "Every PR has at least one."
+  Committed to the #82 branch, as *Fixes by another persona* says.
+- No decisions made; the PR carries out the Team Lead's decision.

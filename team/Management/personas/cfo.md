@@ -61,7 +61,7 @@ thread each came from:
 - rows that say `n/a`, and why.
 
 Then the thread works as [How it works](#how-it-works) says, and ends once
-its PR merges.
+its PR has merged and it has cleared its notes from the board.
 
 ## Review checklist
 

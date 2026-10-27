@@ -33,11 +33,12 @@ in [the review protocol](../blob/develop/team/review-protocol.md#who-reviews-wha
 | # | Found by | Fix in | Finding | Status |
 |---|----------|--------|---------|--------|
 
-## Follow-ups opened
+## Backlog items
 
-<!-- Each GitHub issue reviewers opened for work outside this PR, with its
-     persona label. "None" when there are none. See "Follow-up work" in
-     the review protocol. -->
+<!-- Each finding marked Backlog (outside the current phase or too big for
+     this PR), with the persona that owns it, for Management to add to the
+     roadmap backlog. "None" when there are none. No GitHub issues; see
+     "Follow-up work" in the review protocol. -->
 - None
 
 ## Cost

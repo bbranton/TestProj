@@ -50,8 +50,8 @@ query that skips the `user_id` filter, a secret committed to the repo, a
 backup readable without the key.
 
 Any persona can mark a finding a potential data breach, and should
-whenever it's unsure. The mark starts the finding, and any follow-up issue
-gets the `potential-breach` label. A mark stays until Security has looked
+whenever it's unsure. The mark starts the finding, and the finding is
+fixed in that PR, never moved to the backlog. A mark stays until Security has looked
 at it; only Security can clear it, and says why in the finding.
 Management treats every potential data breach as critical and must-fix,
 as the [Management persona](../../Management/personas/project-manager.md#decisions) says.

@@ -502,8 +502,10 @@ The plan has grown quickly, so these rules keep each phase finishable:
   either moves part of it to a later phase or accepts a later finish; it
   doesn't quietly grow.
 - **Small pull requests.** Each pull request covers one document or one
-  feature. A fix that a change needs in another document is noted and made in
-  that document's own pull request.
+  feature. A fix that a change needs in another document is made in the same
+  pull request by the persona that owns that document, as the
+  [review protocol](../../team/review-protocol.md#who-fixes-a-finding) says.
+  Work outside the current phase goes on the [backlog](#9-backlog).
 - **Exit criteria decide "done".** A phase isn't done until its exit
   criteria pass, and nothing outside them is needed to call it done.
   The test engineer says whether they pass, and the Team Lead calls the phase
@@ -515,6 +517,19 @@ The plan has grown quickly, so these rules keep each phase finishable:
 |-----|------|
 | Team Lead | Has the final say on every decision and disagreement; decides open decisions, questions, and every decision request; OKs each phase's test deploy; approves every roadmap and scope change; can change any pull request's reviewers; reviews and merges the `develop` → `main` release pull request; runs the manual test procedures that need real Canvas accounts or the teacher sandbox; sets up the Google and Canvas accounts in each phase's prerequisites; changes the current phase in CLAUDE.md. |
 | Team personas (Claude) | Management, Requirements engineer, Test engineer, Architecture, UI/UX, Developer, DevOps, Security, and CFO, as described in the [team README](../../team/README.md) and the [review protocol](../../team/review-protocol.md). Each one writes the documents and code it owns and reviews others' work when a pull request touches its area, in small pull requests limited to the current phase; merges its own pull requests into `develop` once their reviewers recommend them, but never approves or merges into `main`; lists the requirement IDs each pull request implements; brings anything outside the current phase to the Team Lead instead of building it. |
+
+## 9. Backlog
+
+Work a review found that is outside the current phase or too big for its
+pull request, as the
+[review protocol](../../team/review-protocol.md#follow-up-work) says.
+Management adds each item from the merged PR's *Backlog items* section and
+reviews the list with the Team Lead at every phase boundary. The Team Lead
+plans an item into a phase or drops it; nobody starts on one before then.
+A potential data breach never goes here.
+
+| ID | Item | Found in | Owner | Suggested phase | Status |
+|----|------|----------|-------|-----------------|--------|
 
 ## Change log
 
@@ -570,3 +585,4 @@ The plan has grown quickly, so these rules keep each phase finishable:
 | 2026-10-26 | Phase 1 scope cut, from the Team Lead (requirements #6, 58c1c04): Phase 1 shows only the Backlog list, and the other three lists, minimizing (FR-61, FR-80), and the 2-second target (NFR-1) move to Phase 2, with a check of the TP-14 baseline before Phase 2 starts; Excused moves to Phase 5. Orphaned cards can be shown from the Phase 1 Filter menu, and the Refresh summary's removed count is Phase 1 (FR-16, FR-45). Phase 5 adds Trello-style search (FR-81) and full WCAG coverage (NFR-37). |
 | 2026-10-26 | Course label colors (FR-66), automatic and student-chosen, move to Phase 5, from the Team Lead's review of the UI specification. Phase 1 uses one neutral strip with the course code. |
 | 2026-10-27 | Section 8 matches the new review protocol, from the Team Lead: the Team Lead decides through decision requests, PR authors pick reviewers by what the PR touches, personas merge their own PRs into `develop`, and only the Team Lead reviews and merges the `develop` → `main` release. Added the CFO to the personas. |
+| 2026-10-27 | Review follow-ups go in the same pull request, fixed by the persona that owns the file, or on the new section 9 backlog when they're outside the current phase; no more follow-up GitHub issues. From the Team Lead. |

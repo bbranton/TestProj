@@ -16,16 +16,17 @@ Lasting lessons for the Management persona. See the
 - Exit criteria name exact test steps that can run in that phase, such as
   "TP-14 steps 3 and 4". "The Phase 1 steps of TP-10" failed review
   because the test plan didn't mark its steps by phase.
-- Triage `needs-triage` issues before planning the next piece of work, so
-  reviewer follow-ups don't sit unread. Recommend a place and a priority;
-  the Team Lead sets the priority.
+- Add Backlog items from merged PRs to the roadmap backlog before
+  planning the next piece of work, so reviewer follow-ups don't sit
+  unread. The Team Lead dropped GitHub issues for review follow-ups
+  (2026-10-27) because they left too many loose ends.
 - Price hosting per phase, not only for the final deploy. The Team Lead
   wants $0 until real users arrive, so test deploys use free tiers (D-3)
   and the paid host waits for Phase 4. Ask DevOps to research free options
   before offering a paid one.
-- A `potential-breach` issue skips the usual triage choices: recommend it as
-  critical, first in the current phase, and fixed before the next deploy.
-  Only the Team Lead can delay it.
+- A potential data breach never goes on the backlog: it is fixed in the
+  PR, or first in the current phase and before the next deploy. Only the
+  Team Lead can delay it.
 - Before any deploy that puts real tokens online, the roadmap lists its
   go-live conditions (incident plan, key handling, secret scanning, cookie
   safety on the host's domain, private secrets and backups). A shared

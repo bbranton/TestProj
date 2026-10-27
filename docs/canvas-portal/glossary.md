@@ -36,7 +36,7 @@ The portal follows [Trello](https://trello.com)'s words (goal G-3): a
 |------|---------|------------|
 | Board | The home screen, titled "My assignments": four lists of cards, one card per Canvas assignment. In Phase 1 it's read only. Not the [team board](#team-process). | FR-60, S-4 |
 | List | One of the board's four columns, always in this order: Backlog, To do, In progress, Done. Older requirements say "column"; it means the same. | FR-31 |
-| Backlog | The first list. New Canvas assignments land here until the student moves them. In Phase 1 every card is in Backlog. Not the `backlog` [issue label](#team-process). | FR-31, FR-34 |
+| Backlog | The first list. New Canvas assignments land here until the student moves them. In Phase 1 every card is in Backlog. Not the [roadmap backlog](#team-process). | FR-31, FR-34 |
 | To do, In progress, Done | The other three lists. Cards only move into them when the student drags them *(Phase 2)*. | FR-31, FR-32 |
 | Card | One Canvas assignment on the board. Until Phase 5, selecting it opens the assignment in Canvas, in a new tab. | FR-26, FR-65 |
 | Card front | What a card shows on the board: the label strip, the title, the due badge, the points, the submission types, and the [card status](#card-status). | FR-65 |
@@ -110,8 +110,7 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 | Verdict | A reviewer's sign-off: Recommend, Recommend with notes, or Changes needed. |
 | Potential data breach | A finding that could expose a token, a session, or a student's data to anyone else. Always critical and must-fix. |
 | Team board | The shared file where threads claim work and leave handoff notes, as the [team workspace](../../team/workspace.md#the-board) says. Not the portal's board. |
-| Follow-up issue | A GitHub issue for work a review uncovered outside the PR, labeled with its department and `needs-triage` until Management triages it. |
-| `backlog` label | An issue label for work that's useful but not planned into a phase. Not the Backlog list. |
+| Roadmap backlog | The list in the [roadmap](01-roadmap.md#9-backlog) of work a review found outside the current phase or too big for its PR, with `B-` IDs. Management keeps it and reviews it with the Team Lead at each phase boundary. Not the Backlog list. Review follow-ups never become GitHub issues. |
 
 ## Web terms
 

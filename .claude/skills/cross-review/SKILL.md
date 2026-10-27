@@ -25,12 +25,15 @@ reviewer.
 4. Answer or fix each finding as it arrives. For a question back to a
    reviewer, ask on the PR comment, then message that reviewer thread with
    the link. After two rounds without agreement, mark the finding
-   **Waiting on the Team Lead**.
+   **Waiting on the Team Lead**. For a finding in another persona's files,
+   ask that persona's thread to commit the fix to this branch, as
+   [Fixes by another persona](../../../team/review-protocol.md#fixes-by-another-persona)
+   says, and pull before your next push.
 5. After pushing fixes for a **Changes needed** verdict, message that
    reviewer thread to re-review.
 6. Post the combined findings table, with anything that needs the Team
-   Lead at the top. List each issue the reviewers opened in the PR's
-   *Follow-ups opened* section, and your `### Decision:` log entries.
+   Lead at the top. List each finding marked Backlog in the PR's
+   *Backlog items* section, and your `### Decision:` log entries.
    When every verdict is Recommend or Recommend with notes, merge into
    `develop`. Then tell each reviewer thread, release the claim on the
    board, and report your cost with the `log-cost` skill.
@@ -43,10 +46,11 @@ reviewer.
    reviews before writing yours.
 2. Use the team skills where they fit: `trace-requirement` for requirement
    IDs and test coverage, `ci-paths` for whether CI runs.
-3. For work you find that is outside this PR, open a GitHub issue that
-   links the PR, with the owning persona's label (such as `persona: security`) and
-   `needs-triage` (plus `potential-breach` when Security marks it one), and log it as a finding with status "Moved to #issue".
-   See [Follow-up work](../../../team/review-protocol.md#follow-up-work).
+3. Log every problem you find as a finding on this PR, naming in *Fix in*
+   the persona whose file needs the change. Don't open GitHub issues. Mark
+   a finding "Backlog" only when its fix is outside the current phase or
+   too big for this PR; a potential data breach never is. See
+   [Who fixes a finding](../../../team/review-protocol.md#who-fixes-a-finding).
 4. Post one PR review headed with your persona and verdict, such as
    "**DevOps review: Changes needed**", with findings as inline comments.
    Write it fully first, then post it only while you hold the `[posting]`

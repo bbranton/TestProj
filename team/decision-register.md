@@ -11,7 +11,7 @@ Like the product register, this is a record, not where the Team Lead is
 asked. Which register a decision goes in, and how it's recorded, is in
 [Decisions are separate from merging](/team/review-protocol.md#decisions-are-separate-from-merging).
 
-- **IDs** are `TD-1`, `TD-2`, ..., in the order the decisions were made.
+- **IDs** are `TD-1`, `TD-2`, ..., in the order they were recorded.
   An ID is never reused. TD-19 to TD-21 were D-10 to D-12 in the roadmap
   before the registers were split.
 - **Status** is **Open** while the Team Lead hasn't answered, and

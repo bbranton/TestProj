@@ -33,10 +33,14 @@ Lasting lessons for the project manager persona. See the
 - Issues opened under the old follow-up rule stay open until done (Team
   Lead, 2026-10-27), so check open issues as well as the roadmap backlog
   when planning.
-- A potential data breach never goes on the backlog: it is fixed in the
-  PR, or first in the current phase and before the next deploy, tracked in
-  the cybersecurity engineer's register meanwhile. Check that register at every phase
-  boundary and before every deploy. Only the Team Lead can delay one.
+- Check the cybersecurity engineer's
+  [security register](/team/QA/notes/cybersecurity-engineer.md#security-register)
+  at every phase boundary and before every deploy; breach handling is in
+  [Potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach).
+- The roadmap applies team rules too (risk ratings, the backlog, step 6
+  gates), but the ripple check's search list leaves out `docs/` apart
+  from the glossary. When a ripple check covers a rule the project manager
+  uses, search `01-roadmap.md` as well (#113, X-1).
 - Before any deploy that puts real tokens online, the roadmap lists its
   go-live conditions (incident plan, key handling, secret scanning, cookie
   safety on the host's domain, private secrets and backups). A shared
@@ -80,3 +84,9 @@ Lasting lessons for the project manager persona. See the
   [ripple check](/team/review-protocol.md#ripple-check-for-process-rules)
   on every process PR, and bring the owners of the matching files in
   before review, not after (Team Lead, 2026-10-27, #96).
+- A persona whose persona file changes only in wording or a link is
+  notified with a board `[note]`, not made a reviewer, as
+  [Wording-only changes](/team/review-protocol.md#wording-only-changes-notify-the-persona)
+  says (Team Lead, 2026-10-27, #99). The test engineer had reviewed #88,
+  #89, and #91 for one sentence or link each, at about $1 a thread. List
+  notified personas in the PR description so the peer can check them.

@@ -431,3 +431,76 @@
   covers phase and scope decisions, close in name to the new ripple check.
   No change needed now.
 - No new decision: #96 is already answered.
+
+## Link the project manager's files to the breach rule (#113)
+
+- On the cybersecurity engineer's PR #113 (#97, PR 1 of 5), changed the
+  project manager's files to link to
+  [Potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
+  instead of restating it: the review protocol (*Who decides what*,
+  *Findings table*, *Follow-up work*), the team README (*Security is
+  everyone's job*), the project manager persona (*Owns*, *Decisions*), the
+  project manager notes, and the `cross-review` skill's reviewer step 3.
+  Kept "Delaying the fix of a potential data breach" under *Needs the Team
+  Lead*, since it names a Team Lead call rather than restating the rule.
+- Wording follows the cybersecurity engineer's proposed text on the PR.
+- No new decision: the Team Lead answered it on #97.
+
+## Review the breach rule's one home (#113)
+
+- Shared-files review at `9c7b18a`, against `develop@c2a78b5`:
+  **Recommend with notes**.
+- Re-ran the ripple check on the branch: outside the home and the
+  security register intro, every mention links to
+  *Potential data breach* or only names the term.
+- F-1 (minor): the PR description still lists the other owners' changes
+  as still to come.
+- N-1 (optional): the glossary repeats the home's "what counts" sentence.
+- X-1 (DevOps engineer): the roadmap still restated the rule in the risk
+  list intro and the backlog intro. Both now link to the home, and the
+  step 6 gate list links the term too. My ripple check had skipped
+  `docs/`, since the ripple check's search list names only the glossary
+  there.
+
+## Notify, not review, for wording-only persona file changes (#99)
+
+- Added *Wording-only changes notify the persona* to the review
+  protocol's *Who reviews what*, as the rule's one home per #97, and
+  linked to it from *Two levels of review*, the two *Who reviews what*
+  rows for another persona's files, the team README's *Folders*, and the
+  workspace's *Team folders* and board rule 4.
+- From the peer review: the team README's step 1 for a persona thread now
+  checks the board for `[note]` lines addressed to it, so a notified
+  persona sees the change, and notified personas go under *Persona
+  review* in the PR description, so the PR template needn't change.
+- Ripple check: `CLAUDE.md`, the PR template, and the `cross-review` skill
+  send readers to the review protocol's *Who reviews what* for reviewers,
+  where the exception now lives, so they needed no change. No glossary
+  term covers it.
+
+### Decision: notify, not review, for wording-only persona file changes
+
+- **Date:** 2026-10-27
+- **Decided by:** Team Lead
+- **Options:** 1, notify the persona with a board `[note]`, keeping the
+  security "always" rule; 2, no change, every persona whose file changes
+  reviews
+- **Recommendation:** 1, with the PR's peer reviewer judging whether a
+  change is wording-only, and the persona reviewing if in doubt
+- **Outcome:** 1, as recommended
+- **Links:** [#99](https://github.com/bbranton/TestProj/issues/99),
+  [process retro](/team/retros/2026-10-27-process.md),
+  [Wording-only changes](/team/review-protocol.md#wording-only-changes-notify-the-persona)
+
+## Peer review of PR #114 (#99)
+
+- Peer review at `0facf70`, against `develop@c2a78b5`: **Changes needed**.
+- F-1: the workspace's *Team folders* still stated the old rule and was
+  missing from *Files that state this rule*. F-2: nothing told a persona
+  thread to read board `[note]` lines left for it. F-3: the *Who reviews
+  what* rows for another persona's files didn't point to the exception,
+  though the `cross-review` skill sends owners to the table. F-4
+  (optional): say where notified personas go in the PR description.
+- All four are in the project manager's own files; no other reviewer
+  needed. Fixed in `84d9890` and the next commit.
+- No new decision: #99 is already answered.

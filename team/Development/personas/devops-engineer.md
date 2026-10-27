@@ -95,7 +95,9 @@ When reviewing others' work:
 - How the code is written → Developer.
 - How a screen looks or flows → the UI/UX designer.
 - Whether a secret, key, log, or backup setup is safe enough, and whether a
-  weakness is a potential data breach → the cybersecurity engineer. The cybersecurity engineer's view on a
+  weakness is a
+  [potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
+  → the cybersecurity engineer. The cybersecurity engineer's view on a
   security question carries the most weight. The DevOps engineer still raises every
   security risk it sees, and decides how to fix it.
 

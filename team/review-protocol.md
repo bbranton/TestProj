@@ -41,7 +41,9 @@ persona that owns most of the changed files. A persona's area is its own
 files in its team folder (its persona file, notes, and daily log) and the
 docs it owns in [Who reviews what](#who-reviews-what). Teams hold several personas, so a
 change to another persona's files in the same team folder is reviewed by
-that persona, and a team script or skill by the other personas who use it.
+that persona, unless it is a
+[wording-only change](#wording-only-changes-notify-the-persona), and a team
+script or skill by the other personas who use it.
 The "always" rules below still apply: a code PR always has the Test
 engineer, and anything touching the cybersecurity engineer's area always has the cybersecurity engineer.
 
@@ -143,8 +145,8 @@ at any time.
 | App code | Developer | Developer |
 | CI, build, install scripts, repo settings, or the top-level `README.md` | DevOps engineer | DevOps engineer |
 | Canvas tokens, sign-in, the session cookie, secrets, student data, hosting, or deploys; the client security document (`06-security-overview.md`) | Cybersecurity engineer, always | Cybersecurity engineer |
-| Shared files at the top of `team/`, or another team's folder | Each persona whose file changes, plus the project manager | Project manager |
-| Another persona's files in your own team's folder | That persona | That persona |
+| Shared files at the top of `team/`, or another team's folder | Each persona whose file changes, plus the project manager (a board note instead, for a [wording-only change](#wording-only-changes-notify-the-persona) to a persona file) | Project manager |
+| Another persona's files in your own team's folder | That persona (a board note instead, for a [wording-only change](#wording-only-changes-notify-the-persona) to a persona file) | That persona |
 | A team script or its skill (see [Team skills](/team/workspace.md#team-skills)) | The other personas who use it | The team whose `scripts/` folder holds it |
 | Only your own persona's area: its persona file, notes, and daily log, or a doc it owns in this table | The peer reviewer only | That persona |
 | The cost log (`team/Management/cost-log.md`) | The peer reviewer (CFO) only | CFO, who adds reported rows in batches |
@@ -159,6 +161,24 @@ persona file, and checks that the words match the
 job: any reviewer raises any token or student-data risk it sees, as
 [Security is everyone's job](/team/README.md#security-is-everyones-job) says.
 
+### Wording-only changes notify the persona
+
+When a PR changes another persona's persona file only in wording or a
+link, without changing what that persona does, decides, or reviews, that
+persona is notified instead of made a reviewer (Team Lead, 2026-10-27,
+[#99](https://github.com/bbranton/TestProj/issues/99)):
+
+- The owner leaves that persona a `[note]` on the
+  [board](/team/workspace.md#the-board) naming the PR and the change, and
+  lists it under *Persona review* in the PR description as
+  `- Notified: <persona>: <change>`.
+- The persona reads the change at its next own thread, fixes anything it
+  disagrees with in its own PR, and deletes the note.
+- The PR's peer reviewer judges whether each such change is wording-only.
+  If in doubt, the persona reviews.
+- The "always" rules above still apply, so a change touching the
+  cybersecurity engineer's area always has the cybersecurity engineer.
+
 ## Who decides what
 
 The Team Lead is the primary decision maker. Each persona decides only
@@ -171,7 +191,7 @@ acceptable for its area.
 | Decision | Decided by | Decision request to the Team Lead for |
 |----------|------------|-------------------------|
 | Business goals, scope and phases, hosting and domains, cost, team structure and process | Team Lead | Always |
-| Feature priorities within a phase, the order of work, the roadmap backlog, keeping the decision register, rating risks. A potential data breach is always critical and must-fix | Project manager | Every scope, roadmap, or phase change; adding or dropping a goal; accepting a risk instead of reducing it |
+| Feature priorities within a phase, the order of work, the roadmap backlog, keeping the decision register, rating risks | Project manager | Every scope, roadmap, or phase change; adding or dropping a goal; accepting a risk instead of reducing it |
 | How a requirement is worded and traced | Requirements engineer | Adding, removing, or moving a requirement between phases |
 | How it's tested, and whether tests pass | Test engineer | Calling a phase done; removing or weakening a test |
 | Design: structure, data, APIs, technology, security design | Architect | A new dependency, service, or data store; how the Canvas token is stored or sent; starting a transition plan |
@@ -248,10 +268,8 @@ When a finding needs a change in another persona's files:
   isn't the owner), Fixing in `#<n>` (a separate PR), Issue `#<n>`,
   Backlog `B-<n>`, Won't fix (with the reason), or Waiting on the Team
   Lead.
-- A finding that could expose a token, a session, or a student's data
-  starts with **Potential data breach:**, whichever persona finds it, as
-  the [cybersecurity engineer persona](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
-  says. It is never Won't fix without the Team Lead.
+- A finding that is a [potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach) is
+  marked and handled as that section says.
 
 ## Follow-up work
 
@@ -301,20 +319,8 @@ reviews the backlog with the Team Lead at every phase boundary,
 recommending a phase or dropping each item. The Team Lead plans items into
 a phase; nobody starts on a backlog item before then.
 
-**A potential data breach never goes through this choice.** It is never
-an issue or a backlog item: it is fixed, or tracked in the security
-register.
-
-- **One the PR adds** is always fixed in that PR before merge.
-- **One already on `develop`** that the review uncovers is fixed in the PR
-  by the persona that owns the file. Only if the cybersecurity engineer agrees the fix is too
-  big for that PR does it wait, as the first work of the current phase,
-  fixed before the next deploy.
-- **Every one not yet fixed** goes in the
-  [security register](/team/QA/notes/cybersecurity-engineer.md#security-register)
-  with the gate *before the next deploy*, before the PR merges. The project manager
-  checks the register at every phase boundary and before every deploy. Only
-  the Team Lead can delay one.
+**A potential data breach never goes through this choice.** It is
+handled as [Potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach) says.
 
 ## Disagreements
 

@@ -26,7 +26,8 @@ Each team is a department, with a folder here holding `notes/`,
 job title, such as `Development/personas/architect.md`. The
 [team workspace](/team/workspace.md#team-folders) says how the folders work.
 Each persona may update its own files there with only a peer review from
-its own persona; another persona's files get that persona's review.
+its own persona; another persona's files are reviewed as
+[Who reviews what](/team/review-protocol.md#who-reviews-what) says.
 
 | Team | Persona files |
 |------|---------------|
@@ -60,7 +61,7 @@ An agent acting as a persona:
    [daily logs](/team/workspace.md#daily-notes) in its team's `notes/` folder, and the
    [review protocol](/team/review-protocol.md) before starting, and checks the
    [team board](/team/workspace.md#the-board) for work another thread has
-   claimed. It uses the words in the
+   claimed and for `[note]` lines addressed to it. It uses the words in the
    [glossary](/docs/canvas-portal/glossary.md), and adds any new term there
    in the same PR.
 2. Stays inside what the persona owns. When work belongs to another persona,
@@ -88,8 +89,8 @@ persona:
 - No persona ignores a security risk, or leaves it for another persona to
   catch.
 - Any persona can mark a finding a
-  [potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach).
-  The project manager treats every one as critical and must-fix.
+  [potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach),
+  which is then handled as that section says.
 - The [cybersecurity engineer persona](/team/QA/personas/cybersecurity-engineer.md) is the specialist. On a
   security question its view carries the most weight, over the persona
   that owns the work. The owner still makes the fix, and can't decline it

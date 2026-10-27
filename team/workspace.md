@@ -154,21 +154,29 @@ costs about $1 to $2.
 
 - **A thread carries one PR to the end.** Its review rounds, fixes, and
   daily log entries stay in that thread.
-- **At about $10, ask the Team Lead about a hand-off.** An owner thread
-  checks its cost with `get_session`, as the `log-cost` skill does, after
-  each Team Lead round. Once it passes about $10, it asks the Team Lead
-  whether now is a good time to hand off; there's no hard cap, and the
-  Team Lead may say carry on. If `get_session` returns no numbers, ask
-  after about four Team Lead rounds instead. On a yes, the thread:
+- **At about $10, ask the Team Lead about a hand-off.** After each Team
+  Lead round, an owner thread checks its cost as the `log-cost` skill's
+  *Checking cost mid-thread* says. Once it passes about $10, it asks the
+  Team Lead whether now is a good time to hand off; there's no hard cap,
+  and the Team Lead may say carry on. If `get_session` has no
+  `external_metadata.usage.cost_usd`, ask after about four Team Lead
+  rounds instead, and say the thread can't read its cost. On a yes, the
+  thread:
   1. adds a hand-off note to its persona's daily log and pushes it to the
      PR branch: the PR and branch, what's done, what's left, open
      findings, decisions waiting on the Team Lead, and the files to read
      first;
-  2. reports its cost with the `log-cost` skill;
-  3. asks the coordinator for a fresh thread of the same persona, linking
-     the note.
-- **Once the PR merges, the thread is done.** It reports its cost with the
-  `log-cost` skill and takes no new work.
+  2. leaves a board `[note]` for the next thread of its persona that
+     points to that log entry, and hands over its board claim;
+  3. reports its cost with the `log-cost` skill;
+  4. asks the coordinator for a fresh thread of the same persona, linking
+     the note, and unsubscribes from the PR's GitHub activity, since
+     events reach only one thread per PR.
+
+  The fresh thread subscribes to the PR, tells the open reviewer threads
+  it is now the owner, deletes the board note, and carries on.
+- **Once the PR merges or closes, the thread is done.** It reports its
+  cost with the `log-cost` skill and takes no new work.
 - **New work goes to a new thread.** Only the coordinator starts threads.
   When the Team Lead asks a thread for work outside its PR, or follow-up
   work after its PR has merged, the thread asks the coordinator for a
@@ -177,4 +185,5 @@ costs about $1 to $2.
   starts from the persona's notes, its daily log, and the PR, not from the
   old thread.
 - **Reviewers already work this way:** each reviewer is a fresh thread, as
-  the [review protocol](/team/review-protocol.md#who-reviews-what) says.
+  the [review protocol](/team/review-protocol.md#one-thread-per-reviewer)
+  says.

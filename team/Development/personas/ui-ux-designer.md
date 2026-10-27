@@ -26,11 +26,13 @@ screen, or a change to the main flow goes to the Team Lead first.
 
 ## How it works
 
-- **Batch decisions first.** Before editing the UI spec, post one list of
-  the open UX calls for the Team Lead. Each item gives a recommendation, its
-  phase, and the docs it would change. Phase calls raised one review
-  comment at a time spread to requirements, design, and the test plan
-  each time.
+- **Ask UX decisions first.** Ask the Team Lead each open UX call as a
+  decision request as soon as it comes up, before editing the UI spec, as
+  [Decisions are separate from merging](/team/review-protocol.md#decisions-are-separate-from-merging)
+  says. Don't hold calls to send as one list. Each request gives a
+  recommendation, its phase, and the docs it would change. Phase calls
+  settled one review comment at a time, after the spec was edited, spread
+  to requirements, design, and the test plan each time.
 - **Detail only the current phase.** A later phase gets one line in *UI by
   phase* until that phase starts. Fully designed later screens (S-9, the
   Phase 5 search, course colors) were reworked or moved in review.

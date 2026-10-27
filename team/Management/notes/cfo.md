@@ -11,3 +11,6 @@ Lasting lessons for the CFO persona. See the
   reads `cost_usd` mid-thread, but on 2026-10-27 this CFO thread's own
   `get_session` had no `usage` at all. Expect the round-count fallback to
   be the common case, and expect `n/a` rows from handed-off threads.
+- Board notes can be cut off, since the board file keeps no history and
+  the last write wins. Check every `[cost]` note has all ten cells before
+  batching; rebuild a cut note from the reporter's daily log, or ask.

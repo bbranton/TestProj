@@ -82,7 +82,7 @@ Both:
   `PascalCase` for classes, and `UPPER_CASE` for constants.
 - **TypeScript:** `camelCase` for functions and variables, `PascalCase` for
   components, types, and interfaces, and `UPPER_CASE` for constants. A
-  component's file has the component's name, such as `BoardCard.tsx`.
+  component's file has the component's name, such as `CardFront.tsx`.
 - **Use the [glossary](/docs/canvas-portal/glossary.md) words in names,**
   such as `card`, `board`, and `refresh`, so the code reads like the
   requirements. A new term goes in the glossary in the same PR.
@@ -129,6 +129,13 @@ Both:
   [design's security table](/docs/canvas-portal/03-design.md#7-security)
   and NFR-10 say. Log IDs, not student data such as names or assignment
   text.
+- **Keep the Canvas token out of every URL, query string, and browser
+  store.** Send it only in the body of `PUT /api/canvas/connection` and in
+  the `Authorization` header to the saved Canvas host. In the frontend,
+  clear it from component state once that request returns, and never put
+  it in `localStorage`, `sessionStorage`, or the URL. These carry out
+  NFR-10 and the design's security table: a URL ends up in history,
+  server logs, and the `Referer` header.
 - **Log each Canvas call's endpoint, page count, and time taken,** as
   [Making Canvas loads fast](/docs/canvas-portal/03-design.md#making-canvas-loads-fast-nfr-1-nfr-2-r-3)
   says. Those numbers are the TP-14 baseline.
@@ -147,6 +154,9 @@ writes:
   such as `def test_missing_badge_stays_red_when_graded():` with
   `"""FR-65: ..."""`. The `trace-requirement` skill finds IDs in code, so
   a reviewer can see each ID the PR claims has a test.
+- **Test that each endpoint hides another user's data.** Its tests ask
+  for another user's ID and expect `not_found`, as NFR-12 and the
+  design's security table say.
 - **Write a test for every bug fix that fails before the fix.** It proves
   the fix and keeps the bug from coming back.
 - **Never use a real Canvas token in a test.** Use the recorded sample

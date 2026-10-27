@@ -3,7 +3,7 @@
 Personas often run in parallel threads that can't see each other. This is
 how they share what they know and avoid stepping on each other's work.
 
-There are three places, for three kinds of information:
+There are four places, for four kinds of information:
 
 | What | Where | Why there |
 |------|-------|-----------|
@@ -153,6 +153,9 @@ and the Team Lead can read it in the project's Library at any time.
 
 - **One line per idea:** who, the date, the idea, and a link to what
   prompted it, such as a PR, review, or log entry.
+- **No secrets:** never write a Canvas token, cookie, secret, or student
+  data in it. Anyone in the project can read it and it keeps no history,
+  so link to the evidence instead.
 - **Same care as the board:** read the file just before you change it, add
   only your own lines, and re-read it about ten seconds after writing.
 - **The retro uses it.** Each persona reads it when a retro starts, and

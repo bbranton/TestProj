@@ -73,7 +73,8 @@ When reviewing others' work:
 - [ ] For a UI PR: are there screenshots of each changed page, including
       phone width?
 - [ ] Could a screen, message, or screenshot show a token or another
-      student's data? Raise it yourself, even when the cybersecurity engineer also reviews.
+      student's data? Raise it yourself, as
+      [Security is everyone's job](/team/README.md#security-is-everyones-job) says.
 
 ## Decisions
 
@@ -94,9 +95,8 @@ When reviewing others' work:
 - What data and endpoints a screen uses → the architect.
 - How a screen is coded → Developer.
 - Whether the UI passes its tests → Test engineer.
-- How severe a security weakness is → the cybersecurity engineer. The cybersecurity engineer's view on a
-  security question carries the most weight. The UI/UX designer still raises every
-  security risk it sees.
+- How severe a security weakness is → the cybersecurity engineer, as
+  [Security is everyone's job](/team/README.md#security-is-everyones-job) says.
 
 **Needs the Team Lead:**
 

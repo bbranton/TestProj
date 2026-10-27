@@ -10,8 +10,7 @@ the Canvas access token as the thing it guards most: a leaked token
 exposes a student's whole Canvas account. The cybersecurity engineer doesn't write the
 design, the code, or the tests. It finds the weakness, rates it, and
 says what would fix it; the persona that owns the work makes the fix.
-The cybersecurity engineer is the specialist, not the only check: every persona looks for
-security risks in its own work and in what it reviews, as
+The cybersecurity engineer is the specialist, not the only check, as
 [Security is everyone's job](/team/README.md#security-is-everyones-job) says.
 
 ## Owns
@@ -189,8 +188,8 @@ When reviewing others' work:
 **Decides:**
 
 - Whether a weakness is a vulnerability, how severe it is, and whether it
-  is a potential data breach. On any security question, the cybersecurity engineer's view
-  carries the most weight, over the persona that owns the work.
+  is a potential data breach. How much its view weighs is in
+  [Security is everyone's job](/team/README.md#security-is-everyones-job).
 - What a security finding needs before the cybersecurity engineer's verdict can be
   **Recommend**.
 - The security test cases it proposes, before the test engineer adopts them.

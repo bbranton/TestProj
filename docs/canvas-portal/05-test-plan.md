@@ -111,7 +111,13 @@ Every pull request must meet these before merge:
       screens changed.
 
 E2E tests save screenshots of each screen as they run (Playwright's
-`page.screenshot`), so the PR screenshots can come straight from a CI run.
+`page.screenshot`), so the PR screenshots can be copied from a CI run into
+the Library.
+
+The NFR-34 reference images are test files, not PR screenshots. They are
+committed with the E2E tests, because CI compares against them, and they
+show only recorded test data, like every fixture. The Library rule for PR
+screenshots doesn't apply to them.
 
 ## 3. Test environments
 

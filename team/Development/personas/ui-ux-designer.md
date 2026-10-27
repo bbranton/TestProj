@@ -60,8 +60,10 @@ project's Library, not the repo (Team Lead, 2026-10-27,
 - Include a phone-width shot when the layout is responsive.
 - When an existing page changes, show it before and after.
 - Use test data only. None may show a Canvas token, a session, or a real
-  student's data: the Library has no history, but a screenshot dragged
-  onto a PR is public.
+  student's data. Anyone in the project can read the Library, and a
+  screenshot dragged onto a PR is uploaded to GitHub, where anyone with
+  the link can see it. Deleting the Library folder doesn't remove that
+  copy, so drag only a screenshot you've checked.
 
 When to delete them:
 

@@ -25,7 +25,7 @@ in the two placeholders once step 5 is done.
 ```text
 Prefer Markdown for documents, lists, and write-ups. Only use HTML pages when something specifically needs it, such as interactivity, charts, or running an app in the browser.
 
-Any PR that changes the UI must include screenshots of the changed pages or screens in the PR description or a PR comment.
+Any PR that changes the UI must include screenshots of the changed pages or screens in the Library, listed in the PR description
 
 Never use the project owner's first name in the repo (files, docs, commits, code comments). Refer to them as "Team Lead".
 

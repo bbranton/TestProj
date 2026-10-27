@@ -581,6 +581,27 @@
   raises them; F-2, the project manager's checklist no longer lists part
   of the cybersecurity engineer's triggers and points to its row instead.
 
+## Carry out #98: process ideas wait for retros
+
+### Decision: process changes wait for retros, and ideas go in a shared ideas file
+
+- **Date:** 2026-10-27
+- **Decided by:** Team Lead
+- **Options:** a weekly batched process PR (the retro's suggestion); an
+  `[idea]` note type on the board; a separate ideas file in the project's
+  shared files; not tracking ideas between retros.
+- **Recommendation:** after the Team Lead explained that the run of
+  process PRs was a deliberate pause to fix the process, no weekly batch,
+  and a separate ideas file, since the board is busy with claims and cost
+  notes and the file needs no PR per idea.
+- **Outcome:** no weekly batch: process improvements wait for periodic
+  retros. Ideas go in `/mnt/project-files/retros/process-ideas.md`.
+- **Links:** [#98](https://github.com/bbranton/TestProj/issues/98),
+  [team workspace](/team/workspace.md#process-ideas).
+
+- Added *Process ideas* to the team workspace, pointed the `retro` skill
+  at the file, and created the file in the shared files.
+
 ## Link the glossary, skills, and PR template to rule homes (#97, PR 4)
 
 - Carried out PR 4 of the #97 rollout from `develop@8dd2205`, as the

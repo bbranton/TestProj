@@ -102,3 +102,6 @@
 - Lesson for the notes: a ripple check for a rule that the docs also
   state covers `docs/` too, not only `team/` and the glossary.
 - No decisions made; the PR carries out the Team Lead's decision on #97.
+- Re-review: X-1 fixed by the project manager in `189d31f`, which links
+  the roadmap's step 6 gate list, risk list, and backlog intro to the home.
+  Verdict now Recommend.

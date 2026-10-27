@@ -50,7 +50,9 @@ Only threads of that persona add to or change its notes folder.
   The time has no colons, since Windows and macOS Finder can't show them
   in a file name.
 - **Each note is a new file,** so no two writers share one, and there's no
-  need to read the folder just before writing or re-read it after.
+  need to read the folder just before writing. Re-read your file about ten
+  seconds after writing it, to check it saved: the Library is a network
+  mount.
 - **No secrets:** never write a Canvas token, cookie, secret, or student
   data in a note or daily log. Anyone in the project can read them and they
   keep no history, so link to the evidence instead.
@@ -78,7 +80,9 @@ A reviewer thread starts its slug with `review`, such as
 `2026-10-28T140000-architect-pr130-review-first-round.md`.
 
 - **Each entry is a new file,** so nothing is lost when the last write
-  wins, and there's no need to read or re-read the folder around a write.
+  wins, and there's no need to read the folder before a write. Re-read your
+  file about ten seconds after writing it, to check it saved: the Library
+  is a network mount.
 - **Only on days with work.** Don't write an entry for a day the thread
   had no tasks.
 - **Open to everyone.** Logs aren't private. Any persona, in any team, can
@@ -194,8 +198,9 @@ the Team Lead can read it in the project's Library at any time.
   (Team Lead, 2026-10-27, on
   [#132](https://github.com/bbranton/TestProj/pull/132#discussion_r4391369705)). The time has
   no colons, since Windows and macOS Finder can't show them in a file
-  name. Each writer makes a new file, so there's no need to re-read it
-  after writing.
+  name. Each writer makes a new file, so there's no need to read the
+  folder before writing. Re-read your file about ten seconds after writing
+  it, to check it saved: the Library is a network mount.
 - **What it holds:** who, the date, the idea, and a link to what prompted
   it, such as a PR, review, or log entry.
 - **No secrets:** never write a Canvas token, cookie, secret, or student

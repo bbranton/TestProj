@@ -138,7 +138,11 @@ that changes a process rule finds and fixes every copy before review (Team Lead,
    The persona that owns each file fixes it, as
    [Fixes by another persona](#fixes-by-another-persona) says, and joins
    the reviewers. The owner of a doc in `docs/canvas-portal/` reviews
-   only the files the rule change touches, not the whole PR.
+   only the files the rule change touches, not the whole PR. The PR's
+   owner fixes a file that has no owner in
+   [Who reviews what](#who-reviews-what), such as `FACTORY.md` (Team
+   Lead, 2026-10-27, F-2 on
+   [#155](https://github.com/bbranton/TestProj/pull/155)).
 3. List every file that states the rule under *Files that state this
    rule* in the PR description, including the ones that needed no change.
 

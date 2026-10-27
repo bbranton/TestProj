@@ -43,7 +43,7 @@ reviewer.
 2. Use the team skills where they fit: `trace-requirement` for requirement
    IDs and test coverage, `ci-paths` for whether CI runs.
 3. For work you find that is outside this PR, open a GitHub issue that
-   links the PR, with the owning department's label (such as `team: QA`) and
+   links the PR, with the owning persona's label (such as `persona: security`) and
    `needs-triage` (plus `potential-breach` when Security marks it one), and log it as a finding with status "Moved to #issue".
    See [Follow-up work](../../../team/review-protocol.md#follow-up-work).
 4. Post one PR review headed with your persona and verdict, such as

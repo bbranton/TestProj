@@ -22,10 +22,11 @@ Each team has a folder under `team/`, with three subfolders:
 - `scripts/`: reusable scripts for jobs the team repeats often.
 
 Each persona may freely update its own files in its team's folder (its
-persona file, notes, daily log, and scripts it owns), through a PR like any
-other change; see the *Only your own persona's files* row of the
+persona file, notes, and daily log), through a PR like any other change;
+see the *Only your own persona's area* row of the
 [review protocol](review-protocol.md#who-reviews-what). Another persona's
-files, even in the same team, get that persona's review. Shared files at
+files, even in the same team, get that persona's review, and a team script
+or skill gets a review from the other personas who use it. Shared files at
 the top of `team/` and other teams' folders are not a persona's to change
 alone.
 

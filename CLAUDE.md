@@ -30,11 +30,12 @@
   that persona adds to the same file, and only to its own persona's log.
   Any persona can read any log. Record decisions in the format in
   [Daily notes](team/workspace.md#daily-notes).
-- Each persona may freely update its own files in `team/<Team>/` (its
-  persona file, notes, daily log, and scripts it owns) through a PR like
-  any other change; such a PR needs no reviewers. Another persona's files,
-  even in the same team, shared files at the top of `team/`, and other
-  teams' folders follow the [review protocol](team/review-protocol.md).
+- A PR that touches only its owner persona's area (its persona file,
+  notes, and daily log, and the docs it owns) needs no reviewers, unless an
+  "always" rule in the [review protocol](team/review-protocol.md) applies.
+  Another persona's files, even in the same team, team scripts and skills,
+  shared files at the top of `team/`, and other teams' folders follow the
+  review protocol.
 - Security is every persona's job. Raise any risk to Canvas tokens or
   student data you see, in any area, and never leave it for another
   persona to catch. The Security persona's view carries the most weight on

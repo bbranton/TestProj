@@ -31,11 +31,14 @@ Everything below is the default when the Team Lead hasn't said otherwise.
 without requesting their review, so the Team Lead sees the diff. Once every
 reviewer's latest verdict is **Recommend** or **Recommend with notes**, the
 owner thread merges the PR itself and posts the link in its thread. A PR
-that touches only its owner persona's own files, such as its persona
-file, its notes and daily log, or a script it owns, needs no reviewers and
-is merged straight away. Teams hold several personas, so a change to
-another persona's files in the same team folder is reviewed by that
-persona.
+that touches only its owner persona's area needs no reviewers and is
+merged straight away. A persona's area is its own files in its team folder
+(its persona file, notes, and daily log) and the docs it owns in
+[Who reviews what](#who-reviews-what). Teams hold several personas, so a
+change to another persona's files in the same team folder is reviewed by
+that persona, and a team script or skill by the other personas who use it.
+The "always" rules below still apply: a code PR always has the Test
+engineer, and anything touching Security's area always has Security.
 
 **`develop` → `main`.** This is a batched release of what's on `develop`.
 Any persona may open it: it assigns the Team Lead and
@@ -111,7 +114,8 @@ at any time.
 | Canvas tokens, sign-in, the session cookie, secrets, student data, hosting, or deploys; the client security document (`06-security-overview.md`) | Security, always | Security |
 | Shared files at the top of `team/`, or another team's folder | Each persona whose file changes, plus Management | Management |
 | Another persona's files in your own team's folder | That persona | That persona |
-| Only your own persona's files: its persona file, notes, daily log, or a script or skill it owns | None | That persona (the `log-cost` skill: CFO) |
+| A team script or its skill (see [Team skills](workspace.md#team-skills)) | The other personas who use it | The team whose `scripts/` folder holds it |
+| Only your own persona's area: its persona file, notes, and daily log, or a doc it owns in this table | None | That persona |
 | The cost log (`team/Management/cost-log.md`) | None | CFO, who adds reported rows in batches |
 
 A code PR always has the Test engineer as a reviewer, since every change

@@ -20,7 +20,8 @@ reviewer.
    a reason for each.
 3. Send the coordinator the PR and its reviewers. The coordinator starts a
    fresh thread for each one. Don't write the reviews yourself. When the PR
-   touches only your own persona's files, it has no reviewers: merge it.
+   touches only your own persona's area and no "always" rule applies, it
+   has no reviewers: merge it.
 4. Answer or fix each finding as it arrives. For a question back to a
    reviewer, ask on the PR comment, then message that reviewer thread with
    the link. After two rounds without agreement, mark the finding

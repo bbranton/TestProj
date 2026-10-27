@@ -246,3 +246,11 @@
   now covers later-phase findings fixed now, and the backlog lesson in the
   notes lists the four options.
 - No new decision: #89 carries out the Team Lead's comment.
+
+## Review #89's follow-up notes (#90)
+
+- Reviewed the protocol line that logs later-phase "fix now" picks under
+  the phase scope budget (8c40f11). It matches this persona's budget,
+  except the budget also allows the Team Lead's OK to let the phase grow
+  instead of naming a cut; noted as a minor finding.
+- No new decision.

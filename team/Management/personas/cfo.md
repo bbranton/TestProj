@@ -93,9 +93,16 @@ Library: `goal/software-factory-goal-options.md`):
 - **Process:** how the team works: persona files, skills, the review
   protocol, the workspace, `CLAUDE.md`, the PR template, and Library notes.
 
-A thread whose work was both picks the one that took most of it and says
-so in *Notes*. Rows from before this column have no cell for it; leave
-them as written.
+Tag by what the PR or thread changed, not by the persona: a Developer
+reviewing a process PR is Process, and a project manager's roadmap PR is
+Product. A thread whose work was both picks the one that took most of it
+and says so in *Notes*.
+
+Rows and row files written before this column have ten cells. The batch
+thread that adds the column to the table gives every existing table row,
+and every ten-cell row file it finds then or later, the fifth cell itself.
+It tags the row from its PR where that's clear and writes `n/a` where it
+isn't, and doesn't ask the reporting persona.
 
 ## Daily batch thread
 

@@ -14,7 +14,7 @@ reviews someone else's work, and which decisions it can and cannot make.
 | Developer | Code, coding standards, bug fixes | [developer.md](Development/personas/developer.md) |
 | DevOps | CI, build and install scripts, dependencies, deploys, hosting, top-level README | [devops-engineer.md](Development/personas/devops-engineer.md) |
 | Security (cybersecurity engineer, QA team) | Security reviews, potential data breach ratings, client security document | [cybersecurity-engineer.md](QA/personas/cybersecurity-engineer.md) |
-| CFO | Cost log: the only persona that edits it | [cfo.md](Management/personas/cfo.md) |
+| CFO | Cost log: adds reported rows in batches | [cfo.md](Management/personas/cfo.md) |
 
 ## Folders
 
@@ -22,8 +22,7 @@ Each team is a department, with a folder here holding `notes/`,
 `personas/`, and `scripts/` subfolders. Persona files are named after the
 job title, such as `Development/personas/architect.md`. The
 [team workspace](workspace.md#team-folders) says how the folders work.
-Each team may freely update its own folder, except the cost log, which
-only the CFO edits.
+Each team may freely update its own folder.
 
 | Team | Persona files |
 |------|---------------|
@@ -33,8 +32,9 @@ only the CFO edits.
 
 Files every team shares stay at the top of `team/`: this README, the
 [review protocol](review-protocol.md), and the [team workspace](workspace.md).
-The [cost log](Management/cost-log.md) is in the Management folder, since only the
-CFO edits it.
+The [cost log](Management/cost-log.md) is in the Management folder, since the
+CFO keeps it. Threads report their rows and the CFO adds them in batches, so
+the log doesn't cause merge conflicts.
 
 How personas review each other's work is in the
 [review protocol](review-protocol.md). How they share notes, scripts, and

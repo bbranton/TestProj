@@ -22,8 +22,7 @@ Each team has a folder under `team/`, with three subfolders:
 - `scripts/`: reusable scripts for jobs the team repeats often.
 
 Each team may freely update its own folder as needed, through a PR like
-any other change, except the [cost log](Management/cost-log.md), which only
-the CFO edits; see the *A team's own folder* row of the
+any other change; see the *A team's own folder* row of the
 [review protocol](review-protocol.md#who-reviews-what). Shared files at the
 top of `team/` and other teams' folders are not the team's to change alone.
 

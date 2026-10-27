@@ -154,7 +154,7 @@ acceptable for its area.
 | How it's tested, and whether tests pass | Test engineer | Calling a phase done; removing or weakening a test |
 | Design: structure, data, APIs, technology, security design | Architect | A new dependency, service, or data store; how the Canvas token is stored or sent; starting a transition plan |
 | Writing code, coding standards, bug fixes | Developer | Design changes go to the architect first |
-| Screens, layout, wording, accessibility | UI/UX designer | A new screen, any visual change (layout, spacing, sizes, colors, icons), or a change to the main flow |
+| Screens, layout, wording, accessibility | UI/UX designer | A new screen, any visual change (layout, spacing, sizes, colors, fonts, icons), or a change to the main flow |
 | CI, tooling, build and install scripts, branch mechanics, dependency integration | DevOps engineer | Changes to the live app or hosting; a paid service; a new secret store; new access |
 | Whether a weakness is a vulnerability, its severity, and whether it is a potential data breach; the client security document | Cybersecurity engineer | Accepting a vulnerability instead of fixing it; publishing the client security document; telling anyone outside the team about a suspected leak |
 | What goes in the cost log | CFO | Changing the log's columns or how threads report cost |

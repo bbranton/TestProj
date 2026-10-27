@@ -266,3 +266,9 @@
 - Updated this persona's *Does not decide* line for the UI/UX designer to
   say layout changes still need the Team Lead.
 - No new decision: #91 carries out the Team Lead's comment on #76.
+- Part 2 of #91 (8c85f7d) moves the screenshot rule from CLAUDE.md to the
+  UI/UX designer's persona file, from the Team Lead's comment on #76.
+  Links resolve, and the PR template still reaches every PR. Notes: the
+  PR bundles two jobs on one branch, so part 2 waits on part 1's open
+  decision; a Developer thread opening a UI PR only meets the rule
+  through the template.

@@ -657,3 +657,8 @@
   is still open, and the cost log's location is under discussion, so the
   index links to the CFO persona's *Role*, not the log's path.
 - No new decision: #97 is already answered and logged in #113.
+- Reviews: project manager peer Recommend with notes (F-1, index lines
+  for persona *Decisions*, *Team skills*, and *PR template*, fixed in
+  `7c838bd`), then Recommend. Cybersecurity engineer Recommend with notes
+  (F-1, say the security and breach rules apply to every thread, fixed in
+  `fc185ce`), then Recommend.

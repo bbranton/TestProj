@@ -1,23 +1,8 @@
-# Cybersecurity engineer notes
+# Security register
 
-Lasting lessons for the cybersecurity engineer persona. See the
-[team workspace](/team/workspace.md#persona-notes) for how notes work.
-
-- The Canvas token is the most harmful thing to leak: a personal access
-  token works for the student's whole Canvas account until they delete it.
-  Trace where it goes first in every review.
-- Every PR posts from the Team Lead's GitHub account, and screenshots go in
-  the repo. Check that no PR body, comment, screenshot, or fixture holds a
-  real token, name, or course (A-3).
-- The design's security table is section 7 of
-  [03-design.md](/docs/canvas-portal/03-design.md#7-security); the
-  security requirements are NFR-10 to NFR-14. Start a review there.
-- Joining late is what costs most: on the roadmap review (#4) the cybersecurity engineer
-  came in after the hosting choice, and three findings were potential data
-  breaches. Review hosting, deploy, and token choices while they're made.
-- Check the review-protocol rule on every token-touching PR: the cybersecurity engineer was
-  missing from the requirements review (#6) until the project manager and
-  the architect flagged it, and both raised the same NFR-11 finding.
+Owned by the cybersecurity engineer. It stays in the repo, unlike the
+persona notes, so every change has history and review
+([#127](https://github.com/bbranton/TestProj/issues/127)).
 
 ## Current threat picture
 
@@ -35,7 +20,7 @@ Update this when hosting, the repo, or where real tokens live changes.
   that folder, and nothing there should run code it pulls
   ([setup guide](/SETUP-NEW-PROJECT.md#5-set-up-the-local-clone)).
 
-## Security register
+## Open findings
 
 Open security findings and potential data breaches. **Gate** is the phase
 step the item must be done before. Clear a row only when it's fixed, and

@@ -22,7 +22,7 @@ if given, narrows what each persona looks at.
    in parallel, each told the window, the topic, and the retro's date (the
    day it was called). A full retro is about eleven threads (each persona,
    the project manager, and the note's reviewer), roughly $12 to $20 from
-   recent cost log rows (`/mnt/project-files/costs/cost-log.md`), so the Team Lead
+   recent cost log rows (Library: `costs/cost-log.md`), so the Team Lead
    can name fewer personas to save cost.
 2. When every persona has replied, start a project manager thread to
    combine the feedback.
@@ -30,10 +30,12 @@ if given, narrows what each persona looks at.
 
 ## As a persona
 
-1. Read your persona file and notes, then gather evidence from the window:
-   your daily logs, the PRs and reviews you took part in, and your rows in
-   the cost log (`/mnt/project-files/costs/cost-log.md`) plus any of your
-   row files beside it that aren't logged yet. Also read the
+1. Read your persona file and notes
+   (Library: `notes/<persona>.md`), then gather evidence from the
+   window: your daily logs (Library: `notes/daily/`), the PRs
+   and reviews you took part in, and your rows in the cost log
+   (Library: `costs/cost-log.md`) plus any of your row files
+   beside it that aren't logged yet. Also read the
    [process ideas](/team/workspace.md#process-ideas) file, and take up any
    idea in your area that the evidence supports.
 2. Write about five bullets in all, under three headings: **What worked**,
@@ -41,7 +43,7 @@ if given, narrows what each persona looks at.
    its evidence: a PR, a review, a log entry, or a cost row. The suggestion
    names the file it would change, and is a recommendation, not an edit.
    Never quote a Canvas token, cookie, secret, or student data.
-3. Save it as `/mnt/project-files/retros/<retro date>/<persona>.md`, with the
+3. Save it as Library: `retros/<retro date>/<persona>.md`, with the
    persona's file name, such as `devops-engineer.md`. It isn't in the repo,
    so it needs no PR, and no daily log entry: the file and the retro note
    are the record. Reply in your thread with a one-line summary.
@@ -49,7 +51,7 @@ if given, narrows what each persona looks at.
 
 ## As the project manager
 
-1. Read every persona's file in `/mnt/project-files/retros/<retro date>/`,
+1. Read every persona's file in Library: `retros/<retro date>/`,
    the previous note in `team/retros/`, and the
    [process ideas](/team/workspace.md#process-ideas) file.
 2. Write `team/retros/<retro date>.md` with these sections:

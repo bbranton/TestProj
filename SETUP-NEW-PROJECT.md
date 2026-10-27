@@ -52,7 +52,9 @@ github.com:
    PR title and description.
 4. **Pages**, if the project has a website: Settings > Pages > Source:
    *GitHub Actions*.
-5. **Labels:** create `decision` and one `persona: <job-title>` label per
+5. **Security** (Settings > Code security): turn on secret scanning,
+   push protection, and Dependabot alerts.
+6. **Labels:** create `decision` and one `persona: <job-title>` label per
    persona, with a color and description. Threads can't rename or delete
    labels, so do any later relabeling here too.
 
@@ -68,21 +70,30 @@ files, not the repo. Create `team/board.md` there with `## Claims` and
    `~/dev/<owner>/<Repo>/develop`. Each is a full clone, not a worktree.
 2. Ask the coordinator for a thread named, for example, "Set up local
    <Repo> clone", and ask it to work on your computer. Approve the Remote
-   Control prompt for the parent folder, such as `~/dev/<owner>`.
-3. Ask it to clone over SSH:
+   Control prompt for `~/dev/<owner>/<Repo>` only, not a parent folder, so
+   the thread can't read your other repos.
+3. Ask it to clone. For a public repo, use HTTPS, which needs no
+   credentials:
 
    ```sh
-   git clone git@github.com:<owner>/<repo>.git ~/dev/<owner>/<Repo>/main
-   git clone -b develop git@github.com:<owner>/<repo>.git ~/dev/<owner>/<Repo>/develop
+   git clone https://github.com/<owner>/<repo>.git ~/dev/<owner>/<Repo>/main
+   git clone -b develop https://github.com/<owner>/<repo>.git ~/dev/<owner>/<Repo>/develop
    ```
 
-   If you already clone other repos over SSH, git needs no more setup.
-   The `gh` command isn't installed and isn't needed.
+   For a private repo, add a read-only deploy key for that one repo
+   (Settings > Deploy keys) and clone over SSH with it, rather than your
+   own SSH key, which can push to every repo you own. The `gh` command
+   isn't needed.
 4. Give it the standing OK in that thread, in these words: "you have my
    standing OK to run `git fetch` and `git pull --ff-only` on `develop`
    when asked". Anything else still needs your OK each time.
 5. Put the thread's title and the `develop` path into the last project
    instruction from step 2.
+
+The Remote Control session runs as your own user, with your local
+credentials. The standing OK is an instruction to Claude, not a technical
+limit, so keep secrets such as `.env` files and tokens out of the approved
+folder.
 
 Don't edit files in the `develop` folder by hand, so every pull
 fast-forwards. Pulls wait while your computer is offline, and one pull

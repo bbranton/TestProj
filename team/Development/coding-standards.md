@@ -134,6 +134,11 @@ Both:
   [design's security table](/docs/canvas-portal/03-design.md#7-security)
   and NFR-10 say. Log IDs, not student data such as names or assignment
   text.
+- **Never log a request body, a validation error's input values, or the
+  Google sign-in `code` and `state` values,** including in a stack trace.
+  The token filter removes headers and fields named `token`, not free text
+  inside an exception message, so the app-level handler logs the exception
+  type and where it happened, not text that could hold what was sent.
 - **Keep the Canvas token out of every URL, query string, and browser
   store.** Send it only in the body of `PUT /api/canvas/connection` and in
   the `Authorization` header to the saved Canvas host. In the frontend,

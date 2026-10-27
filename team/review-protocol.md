@@ -17,7 +17,7 @@ Everything below is the default when the Team Lead hasn't said otherwise.
    anyone edits a doc for it.
 3. **Each persona fixes its own files.** A finding is fixed in the PR it
    was found in, by the persona that owns the file, which may be the
-   owner or a reviewer. No one edits another persona's files.
+   owner or a reviewer. No persona edits another persona's files.
 4. **Read from `develop`.** Open PRs are drafts, never the source of
    truth.
 5. **Small, focused PRs.** One job per PR.
@@ -173,7 +173,7 @@ what it defers and to whom, and what needs the Team Lead.
    to the PR right away, as [Who fixes a finding](#who-fixes-a-finding)
    says, or replies with why not.
 4. **Verdict.** Each reviewer ends with **Recommend**, **Recommend with
-   notes** (minor findings the owner may fix later), or **Changes needed**.
+   notes** (minor findings that may be fixed later), or **Changes needed**.
    After fixes, the reviewer checks only the fixes and updates its verdict.
 5. **Merge.** When every latest verdict is Recommend or Recommend with
    notes, the owner merges into `develop`.

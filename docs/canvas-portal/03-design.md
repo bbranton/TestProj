@@ -260,6 +260,33 @@ so the frontend can choose a screen by code without reading the text:
 | `canvas_unreachable` | 502 | The warning banner with the last data (NFR-20) |
 | `canvas_address_invalid` | 400 | "Couldn't reach that Canvas address" on S-2 (W-1) |
 | `not_found` | 404 | Nothing; also what another user's IDs return (NFR-12) |
+| `invalid_request` | 422 | The UI specification's general error message. The portal's own frontend never sends one, so it means a bug (NFR-10) |
+| `internal_error` | 500 | The UI specification's general error message |
+
+One app-level exception handler turns every error into this shape,
+including FastAPI's own: an `HTTPException`, a request it can't read
+(`RequestValidationError`, as `invalid_request`), and any other exception
+(as `internal_error`). The `message` for these two is fixed text. It
+never echoes the request or the exception's text, because FastAPI's
+default 422 answer repeats the input it rejected, which for
+`PUT /api/canvas/connection` would be the token (NFR-10).
+
+**What the handler logs.** No log line holds the token, and exception
+text and stack traces count as log lines. The filter in section 7 removes
+headers and fields named `token`, not free text inside an exception, such
+as an HTTP library's error quoting a header or a validation error's
+input, so the handler logs only fixed fields:
+
+- `invalid_request`: the method, the path, and for each problem its
+  `loc` (which field) and `type` (what kind of problem). Never its `input`
+  or `msg`, or the request body.
+- `internal_error`: the method, the path, the exception's type, and the
+  file, line, and function of each stack frame. Never the exception's
+  message text or the values in the frames.
+
+The two sign-in endpoints are the exception: the browser goes to them
+directly, not the frontend's code, so they never answer with this shape
+(section 5).
 
 ### Keeping devices in sync (NFR-22, D-8)
 
@@ -358,18 +385,44 @@ sequenceDiagram
 
     U->>B: Select "Sign in with Google"
     B->>A: GET /api/auth/google/login
-    A-->>B: Redirect to Google, with a one-time "state" value
+    A-->>B: Set state cookie, redirect to Google with the same "state"
     B->>G: Google sign-in page
     U->>G: Choose account, approve
     G-->>B: Redirect to /api/auth/google/callback?code=...&state=...
     B->>A: GET /api/auth/google/callback
-    A->>A: Check state matches
+    A->>A: Check state matches the state cookie, then clear the cookie
     A->>G: Exchange code for ID token
     G-->>A: ID token (Google user ID, email, name)
     A->>A: Find or create USER by Google user ID
     A-->>B: Set session cookie, redirect to the board
 ```
 
+- **`state` is tied to the browser that started sign-in.** The login
+  endpoint makes a random one-time `state`, sends it to Google, and keeps
+  it in a short-lived (10 minutes) `HttpOnly`, `Secure`, `SameSite=Lax`
+  cookie signed with `SESSION_SECRET`. The callback accepts Google's answer
+  only when its `state` matches that cookie, and clears the cookie whether
+  or not it matches. Without this, an attacker could sign a student's
+  browser into the attacker's portal account (login CSRF), and the student
+  would then connect their Canvas token to it. `Lax` still sends the cookie
+  on Google's redirect back, which is a top-level `GET`.
+- **Sign-in redirects only to fixed paths on the portal's own origin:** the
+  board on success and the sign-in page on failure. No endpoint takes a
+  redirect target from the request.
+- **A failed sign-in goes back to S-1.** `GET /api/auth/google/login` and
+  `GET /api/auth/google/callback` are page loads, not requests from the
+  frontend's code, so a JSON error would show as raw text. When either
+  fails for any reason (the student cancels, Google answers with an error,
+  the `state` doesn't match, the code exchange fails, or anything
+  unexpected), the backend logs the reason (one of those, as a fixed
+  word) and Google's `error` value only when it's one of the standard
+  OAuth codes, such as `access_denied`. The log never holds the request's
+  address, the `code` or `state` values, Google's tokens, the client
+  secret, or Google's `error_description`, which anyone can set by
+  crafting a link. Then it redirects to the sign-in page with
+  `?signin=failed`, and S-1 shows its sign-in message. The address carries
+  only that fixed value: no error code, Google's error text, or the `code`
+  and `state` values.
 - The backend asks Google only for the `openid email profile` scopes: who the
   user is, nothing from their Google Drive or Gmail.
 - Users are matched by Google's stable user ID (the `sub` value), not by
@@ -633,10 +686,11 @@ sequenceDiagram
 | Concern | Design | Requirements |
 |---------|--------|--------------|
 | Token theft from the database | Tokens are encrypted with a key held only in the server's environment settings, not in the database or the repo | NFR-11 |
-| Token leaking through logs | A logging filter removes `Authorization` headers and any field named `token`; error messages never include request headers | NFR-10 |
+| Token leaking through logs | A logging filter removes `Authorization` headers and any field named `token`; error messages never include request headers; error logs hold only fixed fields, never exception text, a request body, or the sign-in `code` and `state` (sections 4 and 5) | NFR-10 |
 | Token reaching the browser | No endpoint returns the token; after saving, the frontend only knows "connected as *name*" | NFR-10 |
 | Token in an address | The token is sent only in the body of `PUT /api/canvas/connection` and in the `Authorization` header to Canvas, never in a URL | NFR-10 |
 | Other sites acting as the user | Session cookie is `SameSite=Lax`, and no `GET` endpoint changes data (section 5) | NFR-12 |
+| Signing a student into someone else's account (login CSRF) | Sign-in's `state` is kept in a short-lived signed cookie and must match on the callback; sign-in redirects only to fixed paths on the portal (section 5) | NFR-12 |
 | One user seeing another's data | Every query filters on the session's `user_id`; tests check this for every endpoint | NFR-12 |
 | Writes to Canvas | The Canvas client only implements `GET` | NFR-13 |
 | A Canvas address that points somewhere else | The student types the Canvas address, and the server then calls it, so a bad address could make the server call machines on its own network. The address must be `https`, must resolve only to public internet addresses, and is checked again on every call | NFR-11, NFR-12 |
@@ -856,3 +910,7 @@ the data side.
 | 2026-10-26 | Course buttons (FR-78) back in Phase 1 as the only course picker, from the Team Lead (requirements PR #6, 58c1c04); the filter menu has no course list; width sharing and sideways scrolling (FR-61) stay Phase 2. |
 | 2026-10-26 | Orphaned-card show/hide option, its count, and the Refresh summary's removed count move to Phase 1, from the Team Lead. |
 | 2026-10-26 | Course colors (FR-66) postponed to Phase 5, from the Team Lead: `COURSE_LABEL` removed from the Phase 1 tables and the data model; strips and course buttons use one neutral color; section 12 notes the later table. |
+| 2026-10-27 | Error codes `invalid_request` (422) and `internal_error` (500), and one app-level handler for every error, from the coding standards review (PR #141, X-1). |
+| 2026-10-27 | A failed Google sign-in redirects to S-1 with `?signin=failed` instead of answering with the error shape, from the UI/UX designer on PR #141. |
+| 2026-10-27 | Error logs hold an exception's type and place, never its text, a request body, or the sign-in `code` and `state`, from the Requirements engineer on PR #141 (X-3, X-4). |
+| 2026-10-27 | Sign-in `state` kept in a short-lived signed cookie and checked on the callback (login CSRF), fixed redirect paths, and the fields each error and sign-in failure log may hold, from the cybersecurity engineer on PR #141. |

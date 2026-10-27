@@ -73,6 +73,8 @@ without a persona.
   [Follow-up work](/team/review-protocol.md#follow-up-work).
 - Changing a process rule, and where each rule lives:
   [Ripple check](/team/review-protocol.md#ripple-check-for-process-rules).
+- Coding standards for the Canvas portal:
+  [Coding standards](/team/Development/coding-standards.md).
 - Screenshots in UI PRs:
   [Screenshots in UI PRs](/team/Development/personas/ui-ux-designer.md#screenshots-in-ui-prs).
 

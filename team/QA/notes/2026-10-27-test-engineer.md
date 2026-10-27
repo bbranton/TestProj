@@ -38,10 +38,12 @@
 
 - Checked the test plan's PR checklist line, which now links to
   *Screenshots in UI PRs* in the UI/UX designer persona file. The anchor
-  resolves, and the rule there is the one `CLAUDE.md` had, unchanged.
-- The checklist still asks for more than that rule (before and after
-  shots, and wide and phone widths for layout changes). That's on purpose
-  and doesn't conflict, so no change.
+  resolves at `cc4d695`, where the UI/UX designer added before-and-after
+  shots and a test-data-only line to the rule. That now matches the
+  checklist, and the test-data line keeps tokens and student data out of
+  committed screenshots.
+- The checklist also asks for wide and phone widths for layout changes,
+  a little more than the rule. That doesn't conflict, so no change.
 - The test plan's other `CLAUDE.md` links name the current phase, which is
   still there. Link-only changes don't get a change log row, as on #83 and
   #85.

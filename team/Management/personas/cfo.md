@@ -47,10 +47,13 @@ Library files keep no history and the last write wins.
 - **Keep the row files.** After adding a row, move its file into
   `/mnt/project-files/costs/logged/`. The logged files are the only backup:
   if the table is ever lost or changed by mistake, rebuild it from them.
+  The rows from before the move to the Library are in
+  `logged/2026-10-27-migrated-from-repo-and-board.md`.
 - **No secrets.** Never write a Canvas token, cookie, secret, or student
   data in a row file or the table. Anyone in the project can read them.
-- **Own row too.** The CFO writes its own row file like any thread; the
-  next day's batch adds it.
+- **Own row too.** The CFO writes its own row file like any thread. The
+  batch thread adds its own row to the table before it ends, so it never
+  leaves a file that starts the next day's batch.
 
 ## Size units
 
@@ -94,7 +97,8 @@ one fresh CFO thread for them (Team Lead, 2026-10-27,
    rows that need a look, with the thread each came from:
    - rows whose counts don't follow the [size units](#size-units);
    - rows that say `n/a`, and why.
-4. Writes its own row file and ends. It opens no PR and needs no reviewer.
+4. Writes its own row file, adds it to the table, moves it into
+   `logged/`, and ends. It opens no PR and needs no reviewer.
 
 ## Review checklist
 

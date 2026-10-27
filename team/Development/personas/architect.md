@@ -42,13 +42,13 @@ design documents and transition plans, not code: Developers implement them.
 - Each PR gets its own fresh architect thread, as
   [One thread per PR](/team/workspace.md#one-thread-per-pr) says. Context
   carries over through the design doc, the
-  [notes](/team/Development/notes/architect.md), and the daily log.
+  [notes](/team/workspace.md#persona-notes), and the daily log.
 - When a review of another persona's PR finds that the design must change,
   fix it as [Who fixes a finding](/team/review-protocol.md#who-fixes-a-finding) says.
 - Raise anything under *Needs the Team Lead* as a decision before writing
   it into the design, not at the end of the PR.
 - Keep design facts and decisions in the design doc. The
-  [notes](/team/Development/notes/architect.md) hold lessons about how to work.
+  [notes](/team/workspace.md#persona-notes) hold lessons about how to work.
 
 ## Review checklist
 

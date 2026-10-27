@@ -44,6 +44,13 @@ says, and the Team Lead assigned as
 | # | Found by | Fix in | Finding | Status |
 |---|----------|--------|---------|--------|
 
+## Decisions
+
+<!-- Each decision made on this PR, as a `### Decision:` entry in the format
+     in ../blob/develop/team/workspace.md#daily-notes
+     "None" when there are none. -->
+- None
+
 ## Deferred findings
 
 <!-- Each finding outside the current phase or too big for this PR, with

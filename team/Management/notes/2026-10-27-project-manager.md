@@ -338,6 +338,7 @@
   and #26 now show in the security theme.
 - Left for the owner: S-2 and #103 drop the UI spec from the developer's
   ask and name no UI spec reviewer. Verdict Recommend with notes.
+
 ## Combine the process retro (team/retros/2026-10-27-process.md)
 
 - Combined all nine personas' process feedback into

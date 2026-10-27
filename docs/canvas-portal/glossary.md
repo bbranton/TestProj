@@ -7,24 +7,24 @@ explained once. Other docs link here instead of defining a term again.
 
 A term marked with a later phase, such as *(Phase 5)*, is described so the
 docs read clearly. It is not in scope until its phase starts, as the
-[requirements by phase](02-requirements.md#requirements-by-phase) say.
+[requirements by phase](/docs/canvas-portal/02-requirements.md#requirements-by-phase) say.
 
 ## Keeping it up to date
 
 - **The requirements engineer owns what each term means.** A meaning changes in the
   same PR as the requirement it comes from.
 - **The UI/UX designer keeps the screen words in step.** The exact words on screen
-  live in the [UI specification](04-ui-specification.md). A PR that changes
+  live in the [UI specification](/docs/canvas-portal/04-ui-specification.md). A PR that changes
   a screen word changes its entry here too.
 - **The project manager keeps the team process terms in step** with the
-  [review protocol](../../team/review-protocol.md) and the
-  [team README](../../team/README.md).
+  [review protocol](/team/review-protocol.md) and the
+  [team README](/team/README.md).
 - **Every persona checks the glossary** before naming something new in a
   doc, and adds the term here in the same PR when it's missing.
 - **When a doc and the glossary disagree,** the requirements decide what a
   term means and the UI specification decides how it's written on screen.
   The reviewer who spots it logs an `X-` finding, as the
-  [review protocol](../../team/review-protocol.md#findings-table) says.
+  [review protocol](/team/review-protocol.md#findings-table) says.
 
 ## The board
 
@@ -74,14 +74,14 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 | Late, Excused | Tags shown when Canvas marks the submission late or the student excused. They can appear with Submitted and Graded. | FR-23 |
 | Due badge | The due date and time, in the device's time zone. Red when Missing, otherwise green with ✓ when Submitted or Graded, otherwise plain. | FR-22, FR-65 |
 | Points | The points the assignment is worth, such as "20 pts". | FR-22 |
-| Submission type | How the student hands the work in, such as a file upload or on paper, from Canvas's `submission_types`. How each type is written on a card is in the [UI specification's S-4](04-ui-specification.md#s-4-board-home-screen). | FR-23 |
+| Submission type | How the student hands the work in, such as a file upload or on paper, from Canvas's `submission_types`. How each type is written on a card is in the [UI specification's S-4](/docs/canvas-portal/04-ui-specification.md#s-4-board-home-screen). | FR-23 |
 
 ## Screen words
 
 | Term | Meaning | Defined in |
 |------|---------|------------|
-| Screen ID | An ID for each screen, such as `S-4` for the board. | [UI specification](04-ui-specification.md) |
-| Button ID | A name for a button in capitals with underscores, such as `REFRESH`, used in logs, docs, code, and tests. The full list is in the [UI specification's conventions](04-ui-specification.md#conventions-on-every-screen). | UI specification |
+| Screen ID | An ID for each screen, such as `S-4` for the board. | [UI specification](/docs/canvas-portal/04-ui-specification.md) |
+| Button ID | A name for a button in capitals with underscores, such as `REFRESH`, used in logs, docs, code, and tests. The full list is in the [UI specification's conventions](/docs/canvas-portal/04-ui-specification.md#conventions-on-every-screen). | UI specification |
 | Label | A button's name in plain words, such as "Refresh from Canvas". Screen readers announce it, and icon buttons have no other name. | UI specification |
 | Dialog (modal) | A box that opens over the page and must be closed before using the page behind it, like a QML `Dialog`. The card back *(Phase 5)* is one. | S-5 |
 
@@ -89,9 +89,9 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 
 | Term | Meaning |
 |------|---------|
-| Phase | A stage of the [roadmap](01-roadmap.md), from Phase 0 (decisions and setup) to Phase 4 (polish and deploy). Phase 5 holds later ideas that aren't committed. The current phase is set in [CLAUDE.md](../../CLAUDE.md). |
+| Phase | A stage of the [roadmap](/docs/canvas-portal/01-roadmap.md), from Phase 0 (decisions and setup) to Phase 4 (polish and deploy). Phase 5 holds later ideas that aren't committed. The current phase is set in [CLAUDE.md](/CLAUDE.md). |
 | Future feature | A Phase 5 idea. The docs may sketch it, but nobody builds it until the Team Lead plans it into a phase. |
-| Requirement ID | `FR-` for a functional requirement (what the app does) and `NFR-` for a non-functional one (how well it does it), in the [requirements](02-requirements.md). |
+| Requirement ID | `FR-` for a functional requirement (what the app does) and `NFR-` for a non-functional one (how well it does it), in the [requirements](/docs/canvas-portal/02-requirements.md). |
 | Must, Should, Could | A requirement's priority: required for its phase, expected but not blocking, or nice to have. |
 | Other IDs | `G-` a goal, `D-` a decision, and `B-` a backlog item (roadmap); `A-` an assumption, `C-` a constraint, and `Q-` an open question (requirements); `S-` a screen (UI specification); `TP-` a test procedure (test plan). |
 | Traceability | The chain from each requirement to the design part that builds it and the test that checks it, by requirement ID. |
@@ -101,16 +101,16 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 | Term | Meaning |
 |------|---------|
 | Team Lead | The project owner. Has the final say on every decision, and is the only one who approves or merges the `develop` → `main` release PR. |
-| Persona | A role an agent takes on, such as the UI/UX designer or the cybersecurity engineer, with its own area and review checklist. The list is in the [team README](../../team/README.md). |
+| Persona | A role an agent takes on, such as the UI/UX designer or the cybersecurity engineer, with its own area and review checklist. The list is in the [team README](/team/README.md). |
 | Owner | The persona that writes a piece of work and answers its findings. |
-| Reviewers | The personas a PR's author picks: a peer from the owner's own persona (for a team thread, the persona that owns most of the changed files), plus one for each other area the PR touches, as the [review protocol](../../team/review-protocol.md#who-reviews-what) says. Every PR has at least one. The Team Lead can change them. |
-| Decision request | A question for the Team Lead, with options, a recommendation, and the docs it changes, in the project manager's decision register or a `decision` issue. PRs only carry out answered requests; see the [review protocol](../../team/review-protocol.md#decisions-are-separate-from-merging). |
+| Reviewers | The personas a PR's author picks: a peer from the owner's own persona (for a team thread, the persona that owns most of the changed files), plus one for each other area the PR touches, as the [review protocol](/team/review-protocol.md#who-reviews-what) says. Every PR has at least one. The Team Lead can change them. |
+| Decision request | A question for the Team Lead, with options, a recommendation, and the docs it changes, in the project manager's decision register or a `decision` issue. PRs only carry out answered requests; see the [review protocol](/team/review-protocol.md#decisions-are-separate-from-merging). |
 | Cross-review | A review where each reviewer runs in its own fresh thread. |
 | Finding | One problem a reviewer raises, with an ID such as `F-1`, or `X-1` when the fix is in another doc. |
 | Verdict | A reviewer's sign-off: Recommend, Recommend with notes, or Changes needed. |
 | Potential data breach | A finding that could expose a token, a session, or a student's data to anyone else. Always critical and must-fix. |
-| Team board | The shared file where threads claim work and leave handoff notes, as the [team workspace](../../team/workspace.md#the-board) says. Not the portal's board. |
-| Roadmap backlog | The list in the [roadmap](01-roadmap.md#9-backlog) of work a review found outside the current phase or too big for its PR, with `B-` IDs. The project manager keeps it and reviews it with the Team Lead at each phase boundary. Not the Backlog list. |
+| Team board | The shared file where threads claim work and leave handoff notes, as the [team workspace](/team/workspace.md#the-board) says. Not the portal's board. |
+| Roadmap backlog | The list in the [roadmap](/docs/canvas-portal/01-roadmap.md#9-backlog) of work a review found outside the current phase or too big for its PR, with `B-` IDs. The project manager keeps it and reviews it with the Team Lead at each phase boundary. Not the Backlog list. |
 
 ## Web terms
 

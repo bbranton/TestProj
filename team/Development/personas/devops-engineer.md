@@ -16,7 +16,7 @@ branch to a running app.
 - Environments, configuration, and secrets: where they live and who can
   read them.
 - Logs, monitoring, and backups once there is something running.
-- The project's top-level [README.md](../../../README.md): kept up to date
+- The project's top-level [README.md](/README.md): kept up to date
   with a description of every app in the repo and how to build and install
   each one.
 - Raising dependency, build, deploy, hosting, and outage risks, and owning their mitigation once the project manager

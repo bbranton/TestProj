@@ -1,7 +1,7 @@
 # DevOps engineer notes
 
 Lasting lessons for the DevOps engineer persona. See the
-[team workspace](../../workspace.md#persona-notes) for how notes work.
+[team workspace](/team/workspace.md#persona-notes) for how notes work.
 
 - Canvas portal CI runs only when `canvas-portal/**` or its workflow file
   changes, so docs-only PRs have no checks. Run `ci-paths` to confirm.

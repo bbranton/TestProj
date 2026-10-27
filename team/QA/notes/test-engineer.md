@@ -1,7 +1,7 @@
 # Test engineer notes
 
 Lasting lessons for the test engineer persona. See the
-[team workspace](../../workspace.md#persona-notes) for how notes work.
+[team workspace](/team/workspace.md#persona-notes) for how notes work.
 
 - Run `trace-requirement --untested <phase>` before calling a phase's test
   plan complete. It also catches IDs that a range like "FR-10 to FR-14"

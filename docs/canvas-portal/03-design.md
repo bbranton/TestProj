@@ -4,7 +4,7 @@
 
 This document describes how the portal is built: its parts, the data it
 stores, how those parts talk to each other, and how each part meets the
-[requirements](02-requirements.md). The frontend framework (decision
+[requirements](/docs/canvas-portal/02-requirements.md). The frontend framework (decision
 D-1) was chosen after the design: React.
 
 **Scope:** this design covers Phases 0 to 4 only. Phase 5 ideas in the
@@ -15,7 +15,7 @@ few choices made now so those ideas stay possible.
 ### Design by phase
 
 Build only the parts listed for the current phase (see the repo's
-[CLAUDE.md](../../CLAUDE.md)). Each phase adds to the ones before it.
+[CLAUDE.md](/CLAUDE.md)). Each phase adds to the ones before it.
 
 | Phase | Builds |
 |-------|--------|

@@ -1,7 +1,7 @@
 # CFO notes
 
 Lasting lessons for the CFO persona. See the
-[team workspace](../../workspace.md#persona-notes) for how notes work.
+[team workspace](/team/workspace.md#persona-notes) for how notes work.
 
 - Before the CFO existed, every thread appended its own row, so cost-log
   PRs conflicted with each other. Keep one open cost-log PR at a time.

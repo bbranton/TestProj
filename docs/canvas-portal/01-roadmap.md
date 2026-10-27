@@ -14,7 +14,7 @@
 
 G-3 shapes most of the screen and interaction design. It means copying
 Trello's *patterns* (layout and behaviors), not its name, logo, icons,
-or artwork; see constraint C-4 in the [requirements](02-requirements.md).
+or artwork; see constraint C-4 in the [requirements](/docs/canvas-portal/02-requirements.md).
 
 ## 2. Phases at a glance
 
@@ -39,7 +39,7 @@ gantt
 
 The bars show order and rough size. There are no fixed dates; a phase is done
 when its exit criteria are met. Phase 0 is done. The current phase is named in
-the repo's [CLAUDE.md](../../CLAUDE.md).
+the repo's [CLAUDE.md](/CLAUDE.md).
 
 Each phase ends with something a student can use, so the project is worth
 having even if it stops after any phase. From Phase 1 on, each phase also
@@ -120,7 +120,7 @@ if skipped, so none can be dropped or delayed without the Team Lead:
 **Before step 2 starts:** the Team Lead decides how the Canvas token is
 stored and sent, which the review protocol reserves for the Team Lead. The
 design lists these calls in
-[Open decisions raised here](03-design.md#open-decisions-raised-here),
+[Open decisions raised here](/docs/canvas-portal/03-design.md#open-decisions-raised-here),
 such as encrypting tokens with Fernet (a new dependency).
 
 **Work:**
@@ -154,7 +154,7 @@ such as encrypting tokens with Fernet (a new dependency).
   and keyword. Courses aren't in the Filter menu: they are shown and
   hidden only with the course buttons (FR-78). The filter isn't saved yet
   and ends on reload (FR-24, FR-72).
-- [Orphaned cards](glossary.md#the-board), whose assignment is gone from Canvas: cards are matched
+- [Orphaned cards](/docs/canvas-portal/glossary.md#the-board), whose assignment is gone from Canvas: cards are matched
   to assignments by Canvas ID, and an orphaned card is kept, never
   deleted. It is hidden by default, and a "show cards removed from Canvas"
   option in the Filter menu shows it grayed out (FR-35, FR-45).
@@ -188,7 +188,7 @@ such as encrypting tokens with Fernet (a new dependency).
   branch is deleted afterward.
 - Measure how long a full Canvas load takes with the Team Lead's real
   student account and record it as a baseline (TP-14). Tuning is Phase 3; see
-  the design's [Making Canvas loads fast](03-design.md#making-canvas-loads-fast-nfr-1-nfr-2-r-3).
+  the design's [Making Canvas loads fast](/docs/canvas-portal/03-design.md#making-canvas-loads-fast-nfr-1-nfr-2-r-3).
 
 **Order of work.** Phase 1 is the largest phase, so it is built in small
 pull requests, each one usable on its own:
@@ -355,7 +355,7 @@ database, and the domain) is decided, with its cost.
 - Publish the Google OAuth client out of "testing" mode. Until then only
   listed test users can sign in, which doesn't fit "any student at any
   school" (D-5). See the design's
-  [Signing in to the portal](03-design.md#5-signing-in-to-the-portal-d-7).
+  [Signing in to the portal](/docs/canvas-portal/03-design.md#5-signing-in-to-the-portal-d-7).
 
 **Exit criteria:**
 
@@ -451,17 +451,17 @@ through and kept for the record.
 | ~~D-4~~ | ~~How users connect to Canvas~~ | **Personal access token** (works today, no school involvement, user must create and paste it) or **OAuth** (smooth sign-in, needs a developer key from the school's Canvas admin) | **Decided** (Team Lead, 2026-10-25): personal access token. OAuth is a Phase 5 idea if a school will issue a key. | Done |
 | ~~D-5~~ | ~~Who the app is for~~ | Just the Team Lead, a few friends, or any student at any school | **Decided** (Team Lead, 2026-10-25): any student at any school (the Canvas address is a setting), tested with the Team Lead's school. | Done |
 | ~~D-6~~ | ~~Backend language~~ | **Python + FastAPI** (readable, quick to write, good for learning) or **Node.js** (same language as the frontend) | **Decided** (Team Lead, 2026-10-25): Python + FastAPI. | Done |
-| ~~D-7~~ | ~~How users sign in to the portal~~ | **Sign in with Google**, **email magic link**, **username and password**, or a **hosted auth service** (see [design](03-design.md#5-signing-in-to-the-portal-d-7)) | **Decided** (Team Lead, 2026-10-25): Sign in with Google for the MVP. | Done |
-| D-8 | How other open devices learn about a move (NFR-22) | **Polling** (each device asks "anything new?" every 30 seconds and when its window comes back into focus; simple, works on any host) or **live push** (the server tells devices instantly over a WebSocket or server-sent events; faster, but more to build and host) | Polling for Phase 2; live push only if 30 seconds feels slow in practice. See [design](03-design.md#keeping-devices-in-sync-nfr-22-d-8). | Start of Phase 2 |
+| ~~D-7~~ | ~~How users sign in to the portal~~ | **Sign in with Google**, **email magic link**, **username and password**, or a **hosted auth service** (see [design](/docs/canvas-portal/03-design.md#5-signing-in-to-the-portal-d-7)) | **Decided** (Team Lead, 2026-10-25): Sign in with Google for the MVP. | Done |
+| D-8 | How other open devices learn about a move (NFR-22) | **Polling** (each device asks "anything new?" every 30 seconds and when its window comes back into focus; simple, works on any host) or **live push** (the server tells devices instantly over a WebSocket or server-sent events; faster, but more to build and host) | Polling for Phase 2; live push only if 30 seconds feels slow in practice. See [design](/docs/canvas-portal/03-design.md#keeping-devices-in-sync-nfr-22-d-8). | Start of Phase 2 |
 
 ## 6. Risks
 
 Each risk is rated Low, Medium, or High for how likely it is and how much
 harm it would do, and has an owner: the team persona that watches it and
-carries out its mitigation (see the [team personas](../../team/README.md)).
+carries out its mitigation (see the [team personas](/team/README.md)).
 The project manager keeps this list, rates each risk, assigns its owner, and reviews
 it with the Team Lead at every phase boundary. A risk that is a
-[potential data breach](../../team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
+[potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
 is marked **Critical**: it is must-fix, its mitigations come first in the
 current phase and are done before the next deploy, and only the Team Lead
 can delay one. Accepting a risk instead of
@@ -494,7 +494,7 @@ The plan has grown quickly, so these rules keep each phase finishable:
   new request: the current phase, a later one, or nowhere. An idea joins an
   earlier phase only when the Team Lead approves it, in a pull request that
   updates this roadmap and the requirements'
-  [Requirements by phase](02-requirements.md#requirements-by-phase)
+  [Requirements by phase](/docs/canvas-portal/02-requirements.md#requirements-by-phase)
   together.
 - **A phase's scope is fixed once it starts.** If a requirement in the
   current phase turns out bigger than expected, the project manager recommends,
@@ -504,7 +504,7 @@ The plan has grown quickly, so these rules keep each phase finishable:
 - **Small pull requests.** Each pull request covers one document or one
   feature. A fix that a change needs in another document is made in the same
   pull request by the persona that owns that document, as the
-  [review protocol](../../team/review-protocol.md#who-fixes-a-finding) says.
+  [review protocol](/team/review-protocol.md#who-fixes-a-finding) says.
   Work outside the current phase, or too big for its pull request, goes on
   the [backlog](#9-backlog).
 - **Exit criteria decide "done".** A phase isn't done until its exit
@@ -517,19 +517,19 @@ The plan has grown quickly, so these rules keep each phase finishable:
 | Who | Does |
 |-----|------|
 | Team Lead | Has the final say on every decision and disagreement; decides open decisions, questions, and every decision request; OKs each phase's test deploy; approves every roadmap and scope change; can change any pull request's reviewers; reviews and merges the `develop` → `main` release pull request; runs the manual test procedures that need real Canvas accounts or the teacher sandbox; sets up the Google and Canvas accounts in each phase's prerequisites; changes the current phase in CLAUDE.md. |
-| Team personas (Claude) | Project manager, Requirements engineer, Test engineer, Architect, UI/UX designer, Developer, DevOps engineer, Cybersecurity engineer, and CFO, as described in the [team README](../../team/README.md) and the [review protocol](../../team/review-protocol.md). Each one writes the documents and code it owns and reviews others' work when a pull request touches its area, in small pull requests limited to the current phase; merges its own pull requests into `develop` once their reviewers recommend them, but never approves or merges into `main`; lists the requirement IDs each pull request implements; brings anything outside the current phase to the Team Lead instead of building it. |
+| Team personas (Claude) | Project manager, Requirements engineer, Test engineer, Architect, UI/UX designer, Developer, DevOps engineer, Cybersecurity engineer, and CFO, as described in the [team README](/team/README.md) and the [review protocol](/team/review-protocol.md). Each one writes the documents and code it owns and reviews others' work when a pull request touches its area, in small pull requests limited to the current phase; merges its own pull requests into `develop` once their reviewers recommend them, but never approves or merges into `main`; lists the requirement IDs each pull request implements; brings anything outside the current phase to the Team Lead instead of building it. |
 
 ## 9. Backlog
 
 Work a review found that is outside the current phase or too big for its
 pull request, as the
-[review protocol](../../team/review-protocol.md#follow-up-work) says.
+[review protocol](/team/review-protocol.md#follow-up-work) says.
 The project manager adds each item from the merged PR's *Backlog items* section and
 reviews the list with the Team Lead at every phase boundary; an item
 suggested for the current phase goes to the Team Lead in the next decision
 batch instead. The Team Lead plans an item into a phase or drops it; nobody
 starts on one before then. A potential data breach never goes here: it is
-tracked in the [security register](../../team/QA/notes/cybersecurity-engineer.md#security-register).
+tracked in the [security register](/team/QA/notes/cybersecurity-engineer.md#security-register).
 
 | ID | Item | Found in | Owner | Suggested phase | Status |
 |----|------|----------|-------|-----------------|--------|

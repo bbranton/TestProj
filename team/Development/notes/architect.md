@@ -1,8 +1,8 @@
 # Architect notes
 
 Lasting lessons for the architect persona. See the
-[team workspace](../../workspace.md#persona-notes) for how notes work. Design
-facts and decisions belong in the [design](../../../docs/canvas-portal/03-design.md),
+[team workspace](/team/workspace.md#persona-notes) for how notes work. Design
+facts and decisions belong in the [design](/docs/canvas-portal/03-design.md),
 not here.
 
 - Build only what the *Design by phase* table lists for the current phase,

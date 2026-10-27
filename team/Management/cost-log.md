@@ -1,12 +1,12 @@
 # Cost log
 
 What each thread actually cost, so the project manager can estimate new work from
-real numbers. The [CFO](personas/cfo.md) keeps this file. Every other
+real numbers. The [CFO](/team/Management/personas/cfo.md) keeps this file. Every other
 thread reports its row with the
-[`log-cost` skill](../../.claude/skills/log-cost/SKILL.md) instead of adding
+[`log-cost` skill](/.claude/skills/log-cost/SKILL.md) instead of adding
 it in its own PR, and the CFO commits the reported rows in batches, so the
 log doesn't cause merge conflicts. How estimates use the log is in
-[the project manager's cost plans](personas/project-manager.md#cost-plans).
+[the project manager's cost plans](/team/Management/personas/project-manager.md#cost-plans).
 
 ## Size units
 

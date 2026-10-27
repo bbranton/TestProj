@@ -11,7 +11,7 @@ documents refer back to.
 
 **In scope:** reading a student's courses and assignments from Canvas,
 showing them, arranging them on a kanban board that looks and behaves like
-Trello (goal G-3 in the [roadmap](01-roadmap.md#1-project-goals)), keeping
+Trello (goal G-3 in the [roadmap](/docs/canvas-portal/01-roadmap.md#1-project-goals)), keeping
 it current with Canvas, and, as a future feature, keeping private notes.
 
 This document uses Trello's words where they apply: a **board** holds
@@ -22,13 +22,13 @@ This document uses Trello's words where they apply: a **board** holds
 admin features, grades analytics (possibly Phase 5).
 
 Requirements say *what* the portal does, not *how*. Canvas endpoints,
-tables, and component choices are in the [design](03-design.md); a
+tables, and component choices are in the [design](/docs/canvas-portal/03-design.md); a
 requirement names one only where it sets the scope.
 
 ### Requirements by goal
 
 Every requirement serves one of the project goals in the
-[roadmap](01-roadmap.md#1-project-goals), except the maintainability
+[roadmap](/docs/canvas-portal/01-roadmap.md#1-project-goals), except the maintainability
 requirements, which serve the developer.
 
 | Goal | Requirements |
@@ -51,13 +51,13 @@ requirements, which serve the developer.
 Non-functional requirements have no priority column: each one is required
 for its phase to be done.
 
-The *Phase* column matches the [roadmap](01-roadmap.md).
+The *Phase* column matches the [roadmap](/docs/canvas-portal/01-roadmap.md).
 
 ### Requirements by phase
 
 This index lists every requirement by the phase that builds it, so it's
 clear what is in scope at any time. Build only the requirements listed for
-the current phase, which the repo's [CLAUDE.md](../../CLAUDE.md) names.
+the current phase, which the repo's [CLAUDE.md](/CLAUDE.md) names.
 Anything listed for a later phase is out of scope, even where the design or
 the User Interface Specification already describes it. When a
 requirement's *Phase* column changes, update this index in the same PR.
@@ -129,7 +129,7 @@ Removed requirements are not listed.
   repository, chat, and screenshots, and are loaded from a local file that git
   ignores.
 - **C-1** Browsers block pages from calling the Canvas API directly from
-  another site (CORS, see the [glossary](glossary.md#web-terms)).
+  another site (CORS, see the [glossary](/docs/canvas-portal/glossary.md#web-terms)).
   All Canvas calls go through the portal's backend.
 - **C-2** Canvas returns long lists in pages (for example 10 to 100 items at a
   time) and limits how fast one token can make requests. The backend must

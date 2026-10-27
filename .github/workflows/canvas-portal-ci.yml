@@ -1,3 +1,16 @@
+# Canvas portal CI: tests and builds the Canvas portal app in canvas-portal/.
+#
+# What it checks:
+#   - backend: installs the Python backend and runs its tests with pytest.
+#   - frontend: installs the frontend with npm ci, runs its tests, and
+#     builds it, so a change that breaks the build fails here.
+#
+# When it runs: on every pull request, and on pushes to main and develop,
+# but only when files under canvas-portal/ or this workflow change. Docs-only
+# PRs get no checks from it; the ci-paths skill says whether a branch
+# triggers it. It only tests and builds: it deploys nothing, uses no
+# secrets, and its automatic GitHub token can only read the repo.
+
 name: Canvas portal CI
 
 on:

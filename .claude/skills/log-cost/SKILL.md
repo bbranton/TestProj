@@ -1,12 +1,12 @@
 ---
 name: log-cost
-description: Report what this thread cost to the CFO, from the session's own usage data, so it lands in team/Management/cost-log.md. Use when a thread's PR merges or closes, when an owner thread hands off, when a reviewer thread finishes, or when asked what a thread cost.
+description: Report what this thread cost, from the session's own usage data, by writing its row file to the cost folder in the project's Library for the CFO. Use when a thread's PR merges or closes, when an owner thread hands off, when a reviewer thread finishes, or when asked what a thread cost.
 ---
 
 # Report a thread's cost
 
-Report your row to the CFO instead of adding it to the cost log yourself,
-as the [CFO persona](/team/Management/personas/cfo.md#role) says.
+Write your row to a file of your own instead of adding it to the cost log
+yourself, as the [CFO persona](/team/Management/personas/cfo.md#role) says.
 
 1. Look up this session's usage: call the `get_session` tool of the
    `claude-code-remote` server with no `session_id`. The numbers are under
@@ -15,18 +15,15 @@ as the [CFO persona](/team/Management/personas/cfo.md#role) says.
    available, or the session has no `external_metadata.usage` (many
    don't), write `n/a` in the number columns, say why in the notes, and
    don't guess.
-2. Count the size units, as defined in
-   [the cost log](/team/Management/cost-log.md#size-units): threads, PRs,
-   review rounds, and files changed.
-3. Write the row in the log's column order, with a note for anything that
-   made the cost unusual, such as a long thread, CI failures, or a design
-   change partway through.
-4. Report it: add a note to the [team board](/team/workspace.md#the-board),
-   in this form, and message the CFO thread if one is open:
-
-   ```
-   - [cost] <Persona> → CFO · | <Date> | <PR> | <Owner or Reviewer> | <Persona> | <T / P / R / F> | <Output> | <Cache read> | <Cache write> | <Cost> | <Notes> | · <date>
-   ```
+2. Count the [size units](/team/Management/personas/cfo.md#size-units):
+   threads, PRs, review rounds, and files changed.
+3. Write the row in the [column order](/team/Management/personas/cfo.md#columns).
+4. Save it as a new row file in the project's Library, named as the CFO
+   persona's [How it works](/team/Management/personas/cfo.md#how-it-works)
+   says, such as
+   `/mnt/project-files/costs/2026-10-27-devops-engineer-pr115-reviewer.md`.
+   The file holds the one row and nothing else. Never change an existing
+   file there. Re-read your file about ten seconds after writing it.
 
 Usage is the whole session so far. Report it once, when the thread's work
 is done. If a thread is reused for later work, report only the change since
@@ -52,5 +49,6 @@ when the cost can't be read.
 
 ## As the CFO
 
-Batch the reported rows as the
-[CFO persona](/team/Management/personas/cfo.md#how-it-works) says.
+Add the row files to the combined table as the CFO persona's
+[Daily batch thread](/team/Management/personas/cfo.md#daily-batch-thread)
+says.

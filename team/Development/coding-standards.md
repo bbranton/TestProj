@@ -25,11 +25,11 @@ locally before pushing, so CI only confirms what you already saw.
 |------|---------|-----------------|
 | Backend | `pip install -e ".[dev]"`, then `pytest` in `canvas-portal/backend` | Failing backend tests |
 | Backend | `ruff format --check .` | Code Ruff would format differently |
-| Backend | `ruff check .` | Lint problems: the defaults, plus import order (`I`), old Python idioms (`UP`), and likely bugs (`B`) |
+| Backend | `ruff check .` | Lint problems: the defaults, plus import order (`I`), old Python idioms (`UP`), likely bugs (`B`), and any `print` call (`T20`) |
 | Frontend | `npm ci`, then `npm test` in `canvas-portal/frontend` | Failing Vitest tests |
 | Frontend | `npm run format:check` | Code Prettier would format differently |
 | Frontend | `npm run lint` | ESLint problems: the JavaScript and typescript-eslint recommended rules, the React hooks rules, and any `console` call |
-| Frontend | `npm run build` | Type errors, through TypeScript's `tsc -b` with `strict` on, and a broken Vite build |
+| Frontend | `npm run build` | Type errors, through TypeScript 7's `tsc -b` with `strict` on, and a broken Vite build. Type-check only this way: a bare `tsc` or `npx tsc` runs TypeScript 6, which ESLint needs, not the compiler CI uses |
 
 CI uses Python 3.12 and Node 22; use the same locally.
 

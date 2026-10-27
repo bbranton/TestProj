@@ -115,9 +115,14 @@ Both:
   [Refresh progress](/docs/canvas-portal/03-design.md#refresh-progress-fr-16)
   says, and the rest carry on.
 - **In the frontend, handle every request's error state.** A component
-  that fetches shows what the
-  [UI specification](/docs/canvas-portal/04-ui-specification.md) says for
-  each error code, never a blank screen.
+  that fetches shows the
+  [UI specification](/docs/canvas-portal/04-ui-specification.md)'s words
+  for each error code, never a blank screen. For `invalid_request` and
+  `internal_error`, that's the
+  [General error message](/docs/canvas-portal/04-ui-specification.md#general-error-message).
+- **Never show the backend's `message` text or the error code on screen.**
+  The frontend picks what to show by code, as the design says, so the
+  backend's wording can change without changing a screen.
 
 ## Logging
 

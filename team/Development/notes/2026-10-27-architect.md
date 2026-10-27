@@ -1,6 +1,6 @@
 # Architect, 2026-10-27
 
-## Carry out #95 in the architect persona file (PR #TBD)
+## Carry out #95 in the architect persona file (PR #111)
 
 - Replaced "One long-running architect thread writes the design and
   reviews other docs" under *How I work* with a link to

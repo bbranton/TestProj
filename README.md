@@ -1,6 +1,9 @@
 # TestProj
 a project to test github features
 
+Starting a new project like this one? See
+[Set up a new project like this one](/SETUP-NEW-PROJECT.md).
+
 ## Site layout
 
 The GitHub Pages site is assembled by `.github/workflows/pages.yml`:

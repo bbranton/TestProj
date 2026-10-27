@@ -36,6 +36,10 @@ Lasting lessons for the DevOps engineer persona. See the
 - Many PRs appending rows to `cost-log.md` caused merge conflicts and
   extra merge commits, so the CFO is now its only writer. Keep shared
   append-only files to one owner thread where possible.
+- Pages deploys from `main`, but `develop` is the default branch, so the
+  `github-pages` environment must allow `main` (Settings > Environments >
+  github-pages > Deployment branches). Sessions can't read environment or
+  Pages settings, so ask the Team Lead to check.
 
 ## Open items
 
@@ -44,3 +48,7 @@ Lasting lessons for the DevOps engineer persona. See the
   screenshot helper for UI PRs. Needs the Team Lead's OK before building.
 - Phase 1 test deploy (Koyeb plus Neon, nightly encrypted backup) not set
   up yet; see roadmap Phase 1 step 6.
+
+- Live repo gaps raised on #92 for the Team Lead: confirm `github-pages`
+  allows `main`, create the `decision` label, and delete the disabled
+  `develop` ruleset if it is not wanted.

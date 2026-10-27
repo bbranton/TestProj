@@ -272,3 +272,17 @@
   PR bundles two jobs on one branch, so part 2 waits on part 1's open
   decision; a Developer thread opening a UI PR only meets the rule
   through the template.
+
+## Review the new-project setup guide (#92)
+
+- Reviewed #92 as Management: Changes needed. Read `d3986f8`, the version
+  refocused on setup done outside the repo, against `develop@b94c197`.
+- Two major findings in its copy step: starting every notes file empty
+  drops the security register, and the roadmap's decision register,
+  risks, backlog, and change log (plus the glossary) aren't in the copy
+  list, though the review protocol and persona files link to them.
+- One minor note for the DevOps engineer peer: the merge settings step
+  restates the DevOps engineer notes.
+- The owner fixed all three in `da26f94`; re-checked at `868dbe9` and
+  changed the verdict to Recommend.
+- No decision was raised.

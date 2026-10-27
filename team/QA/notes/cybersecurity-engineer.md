@@ -29,6 +29,11 @@ Update this when hosting, the repo, or where real tokens live changes.
   holding real Canvas tokens. `koyeb.app` isn't on the Public Suffix List.
 - Only the Team Lead's own accounts should connect until #16 is published
   and #17 is in place.
+- A Remote Control thread on the Team Lead's computer runs `git fetch` and
+  `git pull --ff-only` in the local `develop` clone under a standing OK. It
+  runs as the Team Lead's own user, so keep secrets and real tokens out of
+  that folder, and nothing there should run code it pulls
+  ([setup guide](/SETUP-NEW-PROJECT.md#5-set-up-the-local-clone)).
 
 ## Security register
 

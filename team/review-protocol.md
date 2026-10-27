@@ -351,6 +351,44 @@ owner's view counts most, except on security, as
 says. After two rounds on the same point without agreement, the owner
 marks the finding **Waiting on the Team Lead**.
 
+### Logging a disagreement
+
+Every disagreement between an owner and a reviewer gets a short summary
+in the Library, even when the two settle it without the Team Lead, so the
+team can see how often it happens and spot patterns at each
+[retro](/.claude/skills/retro/SKILL.md) (Team Lead, 2026-10-27, on
+[#132](https://github.com/bbranton/TestProj/pull/132#discussion_r4391121374)).
+
+- **When:** as soon as the owner disagrees with a finding, or a reviewer
+  disagrees with the owner's reply to one.
+- **Who:** the owner thread writes the file and keeps it up to date until
+  the disagreement ends. It needs no PR.
+- **Where:** one file per disagreement, Library:
+  `disagreements/<date>-pr<number>-<finding>.md`, with the day it started,
+  the PR, and the finding's ID in lower case, such as
+  `2026-10-27-pr134-f-2.md`.
+- **What:** the form below. A **round** is one reply from each side on
+  the same point. The **outcome** is one of **agreed** (both settled on a
+  third way), **owner** (the reviewer accepted the owner's view),
+  **reviewer** (the owner made the change), **Team Lead** (with what the
+  Team Lead decided), or **open** (not settled when the PR merged or
+  closed).
+- **No secrets:** never write a Canvas token, cookie, secret, or student
+  data in it. Link to the finding instead.
+
+```markdown
+# PR #<number> <finding>: <the point, in a few words>
+
+- **Personas:** <owner persona> (owner), <reviewer persona> (reviewer)
+- **Point:** what the finding asked for, in one sentence
+- **Reviewer's case:** one sentence
+- **Owner's case:** one sentence
+- **Outcome:** agreed / owner / reviewer / Team Lead / open, and what
+  was done
+- **Rounds:** <number>
+- **Links:** the finding, and the decision request if there was one
+```
+
 ## Running reviews with agents
 
 ### One thread per reviewer
@@ -401,7 +439,8 @@ is written on the PR before anyone acts on it.
 - **Before merging,** the owner adds a `### Decision:` entry for each
   decision to the *Decisions* section of the PR description, in the format
   in [Daily notes](/team/workspace.md#daily-notes), and any lasting lesson to
-  its [notes](/team/workspace.md#persona-notes).
+  its [notes](/team/workspace.md#persona-notes), and brings each of the
+  PR's [disagreement files](#logging-a-disagreement) up to date.
 - **After the PR merges or closes,** the owner releases its claim on the
   [board](/team/workspace.md#the-board), and every thread that worked on the PR
   reports its cost and ends, as

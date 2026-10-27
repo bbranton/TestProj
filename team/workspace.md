@@ -3,7 +3,7 @@
 Personas often run in parallel threads that can't see each other. This is
 how they share what they know and avoid stepping on each other's work.
 
-There are five places, for five kinds of information:
+There are six places, for six kinds of information:
 
 | What | Where | Why there |
 |------|-------|-----------|
@@ -12,6 +12,7 @@ There are five places, for five kinds of information:
 | Who is working on what right now, and handoffs | The board, in the project's shared files | Instant, no PR needed |
 | What each thread cost | The cost log and row files, in the project's shared files | No PR; one file per row, as the [CFO persona](/team/Management/personas/cfo.md#role) says |
 | Process ideas waiting for the next retro | The [ideas file](#process-ideas), in the project's shared files | No PR or review for a one-line idea |
+| Each disagreement between an owner and a reviewer | Library: `disagreements/`, one file per disagreement, as [Logging a disagreement](/team/review-protocol.md#logging-a-disagreement) says | No PR; the retro reads them |
 
 ## Team folders
 

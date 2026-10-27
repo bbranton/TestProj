@@ -52,14 +52,22 @@ if given, narrows what each persona looks at.
 ## As the project manager
 
 1. Read every persona's file in Library: `retros/<retro date>/`,
-   the previous note in `team/retros/`, and the
-   [process ideas](/team/workspace.md#process-ideas) file.
+   the previous note in `team/retros/`, the
+   [process ideas](/team/workspace.md#process-ideas) file, and the
+   disagreement files in Library: `disagreements/` dated in the window,
+   as [Logging a disagreement](/team/review-protocol.md#logging-a-disagreement)
+   says.
 2. Write `team/retros/<retro date>.md` with these sections:
    - **Window and topic**, and which personas took part.
    - **Did the last changes help?** For each change made from the previous
      retro, what the feedback and logs show since.
    - **Themes**: points raised by more than one persona, grouped, naming
      who raised each and linking the evidence.
+   - **Disagreements**: how many there were in the window and how each
+     ended (agreed, owner, reviewer, Team Lead, or open), and any pattern:
+     the same pair of personas, the same kind of point, or many rounds
+     before an outcome. Name each file by its Library path, or say there
+     were none.
    - **Suggestions**: each suggested change, merged where personas
      suggested the same thing, with a link to its decision request. Add
      any idea from the process ideas file that no persona took up, naming

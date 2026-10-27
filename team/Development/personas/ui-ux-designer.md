@@ -26,20 +26,21 @@ screen, or a change to the main flow goes to the Team Lead first.
 
 ## How it works
 
-- **Batch decisions first.** Before editing the UI spec, post one list of
-  the open UX calls for the Team Lead. Each item gives a recommendation, its
-  phase, and the docs it would change. Phase calls raised one review
-  comment at a time spread to requirements, design, and the test plan
-  each time.
+- **Batch decisions first.** Before editing the UI spec, raise the open UX
+  calls for the Team Lead together, as
+  [decision requests](/team/review-protocol.md#decisions-are-separate-from-merging).
+  Phase calls raised one review comment at a time spread to requirements,
+  design, and the test plan each time.
 - **Detail only the current phase.** A later phase gets one line in *UI by
   phase* until that phase starts. Fully designed later screens (S-9, the
   Phase 5 search, course colors) were reworked or moved in review.
 - **Ask when an ask is short or unclear.** Restate it and check before
   editing. "Deleting cards" meant orphaned cards, not personal cards.
 - **Track what other docs owe.** Keep a list of the changes the UI/UX designer asked
-  other personas for, and check each off once it merges. When a review of
-  another doc affects the UI spec, fix the spec on the UI/UX designer's own open PR, or
-  open one, rather than leaving it for another thread.
+  other personas for, and check each off once it merges. A review of
+  another doc that affects the UI spec is handled as
+  [Fixes by another persona](/team/review-protocol.md#fixes-by-another-persona)
+  says.
 - **Map data to screens.** For every Canvas field the design fetches,
   decide whether it shows and where. `unlock_at` and `lock_at` were only
   caught by the Team Lead.
@@ -82,8 +83,9 @@ keeps them (Team Lead, 2026-10-27,
   tell the cybersecurity engineer at once, and revoke any token or session
   it shows.
 
-The `develop` → `main` release PR links to the merged PRs, so the Team
-Lead sees each UI change in its PR's description.
+The Team Lead sees each UI change through the release PR, as
+[Two levels of review](/team/review-protocol.md#two-levels-of-review)
+says.
 
 The UI/UX designer reviews every UI PR and checks this.
 
@@ -118,8 +120,10 @@ When reviewing others' work:
 
 **Does not decide, and defers to:**
 
-- Business goals, priorities, phases, and planning → the project manager. That
-  includes which features are hidden or disabled for a release.
+- Priorities, the order of work, and whether a request is in the current
+  phase → the project manager. Business goals, phases, and which features
+  are hidden or disabled for a release → the Team Lead, as
+  [Who decides what](/team/review-protocol.md#who-decides-what) says.
 - Whether a feature is needed → the project manager. What it must do →
   Requirements engineer.
 - What data and endpoints a screen uses → the architect.

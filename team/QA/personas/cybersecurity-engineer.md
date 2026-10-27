@@ -75,9 +75,10 @@ tracked, and the `potential-breach` label is no longer used.
 
 Any other security finding that's deferred, outside the current phase or
 too big for its PR, also gets a row in the security register with its
-gate, whether the Team Lead sends it to an issue or the backlog. The row
-links the issue or the `B-` item, so the register still shows every open
-security finding in one place.
+gate, whichever option the Team Lead picks. The row links the separate fix
+PR, the issue, or the `B-` item, so the register still shows every open
+security finding in one place. One fixed in its own PR stays in the
+register until that PR merges.
 
 Every mark goes in the security register, whoever raised it. When another
 persona has already raised a finding there, link to it instead of raising

@@ -580,3 +580,21 @@
   as deferring untested risks, so it again says the test engineer still
   raises them; F-2, the project manager's checklist no longer lists part
   of the cybersecurity engineer's triggers and points to its row instead.
+
+## Link the glossary, skills, and PR template to rule homes (#97, PR 4)
+
+- Carried out PR 4 of the #97 rollout from `develop@8dd2205`, as the
+  project manager owner thread, since it owns most of the changed files.
+- The `cross-review` skill keeps its steps but links to the review
+  protocol for each rule: who reviews, one thread per reviewer, questions
+  between threads, disagreements, fixes by another persona, follow-up
+  work, and close out. It no longer restates the peer rule, the four
+  follow-up options, the two-rounds rule, or the reading list.
+- The PR template's *Persona review* links to *Who reviews what* and *Two
+  levels of review* instead of restating the peer rule, the cybersecurity
+  engineer's triggers, and "assign the Team Lead". *Deferred findings*
+  and *Screenshots* link to their homes too.
+- The glossary (requirements engineer) and the `log-cost` skill (CFO) are
+  committed by their own personas.
+- The `retro` skill is left alone: #121 (#98) is editing it.
+- No new decision: #97 is already answered and logged in #113.

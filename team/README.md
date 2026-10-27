@@ -61,7 +61,7 @@ An agent acting as a persona:
    [daily logs](/team/workspace.md#daily-notes) in its team's `notes/` folder, and the
    [review protocol](/team/review-protocol.md) before starting, and checks the
    [team board](/team/workspace.md#the-board) for work another thread has
-   claimed. It uses the words in the
+   claimed and for `[note]` lines addressed to it. It uses the words in the
    [glossary](/docs/canvas-portal/glossary.md), and adds any new term there
    in the same PR.
 2. Stays inside what the persona owns. When work belongs to another persona,

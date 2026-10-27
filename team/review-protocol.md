@@ -145,8 +145,8 @@ at any time.
 | App code | Developer | Developer |
 | CI, build, install scripts, repo settings, or the top-level `README.md` | DevOps engineer | DevOps engineer |
 | Canvas tokens, sign-in, the session cookie, secrets, student data, hosting, or deploys; the client security document (`06-security-overview.md`) | Cybersecurity engineer, always | Cybersecurity engineer |
-| Shared files at the top of `team/`, or another team's folder | Each persona whose file changes, plus the project manager | Project manager |
-| Another persona's files in your own team's folder | That persona | That persona |
+| Shared files at the top of `team/`, or another team's folder | Each persona whose file changes, plus the project manager (a board note instead, for a [wording-only change](#wording-only-changes-notify-the-persona) to a persona file) | Project manager |
+| Another persona's files in your own team's folder | That persona (a board note instead, for a [wording-only change](#wording-only-changes-notify-the-persona) to a persona file) | That persona |
 | A team script or its skill (see [Team skills](/team/workspace.md#team-skills)) | The other personas who use it | The team whose `scripts/` folder holds it |
 | Only your own persona's area: its persona file, notes, and daily log, or a doc it owns in this table | The peer reviewer only | That persona |
 | The cost log (`team/Management/cost-log.md`) | The peer reviewer (CFO) only | CFO, who adds reported rows in batches |
@@ -170,7 +170,8 @@ persona is notified instead of made a reviewer (Team Lead, 2026-10-27,
 
 - The owner leaves that persona a `[note]` on the
   [board](/team/workspace.md#the-board) naming the PR and the change, and
-  lists the persona as notified in the PR description.
+  lists it under *Persona review* in the PR description as
+  `- Notified: <persona>: <change>`.
 - The persona reads the change at its next own thread, fixes anything it
   disagrees with in its own PR, and deletes the note.
 - The PR's peer reviewer judges whether each such change is wording-only.

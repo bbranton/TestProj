@@ -35,7 +35,7 @@ whose changes touch no other persona's area, such as a team's edit to its
 own folder, needs no reviewers and is merged straight away.
 
 **`develop` → `main`.** This is a batched release of what's on `develop`.
-Any persona may open it when asked: it assigns the Team Lead and
+Any persona may open it: it assigns the Team Lead and
 summarizes everything merged since `main`, grouped by area, with links to
 the merged PRs and to the screenshots of any UI change. The Team Lead is
 its only reviewer and the only one who merges it. No persona approves or

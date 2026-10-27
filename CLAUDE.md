@@ -12,9 +12,11 @@
 
 - Link to files in the repo from the repo root, starting with `/`, such as
   `[design](/docs/canvas-portal/03-design.md#design-by-phase)`. Don't use
-  `../` or file-relative paths. GitHub and VS Code's Markdown preview read
-  `/` as the repo root, and so does Obsidian when the repo folder is the
-  vault.
+  `../` or file-relative paths. A leading `/` means the repo root, not the
+  computer's root: to open a linked file with a file tool, put the repo's
+  path in front of it. GitHub and VS Code's Markdown preview read it that
+  way. Obsidian, with the repo folder as the vault, should too, but that
+  hasn't been tested.
 - The one exception is the PR template, whose links show on the PR page and
   so use `../blob/develop/...`.
 

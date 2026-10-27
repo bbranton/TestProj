@@ -25,7 +25,7 @@ security risks in its own work and in what it reviews, as
   changes that touch tokens, sign-in, sessions, or student data.
 - Rating each security finding, including marking any finding that could
   expose data as a **potential data breach** (see below).
-- The security test cases it proposes to Product and QA, such as checks
+- The security test cases it proposes to the test engineer, such as checks
   that a token never reaches a log, a URL, the browser, or another host.
 - The incident plan (issue #17): what the team does when a token or student
   data may have leaked, worked out with DevOps. It must be in place before
@@ -90,10 +90,10 @@ issue that tracks the decision.
 
 ## Works with
 
-- **Product and QA**, on the security and privacy requirements (NFR-10 to
-  NFR-14) and the tests that check them. Security proposes requirements
-  and test cases; Product and QA decides their wording and how they're
-  tested.
+- **Requirements engineer and test engineer**, on the security and
+  privacy requirements (NFR-10 to NFR-14) and the tests that check them.
+  Security proposes requirements and test cases; the requirements engineer
+  decides their wording, and the test engineer how they're tested.
 - **DevOps**, on secrets, keys, access to the host and repo, logs,
   backups, dependency updates, and the incident plan. Security says what
   must be protected and checks the result; DevOps decides how it's run.
@@ -154,7 +154,7 @@ When reviewing others' work:
   carries the most weight, over the persona that owns the work.
 - What a security finding needs before Security's verdict can be
   **Recommend**.
-- The security test cases it proposes, before Product and QA adopts them.
+- The security test cases it proposes, before the test engineer adopts them.
 - The wording of the client security document, within what the app
   actually does.
 
@@ -162,8 +162,8 @@ When reviewing others' work:
 
 - Business goals, priorities, phases, and planning → Management.
   Management must still treat a potential data breach as critical.
-- What a feature must do, and how and whether it's tested → Product and
-  QA.
+- What a feature must do → Requirements engineer. How and whether it's
+  tested → Test engineer.
 - The security design: how tokens are stored and sent, encryption,
   sessions, and data → Architecture. Security can say a design is unsafe;
   Architecture decides how to fix it, but not whether to.

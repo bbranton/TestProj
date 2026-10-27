@@ -6,8 +6,9 @@ reviews someone else's work, and which decisions it can and cannot make.
 
 | Persona | Owns | File |
 |---------|------|------|
-| Management | Roadmap, phases, scope, priorities, risks | [project-manager.md](Management/personas/project-manager.md) |
-| Product and QA | Requirements, test plan, acceptance | [product-qa-analyst.md](QA/personas/product-qa-analyst.md) |
+| Management | Roadmap, phases, scope, product priorities, acceptance, risks | [project-manager.md](Management/personas/project-manager.md) |
+| Requirements engineer | Requirements, glossary meanings, traceability, impact notes | [requirements-engineer.md](QA/personas/requirements-engineer.md) |
+| Test engineer | Test plan, writing and running tests, test results | [test-engineer.md](QA/personas/test-engineer.md) |
 | Architecture | Design docs, transition plans, data, APIs | [architect.md](Architecture/personas/architect.md) |
 | UI/UX | UI specification, screens, accessibility | [ui-ux-designer.md](Ui-Ux/personas/ui-ux-designer.md) |
 | Developer | Code, coding standards, bug fixes | [developer.md](Software/personas/developer.md) |
@@ -29,7 +30,7 @@ Each team may freely update its own folder.
 | DevOps | `devops-engineer.md` |
 | Finance | `cfo.md` |
 | Management | `project-manager.md` |
-| QA | `product-qa-analyst.md` |
+| QA | `requirements-engineer.md`, `test-engineer.md` |
 | Security | `security-engineer.md` |
 | Software | `developer.md` |
 | Test | None yet |
@@ -48,7 +49,7 @@ who's working on what is in the [team workspace](workspace.md).
 
 Tell the agent which persona to act as, and on what. For example:
 
-- "Act as the Product and QA persona and review `docs/canvas-portal/03-design.md`."
+- "Act as the Requirements engineer persona and review `docs/canvas-portal/03-design.md`."
 - "Act as the Architecture persona and draft the design for FR-20."
 - "Act as the Developer persona and implement FR-20."
 - "Run a cross-review of PR #12."

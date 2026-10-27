@@ -1,6 +1,6 @@
 # Glossary
 
-**Status:** Draft · **Owner:** Product and QA · **Last updated:** 2026-10-26
+**Status:** Draft · **Owner:** Requirements engineer · **Last updated:** 2026-10-26
 
 The words the team uses for the portal, the docs, and the way we work, each
 explained once. Other docs link here instead of defining a term again.
@@ -11,7 +11,7 @@ docs read clearly. It is not in scope until its phase starts, as the
 
 ## Keeping it up to date
 
-- **Product and QA owns what each term means.** A meaning changes in the
+- **The requirements engineer owns what each term means.** A meaning changes in the
   same PR as the requirement it comes from.
 - **UI/UX keeps the screen words in step.** The exact words on screen
   live in the [UI specification](04-ui-specification.md). A PR that changes

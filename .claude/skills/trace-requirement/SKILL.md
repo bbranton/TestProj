@@ -5,7 +5,7 @@ description: Trace canvas portal requirement IDs (FR-, NFR-) through the design,
 
 # Trace a requirement
 
-Mostly used by the Product and QA persona, and by any reviewer checking
+Mostly used by the requirements engineer and test engineer personas, and by any reviewer checking
 that a PR's requirement IDs are real and covered.
 
 Run from the repo root:

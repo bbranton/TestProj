@@ -222,7 +222,7 @@ sandbox).
 
 **Exit criteria (test part).** The tests are done for a phase when every
 procedure listed for it passes, the results are recorded in section 7, and
-no open issue fails a *Must* requirement of the phase. Product and QA
+no open issue fails a *Must* requirement of the phase. The test engineer
 reports this; the Team Lead calls the phase done, after Management's review
 of the roadmap's exit criteria. Later work can break earlier screens, so
 each phase also reruns the earlier procedures for any screen it changed.

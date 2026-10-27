@@ -30,19 +30,19 @@ for another persona in a finding.
 
 | Work | Owner | Recommended reviewers | Optional reviewers |
 |------|-------|--------------------|--------------------|
-| Roadmap (`01-roadmap.md`) | Management | Product and QA, Architecture | DevOps |
-| Requirements (`02-requirements.md`) | Product and QA | Architecture, plus Management when a phase changes | UI/UX, Developer |
-| Design (`03-design.md`) | Architecture | Product and QA, Developer | UI/UX, DevOps |
-| Transition plan (major design change) | Architecture | Developer, Product and QA | DevOps, Management |
-| UI specification (`04-ui-specification.md`) | UI/UX | Product and QA, Architecture | Management, when features must be hidden or disabled to fit the release schedule |
-| Test plan (`05-test-plan.md`) | Product and QA | Architecture | Developer, UI/UX, DevOps |
-| Glossary (`glossary.md`) | Product and QA | UI/UX | Management, for team process terms; Architecture, for web terms |
-| Code PR (backend) | Developer | Architecture, Product and QA | DevOps |
-| Code PR (frontend or any UI change) | Developer | Architecture, UI/UX, Product and QA | DevOps |
-| Top-level `README.md` | DevOps | Developer | Product and QA |
-| CI, build, install, dependency, deploy, or hosting change | DevOps | Developer | Architecture, Product and QA |
-| Phase exit (moving to the next phase) | Management | Product and QA | Architecture, Developer, UI/UX, DevOps |
-| Client security document (`06-security-overview.md`) | Security | Architecture, DevOps | Product and QA, Management |
+| Roadmap (`01-roadmap.md`) | Management | Requirements engineer, Architecture | Test engineer, DevOps |
+| Requirements (`02-requirements.md`) | Requirements engineer | Test engineer, Architecture, plus Management when a priority or phase changes | UI/UX, Developer |
+| Design (`03-design.md`) | Architecture | Requirements engineer, Developer | Test engineer, UI/UX, DevOps |
+| Transition plan (major design change) | Architecture | Developer, Requirements engineer | Test engineer, DevOps, Management |
+| UI specification (`04-ui-specification.md`) | UI/UX | Requirements engineer, Architecture | Test engineer; Management, when features must be hidden or disabled to fit the release schedule |
+| Test plan (`05-test-plan.md`) | Test engineer | Requirements engineer, Architecture | Developer, UI/UX, DevOps |
+| Glossary (`glossary.md`) | Requirements engineer | UI/UX | Management, for team process terms; Architecture, for web terms |
+| Code PR (backend) | Developer | Architecture, Test engineer | DevOps |
+| Code PR (frontend or any UI change) | Developer | Architecture, UI/UX, Test engineer | DevOps |
+| Top-level `README.md` | DevOps | Developer | Test engineer |
+| CI, build, install, dependency, deploy, or hosting change | DevOps | Developer | Architecture, Test engineer |
+| Phase exit (moving to the next phase) | Management | Test engineer, Requirements engineer | Architecture, Developer, UI/UX, DevOps |
+| Client security document (`06-security-overview.md`) | Security | Architecture, DevOps | Requirements engineer, Management |
 | Team process (shared files at the top of `team/`, team skills) | Management | Each persona whose file changes | Any other persona |
 | A team's own folder (`team/<Team>/`) | That team | None | Any persona the team asks |
 | Cost log (`team/Finance/cost-log.md`) | CFO | None | Management |
@@ -63,10 +63,10 @@ Every reviewer also checks that the words match the
 [glossary](../docs/canvas-portal/glossary.md): a term used with a different
 meaning, or a new term the glossary doesn't have, is a finding.
 
-Product and QA owns both the requirements and the tests, so no one else
-checks that its requirements can be tested. It must run its own
-testability check before handing requirements on, and Architecture's
-review of the requirements and the test plan is the outside check.
+The requirements engineer runs its own testability check before handing
+requirements on, and the test engineer's review of the requirements is the
+outside check that each one can be tested. The requirements engineer's
+review of the test plan checks that every requirement is covered.
 
 ## Who decides what
 
@@ -78,10 +78,10 @@ outside its area is advice, never sign-off.
 | Decision | Decided by | Needs the Team Lead for |
 |----------|------------|-------------------------|
 | Business goals | Team Lead | Always |
-| Priorities and scope within the approved roadmap; recommends phases, timelines, and features hidden for a release | Management | Every change to the roadmap or its phases; adding or dropping a goal |
+| Priorities and scope within the approved roadmap, including product priorities and accepting finished features; recommends phases, timelines, and features hidden for a release | Management | Every change to the roadmap or its phases; adding or dropping a goal |
 | The risk list: rating each risk and assigning its owner. A potential data breach is always critical and must-fix | Management | Accepting a risk instead of reducing it; a mitigation that changes scope or timeline |
-| What a feature must do | Product and QA | Adding, removing, or moving a requirement between phases |
-| How it's tested, and whether tests pass | Product and QA | Calling a phase done; removing or weakening a test |
+| How a requirement is worded and traced | Requirements engineer | Adding, removing, or moving a requirement between phases |
+| How it's tested, and whether tests pass | Test engineer | Calling a phase done; removing or weakening a test |
 | Design: structure, data, APIs, technology, security design | Architecture | A new dependency, service, or data store; how the Canvas token is stored or sent; starting a transition plan |
 | Writing code, coding standards, bug fixes | Developer | Approving and merging every PR; design changes go to Architecture |
 | Screens, layout, wording, accessibility | UI/UX | A new screen or a change to the main flow |
@@ -135,7 +135,7 @@ Use the same shape as the canvas portal docs review:
 
 | # | Found by | Fix in | Finding | Status |
 |---|----------|--------|---------|--------|
-| F-1 | Product and QA | Requirements | FR-12 says "fast"; give a number so it can be tested. | Open |
+| F-1 | Requirements engineer | Requirements | FR-12 says "fast"; give a number so it can be tested. | Open |
 
 - **#** is unique within the review (`F-1`, `F-2`, ...). Findings that span
   several docs use `X-` IDs.

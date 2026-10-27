@@ -50,7 +50,8 @@ Tell the agent which persona to act as, and on what. For example:
 
 An agent acting as a persona:
 
-1. Reads its persona file, its team's `notes/` folder, and the
+1. Reads its persona file, its lasting notes and recent
+   [daily logs](workspace.md#daily-notes) in its team's `notes/` folder, and the
    [review protocol](review-protocol.md) before starting, and checks the
    [team board](workspace.md#the-board) for work another thread has
    claimed. It uses the words in the

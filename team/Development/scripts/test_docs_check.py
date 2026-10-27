@@ -103,6 +103,15 @@ class DocsCheckTest(unittest.TestCase):
             ```
             """), [])
 
+    def test_mixed_fences_dont_hide_later_lines(self):
+        problems = self.links("""\
+            ~~~
+            ```
+            ~~~
+            [x](/team/nope.md)
+            """)
+        self.assertEqual(len(problems), 1)
+
     # Links that must fail
 
     def test_missing_file(self):

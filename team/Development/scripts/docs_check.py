@@ -7,7 +7,9 @@ Links: every [text](target) whose target is in the repo, written from the
 repo root (/team/README.md), relative to the file, or as the PR template's
 ../blob/develop/... form, must name a file or
 folder that exists, and a #fragment must match a heading or an explicit
-anchor in that file. Web links (http:, mailto:) aren't fetched.
+anchor in that file. Web links (http:, mailto:) aren't fetched, and
+reference-style links ([text][ref]) and percent-encoded paths aren't
+checked; neither is used in the repo.
 
 Requirement IDs: every FR- and NFR- ID named in docs/canvas-portal/ must be
 defined in the requirement tables of 02-requirements.md. A row marked
@@ -29,7 +31,7 @@ REQS = DOCS / "02-requirements.md"
 REQ_ROW = re.compile(r"^\|\s*((?:FR|NFR)-\d+)\s*\|\s*(\*?\(Removed)?")
 REQ_ID = re.compile(r"\b(?:FR|NFR)-\d+[A-Za-z]*\b")
 LINK = re.compile(r"(?<!\\)\[[^\]]*\]\(\s*<?([^)\s>]+)>?(?:\s+\"[^\"]*\")?\s*\)")
-FENCE = re.compile(r"^\s*(```|~~~)")
+FENCE = re.compile(r"^\s*(`{3,}|~{3,})")
 HEADING = re.compile(r"^#{1,6}\s+(.*?)\s*#*\s*$")
 BLOB = re.compile(r"^(?:\.\./)+blob/[^/]+/")  # the PR template's links
 ANCHOR = re.compile(r"<a\s+(?:name|id)=\"([^\"]+)\"")
@@ -47,12 +49,16 @@ def prose_lines(path, keep_code=False):
     """(line number, text) for each line outside fenced code blocks, with
     inline code removed unless keep_code, so examples in code aren't
     checked."""
-    in_fence = False
+    fence = None  # the marker that opened the current fence
     for n, line in enumerate(path.read_text().splitlines(), 1):
-        if FENCE.match(line):
-            in_fence = not in_fence
+        m = FENCE.match(line)
+        if m and fence is None:
+            fence = m.group(1)
             continue
-        if not in_fence:
+        if m and m.group(1)[0] == fence[0] and len(m.group(1)) >= len(fence):
+            fence = None
+            continue
+        if fence is None:
             yield n, line if keep_code else re.sub(r"`[^`]*`", "", line)
 
 

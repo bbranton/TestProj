@@ -114,3 +114,8 @@
 - Test engineer F-2: added `test_docs_check.py` (13 cases, standard
   library), which the workflow runs before the check. Reverting the F-1
   fix makes a test fail.
+- DevOps engineer peer F-1 was the same anchor bug, fixed above. Peer
+  F-2: a backtick fence inside a `~~~` block, or the other way round,
+  flipped code mode and hid the rest of the file. A fence now closes only
+  on the marker that opened it, with a test (14 cases now). The docstring
+  says reference-style links and percent-encoded paths aren't checked.

@@ -49,7 +49,9 @@ reviewer.
 3. Log every problem you find as a finding on this PR, naming in *Fix in*
    the persona whose file needs the change. Don't open GitHub issues. Mark
    a finding "Backlog" only when its fix is outside the current phase or
-   too big for this PR; a potential data breach never is. See
+   too big for this PR. A potential data breach never is: add it to the
+   [security register](../../../team/QA/notes/cybersecurity-engineer.md#security-register)
+   too. See
    [Who fixes a finding](../../../team/review-protocol.md#who-fixes-a-finding).
 4. Post one PR review headed with your persona and verdict, such as
    "**DevOps review: Changes needed**", with findings as inline comments.

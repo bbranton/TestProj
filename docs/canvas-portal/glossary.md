@@ -1,6 +1,6 @@
 # Glossary
 
-**Status:** Draft · **Owner:** Requirements engineer · **Last updated:** 2026-10-26
+**Status:** Draft · **Owner:** Requirements engineer · **Last updated:** 2026-10-27
 
 The words the team uses for the portal, the docs, and the way we work, each
 explained once. Other docs link here instead of defining a term again.
@@ -93,7 +93,7 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 | Future feature | A Phase 5 idea. The docs may sketch it, but nobody builds it until the Team Lead plans it into a phase. |
 | Requirement ID | `FR-` for a functional requirement (what the app does) and `NFR-` for a non-functional one (how well it does it), in the [requirements](02-requirements.md). |
 | Must, Should, Could | A requirement's priority: required for its phase, expected but not blocking, or nice to have. |
-| Other IDs | `G-` a goal and `D-` a decision (roadmap); `A-` an assumption, `C-` a constraint, and `Q-` an open question (requirements); `S-` a screen (UI specification); `TP-` a test procedure (test plan). |
+| Other IDs | `G-` a goal, `D-` a decision, and `B-` a backlog item (roadmap); `A-` an assumption, `C-` a constraint, and `Q-` an open question (requirements); `S-` a screen (UI specification); `TP-` a test procedure (test plan). |
 | Traceability | The chain from each requirement to the design part that builds it and the test that checks it, by requirement ID. |
 
 ## Team process
@@ -110,7 +110,7 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 | Verdict | A reviewer's sign-off: Recommend, Recommend with notes, or Changes needed. |
 | Potential data breach | A finding that could expose a token, a session, or a student's data to anyone else. Always critical and must-fix. |
 | Team board | The shared file where threads claim work and leave handoff notes, as the [team workspace](../../team/workspace.md#the-board) says. Not the portal's board. |
-| Roadmap backlog | The list in the [roadmap](01-roadmap.md#9-backlog) of work a review found outside the current phase or too big for its PR, with `B-` IDs. Management keeps it and reviews it with the Team Lead at each phase boundary. Not the Backlog list. Review follow-ups never become GitHub issues. |
+| Roadmap backlog | The list in the [roadmap](01-roadmap.md#9-backlog) of work a review found outside the current phase or too big for its PR, with `B-` IDs. Management keeps it and reviews it with the Team Lead at each phase boundary. Not the Backlog list. |
 
 ## Web terms
 

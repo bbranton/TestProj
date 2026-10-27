@@ -140,7 +140,7 @@ acceptable for its area.
 | Decision | Decided by | Decision request to the Team Lead for |
 |----------|------------|-------------------------|
 | Business goals, scope and phases, hosting and domains, cost, team structure and process | Team Lead | Always |
-| Feature priorities within a phase, the order of work, triage, keeping the decision register, rating risks. A potential data breach is always critical and must-fix | Management | Every scope, roadmap, or phase change; adding or dropping a goal; accepting a risk instead of reducing it |
+| Feature priorities within a phase, the order of work, the roadmap backlog, keeping the decision register, rating risks. A potential data breach is always critical and must-fix | Management | Every scope, roadmap, or phase change; adding or dropping a goal; accepting a risk instead of reducing it |
 | How a requirement is worded and traced | Requirements engineer | Adding, removing, or moving a requirement between phases |
 | How it's tested, and whether tests pass | Test engineer | Calling a phase done; removing or weakening a test |
 | Design: structure, data, APIs, technology, security design | Architecture | A new dependency, service, or data store; how the Canvas token is stored or sent; starting a transition plan |
@@ -212,7 +212,7 @@ When a finding needs a change in another persona's files:
 - **#** is unique within the review (`F-1`, `F-2`, ...). Findings whose fix
   is in another doc use `X-` IDs.
 - **Status** is one of Open, Fixed in `<sha>` (with the persona when it
-  isn't the owner), Backlog B-n, Won't fix (with the reason), or Waiting on
+  isn't the owner), Backlog, Won't fix (with the reason), or Waiting on
   the Team Lead.
 - A finding that could expose a token, a session, or a student's data
   starts with **Potential data breach:**, whichever persona finds it, as
@@ -235,13 +235,23 @@ somewhere nobody looks. Work a review uncovers goes one of two places:
    the verdict.
 
 Management reviews the backlog with the Team Lead at every phase boundary,
-recommending a phase or dropping each item. The Team Lead plans items into
-a phase; nobody starts on a backlog item before then.
+recommending a phase or dropping each item. An item whose suggested phase is
+the current one goes to the Team Lead in Management's next decision batch
+instead of waiting for the boundary. The Team Lead plans items into a phase;
+nobody starts on a backlog item before then.
 
-**A potential data breach never goes on the backlog.** It is fixed in the
-PR it was found in, before merge, by the persona that owns the file. If
-the fix is too big for that PR, it is the first work of the current phase
-and is fixed before the next deploy. Only the Team Lead can delay one.
+**A potential data breach never goes on the backlog.**
+
+- **One the PR adds** is always fixed in that PR before merge.
+- **One already on `develop`** that the review uncovers is fixed in the PR
+  by the persona that owns the file. Only if Security agrees the fix is too
+  big for that PR does it wait, as the first work of the current phase,
+  fixed before the next deploy.
+- **Every one not yet fixed** goes in the
+  [security register](QA/notes/cybersecurity-engineer.md#security-register)
+  with the gate *before the next deploy*, before the PR merges. Management
+  checks the register at every phase boundary and before every deploy. Only
+  the Team Lead can delay one.
 
 ## Disagreements
 

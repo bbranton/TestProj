@@ -44,3 +44,17 @@
   the files say "layout change". If colors, fonts, or icons are meant too,
   the files need to say so.
 - Verdict: Recommend with notes.
+
+## Confirm the visual-change scope (PR #91, 3fe881c)
+
+- The Team Lead's pick left only wording and accessibility with the
+  UI/UX designer, so 3fe881c widens "layout change" to "visual change".
+  This answers F-6.
+- F-7, fixed: contrast is an accessibility call, but a contrast fix
+  changes colors. The accessibility line now says any accessibility fix
+  that changes how something looks, such as a color for contrast or a
+  size for zoom, is a visual change and goes to the Team Lead.
+- F-8, fixed in the persona file: the list left out fonts. It now reads
+  "such as layout, spacing, sizes, colors, fonts, or icons", so the list
+  gives examples instead of the whole set.
+- Verdict: Recommend with notes.

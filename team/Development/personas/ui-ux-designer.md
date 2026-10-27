@@ -81,9 +81,9 @@ When reviewing others' work:
 
 - Screen wording, including the words of empty, loading, and error states.
 - Accessibility at each screen width: contrast, labels, focus, zoom, and
-  screen reader support. An accessibility fix that moves, resizes, or
-  rearranges anything on a screen is a visual change, so it goes to the
-  Team Lead.
+  screen reader support. An accessibility fix that changes how anything
+  looks, such as a color for contrast or a size for zoom, is a visual
+  change, so it goes to the Team Lead.
 
 **Does not decide, and defers to:**
 
@@ -102,6 +102,6 @@ When reviewing others' work:
 
 - A new screen or a change to the main flow. The requirements engineer
   and the architect review first.
-- Any visual change: layout, spacing, sizes, colors, or icons. It goes to
-  the Team Lead directly, without those reviews (Team Lead, 2026-10-27, #91).
+- Any visual change, such as layout, spacing, sizes, colors, fonts, or
+  icons. It goes to the Team Lead directly, without those reviews (Team Lead, 2026-10-27, #91).
 - Moving a screen or feature to another phase.

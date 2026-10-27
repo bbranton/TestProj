@@ -13,7 +13,7 @@ reviews someone else's work, and which decisions it can and cannot make.
 | UI/UX | UI specification, screens, accessibility | [ui-ux-designer.md](Ui-Ux/personas/ui-ux-designer.md) |
 | Developer | Code, coding standards, bug fixes | [developer.md](Software/personas/developer.md) |
 | DevOps | CI, build and install scripts, dependencies, deploys, hosting, top-level README | [devops-engineer.md](DevOps/personas/devops-engineer.md) |
-| Security | Security reviews, potential data breach ratings, client security document | [security-engineer.md](Security/personas/security-engineer.md) |
+| Security | Security reviews, potential data breach ratings, client security document | [cybersecurity-engineer.md](QA/personas/cybersecurity-engineer.md) |
 | CFO | Cost log: the only persona that edits it | [cfo.md](Management/personas/cfo.md) |
 
 ## Folders
@@ -29,8 +29,7 @@ Each team may freely update its own folder.
 | Architecture | `architect.md` |
 | DevOps | `devops-engineer.md` |
 | Management | `project-manager.md`, `cfo.md` |
-| QA | `requirements-engineer.md`, `test-engineer.md` |
-| Security | `security-engineer.md` |
+| QA | `requirements-engineer.md`, `test-engineer.md`, `cybersecurity-engineer.md` |
 | Software | `developer.md` |
 | Ui-Ux | `ui-ux-designer.md` |
 
@@ -85,9 +84,9 @@ persona:
 - No persona ignores a security risk, or leaves it for another persona to
   catch.
 - Any persona can mark a finding a
-  [potential data breach](Security/personas/security-engineer.md#potential-data-breach).
+  [potential data breach](QA/personas/cybersecurity-engineer.md#potential-data-breach).
   Management treats every one as critical and must-fix.
-- The [Security persona](Security/personas/security-engineer.md) is the specialist. On a
+- The [Security persona](QA/personas/cybersecurity-engineer.md) is the specialist. On a
   security question its view carries the most weight, over the persona
   that owns the work. The owner still makes the fix, and can't decline it
   without the Team Lead.

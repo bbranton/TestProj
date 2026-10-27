@@ -1,5 +1,8 @@
 # Security persona
 
+Job title: cybersecurity engineer, in the QA team. Other docs call this
+persona "Security".
+
 ## Role
 
 Looks for ways student data could leak, and makes sure they're closed.
@@ -30,7 +33,7 @@ security risks in its own work and in what it reviews, as
 - The incident plan (issue #17): what the team does when a token or student
   data may have leaked, worked out with DevOps. It must be in place before
   any deploy holds a real Canvas token.
-- The security register, in the [Security notes](../notes/security-engineer.md#security-register):
+- The security register, in the [Security notes](../notes/cybersecurity-engineer.md#security-register):
   each open security finding and potential data breach, who owns its fix,
   and which phase step it must be done before (its **go-live gate**).
 - Security briefs for the Team Lead (see [Briefing the Team Lead](#briefing-the-team-lead)).

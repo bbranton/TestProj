@@ -37,8 +37,8 @@ reviews changes to them.
 Files every team shares stay at the top of `team/`: this README, the
 [review protocol](/team/review-protocol.md), the [team workspace](/team/workspace.md),
 and `retros/`, the project manager's notes from each team retro.
-The [cost log](/team/Management/cost-log.md) is in the Management folder, since the
-CFO keeps it, as the [CFO persona](/team/Management/personas/cfo.md#role) says.
+The cost log isn't in the repo: the CFO keeps it in the project's Library, as
+the [CFO persona](/team/Management/personas/cfo.md#role) says.
 
 How personas review each other's work is in the
 [review protocol](/team/review-protocol.md). How they share notes, scripts, and

@@ -164,7 +164,6 @@ at any time.
 | Another persona's files in your own team's folder | That persona (a board note instead, for a [wording-only change](#wording-only-changes-notify-the-persona) to a persona file) | That persona |
 | A team script or its skill (see [Team skills](/team/workspace.md#team-skills)) | The other personas who use it | The team whose `scripts/` folder holds it |
 | Only your own persona's area: its persona file, notes, and daily log, or a doc it owns in this table | The peer reviewer only | That persona |
-| The cost log (`team/Management/cost-log.md`) | The peer reviewer (CFO) only | CFO, as its [*Role*](/team/Management/personas/cfo.md#role) says |
 
 A code PR always has the Test engineer as a reviewer, since every change
 needs a test. A PR that changes a phase or a priority always has

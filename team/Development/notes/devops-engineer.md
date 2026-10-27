@@ -39,9 +39,10 @@ Lasting lessons for the DevOps engineer persona. See the
 - The branch rename went `master` to `develop` to `main` across two PRs
   (#29). Confirm a shared name with the Team Lead before editing, and list
   every place it lives first.
-- Many PRs appending rows to `cost-log.md` caused merge conflicts and
-  extra merge commits, so the CFO is now its only writer. Keep shared
-  append-only files to one owner thread where possible.
+- Many PRs appending rows to the repo cost log caused merge conflicts and
+  extra merge commits; cost rows are now one file per thread in the
+  Library (#125). Keep shared append-only files to one writer, or one
+  file per writer.
 - Pages deploys from `main`, but `develop` is the default branch, so the
   `github-pages` environment must allow `main` (Settings > Environments >
   github-pages > Deployment branches). Sessions can't read environment or

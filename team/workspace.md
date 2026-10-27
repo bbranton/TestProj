@@ -3,13 +3,14 @@
 Personas often run in parallel threads that can't see each other. This is
 how they share what they know and avoid stepping on each other's work.
 
-There are four places, for four kinds of information:
+There are five places, for five kinds of information:
 
 | What | Where | Why there |
 |------|-------|-----------|
 | Lasting knowledge, daily notes, and findings | `team/<Team>/notes/` | Versioned in PRs, owned by the team |
 | Scripts a team runs often | `team/<Team>/scripts/`, called from a skill in `.claude/skills/` | The script lives with its team; every agent session loads skills automatically |
 | Who is working on what right now, and handoffs | The board, in the project's shared files | Instant, no PR needed |
+| What each thread cost | The cost log and row files, in the project's shared files | No PR; one file per row, as the [CFO persona](/team/Management/personas/cfo.md#role) says |
 | Process ideas waiting for the next retro | The [ideas file](#process-ideas), in the project's shared files | No PR or review for a one-line idea |
 
 ## Team folders
@@ -84,7 +85,7 @@ it, and the `SKILL.md` says how to run it.
 |-------|--------------|----------------|
 | `trace-requirement` | Finds a requirement ID in the design, UI spec, test plan, and code; lists requirements with no test. Script: [`QA/scripts/trace.py`](/team/QA/scripts/trace.py) | Requirements engineer, Test engineer, Developer |
 | `ci-paths` | Says which workflows a branch's changes will trigger. Script: [`Development/scripts/ci_paths.py`](/team/Development/scripts/ci_paths.py) | DevOps engineer |
-| `log-cost` | Reports a thread's real token use and cost to the CFO for the [cost log](/team/Management/cost-log.md), as the [CFO persona](/team/Management/personas/cfo.md#role) says | Every thread, when its work is done |
+| `log-cost` | Writes a thread's real token use and cost to its own row file in the Library for the CFO's cost log, as the [CFO persona](/team/Management/personas/cfo.md#role) says | Every thread, when its work is done |
 | `cross-review` | Steps for the owner and for each fresh reviewer thread in a cross-review | Owner and reviewer threads |
 | `retro` | Steps for a team retro the Team Lead calls: each persona's feedback, and the project manager's note in `team/retros/` | Coordinator, every persona, project manager |
 

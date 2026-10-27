@@ -17,3 +17,15 @@
   test. Now "a roadmap backlog item" with the glossary link, matching the
   requirements engineer's sentence (`bfd7ee8`).
 - Verdict: Recommend.
+
+## Review of PR #89: four options for each deferred finding
+
+- Reviewed the test engineer persona sentence, which now points to
+  *Follow-up work* instead of listing the options. It no longer names the
+  roadmap backlog, so the Backlog list mix-up fixed on #88 can't come
+  back. No change needed in my file.
+- One minor finding for the owner, in the review protocol: a deferred
+  finding doesn't block the PR, so the PR can merge before the Team Lead
+  answers, and then option 1 (fix it in this PR) has no PR left to fix
+  in.
+- Verdict: Recommend with notes.

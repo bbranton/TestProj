@@ -69,6 +69,11 @@ The [board](/team/workspace.md#the-board) is in the project's shared
 files, not the repo. Create `team/board.md` there with `## Claims` and
 `## Notes` headings.
 
+Also create `costs/` there, holding `cost-log.md` with the header row from
+the CFO persona's [Columns](/team/Management/personas/cfo.md#columns) and
+an empty `logged/` folder. The
+[CFO persona](/team/Management/personas/cfo.md#role) says how it's used.
+
 ## 5. Set up the local clone
 
 1. Make only `~/dev/<owner>/<Repo>`. The clones in step 3 create its

@@ -332,4 +332,6 @@
 - Lesson: when combining feedback, check each "raised by" list against
   the files, one persona at a time, rather than from memory of the
   themes.
+- The owner fixed F-1 to F-5 in `ab79936`; re-checked at `33a3f79` and
+  changed the verdict to Recommend.
 - No new decision: the retro's decisions wait on the Team Lead.

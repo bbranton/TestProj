@@ -74,12 +74,15 @@ if given, narrows what each persona looks at.
 
    As in the feedback, link evidence and never quote a Canvas token,
    cookie, secret, or student data.
-3. Raise one decision request per suggestion, as a GitHub issue labeled
-   both `decision` and `retrospective`, so the Team Lead can find a
-   retro's requests apart from the rest (Team Lead, 2026-10-27,
-   [PR #132](https://github.com/bbranton/TestProj/pull/132)). Give it your
-   recommendation, the files it changes, and what under *What's working*
-   it would change or remove. Open a
+3. Ask the Team Lead one decision request per suggestion, right away in
+   your thread, as
+   [Decisions are separate from merging](/team/review-protocol.md#decisions-are-separate-from-merging)
+   says. Give it your recommendation, the files it changes, and what under
+   *What's working* it would change or remove. Record each one in a GitHub
+   issue labeled both `decision` and `retrospective`, so the Team Lead can
+   find a retro's requests apart from the rest (Team Lead, 2026-10-27,
+   [PR #132](https://github.com/bbranton/TestProj/pull/132)), and link the
+   issue from the suggestion. Open a
    PR with the note, reviewed as the [review protocol](/team/review-protocol.md#who-reviews-what)
    says. Once it merges, clear the ideas it covered, as
    [Process ideas](/team/workspace.md#process-ideas) says.

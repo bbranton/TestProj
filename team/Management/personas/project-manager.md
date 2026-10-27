@@ -131,7 +131,7 @@ plan before work starts, and the Team Lead approves it with the plan:
 
 When the feature is done, compare the actual cost with the plan, so the
 next estimate is better. The project manager sends the comparison to the
-CFO to add to the feature's rows, as
+CFO to add to the feature's rows, since the CFO writes the log, as
 [the CFO persona](/team/Management/personas/cfo.md#role) says.
 
 ## Decisions

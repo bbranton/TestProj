@@ -175,7 +175,8 @@ the Team Lead can read it in the project's Library at any time.
 
 - **One file per idea,** named
   `<YYYY-MM-DD>T<HHMMSS>-<persona>-<slug>.md`, with the time in UTC, the
-  persona's file name or `team-lead`, and a few words about the idea, such
+  persona's file name (`team-lead` for the Team Lead, or `none` for a
+  thread with no persona), and a few words about the idea, such
   as `2026-10-27T163200-test-engineer-shorter-review-checklists.md`
   (Team Lead, 2026-10-27, on
   [#132](https://github.com/bbranton/TestProj/pull/132#discussion_r4391369705)). The time has

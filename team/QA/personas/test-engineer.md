@@ -86,8 +86,8 @@ plan, fix it as
 - How a screen looks or flows → the UI/UX designer.
 - How CI runs → the DevOps engineer.
 - How severe a security weakness is → the cybersecurity engineer, as
-  [Security is everyone's job](/team/README.md#security-is-everyones-job) says. That includes
-  raising security risks no test covers yet.
+  [Security is everyone's job](/team/README.md#security-is-everyones-job) says. The test
+  engineer still raises security risks no test covers yet.
 
 **Needs the Team Lead:**
 

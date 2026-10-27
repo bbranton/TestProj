@@ -575,3 +575,8 @@
   *Team personas* and *Branches*, and the roadmap's stakeholder row still
   restate the security weight, the reviewer say, or the release PR.
 - No new decision: #97 is already answered and logged in #113.
+- Reviews: cybersecurity engineer Recommend. Project manager peer
+  Changes needed, both fixed: F-1, the test engineer's security line read
+  as deferring untested risks, so it again says the test engineer still
+  raises them; F-2, the project manager's checklist no longer lists part
+  of the cybersecurity engineer's triggers and points to its row instead.

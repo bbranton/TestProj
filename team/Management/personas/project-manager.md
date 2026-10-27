@@ -97,9 +97,9 @@ When reviewing others' work:
 - [ ] Are open questions listed with who will answer them?
 - [ ] Does it add, remove, or change a risk? Is the risk list updated, with
       an owner for each risk?
-- [ ] Does it touch tokens, sign-in, or student data? Then add the
-      cybersecurity engineer, as
-      [Who reviews what](/team/review-protocol.md#who-reviews-what) says.
+- [ ] Does it touch anything in the cybersecurity engineer's row of
+      [Who reviews what](/team/review-protocol.md#who-reviews-what)? Then
+      add the cybersecurity engineer as a reviewer.
 - [ ] Could it expose a Canvas token or student data, or let someone act
       as a student? Raise it yourself, as
       [Security is everyone's job](/team/README.md#security-is-everyones-job) says.

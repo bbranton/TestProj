@@ -105,3 +105,18 @@
 - Re-review: X-1 fixed by the project manager in `189d31f`, which links
   the roadmap's step 6 gate list, risk list, and backlog intro to the home.
   Verdict now Recommend.
+
+## Review of PR #115: docs check in CI (#100)
+
+- Reviewed what `docs_check.py` counts as a defined FR or NFR ID: any
+  requirement row in `02-requirements.md`, the same rule as `trace.py`.
+  No requirement IDs touched. Verdict: Changes needed.
+- F-1, fixed by the DevOps engineer in `ef632ba`: removed requirements
+  (FR-30, FR-37, FR-52, FR-73, NFR-31) keep their rows, so they counted as
+  defined, and a doc citing one would pass. Removed rows now count only
+  inside `02-requirements.md`, which names NFR-31 to explain it.
+- N-1, fixed in `ef632ba`: a suffixed ID such as `FR-12a` was skipped
+  silently; it's now reported.
+- Re-review on a scratch copy: removed, suffixed, and unknown IDs each
+  get their own message. Verdict now Recommend. The PR merged.
+- No decisions made; the PR carries out the Team Lead's answer on #100.

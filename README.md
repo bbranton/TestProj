@@ -7,6 +7,13 @@ it works.
 Starting a new project like this one? See
 [Set up a new project like this one](/SETUP-NEW-PROJECT.md).
 
+## Canvas Assignments Portal
+
+`canvas-portal/` holds the first product: a FastAPI backend and a React +
+TypeScript frontend, tested in CI on every pull request. It isn't deployed
+yet; `/canvas-portal/` on the site is a placeholder. To build, test, and run
+it locally, see the [Canvas portal README](/canvas-portal/README.md).
+
 ## Site layout
 
 The GitHub Pages site is assembled by `.github/workflows/pages.yml`:

@@ -108,8 +108,8 @@ catches up on every merge.
 
 Copy `CLAUDE.md`, `team/`, `.claude/skills/`, and
 `.github/pull_request_template.md` into the new repo in one PR into
-`develop`. Leave out the daily logs and cost-log rows, and start each
-persona's notes file empty, except for the
+`develop`. Leave out the daily logs (the cost log is in the Library, not
+the repo), and start each persona's notes file empty, except for the
 [Security register](/team/QA/notes/cybersecurity-engineer.md#security-register)
 heading, intro, and empty table.
 

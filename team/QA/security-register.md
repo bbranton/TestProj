@@ -4,6 +4,24 @@ Owned by the cybersecurity engineer. It stays in the repo, unlike the
 persona notes, so every change has history and review
 ([#127](https://github.com/bbranton/TestProj/issues/127)).
 
+## Current threat picture
+
+Update this when hosting, the repo, or where real tokens live changes.
+
+- The repo is public. Workflow artifacts and logs can be downloaded by any
+  GitHub user.
+- Phase 1 step 6 deploys to a free Koyeb app with a Neon free database,
+  holding real Canvas tokens. `koyeb.app` isn't on the Public Suffix List.
+- Only the Team Lead's own accounts should connect until #16 is published
+  and #17 is in place.
+- A Remote Control thread on the Team Lead's computer runs `git fetch` and
+  `git pull --ff-only` in the local `develop` clone under a standing OK. It
+  runs as the Team Lead's own user, so keep secrets and real tokens out of
+  that folder, and nothing there should run code it pulls
+  ([setup guide](/SETUP-NEW-PROJECT.md#5-set-up-the-local-clone)).
+
+## Open findings
+
 Open security findings and potential data breaches. **Gate** is the phase
 step the item must be done before. Clear a row only when it's fixed, and
 say where. A **Proposed** gate isn't in the roadmap yet; the project manager

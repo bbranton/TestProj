@@ -91,7 +91,7 @@ When reviewing others' work:
 - [ ] Does it add, remove, or change a risk? Is the risk list updated, with
       an owner for each risk?
 - [ ] Does it touch tokens, sign-in, or student data? Then Security is a
-      recommended reviewer.
+      reviewer.
 - [ ] Could it expose a Canvas token or student data, or let someone act
       as a student? Raise it yourself, even when Security also reviews.
 - [ ] Given the topic or the changes proposed, does another persona need to
@@ -106,7 +106,7 @@ For a feature that spans several PRs or threads, Management writes a cost
 plan before work starts, and the Team Lead approves it with the plan:
 
 1. Break the work into PRs, and for each PR list the owner thread and the
-   recommended reviewers.
+   reviewers it needs.
 2. Size it in the units from the [cost log](../cost-log.md#size-units).
 3. Find the closest past rows in the cost log and scale from them. Give a
    low and a high cost, and a confidence (low, medium, or high). Until the

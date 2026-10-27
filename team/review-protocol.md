@@ -15,8 +15,9 @@ Everything below is the default when the Team Lead hasn't said otherwise.
 2. **The Team Lead decides; PRs carry out decisions.** Every real
    decision goes to the Team Lead as a decision request, answered before
    anyone edits a doc for it.
-3. **The owner fixes, the reviewer reports.** A reviewer never edits
-   another persona's files.
+3. **Each persona fixes its own files.** A finding is fixed in the PR it
+   was found in, by the persona that owns the file, which may be the
+   owner or a reviewer. No one edits another persona's files.
 4. **Read from `develop`.** Open PRs are drafts, never the source of
    truth.
 5. **Small, focused PRs.** One job per PR.
@@ -168,8 +169,9 @@ what it defers and to whom, and what needs the Team Lead.
 2. **Reviewers review.** Each reviewer reads the change against its
    checklist and posts one review headed with its persona and verdict,
    such as "**DevOps engineer review: Changes needed**".
-3. **Owner fixes.** The owner pushes a fix for each finding right away, or
-   replies with why not.
+3. **Findings get fixed.** The persona that owns each file pushes the fix
+   to the PR right away, as [Who fixes a finding](#who-fixes-a-finding)
+   says, or replies with why not.
 4. **Verdict.** Each reviewer ends with **Recommend**, **Recommend with
    notes** (minor findings the owner may fix later), or **Changes needed**.
    After fixes, the reviewer checks only the fixes and updates its verdict.

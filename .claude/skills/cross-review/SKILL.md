@@ -66,4 +66,7 @@ reviewer.
    verdict. When the owner says the PR is done, report your cost with the
    `log-cost` skill.
 
-Don't fix findings yourself. The owner does that.
+Fix findings only in your own persona's files, committed to the PR's branch
+as [Fixes by another persona](/team/review-protocol.md#fixes-by-another-persona)
+says. Never edit another persona's files: the persona that owns each file
+fixes it.

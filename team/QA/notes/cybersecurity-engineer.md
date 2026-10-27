@@ -35,7 +35,10 @@ Update this when hosting, the repo, or where real tokens live changes.
 Open security findings and potential data breaches. **Gate** is the phase
 step the item must be done before. Clear a row only when it's fixed, and
 say where. A **Proposed** gate isn't in the roadmap yet; Management
-decides it.
+decides it. Review follow-ups don't become GitHub issues any more (Team
+Lead, 2026-10-27, PR #80), so a potential data breach that isn't fixed
+in the PR it was found in is tracked only here: add its row before that
+PR merges. The rows below that link issues are from before the change.
 
 | Item | Potential data breach | Owner | Gate | Status |
 |------|-----------------------|-------|------|--------|

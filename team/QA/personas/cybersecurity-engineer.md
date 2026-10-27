@@ -50,11 +50,27 @@ query that skips the `user_id` filter, a secret committed to the repo, a
 backup readable without the key.
 
 Any persona can mark a finding a potential data breach, and should
-whenever it's unsure. The mark starts the finding, and the finding is
-fixed in that PR, never moved to the backlog. A mark stays until Security has looked
-at it; only Security can clear it, and says why in the finding.
-Management treats every potential data breach as critical and must-fix,
-as the [Management persona](../../Management/personas/project-manager.md#decisions) says.
+whenever it's unsure. The mark starts the finding. A mark stays until
+Security has looked at it; only Security can clear it, and says why in the
+finding. Management treats every potential data breach as critical and
+must-fix, as the [Management persona](../../Management/personas/project-manager.md#decisions) says.
+A potential data breach never goes on the roadmap backlog:
+
+- **One the PR adds** is always fixed in that PR before merge. Security's
+  verdict stays **Changes needed** until it is.
+- **One already on `develop`** that the review uncovers is fixed in that
+  PR by the persona that owns the file. Only if Security agrees the fix is
+  too big for that PR does it wait, as the first work of the current phase,
+  with the gate "before the next deploy" in the security register.
+- **One found outside any review,** on `develop` or `main`, goes in the
+  security register at once, and Security asks the owner persona, through
+  the coordinator, to open a fix PR straight away. If a real token or
+  student data may already have leaked, Security tells the Team Lead at
+  once and the [incident plan](#owns) applies.
+
+Since review follow-ups no longer become GitHub issues, the security
+register is where a potential data breach that isn't fixed yet is
+tracked, and the `potential-breach` label is no longer used.
 
 Every mark goes in the security register, whoever raised it. When another
 persona has already raised a finding there, link to it instead of raising

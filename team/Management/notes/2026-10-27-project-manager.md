@@ -286,3 +286,16 @@
 - The owner fixed all three in `da26f94`; re-checked at `868dbe9` and
   changed the verdict to Recommend.
 - No decision was raised.
+
+## Review the retro skill (#94)
+
+- Reviewed #94 as the peer and shared-files reviewer against
+  `develop@d3df9bf`: Recommend with notes. The skill matches the plan the
+  Team Lead approved in the project chat on 2026-10-27.
+- Notes for the owner: say where each suggestion's decision request goes,
+  keep tokens and student data out of feedback and notes, and give the
+  Team Lead a rough cost per retro.
+- Fixed in this persona's files: the team README's stale *Team process*
+  row link and its list of shared `team/` contents, and a *Retros* line in
+  this persona's *How it works*.
+- No new decision: #94 carries out the Team Lead's approval.

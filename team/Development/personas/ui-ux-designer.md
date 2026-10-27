@@ -49,7 +49,8 @@ screen, or a change to the main flow goes to the Team Lead first.
 Any PR that changes the UI (pages, styles, app screens) must show
 screenshots of each changed page in its description, whoever opens it.
 They're committed to the PR's branch for the review, then removed before
-it merges, so they never land on `develop` (Team Lead, 2026-10-27,
+it merges, so they're never in `develop`'s files, though its history
+keeps them (Team Lead, 2026-10-27,
 [#129](https://github.com/bbranton/TestProj/issues/129)).
 
 1. Before you push, open each screenshot and check it shows no Canvas

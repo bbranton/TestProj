@@ -19,65 +19,60 @@
 
 ## Team personas
 
-- When asked to act as a persona (Project manager, Requirements engineer, Test engineer, Architect,
-  Developer, UI/UX designer, DevOps engineer, Cybersecurity engineer, or CFO), read its file in its team's `personas/` folder
-  (see the [team README](/team/README.md)) first, and stay inside what it
-  owns.
-- Before persona work, read the notes in its team's `notes/` folder
-  under `team/<Team>/`.
-  Before editing a doc or starting a cross-review, claim it on the board
-  described in the [team workspace](/team/workspace.md). Add lasting lessons to the notes
-  in the same PR.
-- Each persona keeps one daily log per day with work, named
-  `YYYY-MM-DD-<persona>.md` in its team's `notes/` folder, such as
-  `team/Development/notes/2026-10-27-devops-engineer.md`. Every thread of
-  that persona adds to the same file, and only to its own persona's log.
-  Any persona can read any log. Record decisions in the format in
-  [Daily notes](/team/workspace.md#daily-notes).
-- Every PR has at least one reviewer: a fresh thread of the owner's own
-  persona reviews it as a peer (for a team thread with no persona, the
-  persona that owns most of the changed files). A PR that touches only its owner persona's
-  area (its persona file, notes, and daily log, and the docs it owns) needs
-  only that peer, unless an "always" rule in the
-  [review protocol](/team/review-protocol.md) applies. Another persona's
-  files, even in the same team, team scripts and skills, shared files at
-  the top of `team/`, and other teams' folders follow the review protocol.
-- Security is every persona's job. Raise any risk to Canvas tokens or
-  student data you see, in any area, and never leave it for another
-  persona to catch. The cybersecurity engineer's view carries the most weight on
-  security; see [Security is everyone's job](/team/README.md#security-is-everyones-job).
-- Every PR gets its own fresh owner thread, and new work after a merge
-  goes to a new thread that the coordinator starts. An owner thread past
-  about $10 asks the Team Lead whether to hand off; see
+The personas are Project manager, Requirements engineer, Test engineer,
+Architect, Developer, UI/UX designer, DevOps engineer, Cybersecurity
+engineer, and CFO.
+
+Personas recommend; the Team Lead has the final say on every decision,
+including any PR's reviewers.
+
+### Rule index
+
+Each team rule is stated once, in its home. This list names each rule and
+links to the home, which says what to do. Read the home before you act on
+a rule.
+
+- Acting as a persona: [Using a persona](/team/README.md#using-a-persona).
+- Persona notes: [Persona notes](/team/workspace.md#persona-notes).
+- Claiming work: [The board](/team/workspace.md#the-board).
+- Daily logs and decision entries: [Daily notes](/team/workspace.md#daily-notes).
+- One thread per PR, and the $10 hand-off check:
   [One thread per PR](/team/workspace.md#one-thread-per-pr).
-- When a thread's work is done, report its cost with the `log-cost` skill.
-  Don't add rows to `team/Management/cost-log.md` in your own PR: the CFO
-  adds reported rows in batches, so the log doesn't cause merge conflicts.
-- When asked to review or cross-review a doc or PR, follow the
-  [review protocol](/team/review-protocol.md): it says which personas
-  review what and how findings are logged. The PR's author picks its
-  reviewers by what the PR touches.
-- Personas recommend; the Team Lead has the final say on every decision
-  and can change any PR's reviewers. Every real decision goes to the Team
-  Lead as a decision request, and PRs only carry out decisions already
-  made; see the [review protocol](/team/review-protocol.md#decisions-are-separate-from-merging).
-- A PR that changes a process rule fixes every file that states it, in the
-  same PR, and lists them; see the
-  [ripple check](/team/review-protocol.md#ripple-check-for-process-rules).
+- Process ideas: [Process ideas](/team/workspace.md#process-ideas).
+- Reporting cost: [CFO persona](/team/Management/personas/cfo.md#role).
+- Security is everyone's job:
+  [Security is everyone's job](/team/README.md#security-is-everyones-job).
+- Potential data breach:
+  [Potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach).
+- Decision requests:
+  [Decisions are separate from merging](/team/review-protocol.md#decisions-are-separate-from-merging).
+- Who reviews a PR: [Who reviews what](/team/review-protocol.md#who-reviews-what).
+- Wording-only changes to another persona's file:
+  [Wording-only changes notify the persona](/team/review-protocol.md#wording-only-changes-notify-the-persona).
+- Running a review or cross-review:
+  [How a review runs](/team/review-protocol.md#how-a-review-runs).
+- Each persona edits only its own files:
+  [Who fixes a finding](/team/review-protocol.md#who-fixes-a-finding).
+- Work outside the phase or the PR:
+  [Follow-up work](/team/review-protocol.md#follow-up-work).
+- Changing a process rule, and where each rule lives:
+  [Ripple check](/team/review-protocol.md#ripple-check-for-process-rules).
+- Screenshots in UI PRs:
+  [Screenshots in UI PRs](/team/Development/personas/ui-ux-designer.md#screenshots-in-ui-prs).
 
 ## Branches
 
 - `develop` is the default branch and the integration branch. Every PR
-  targets `develop`, and a thread may merge its own PR into `develop` once
-  its reviewers recommend it.
-- Still open a PR for every change to `develop`, so the Team Lead can see
-  the diff. Assign the Team Lead, but don't request their review. Merge it
-  yourself and post the PR link in the thread. The Team Lead reviews only
-  the `develop` → `main` release PR.
+  targets `develop`.
+- Open a PR for every change to `develop`, so the Team Lead can see the
+  diff. Assign the Team Lead, but don't request their review. The owner
+  merges it, as [Two levels of review](/team/review-protocol.md#two-levels-of-review)
+  says.
 - `main` is what's live. The only PR into `main` is the `develop` → `main`
   release PR. Any persona may open it, assigning the Team Lead
-  and summarizing everything merged since `main`. Never approve or merge
-  it: only the Team Lead merges into `main`.
+  and summarizing everything merged since `main`. The Team Lead is its
+  only reviewer: never approve or merge it. Only the Team Lead merges
+  into `main`.
 - Never force-push or delete `main` or `develop`.
 
 ## Canvas portal phases

@@ -23,8 +23,7 @@
 Reviewers, picked as
 [Who reviews what](../blob/develop/team/review-protocol.md#who-reviews-what)
 says, and the Team Lead assigned as
-[Two levels of review](../blob/develop/team/review-protocol.md#two-levels-of-review)
-says.
+[Branches](../blob/develop/CLAUDE.md#branches) says.
 
 <!-- One line per reviewer, with why. For an "always" reviewer, such as the
      cybersecurity engineer, name the row of Who reviews what that applies.

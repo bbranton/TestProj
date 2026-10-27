@@ -30,8 +30,8 @@ otherwise.
 ## Two levels of review
 
 **Into `develop`.** The owner persona opens the PR, picks its reviewers
-(see [Who reviews what](#who-reviews-what)), and assigns the Team Lead
-without requesting their review, so the Team Lead sees the diff. Once every
+(see [Who reviews what](#who-reviews-what)), and assigns the Team Lead as
+[Branches](/CLAUDE.md#branches) says. Once every
 reviewer's latest verdict is **Recommend** or **Recommend with notes**, the
 owner thread merges the PR itself and posts the link in its thread.
 
@@ -89,6 +89,10 @@ other file links to that heading instead of restating it (Team Lead,
 - What each persona decides: the *Decisions* section of its persona file.
 - Links, naming, branches, phases, and the Team Lead's final say:
   [CLAUDE.md](/CLAUDE.md).
+
+The [rule index](/CLAUDE.md#rule-index) in CLAUDE.md has one line per
+rule, naming it and linking to its home. A PR that adds a rule, or moves
+or renames its home, updates that line.
 
 Older copies are being replaced with links, one owner at a time. A PR
 that changes a process rule finds and fixes every copy before review (Team Lead,

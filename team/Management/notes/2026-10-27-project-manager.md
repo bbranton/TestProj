@@ -629,3 +629,31 @@
 - For PR 5: "assign the Team Lead, don't request review" is stated in both
   CLAUDE.md *Branches* and the protocol's *Two levels of review*. Pick one
   home (PM peer F-2 on #122).
+
+## Make CLAUDE.md the rule index (#97, PR 5)
+
+- Carried out PR 5 of the #97 rollout from `develop@1d3036d`, as the
+  project manager owner thread.
+- CLAUDE.md *Team personas* keeps the persona list and the Team Lead's
+  final say in full, and a new *Rule index* has one line per team rule
+  linking to its home. It no longer restates the security weight, the
+  peer reviewer rule, the daily log format, the $10 hand-off, or the cost
+  log rule. Links, Naming, Branches, and Canvas portal phases stay in full,
+  since CLAUDE.md is their home.
+- "Assign the Team Lead, don't request review" now lives only in CLAUDE.md
+  *Branches* (#122 peer F-2): Branches is the home of branch rules and is
+  read by every session. The protocol's *Two levels of review* and the PR
+  template link to it. The merge condition lives only in *Two levels of
+  review*, and Branches links to it.
+- *Branches* now says the Team Lead is the release PR's only reviewer.
+- The roadmap's Team Lead and team personas rows link to CLAUDE.md for the
+  final say, branches, and phases instead of restating them.
+- The ripple check says a PR that adds a rule or moves its home updates its
+  index line.
+- The `log-cost` skill's *At a hand-off* (#122 CFO note): no change. It
+  gives the reporting thread's steps; the CFO's rule for adding hand-off
+  rows together stays in the CFO persona's *How it works*.
+- Not acted on: #118 (searching `docs/canvas-portal/` in the ripple check)
+  is still open, and the cost log's location is under discussion, so the
+  index links to the CFO persona's *Role*, not the log's path.
+- No new decision: #97 is already answered and logged in #113.

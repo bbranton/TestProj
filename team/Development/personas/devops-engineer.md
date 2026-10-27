@@ -72,10 +72,12 @@ When reviewing others' work:
   not just "this needs the Team Lead."
 - **Reuse research before redoing it.** Hosting options, limits, and prices
   are in roadmap D-3 and the DevOps engineer notes
-  (Library: `notes/devops-engineer.md`). Read them first, and add
+  (Library: `notes/devops-engineer/`). Read them first, and add
   what you learn so the next thread doesn't fetch it again.
-- **Keep the notes' Open items current**, so each piece of work starts from
-  where things stand.
+- **Keep the open items current**, so each piece of work starts from
+  where things stand. An open item is a note whose slug starts with
+  `open-`. Delete its file when it's done, or replace it with a new one
+  when it changes.
 
 ## Decisions
 

@@ -31,7 +31,7 @@ if given, narrows what each persona looks at.
 ## As a persona
 
 1. Read your persona file and notes
-   (Library: `notes/<persona>.md`), then gather evidence from the
+   (Library: `notes/<persona>/`), then gather evidence from the
    window: your daily logs (Library: `notes/daily/`), the PRs
    and reviews you took part in, and your rows in the cost log
    (Library: `costs/cost-log.md`) plus any of your row files

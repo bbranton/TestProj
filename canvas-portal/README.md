@@ -50,9 +50,17 @@ checks above before pushing. To fix formatting:
   `frontend/eslint.config.js`.
 
 Ruff and Prettier are pinned to one version, because a new version can
-format code differently. The frontend's `typescript` dev dependency is the TypeScript 6
-API package, which ESLint's TypeScript parser needs; the app still builds
-with TypeScript 7, installed as `typescript7`.
+format code differently.
+
+The frontend has two TypeScripts for now. ESLint's TypeScript parser
+needs TypeScript 6 (`typescript`, kept below 6.1 as typescript-eslint
+requires), and the app type-checks and builds with TypeScript 7
+(`typescript7`) through `npm run build`. A bare `tsc` runs TypeScript 6,
+so don't use it. Until the split ends, don't turn on typed linting
+(`recommendedTypeChecked` or `parserOptions.projectService`), or ESLint
+would type-check with a different compiler from the build. Once
+typescript-eslint supports TypeScript 7, go back to one `typescript@7`
+and a plain `tsc -b`.
 
 ## Settings
 

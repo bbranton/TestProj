@@ -23,7 +23,8 @@ yourself, as the [CFO persona](/team/Management/personas/cfo.md#role) says.
    says, such as
    Library: `costs/2026-10-27-devops-engineer-pr115-reviewer.md`.
    The file holds the one row and nothing else. Never change an existing
-   file there. Re-read your file about ten seconds after writing it.
+   file there. Re-read your file about ten seconds after writing it, to
+   check it saved: the Library is a network mount.
 
 Usage is the whole session so far. Report it once, when the thread's work
 is done. If a thread is reused for later work, report only the change since

@@ -21,7 +21,7 @@ yourself, as the [CFO persona](/team/Management/personas/cfo.md#role) says.
 4. Save it as a new row file in the project's Library, named as the CFO
    persona's [How it works](/team/Management/personas/cfo.md#how-it-works)
    says, such as
-   `/mnt/project-files/costs/2026-10-27-devops-engineer-pr115-reviewer.md`.
+   Library: `costs/2026-10-27-devops-engineer-pr115-reviewer.md`.
    The file holds the one row and nothing else. Never change an existing
    file there. Re-read your file about ten seconds after writing it.
 

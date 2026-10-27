@@ -26,3 +26,13 @@
   finding also gets a register row linking its issue or `B-` item.
 - Noted for the incident plan (#17): a deferred security finding sent to
   an issue describes a weakness in public, since the repo is public.
+
+## Security review of PR #90 (later-phase fixes under the phase scope budget)
+
+- Fixed the project manager's F-3 in my own files: a deferred security
+  finding's register row also links a separate fix PR (the "fix it now in
+  a separate PR" option from #89), and stays until that PR merges. The
+  register note lists all four options.
+- Read the new scope-budget paragraph in *Follow-up work*: it changes no
+  breach handling, since a potential data breach never goes through the
+  four options.

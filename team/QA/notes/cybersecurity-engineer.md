@@ -38,8 +38,9 @@ say where. A **Proposed** gate isn't in the roadmap yet; the project manager
 decides it. A potential data breach that isn't fixed in the PR it was
 found in is tracked only here, never as an issue or a backlog item: add
 its row before that PR merges (Team Lead, 2026-10-27, PRs #80 and #88).
-Any other deferred security finding goes to the Team Lead as an issue or
-a backlog item, and gets a row here too, linking it.
+Any other deferred security finding goes to the Team Lead with the four
+options in *Follow-up work*. Unless it's fixed in the PR it was found in,
+it gets a row here too, linking its separate fix PR, issue, or `B-` item.
 
 | Item | Potential data breach | Owner | Gate | Status |
 |------|-----------------------|-------|------|--------|

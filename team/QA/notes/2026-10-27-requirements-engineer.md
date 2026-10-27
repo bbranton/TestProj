@@ -134,3 +134,6 @@
   `CLAUDE.md`, and the roadmap.
 - Added a change log row citing #97. No requirement IDs touched.
 - No decisions made; the PR carries out the Team Lead's decision on #97.
+- Fixed peer F-1 and F-2 on #122: the Team Lead row now says what each
+  link covers (decisions, and releases to `main`), and the Finding row
+  keeps the `X-` ID.

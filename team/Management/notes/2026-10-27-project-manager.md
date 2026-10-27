@@ -217,3 +217,18 @@
   Lead's decisions; "No persona" keeps the old scope. And step 4's "minor
   findings the owner may fix later" still names the owner as the fixer.
 - No new decision: #86 carries out #80.
+
+## Review "ask per finding: issue or backlog" (#88)
+
+- Reviewed #88 as the peer and area reviewer for the shared files, the
+  roadmap, and the glossary. The direction matches the Team Lead's pick.
+- Findings: a potential data breach must stay out of the issue-or-backlog
+  choice, and the cybersecurity engineer's persona file and notes still
+  say follow-ups never become issues; "Waiting on the Team Lead" clashes
+  with "a PR that needs a new decision stops"; the new-name `persona:`
+  labels don't exist yet; the workspace still lists "backlog items" in
+  the PR template; and the protocol doesn't say where the per-finding
+  requests go.
+- Updated the backlog lesson in the notes to the new rule.
+- No new decision: #88 carries out the Team Lead's "Ask per finding,
+  issue or backlog" pick.

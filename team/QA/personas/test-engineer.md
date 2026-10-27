@@ -65,8 +65,8 @@ complete.
 When a review of another persona's PR turns up a change for the test
 plan, commit it to that PR's branch, as
 [Fixes by another persona](/team/review-protocol.md#fixes-by-another-persona)
-says. If it's outside the current phase or too big for that PR, it goes on
-the backlog instead.
+says. If it's outside the current phase or too big for that PR, the owner
+asks the Team Lead whether it becomes a GitHub issue or a backlog item.
 
 ## Decisions
 

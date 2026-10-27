@@ -33,8 +33,11 @@ reviewer.
 5. After pushing fixes for a **Changes needed** verdict, message that
    reviewer thread to re-review.
 6. Post the combined findings table, with anything that needs the Team
-   Lead at the top. List each finding marked Backlog in the PR's
-   *Backlog items* section, and your `### Decision:` log entries.
+   Lead at the top. For each finding outside the current phase or too big
+   for this PR, send the Team Lead a decision request (GitHub issue or
+   roadmap backlog) and list it in the PR's *Deferred findings* section,
+   as [Follow-up work](/team/review-protocol.md#follow-up-work) says. Add
+   your `### Decision:` log entries.
    When every verdict is Recommend or Recommend with notes, merge into
    `develop`. Then tell each reviewer thread, release the claim on the
    board, and report your cost with the `log-cost` skill.
@@ -48,9 +51,10 @@ reviewer.
 2. Use the team skills where they fit: `trace-requirement` for requirement
    IDs and test coverage, `ci-paths` for whether CI runs.
 3. Log every problem you find as a finding on this PR, naming in *Fix in*
-   the persona whose file needs the change. Don't open GitHub issues. Mark
-   a finding "Backlog" only when its fix is outside the current phase or
-   too big for this PR. A potential data breach never is: add it to the
+   the persona whose file needs the change. Don't open GitHub issues
+   yourself. Say so when a fix is outside the current phase or too big for
+   this PR: the owner asks the Team Lead where it goes. A potential data
+   breach never is: add it to the
    [security register](/team/QA/notes/cybersecurity-engineer.md#security-register)
    too. See
    [Who fixes a finding](/team/review-protocol.md#who-fixes-a-finding).

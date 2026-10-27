@@ -84,8 +84,8 @@ item at a time without seeing what each one pulls along. To prevent that:
 When a review of another persona's PR turns up a change for the
 requirements, commit it to that PR's branch, as
 [Fixes by another persona](/team/review-protocol.md#fixes-by-another-persona)
-says. If it's outside the current phase or too big for that PR, it goes on
-the backlog instead. Don't hand it to another thread to make.
+says. If it's outside the current phase or too big for that PR, the owner
+asks the Team Lead whether it becomes a GitHub issue or a backlog item. Don't hand it to another thread to make.
 
 ## Decisions
 

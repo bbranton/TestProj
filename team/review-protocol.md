@@ -189,8 +189,9 @@ current phase, by whichever persona owns the file:
   reviewing the UI specification:** that persona commits the fix to the
   same PR, as [Fixes by another persona](#fixes-by-another-persona) says.
   That persona joins the PR's reviewers if it wasn't one.
-- **Outside the current phase, or too big for this PR:** it goes on the
-  backlog, as [Follow-up work](#follow-up-work) says.
+- **Outside the current phase, or too big for this PR:** the Team Lead
+  decides whether it becomes a GitHub issue or a backlog item, as
+  [Follow-up work](#follow-up-work) says.
 
 A fix that needs a new decision, such as moving a requirement between
 phases, goes to the Team Lead as a decision request first, and the finding
@@ -219,8 +220,8 @@ When a finding needs a change in another persona's files:
 - **#** is unique within the review (`F-1`, `F-2`, ...). Findings whose fix
   is in another doc use `X-` IDs.
 - **Status** is one of Open, Fixed in `<sha>` (with the persona when it
-  isn't the owner), Backlog, Won't fix (with the reason), or Waiting on
-  the Team Lead.
+  isn't the owner), Issue `#<n>`, Backlog `B-<n>`, Won't fix (with the
+  reason), or Waiting on the Team Lead.
 - A finding that could expose a token, a session, or a student's data
   starts with **Potential data breach:**, whichever persona finds it, as
   the [cybersecurity engineer persona](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
@@ -228,24 +229,31 @@ When a finding needs a change in another persona's files:
 
 ## Follow-up work
 
-Review follow-ups never become GitHub issues, so nothing is left open
-somewhere nobody looks. Work a review uncovers goes one of two places:
+Nothing a review finds is parked without the Team Lead's say. Work a
+review uncovers goes one of two ways:
 
 1. **This PR, when it's in the current phase.** The persona that owns the
    file fixes it here, as [Who fixes a finding](#who-fixes-a-finding) says.
-2. **The backlog, when it's outside the current phase or too big for this
-   PR.** The finding's status is "Backlog", and the owner lists it in the
-   PR's *Backlog items* section before merging. The project manager adds each item
-   to the [backlog](/docs/canvas-portal/01-roadmap.md#9-backlog) in the
-   roadmap, in its next roadmap PR, with a `B-` ID, the PR it came from,
-   and the persona that owns it. Backlog items don't block the PR or change
-   the verdict.
+2. **The Team Lead decides, when it's outside the current phase or too big
+   for this PR.** The owner sends the Team Lead one decision request for
+   that finding, with two options and a recommendation:
+   - **A GitHub issue**, labeled with the owning persona's `persona:`
+     label, for work that should be picked up soon.
+   - **The [roadmap backlog](/docs/canvas-portal/01-roadmap.md#9-backlog)**,
+     for work that belongs in a later phase.
 
-The project manager reviews the backlog with the Team Lead at every phase boundary,
-recommending a phase or dropping each item. An item whose suggested phase is
-the current one goes to the Team Lead in the project manager's next decision batch
-instead of waiting for the boundary. The Team Lead plans items into a phase;
-nobody starts on a backlog item before then.
+   The finding is **Waiting on the Team Lead** and is listed in the PR's
+   *Deferred findings* section. It doesn't block the PR or change the
+   verdict. When the Team Lead answers, the owner opens the issue or lists
+   the item for the project manager, and sets the status to Issue `#<n>`
+   or Backlog `B-<n>`. If the owner's thread has ended, the project manager
+   does it.
+
+The project manager adds backlog items to the roadmap, in its next roadmap
+PR, with a `B-` ID, the PR it came from, and the persona that owns it. It
+reviews the backlog with the Team Lead at every phase boundary,
+recommending a phase or dropping each item. The Team Lead plans items into
+a phase; nobody starts on a backlog item before then.
 
 **A potential data breach never goes on the backlog.**
 

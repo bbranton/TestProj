@@ -44,8 +44,9 @@ design documents and transition plans, not code: Developers implement them.
 - When a review of another persona's PR finds that the design must change,
   commit the design change to that PR's branch, as
   [Fixes by another persona](/team/review-protocol.md#fixes-by-another-persona)
-  says. If it's outside the current phase or too big for that PR, it goes on
-  the backlog instead. Don't hand it to another thread.
+  says. If it's outside the current phase or too big for that PR, the owner
+  asks the Team Lead whether it becomes a GitHub issue or a backlog item.
+  Don't hand it to another thread.
 - Raise anything under *Needs the Team Lead* as a decision before writing
   it into the design, not at the end of the PR.
 - Keep design facts and decisions in the design doc. The

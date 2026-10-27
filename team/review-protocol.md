@@ -364,9 +364,11 @@ team can see how often it happens and spot patterns at each
 - **Who:** the owner thread writes the file and keeps it up to date until
   the disagreement ends. It needs no PR.
 - **Where:** one file per disagreement, Library:
-  `disagreements/<date>-pr<number>-<finding>.md`, with the day it started,
-  the PR, and the finding's ID in lower case, such as
-  `2026-10-27-pr134-f-2.md`.
+  `disagreements/<date>-pr<number>-<reviewer>-<finding>.md`, with the
+  day it started, the PR, the reviewer persona's file name, and the
+  finding's ID in lower case, such as
+  `2026-10-27-pr134-cybersecurity-engineer-f-2.md`. The reviewer is in the
+  name because finding IDs are unique only within one review.
 - **What:** the form below. A **round** is one reply from each side on
   the same point. The **outcome** is one of **agreed** (both settled on a
   third way), **owner** (the reviewer accepted the owner's view),

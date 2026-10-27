@@ -55,7 +55,7 @@ if given, narrows what each persona looks at.
    the previous note in `team/retros/`, the
    [process ideas](/team/workspace.md#process-ideas) file, and the
    disagreement files in Library: `disagreements/` dated in the window,
-   as [Logging a disagreement](/team/review-protocol.md#logging-a-disagreement)
+   plus any the previous note listed as open, as [Logging a disagreement](/team/review-protocol.md#logging-a-disagreement)
    says.
 2. Write `team/retros/<retro date>.md` with these sections:
    - **Window and topic**, and which personas took part.

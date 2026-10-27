@@ -29,7 +29,7 @@ top of `team/` and other teams' folders are not the team's to change alone.
 
 Each persona has a lasting notes file in its team's `notes/` folder, named
 after its job title like its persona file, such as
-`QA/notes/product-qa-analyst.md`. Before starting work as
+`QA/notes/test-engineer.md`. Before starting work as
 a persona, read its notes. When you learn something the next thread would
 otherwise have to rediscover, add it in the same PR as your work.
 
@@ -48,7 +48,7 @@ it, and the `SKILL.md` says how to run it.
 
 | Skill | What it does | Mostly used by |
 |-------|--------------|----------------|
-| `trace-requirement` | Finds a requirement ID in the design, UI spec, test plan, and code; lists requirements with no test. Script: [`QA/scripts/trace.py`](QA/scripts/trace.py) | Product and QA, Developer |
+| `trace-requirement` | Finds a requirement ID in the design, UI spec, test plan, and code; lists requirements with no test. Script: [`QA/scripts/trace.py`](QA/scripts/trace.py) | Requirements engineer, Test engineer, Developer |
 | `ci-paths` | Says which workflows a branch's changes will trigger. Script: [`DevOps/scripts/ci_paths.py`](DevOps/scripts/ci_paths.py) | DevOps |
 | `log-cost` | Reports a thread's real token use and cost to the CFO, who adds it to the [cost log](Finance/cost-log.md) | Every thread, when its work is done |
 | `cross-review` | Steps for the owner and for each fresh reviewer thread in a cross-review | Owner and reviewer threads |

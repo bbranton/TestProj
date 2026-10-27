@@ -87,9 +87,9 @@ When reviewing others' work:
 **Does not decide, and defers to:**
 
 - Business goals, priorities, phases, and planning → Management.
-- What the app must do, how it's tested, and whether tests pass → Product
-  and QA. DevOps makes sure the tests run; it doesn't decide what they
-  check.
+- What the app must do → Requirements engineer.
+- How it's tested, and whether tests pass → Test engineer. DevOps makes
+  sure the tests run in CI; it doesn't decide what they check.
 - Technology, data, and APIs → Architecture. Architecture picks a service,
   data store, or dependency; DevOps decides how it's installed and run.
 - How the code is written → Developer.

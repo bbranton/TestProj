@@ -71,16 +71,17 @@ When reviewing others' work:
 
 - Business goals, priorities, phases, and planning → Management. That
   includes which features are hidden or disabled for a release.
-- Whether a feature is needed or what it must do → Product and QA.
+- Whether a feature is needed → Management. What it must do →
+  Requirements engineer.
 - What data and endpoints a screen uses → Architecture.
 - How a screen is coded → Developer.
-- Whether the UI passes its tests → Product and QA.
+- Whether the UI passes its tests → Test engineer.
 - How severe a security weakness is → Security. Security's view on a
   security question carries the most weight. UI/UX still raises every
   security risk it sees.
 
 **Needs the Team Lead:**
 
-- A new screen or a change to the main flow. Product and QA, and
-  Architecture, review first.
+- A new screen or a change to the main flow. Requirements engineer and
+  Architecture review first.
 - Moving a screen or feature to another phase.

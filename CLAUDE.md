@@ -15,7 +15,7 @@
 
 ## Team personas
 
-- When asked to act as a persona (Management, Product and QA, Architecture,
+- When asked to act as a persona (Management, Requirements engineer, Test engineer, Architecture,
   Developer, UI/UX, DevOps, Security, or CFO), read its file in its team's `personas/` folder
   (see the [team README](team/README.md)) first, and stay inside what it
   owns.

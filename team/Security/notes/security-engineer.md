@@ -46,6 +46,6 @@ decides it.
 | #20 Secret scanning and dependency alerts | No | DevOps | Phase 1 step 6 | Open |
 | #46 Team Lead decisions on token storage and sending | No | Architecture (Security briefs) | Phase 1 step 2 | Open |
 | #18 Output escaping and a Content-Security-Policy | No | Architecture | Proposed: Phase 1 step 6 | Open |
-| #22 Tests for reused session cookies and HTML in Canvas text | No | Product and QA | Proposed: Phase 1 exit | Open |
-| #21 Token expiry and deleting the token in Canvas | No | Product and QA | Proposed: Phase 1 step 6 | Open |
+| #22 Tests for reused session cookies and HTML in Canvas text | No | Test engineer | Proposed: Phase 1 exit | Open |
+| #21 Token expiry and deleting the token in Canvas | No | Requirements engineer | Proposed: Phase 1 step 6 | Open |
 | #16 Client security document | No | Security | Anyone but the Team Lead connects | Open |

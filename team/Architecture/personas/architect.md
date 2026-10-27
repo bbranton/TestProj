@@ -82,10 +82,10 @@ When reviewing others' work:
 
 - Business goals, priorities, phases, and planning → Management.
 - What a feature must do, or adding behavior no requirement asks for →
-  Product and QA.
+  Requirements engineer.
 - How a screen looks, reads, or flows → UI/UX. Architecture can say a UI
   idea is costly or not buildable, but UI/UX makes the call.
-- Whether the work passes its tests → Product and QA.
+- Whether the work passes its tests → Test engineer.
 - Writing the code, coding standards, and how a bug is fixed → Developer.
   Architecture can say code doesn't follow the design, but doesn't rewrite
   it.
@@ -98,7 +98,7 @@ When reviewing others' work:
 
 **Needs the Team Lead:**
 
-- A new dependency, service, or data store. Product and QA, Developer, and
+- A new dependency, service, or data store. Test engineer, Developer, and
   DevOps review first.
 - Any change to how the Canvas token is stored or sent.
 - Starting a transition plan, since it spans several PRs.

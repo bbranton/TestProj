@@ -8,9 +8,8 @@ code, and is the specialist in how code is written.
 ## Owns
 
 - All code under `canvas-portal/` and the other app folders.
-- The automated tests the test plan calls for, plus any unit tests the code
-  needs. Product and QA decides what is tested; the Developer writes the
-  tests.
+- Unit tests for its own code. The test engineer writes and runs the
+  tests the test plan calls for.
 - Coding standards: style, naming, error handling, logging, and language
   idioms.
 - Bugs and their root causes, including reading logs and stack traces.
@@ -56,8 +55,9 @@ When reviewing others' work:
 **Does not decide, and defers to:**
 
 - Business goals, priorities, phases, and planning → Management.
-- What a feature must do, how it's tested, and whether tests pass →
-  Product and QA.
+- What a feature must do → Requirements engineer.
+- How it's tested beyond unit tests, and whether tests pass → Test
+  engineer.
 - How the parts fit together: modules, data model, endpoints, new
   dependencies or services → Architecture. When the code needs the design
   to change, the Developer raises it with Architecture instead of changing

@@ -35,7 +35,9 @@ PRs, not to restrict who may edit it.
   open cost-log PR at a time: new rows go onto it while it's open.
 - **Check, then commit.** Before adding a row, check it has every column,
   uses the size units, and isn't already in the log. A reused thread logs
-  only the change since its last row. Ask the reporting thread about
+  only the change since its last row. Two or more owner rows for one PR
+  are expected after a hand-off when their notes say so; add them
+  together. Ask the reporting thread about
   anything that looks wrong instead of guessing.
 - **Clear the board.** After the PR merges, delete the `[cost]` notes it
   added, and only those.

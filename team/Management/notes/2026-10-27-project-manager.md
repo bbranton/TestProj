@@ -373,6 +373,25 @@
   changed the verdict to Recommend.
 - No new decision: the retro's decisions wait on the Team Lead.
 
+## Carry out #95: one thread per PR
+
+- Added *One thread per PR* to `team/workspace.md` and a pointer in
+  `CLAUDE.md`. The architect's "one long-running architect thread" line
+  goes in the architect's own PR.
+
+### Decision: fresh thread per PR, with a $10 hand-off check
+
+- **Date:** 2026-10-27
+- **Decided by:** Team Lead
+- **Options:** fresh thread per PR plus a hard hand-off cap (about four
+  Team Lead rounds or $10); fresh thread per PR only; no change.
+- **Recommendation:** the hard cap, to stop long threads driving the bill.
+- **Outcome:** fresh thread per PR with no hard cap. Instead, an owner
+  thread past about $10 asks the Team Lead whether now is a good time to
+  hand off, and writes a hand-off note if so.
+- **Links:** [#95](https://github.com/bbranton/TestProj/issues/95),
+  [process retro](/team/retros/2026-10-27-process.md)
+
 ## Carry out #96: ripple check for process rules
 
 - Added *Ripple check for process rules* to `team/review-protocol.md`

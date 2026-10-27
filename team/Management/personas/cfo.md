@@ -88,10 +88,11 @@ why a number is `n/a`.
 see what share of spend goes to the product (Team Lead, 2026-10-27, in
 Library: `goal/software-factory-goal-options.md`):
 
-- **Product:** the product being built: its code, tests, CI, and its
-  docs, such as those under `docs/canvas-portal/`.
-- **Process:** how the team works: persona files, skills, the review
-  protocol, the workspace, `CLAUDE.md`, the PR template, and Library notes.
+- **Product:** the product being built: its code, tests, its own CI
+  workflows, and its docs, such as those under `docs/canvas-portal/`.
+- **Process:** how the team works: persona files, skills, team scripts,
+  the docs-check workflow, the review protocol, the workspace,
+  `CLAUDE.md`, the PR template, and Library notes.
 
 Tag by what the PR or thread changed, not by the persona: a Developer
 reviewing a process PR is Process, and a project manager's roadmap PR is

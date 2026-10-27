@@ -54,7 +54,7 @@ reviewer.
    the persona whose file needs the change. Don't open GitHub issues
    yourself. Say so when a fix is outside the current phase or too big for
    this PR: the owner asks the Team Lead where it goes. A potential data
-   breach never is: add it to the
+   breach is never deferred: add it to the
    [security register](/team/QA/notes/cybersecurity-engineer.md#security-register)
    too. See
    [Who fixes a finding](/team/review-protocol.md#who-fixes-a-finding).

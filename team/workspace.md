@@ -103,7 +103,7 @@ standard library, so they run anywhere without installing anything.
 fills in every new PR's description with the sections the
 [review protocol](/team/review-protocol.md) needs: requirement IDs, the owner, the
 reviewers the author picked and why, verdicts, findings,
-backlog items, testing, and screenshots. Keep its sections in step with the protocol.
+deferred findings, testing, and screenshots. Keep its sections in step with the protocol.
 
 ## The board
 

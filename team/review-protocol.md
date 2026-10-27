@@ -238,7 +238,9 @@ review uncovers goes one of two ways:
    file fixes it here, as [Who fixes a finding](#who-fixes-a-finding) says.
 2. **The Team Lead decides, when it's outside the current phase or too big
    for this PR.** The owner sends the Team Lead one decision request for
-   that finding, with two options and a recommendation:
+   that finding, in the
+   [decision register](/docs/canvas-portal/01-roadmap.md#5-open-decisions)
+   with a link to the finding, giving two options and a recommendation:
    - **A GitHub issue**, labeled with the owning persona's `persona:`
      label, for work that should be picked up soon.
    - **The [roadmap backlog](/docs/canvas-portal/01-roadmap.md#9-backlog)**,
@@ -257,7 +259,9 @@ reviews the backlog with the Team Lead at every phase boundary,
 recommending a phase or dropping each item. The Team Lead plans items into
 a phase; nobody starts on a backlog item before then.
 
-**A potential data breach never goes on the backlog.**
+**A potential data breach never goes through this choice.** It is never
+an issue or a backlog item: it is fixed, or tracked in the security
+register.
 
 - **One the PR adds** is always fixed in that PR before merge.
 - **One already on `develop`** that the review uncovers is fixed in the PR

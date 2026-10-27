@@ -129,9 +129,7 @@ that changes a process rule finds and fixes every copy before review (Team Lead,
    [#132](https://github.com/bbranton/TestProj/pull/132)). Skip retro
    notes and the daily logs in the Library: they record what was true
    that day. When a persona's notes in the Library restate the rule,
-   leave that persona a board `[note]` to fix them. The owner of a
-   product doc fixes and reviews only the files that the rule change
-   touches, not the whole PR.
+   leave that persona a board `[note]` to fix them.
 2. Fix every file that still states the old rule in the same PR, by
    replacing the copy with a link to the home, and fix any link the change
    breaks. For each link to the rule's home, check that the sentence
@@ -139,7 +137,8 @@ that changes a process rule finds and fixes every copy before review (Team Lead,
    2026-10-27, on [#132](https://github.com/bbranton/TestProj/pull/132)).
    The persona that owns each file fixes it, as
    [Fixes by another persona](#fixes-by-another-persona) says, and joins
-   the reviewers.
+   the reviewers. The owner of a doc in `docs/canvas-portal/` reviews
+   only the files the rule change touches, not the whole PR.
 3. List every file that states the rule under *Files that state this
    rule* in the PR description, including the ones that needed no change.
 

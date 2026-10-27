@@ -61,7 +61,8 @@ That is why a persona can merge into `develop` without the Team Lead.
 - **Ask the Team Lead right away** (Team Lead, 2026-10-27, on
   [#132](https://github.com/bbranton/TestProj/pull/132)). The persona that
   raises a request asks the Team Lead as soon as it comes up, in the
-  thread that raised it, or in the project chat when there is no thread.
+  thread that raised it. When there is no thread, the coordinator asks in
+  the project chat.
   The Team Lead can then ask follow-up or clarifying questions there, and
   the persona answers them in the same place. Don't hold a request to
   batch it, or leave it only in a file or an issue: a question that isn't

@@ -79,7 +79,9 @@ short bullets on what was done.
 Decisions are recorded in the PR, where reviewers see them: the owner adds
 each one to the *Decisions* section of the PR description before merging,
 as [Close out](/team/review-protocol.md#close-out) says. A Team Lead
-decision also has its `decision` issue. Use this form, so a search for
+decision is also recorded in the
+[decision register](/docs/canvas-portal/01-roadmap.md#5-open-decisions),
+and in its `decision` issue when there is one. Use this form, so a search for
 `Decision:` finds every one:
 
 ```markdown

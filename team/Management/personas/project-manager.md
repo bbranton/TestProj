@@ -61,7 +61,8 @@ minimum viable solution.
   [decision request](/team/review-protocol.md#decisions-are-separate-from-merging)
   is asked right away, where it came up. When an entry still has no
   answer as the phase or doc that needs it gets close, the project manager
-  asks the Team Lead about it again, in the project chat.
+  asks the Team Lead about it again, through the coordinator in the
+  project chat.
 - **Ripple list for each decision.** When the Team Lead makes a phase or
   scope decision, the project manager lists every doc it changes and the one change
   each needs, and sends that list to each owner at once. Owners don't find

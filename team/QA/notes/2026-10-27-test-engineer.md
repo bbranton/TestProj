@@ -33,3 +33,16 @@
   option 2 (a new thread fixes it in a separate PR). The architect fixed
   the same sentence in its own file (`c4ed7ba`).
 - Verdict: Recommend with notes.
+
+## Review of PR #91: the screenshot rule moves to the UI/UX designer
+
+- Checked the test plan's PR checklist line, which now links to
+  *Screenshots in UI PRs* in the UI/UX designer persona file. The anchor
+  resolves, and the rule there is the one `CLAUDE.md` had, unchanged.
+- The checklist still asks for more than that rule (before and after
+  shots, and wide and phone widths for layout changes). That's on purpose
+  and doesn't conflict, so no change.
+- The test plan's other `CLAUDE.md` links name the current phase, which is
+  still there. Link-only changes don't get a change log row, as on #83 and
+  #85.
+- No change needed in my files. Verdict: Recommend.

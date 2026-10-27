@@ -461,7 +461,7 @@ harm it would do, and has an owner: the team persona that watches it and
 carries out its mitigation (see the [team personas](../../team/README.md)).
 Management keeps this list, rates each risk, assigns its owner, and reviews
 it with the Team Lead at every phase boundary. A risk that is a
-[potential data breach](../../team/Security/personas/security-engineer.md#potential-data-breach)
+[potential data breach](../../team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
 is marked **Critical**: it is must-fix, its mitigations come first in the
 current phase and are done before the next deploy, and only the Team Lead
 can delay one. Accepting a risk instead of

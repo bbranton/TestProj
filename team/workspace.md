@@ -10,6 +10,7 @@ There are three places, for three kinds of information:
 | Lasting knowledge, daily notes, and findings | `team/<Team>/notes/` | Versioned in PRs, owned by the team |
 | Scripts a team runs often | `team/<Team>/scripts/`, called from a skill in `.claude/skills/` | The script lives with its team; every agent session loads skills automatically |
 | Who is working on what right now, and handoffs | The board, in the project's shared files | Instant, no PR needed |
+| Process ideas waiting for the next retro | The [ideas file](#process-ideas), in the project's shared files | No PR or review for a one-line idea |
 
 ## Team folders
 
@@ -140,6 +141,26 @@ Rules:
 
 A session outside this project has no board. It should check open PRs for
 the same doc instead.
+
+## Process ideas
+
+Process changes wait for the next [retro](/.claude/skills/retro/SKILL.md),
+not a PR of their own (Team Lead, 2026-10-27,
+[#98](https://github.com/bbranton/TestProj/issues/98)). When an idea
+comes up, any thread adds it to `/mnt/project-files/retros/process-ideas.md`,
+in the project's shared files. It isn't in the repo, so it needs no PR,
+and the Team Lead can read it in the project's Library at any time.
+
+- **One line per idea:** who, the date, the idea, and a link to what
+  prompted it, such as a PR, review, or log entry.
+- **Same care as the board:** read the file just before you change it, add
+  only your own lines, and re-read it about ten seconds after writing.
+- **The retro uses it.** Each persona reads it when a retro starts, and
+  the project manager removes the ideas the retro note covered once the
+  note merges.
+
+A change needed to unblock work right now is still a decision request to
+the Team Lead, not an idea for later.
 
 ## One thread per PR
 

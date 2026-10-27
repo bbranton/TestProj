@@ -2,7 +2,8 @@
 # that 02-requirements.md doesn't define.
 #
 # What it runs: team/Development/scripts/docs_check.py, which reads every
-# tracked .md file. Run the same script locally before opening a PR:
+# tracked .md file, after its own tests in test_docs_check.py. Run the same
+# locally before opening a PR:
 #   python3 team/Development/scripts/docs_check.py
 #
 # When it runs: on every pull request, and on pushes to main and develop.
@@ -27,5 +28,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false  # the job never pushes
+      - name: Test the docs check
+        run: python3 -m unittest discover -s team/Development/scripts -p "test_docs_check.py"
       - name: Check links and requirement IDs
         run: python3 team/Development/scripts/docs_check.py

@@ -100,3 +100,17 @@
 - **Outcome:** 1, as recommended
 - **Links:** [#100](https://github.com/bbranton/TestProj/issues/100),
   [process retro](/team/retros/2026-10-27-process.md)
+
+## Review fixes on PR #115
+
+- Cybersecurity engineer F-1: `persist-credentials: false` on checkout,
+  since the job never pushes (`5b77fd0`).
+- Requirements engineer F-1 and N-1: removed requirements no longer count
+  as defined outside `02-requirements.md`, and IDs with a letter suffix
+  such as `FR-12a` are reported (`ef632ba`).
+- Test engineer F-1: a heading with inline code, such as *Read from
+  `develop`*, got the wrong anchor, because inline code was stripped
+  before reading headings. Anchors now keep it.
+- Test engineer F-2: added `test_docs_check.py` (13 cases, standard
+  library), which the workflow runs before the check. Reverting the F-1
+  fix makes a test fail.

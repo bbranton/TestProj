@@ -43,16 +43,17 @@ def tracked_markdown():
     return [ROOT / f for f in out.splitlines() if f]
 
 
-def prose_lines(path):
+def prose_lines(path, keep_code=False):
     """(line number, text) for each line outside fenced code blocks, with
-    inline code removed, so examples in code aren't checked."""
+    inline code removed unless keep_code, so examples in code aren't
+    checked."""
     in_fence = False
     for n, line in enumerate(path.read_text().splitlines(), 1):
         if FENCE.match(line):
             in_fence = not in_fence
             continue
         if not in_fence:
-            yield n, re.sub(r"`[^`]*`", "", line)
+            yield n, line if keep_code else re.sub(r"`[^`]*`", "", line)
 
 
 def slug(heading):
@@ -64,13 +65,16 @@ def slug(heading):
 
 
 _anchors = {}
+checked = {"links": 0, "IDs": 0}  # so "0 problems" can't mean "checked nothing"
 
 
 def anchors(path):
     """Every #fragment a link may use for this file."""
     if path not in _anchors:
         found, seen = set(), {}
-        for _, line in prose_lines(path):
+        # Inline code in a heading keeps its text in the anchor:
+        # "Read from `develop`" is #read-from-develop.
+        for _, line in prose_lines(path, keep_code=True):
             found.update(ANCHOR.findall(line))
             m = HEADING.match(line)
             if m:
@@ -88,6 +92,7 @@ def check_links(path):
         for target in LINK.findall(line):
             if re.match(r"^[a-z][a-z0-9+.-]*:", target, re.I):
                 continue  # http:, https:, mailto: and the like
+            checked["links"] += 1
             file_part, _, fragment = target.partition("#")
             file_part = BLOB.sub("/", file_part)
             if not file_part:
@@ -123,7 +128,9 @@ def check_requirement_ids(current, removed):
         for n, line in prose_lines(path):
             if line.startswith("## Change log"):
                 break
-            for req_id in sorted(set(REQ_ID.findall(line)) - allowed):
+            named = set(REQ_ID.findall(line))
+            checked["IDs"] += len(named)
+            for req_id in sorted(named - allowed):
                 if req_id in removed:
                     why = "was removed in 02-requirements.md"
                 elif not req_id.split("-")[1].isdigit():
@@ -142,7 +149,8 @@ def main():
     problems += check_requirement_ids(*requirement_rows())
     for p in problems:
         print(p)
-    print(f"Checked {len(files)} Markdown files: {len(problems)} problem(s).")
+    print(f"Checked {len(files)} Markdown files, {checked['links']} repo links, "
+          f"and {checked['IDs']} requirement ID mentions: {len(problems)} problem(s).")
     return 1 if problems else 0
 
 

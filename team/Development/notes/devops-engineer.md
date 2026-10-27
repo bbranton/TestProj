@@ -9,7 +9,8 @@ Lasting lessons for the DevOps engineer persona. See the
 - Run `python3 team/Development/scripts/docs_check.py` before opening a
   PR. It finds broken repo links (anchors included) and undefined FR and
   NFR IDs, as the docs check in CI does (#100). It skips fenced and inline
-  code, so example links in backticks aren't checked.
+  code, so example links in backticks aren't checked. Its tests are in
+  `test_docs_check.py`; add a case there for each new rule or fix.
 - GitHub Pages deploys on push to `main` when `site/**` or
   `qml-hello-wasm/site/**` changes. Merging such a PR changes the live site,
   which needs the Team Lead.

@@ -255,6 +255,11 @@ review uncovers goes one of two ways:
    4. **The [roadmap backlog](/docs/canvas-portal/01-roadmap.md#9-backlog)**,
       for work that belongs in a later phase.
 
+   For later-phase work, options 1 and 2 grow the current phase, so the
+   decision request says what the fix displaces, and the project manager
+   logs it under the
+   [phase scope budget](/team/Management/personas/project-manager.md#how-it-works).
+
    The finding is **Waiting on the Team Lead** and is listed in the PR's
    *Deferred findings* section. It doesn't change the verdict. When the
    owner recommends option 1, the PR waits for the answer. Otherwise it

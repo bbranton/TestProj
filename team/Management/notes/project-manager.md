@@ -16,8 +16,10 @@ Lasting lessons for the project manager persona. See the
 - Exit criteria name exact test steps that can run in that phase, such as
   "TP-14 steps 3 and 4". "The Phase 1 steps of TP-10" failed review
   because the test plan didn't mark its steps by phase.
-- Before planning the next piece of work, add the deferred findings the
-  Team Lead sent to the backlog, so reviewer follow-ups don't sit unread.
+- As soon as the Team Lead sends a deferred finding to the backlog, add
+  it to the roadmap in a small PR of its own, so reviewer follow-ups don't
+  sit unread (Team Lead, 2026-10-27, #89). Answers that arrive together
+  can share one PR, to save review threads.
   Each finding outside the current phase or too big for its PR is its own
   decision request: the Team Lead picks fix it in this PR, fix it now in
   a separate PR, a GitHub issue, or the backlog (2026-10-27, #88, #89).

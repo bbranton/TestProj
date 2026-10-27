@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Say which GitHub Actions workflows a branch's changes will trigger.
 
-  ci_paths.py [BASE]   compare HEAD with BASE (default origin/main)
+  ci_paths.py [BASE]   compare HEAD with BASE (default origin/develop)
 
 Reads the `paths:` filters in .github/workflows/*.yml. Only the one-line
 form `paths: ["a/**", "b"]` is understood, which is what this repo uses.
@@ -37,8 +37,9 @@ def glob_to_regex(glob):
 
 
 def triggers(path):
-    """{event: [path globs] or None for no filter} for push and pull_request."""
-    found, event = {}, None
+    """{event: [path globs] or None for no filter} for push and pull_request,
+    plus the push branches filter."""
+    found, branches, event = {}, None, None
     for line in path.read_text().splitlines():
         m = re.match(r"^  (push|pull_request|workflow_dispatch)\s*:", line)
         if m:
@@ -50,18 +51,22 @@ def triggers(path):
             p = re.match(r"^\s+paths:\s*\[(.*)\]", line)
             if p:
                 found[event] = [g.strip().strip("\"'") for g in p.group(1).split(",")]
-    return found
+            b = re.match(r"^\s+branches:\s*\[(.*)\]", line)
+            if b and event == "push":
+                branches = [g.strip().strip("\"'") for g in b.group(1).split(",")]
+    return found, branches
 
 
 def main(args):
-    base = args[0] if args else "origin/main"
+    base = args[0] if args else "origin/develop"
     files = changed_files(base)
     print(f"{len(files)} file(s) changed since {base}.")
     for wf in sorted(WORKFLOWS.glob("*.y*ml")):
-        for event, globs in triggers(wf).items():
+        found, branches = triggers(wf)
+        for event, globs in found.items():
             if event == "workflow_dispatch":
                 continue
-            when = "on this PR" if event == "pull_request" else "on push to main"
+            when = "on this PR" if event == "pull_request" else f"on push to {' or '.join(branches or ['any branch'])}"
             if globs is None:
                 print(f"  {wf.name}: runs {when} (no paths filter)")
                 continue

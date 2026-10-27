@@ -11,15 +11,18 @@
 
 **Owner:** <!-- the persona that wrote this PR -->
 
-Recommended reviewers, from *Who reviews what* in
-[the review protocol](../blob/main/docs/team/review-protocol.md#who-reviews-what).
-The Team Lead ticks each reviewer to run, or ticks *Team Lead review only*.
+**Based on:** `develop@<sha>` <!-- merge develop in before asking for review -->
 
-<!-- One line per reviewer, with why. Add optional reviewers the same way.
-     Add Security when the PR touches tokens, sign-in, secrets, or student
-     data, and say which. -->
-- [ ] Persona: reason
-- [ ] Team Lead review only
+Reviewers: a peer from the owner's own persona, plus each other persona
+whose area this PR touches, from *Who reviews what* in
+[the review protocol](../blob/develop/team/review-protocol.md#who-reviews-what).
+Never "None": every PR has at least the peer.
+
+<!-- One line per reviewer, with why. The cybersecurity engineer always reviews anything
+     touching tokens, sign-in, secrets, student data, hosting, or deploys;
+     say which. Assign the Team Lead, but don't request their review. -->
+- Peer (owner's persona, or for a team thread the persona owning most changed files): precaution, every PR
+- Persona: reason
 
 ### Verdicts
 
@@ -32,17 +35,18 @@ The Team Lead ticks each reviewer to run, or ticks *Team Lead review only*.
 | # | Found by | Fix in | Finding | Status |
 |---|----------|--------|---------|--------|
 
-## Follow-ups opened
+## Deferred findings
 
-<!-- Each GitHub issue reviewers opened for work outside this PR, with its
-     persona label. "None" when there are none. See "Follow-up work" in
-     the review protocol. -->
+<!-- Each finding outside the current phase or too big for this PR, with
+     the persona that owns it, the Team Lead's decision request, and the
+     answer: fixed in this PR, separate PR #n, GitHub issue #n, or roadmap
+     backlog B-n. "None" when there are none. See "Follow-up work" in the review protocol. -->
 - None
 
 ## Cost
 
 <!-- For a feature with a cost plan: the plan's estimate. After merge, each
-     thread logs its actual cost with the log-cost skill. Delete this
+     thread reports its actual cost with the log-cost skill. Delete this
      section for small PRs with no plan. -->
 Estimate: 
 
@@ -54,5 +58,6 @@ Estimate:
 ## Screenshots
 
 <!-- Required for any UI change: each changed page, plus a phone-width shot
-     when the layout is responsive (see CLAUDE.md). Delete this section when
-     nothing in the UI changes. -->
+     when the layout is responsive. How to store and embed them:
+     ../blob/develop/team/Development/personas/ui-ux-designer.md#screenshots-in-ui-prs
+     Delete this section when nothing in the UI changes. -->

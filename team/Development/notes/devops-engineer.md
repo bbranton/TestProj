@@ -1,7 +1,7 @@
-# DevOps notes
+# DevOps engineer notes
 
-Lasting lessons for the DevOps persona. See the
-[team workspace](../workspace.md#persona-notes) for how notes work.
+Lasting lessons for the DevOps engineer persona. See the
+[team workspace](/team/workspace.md#persona-notes) for how notes work.
 
 - Canvas portal CI runs only when `canvas-portal/**` or its workflow file
   changes, so docs-only PRs have no checks. Run `ci-paths` to confirm.
@@ -17,14 +17,15 @@ Lasting lessons for the DevOps persona. See the
   branch is auto-deleted, GitHub retargets the next PR to its base, and its
   diff stays clean because the commits are already there. A squash would
   make the next PR show the bottom PR's commits again.
-- The default branch is `main` (renamed from `master`). Workflow
-  `branches:` filters, the `ci-paths` default base, and any deploy
-  environment's branch rule must name `main`. Old clones need
-  `git branch -m master main && git fetch origin && git branch -u origin/main main`.
-- One branch for now: every PR merges to `main`, which is live. After Phase 1
-  deploys, the Team Lead wants a release plan: `develop` for next-phase
-  work, `main` for what's live, and a tag at each release so a patch can
-  branch from it (#30).
+- Two branches: `develop` is the default and integration branch, and
+  `main` is live. PRs target `develop`; only the Team Lead merges
+  `develop` → `main`. A ruleset on `main` restricts deletion, blocks force
+  pushes, and requires a PR (no bypass). Sessions act as the Team Lead's
+  GitHub account, so GitHub can't stop a thread merging to `main`; the rule
+  in CLAUDE.md does. Read rulesets with `gh api repos/bbranton/TestProj/rulesets`.
+- Pages deploys only from `main`; CI runs on PRs and on pushes to `main`
+  and `develop`. `ci-paths` compares against `origin/develop` by default.
+  Tag each release on `main` so a patch can branch from it (#30).
 - Hosting research lives in roadmap D-3, R-13, and R-15: test deploys run
   on Koyeb free plus Neon free (Render free is the fallback), and paid
   production hosting is about $13 to $14 a month plus a domain. Read these
@@ -32,9 +33,13 @@ Lasting lessons for the DevOps persona. See the
 - The branch rename went `master` to `develop` to `main` across two PRs
   (#29). Confirm a shared name with the Team Lead before editing, and list
   every place it lives first.
-- Many PRs append rows to `cost-log.md`, which causes merge conflicts and
-  extra "Merge main" commits. Keep shared append-only files to one owner
-  thread where possible.
+- Many PRs appending rows to `cost-log.md` caused merge conflicts and
+  extra merge commits, so the CFO is now its only writer. Keep shared
+  append-only files to one owner thread where possible.
+- Pages deploys from `main`, but `develop` is the default branch, so the
+  `github-pages` environment must allow `main` (Settings > Environments >
+  github-pages > Deployment branches). Sessions can't read environment or
+  Pages settings, so ask the Team Lead to check.
 
 ## Open items
 
@@ -43,3 +48,7 @@ Lasting lessons for the DevOps persona. See the
   screenshot helper for UI PRs. Needs the Team Lead's OK before building.
 - Phase 1 test deploy (Koyeb plus Neon, nightly encrypted backup) not set
   up yet; see roadmap Phase 1 step 6.
+
+- Live repo gaps raised on #92 for the Team Lead: confirm `github-pages`
+  allows `main`, create the `decision` label, and delete the disabled
+  `develop` ruleset if it is not wanted.

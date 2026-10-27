@@ -3,12 +3,12 @@
 **Status:** Draft · **Owner:** Team Lead · **Last updated:** 2026-10-25
 
 This document says how we check that the portal meets its
-[requirements](02-requirements.md). Automated tests run on every pull
+[requirements](/docs/canvas-portal/02-requirements.md). Automated tests run on every pull
 request. Manual procedures are run before a phase is called done, and their
 results are recorded in section 7.
 
 Like the requirements, tests are built with their phase. Write the automated
-tests listed for the current phase (the repo's [CLAUDE.md](../../CLAUDE.md)
+tests listed for the current phase (the repo's [CLAUDE.md](/CLAUDE.md)
 names it), and run the manual procedures listed for it in
 [Procedures by phase](#procedures-by-phase). Tests marked for a later phase
 are planned here so nothing is forgotten, but are not written early.
@@ -91,8 +91,8 @@ Every pull request must meet these before merge:
 
 - [ ] The PR description lists the requirement IDs it implements, and each
       one is in the current phase in
-      [Requirements by phase](02-requirements.md#requirements-by-phase).
-      The repo's [CLAUDE.md](../../CLAUDE.md) names the current phase.
+      [Requirements by phase](/docs/canvas-portal/02-requirements.md#requirements-by-phase).
+      The repo's [CLAUDE.md](/CLAUDE.md) names the current phase.
 - [ ] CI is green: unit, API, and E2E tests pass, and from Phase 4 the
       accessibility tests too.
 - [ ] New or changed behavior has tests that name the requirement IDs they
@@ -100,7 +100,8 @@ Every pull request must meet these before merge:
 - [ ] **If the PR changes anything a user sees, the PR description includes
       screenshots of each changed screen, with before and after shots when an
       existing screen changes.** Wide and phone widths for layout changes.
-      Store and embed them as the repo's [CLAUDE.md](../../CLAUDE.md) describes.
+      Store and embed them as
+      [Screenshots in UI PRs](/team/Development/personas/ui-ux-designer.md#screenshots-in-ui-prs) describes.
 - [ ] If the PR changes the board or its menus, it says how the change
       compares with Trello's behavior (goal G-3), and any deliberate
       difference is noted.
@@ -209,7 +210,7 @@ checks more than one phase's behavior says which part comes later.
 Each procedure lists the requirements it checks, what's needed first, the
 steps, and the expected result. Screen IDs refer to the
 wireframes in the
-[User Interface Specification](04-ui-specification.md). Steps marked with a
+[User Interface Specification](/docs/canvas-portal/04-ui-specification.md). Steps marked with a
 later phase are skipped until that phase.
 
 ### Procedures by phase
@@ -222,8 +223,8 @@ sandbox).
 
 **Exit criteria (test part).** The tests are done for a phase when every
 procedure listed for it passes, the results are recorded in section 7, and
-no open issue fails a *Must* requirement of the phase. Product and QA
-reports this; the Team Lead calls the phase done, after Management's review
+no open issue fails a *Must* requirement of the phase. The test engineer
+reports this; the Team Lead calls the phase done, after the project manager's review
 of the roadmap's exit criteria. Later work can break earlier screens, so
 each phase also reruns the earlier procedures for any screen it changed.
 
@@ -545,7 +546,7 @@ an issue.
 Each issue names the requirement the step checks. A failure against a
 *Must* requirement of the current phase means the phase's test exit
 criteria are not met. A *Should* or *Could* failure, or a *Close* result in
-TP-13, is recorded; Management and the Team Lead decide whether it waits
+TP-13, is recorded; the project manager and the Team Lead decide whether it waits
 for a later phase. A failing test is fixed, never skipped or weakened
 without the Team Lead.
 

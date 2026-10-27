@@ -80,6 +80,10 @@ says. The request covers:
 - **What it saves:** the design, code, or rework it removes, and roughly
   how much.
 - **What it gives up:** what the user loses, or what the schedule moves.
+  A feature pulled into the current phase names what it displaces, or
+  asks to let the phase grow, as the
+  [phase scope budget](/team/Management/personas/project-manager.md#how-it-works)
+  says.
 - **Docs touched:** each doc the change reaches, with the persona that
   owns it, who adds its impact to the request.
 - **Recommendation:** whether to make the change, and why.

@@ -418,18 +418,15 @@
 
 ## Review the ripple check PR (#112)
 
-- Peer review of the ripple check for #96 at `5e29e9f`, against
-  `develop@94262eb`: **Changes needed**.
+- Peer review of the ripple check for #96 at `0aef974`, against
+  `develop@94262eb`: **Recommend with notes**.
 - The rule's text is sound and matches the Team Lead's answer. Re-ran the
   ripple check on the rule: no other file in `team/`, `.claude/skills/`,
   `CLAUDE.md`, the PR template, or the glossary restates the owner's
-  steps.
-- F-1: the branch is behind `develop` and conflicts in this daily log,
-  where #95's section and #96's both end the file. Merge `develop`, keep
-  both sections, and update *Based on*.
-- F-2: the PR template's *Files that state this rule* line from the
-  DevOps engineer hasn't landed yet. Step 3 of the rule points at it, so
-  hold the merge for it.
+  steps. The DevOps engineer's template heading matches step 3 word for
+  word, and the branch merges cleanly with `develop`.
+- F-1 (minor): *Based on* in the PR description still says `8faa950`;
+  the branch now has `develop@94262eb`.
 - N-1 (optional): the project manager's "Ripple list for each decision"
   covers phase and scope decisions, close in name to the new ripple check.
   No change needed now.

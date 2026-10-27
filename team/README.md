@@ -35,7 +35,8 @@ its own persona; another persona's files get that persona's review.
 | QA | `requirements-engineer.md`, `test-engineer.md`, `cybersecurity-engineer.md` |
 
 Files every team shares stay at the top of `team/`: this README, the
-[review protocol](/team/review-protocol.md), and the [team workspace](/team/workspace.md).
+[review protocol](/team/review-protocol.md), the [team workspace](/team/workspace.md),
+and `retros/`, the project manager's notes from each team retro.
 The [cost log](/team/Management/cost-log.md) is in the Management folder, since the
 CFO keeps it. Threads report their rows and the CFO adds them in batches, so
 the log doesn't cause merge conflicts.
@@ -109,4 +110,9 @@ To add a persona:
    update the **Decisions** section of any persona whose area it takes over.
 
 Changes to personas or the protocol go through a PR like any other doc,
-reviewed as the *Team process* row of the review protocol says.
+reviewed as the *Shared files at the top of `team/`* row of the
+[review protocol](/team/review-protocol.md#who-reviews-what) says.
+
+To gather the team's feedback and suggestions for such changes, the Team
+Lead can call a retro, as the [`retro` skill](/.claude/skills/retro/SKILL.md)
+says.

@@ -91,6 +91,7 @@ it, and the `SKILL.md` says how to run it.
 | `ci-paths` | Says which workflows a branch's changes will trigger. Script: [`Development/scripts/ci_paths.py`](/team/Development/scripts/ci_paths.py) | DevOps engineer |
 | `log-cost` | Reports a thread's real token use and cost to the CFO, who adds it to the [cost log](/team/Management/cost-log.md) | Every thread, when its work is done |
 | `cross-review` | Steps for the owner and for each fresh reviewer thread in a cross-review | Owner and reviewer threads |
+| `retro` | Steps for a team retro the Team Lead calls: each persona's feedback, and the project manager's note in `team/retros/` | Coordinator, every persona, project manager |
 
 To add a skill, copy an existing folder, write a `SKILL.md` whose
 `description` says when to use it, put any script in the owning team's

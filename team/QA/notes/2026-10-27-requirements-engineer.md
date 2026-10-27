@@ -46,3 +46,17 @@
   thread" clashed with option 2 (fix in a separate PR by a new thread).
   The owner thread added "unless the Team Lead picks a fix in a separate
   PR" in 31ae463, matching the architect's fix; checked and kept as is.
+
+## Review of PR #94: the retro skill
+
+- Reviewed the new *Retro* glossary row and the skill's words against
+  `develop@d3df9bf`. The row sits with the team process terms, matches the
+  table's format, and has a change log entry. No requirement IDs touched.
+- F-1, fixed on the PR branch: the meaning said who runs a retro but not
+  what it is for, and named the `retro` skill without linking it, unlike
+  the other team process rows. It now says it is a look back at how well
+  the personas work together and links the skill.
+- F-2 (optional) for the owner, in the skill: say whether a persona's
+  retro feedback goes in its daily log. A point on keeping tokens and
+  student data out of the feedback was already fixed in d044ac7.
+- No decisions made; the PR carries out the Team Lead's decision.

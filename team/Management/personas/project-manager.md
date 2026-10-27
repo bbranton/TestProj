@@ -80,6 +80,11 @@ minimum viable solution.
   says. Work outside the current phase goes to the Team Lead, who picks
   where it goes, as [Follow-up work](/team/review-protocol.md#follow-up-work)
   says.
+- **Retros.** When the Team Lead calls a retro, the project manager
+  combines every persona's feedback into a note in `team/retros/`, checks
+  whether the last retro's changes helped, and raises a decision request
+  for each suggested change, as the [`retro` skill](/.claude/skills/retro/SKILL.md)
+  says. It recommends; the Team Lead picks which changes to make.
 - **Backlog right away.** As soon as the Team Lead sends a finding to the
   backlog, the project manager adds it to the roadmap in a small PR of its
   own, and says in its reply how many items are waiting for the next phase

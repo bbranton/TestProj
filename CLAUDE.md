@@ -24,6 +24,12 @@
   Before editing a doc or starting a cross-review, claim it on the board
   described in the [team workspace](team/workspace.md). Add lasting lessons to the notes
   in the same PR.
+- Each persona keeps one daily log per day with work, named
+  `YYYY-MM-DD-<persona>.md` in its team's `notes/` folder, such as
+  `team/Development/notes/2026-10-27-devops-engineer.md`. Every thread of
+  that persona adds to the same file, and only to its own persona's log.
+  Any persona can read any log. Record decisions in the format in
+  [Daily notes](team/workspace.md#daily-notes).
 - Each team may freely update its own folder, `team/<Team>/` (`notes/`,
   `personas/`, `scripts/`), through a PR like any other change. Shared
   files at the top of `team/` and other teams' folders follow the

@@ -15,7 +15,8 @@ There are three places, for three kinds of information:
 
 Each team has a folder under `team/`, with three subfolders:
 
-- `notes/`: daily notes and important findings.
+- `notes/`: each persona's lasting notes (`<persona>.md`) and daily logs
+  (`YYYY-MM-DD-<persona>.md`).
 - `personas/`: one file for each persona that can work on the team, named
   after the job title, such as `architect.md`.
 - `scripts/`: reusable scripts for jobs the team repeats often.
@@ -33,12 +34,46 @@ after its job title like its persona file, such as
 a persona, read its notes. When you learn something the next thread would
 otherwise have to rediscover, add it in the same PR as your work.
 
-Daily notes go in the same folder as `YYYY-MM-DD.md`, only on days the team
-had tasks. Don't create a daily file for a day with no work.
-
-A note is one or two lines: the rule, then why. Notes that turn out wrong
+A lasting note is one or two lines: the rule, then why. Notes that turn out wrong
 are deleted, not left with a correction. A note that every persona needs
 belongs in [CLAUDE.md](../CLAUDE.md) instead.
+
+## Daily notes
+
+Each persona keeps one daily log per day, in its team's `notes/` folder,
+named `YYYY-MM-DD-<persona>.md` with the persona's file name, such as
+`Development/notes/2026-10-27-devops-engineer.md`.
+
+- **One file per day per persona.** Every thread working as that persona
+  that day adds to the same file. Two DevOps engineer threads share
+  `2026-10-27-devops-engineer.md`; a Developer thread writes to
+  `2026-10-27-developer.md`, never to another persona's log.
+- **Only on days with work.** Don't create a log for a day the persona had
+  no tasks.
+- **Add, don't rewrite.** Read the file just before you change it, add your
+  entries at the end, and leave other threads' entries as they are. Logs
+  go in through a PR like any other change; if two PRs add to the same log,
+  keep both sets of entries when you merge.
+- **Open to everyone.** Logs aren't private. Any persona, in any team, can
+  read any other persona's logs when it helps.
+
+Start each entry with a heading naming the thread's task and its PR, then
+short bullets on what was done. Record each decision in this form, so a
+search for `Decision:` finds every one:
+
+```markdown
+### Decision: <one-line summary>
+
+- **Date:** YYYY-MM-DD
+- **Decided by:** Team Lead, or the persona that owns the call
+- **Options:** each option considered, in a few words
+- **Recommendation:** what the persona recommended, and why
+- **Outcome:** what was decided, if it differs from the recommendation
+- **Links:** PR, issue, thread, or doc sections
+```
+
+Lessons that will matter beyond the day go in the persona's lasting notes
+file, not only in the daily log.
 
 ## Team skills
 

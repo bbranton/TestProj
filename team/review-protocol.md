@@ -35,7 +35,9 @@ otherwise.
 reviewer's latest verdict is **Recommend** or **Recommend with notes**, and
 CI is green on the latest commit, the owner thread merges the PR itself and
 posts the link in its thread (Team Lead, 2026-10-27, N-1 on
-[#141](https://github.com/bbranton/TestProj/pull/141)).
+[#141](https://github.com/bbranton/TestProj/pull/141)). **Green** means
+every check on the latest commit has finished and none failed; a skipped
+check counts as passed.
 
 **`develop` → `main`.** This is a batched release of what's on `develop`.
 Who opens and merges it is in [Branches](/CLAUDE.md#branches).
@@ -259,8 +261,9 @@ Team Lead, and wins where the two differ.
    notes** (minor findings that may be fixed later), or **Changes needed**.
    After fixes, the reviewer checks only the fixes and updates its verdict.
 5. **Merge.** When every latest verdict is Recommend or Recommend with
-   notes, and CI is green on the latest commit, the owner merges into
-   `develop`.
+   notes, and CI is green on the latest commit, as
+   [Two levels of review](#two-levels-of-review) says, the owner merges
+   into `develop`.
 
 ### Who fixes a finding
 

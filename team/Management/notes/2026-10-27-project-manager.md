@@ -150,11 +150,12 @@
   `develop`, with reviewers re-checking fixes.
 - **Links:** #82, #76 (Team Lead's comment), `team/review-protocol.md#who-reviews-what`
 
-## Old follow-up issues after #80
+## Old follow-up issues after #80 (#84)
 
 - Raised the X-1 decision request from the #80 review: what happens to the
-  23 issues still open from the old follow-up rule. The Team Lead chose to
-  leave them open.
+  23 open issues, most of them opened under the old follow-up rule. The
+  Team Lead chose to leave them open. The `decision` issue (#46) and the
+  test-plan issues among them were never follow-ups and stay as they are.
 
 ### Decision: Issues opened under the old follow-up rule stay open until done
 
@@ -167,4 +168,4 @@
 - **Outcome:** leave them open until done. Only new review follow-ups use
   the roadmap backlog. `decision` and test-plan issues were never in
   question.
-- **Links:** #80, `docs/canvas-portal/01-roadmap.md#9-backlog`
+- **Links:** #80, #84, `docs/canvas-portal/01-roadmap.md#9-backlog`

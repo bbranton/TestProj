@@ -16,15 +16,19 @@ the design differ, the design wins and the Developer fixes this file.
 ## Tools CI enforces
 
 CI runs these on every PR that touches `canvas-portal/`, as
-[`canvas-portal-ci.yml`](/.github/workflows/canvas-portal-ci.yml) says. A
-PR doesn't merge while any of them fails. Run the same commands locally
-before pushing, so CI only confirms what you already saw.
+[`canvas-portal-ci.yml`](/.github/workflows/canvas-portal-ci.yml) says.
+Don't merge a PR while any of them fails. GitHub doesn't block the merge,
+since no check is required yet, so the owner checks them before merging.
+Run the same commands locally before pushing, so CI only confirms what you
+already saw.
 
 | Part | Command | What it catches |
 |------|---------|-----------------|
 | Backend | `pip install -e ".[dev]"`, then `pytest` in `canvas-portal/backend` | Failing backend tests |
 | Frontend | `npm ci`, then `npm test` in `canvas-portal/frontend` | Failing Vitest tests |
 | Frontend | `npm run build` | Type errors, through `tsc -b` with `strict` on, and a broken Vite build |
+
+CI uses Python 3.12 and Node 22; use the same locally.
 
 The [docs check](/.github/workflows/docs-check.yml) also runs on every PR:
 `python3 team/Development/scripts/docs_check.py`. It fails on a broken

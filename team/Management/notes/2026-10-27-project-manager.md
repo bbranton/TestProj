@@ -338,3 +338,36 @@
   and #26 now show in the security theme.
 - Left for the owner: S-2 and #103 drop the UI spec from the developer's
   ask and name no UI spec reviewer. Verdict Recommend with notes.
+## Combine the process retro (team/retros/2026-10-27-process.md)
+
+- Combined all nine personas' process feedback into
+  [the retro note](/team/retros/2026-10-27-process.md), following the
+  `retro` skill. Used the retro date `2026-10-27-process` so it doesn't
+  collide with the docs retro run the same day.
+- First retro, so nothing earlier to check.
+- Raised seven decision requests, all recommended: #95 fresh thread per
+  PR, #96 ripple check on rule changes, #97 one place for the potential
+  data breach rule, #98 batch process changes during Phase 1, #99 notify
+  for wording-only persona changes, #100 docs check in CI, #102 daily CFO
+  batch thread.
+- No decision was made here: each waits on the Team Lead.
+
+## Review the process retro note (#108)
+
+- Peer review of `team/retros/2026-10-27-process.md` against the `retro`
+  skill and all nine feedback files: **Changes needed**.
+- All seven suggestions map one to one to decision requests #95 to #100
+  and #102, each with a recommendation and the files it changes. #101 is
+  the docs retro's S-1.
+- F-1 to F-4 are attribution and coverage fixes: process churn was raised
+  by eight personas, not nine (the DevOps engineer didn't); the
+  cybersecurity engineer's counterpoint that one reused thread stayed
+  cheap for small reviews; the architect's fixes were on #88, #89, and
+  #91; and two missing points (the cost log for planning, the UI/UX
+  designer's #54 self-review). F-5, an unlinked claim, is optional.
+- Lesson: when combining feedback, check each "raised by" list against
+  the files, one persona at a time, rather than from memory of the
+  themes.
+- The owner fixed F-1 to F-5 in `ab79936`; re-checked at `33a3f79` and
+  changed the verdict to Recommend.
+- No new decision: the retro's decisions wait on the Team Lead.

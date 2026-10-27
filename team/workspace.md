@@ -25,7 +25,8 @@ Each persona may update its own files in its team's folder (its persona
 file, notes, and daily log) through a PR like any other change, reviewed
 only by a peer from its own persona; see the *Only your own persona's
 area* row of the [review protocol](/team/review-protocol.md#who-reviews-what). Another persona's
-files, even in the same team, get that persona's review, and a team script
+files, even in the same team, are reviewed as
+[Who reviews what](/team/review-protocol.md#who-reviews-what) says, and a team script
 or skill gets a review from the other personas who use it. Shared files at
 the top of `team/` and other teams' folders are not a persona's to change
 alone.
@@ -139,7 +140,9 @@ Rules:
 3. **Stale claims.** A claim older than two days with no open PR can be
    removed by anyone. Say so in your thread.
 4. **Notes are for handoffs**, such as advice or a question for whoever
-   picks up a persona next. The persona it's for deletes the note once
+   picks up a persona next, or a
+   [wording-only change](/team/review-protocol.md#wording-only-changes-notify-the-persona)
+   to its persona file. The persona it's for deletes the note once
    handled. Anything lasting moves into that persona's notes file.
 
 A session outside this project has no board. It should check open PRs for

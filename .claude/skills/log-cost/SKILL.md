@@ -5,9 +5,10 @@ description: Report what this thread cost to the CFO, from the session's own usa
 
 # Report a thread's cost
 
-Only the [CFO persona](../../../team/Management/personas/cfo.md) edits
-`team/Management/cost-log.md`. Every other thread reports its row and doesn't
-open a cost-log PR or add rows to its own PR.
+Report your row to the [CFO persona](../../../team/Management/personas/cfo.md)
+instead of opening a cost-log PR or adding rows to your own PR. The CFO adds
+reported rows to `team/Management/cost-log.md` in batches, so parallel PRs
+don't conflict on the log.
 
 1. Look up this session's usage: call the `get_session` tool of the
    `claude-code-remote` server with no `session_id`. The numbers are under

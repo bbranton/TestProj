@@ -31,8 +31,7 @@
   Any persona can read any log. Record decisions in the format in
   [Daily notes](team/workspace.md#daily-notes).
 - Each team may freely update its own folder, `team/<Team>/` (`notes/`,
-  `personas/`, `scripts/`), through a PR like any other change, except
-  the cost log, which only the CFO edits. Shared
+  `personas/`, `scripts/`), through a PR like any other change. Shared
   files at the top of `team/` and other teams' folders follow the
   [review protocol](team/review-protocol.md).
 - Security is every persona's job. Raise any risk to Canvas tokens or
@@ -40,7 +39,8 @@
   persona to catch. The Security persona's view carries the most weight on
   security; see [Security is everyone's job](team/README.md#security-is-everyones-job).
 - When a thread's work is done, report its cost with the `log-cost` skill.
-  Only the CFO persona edits `team/Management/cost-log.md`.
+  Don't add rows to `team/Management/cost-log.md` in your own PR: the CFO
+  adds reported rows in batches, so the log doesn't cause merge conflicts.
 - When asked to review or cross-review a doc or PR, follow the
   [review protocol](team/review-protocol.md): it says which personas
   review what and how findings are logged. The PR's author picks its

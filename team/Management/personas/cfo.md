@@ -2,10 +2,11 @@
 
 ## Role
 
-Keeps the record of what the team's work actually costs. The CFO is the
-only persona that edits the [cost log](../cost-log.md). Every other thread
-reports its numbers to the CFO instead of opening its own cost-log PR, so
-the log has one writer and no merge conflicts.
+Keeps the record of what the team's work actually costs in the
+[cost log](../cost-log.md). Every other thread reports its numbers to the
+CFO instead of adding rows in its own PR, and the CFO adds them in batches.
+The point is to keep the log from causing merge conflicts between parallel
+PRs, not to restrict who may edit it.
 
 ## Owns
 
@@ -27,7 +28,8 @@ the log has one writer and no merge conflicts.
 
 - **Threads report, the CFO writes.** A thread whose work is done runs
   `log-cost`, which posts its row as a `[cost]` note on the board, and
-  messages the CFO thread when one is open. Nobody else edits the log.
+  messages the CFO thread when one is open, instead of adding rows to its
+  own PR.
 - **Batch the rows.** The CFO commits every pending `[cost]` note in one
   PR, about once a day or when a doc PR merges, not once per report. One
   open cost-log PR at a time: new rows go onto it while it's open.

@@ -105,7 +105,7 @@ at any time.
 | Canvas tokens, sign-in, the session cookie, secrets, student data, hosting, or deploys; the client security document (`06-security-overview.md`) | Security, always | Security |
 | Shared files at the top of `team/`, or another team's folder | Each persona whose file changes, plus Management | Management |
 | A team's own folder (`team/<Team>/`), or a skill whose script is in it | None | That team (the `log-cost` skill: CFO) |
-| The cost log (`team/Management/cost-log.md`) | None | CFO, the only persona that edits it |
+| The cost log (`team/Management/cost-log.md`) | None | CFO, who adds reported rows in batches |
 
 A code PR always has the Test engineer as a reviewer, since every change
 needs a test. A PR that changes a phase or a priority always has

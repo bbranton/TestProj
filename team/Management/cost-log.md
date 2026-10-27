@@ -1,10 +1,11 @@
 # Cost log
 
 What each thread actually cost, so Management can estimate new work from
-real numbers. The [CFO](personas/cfo.md) owns this file and is the only
-persona that edits it. Every other thread reports its row with the
-[`log-cost` skill](../../.claude/skills/log-cost/SKILL.md), and the CFO
-commits the reported rows in batches. How estimates use the log is in
+real numbers. The [CFO](personas/cfo.md) keeps this file. Every other
+thread reports its row with the
+[`log-cost` skill](../../.claude/skills/log-cost/SKILL.md) instead of adding
+it in its own PR, and the CFO commits the reported rows in batches, so the
+log doesn't cause merge conflicts. How estimates use the log is in
 [Management's cost plans](personas/project-manager.md#cost-plans).
 
 ## Size units
@@ -21,6 +22,10 @@ Size a piece of work by what an agent can count:
 
 Tokens are in thousands (K) or millions (M). *Cache read* is context the
 thread re-read on each turn, and is usually most of the cost.
+
+Rows before 2026-10-27 name a *Product and QA* persona. That persona was
+later split into the requirements engineer and the test engineer, both in
+the QA team. The old rows are kept as written.
 
 | Date | PR | Thread | Persona | Threads / PRs / rounds / files | Output | Cache read | Cache write | Cost (USD) | Notes |
 |------|----|--------|---------|--------------------------------|--------|------------|-------------|------------|-------|

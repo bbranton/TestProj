@@ -619,3 +619,13 @@
   committed by their own personas.
 - The `retro` skill is left alone: #121 (#98) is editing it.
 - No new decision: #97 is already answered and logged in #113.
+- Reviews: CFO Recommend (F-1, `log-cost` restated the CFO's *How it
+  works*, fixed by the CFO in `0469fb5`). Requirements engineer Recommend
+  (F-1 and F-2 in the glossary, fixed by the requirements engineer in
+  `4e348c7`; X-1, "decision request" in `cross-review` step 6, fixed in
+  `191b99f`). Project manager peer Recommend with notes (F-1, link the
+  merge condition, fixed in `de17564`). Cybersecurity engineer Recommend
+  with notes (F-1, a template cue to name the "always" row, fixed here).
+- For PR 5: "assign the Team Lead, don't request review" is stated in both
+  CLAUDE.md *Branches* and the protocol's *Two levels of review*. Pick one
+  home (PM peer F-2 on #122).

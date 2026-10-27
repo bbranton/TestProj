@@ -14,15 +14,13 @@ reviewer.
 1. Check the [team board](../../../team/workspace.md#the-board). If
    another thread already claimed this review, stop and say so. Otherwise
    claim it.
-2. Find the recommended reviewers in the protocol's *Who reviews what*
-   table. Add optional reviewers by Management's rule (does the topic call
-   for another persona?), and fill in the *Persona review* section of the
-   PR template with a reason for each.
-3. Send the coordinator the PR and its recommended reviewers. The
-   coordinator recommends reviewers to the Team Lead and starts a fresh
-   thread only for each one the Team Lead confirms. Don't write the reviews
-   yourself. If the Team Lead confirms none, the Team Lead reviews the PR
-   directly.
+2. Merge `develop` into the branch. Pick the reviewers from the
+   protocol's *Who reviews what* table: each persona whose area the PR
+   touches. Fill in the *Persona review* section of the PR template with
+   a reason for each.
+3. Send the coordinator the PR and its reviewers. The coordinator starts a
+   fresh thread for each one. Don't write the reviews yourself. With no
+   reviewers, merge the PR.
 4. Answer or fix each finding as it arrives. For a question back to a
    reviewer, ask on the PR comment, then message that reviewer thread with
    the link. After two rounds without agreement, mark the finding
@@ -31,19 +29,21 @@ reviewer.
    reviewer thread to re-review.
 6. Post the combined findings table, with anything that needs the Team
    Lead at the top. List each issue the reviewers opened in the PR's
-   *Follow-ups opened* section. When the PR merges or closes, tell each reviewer thread,
-   report your cost with the `log-cost` skill, and release the claim on the
-   board.
+   *Follow-ups opened* section, and your `### Decision:` log entries.
+   When every verdict is Recommend or Recommend with notes, merge into
+   `develop`. Then tell each reviewer thread, release the claim on the
+   board, and report your cost with the `log-cost` skill.
 
 ## As a reviewer thread
 
-1. Read only your persona file, your team's notes in `team/<Team>/notes/`, the
-   review protocol, the PR, and the docs the PR changes or names. Don't read the owner's thread or the other
+1. Read only your persona file, your persona's notes and recent daily logs
+   in your team's `notes/` folder, the review protocol, the PR, and the docs
+   on `develop` that the PR changes or names. Cite `develop@<sha>`. Don't read the owner's thread or the other
    reviews before writing yours.
 2. Use the team skills where they fit: `trace-requirement` for requirement
    IDs and test coverage, `ci-paths` for whether CI runs.
 3. For work you find that is outside this PR, open a GitHub issue that
-   links the PR, with the owning persona's `persona: <name>` label and
+   links the PR, with the owning department's label (such as `team: QA`) and
    `needs-triage` (plus `potential-breach` when Security marks it one), and log it as a finding with status "Moved to #issue".
    See [Follow-up work](../../../team/review-protocol.md#follow-up-work).
 4. Post one PR review headed with your persona and verdict, such as

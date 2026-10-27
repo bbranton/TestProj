@@ -11,15 +11,16 @@
 
 **Owner:** <!-- the persona that wrote this PR -->
 
-Recommended reviewers, from *Who reviews what* in
-[the review protocol](../blob/main/team/review-protocol.md#who-reviews-what).
-The Team Lead ticks each reviewer to run, or ticks *Team Lead review only*.
+**Based on:** `develop@<sha>` <!-- merge develop in before asking for review -->
 
-<!-- One line per reviewer, with why. Add optional reviewers the same way.
-     Add Security when the PR touches tokens, sign-in, secrets, or student
-     data, and say which. -->
-- [ ] Persona: reason
-- [ ] Team Lead review only
+Reviewers: each persona whose area this PR touches, from *Who reviews what*
+in [the review protocol](../blob/develop/team/review-protocol.md#who-reviews-what).
+"None" when it touches no other persona's area.
+
+<!-- One line per reviewer, with why. Security always reviews anything
+     touching tokens, sign-in, secrets, student data, hosting, or deploys;
+     say which. Assign the Team Lead, but don't request their review. -->
+- Persona: reason
 
 ### Verdicts
 

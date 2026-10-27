@@ -302,7 +302,7 @@
   changed the verdict to Recommend.
 - No new decision: #94 carries out the Team Lead's approval.
 
-## Combine the docs retro (PR to come)
+## Combine the docs retro (#109)
 
 - Combined the nine personas' docs retro feedback into
   [the 2026-10-27 docs retro note](/team/retros/2026-10-27-docs.md). The
@@ -326,3 +326,15 @@
   so the Team Lead answers six questions instead of nine. The CFO's
   fresh-thread and cost-row points went to the process retro.
 - **Links:** #101, #103, #104, #105, #106, #107
+
+## Peer review of the docs retro note (#109)
+
+- Checked the note against all nine feedback files and decision issues
+  #101 and #103 to #107. Every suggestion maps to one issue; the CFO's
+  fresh-thread and cost-row points are in the process retro (#102).
+- Fixed three attribution and evidence gaps in the note: the developer
+  didn't raise the scope churn theme, the UI/UX designer raised the gaps
+  that reached the Team Lead, and the open potential data breaches #25
+  and #26 now show in the security theme.
+- Left for the owner: S-2 and #103 drop the UI spec from the developer's
+  ask and name no UI spec reviewer. Verdict Recommend with notes.

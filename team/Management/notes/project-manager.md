@@ -1,6 +1,6 @@
-# Management notes
+# Project manager notes
 
-Lasting lessons for the Management persona. See the
+Lasting lessons for the project manager persona. See the
 [team workspace](../../workspace.md#persona-notes) for how notes work.
 
 - The current phase is the line in [CLAUDE.md](../../../CLAUDE.md). Only the
@@ -22,11 +22,11 @@ Lasting lessons for the Management persona. See the
   (2026-10-27) because they left too many loose ends.
 - Price hosting per phase, not only for the final deploy. The Team Lead
   wants $0 until real users arrive, so test deploys use free tiers (D-3)
-  and the paid host waits for Phase 4. Ask DevOps to research free options
+  and the paid host waits for Phase 4. Ask the DevOps engineer to research free options
   before offering a paid one.
 - A potential data breach never goes on the backlog: it is fixed in the
   PR, or first in the current phase and before the next deploy, tracked in
-  Security's register meanwhile. Check that register at every phase
+  the cybersecurity engineer's register meanwhile. Check that register at every phase
   boundary and before every deploy. Only the Team Lead can delay one.
 - Before any deploy that puts real tokens online, the roadmap lists its
   go-live conditions (incident plan, key handling, secret scanning, cookie
@@ -51,8 +51,12 @@ Lasting lessons for the Management persona. See the
   confirmation of every PR's reviewers too slow once PRs were small.
 - Every PR has at least one reviewer: a fresh thread of the owner's own
   persona as a peer, even for an own-area PR (2026-10-27, #82). When a
-  team thread owns a PR, Management is often the peer, since it owns most
+  team thread owns a PR, the project manager is often the peer, since it owns most
   shared process files. Budget one reviewer thread for every PR.
 - When a persona is split or renamed, relabel its open issues in the same
   pass. Setting a missing label on an issue creates it, grey and with no
   description, so give it a color and description afterward if they matter.
+- A persona rename isn't done until the `persona:` issue labels and the
+  prose headers of other personas' files (such as the cost log's intro)
+  match. Grep for the old name outside change logs, daily logs, and old
+  finding IDs, and check the labels on open issues (#83).

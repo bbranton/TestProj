@@ -18,7 +18,7 @@ whose area this PR touches, from *Who reviews what* in
 [the review protocol](../blob/develop/team/review-protocol.md#who-reviews-what).
 Never "None": every PR has at least the peer.
 
-<!-- One line per reviewer, with why. Security always reviews anything
+<!-- One line per reviewer, with why. The cybersecurity engineer always reviews anything
      touching tokens, sign-in, secrets, student data, hosting, or deploys;
      say which. Assign the Team Lead, but don't request their review. -->
 - Peer (owner's persona, or for a team thread the persona owning most changed files): precaution, every PR
@@ -38,7 +38,7 @@ Never "None": every PR has at least the peer.
 ## Backlog items
 
 <!-- Each finding marked Backlog (outside the current phase or too big for
-     this PR), with the persona that owns it, for Management to add to the
+     this PR), with the persona that owns it, for the project manager to add to the
      roadmap backlog. "None" when there are none. No GitHub issues; see
      "Follow-up work" in the review protocol. -->
 - None

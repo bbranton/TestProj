@@ -1,6 +1,6 @@
-# UI/UX notes
+# UI/UX designer notes
 
-Lasting lessons for the UI/UX persona. See the
+Lasting lessons for the UI/UX designer persona. See the
 [team workspace](../../workspace.md#persona-notes) for how notes work.
 
 - Every UI PR needs screenshots of each changed page, committed under

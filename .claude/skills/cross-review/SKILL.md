@@ -55,7 +55,7 @@ reviewer.
    too. See
    [Who fixes a finding](../../../team/review-protocol.md#who-fixes-a-finding).
 4. Post one PR review headed with your persona and verdict, such as
-   "**DevOps review: Changes needed**", with findings as inline comments.
+   "**DevOps engineer review: Changes needed**", with findings as inline comments.
    Write it fully first, then post it only while you hold the `[posting]`
    line for this PR on the board, as
    [Posting reviews one at a time](../../../team/review-protocol.md#posting-reviews-one-at-a-time)

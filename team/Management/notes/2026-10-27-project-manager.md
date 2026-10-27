@@ -149,3 +149,27 @@
   most of the changed files. "Every push" is read as every PR into
   `develop`, with reviewers re-checking fixes.
 - **Links:** #82, #76 (Team Lead's comment), `team/review-protocol.md#who-reviews-what`
+
+## Review the job-title rename (#83)
+
+- Reviewed #83 as the peer and the shared-files reviewer. The rename is
+  complete in the persona files, team rules, and Canvas portal docs;
+  findings were a missed rename in the cost log's intro and one in the
+  security register, the `persona:` issue labels, and mixed capitals for
+  persona names mid-sentence.
+- Fixed the capitals in this persona's *Does not decide* list, and added
+  the rename lesson to the notes.
+- #83's owner is a team thread with no persona log, so the decision is
+  recorded here.
+
+### Decision: Personas are named by job title
+
+- **Date:** 2026-10-27
+- **Decided by:** Team Lead
+- **Options:** keep the area names (Management, Architecture, UI/UX,
+  DevOps, Security); name personas by job title
+- **Recommendation:** none asked; the Team Lead's own comment
+- **Outcome:** Project manager, Architect, UI/UX designer, DevOps engineer,
+  and Cybersecurity engineer. Management, QA, and Development stay as team
+  names. History (change logs, daily logs, old finding IDs) is not renamed.
+- **Links:** #83, #76 (Team Lead's comment)

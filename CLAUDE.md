@@ -15,8 +15,8 @@
 
 ## Team personas
 
-- When asked to act as a persona (Management, Requirements engineer, Test engineer, Architecture,
-  Developer, UI/UX, DevOps, Security, or CFO), read its file in its team's `personas/` folder
+- When asked to act as a persona (Project manager, Requirements engineer, Test engineer, Architect,
+  Developer, UI/UX designer, DevOps engineer, Cybersecurity engineer, or CFO), read its file in its team's `personas/` folder
   (see the [team README](team/README.md)) first, and stay inside what it
   owns.
 - Before persona work, read the notes in its team's `notes/` folder
@@ -40,7 +40,7 @@
   the top of `team/`, and other teams' folders follow the review protocol.
 - Security is every persona's job. Raise any risk to Canvas tokens or
   student data you see, in any area, and never leave it for another
-  persona to catch. The Security persona's view carries the most weight on
+  persona to catch. The cybersecurity engineer's view carries the most weight on
   security; see [Security is everyone's job](team/README.md#security-is-everyones-job).
 - When a thread's work is done, report its cost with the `log-cost` skill.
   Don't add rows to `team/Management/cost-log.md` in your own PR: the CFO

@@ -40,7 +40,7 @@ docs it owns in [Who reviews what](#who-reviews-what). Teams hold several person
 change to another persona's files in the same team folder is reviewed by
 that persona, and a team script or skill by the other personas who use it.
 The "always" rules below still apply: a code PR always has the Test
-engineer, and anything touching Security's area always has Security.
+engineer, and anything touching the cybersecurity engineer's area always has the cybersecurity engineer.
 
 **`develop` → `main`.** This is a batched release of what's on `develop`.
 Any persona may open it: it assigns the Team Lead and
@@ -64,10 +64,10 @@ That is why a persona can merge into `develop` without the Team Lead.
 - **A decision request** states the question, the options, a
   recommendation, and the docs it changes. Each persona whose area it
   affects adds its impact: which of its files change, and how. Requests go
-  in Management's
+  in the project manager's
   [decision register](../docs/canvas-portal/01-roadmap.md#5-open-decisions)
   or in a GitHub issue labeled `decision`.
-- **The Team Lead answers in batches.** Management keeps the register and
+- **The Team Lead answers in batches.** The project manager keeps the register and
   brings it to the Team Lead. Only after an answer do the owners make their
   edits, each in its own PR, citing the decision.
 - **A PR that needs a new decision stops.** The owner raises a decision
@@ -109,15 +109,15 @@ at any time.
 
 | If the PR touches | Reviewer | Owner of the area |
 |-------------------|----------|-------------------|
-| Phases, scope, priorities, risks, or the roadmap (`01-roadmap.md`) | Management | Management |
+| Phases, scope, priorities, risks, or the roadmap (`01-roadmap.md`) | Project manager | Project manager |
 | Requirement wording, IDs, or the glossary (`02-requirements.md`, `glossary.md`) | Requirements engineer | Requirements engineer |
 | What needs testing, the test plan (`05-test-plan.md`), or test code | Test engineer | Test engineer |
-| Structure, data, APIs, new dependencies, or the design (`03-design.md`) | Architecture | Architecture |
-| Any page, screen, style, on-screen wording, accessibility, or the UI specification (`04-ui-specification.md`) | UI/UX | UI/UX |
+| Structure, data, APIs, new dependencies, or the design (`03-design.md`) | Architect | Architect |
+| Any page, screen, style, on-screen wording, accessibility, or the UI specification (`04-ui-specification.md`) | UI/UX designer | UI/UX designer |
 | App code | Developer | Developer |
-| CI, build, install scripts, repo settings, or the top-level `README.md` | DevOps | DevOps |
-| Canvas tokens, sign-in, the session cookie, secrets, student data, hosting, or deploys; the client security document (`06-security-overview.md`) | Security, always | Security |
-| Shared files at the top of `team/`, or another team's folder | Each persona whose file changes, plus Management | Management |
+| CI, build, install scripts, repo settings, or the top-level `README.md` | DevOps engineer | DevOps engineer |
+| Canvas tokens, sign-in, the session cookie, secrets, student data, hosting, or deploys; the client security document (`06-security-overview.md`) | Cybersecurity engineer, always | Cybersecurity engineer |
+| Shared files at the top of `team/`, or another team's folder | Each persona whose file changes, plus the project manager | Project manager |
 | Another persona's files in your own team's folder | That persona | That persona |
 | A team script or its skill (see [Team skills](workspace.md#team-skills)) | The other personas who use it | The team whose `scripts/` folder holds it |
 | Only your own persona's area: its persona file, notes, and daily log, or a doc it owns in this table | The peer reviewer only | That persona |
@@ -125,7 +125,7 @@ at any time.
 
 A code PR always has the Test engineer as a reviewer, since every change
 needs a test. A PR that changes a phase or a priority always has
-Management.
+the project manager.
 
 Each reviewer looks through its own lens, using the review checklist in its
 persona file, and checks that the words match the
@@ -145,14 +145,14 @@ acceptable for its area.
 | Decision | Decided by | Decision request to the Team Lead for |
 |----------|------------|-------------------------|
 | Business goals, scope and phases, hosting and domains, cost, team structure and process | Team Lead | Always |
-| Feature priorities within a phase, the order of work, the roadmap backlog, keeping the decision register, rating risks. A potential data breach is always critical and must-fix | Management | Every scope, roadmap, or phase change; adding or dropping a goal; accepting a risk instead of reducing it |
+| Feature priorities within a phase, the order of work, the roadmap backlog, keeping the decision register, rating risks. A potential data breach is always critical and must-fix | Project manager | Every scope, roadmap, or phase change; adding or dropping a goal; accepting a risk instead of reducing it |
 | How a requirement is worded and traced | Requirements engineer | Adding, removing, or moving a requirement between phases |
 | How it's tested, and whether tests pass | Test engineer | Calling a phase done; removing or weakening a test |
-| Design: structure, data, APIs, technology, security design | Architecture | A new dependency, service, or data store; how the Canvas token is stored or sent; starting a transition plan |
-| Writing code, coding standards, bug fixes | Developer | Design changes go to Architecture first |
-| Screens, layout, wording, accessibility | UI/UX | A new screen or a change to the main flow |
-| CI, tooling, build and install scripts, branch mechanics, dependency integration | DevOps | Changes to the live app or hosting; a paid service; a new secret store; new access |
-| Whether a weakness is a vulnerability, its severity, and whether it is a potential data breach; the client security document | Security | Accepting a vulnerability instead of fixing it; publishing the client security document; telling anyone outside the team about a suspected leak |
+| Design: structure, data, APIs, technology, security design | Architect | A new dependency, service, or data store; how the Canvas token is stored or sent; starting a transition plan |
+| Writing code, coding standards, bug fixes | Developer | Design changes go to the architect first |
+| Screens, layout, wording, accessibility | UI/UX designer | A new screen or a change to the main flow |
+| CI, tooling, build and install scripts, branch mechanics, dependency integration | DevOps engineer | Changes to the live app or hosting; a paid service; a new secret store; new access |
+| Whether a weakness is a vulnerability, its severity, and whether it is a potential data breach; the client security document | Cybersecurity engineer | Accepting a vulnerability instead of fixing it; publishing the client security document; telling anyone outside the team about a suspected leak |
 | What goes in the cost log | CFO | Changing the log's columns or how threads report cost |
 | Merging a PR into `develop` | The PR's owner, once its reviewers recommend it | Never: the PR only carries out decisions already made |
 | Approving and merging the `develop` → `main` release PR | Team Lead | Always |
@@ -167,7 +167,7 @@ what it defers and to whom, and what needs the Team Lead.
    why.
 2. **Reviewers review.** Each reviewer reads the change against its
    checklist and posts one review headed with its persona and verdict,
-   such as "**DevOps review: Changes needed**".
+   such as "**DevOps engineer review: Changes needed**".
 3. **Owner fixes.** The owner pushes a fix for each finding right away, or
    replies with why not.
 4. **Verdict.** Each reviewer ends with **Recommend**, **Recommend with
@@ -221,7 +221,7 @@ When a finding needs a change in another persona's files:
   the Team Lead.
 - A finding that could expose a token, a session, or a student's data
   starts with **Potential data breach:**, whichever persona finds it, as
-  the [Security persona](QA/personas/cybersecurity-engineer.md#potential-data-breach)
+  the [cybersecurity engineer persona](QA/personas/cybersecurity-engineer.md#potential-data-breach)
   says. It is never Won't fix without the Team Lead.
 
 ## Follow-up work
@@ -233,15 +233,15 @@ somewhere nobody looks. Work a review uncovers goes one of two places:
    file fixes it here, as [Who fixes a finding](#who-fixes-a-finding) says.
 2. **The backlog, when it's outside the current phase or too big for this
    PR.** The finding's status is "Backlog", and the owner lists it in the
-   PR's *Backlog items* section before merging. Management adds each item
+   PR's *Backlog items* section before merging. The project manager adds each item
    to the [backlog](../docs/canvas-portal/01-roadmap.md#9-backlog) in the
    roadmap, in its next roadmap PR, with a `B-` ID, the PR it came from,
    and the persona that owns it. Backlog items don't block the PR or change
    the verdict.
 
-Management reviews the backlog with the Team Lead at every phase boundary,
+The project manager reviews the backlog with the Team Lead at every phase boundary,
 recommending a phase or dropping each item. An item whose suggested phase is
-the current one goes to the Team Lead in Management's next decision batch
+the current one goes to the Team Lead in the project manager's next decision batch
 instead of waiting for the boundary. The Team Lead plans items into a phase;
 nobody starts on a backlog item before then.
 
@@ -249,12 +249,12 @@ nobody starts on a backlog item before then.
 
 - **One the PR adds** is always fixed in that PR before merge.
 - **One already on `develop`** that the review uncovers is fixed in the PR
-  by the persona that owns the file. Only if Security agrees the fix is too
+  by the persona that owns the file. Only if the cybersecurity engineer agrees the fix is too
   big for that PR does it wait, as the first work of the current phase,
   fixed before the next deploy.
 - **Every one not yet fixed** goes in the
   [security register](QA/notes/cybersecurity-engineer.md#security-register)
-  with the gate *before the next deploy*, before the PR merges. Management
+  with the gate *before the next deploy*, before the PR merges. The project manager
   checks the register at every phase boundary and before every deploy. Only
   the Team Lead can delay one.
 
@@ -263,7 +263,7 @@ nobody starts on a backlog item before then.
 When an owner and a reviewer disagree, each states its case in one or two
 sentences in the findings table, and the finding is marked **Waiting on the
 Team Lead**. Personas don't overrule each other. Inside its own area the
-owner's view counts most, except on security, where Security's counts
+owner's view counts most, except on security, where the cybersecurity engineer's counts
 most. After two rounds on the same point without agreement, the owner
 marks the finding **Waiting on the Team Lead**.
 
@@ -298,7 +298,7 @@ first, then:
 1. Check the [team board](workspace.md#the-board) for a `[posting]` line on
    the same PR, and wait for it to go. A line older than an hour is stale.
 2. Add your own, such as
-   `- [posting] DevOps · review of PR #12 · 2026-10-25 21:30`, create the
+   `- [posting] DevOps engineer · review of PR #12 · 2026-10-25 21:30`, create the
    draft review, add the comments, and submit.
 3. Delete your line as soon as the review is submitted.
 

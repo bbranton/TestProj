@@ -62,8 +62,11 @@ the requirements commit it matches. Run
 `trace-requirement --untested <phase>` before calling a phase's test plan
 complete.
 
-When a review of another doc turns up a change for the test plan, make it
-on your own open PR, or batch it into your next one.
+When a review of another persona's PR turns up a change for the test
+plan, commit it to that PR's branch, as
+[Fixes by another persona](../../review-protocol.md#fixes-by-another-persona)
+says. If it's outside the current phase or too big for that PR, it goes on
+the backlog instead.
 
 ## Decisions
 

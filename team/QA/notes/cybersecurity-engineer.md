@@ -47,7 +47,7 @@ PR merges. The rows below that link issues are from before the change.
 | #17 Incident plan | No | Cybersecurity engineer | Phase 1 step 6 | Open |
 | #19 Key and session secret storage and rotation | No | DevOps engineer | Phase 1 step 6 | Open |
 | #20 Secret scanning and dependency alerts | No | DevOps engineer | Phase 1 step 6 | Open |
-| #46 Team Lead decisions on token storage and sending | No | Architect (Security briefs) | Phase 1 step 2 | Open |
+| #46 Team Lead decisions on token storage and sending | No | Architect (cybersecurity engineer briefs) | Phase 1 step 2 | Open |
 | #18 Output escaping and a Content-Security-Policy | No | Architect | Proposed: Phase 1 step 6 | Open |
 | #22 Tests for reused session cookies and HTML in Canvas text | No | Test engineer | Proposed: Phase 1 exit | Open |
 | #21 Token expiry and deleting the token in Canvas | No | Requirements engineer | Proposed: Phase 1 step 6 | Open |

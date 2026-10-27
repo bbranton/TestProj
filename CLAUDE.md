@@ -39,11 +39,15 @@ a rule.
 - One thread per PR, and the $10 hand-off check:
   [One thread per PR](/team/workspace.md#one-thread-per-pr).
 - Process ideas: [Process ideas](/team/workspace.md#process-ideas).
+- Team skills: [Team skills](/team/workspace.md#team-skills).
+- The PR template: [PR template](/team/workspace.md#pr-template).
 - Reporting cost: [CFO persona](/team/Management/personas/cfo.md#role).
 - Security is everyone's job:
   [Security is everyone's job](/team/README.md#security-is-everyones-job).
 - Potential data breach:
   [Potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach).
+- What each persona decides: the *Decisions* section of its persona file,
+  summarized in [Who decides what](/team/review-protocol.md#who-decides-what).
 - Decision requests:
   [Decisions are separate from merging](/team/review-protocol.md#decisions-are-separate-from-merging).
 - Who reviews a PR: [Who reviews what](/team/review-protocol.md#who-reviews-what).

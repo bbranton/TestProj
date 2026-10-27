@@ -140,7 +140,7 @@ acceptable for its area.
 | Decision | Decided by | Decision request to the Team Lead for |
 |----------|------------|-------------------------|
 | Business goals, scope and phases, hosting and domains, cost, team structure and process | Team Lead | Always |
-| Feature priorities within a phase, the order of work, triage, keeping the decision register, rating risks. A potential data breach is always critical and must-fix | Management | Every scope, roadmap, or phase change; adding or dropping a goal; accepting a risk instead of reducing it |
+| Feature priorities within a phase, the order of work, the roadmap backlog, keeping the decision register, rating risks. A potential data breach is always critical and must-fix | Management | Every scope, roadmap, or phase change; adding or dropping a goal; accepting a risk instead of reducing it |
 | How a requirement is worded and traced | Requirements engineer | Adding, removing, or moving a requirement between phases |
 | How it's tested, and whether tests pass | Test engineer | Calling a phase done; removing or weakening a test |
 | Design: structure, data, APIs, technology, security design | Architecture | A new dependency, service, or data store; how the Canvas token is stored or sent; starting a transition plan |
@@ -171,15 +171,37 @@ what it defers and to whom, and what needs the Team Lead.
 5. **Merge.** When every latest verdict is Recommend or Recommend with
    notes, the owner merges into `develop`.
 
-### The owner fixes, the reviewer reports
+### Who fixes a finding
 
-A reviewer never edits another persona's files. Each finding goes one of
-three ways:
+Each persona edits only its own files, even on another persona's PR. A
+finding is fixed in the PR it was found in whenever the fix is in the
+current phase, by whichever persona owns the file:
 
-- **About this PR:** a finding on the PR. The owner fixes it before merge.
-- **About the reviewer's own doc:** the reviewer fixes it in its own PR.
-- **About another persona's area, outside this PR:** the reviewer opens a
-  GitHub issue, as [Follow-up work](#follow-up-work) says.
+- **In the owner's files:** the owner fixes it before merge.
+- **In another persona's files, such as a requirement change found while
+  reviewing the UI specification:** that persona commits the fix to the
+  same PR, as [Fixes by another persona](#fixes-by-another-persona) says.
+  That persona joins the PR's reviewers if it wasn't one.
+- **Outside the current phase, or too big for this PR:** it goes on the
+  backlog, as [Follow-up work](#follow-up-work) says.
+
+A fix that needs a new decision, such as moving a requirement between
+phases, goes to the Team Lead as a decision request first, and the finding
+is marked **Waiting on the Team Lead**.
+
+### Fixes by another persona
+
+When a finding needs a change in another persona's files:
+
+1. The owner messages that persona's thread (through the coordinator if
+   none is open) with the finding and the PR link.
+2. That persona's thread fetches the PR's branch, pulls the latest, and
+   commits its change to its own files only. It never force-pushes or
+   rewrites the branch's history.
+3. It pushes, replies on the finding with the commit, and tells the owner.
+   The owner pulls before its next push.
+4. The finding's status is "Fixed in `<sha>` by `<persona>`", and the
+   reviewer who raised it checks the fix like any other.
 
 ## Findings table
 
@@ -189,8 +211,9 @@ three ways:
 
 - **#** is unique within the review (`F-1`, `F-2`, ...). Findings whose fix
   is in another doc use `X-` IDs.
-- **Status** is one of Open, Fixed in #PR, Moved to #issue, Won't fix
-  (with the reason), or Waiting on the Team Lead.
+- **Status** is one of Open, Fixed in `<sha>` (with the persona when it
+  isn't the owner), Backlog, Won't fix (with the reason), or Waiting on
+  the Team Lead.
 - A finding that could expose a token, a session, or a student's data
   starts with **Potential data breach:**, whichever persona finds it, as
   the [Security persona](QA/personas/cybersecurity-engineer.md#potential-data-breach)
@@ -198,26 +221,37 @@ three ways:
 
 ## Follow-up work
 
-Work a review uncovers outside the PR becomes a GitHub issue, not a
-comment that gets lost:
+Review follow-ups never become GitHub issues, so nothing is left open
+somewhere nobody looks. Work a review uncovers goes one of two places:
 
-1. **The reviewer opens it.** The issue says what is needed and why, links
-   the PR, and gets the owning persona's label, such as `persona: security`,
-   plus `needs-triage`. A potential data breach also gets
-   `potential-breach`. Persona labels use the persona's name from the
-   [team README](README.md), in lower case with hyphens: `management`,
-   `requirements-engineer`, `test-engineer`, `architecture`, `ui-ux`,
-   `developer`, `devops`, `security`, or `cfo`.
-2. **The review names it.** The finding's status is "Moved to #issue".
-   Follow-ups don't block the PR or change the verdict.
-3. **The owner lists it** in the PR's *Follow-ups opened* section before
-   merging.
-4. **Management triages it,** naming the persona that owns it and
-   recommending a phase, the backlog, or closing, in a comment on the issue, then removes `needs-triage`. A
-   `potential-breach` issue is always critical, first in the current
-   phase, and fixed before the next deploy.
-5. **The Team Lead sets its priority.** Nobody starts on an issue before
-   then.
+1. **This PR, when it's in the current phase.** The persona that owns the
+   file fixes it here, as [Who fixes a finding](#who-fixes-a-finding) says.
+2. **The backlog, when it's outside the current phase or too big for this
+   PR.** The finding's status is "Backlog", and the owner lists it in the
+   PR's *Backlog items* section before merging. Management adds each item
+   to the [backlog](../docs/canvas-portal/01-roadmap.md#9-backlog) in the
+   roadmap, in its next roadmap PR, with a `B-` ID, the PR it came from,
+   and the persona that owns it. Backlog items don't block the PR or change
+   the verdict.
+
+Management reviews the backlog with the Team Lead at every phase boundary,
+recommending a phase or dropping each item. An item whose suggested phase is
+the current one goes to the Team Lead in Management's next decision batch
+instead of waiting for the boundary. The Team Lead plans items into a phase;
+nobody starts on a backlog item before then.
+
+**A potential data breach never goes on the backlog.**
+
+- **One the PR adds** is always fixed in that PR before merge.
+- **One already on `develop`** that the review uncovers is fixed in the PR
+  by the persona that owns the file. Only if Security agrees the fix is too
+  big for that PR does it wait, as the first work of the current phase,
+  fixed before the next deploy.
+- **Every one not yet fixed** goes in the
+  [security register](QA/notes/cybersecurity-engineer.md#security-register)
+  with the gate *before the next deploy*, before the PR merges. Management
+  checks the register at every phase boundary and before every deploy. Only
+  the Team Lead can delay one.
 
 ## Disagreements
 

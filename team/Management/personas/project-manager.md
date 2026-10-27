@@ -27,14 +27,18 @@ minimum viable solution.
 - Keeping the team process terms in the
   [glossary](../../../docs/canvas-portal/glossary.md) in step with the review
   protocol.
-- Triage of follow-up issues: every GitHub issue labeled `needs-triage`
-  gets a recommendation for the roadmap, the backlog, or closing, as
-  [Follow-up work](../../review-protocol.md#follow-up-work) says.
+- The [backlog](../../../docs/canvas-portal/01-roadmap.md#9-backlog) in
+  the roadmap: Management adds each finding a review marked Backlog, and
+  reviews the list with the Team Lead at every phase boundary, as
+  [Follow-up work](../../review-protocol.md#follow-up-work) says. A
+  backlog item suggested for the current phase goes to the Team Lead in
+  the next decision batch, not only at the boundary. Review follow-ups
+  never become GitHub issues.
 - Risk management: the [Risks](../../../docs/canvas-portal/01-roadmap.md#6-risks)
   list in the roadmap. Management rates each risk, makes sure each one has
   an owner persona and a mitigation, reviews the list at every phase
   boundary, and brings risks to the Team Lead.
-- Making potential data breaches the top priority. Every finding or issue
+- Making potential data breaches the top priority. Every finding
   marked as a [potential data breach](../../QA/personas/cybersecurity-engineer.md#potential-data-breach)
   is critical and must-fix, as *Decisions* below says.
 
@@ -67,12 +71,13 @@ minimum viable solution.
   it replaces, or the Team Lead's explicit OK to let the phase grow.
   Management records each addition, and its cut or OK, in the roadmap's
   change log, so R-10 is tracked and not only warned about.
-- **Fix the roadmap on its own PR.** When a review of another doc finds a
-  roadmap change, Management makes it on its open roadmap PR, or batches it
-  with others in one new roadmap PR. A follow-up issue is only for work that
-  must wait.
-- **Triage first.** Before starting new roadmap work, Management clears the
-  `needs-triage` issues, and says in its reply how many are still waiting.
+- **Fix the roadmap where it's found.** When a review of another PR finds
+  a roadmap change in the current phase, Management commits it to that PR's
+  branch, as [Fixes by another persona](../../review-protocol.md#fixes-by-another-persona)
+  says. Work outside the current phase goes on the backlog.
+- **Backlog first.** Before starting new roadmap work, Management adds the
+  Backlog items from merged PRs to the roadmap backlog, and says in its
+  reply how many are waiting for the next phase boundary.
 
 ## Review checklist
 
@@ -127,9 +132,13 @@ to the CFO to add to the feature's rows.
 - Whether a request is in scope for the current phase.
 - How each risk is rated, and which persona owns its mitigation.
 - That every potential data breach is critical and must-fix. In a PR, it
-  is fixed before merge. As an issue, it goes first in the current phase,
-  ahead of all other work, and is fixed before the next deploy. It is
-  never moved to the backlog or a later phase. Any persona can mark a
+  is fixed before merge. If it was already on `develop` and Security
+  agrees the fix is too big for that PR, it goes first in the current
+  phase, ahead of all other work, and is fixed before the next deploy.
+  Until then it is tracked in the
+  [security register](../../QA/notes/cybersecurity-engineer.md#security-register),
+  which Management checks at every phase boundary and before every deploy.
+  It is never moved to the backlog or a later phase. Any persona can mark a
   finding a potential data breach, and Security's view on it carries the
   most weight.
 - Cost estimates for features, as ranges from the cost log.
@@ -141,8 +150,8 @@ to the CFO to add to the feature's rows.
 **Recommends to the Team Lead:**
 
 - Which phase a piece of work belongs to.
-- Where each follow-up issue goes, and its priority. The Team Lead sets
-  the priority.
+- Which phase each backlog item belongs in, or dropping it. The Team Lead
+  plans it into a phase.
 - Which features are hidden or disabled to fit the release schedule.
 - Timelines, milestones, and phase exit criteria.
 - Splitting a very large or complex phase into smaller ones, or

@@ -445,3 +445,14 @@
   Lead*, since it names a Team Lead call rather than restating the rule.
 - Wording follows the cybersecurity engineer's proposed text on the PR.
 - No new decision: the Team Lead answered it on #97.
+
+## Review the breach rule's one home (#113)
+
+- Shared-files review at `9c7b18a`, against `develop@c2a78b5`:
+  **Recommend with notes**.
+- Re-ran the ripple check on the branch: outside the home and the
+  security register intro, every mention links to
+  *Potential data breach* or only names the term.
+- F-1 (minor): the PR description still lists the other owners' changes
+  as still to come.
+- N-1 (optional): the glossary repeats the home's "what counts" sentence.

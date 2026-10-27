@@ -129,7 +129,10 @@ that changes a process rule finds and fixes every copy before review (Team Lead,
    board `[note]` to fix them.
 2. Fix every file that still states the old rule in the same PR, by
    replacing the copy with a link to the home, and fix any link the change
-   breaks. The persona that owns each file fixes it, as
+   breaks. For each link to the rule's home, check that the sentence
+   around it still matches the new rule, and fix it if not (Team Lead,
+   2026-10-27, on [#132](https://github.com/bbranton/TestProj/pull/132)).
+   The persona that owns each file fixes it, as
    [Fixes by another persona](#fixes-by-another-persona) says, and joins
    the reviewers.
 3. List every file that states the rule under *Files that state this

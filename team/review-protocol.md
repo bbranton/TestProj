@@ -346,12 +346,14 @@ handled as [Potential data breach](/team/QA/personas/cybersecurity-engineer.md#p
 ## Disagreements
 
 When an owner and a reviewer disagree, each states its case in one or two
-sentences in the findings table, and the finding is marked **Waiting on the
-Team Lead**. Personas don't overrule each other. Inside its own area the
+sentences in the findings table, and they try to settle it between them.
+Personas don't overrule each other. Inside its own area the
 owner's view counts most, except on security, as
 [Security is everyone's job](/team/README.md#security-is-everyones-job)
 says. After two rounds on the same point without agreement, the owner
-marks the finding **Waiting on the Team Lead**.
+marks the finding **Waiting on the Team Lead**, the only point where a
+disagreement goes to the Team Lead (Team Lead, 2026-10-27, F-2 on
+[#137](https://github.com/bbranton/TestProj/pull/137)).
 
 ### Logging a disagreement
 

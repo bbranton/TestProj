@@ -179,7 +179,8 @@ writes:
 - **Clean recorded sample data before committing it.** Drop the
   `Authorization` header, and replace real names, courses, emails, and
   Canvas IDs with made-up ones. The repo is public, so a fixture is
-  published the moment it's pushed.
+  published the moment it's pushed. The reviewer checks the fixture diff
+  for both.
 - **Test one behavior per test, and keep tests independent.** A failing
   test then names the broken behavior, and tests can run in any order.
 - **Find frontend elements by role and name,** such as

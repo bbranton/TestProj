@@ -32,8 +32,12 @@ otherwise.
 **Into `develop`.** The owner persona opens the PR, picks its reviewers
 (see [Who reviews what](#who-reviews-what)), and assigns the Team Lead as
 [Branches](/CLAUDE.md#branches) says. Once every
-reviewer's latest verdict is **Recommend** or **Recommend with notes**, the
-owner thread merges the PR itself and posts the link in its thread.
+reviewer's latest verdict is **Recommend** or **Recommend with notes**, and
+CI is green on the latest commit, the owner thread merges the PR itself and
+posts the link in its thread (Team Lead, 2026-10-27, N-1 on
+[#141](https://github.com/bbranton/TestProj/pull/141)). **Green** means
+every check on the latest commit has finished and none failed; a skipped
+check counts as passed.
 
 **`develop` → `main`.** This is a batched release of what's on `develop`.
 Who opens and merges it is in [Branches](/CLAUDE.md#branches).
@@ -234,7 +238,7 @@ acceptable for its area.
 | CI, tooling, build and install scripts, branch mechanics, dependency integration | DevOps engineer | Changes to the live app or hosting; a paid service; a new secret store; new access |
 | Whether a weakness is a vulnerability, its severity, and whether it is a potential data breach; the client security document | Cybersecurity engineer | Accepting a vulnerability instead of fixing it; publishing the client security document; telling anyone outside the team about a suspected leak |
 | What goes in the cost log | CFO | Changing the log's columns or how threads report cost |
-| Merging a PR into `develop` | The PR's owner, once its reviewers recommend it | Never: the PR only carries out decisions already made |
+| Merging a PR into `develop` | The PR's owner, once its reviewers recommend it and CI is green | Never: the PR only carries out decisions already made |
 | Approving and merging the `develop` → `main` release PR | Team Lead | Always |
 
 This table is a summary. Each persona file's **Decisions** section is the
@@ -257,7 +261,9 @@ Team Lead, and wins where the two differ.
    notes** (minor findings that may be fixed later), or **Changes needed**.
    After fixes, the reviewer checks only the fixes and updates its verdict.
 5. **Merge.** When every latest verdict is Recommend or Recommend with
-   notes, the owner merges into `develop`.
+   notes, and CI is green on the latest commit, as
+   [Two levels of review](#two-levels-of-review) says, the owner merges
+   into `develop`.
 
 ### Who fixes a finding
 

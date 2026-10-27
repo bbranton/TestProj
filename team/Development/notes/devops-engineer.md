@@ -4,7 +4,13 @@ Lasting lessons for the DevOps engineer persona. See the
 [team workspace](/team/workspace.md#persona-notes) for how notes work.
 
 - Canvas portal CI runs only when `canvas-portal/**` or its workflow file
-  changes, so docs-only PRs have no checks. Run `ci-paths` to confirm.
+  changes, so docs-only PRs run only the
+  [docs check](/.github/workflows/docs-check.yml). Run `ci-paths` to confirm.
+- Run `python3 team/Development/scripts/docs_check.py` before opening a
+  PR. It finds broken repo links (anchors included) and undefined FR and
+  NFR IDs, as the docs check in CI does (#100). It skips fenced and inline
+  code, so example links in backticks aren't checked. Its tests are in
+  `test_docs_check.py`; add a case there for each new rule or fix.
 - GitHub Pages deploys on push to `main` when `site/**` or
   `qml-hello-wasm/site/**` changes. Merging such a PR changes the live site,
   which needs the Team Lead.
@@ -44,8 +50,8 @@ Lasting lessons for the DevOps engineer persona. See the
 ## Open items
 
 - Release plan after Phase 1 deploys: `develop`, `main`, and release tags (#30).
-- Docs PRs have no checks. Proposed: a link and requirement-ID check, and a
-  screenshot helper for UI PRs. Needs the Team Lead's OK before building.
+- Screenshot helper for UI PRs: proposed, not built. Needs the Team Lead's
+  OK before building.
 - Phase 1 test deploy (Koyeb plus Neon, nightly encrypted backup) not set
   up yet; see roadmap Phase 1 step 6.
 

@@ -13,3 +13,8 @@ Lasting lessons for the test engineer persona. See the
 - Check that each security NFR has a test by the phase of the first
   internet-facing deploy. HTTPS was once set to Phase 4 while that deploy
   was in Phase 1 (Management M-1 on #6).
+- When reviewing a check, make it fail on purpose, and ask for a committed
+  test that does the same. A check that only says "0 problems" can't tell
+  "nothing wrong" from "checked nothing" (PR #115).
+- GitHub keeps the text of inline code in a heading's anchor: *Read from
+  `develop`* is `#read-from-develop`. Link checkers must too (PR #115).

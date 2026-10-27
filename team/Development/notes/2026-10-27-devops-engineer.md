@@ -1,6 +1,6 @@
 # DevOps engineer, 2026-10-27
 
-## Explain the Canvas portal CI workflow (PR #TBD)
+## Explain the Canvas portal CI workflow (PR #87)
 
 - The Team Lead asked on release PR #76 for a comment saying what
   `.github/workflows/canvas-portal-ci.yml` is for.

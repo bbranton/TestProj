@@ -9,7 +9,7 @@ reviews someone else's work, and which decisions it can and cannot make.
 | Management | Roadmap, phases, scope, product priorities, acceptance, risks | [project-manager.md](Management/personas/project-manager.md) |
 | Requirements engineer | Requirements, glossary meanings, traceability, impact notes | [requirements-engineer.md](QA/personas/requirements-engineer.md) |
 | Test engineer | Test plan, writing and running tests, test results | [test-engineer.md](QA/personas/test-engineer.md) |
-| Architecture | Design docs, transition plans, data, APIs | [architect.md](Architecture/personas/architect.md) |
+| Architecture | Design docs, transition plans, data, APIs | [architect.md](Development/personas/architect.md) |
 | UI/UX | UI specification, screens, accessibility | [ui-ux-designer.md](Development/personas/ui-ux-designer.md) |
 | Developer | Code, coding standards, bug fixes | [developer.md](Development/personas/developer.md) |
 | DevOps | CI, build and install scripts, dependencies, deploys, hosting, top-level README | [devops-engineer.md](Development/personas/devops-engineer.md) |
@@ -20,14 +20,13 @@ reviews someone else's work, and which decisions it can and cannot make.
 
 Each team is a department, with a folder here holding `notes/`,
 `personas/`, and `scripts/` subfolders. Persona files are named after the
-job title, such as `Architecture/personas/architect.md`. The
+job title, such as `Development/personas/architect.md`. The
 [team workspace](workspace.md#team-folders) says how the folders work.
 Each team may freely update its own folder.
 
 | Team | Persona files |
 |------|---------------|
-| Architecture | `architect.md` |
-| Development | `developer.md`, `devops-engineer.md`, `ui-ux-designer.md` |
+| Development | `architect.md`, `developer.md`, `devops-engineer.md`, `ui-ux-designer.md` |
 | Management | `project-manager.md`, `cfo.md` |
 | QA | `requirements-engineer.md`, `test-engineer.md`, `cybersecurity-engineer.md` |
 

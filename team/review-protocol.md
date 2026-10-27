@@ -73,7 +73,9 @@ That is why a persona can merge into `develop` without the Team Lead.
   edits, each in its own PR, citing the decision.
 - **A PR that needs a new decision stops.** The owner raises a decision
   request and waits for the answer before going on. A finding that needs
-  one is marked **Waiting on the Team Lead**.
+  one is marked **Waiting on the Team Lead**. A deferred finding, asking
+  whether work goes in a GitHub issue or the backlog, is the exception: it
+  doesn't stop the PR, as [Follow-up work](#follow-up-work) says.
 
 ### Keeping the Team Lead informed
 

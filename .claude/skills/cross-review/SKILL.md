@@ -39,8 +39,10 @@ reviewer.
    outside the current phase or too big for this PR, and list it in the
    PR's *Deferred findings* section, as
    [Follow-up work](/team/review-protocol.md#follow-up-work) says.
-7. Merge into `develop` when the review allows it, and close out, as
-   [Close out](/team/review-protocol.md#close-out) says. Tell each
+7. Merge into `develop` once
+   [How a review runs](/team/review-protocol.md#how-a-review-runs) allows
+   it, and close out, as [Close out](/team/review-protocol.md#close-out)
+   says. Tell each
    reviewer thread when the PR merges or closes.
 
 ## As a reviewer thread

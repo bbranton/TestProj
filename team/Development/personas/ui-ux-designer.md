@@ -46,33 +46,44 @@ screen, or a change to the main flow goes to the Team Lead first.
 
 ## Screenshots in UI PRs
 
-Any PR that changes the UI (pages, styles, app screens) must include
-screenshots of each changed page, whoever opens it. They live in the
-project's Library, not the repo (Team Lead, 2026-10-27,
+Any PR that changes the UI (pages, styles, app screens) must show
+screenshots of each changed page in its description, whoever opens it.
+They're committed to the PR's branch for the review, then removed before
+it merges, so they're never in `develop`'s files, though git history
+keeps them (Team Lead, 2026-10-27,
 [#129](https://github.com/bbranton/TestProj/issues/129)).
 
-- Save them in Library: `pr-screenshots/pr-<number>/`, such as Library:
-  `pr-screenshots/pr-130/1-landing.png`.
-- In the PR description's *Screenshots* section, list each one by its
-  Library path, with one line on what it shows. GitHub can't show Library
-  images, so the Team Lead and the reviewers open them in the Library.
-  The Team Lead may drag one into a PR comment to show it on the PR page.
+1. Before you push, open each screenshot and check it shows no Canvas
+   token, session cookie or ID, sign-in or callback URL with a code or
+   token, real student, course, or grade, or a real school's Canvas
+   address. Capture only the page, as Playwright's `page.screenshot`
+   does, not the whole screen, so the address bar, dev tools, other tabs,
+   and notifications stay out.
+2. Commit them under `docs/screenshots/pr-<number>/`.
+3. Embed each one in the description's *Screenshots* section with the
+   commit that added it:
+   `https://raw.githubusercontent.com/bbranton/TestProj/<commit-sha>/docs/screenshots/pr-<number>/<file>.png`.
+   A link that names a commit keeps working after the file is removed.
+   Give each image alt text naming the page and width, such as
+   `![Landing page, phone width](...)`, and one line under it on what
+   changed.
+4. As the PR's last commit before merging, remove
+   `docs/screenshots/pr-<number>/`. Check that the description still
+   shows every image.
+
 - Include a phone-width shot when the layout is responsive.
 - When an existing page changes, show it before and after.
 - Use test data only. None may show a Canvas token, a session, or a real
-  student's data. Anyone in the project can read the Library, and a
-  screenshot dragged onto a PR is uploaded to GitHub, where anyone with
-  the link can see it. Deleting the Library folder doesn't remove that
-  copy, so drag only a screenshot you've checked.
+  student's data: the repo is public, and git history keeps every
+  screenshot after it's removed.
+- If a pushed screenshot shows any of these, removing it doesn't take it
+  back. Treat it as a
+  [potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach),
+  tell the cybersecurity engineer at once, and revoke any token or session
+  it shows.
 
-When to delete them:
-
-- A PR closed without merging: its owner thread deletes its folder when
-  it closes.
-- A merged PR: the `develop` → `main` release PR lists the folders of the
-  UI PRs it ships, so the Team Lead can see what goes live. Once it merges
-  into `main`, the thread that opened it deletes those folders, or the
-  project manager if that thread has ended.
+The `develop` → `main` release PR links to the merged PRs, so the Team
+Lead sees each UI change in its PR's description.
 
 The UI/UX designer reviews every UI PR and checks this.
 
@@ -89,7 +100,8 @@ When reviewing others' work:
 - [ ] For a design: does any technical choice change what the user sees or
       waits for?
 - [ ] For a UI PR: are there screenshots of each changed page, including
-      phone width, listed by their Library paths?
+      phone width, shown in the description, with `docs/screenshots/`
+      removed before the merge?
 - [ ] Could a screen, message, or screenshot show a token or another
       student's data? Raise it yourself, as
       [Security is everyone's job](/team/README.md#security-is-everyones-job) says.

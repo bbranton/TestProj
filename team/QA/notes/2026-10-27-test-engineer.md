@@ -65,3 +65,12 @@
 - Removed requirements counting as defined was already fixed in `ef632ba`
   while I reviewed; checked it reports FR-30 as removed.
 - Verdict: Changes needed.
+- Re-check at `015bb20`: F-1, F-2, and N-1 fixed. The 13 new tests pass,
+  and each of five deliberate breaks to the script (code stripped from
+  headings again, a link or ID pattern that matches nothing, exit 0 on
+  problems, removed rows counted as defined) makes a test fail. A temp
+  repo per test is better than the fixture folder I suggested, since
+  committed bad links would fail the check itself.
+- Minor: the commit also added two `__pycache__/*.pyc` files. Asked the
+  DevOps engineer to remove them and ignore `__pycache__/`.
+- Verdict: Recommend with notes.

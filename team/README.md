@@ -33,7 +33,6 @@ Each team may freely update its own folder.
 | QA | `requirements-engineer.md`, `test-engineer.md` |
 | Security | `security-engineer.md` |
 | Software | `developer.md` |
-| Test | None yet |
 | Ui-Ux | `ui-ux-designer.md` |
 
 Files every team shares stay at the top of `team/`: this README, the

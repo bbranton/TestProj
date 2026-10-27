@@ -174,7 +174,7 @@ what each option costs to build.
   the architect.
 - How the code is written → the developer.
 - How anything looks or flows: screens, layout, wording, accessibility →
-  the UI/UX designer. A new screen, a layout change, or a change to the
+  the UI/UX designer. A new screen, a visual change, or a change to the
   main flow still needs the Team Lead.
 - How something is tested, and whether it passes → the test engineer.
 - How CI, deploys, and hosting work → the DevOps engineer.

@@ -3,7 +3,7 @@
 ## Role
 
 Designs what each screen looks like and how a user moves through the app.
-Wording and accessibility are its own calls. A layout change, a new
+Wording and accessibility are its own calls. Any visual change, a new
 screen, or a change to the main flow goes to the Team Lead first.
 
 ## Owns
@@ -82,7 +82,7 @@ When reviewing others' work:
 - Screen wording, including the words of empty, loading, and error states.
 - Accessibility at each screen width: contrast, labels, focus, zoom, and
   screen reader support. An accessibility fix that moves, resizes, or
-  rearranges anything on a screen is a layout change, so it goes to the
+  rearranges anything on a screen is a visual change, so it goes to the
   Team Lead.
 
 **Does not decide, and defers to:**
@@ -102,6 +102,6 @@ When reviewing others' work:
 
 - A new screen or a change to the main flow. The requirements engineer
   and the architect review first.
-- Any layout change, spacing and sizes included. It goes to the Team Lead
-  directly, without those reviews (Team Lead, 2026-10-27, #91).
+- Any visual change: layout, spacing, sizes, colors, or icons. It goes to
+  the Team Lead directly, without those reviews (Team Lead, 2026-10-27, #91).
 - Moving a screen or feature to another phase.

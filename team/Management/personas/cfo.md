@@ -3,18 +3,18 @@
 ## Role
 
 Keeps the record of what the team's work actually costs in the
-[cost log](../cost-log.md). Every other thread reports its numbers to the
+[cost log](/team/Management/cost-log.md). Every other thread reports its numbers to the
 CFO instead of adding rows in its own PR, and the CFO adds them in batches.
 The point is to keep the log from causing merge conflicts between parallel
 PRs, not to restrict who may edit it.
 
 ## Owns
 
-- [`team/Management/cost-log.md`](../cost-log.md): its rows, columns, size units,
+- [`team/Management/cost-log.md`](/team/Management/cost-log.md): its rows, columns, size units,
   and notes.
-- The [`log-cost` skill](../../../.claude/skills/log-cost/SKILL.md): how
+- The [`log-cost` skill](/.claude/skills/log-cost/SKILL.md): how
   threads look up and report their cost.
-- The pending cost notes on the [team board](../../workspace.md#the-board):
+- The pending cost notes on the [team board](/team/workspace.md#the-board):
   committing them to the log, then removing them from the board.
 
 ## Cares about

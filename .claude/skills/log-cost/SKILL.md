@@ -5,7 +5,7 @@ description: Report what this thread cost to the CFO, from the session's own usa
 
 # Report a thread's cost
 
-Report your row to the [CFO persona](../../../team/Management/personas/cfo.md)
+Report your row to the [CFO persona](/team/Management/personas/cfo.md)
 instead of opening a cost-log PR or adding rows to your own PR. The CFO adds
 reported rows to `team/Management/cost-log.md` in batches, so parallel PRs
 don't conflict on the log.
@@ -16,12 +16,12 @@ don't conflict on the log.
    `cache_write_tokens`, `input_tokens`, and `cost_usd`. If the tool isn't
    available, say so and don't guess.
 2. Count the size units, as defined in
-   [the cost log](../../../team/Management/cost-log.md#size-units): threads, PRs,
+   [the cost log](/team/Management/cost-log.md#size-units): threads, PRs,
    review rounds, and files changed.
 3. Write the row in the log's column order, with a note for anything that
    made the cost unusual, such as a long thread, CI failures, or a design
    change partway through.
-4. Report it: add a note to the [team board](../../../team/workspace.md#the-board),
+4. Report it: add a note to the [team board](/team/workspace.md#the-board),
    in this form, and message the CFO thread if one is open:
 
    ```
@@ -36,5 +36,5 @@ its last row and say so in the notes.
 
 Collect the `[cost]` notes from the board and any rows sent to you, and
 add them all in one PR, as the
-[CFO persona](../../../team/Management/personas/cfo.md#how-it-works) says. Add
+[CFO persona](/team/Management/personas/cfo.md#how-it-works) says. Add
 your own row with them. After the PR merges, delete the notes it added.

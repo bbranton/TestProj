@@ -1,6 +1,6 @@
 # Canvas Assignments Portal
 
-The app described in [docs/canvas-portal](../docs/canvas-portal/README.md).
+The app described in [docs/canvas-portal](/docs/canvas-portal/README.md).
 This is the Phase 0 skeleton: a FastAPI backend with one health endpoint,
 a React + TypeScript frontend (built with Vite) with one page, and CI that
 tests both on every pull request.

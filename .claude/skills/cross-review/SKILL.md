@@ -5,13 +5,13 @@ description: Run a persona cross-review of a PR or canvas portal doc, following 
 
 # Cross-review
 
-Follow [Running reviews with agents](../../../team/review-protocol.md#running-reviews-with-agents).
+Follow [Running reviews with agents](/team/review-protocol.md#running-reviews-with-agents).
 What you do depends on whether you are the PR's owner thread or a
 reviewer.
 
 ## As the owner thread
 
-1. Check the [team board](../../../team/workspace.md#the-board). If
+1. Check the [team board](/team/workspace.md#the-board). If
    another thread already claimed this review, stop and say so. Otherwise
    claim it.
 2. Merge `develop` into the branch. Pick the reviewers from the
@@ -28,7 +28,7 @@ reviewer.
    the link. After two rounds without agreement, mark the finding
    **Waiting on the Team Lead**. For a finding in another persona's files,
    ask that persona's thread to commit the fix to this branch, as
-   [Fixes by another persona](../../../team/review-protocol.md#fixes-by-another-persona)
+   [Fixes by another persona](/team/review-protocol.md#fixes-by-another-persona)
    says, and pull before your next push.
 5. After pushing fixes for a **Changes needed** verdict, message that
    reviewer thread to re-review.
@@ -51,14 +51,14 @@ reviewer.
    the persona whose file needs the change. Don't open GitHub issues. Mark
    a finding "Backlog" only when its fix is outside the current phase or
    too big for this PR. A potential data breach never is: add it to the
-   [security register](../../../team/QA/notes/cybersecurity-engineer.md#security-register)
+   [security register](/team/QA/notes/cybersecurity-engineer.md#security-register)
    too. See
-   [Who fixes a finding](../../../team/review-protocol.md#who-fixes-a-finding).
+   [Who fixes a finding](/team/review-protocol.md#who-fixes-a-finding).
 4. Post one PR review headed with your persona and verdict, such as
    "**DevOps engineer review: Changes needed**", with findings as inline comments.
    Write it fully first, then post it only while you hold the `[posting]`
    line for this PR on the board, as
-   [Posting reviews one at a time](../../../team/review-protocol.md#posting-reviews-one-at-a-time)
+   [Posting reviews one at a time](/team/review-protocol.md#posting-reviews-one-at-a-time)
    says.
 5. Stay open until the owner says the PR merged or closed. When the owner
    asks a question, answer on the PR comment, then tell the owner thread.

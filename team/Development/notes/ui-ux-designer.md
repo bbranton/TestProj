@@ -1,11 +1,11 @@
 # UI/UX designer notes
 
 Lasting lessons for the UI/UX designer persona. See the
-[team workspace](../../workspace.md#persona-notes) for how notes work.
+[team workspace](/team/workspace.md#persona-notes) for how notes work.
 
 - Every UI PR needs screenshots of each changed page, committed under
   `docs/screenshots/pr-<number>/`, plus a phone-width shot when the layout
-  is responsive. The exact embed URL is in [CLAUDE.md](../../../CLAUDE.md).
+  is responsive. The exact embed URL is in [CLAUDE.md](/CLAUDE.md).
 - Hover can't be the only way to see something, such as a course's full name.
 - Until Phase 5 there is no card back, so the card front must show every
   field FR-22 lists (due date and time, points, status). Check sketches
@@ -29,4 +29,4 @@ Lasting lessons for the UI/UX designer persona. See the
 - Emoji such as 🔒 take two columns in text sketches. Drop a space of
   padding so the box borders still line up.
 - A README only describes what's in its folder. Product terms go in the
-  [glossary](../../../docs/canvas-portal/glossary.md).
+  [glossary](/docs/canvas-portal/glossary.md).

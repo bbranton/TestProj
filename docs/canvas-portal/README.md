@@ -4,20 +4,20 @@ A personal dashboard where a student connects their Canvas account, sees their
 current courses and assignments in one place, and arranges them on a
 Trello-style board that stays current with Canvas. Private notes on each
 assignment are planned as a future feature. The full list of
-project goals is in the [roadmap](01-roadmap.md#1-project-goals).
+project goals is in the [roadmap](/docs/canvas-portal/01-roadmap.md#1-project-goals).
 
 This folder is the project's formal documentation. Each document has a status
 and a change log at the bottom, so it can grow as the project does.
 
 | # | Document | What it answers | Status |
 |---|----------|-----------------|--------|
-| 1 | [Roadmap](01-roadmap.md) | What gets built, in what order, and how we know a phase is done | Draft |
-| 2 | [Requirements](02-requirements.md) | What the app must do, and how well | Draft |
-| 3 | [Design](03-design.md) | How the parts fit together: frontend, backend, data, Canvas API | Draft |
-| 4 | [User Interface Specification](04-ui-specification.md) | What each screen looks like and how a user moves through it | Draft |
-| 5 | [Test procedures](05-test-plan.md) | How each requirement is checked, step by step | Draft |
+| 1 | [Roadmap](/docs/canvas-portal/01-roadmap.md) | What gets built, in what order, and how we know a phase is done | Draft |
+| 2 | [Requirements](/docs/canvas-portal/02-requirements.md) | What the app must do, and how well | Draft |
+| 3 | [Design](/docs/canvas-portal/03-design.md) | How the parts fit together: frontend, backend, data, Canvas API | Draft |
+| 4 | [User Interface Specification](/docs/canvas-portal/04-ui-specification.md) | What each screen looks like and how a user moves through it | Draft |
+| 5 | [Test procedures](/docs/canvas-portal/05-test-plan.md) | How each requirement is checked, step by step | Draft |
 
-The [glossary](glossary.md) explains the words these documents use: the
+The [glossary](/docs/canvas-portal/glossary.md) explains the words these documents use: the
 board and its lists, Refresh, card statuses, IDs, the team's review terms,
 and web terms for readers coming from Qt.
 
@@ -48,10 +48,10 @@ flowchart LR
 - A pull request that changes anything a user sees must include screenshots
   of the changed screens in the PR description (before and after when an
   existing screen changes), following the steps in the repo's
-  [CLAUDE.md](../../CLAUDE.md). The [test procedures](05-test-plan.md) make
+  [CLAUDE.md](/CLAUDE.md). The [test procedures](/docs/canvas-portal/05-test-plan.md) make
   this a review step.
 - The project owner is called "Team Lead" in the repo; no personal names.
-- A term is defined once, in the [glossary](glossary.md), and other
+- A term is defined once, in the [glossary](/docs/canvas-portal/glossary.md), and other
   documents link to it. A PR that adds or changes a term updates the
   glossary too.
 - Open decisions are marked **DECISION** with an ID (`D-1`, `D-2`, ...) and are

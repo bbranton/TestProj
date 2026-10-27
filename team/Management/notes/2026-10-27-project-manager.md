@@ -193,3 +193,15 @@
   the roadmap backlog. `decision` and test-plan issues were never in
   question.
 - **Links:** #80, #84, `docs/canvas-portal/01-roadmap.md#9-backlog`
+
+## Review the root-path links (#85)
+
+- Reviewed #85 as the peer and the shared-files reviewer. A script
+  checked every Markdown link in the repo: none is broken, every section
+  anchor exists, and the only relative link left is the PR template's
+  named exception. The diff changes link targets only.
+- Findings were wording in the new *Links* rule: say a leading `/` means
+  the repo root, not the computer's, since agents open these paths with
+  file tools, and don't state the untested Obsidian behavior as fact.
+- No new decision: #85 carries out the Team Lead's "Switch all links now"
+  pick on #76.

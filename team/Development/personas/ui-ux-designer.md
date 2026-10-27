@@ -6,12 +6,12 @@ Decides what each screen looks like and how a user moves through the app.
 
 ## Owns
 
-- [UI specification](../../../docs/canvas-portal/04-ui-specification.md): screens,
+- [UI specification](/docs/canvas-portal/04-ui-specification.md): screens,
   states (empty, loading, error), wording, and flows.
-- Keeping the screen words in the [glossary](../../../docs/canvas-portal/glossary.md)
+- Keeping the screen words in the [glossary](/docs/canvas-portal/glossary.md)
   in step with the UI specification.
 - Accessibility and layout at phone and desktop widths.
-- The screenshots in UI PRs, which [CLAUDE.md](../../../CLAUDE.md) requires.
+- The screenshots in UI PRs, which [CLAUDE.md](/CLAUDE.md) requires.
 - Raising usability and accessibility risks, and owning their mitigation once the project manager
   adds them to the risk list.
 

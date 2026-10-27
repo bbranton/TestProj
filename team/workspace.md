@@ -24,7 +24,7 @@ Each team has a folder under `team/`, with three subfolders:
 Each persona may update its own files in its team's folder (its persona
 file, notes, and daily log) through a PR like any other change, reviewed
 only by a peer from its own persona; see the *Only your own persona's
-area* row of the [review protocol](review-protocol.md#who-reviews-what). Another persona's
+area* row of the [review protocol](/team/review-protocol.md#who-reviews-what). Another persona's
 files, even in the same team, get that persona's review, and a team script
 or skill gets a review from the other personas who use it. Shared files at
 the top of `team/` and other teams' folders are not a persona's to change
@@ -40,7 +40,7 @@ otherwise have to rediscover, add it in the same PR as your work.
 
 A lasting note is one or two lines: the rule, then why. Notes that turn out wrong
 are deleted, not left with a correction. A note that every persona needs
-belongs in [CLAUDE.md](../CLAUDE.md) instead.
+belongs in [CLAUDE.md](/CLAUDE.md) instead.
 
 ## Daily notes
 
@@ -87,9 +87,9 @@ it, and the `SKILL.md` says how to run it.
 
 | Skill | What it does | Mostly used by |
 |-------|--------------|----------------|
-| `trace-requirement` | Finds a requirement ID in the design, UI spec, test plan, and code; lists requirements with no test. Script: [`QA/scripts/trace.py`](QA/scripts/trace.py) | Requirements engineer, Test engineer, Developer |
-| `ci-paths` | Says which workflows a branch's changes will trigger. Script: [`Development/scripts/ci_paths.py`](Development/scripts/ci_paths.py) | DevOps engineer |
-| `log-cost` | Reports a thread's real token use and cost to the CFO, who adds it to the [cost log](Management/cost-log.md) | Every thread, when its work is done |
+| `trace-requirement` | Finds a requirement ID in the design, UI spec, test plan, and code; lists requirements with no test. Script: [`QA/scripts/trace.py`](/team/QA/scripts/trace.py) | Requirements engineer, Test engineer, Developer |
+| `ci-paths` | Says which workflows a branch's changes will trigger. Script: [`Development/scripts/ci_paths.py`](/team/Development/scripts/ci_paths.py) | DevOps engineer |
+| `log-cost` | Reports a thread's real token use and cost to the CFO, who adds it to the [cost log](/team/Management/cost-log.md) | Every thread, when its work is done |
 | `cross-review` | Steps for the owner and for each fresh reviewer thread in a cross-review | Owner and reviewer threads |
 
 To add a skill, copy an existing folder, write a `SKILL.md` whose
@@ -99,9 +99,9 @@ standard library, so they run anywhere without installing anything.
 
 ## PR template
 
-[`.github/pull_request_template.md`](../.github/pull_request_template.md)
+[`.github/pull_request_template.md`](/.github/pull_request_template.md)
 fills in every new PR's description with the sections the
-[review protocol](review-protocol.md) needs: requirement IDs, the owner, the
+[review protocol](/team/review-protocol.md) needs: requirement IDs, the owner, the
 reviewers the author picked and why, verdicts, findings,
 backlog items, testing, and screenshots. Keep its sections in step with the protocol.
 
@@ -124,7 +124,7 @@ Each line is one claim or one note:
 ```
 
 A `[posting]` line holds the PR's one GitHub draft review while a reviewer
-posts, as [Posting reviews one at a time](review-protocol.md#posting-reviews-one-at-a-time)
+posts, as [Posting reviews one at a time](/team/review-protocol.md#posting-reviews-one-at-a-time)
 says.
 
 Rules:

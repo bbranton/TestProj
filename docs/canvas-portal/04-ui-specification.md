@@ -10,13 +10,13 @@ get something done.
 
 Screen IDs (`S-1`, `S-2`, ...) and workflow IDs (`W-1`, `W-2`, ...) are
 used by the design and the test procedures. Terms such as board, list,
-card, Refresh, and Missing are defined in the [glossary](glossary.md).
+card, Refresh, and Missing are defined in the [glossary](/docs/canvas-portal/glossary.md).
 
 ### UI by phase
 
 Build only what is listed for the current phase (see the repo's
-[CLAUDE.md](../../CLAUDE.md) and
-[Requirements by phase](02-requirements.md#requirements-by-phase)). The
+[CLAUDE.md](/CLAUDE.md) and
+[Requirements by phase](/docs/canvas-portal/02-requirements.md#requirements-by-phase)). The
 Phase 5 sketches are kept as a starting point for later; they are out of
 scope until the Team Lead plans them into a phase. This table only mirrors the
 requirements index, which the requirements engineer owns; where they differ, the
@@ -103,7 +103,7 @@ even though the formal accessibility check (NFR-32) is Phase 4.
   due badge read the same way.
 - **One word per idea.** The action is always "Refresh", lists are
   "lists", and courses are "courses" (not "labels"). Screen words match
-  the [glossary](glossary.md); a new or changed word goes into it in the
+  the [glossary](/docs/canvas-portal/glossary.md); a new or changed word goes into it in the
   same PR.
 - **Messages say what happened and what to do next,** in plain words,
   with the button that does it, such as [Retry refresh]. They never show
@@ -930,7 +930,7 @@ flowchart TD
 | 2026-10-26 | The account menu button is a gear, [⚙], instead of (A), from the Team Lead's review. |
 | 2026-10-26 | Every button has an ID in capitals with underscores for logs, docs, code, and tests, and a plain-words label for screen readers, with a table of Phase 1 to 4 button IDs, from the Team Lead's review. Dates use the device's time zone (FR-22). |
 | 2026-10-26 | Deleting a note or an orphaned card (Phase 5) joins the destructive actions that ask first; S-9 adds Delete for orphaned cards, those whose assignment is gone from Canvas. From the Team Lead's review. |
-| 2026-10-26 | Links to the new [glossary](glossary.md), and screen words follow it, from the Team Lead's review. |
+| 2026-10-26 | Links to the new [glossary](/docs/canvas-portal/glossary.md), and screen words follow it, from the Team Lead's review. |
 | 2026-10-26 | S-2's token steps ask for an expiry date, and disconnecting reminds the student to delete the token in Canvas (risk R-2), from the Team Lead's review. |
 | 2026-10-26 | Cards removed from Canvas are hidden by default, not for good: from Phase 2 a [◌ Removed from Canvas] button on the course row shows them, grayed out in their lists. From the Team Lead's review. |
 | 2026-10-26 | The [◌ Removed from Canvas] button moves to Phase 2, with dragging, and the S-10 summary says when a Refresh removed cards, from the Team Lead's review. |

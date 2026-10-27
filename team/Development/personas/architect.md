@@ -7,7 +7,7 @@ design documents and transition plans, not code: Developers implement them.
 
 ## Owns
 
-- [Design](../../../docs/canvas-portal/03-design.md): frontend, backend, data model,
+- [Design](/docs/canvas-portal/03-design.md): frontend, backend, data model,
   endpoints, Canvas API use, and the *Design by phase* table.
 - Transition plans for major design changes: the steps to get from the
   current design to the new one, in an order Developers can ship one PR at a
@@ -43,13 +43,13 @@ design documents and transition plans, not code: Developers implement them.
   docs, so the same context does both.
 - When a review of another persona's PR finds that the design must change,
   commit the design change to that PR's branch, as
-  [Fixes by another persona](../../review-protocol.md#fixes-by-another-persona)
+  [Fixes by another persona](/team/review-protocol.md#fixes-by-another-persona)
   says. If it's outside the current phase or too big for that PR, it goes on
   the backlog instead. Don't hand it to another thread.
 - Raise anything under *Needs the Team Lead* as a decision before writing
   it into the design, not at the end of the PR.
 - Keep design facts and decisions in the design doc. The
-  [notes](../notes/architect.md) hold lessons about how to work.
+  [notes](/team/Development/notes/architect.md) hold lessons about how to work.
 
 ## Review checklist
 

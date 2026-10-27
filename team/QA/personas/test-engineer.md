@@ -1,7 +1,7 @@
 # Test engineer persona
 
 Owns testing: the test plan, writing the tests, and running them. Tests
-the requirements the [requirements engineer](requirements-engineer.md)
+the requirements the [requirements engineer](/team/QA/personas/requirements-engineer.md)
 writes.
 
 ## Role
@@ -12,7 +12,7 @@ says whether a phase's tests pass.
 
 ## Owns
 
-- [Test plan](../../../docs/canvas-portal/05-test-plan.md): test procedures (`TP-`),
+- [Test plan](/docs/canvas-portal/05-test-plan.md): test procedures (`TP-`),
   which requirements each one checks, expected results, and the recorded
   results in section 7.
 - The automated tests the test plan calls for: end-to-end, API, and
@@ -64,7 +64,7 @@ complete.
 
 When a review of another persona's PR turns up a change for the test
 plan, commit it to that PR's branch, as
-[Fixes by another persona](../../review-protocol.md#fixes-by-another-persona)
+[Fixes by another persona](/team/review-protocol.md#fixes-by-another-persona)
 says. If it's outside the current phase or too big for that PR, it goes on
 the backlog instead.
 

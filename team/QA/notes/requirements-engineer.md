@@ -1,9 +1,9 @@
 # Requirements engineer notes
 
 Lasting lessons for the requirements engineer persona. See the
-[team workspace](../../workspace.md#persona-notes) for how notes work.
+[team workspace](/team/workspace.md#persona-notes) for how notes work.
 
-- Define a term once, in the [glossary](../../../docs/canvas-portal/glossary.md),
+- Define a term once, in the [glossary](/docs/canvas-portal/glossary.md),
   and link to it. The README once held the web terms, and the Team Lead
   moved them out: a README describes its folder, not the product.
 - A finding that needs a change in another doc gets an `X-` ID and is fixed

@@ -1,7 +1,7 @@
 # Review protocol
 
 How personas review each other's work. The personas are listed in the
-[team README](README.md).
+[team README](/team/README.md).
 
 The Team Lead has the final say on every decision and every disagreement,
 and can override any rule here, including the reviewers on any PR.
@@ -65,7 +65,7 @@ That is why a persona can merge into `develop` without the Team Lead.
   recommendation, and the docs it changes. Each persona whose area it
   affects adds its impact: which of its files change, and how. Requests go
   in the project manager's
-  [decision register](../docs/canvas-portal/01-roadmap.md#5-open-decisions)
+  [decision register](/docs/canvas-portal/01-roadmap.md#5-open-decisions)
   or in a GitHub issue labeled `decision`.
 - **The Team Lead answers in batches.** The project manager keeps the register and
   brings it to the Team Lead. Only after an answer do the owners make their
@@ -119,7 +119,7 @@ at any time.
 | Canvas tokens, sign-in, the session cookie, secrets, student data, hosting, or deploys; the client security document (`06-security-overview.md`) | Cybersecurity engineer, always | Cybersecurity engineer |
 | Shared files at the top of `team/`, or another team's folder | Each persona whose file changes, plus the project manager | Project manager |
 | Another persona's files in your own team's folder | That persona | That persona |
-| A team script or its skill (see [Team skills](workspace.md#team-skills)) | The other personas who use it | The team whose `scripts/` folder holds it |
+| A team script or its skill (see [Team skills](/team/workspace.md#team-skills)) | The other personas who use it | The team whose `scripts/` folder holds it |
 | Only your own persona's area: its persona file, notes, and daily log, or a doc it owns in this table | The peer reviewer only | That persona |
 | The cost log (`team/Management/cost-log.md`) | The peer reviewer (CFO) only | CFO, who adds reported rows in batches |
 
@@ -129,9 +129,9 @@ the project manager.
 
 Each reviewer looks through its own lens, using the review checklist in its
 persona file, and checks that the words match the
-[glossary](../docs/canvas-portal/glossary.md). Security is still everyone's
+[glossary](/docs/canvas-portal/glossary.md). Security is still everyone's
 job: any reviewer raises any token or student-data risk it sees, as
-[Security is everyone's job](README.md#security-is-everyones-job) says.
+[Security is everyone's job](/team/README.md#security-is-everyones-job) says.
 
 ## Who decides what
 
@@ -221,7 +221,7 @@ When a finding needs a change in another persona's files:
   the Team Lead.
 - A finding that could expose a token, a session, or a student's data
   starts with **Potential data breach:**, whichever persona finds it, as
-  the [cybersecurity engineer persona](QA/personas/cybersecurity-engineer.md#potential-data-breach)
+  the [cybersecurity engineer persona](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
   says. It is never Won't fix without the Team Lead.
 
 ## Follow-up work
@@ -234,7 +234,7 @@ somewhere nobody looks. Work a review uncovers goes one of two places:
 2. **The backlog, when it's outside the current phase or too big for this
    PR.** The finding's status is "Backlog", and the owner lists it in the
    PR's *Backlog items* section before merging. The project manager adds each item
-   to the [backlog](../docs/canvas-portal/01-roadmap.md#9-backlog) in the
+   to the [backlog](/docs/canvas-portal/01-roadmap.md#9-backlog) in the
    roadmap, in its next roadmap PR, with a `B-` ID, the PR it came from,
    and the persona that owns it. Backlog items don't block the PR or change
    the verdict.
@@ -253,7 +253,7 @@ nobody starts on a backlog item before then.
   big for that PR does it wait, as the first work of the current phase,
   fixed before the next deploy.
 - **Every one not yet fixed** goes in the
-  [security register](QA/notes/cybersecurity-engineer.md#security-register)
+  [security register](/team/QA/notes/cybersecurity-engineer.md#security-register)
   with the gate *before the next deploy*, before the PR merges. The project manager
   checks the register at every phase boundary and before every deploy. Only
   the Team Lead can delay one.
@@ -295,7 +295,7 @@ posts from the Team Lead's account, so two reviewers posting at once get
 their findings mixed into one review (as on PR #4). Write the whole review
 first, then:
 
-1. Check the [team board](workspace.md#the-board) for a `[posting]` line on
+1. Check the [team board](/team/workspace.md#the-board) for a `[posting]` line on
    the same PR, and wait for it to go. A line older than an hour is stale.
 2. Add your own, such as
    `- [posting] DevOps engineer · review of PR #12 · 2026-10-25 21:30`, create the
@@ -314,8 +314,8 @@ is written on the PR before anyone acts on it.
 
 - **Before merging,** the owner adds a `### Decision:` entry for each
   decision to its persona's daily log in the same PR, in the format in
-  [Daily notes](workspace.md#daily-notes), and any lasting lesson to its
+  [Daily notes](/team/workspace.md#daily-notes), and any lasting lesson to its
   notes.
 - **After the PR merges or closes,** the owner releases its claim on the
-  [board](workspace.md#the-board), and every thread that worked on the PR
+  [board](/team/workspace.md#the-board), and every thread that worked on the PR
   reports its cost to the CFO with the `log-cost` skill and ends.

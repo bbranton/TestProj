@@ -26,7 +26,8 @@ Each team is a department, with a folder here holding `notes/`,
 `personas/`, and `scripts/` subfolders. Persona files are named after the
 job title, such as `Development/personas/architect.md`. The
 [team workspace](workspace.md#team-folders) says how the folders work.
-Each team may freely update its own folder.
+Each persona may freely update its own files there; another persona's
+files get that persona's review.
 
 | Team | Persona files |
 |------|---------------|

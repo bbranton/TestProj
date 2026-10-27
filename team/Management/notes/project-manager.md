@@ -47,3 +47,6 @@ Lasting lessons for the Management persona. See the
 - Reviewers come from what a PR touches, not from the kind of doc: each
   persona whose area changes reviews it. The Team Lead found Team Lead
   confirmation of every PR's reviewers too slow once PRs were small.
+- When a persona is split or renamed, relabel its open issues in the same
+  pass. Setting a missing label on an issue creates it, grey and with no
+  description, so give it a color and description afterward if they matter.

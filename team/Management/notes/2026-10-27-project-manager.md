@@ -48,3 +48,13 @@
   coordinator tells the Team Lead in real time when a PR merges or a
   request is raised.
 - **Links:** #71, `team/review-protocol.md#decisions-are-separate-from-merging`
+
+## Relabel the old Product and QA issues
+
+- Moved the 9 open issues labeled `persona: product-qa` to the split
+  personas. Requirements engineer: #13, #21, #48, #49, #50. Test engineer:
+  #14, #22, #37, #51. Each got a triage comment naming its owner.
+- Created `persona: requirements-engineer` and `persona: test-engineer`.
+  Left priorities, phases, `backlog`, and `needs-triage` unchanged.
+- None was ambiguous: each one changes either `02-requirements.md` or
+  `05-test-plan.md`.

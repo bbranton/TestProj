@@ -415,3 +415,22 @@
 - **Links:** [#96](https://github.com/bbranton/TestProj/issues/96),
   [process retro](/team/retros/2026-10-27-process.md),
   [ripple check](/team/review-protocol.md#ripple-check-for-process-rules)
+
+## Review the ripple check PR (#112)
+
+- Peer review of the ripple check for #96 at `5e29e9f`, against
+  `develop@94262eb`: **Changes needed**.
+- The rule's text is sound and matches the Team Lead's answer. Re-ran the
+  ripple check on the rule: no other file in `team/`, `.claude/skills/`,
+  `CLAUDE.md`, the PR template, or the glossary restates the owner's
+  steps.
+- F-1: the branch is behind `develop` and conflicts in this daily log,
+  where #95's section and #96's both end the file. Merge `develop`, keep
+  both sections, and update *Based on*.
+- F-2: the PR template's *Files that state this rule* line from the
+  DevOps engineer hasn't landed yet. Step 3 of the rule points at it, so
+  hold the merge for it.
+- N-1 (optional): the project manager's "Ripple list for each decision"
+  covers phase and scope decisions, close in name to the new ripple check.
+  No change needed now.
+- No new decision: #96 is already answered.

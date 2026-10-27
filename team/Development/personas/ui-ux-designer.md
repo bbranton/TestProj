@@ -50,8 +50,13 @@ Any PR that changes the UI (pages, styles, app screens) must include
 screenshots of each changed page in the PR description, whoever opens it.
 Commit them under `docs/screenshots/pr-<number>/` and embed them with
 `https://raw.githubusercontent.com/bbranton/TestProj/<commit-sha>/docs/screenshots/pr-<number>/<file>.png`.
-Include a phone-width shot when the layout is responsive. The UI/UX
-designer reviews every UI PR and checks this.
+
+- Include a phone-width shot when the layout is responsive.
+- When an existing page changes, show it before and after.
+- Use test data only. Screenshots are committed to the repo, so none may
+  show a Canvas token, a session, or a real student's data.
+
+The UI/UX designer reviews every UI PR and checks this.
 
 ## Review checklist
 

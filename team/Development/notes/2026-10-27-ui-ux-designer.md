@@ -13,3 +13,19 @@
   file now says such a fix is a layout change and goes to the Team Lead,
   as "When in doubt, it's a decision request" already implies.
 - Verdict: Recommend with notes.
+
+## Re-review: screenshot rule moved out of CLAUDE.md (PR #91, 8c85f7d)
+
+- The Team Lead asked on #76 that the screenshot rule leave CLAUDE.md. It
+  is now the *Screenshots in UI PRs* section of the UI/UX designer persona
+  file, and the PR template, test plan, Canvas portal README, and notes
+  link there. No links still point at CLAUDE.md for it, and the anchor
+  works.
+- F-3, fixed: the new section left out the before-and-after shots that the
+  test plan and README require. Added.
+- F-4, fixed: screenshots are committed to the repo, so the section now
+  says to use test data, with no Canvas token, session, or real student's
+  data in any shot.
+- F-5, fixed: the notes line repeated the rule; it now points at the
+  section instead.
+- Verdict: Recommend with notes.

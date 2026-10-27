@@ -260,6 +260,16 @@ so the frontend can choose a screen by code without reading the text:
 | `canvas_unreachable` | 502 | The warning banner with the last data (NFR-20) |
 | `canvas_address_invalid` | 400 | "Couldn't reach that Canvas address" on S-2 (W-1) |
 | `not_found` | 404 | Nothing; also what another user's IDs return (NFR-12) |
+| `invalid_request` | 422 | The UI specification's general error message. The portal's own frontend never sends one, so it means a bug |
+| `internal_error` | 500 | The UI specification's general error message |
+
+One app-level exception handler turns every error into this shape,
+including FastAPI's own: an `HTTPException`, a request it can't read
+(`RequestValidationError`, as `invalid_request`), and any other exception
+(as `internal_error`, logged with its stack trace). The `message` for
+these two is fixed text. It never echoes the request or the exception's
+text, because FastAPI's default 422 answer repeats the input it rejected,
+which for `PUT /api/canvas/connection` would be the token (NFR-10).
 
 ### Keeping devices in sync (NFR-22, D-8)
 
@@ -856,3 +866,4 @@ the data side.
 | 2026-10-26 | Course buttons (FR-78) back in Phase 1 as the only course picker, from the Team Lead (requirements PR #6, 58c1c04); the filter menu has no course list; width sharing and sideways scrolling (FR-61) stay Phase 2. |
 | 2026-10-26 | Orphaned-card show/hide option, its count, and the Refresh summary's removed count move to Phase 1, from the Team Lead. |
 | 2026-10-26 | Course colors (FR-66) postponed to Phase 5, from the Team Lead: `COURSE_LABEL` removed from the Phase 1 tables and the data model; strips and course buttons use one neutral color; section 12 notes the later table. |
+| 2026-10-27 | Error codes `invalid_request` (422) and `internal_error` (500), and one app-level handler for every error, from the coding standards review (PR #141, X-1). |

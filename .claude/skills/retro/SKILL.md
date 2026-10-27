@@ -41,7 +41,8 @@ if given, narrows what each persona looks at.
    Never quote a Canvas token, cookie, secret, or student data.
 3. Save it as `/mnt/project-files/retros/<retro date>/<persona>.md`, with the
    persona's file name, such as `devops-engineer.md`. It isn't in the repo,
-   so it needs no PR. Reply in your thread with a one-line summary.
+   so it needs no PR, and no daily log entry: the file and the retro note
+   are the record. Reply in your thread with a one-line summary.
 4. Report your cost with the `log-cost` skill.
 
 ## As the project manager

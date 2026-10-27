@@ -102,9 +102,9 @@ standard library, so they run anywhere without installing anything.
 
 [`.github/pull_request_template.md`](/.github/pull_request_template.md)
 fills in every new PR's description with the sections the
-[review protocol](/team/review-protocol.md) needs: requirement IDs, the owner, the
-reviewers the author picked and why, verdicts, findings,
-deferred findings, testing, and screenshots. Keep its sections in step with the protocol.
+[review protocol](/team/review-protocol.md) needs: the files that state a changed process
+rule, requirement IDs, the owner, the reviewers the author picked and why,
+verdicts, findings, deferred findings, testing, and screenshots. Keep its sections in step with the protocol.
 
 ## The board
 

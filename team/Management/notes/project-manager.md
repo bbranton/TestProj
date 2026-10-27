@@ -75,3 +75,8 @@ Lasting lessons for the project manager persona. See the
   and the note. When combining, merge suggestions that ask for the same
   change into one decision request, and send points outside the retro's
   topic to the other retro (2026-10-27).
+- A process rule lives in several files, and #86, #88, #89, and #91 each
+  found one still stating the old rule. Run the
+  [ripple check](/team/review-protocol.md#ripple-check-for-process-rules)
+  on every process PR, and bring the owners of the matching files in
+  before review, not after (Team Lead, 2026-10-27, #96).

@@ -39,3 +39,17 @@
   disabled `develop` ruleset left over.
 - F-1 to F-4 fixed in `f1be7de` by the owner. Re-checked the fixes:
   verdict now Recommend.
+
+## PR template line and review for the ripple check (PR #112)
+
+- Carries out the Team Lead's answer on #96 in the file the DevOps
+  engineer owns: added *Files that state this rule* under *Summary* in
+  `.github/pull_request_template.md`. It asks the author to list every
+  file that states a changed process rule, including ones that needed no
+  change, or write "None: no process rule changes". Left blank on
+  purpose, so a rule-changing PR can't pass with a default "None".
+- The template's link uses `../blob/develop/...`, as CLAUDE.md says for
+  the PR template.
+- Reviewed the whole PR against `develop@94262eb`. Docs only: `ci-paths`
+  says no workflow runs. Verdict below, posted on the PR.
+- No new decision: this carries out #96.

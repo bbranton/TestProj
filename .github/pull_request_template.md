@@ -2,6 +2,13 @@
 
 <!-- What changes and why, in a few lines. -->
 
+### Files that state this rule
+
+<!-- For a PR that changes a process rule: every file that states the rule,
+     including the ones that needed no change, from the ripple check in
+     ../blob/develop/team/review-protocol.md#ripple-check-for-process-rules
+     Otherwise write "None: no process rule changes". -->
+
 ## Requirement IDs
 
 <!-- The FR- and NFR- IDs this PR implements or changes, or "None" and why.

@@ -61,6 +61,9 @@
   and can change any PR's reviewers. Every real decision goes to the Team
   Lead as a decision request, and PRs only carry out decisions already
   made; see the [review protocol](/team/review-protocol.md#decisions-are-separate-from-merging).
+- A PR that changes a process rule fixes every file that states it, in the
+  same PR, and lists them; see the
+  [ripple check](/team/review-protocol.md#ripple-check-for-process-rules).
 
 ## Branches
 

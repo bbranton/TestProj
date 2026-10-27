@@ -97,10 +97,10 @@ Every pull request must meet these before merge:
       accessibility tests too.
 - [ ] New or changed behavior has tests that name the requirement IDs they
       check, such as `test_fr23_missing_flag`.
-- [ ] **If the PR changes anything a user sees, the PR description includes
+- [ ] **If the PR changes anything a user sees, the PR description lists
       screenshots of each changed screen, with before and after shots when an
       existing screen changes.** Wide and phone widths for layout changes.
-      Store and embed them as
+      Store and list them as
       [Screenshots in UI PRs](/team/Development/personas/ui-ux-designer.md#screenshots-in-ui-prs) describes.
 - [ ] If the PR changes the board or its menus, it says how the change
       compares with Trello's behavior (goal G-3), and any deliberate

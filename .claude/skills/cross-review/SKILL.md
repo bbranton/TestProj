@@ -59,10 +59,9 @@ reviewer.
    rule, check the files it lists under *Files that state this rule*, and
    log any other file still stating the old rule. Don't open GitHub issues
    yourself. Say so when a fix is outside the current phase or too big for
-   this PR: the owner asks the Team Lead where it goes. A potential data
-   breach is never deferred: add it to the
-   [security register](/team/QA/notes/cybersecurity-engineer.md#security-register)
-   too. See
+   this PR: the owner asks the Team Lead where it goes. Handle a
+   [potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
+   as that section says. See
    [Who fixes a finding](/team/review-protocol.md#who-fixes-a-finding).
 4. Post one PR review headed with your persona and verdict, such as
    "**DevOps engineer review: Changes needed**", with findings as inline comments.

@@ -36,7 +36,7 @@ if given, narrows what each persona looks at.
    and reviews you took part in, and your rows in the cost log
    (Library: `costs/cost-log.md`) plus any of your row files
    beside it that aren't logged yet. Also read the
-   [process ideas](/team/workspace.md#process-ideas) file, and take up any
+   [process ideas](/team/workspace.md#process-ideas) folder, and take up any
    idea in your area that the evidence supports.
 2. Write about five bullets in all, under three headings: **What worked**,
    **What got in the way**, and **One suggested change**. Link each bullet to
@@ -53,7 +53,7 @@ if given, narrows what each persona looks at.
 
 1. Read every persona's file in Library: `retros/<retro date>/`,
    the previous note in `team/retros/`, and the
-   [process ideas](/team/workspace.md#process-ideas) file.
+   [process ideas](/team/workspace.md#process-ideas) folder.
 2. Write `team/retros/<retro date>.md` with these sections:
    - **Window and topic**, and which personas took part.
    - **Did the last changes help?** For each change made from the previous
@@ -62,7 +62,7 @@ if given, narrows what each persona looks at.
      who raised each and linking the evidence.
    - **Suggestions**: each suggested change, merged where personas
      suggested the same thing, with a link to its decision request. Add
-     any idea from the process ideas file that no persona took up, naming
+     any idea from the process ideas folder that no persona took up, naming
      who logged it.
 
    As in the feedback, link evidence and never quote a Canvas token,

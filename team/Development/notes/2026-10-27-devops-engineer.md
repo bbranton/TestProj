@@ -37,3 +37,5 @@
 - Told the Team Lead about three live-repo gaps outside the PR: no
   `decision` label, grey persona labels with no description, and a
   disabled `develop` ruleset left over.
+- F-1 to F-4 fixed in `f1be7de` by the owner. Re-checked the fixes:
+  verdict now Recommend.

@@ -191,9 +191,12 @@ Work a review uncovers outside the PR becomes a GitHub issue, not a
 comment that gets lost:
 
 1. **The reviewer opens it.** The issue says what is needed and why, links
-   the PR, and gets the owning department's label, such as `team: QA`,
-   plus `needs-triage`. A
-   potential data breach also gets `potential-breach`.
+   the PR, and gets the owning persona's label, such as `persona: security`,
+   plus `needs-triage`. A potential data breach also gets
+   `potential-breach`. Persona labels use the persona's name from the
+   [team README](README.md), in lower case with hyphens: `management`,
+   `requirements-engineer`, `test-engineer`, `architecture`, `ui-ux`,
+   `developer`, `devops`, `security`, or `cfo`.
 2. **The review names it.** The finding's status is "Moved to #issue".
    Follow-ups don't block the PR or change the verdict.
 3. **The owner lists it** in the PR's *Follow-ups opened* section before

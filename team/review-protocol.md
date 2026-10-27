@@ -262,8 +262,9 @@ review uncovers goes one of two ways:
    the issue, or lists the item for the project manager, and updates the
    status. If the owner's thread has ended, the project manager does it.
 
-The project manager adds backlog items to the roadmap, in its next roadmap
-PR, with a `B-` ID, the PR it came from, and the persona that owns it. It
+The project manager adds each backlog item to the roadmap as soon as the
+Team Lead picks the backlog, in a small roadmap PR of its own, with a `B-`
+ID, the PR it came from, and the persona that owns it. It
 reviews the backlog with the Team Lead at every phase boundary,
 recommending a phase or dropping each item. The Team Lead plans items into
 a phase; nobody starts on a backlog item before then.

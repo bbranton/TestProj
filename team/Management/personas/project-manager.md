@@ -80,9 +80,10 @@ minimum viable solution.
   says. Work outside the current phase goes to the Team Lead, who picks
   where it goes, as [Follow-up work](/team/review-protocol.md#follow-up-work)
   says.
-- **Backlog first.** Before starting new roadmap work, the project manager adds the
-  findings the Team Lead sent to the backlog, and says in its reply how
-  many are waiting for the next phase boundary.
+- **Backlog right away.** As soon as the Team Lead sends a finding to the
+  backlog, the project manager adds it to the roadmap in a small PR of its
+  own, and says in its reply how many items are waiting for the next phase
+  boundary.
 
 ## Review checklist
 

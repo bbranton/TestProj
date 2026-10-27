@@ -13,7 +13,7 @@ screen, or a change to the main flow goes to the Team Lead first.
 - Keeping the screen words in the [glossary](/docs/canvas-portal/glossary.md)
   in step with the UI specification.
 - Accessibility and layout at phone and desktop widths.
-- The screenshots in UI PRs, which [CLAUDE.md](/CLAUDE.md) requires.
+- The [screenshot rule for UI PRs](#screenshots-in-ui-prs).
 - Raising usability and accessibility risks, and owning their mitigation once the project manager
   adds them to the risk list.
 
@@ -43,6 +43,15 @@ screen, or a change to the main flow goes to the Team Lead first.
 - **Map data to screens.** For every Canvas field the design fetches,
   decide whether it shows and where. `unlock_at` and `lock_at` were only
   caught by the Team Lead.
+
+## Screenshots in UI PRs
+
+Any PR that changes the UI (pages, styles, app screens) must include
+screenshots of each changed page in the PR description, whoever opens it.
+Commit them under `docs/screenshots/pr-<number>/` and embed them with
+`https://raw.githubusercontent.com/bbranton/TestProj/<commit-sha>/docs/screenshots/pr-<number>/<file>.png`.
+Include a phone-width shot when the layout is responsive. The UI/UX
+designer reviews every UI PR and checks this.
 
 ## Review checklist
 

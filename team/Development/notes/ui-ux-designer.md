@@ -5,7 +5,8 @@ Lasting lessons for the UI/UX designer persona. See the
 
 - Every UI PR needs screenshots of each changed page, committed under
   `docs/screenshots/pr-<number>/`, plus a phone-width shot when the layout
-  is responsive. The exact embed URL is in [CLAUDE.md](/CLAUDE.md).
+  is responsive. The exact embed URL is in
+  [Screenshots in UI PRs](/team/Development/personas/ui-ux-designer.md#screenshots-in-ui-prs).
 - Hover can't be the only way to see something, such as a course's full name.
 - Until Phase 5 there is no card back, so the card front must show every
   field FR-22 lists (due date and time, points, status). Check sketches

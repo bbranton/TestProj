@@ -47,9 +47,10 @@ flowchart LR
   The PR description says what changed and why.
 - A pull request that changes anything a user sees must include screenshots
   of the changed screens in the PR description (before and after when an
-  existing screen changes), following the steps in the repo's
-  [CLAUDE.md](/CLAUDE.md). The [test procedures](/docs/canvas-portal/05-test-plan.md) make
-  this a review step.
+  existing screen changes), following the
+  [screenshot steps](/team/Development/personas/ui-ux-designer.md#screenshots-in-ui-prs).
+  The [test procedures](/docs/canvas-portal/05-test-plan.md) make this a
+  review step.
 - The project owner is called "Team Lead" in the repo; no personal names.
 - A term is defined once, in the [glossary](/docs/canvas-portal/glossary.md), and other
   documents link to it. A PR that adds or changes a term updates the

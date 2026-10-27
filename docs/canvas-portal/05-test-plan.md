@@ -100,7 +100,8 @@ Every pull request must meet these before merge:
 - [ ] **If the PR changes anything a user sees, the PR description includes
       screenshots of each changed screen, with before and after shots when an
       existing screen changes.** Wide and phone widths for layout changes.
-      Store and embed them as the repo's [CLAUDE.md](/CLAUDE.md) describes.
+      Store and embed them as
+      [Screenshots in UI PRs](/team/Development/personas/ui-ux-designer.md#screenshots-in-ui-prs) describes.
 - [ ] If the PR changes the board or its menus, it says how the change
       compares with Trello's behavior (goal G-3), and any deliberate
       difference is noted.

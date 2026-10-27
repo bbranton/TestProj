@@ -58,5 +58,6 @@ Estimate:
 ## Screenshots
 
 <!-- Required for any UI change: each changed page, plus a phone-width shot
-     when the layout is responsive (see CLAUDE.md). Delete this section when
-     nothing in the UI changes. -->
+     when the layout is responsive. How to store and embed them:
+     ../blob/develop/team/Development/personas/ui-ux-designer.md#screenshots-in-ui-prs
+     Delete this section when nothing in the UI changes. -->

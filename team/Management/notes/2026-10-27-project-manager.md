@@ -58,3 +58,28 @@
   Left priorities, phases, `backlog`, and `needs-triage` unchanged.
 - None was ambiguous: each one changes either `02-requirements.md` or
   `05-test-plan.md`.
+
+## Review the release PR rule change (#77)
+
+- Reviewed #77 as Management: Recommend with notes. Only `CLAUDE.md` and
+  `team/review-protocol.md` changed, and every other doc that states the
+  rule already agreed with it.
+- Two minor notes for the owner: "when asked" narrows the decision, and
+  `CLAUDE.md` still speaks of requesting the Team Lead's review on the
+  release PR, which GitHub can't do when the PR is opened through their
+  account.
+- #77's owner is a team thread with no persona log, so the decision is
+  recorded here.
+
+### Decision: Any persona may open the develop → main release PR
+
+- **Date:** 2026-10-27
+- **Decided by:** Team Lead
+- **Options:** only the Team Lead opens and merges the release PR (the old
+  rule); any persona may open it, and only the Team Lead merges it
+- **Recommendation:** let personas open it, since a persona thread had just
+  opened #76 at the Team Lead's request
+- **Outcome:** as recommended. The opener assigns the Team Lead and
+  summarizes what changed since `main`; no persona approves or merges into
+  `main`.
+- **Links:** #76, #77, `team/review-protocol.md#two-levels-of-review`

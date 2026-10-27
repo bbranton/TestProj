@@ -10,8 +10,11 @@ folder that exists, and a #fragment must match a heading or an explicit
 anchor in that file. Web links (http:, mailto:) aren't fetched.
 
 Requirement IDs: every FR- and NFR- ID named in docs/canvas-portal/ must be
-defined in the requirement tables of 02-requirements.md. Change logs are
-skipped, since they may name IDs that were removed.
+defined in the requirement tables of 02-requirements.md. A row marked
+*(Removed: ...)* doesn't count, except inside 02-requirements.md, which
+names removed IDs to explain them. An ID with a letter suffix, such as
+FR-12a, is reported too. Change logs are skipped, since they may name IDs
+that were removed.
 
 Runs in CI from .github/workflows/docs-check.yml. Standard library only.
 """
@@ -23,8 +26,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 DOCS = ROOT / "docs" / "canvas-portal"
 REQS = DOCS / "02-requirements.md"
-REQ_ROW = re.compile(r"^\|\s*((?:FR|NFR)-\d+)\s*\|")
-REQ_ID = re.compile(r"\b(?:FR|NFR)-\d+\b")
+REQ_ROW = re.compile(r"^\|\s*((?:FR|NFR)-\d+)\s*\|\s*(\*?\(Removed)?")
+REQ_ID = re.compile(r"\b(?:FR|NFR)-\d+[A-Za-z]*\b")
 LINK = re.compile(r"(?<!\\)\[[^\]]*\]\(\s*<?([^)\s>]+)>?(?:\s+\"[^\"]*\")?\s*\)")
 FENCE = re.compile(r"^\s*(```|~~~)")
 HEADING = re.compile(r"^#{1,6}\s+(.*?)\s*#*\s*$")
@@ -104,19 +107,30 @@ def check_links(path):
     return problems
 
 
-def defined_requirements():
-    return {m.group(1) for line in REQS.read_text().splitlines()
-            if (m := REQ_ROW.match(line))}
+def requirement_rows():
+    """({current IDs}, {removed IDs}) from the requirement tables."""
+    current, removed = set(), set()
+    for line in REQS.read_text().splitlines():
+        if m := REQ_ROW.match(line):
+            (removed if m.group(2) else current).add(m.group(1))
+    return current, removed
 
 
-def check_requirement_ids(defined):
+def check_requirement_ids(current, removed):
     problems = []
     for path in sorted(DOCS.glob("*.md")):
+        allowed = current | removed if path == REQS else current
         for n, line in prose_lines(path):
             if line.startswith("## Change log"):
                 break
-            for req_id in sorted(set(REQ_ID.findall(line)) - defined):
-                problems.append(f"{path.relative_to(ROOT)}:{n}: {req_id} isn't defined in 02-requirements.md")
+            for req_id in sorted(set(REQ_ID.findall(line)) - allowed):
+                if req_id in removed:
+                    why = "was removed in 02-requirements.md"
+                elif not req_id.split("-")[1].isdigit():
+                    why = "isn't a requirement ID (IDs are plain numbers)"
+                else:
+                    why = "isn't defined in 02-requirements.md"
+                problems.append(f"{path.relative_to(ROOT)}:{n}: {req_id} {why}")
     return problems
 
 
@@ -125,7 +139,7 @@ def main():
     files = tracked_markdown()
     for path in files:
         problems += check_links(path)
-    problems += check_requirement_ids(defined_requirements())
+    problems += check_requirement_ids(*requirement_rows())
     for p in problems:
         print(p)
     print(f"Checked {len(files)} Markdown files: {len(problems)} problem(s).")

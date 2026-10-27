@@ -62,7 +62,6 @@
 - F-2 (Changes needed): the check's behavior isn't verified by anything
   committed. The negative test was a one-off on a scratch copy, so a
   regression that makes the check pass everything would stay green.
-- F-3 (minor, for the requirements engineer): removed requirements keep a
-  `(Removed: ...)` row, so they count as defined and a doc still relying
-  on one passes.
+- Removed requirements counting as defined was already fixed in `ef632ba`
+  while I reviewed; checked it reports FR-30 as removed.
 - Verdict: Changes needed.

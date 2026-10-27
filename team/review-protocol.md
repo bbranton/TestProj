@@ -346,12 +346,54 @@ handled as [Potential data breach](/team/QA/personas/cybersecurity-engineer.md#p
 ## Disagreements
 
 When an owner and a reviewer disagree, each states its case in one or two
-sentences in the findings table, and the finding is marked **Waiting on the
-Team Lead**. Personas don't overrule each other. Inside its own area the
+sentences in the findings table, and they try to settle it between them.
+Personas don't overrule each other. Inside its own area the
 owner's view counts most, except on security, as
 [Security is everyone's job](/team/README.md#security-is-everyones-job)
 says. After two rounds on the same point without agreement, the owner
-marks the finding **Waiting on the Team Lead**.
+marks the finding **Waiting on the Team Lead**, the only point where a
+disagreement goes to the Team Lead (Team Lead, 2026-10-27, F-2 on
+[#137](https://github.com/bbranton/TestProj/pull/137)).
+
+### Logging a disagreement
+
+Every disagreement between an owner and a reviewer gets a short summary
+in the Library, even when the two settle it without the Team Lead, so the
+team can see how often it happens and spot patterns at each
+[retro](/.claude/skills/retro/SKILL.md) (Team Lead, 2026-10-27, on
+[#132](https://github.com/bbranton/TestProj/pull/132#discussion_r4391121374)).
+
+- **When:** as soon as the owner disagrees with a finding, or a reviewer
+  disagrees with the owner's reply to one.
+- **Who:** the owner thread writes the file and keeps it up to date until
+  the disagreement ends. It needs no PR.
+- **Where:** one file per disagreement, Library:
+  `disagreements/<date>-pr<number>-<reviewer>-<finding>.md`, with the
+  day it started, the PR, the reviewer persona's file name, and the
+  finding's ID in lower case, such as
+  `2026-10-27-pr134-cybersecurity-engineer-f-2.md`. The reviewer is in the
+  name because finding IDs are unique only within one review.
+- **What:** the form below. A **round** is one reply from each side on
+  the same point. The **outcome** is one of **agreed** (both settled on a
+  third way), **owner** (the reviewer accepted the owner's view),
+  **reviewer** (the owner made the change), **Team Lead** (with what the
+  Team Lead decided), or **open** (not settled when the PR merged or
+  closed).
+- **No secrets:** never write a Canvas token, cookie, secret, or student
+  data in it. Link to the finding instead.
+
+```markdown
+# PR #<number> <finding>: <the point, in a few words>
+
+- **Personas:** <owner persona> (owner), <reviewer persona> (reviewer)
+- **Point:** what the finding asked for, in one sentence
+- **Reviewer's case:** one sentence
+- **Owner's case:** one sentence
+- **Outcome:** agreed / owner / reviewer / Team Lead / open, and what
+  was done
+- **Rounds:** <number>
+- **Links:** the finding, and the decision request if there was one
+```
 
 ## Running reviews with agents
 
@@ -403,7 +445,8 @@ is written on the PR before anyone acts on it.
 - **Before merging,** the owner adds a `### Decision:` entry for each
   decision to the *Decisions* section of the PR description, in the format
   in [Daily notes](/team/workspace.md#daily-notes), and any lasting lesson to
-  its [notes](/team/workspace.md#persona-notes).
+  its [notes](/team/workspace.md#persona-notes), and brings each of the
+  PR's [disagreement files](#logging-a-disagreement) up to date.
 - **After the PR merges or closes,** the owner releases its claim on the
   [board](/team/workspace.md#the-board), and every thread that worked on the PR
   reports its cost and ends, as

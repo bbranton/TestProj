@@ -66,6 +66,8 @@ without a persona.
   [Wording-only changes notify the persona](/team/review-protocol.md#wording-only-changes-notify-the-persona).
 - Running a review or cross-review:
   [How a review runs](/team/review-protocol.md#how-a-review-runs).
+- Disagreements, and logging each one in the Library:
+  [Disagreements](/team/review-protocol.md#disagreements).
 - Each persona edits only its own files:
   [Who fixes a finding](/team/review-protocol.md#who-fixes-a-finding).
 - Work outside the phase or the PR:

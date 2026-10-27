@@ -26,7 +26,9 @@ says, and the Team Lead assigned as
 [Two levels of review](../blob/develop/team/review-protocol.md#two-levels-of-review)
 says.
 
-<!-- One line per reviewer, with why. List notified personas here too, as
+<!-- One line per reviewer, with why. For an "always" reviewer, such as the
+     cybersecurity engineer, name the row of Who reviews what that applies.
+     List notified personas here too, as
      ../blob/develop/team/review-protocol.md#wording-only-changes-notify-the-persona
      says. -->
 - Peer: reason

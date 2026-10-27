@@ -88,6 +88,8 @@ other file links to that heading instead of restating it (Team Lead,
   [CFO persona](/team/Management/personas/cfo.md#role).
 - Screenshots in UI PRs: the
   [UI/UX designer persona](/team/Development/personas/ui-ux-designer.md#screenshots-in-ui-prs).
+- Coding standards: the Developer's
+  [coding standards](/team/Development/coding-standards.md).
 - What each persona decides: the *Decisions* section of its persona file.
 - Links, naming, branches, phases, and the Team Lead's final say:
   [CLAUDE.md](/CLAUDE.md).

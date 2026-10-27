@@ -47,8 +47,8 @@ says, and the Team Lead assigned as
 ## Decisions
 
 <!-- Each decision made on this PR, as a `### Decision:` entry in the format
-     in ../blob/develop/team/workspace.md#daily-notes
-     "None" when there are none. -->
+     ../blob/develop/team/workspace.md#daily-notes
+     says. "None" when there are none. -->
 - None
 
 ## Deferred findings

@@ -223,8 +223,8 @@ costs about $1 to $2.
   work after its PR has merged, the thread asks the coordinator for a
   fresh thread of the persona that owns the work, attaching the Team
   Lead's message, and tells the Team Lead in one line. The new thread
-  starts from the persona's notes, its daily log, and the PR, not from the
-  old thread.
+  starts from the persona's notes, the old thread's daily log, and the
+  PR, not from the old thread.
 - **Reviewers already work this way:** each reviewer is a fresh thread, as
   the [review protocol](/team/review-protocol.md#one-thread-per-reviewer)
   says.

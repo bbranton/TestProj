@@ -504,3 +504,19 @@
 - All four are in the project manager's own files; no other reviewer
   needed. Fixed in `84d9890` and the next commit.
 - No new decision: #99 is already answered.
+
+## Link the workspace to the CFO's daily batch thread (#102)
+
+- On the CFO's PR #116, added one line to the workspace's *One thread per
+  PR*, after "Only the coordinator starts threads.": it links to the CFO
+  persona's
+  [Daily batch thread](/team/Management/personas/cfo.md#daily-batch-thread)
+  and doesn't restate the rule, per #97.
+- Left the hunks PR #114 changes (*Team folders*, board rule 4) alone.
+- No new decision: the Team Lead answered it on #102.
+
+## Review the CFO's daily batch thread (#116)
+
+- Shared-files review: **Recommend**. Ripple check found no other file
+  that gives the batch's timing; the rest say "in batches" or link to the
+  CFO persona.

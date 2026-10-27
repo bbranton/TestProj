@@ -173,3 +173,23 @@
   and Cybersecurity engineer. Management, QA, and Development stay as team
   names. History (change logs, daily logs, old finding IDs) is not renamed.
 - **Links:** #83, #76 (Team Lead's comment)
+
+## Old follow-up issues after #80 (#84)
+
+- Raised the X-1 decision request from the #80 review: what happens to the
+  23 open issues, most of them opened under the old follow-up rule. The
+  Team Lead chose to leave them open. The `decision` issue (#46) and the
+  test-plan issues among them were never follow-ups and stay as they are.
+
+### Decision: Issues opened under the old follow-up rule stay open until done
+
+- **Date:** 2026-10-27
+- **Decided by:** Team Lead
+- **Options:** move each old follow-up issue to the roadmap backlog (#25
+  and #26 to the Risks list) and close it with a link; leave them open and
+  work them as before, with only new follow-ups on the backlog
+- **Recommendation:** move them, so there's one tracker
+- **Outcome:** leave them open until done. Only new review follow-ups use
+  the roadmap backlog. `decision` and test-plan issues were never in
+  question.
+- **Links:** #80, #84, `docs/canvas-portal/01-roadmap.md#9-backlog`

@@ -24,6 +24,9 @@ Lasting lessons for the project manager persona. See the
   wants $0 until real users arrive, so test deploys use free tiers (D-3)
   and the paid host waits for Phase 4. Ask the DevOps engineer to research free options
   before offering a paid one.
+- Issues opened under the old follow-up rule stay open until done (Team
+  Lead, 2026-10-27), so check open issues as well as the roadmap backlog
+  when planning; only new follow-ups go on the backlog.
 - A potential data breach never goes on the backlog: it is fixed in the
   PR, or first in the current phase and before the next deploy, tracked in
   the cybersecurity engineer's register meanwhile. Check that register at every phase

@@ -110,7 +110,7 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 | Verdict | A reviewer's sign-off: Recommend, Recommend with notes, or Changes needed. |
 | Potential data breach | A finding that could expose a token, a session, or a student's data to anyone else. Always critical and must-fix. |
 | Team board | The shared file where threads claim work and leave handoff notes, as the [team workspace](/team/workspace.md#the-board) says. Not the portal's board. |
-| Roadmap backlog | The list in the [roadmap](/docs/canvas-portal/01-roadmap.md#9-backlog) of work a review found outside the current phase or too big for its PR, and that the Team Lead chose to put there instead of in a GitHub issue, with `B-` IDs. The project manager keeps it and reviews it with the Team Lead at each phase boundary. Not the Backlog list. |
+| Roadmap backlog | The list in the [roadmap](/docs/canvas-portal/01-roadmap.md#9-backlog) of work a review found outside the current phase or too big for its PR, and that the Team Lead chose to put there instead of fixing it now or opening a GitHub issue, with `B-` IDs. The project manager keeps it and reviews it with the Team Lead at each phase boundary. Not the Backlog list. |
 
 ## Web terms
 

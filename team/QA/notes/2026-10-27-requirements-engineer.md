@@ -32,3 +32,17 @@
   links the glossary; it also says to flag the finding, names "the PR's
   owner", links *Follow-up work*, and is wrapped like the rest of the file.
 - No decisions made; the PR carries out the Team Lead's decision.
+
+## Review of PR #89: four options for each deferred finding
+
+- Reviewed the requirements engineer persona sentence and the *Roadmap
+  backlog* glossary row against `develop@18e59e5`. Both read correctly; the
+  sentence now points at *Follow-up work* instead of listing options, so it
+  can't drift. No requirement IDs touched.
+- X-1 for the project manager: the PR doesn't wait for the answer, so it
+  can merge before the Team Lead picks "fix it in this PR".
+- No decisions made; the PR carries out the Team Lead's decision.
+- Missed in my review: the persona sentence's "Don't hand it to another
+  thread" clashed with option 2 (fix in a separate PR by a new thread).
+  The owner thread added "unless the Team Lead picks a fix in a separate
+  PR" in 31ae463, matching the architect's fix; checked and kept as is.

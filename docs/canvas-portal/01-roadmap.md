@@ -506,8 +506,9 @@ The plan has grown quickly, so these rules keep each phase finishable:
   pull request by the persona that owns that document, as the
   [review protocol](/team/review-protocol.md#who-fixes-a-finding) says.
   Work outside the current phase, or too big for its pull request, goes to
-  the Team Lead, who decides whether it becomes a GitHub issue or a
-  [backlog](#9-backlog) item.
+  the Team Lead, who decides whether it's fixed now (in that pull request
+  or a separate one), becomes a GitHub issue, or goes on the
+  [backlog](#9-backlog).
 - **Exit criteria decide "done".** A phase isn't done until its exit
   criteria pass, and nothing outside them is needed to call it done.
   The test engineer says whether they pass, and the Team Lead calls the phase
@@ -523,8 +524,8 @@ The plan has grown quickly, so these rules keep each phase finishable:
 ## 9. Backlog
 
 Work a review found that is outside the current phase or too big for its
-pull request, and that the Team Lead chose to put here instead of in a
-GitHub issue, as the
+pull request, and that the Team Lead chose to put here instead of fixing
+it now or opening a GitHub issue, as the
 [review protocol](/team/review-protocol.md#follow-up-work) says.
 The project manager adds each item and reviews the list with the Team Lead
 at every phase boundary. The Team Lead plans an item into a phase or drops
@@ -590,3 +591,4 @@ tracked in the [security register](/team/QA/notes/cybersecurity-engineer.md#secu
 | 2026-10-27 | Section 8 matches the new review protocol, from the Team Lead: the Team Lead decides through decision requests, PR authors pick reviewers by what the PR touches, personas merge their own PRs into `develop`, and only the Team Lead reviews and merges the `develop` → `main` release. Added the CFO to the personas. |
 | 2026-10-27 | Review follow-ups go in the same pull request, fixed by the persona that owns the file, or on the new section 9 backlog when they're outside the current phase or too big for the pull request; no more follow-up GitHub issues. From the Team Lead. |
 | 2026-10-27 | A finding outside the current phase or too big for its pull request goes to the Team Lead as its own decision request, choosing a GitHub issue or the section 9 backlog, so nothing is parked without the Team Lead's say. From the Team Lead. |
+| 2026-10-27 | The Team Lead's options for such a finding are four: fix it now in the same pull request, fix it now in a separate pull request by a new thread, a GitHub issue, or the section 9 backlog. From the Team Lead. |

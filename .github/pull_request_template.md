@@ -39,8 +39,8 @@ Never "None": every PR has at least the peer.
 
 <!-- Each finding outside the current phase or too big for this PR, with
      the persona that owns it, the Team Lead's decision request, and the
-     answer: GitHub issue #n or roadmap backlog B-n. "None" when there are
-     none. See "Follow-up work" in the review protocol. -->
+     answer: fixed in this PR, separate PR #n, GitHub issue #n, or roadmap
+     backlog B-n. "None" when there are none. See "Follow-up work" in the review protocol. -->
 - None
 
 ## Cost

@@ -69,17 +69,21 @@ minimum viable solution.
   each needs, and sends that list to each owner at once. Owners don't find
   the follow-ups one review at a time.
 - **Phase scope budget.** Anything added to the current phase names what
-  it replaces, or the Team Lead's explicit OK to let the phase grow.
+  it replaces, or the Team Lead's explicit OK to let the phase grow. That
+  includes a later-phase finding the Team Lead chose to fix now, in its PR
+  or a separate one.
   The project manager records each addition, and its cut or OK, in the roadmap's
   change log, so R-10 is tracked and not only warned about.
 - **Fix the roadmap where it's found.** When a review of another PR finds
   a roadmap change in the current phase, the project manager commits it to that PR's
   branch, as [Fixes by another persona](/team/review-protocol.md#fixes-by-another-persona)
   says. Work outside the current phase goes to the Team Lead, who picks
-  a GitHub issue or the backlog.
-- **Backlog first.** Before starting new roadmap work, the project manager adds the
-  findings the Team Lead sent to the backlog, and says in its reply how
-  many are waiting for the next phase boundary.
+  where it goes, as [Follow-up work](/team/review-protocol.md#follow-up-work)
+  says.
+- **Backlog right away.** As soon as the Team Lead sends a finding to the
+  backlog, the project manager adds it to the roadmap in a small PR of its
+  own, and says in its reply how many items are waiting for the next phase
+  boundary.
 
 ## Review checklist
 

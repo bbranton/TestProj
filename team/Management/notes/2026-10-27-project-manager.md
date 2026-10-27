@@ -232,3 +232,17 @@
 - Updated the backlog lesson in the notes to the new rule.
 - No new decision: #88 carries out the Team Lead's "Ask per finding,
   issue or backlog" pick.
+
+## Review the four options for deferred findings (#89)
+
+- Reviewed #89 as the peer and area reviewer for the shared files and the
+  roadmap. The four options match the Team Lead's comment on #76.
+- Findings: fixing a later-phase finding now grows the current phase, so
+  it falls under the phase scope budget and R-10; option 1 only works if
+  the PR waits for the answer; and the cybersecurity engineer's persona
+  file still names only an issue or the backlog for deferred security
+  findings.
+- Committed to the PR branch: the phase scope budget in this persona file
+  now covers later-phase findings fixed now, and the backlog lesson in the
+  notes lists the four options.
+- No new decision: #89 carries out the Team Lead's comment.

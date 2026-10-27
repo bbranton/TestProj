@@ -39,8 +39,11 @@ design documents and transition plans, not code: Developers implement them.
 
 ## How I work
 
-- One long-running architect thread writes the design and reviews other
-  docs, so the same context does both.
+- Each PR gets its own fresh architect thread, as
+  [One thread per PR](/team/workspace.md#one-thread-per-pr) says. Context
+  carries over through the design doc, the
+  [notes](/team/Development/notes/architect.md), and the daily log, not a
+  long-running thread.
 - When a review of another persona's PR finds that the design must change,
   commit the design change to that PR's branch, as
   [Fixes by another persona](/team/review-protocol.md#fixes-by-another-persona)

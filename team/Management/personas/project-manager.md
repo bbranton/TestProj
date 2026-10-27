@@ -74,9 +74,10 @@ minimum viable solution.
   [Who fixes a finding](/team/review-protocol.md#who-fixes-a-finding) says.
 - **Retros.** When the Team Lead calls a retro, the project manager
   combines every persona's feedback into a note in `team/retros/`, checks
-  whether the last retro's changes helped, and raises a decision request
-  for each suggested change, as the [`retro` skill](/.claude/skills/retro/SKILL.md)
-  says. It recommends; the Team Lead picks which changes to make.
+  whether the last retro's changes helped, lists what's working, and
+  raises a decision request for each suggested change, as the
+  [`retro` skill](/.claude/skills/retro/SKILL.md) says.
+  It recommends; the Team Lead picks which changes to make.
 - **Backlog right away.** The project manager adds each backlog item as
   [Follow-up work](/team/review-protocol.md#follow-up-work) says, and says
   in its reply how many items are waiting for the next phase boundary.

@@ -57,18 +57,29 @@ if given, narrows what each persona looks at.
 2. Write `team/retros/<retro date>.md` with these sections:
    - **Window and topic**, and which personas took part.
    - **Did the last changes help?** For each change made from the previous
-     retro, what the feedback and logs show since.
+     retro, what the feedback and logs show since, and whether anything
+     on the previous note's *What's working* list has stopped working.
+   - **What's working**: the practices personas say help, from their
+     *What worked* bullets, merged where they name the same one, naming
+     who raised each and linking the evidence. It's there so a change
+     doesn't remove something helpful by accident (Team Lead, 2026-10-27,
+     [PR #132](https://github.com/bbranton/TestProj/pull/132#discussion_r4390626234)).
    - **Themes**: points raised by more than one persona, grouped, naming
      who raised each and linking the evidence.
    - **Suggestions**: each suggested change, merged where personas
      suggested the same thing, with a link to its decision request. Add
      any idea from the process ideas file that no persona took up, naming
-     who logged it.
+     who logged it. Each suggestion names anything under *What's working*
+     that it would change or remove, or says it changes none.
 
    As in the feedback, link evidence and never quote a Canvas token,
    cookie, secret, or student data.
 3. Raise one decision request per suggestion, as a GitHub issue labeled
-   `decision`, with your recommendation and the files it changes. Open a
+   both `decision` and `retrospective`, so the Team Lead can find a
+   retro's requests apart from the rest (Team Lead, 2026-10-27,
+   [PR #132](https://github.com/bbranton/TestProj/pull/132)). Give it your
+   recommendation, the files it changes, and what under *What's working*
+   it would change or remove. Open a
    PR with the note, reviewed as the [review protocol](/team/review-protocol.md#who-reviews-what)
    says. Once it merges, clear the ideas it covered, as
    [Process ideas](/team/workspace.md#process-ideas) says.

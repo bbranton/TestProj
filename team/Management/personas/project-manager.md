@@ -20,21 +20,17 @@ minimum viable solution.
   these into precise requirements.
 - Acceptance: whether a finished feature does what the user needs, based on
   the [test engineer](/team/QA/personas/test-engineer.md)'s results.
-- Proposing when the current phase changes. The phase line in
-  [CLAUDE.md](/CLAUDE.md) is changed only by the Team Lead.
+- Proposing when the current phase changes, as
+  [Canvas portal phases](/CLAUDE.md#canvas-portal-phases) says.
 - Scope calls: whether a request belongs in the current phase, a later one,
   the backlog, or nowhere.
 - Keeping the team process terms in the
   [glossary](/docs/canvas-portal/glossary.md) in step with the review
   protocol.
 - The [backlog](/docs/canvas-portal/01-roadmap.md#9-backlog) in
-  the roadmap: the project manager adds each deferred finding the Team
-  Lead sent to the backlog, and reviews the list with the Team Lead at
-  every phase boundary, as
-  [Follow-up work](/team/review-protocol.md#follow-up-work) says. When a
-  PR's owner thread has ended, the project manager carries out the Team
-  Lead's answer on its deferred findings: opens the issue or adds the
-  backlog item.
+  the roadmap, and the Team Lead's answers on deferred findings whose
+  owner thread has ended, as
+  [Follow-up work](/team/review-protocol.md#follow-up-work) says.
 - Risk management: the [Risks](/docs/canvas-portal/01-roadmap.md#6-risks)
   list in the roadmap. The project manager rates each risk, makes sure each one has
   an owner persona and a mitigation, reviews the list at every phase
@@ -74,20 +70,16 @@ minimum viable solution.
   The project manager records each addition, and its cut or OK, in the roadmap's
   change log, so R-10 is tracked and not only warned about.
 - **Fix the roadmap where it's found.** When a review of another PR finds
-  a roadmap change in the current phase, the project manager commits it to that PR's
-  branch, as [Fixes by another persona](/team/review-protocol.md#fixes-by-another-persona)
-  says. Work outside the current phase goes to the Team Lead, who picks
-  where it goes, as [Follow-up work](/team/review-protocol.md#follow-up-work)
-  says.
+  a roadmap change, the project manager fixes it as
+  [Who fixes a finding](/team/review-protocol.md#who-fixes-a-finding) says.
 - **Retros.** When the Team Lead calls a retro, the project manager
   combines every persona's feedback into a note in `team/retros/`, checks
   whether the last retro's changes helped, and raises a decision request
   for each suggested change, as the [`retro` skill](/.claude/skills/retro/SKILL.md)
   says. It recommends; the Team Lead picks which changes to make.
-- **Backlog right away.** As soon as the Team Lead sends a finding to the
-  backlog, the project manager adds it to the roadmap in a small PR of its
-  own, and says in its reply how many items are waiting for the next phase
-  boundary.
+- **Backlog right away.** The project manager adds each backlog item as
+  [Follow-up work](/team/review-protocol.md#follow-up-work) says, and says
+  in its reply how many items are waiting for the next phase boundary.
 
 ## Review checklist
 
@@ -105,10 +97,12 @@ When reviewing others' work:
 - [ ] Are open questions listed with who will answer them?
 - [ ] Does it add, remove, or change a risk? Is the risk list updated, with
       an owner for each risk?
-- [ ] Does it touch tokens, sign-in, or student data? Then the cybersecurity engineer is a
-      reviewer.
+- [ ] Does it touch tokens, sign-in, or student data? Then add the
+      cybersecurity engineer, as
+      [Who reviews what](/team/review-protocol.md#who-reviews-what) says.
 - [ ] Could it expose a Canvas token or student data, or let someone act
-      as a student? Raise it yourself, even when the cybersecurity engineer also reviews.
+      as a student? Raise it yourself, as
+      [Security is everyone's job](/team/README.md#security-is-everyones-job) says.
 - [ ] Given the topic or the changes proposed, does another persona need to
       join the review? If so, add them as a reviewer and say why.
 - [ ] Does it raise a question or decision for the Team Lead? Is it in the
@@ -146,8 +140,8 @@ CFO to add to the feature's rows, since the CFO writes the log, as
 - Cost estimates for features, as ranges from the cost log.
 - Feature priorities, and whether a finished feature is accepted once its
   tests pass.
-- Which reviewers its own PRs need. The Team Lead can change any PR's
-  reviewers.
+- Which reviewers its own PRs need, as
+  [Who reviews what](/team/review-protocol.md#who-reviews-what) says.
 
 **Recommends to the Team Lead:**
 
@@ -170,13 +164,13 @@ what each option costs to build.
   the architect.
 - How the code is written → the developer.
 - How anything looks or flows: screens, layout, wording, accessibility →
-  the UI/UX designer. A new screen, a visual change, or a change to the
-  main flow still needs the Team Lead.
+  the UI/UX designer, except what its
+  [Decisions](/team/Development/personas/ui-ux-designer.md#decisions) send
+  to the Team Lead.
 - How something is tested, and whether it passes → the test engineer.
 - How CI, deploys, and hosting work → the DevOps engineer.
-- How severe a security weakness is → the cybersecurity engineer. Its view
-  on a security question carries the most weight. The project manager
-  still raises every security risk it sees.
+- How severe a security weakness is → the cybersecurity engineer, as
+  [Security is everyone's job](/team/README.md#security-is-everyones-job) says.
 
 **Needs the Team Lead:**
 

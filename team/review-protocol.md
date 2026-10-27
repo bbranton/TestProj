@@ -256,7 +256,8 @@ review uncovers goes one of two ways:
       for work that belongs in a later phase.
 
    For later-phase work, options 1 and 2 grow the current phase, so the
-   decision request says what the fix displaces, and the project manager
+   decision request says what the fix displaces, or asks the Team Lead to
+   let the phase grow, as the scope budget allows, and the project manager
    logs it under the
    [phase scope budget](/team/Management/personas/project-manager.md#how-it-works).
 

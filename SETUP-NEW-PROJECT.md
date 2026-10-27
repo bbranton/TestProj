@@ -45,9 +45,13 @@ github.com:
 1. **Branches:** create the repo with a README, so `main` has a first
    commit. Then create `develop` from `main`, and make `develop` the
    default branch (Settings > General).
-2. **Ruleset on `main`** (Settings > Rules > Rulesets > New branch
-   ruleset), with no bypass: *Restrict deletions*, *Block force pushes*,
-   *Require a pull request before merging*.
+2. **Rulesets** (Settings > Rules > Rulesets > New branch ruleset). One
+   on `main`, with no bypass: *Restrict deletions*, *Block force pushes*,
+   *Require a pull request before merging*. One on `develop` with
+   *Require status checks to pass* and the checks `docs`, `backend`, and
+   `frontend` from GitHub Actions, so a PR only merges once its CI
+   passes. Add the checks after each has run once, since GitHub only
+   offers check names it has seen.
 3. **Merge settings:** as the
    DevOps engineer notes record them, in the project's shared files
    (Library: `notes/devops-engineer/`).
@@ -111,9 +115,10 @@ catches up on every merge.
 
 ## 6. Copy the team files
 
-Copy `CLAUDE.md`, `team/`, `.claude/skills/`, and
+Copy `CLAUDE.md`, `FACTORY.md`, `team/`, `.claude/skills/`, and
 `.github/pull_request_template.md` into the new repo in one PR into
-`develop`. The cost log, persona notes, and daily logs are in the Library,
+`develop`. Rewrite `FACTORY.md`'s goal, layout, and stages for the new
+repo. The cost log, persona notes, and daily logs are in the Library,
 not the repo. Start the
 [security register](/team/QA/security-register.md) with its heading,
 intro, and an empty table.

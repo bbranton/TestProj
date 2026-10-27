@@ -580,6 +580,7 @@
   as deferring untested risks, so it again says the test engineer still
   raises them; F-2, the project manager's checklist no longer lists part
   of the cybersecurity engineer's triggers and points to its row instead.
+
 ## Carry out #98: process ideas wait for retros
 
 ### Decision: process changes wait for retros, and ideas go in a shared ideas file

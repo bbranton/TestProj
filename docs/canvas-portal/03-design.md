@@ -270,6 +270,9 @@ including FastAPI's own: an `HTTPException`, a request it can't read
 these two is fixed text. It never echoes the request or the exception's
 text, because FastAPI's default 422 answer repeats the input it rejected,
 which for `PUT /api/canvas/connection` would be the token (NFR-10).
+The two sign-in endpoints are the exception: the browser goes to them
+directly, not the frontend's code, so they never answer with this shape
+(section 5).
 
 ### Keeping devices in sync (NFR-22, D-8)
 
@@ -380,6 +383,15 @@ sequenceDiagram
     A-->>B: Set session cookie, redirect to the board
 ```
 
+- **A failed sign-in goes back to S-1.** `GET /api/auth/google/login` and
+  `GET /api/auth/google/callback` are page loads, not requests from the
+  frontend's code, so a JSON error would show as raw text. When either
+  fails for any reason (the student cancels, Google answers with an error,
+  the `state` doesn't match, the code exchange fails, or anything
+  unexpected), the backend logs it and redirects to the sign-in page with
+  `?signin=failed`, and S-1 shows its sign-in message. The address carries
+  only that fixed value: no error code, Google's error text, or the `code`
+  and `state` values.
 - The backend asks Google only for the `openid email profile` scopes: who the
   user is, nothing from their Google Drive or Gmail.
 - Users are matched by Google's stable user ID (the `sub` value), not by
@@ -867,3 +879,4 @@ the data side.
 | 2026-10-26 | Orphaned-card show/hide option, its count, and the Refresh summary's removed count move to Phase 1, from the Team Lead. |
 | 2026-10-26 | Course colors (FR-66) postponed to Phase 5, from the Team Lead: `COURSE_LABEL` removed from the Phase 1 tables and the data model; strips and course buttons use one neutral color; section 12 notes the later table. |
 | 2026-10-27 | Error codes `invalid_request` (422) and `internal_error` (500), and one app-level handler for every error, from the coding standards review (PR #141, X-1). |
+| 2026-10-27 | A failed Google sign-in redirects to S-1 with `?signin=failed` instead of answering with the error shape, from the UI/UX designer on PR #141. |

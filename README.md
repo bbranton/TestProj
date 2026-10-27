@@ -1,8 +1,18 @@
 # TestProj
-a project to test github features
+
+A Software Factory: a team of AI personas, and the products it builds.
+[FACTORY.md](/FACTORY.md) says what the factory is for and how we'll show
+it works.
 
 Starting a new project like this one? See
 [Set up a new project like this one](/SETUP-NEW-PROJECT.md).
+
+## Canvas Assignments Portal
+
+`canvas-portal/` holds the first product: a FastAPI backend and a React +
+TypeScript frontend, tested in CI on every pull request. It isn't deployed
+yet; `/canvas-portal/` on the site is a placeholder. To build, test, and run
+it locally, see the [Canvas portal README](/canvas-portal/README.md).
 
 ## Site layout
 

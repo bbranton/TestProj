@@ -48,3 +48,21 @@
   still there. Link-only changes don't get a change log row, as on #83 and
   #85.
 - No change needed in my files. Verdict: Recommend.
+
+## Review of PR #115: docs check in CI (#100)
+
+- Ran the script on the branch and on the branch merged with `develop`:
+  0 problems both times, exit 0.
+- Ran a scratch file of 15 cases through it. It catches a missing file, a
+  missing heading, a bad `../blob/develop/` link, and an undefined ID, and
+  exits 1. It skips IDs in inline code and in change logs, as intended.
+- F-1 (Changes needed): a heading with inline code, such as *Read from
+  `develop`* in the review protocol, gets the wrong anchor, so a valid link
+  to it fails. Two such headings are on `develop` today.
+- F-2 (Changes needed): the check's behavior isn't verified by anything
+  committed. The negative test was a one-off on a scratch copy, so a
+  regression that makes the check pass everything would stay green.
+- F-3 (minor, for the requirements engineer): removed requirements keep a
+  `(Removed: ...)` row, so they count as defined and a doc still relying
+  on one passes.
+- Verdict: Changes needed.

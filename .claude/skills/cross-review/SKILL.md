@@ -35,10 +35,10 @@ reviewer.
 5. After pushing fixes for a **Changes needed** verdict, message that
    reviewer thread to re-review.
 6. Post the combined findings table, with anything that needs the Team
-   Lead at the top. Send each finding outside the current phase or too big
-   for this PR to the Team Lead and list it in the PR's *Deferred findings*
-   section, as [Follow-up work](/team/review-protocol.md#follow-up-work)
-   says.
+   Lead at the top. Send the Team Lead a decision request for each finding
+   outside the current phase or too big for this PR, and list it in the
+   PR's *Deferred findings* section, as
+   [Follow-up work](/team/review-protocol.md#follow-up-work) says.
 7. Merge into `develop` when the review allows it, and close out, as
    [Close out](/team/review-protocol.md#close-out) says. Tell each
    reviewer thread when the PR merges or closes.

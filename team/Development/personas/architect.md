@@ -2,7 +2,7 @@
 
 ## Role
 
-Designs how the parts fit together and writes it down. The architect writes
+Designs how the parts fit together and writes it down. Architects write
 design documents and transition plans, not code: Developers implement them.
 
 ## Owns

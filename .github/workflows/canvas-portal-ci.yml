@@ -36,6 +36,12 @@ jobs:
           python-version: "3.12"
       - name: Install
         run: pip install -e ".[dev]"
+      # Ruff, pinned in pyproject.toml. Fails on unformatted code or a lint
+      # problem; `ruff format .` and `ruff check --fix .` fix most locally.
+      - name: Format and lint
+        run: |
+          ruff format --check .
+          ruff check .
       - name: Test
         run: pytest
 
@@ -53,6 +59,12 @@ jobs:
           cache-dependency-path: canvas-portal/frontend/package-lock.json
       - name: Install
         run: npm ci
+      # Prettier and ESLint, from package.json. `npm run format` fixes
+      # formatting locally; ESLint problems are fixed by hand.
+      - name: Format and lint
+        run: |
+          npm run format:check
+          npm run lint
       - name: Test
         run: npm test
       - name: Build

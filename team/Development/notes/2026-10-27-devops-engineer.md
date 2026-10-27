@@ -18,3 +18,5 @@
   triggers, and `paths` filters. Both CI jobs passed on the PR.
 - Verdict: Recommend with notes. One optional wording note (F-1): say the
   automatic GitHub token is read-only because of `permissions: contents: read`.
+- F-1 was fixed in `a743058` by the owner (comment only). Re-checked the
+  fix: verdict now Recommend.

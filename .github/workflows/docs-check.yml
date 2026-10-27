@@ -1,0 +1,29 @@
+# Docs check: fails on broken repo links in Markdown and on FR or NFR IDs
+# that 02-requirements.md doesn't define.
+#
+# What it runs: team/Development/scripts/docs_check.py, which reads every
+# tracked .md file. Run the same script locally before opening a PR:
+#   python3 team/Development/scripts/docs_check.py
+#
+# When it runs: on every pull request, and on pushes to main and develop.
+# It has no paths filter, since a change to any file (a rename, a deleted
+# doc) can break a link. It takes seconds, deploys nothing, uses no
+# secrets, and its automatic GitHub token can only read the repo.
+
+name: Docs check
+
+on:
+  pull_request:
+  push:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check links and requirement IDs
+        run: python3 team/Development/scripts/docs_check.py

@@ -53,3 +53,38 @@
 - Reviewed the whole PR against `develop@94262eb`. Docs only: `ci-paths`
   says no workflow runs. Verdict below, posted on the PR.
 - No new decision: this carries out #96.
+
+## Docs check in CI (#100)
+
+- Carries out the Team Lead's answer on
+  [#100](https://github.com/bbranton/TestProj/issues/100): added
+  `.github/workflows/docs-check.yml`, which runs
+  `team/Development/scripts/docs_check.py` on every PR and on pushes to
+  `main` and `develop`.
+- The script checks every tracked `.md` file: repo links written from the
+  root, relative, or as the PR template's `../blob/develop/...` form must
+  name a file that exists, and a `#fragment` must match a heading. Every
+  FR and NFR ID in `docs/canvas-portal/` outside a change log must be
+  defined in `02-requirements.md`. Standard library only, no secrets.
+- No paths filter, since renaming or deleting any file can break a link.
+- Starts green on `develop`: 49 files, 0 problems. A test copy with a
+  missing file, a missing heading, and an undefined ID failed with all
+  three.
+- Updated the files that said docs PRs run no checks: DevOps notes (and
+  Open items), the DevOps persona's *Owns*, and the `ci-paths` skill.
+- Not done: making the check required before merge. That is a repo
+  setting, and a change to which checks must pass, so it needs the Team
+  Lead.
+
+### Decision: add a docs check to CI for links and requirement IDs
+
+- **Date:** 2026-10-27
+- **Decided by:** Team Lead
+- **Options:** 1, add `docs-check.yml` backed by a script in
+  `team/Development/scripts/`; 2, no change, reviewers keep checking links
+  by hand
+- **Recommendation:** 1: it costs $0, needs no secrets, and replaces
+  manual link checks on every docs PR
+- **Outcome:** 1, as recommended
+- **Links:** [#100](https://github.com/bbranton/TestProj/issues/100),
+  [process retro](/team/retros/2026-10-27-process.md)

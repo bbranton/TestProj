@@ -26,7 +26,8 @@ Each team is a department, with a folder here holding `notes/`,
 job title, such as `Development/personas/architect.md`. The
 [team workspace](/team/workspace.md#team-folders) says how the folders work.
 Each persona may update its own files there with only a peer review from
-its own persona; another persona's files get that persona's review.
+its own persona; another persona's files are reviewed as
+[Who reviews what](/team/review-protocol.md#who-reviews-what) says.
 
 | Team | Persona files |
 |------|---------------|

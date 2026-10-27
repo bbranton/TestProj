@@ -41,7 +41,9 @@ persona that owns most of the changed files. A persona's area is its own
 files in its team folder (its persona file, notes, and daily log) and the
 docs it owns in [Who reviews what](#who-reviews-what). Teams hold several personas, so a
 change to another persona's files in the same team folder is reviewed by
-that persona, and a team script or skill by the other personas who use it.
+that persona, unless it is a
+[wording-only change](#wording-only-changes-notify-the-persona), and a team
+script or skill by the other personas who use it.
 The "always" rules below still apply: a code PR always has the Test
 engineer, and anything touching the cybersecurity engineer's area always has the cybersecurity engineer.
 
@@ -158,6 +160,23 @@ persona file, and checks that the words match the
 [glossary](/docs/canvas-portal/glossary.md). Security is still everyone's
 job: any reviewer raises any token or student-data risk it sees, as
 [Security is everyone's job](/team/README.md#security-is-everyones-job) says.
+
+### Wording-only changes notify the persona
+
+When a PR changes another persona's persona file only in wording or a
+link, without changing what that persona does, decides, or reviews, that
+persona is notified instead of made a reviewer (Team Lead, 2026-10-27,
+[#99](https://github.com/bbranton/TestProj/issues/99)):
+
+- The owner leaves that persona a `[note]` on the
+  [board](/team/workspace.md#the-board) naming the PR and the change, and
+  lists the persona as notified in the PR description.
+- The persona reads the change at its next own thread, fixes anything it
+  disagrees with in its own PR, and deletes the note.
+- The PR's peer reviewer judges whether each such change is wording-only.
+  If in doubt, the persona reviews.
+- The "always" rules above still apply, so a change touching the
+  cybersecurity engineer's area always has the cybersecurity engineer.
 
 ## Who decides what
 

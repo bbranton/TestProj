@@ -431,3 +431,28 @@
   covers phase and scope decisions, close in name to the new ripple check.
   No change needed now.
 - No new decision: #96 is already answered.
+
+## Notify, not review, for wording-only persona file changes (#99)
+
+- Added *Wording-only changes notify the persona* to the review
+  protocol's *Who reviews what*, as the rule's one home per #97, and
+  linked to it from *Two levels of review*, the team README's *Folders*,
+  and the workspace's board rule 4.
+- Ripple check: `CLAUDE.md`, the PR template, and the `cross-review` skill
+  send readers to the review protocol's *Who reviews what* for reviewers,
+  where the exception now lives, so they needed no change. No glossary
+  term covers it.
+
+### Decision: notify, not review, for wording-only persona file changes
+
+- **Date:** 2026-10-27
+- **Decided by:** Team Lead
+- **Options:** 1, notify the persona with a board `[note]`, keeping the
+  security "always" rule; 2, no change, every persona whose file changes
+  reviews
+- **Recommendation:** 1, with the PR's peer reviewer judging whether a
+  change is wording-only, and the persona reviewing if in doubt
+- **Outcome:** 1, as recommended
+- **Links:** [#99](https://github.com/bbranton/TestProj/issues/99),
+  [process retro](/team/retros/2026-10-27-process.md),
+  [Wording-only changes](/team/review-protocol.md#wording-only-changes-notify-the-persona)

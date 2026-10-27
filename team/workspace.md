@@ -139,7 +139,9 @@ Rules:
 3. **Stale claims.** A claim older than two days with no open PR can be
    removed by anyone. Say so in your thread.
 4. **Notes are for handoffs**, such as advice or a question for whoever
-   picks up a persona next. The persona it's for deletes the note once
+   picks up a persona next, or a
+   [wording-only change](/team/review-protocol.md#wording-only-changes-notify-the-persona)
+   to its persona file. The persona it's for deletes the note once
    handled. Anything lasting moves into that persona's notes file.
 
 A session outside this project has no board. It should check open PRs for

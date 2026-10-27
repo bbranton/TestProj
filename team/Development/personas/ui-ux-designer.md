@@ -52,12 +52,18 @@ They're committed to the PR's branch for the review, then removed before
 it merges, so they never land on `develop` (Team Lead, 2026-10-27,
 [#129](https://github.com/bbranton/TestProj/issues/129)).
 
-1. Commit them under `docs/screenshots/pr-<number>/`.
-2. Embed each one in the description's *Screenshots* section with the
+1. Before you push, open each screenshot and check it shows no Canvas
+   token, session cookie or ID, sign-in or callback URL with a code or
+   token, real student, course, or grade, or a real school's Canvas
+   address. Capture only the page, as Playwright's `page.screenshot`
+   does, not the whole screen, so the address bar, dev tools, other tabs,
+   and notifications stay out.
+2. Commit them under `docs/screenshots/pr-<number>/`.
+3. Embed each one in the description's *Screenshots* section with the
    commit that added it:
    `https://raw.githubusercontent.com/bbranton/TestProj/<commit-sha>/docs/screenshots/pr-<number>/<file>.png`.
    A link that names a commit keeps working after the file is removed.
-3. As the PR's last commit before merging, remove
+4. As the PR's last commit before merging, remove
    `docs/screenshots/pr-<number>/`. Check that the description still
    shows every image.
 
@@ -66,6 +72,11 @@ it merges, so they never land on `develop` (Team Lead, 2026-10-27,
 - Use test data only. None may show a Canvas token, a session, or a real
   student's data: the repo is public, and git history keeps every
   screenshot after it's removed.
+- If a pushed screenshot shows any of these, removing it doesn't take it
+  back. Treat it as a
+  [potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach),
+  tell the cybersecurity engineer at once, and revoke any token or session
+  it shows.
 
 The `develop` → `main` release PR links to the merged PRs, so the Team
 Lead sees each UI change in its PR's description.

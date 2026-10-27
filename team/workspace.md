@@ -144,3 +144,37 @@ Rules:
 
 A session outside this project has no board. It should check open PRs for
 the same doc instead.
+
+## One thread per PR
+
+Every PR gets its own fresh owner thread (Team Lead, 2026-10-27,
+[#95](https://github.com/bbranton/TestProj/issues/95)). Long, reused
+threads were most of the team's bill, and a fresh thread for one small PR
+costs about $1 to $2.
+
+- **A thread carries one PR to the end.** Its review rounds, fixes, and
+  daily log entries stay in that thread.
+- **At about $10, ask the Team Lead about a hand-off.** An owner thread
+  checks its cost with `get_session`, as the `log-cost` skill does, after
+  each Team Lead round. Once it passes about $10, it asks the Team Lead
+  whether now is a good time to hand off; there's no hard cap, and the
+  Team Lead may say carry on. If `get_session` returns no numbers, ask
+  after about four Team Lead rounds instead. On a yes, the thread:
+  1. adds a hand-off note to its persona's daily log and pushes it to the
+     PR branch: the PR and branch, what's done, what's left, open
+     findings, decisions waiting on the Team Lead, and the files to read
+     first;
+  2. reports its cost with the `log-cost` skill;
+  3. asks the coordinator for a fresh thread of the same persona, linking
+     the note.
+- **Once the PR merges, the thread is done.** It reports its cost with the
+  `log-cost` skill and takes no new work.
+- **New work goes to a new thread.** Only the coordinator starts threads.
+  When the Team Lead asks a thread for work outside its PR, or follow-up
+  work after its PR has merged, the thread asks the coordinator for a
+  fresh thread of the persona that owns the work, attaching the Team
+  Lead's message, and tells the Team Lead in one line. The new thread
+  starts from the persona's notes, its daily log, and the PR, not from the
+  old thread.
+- **Reviewers already work this way:** each reviewer is a fresh thread, as
+  the [review protocol](/team/review-protocol.md#who-reviews-what) says.

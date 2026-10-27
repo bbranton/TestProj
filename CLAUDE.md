@@ -46,6 +46,10 @@
   student data you see, in any area, and never leave it for another
   persona to catch. The cybersecurity engineer's view carries the most weight on
   security; see [Security is everyone's job](/team/README.md#security-is-everyones-job).
+- Every PR gets its own fresh owner thread, and new work after a merge
+  goes to a new thread that the coordinator starts. An owner thread past
+  about $10 asks the Team Lead whether to hand off; see
+  [One thread per PR](/team/workspace.md#one-thread-per-pr).
 - When a thread's work is done, report its cost with the `log-cost` skill.
   Don't add rows to `team/Management/cost-log.md` in your own PR: the CFO
   adds reported rows in batches, so the log doesn't cause merge conflicts.

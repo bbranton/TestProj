@@ -461,3 +461,19 @@
   step 6 gate list links the term too. My ripple check had skipped
   `docs/`, since the ripple check's search list names only the glossary
   there.
+
+## Link the workspace to the CFO's daily batch thread (#102)
+
+- On the CFO's PR #116, added one line to the workspace's *One thread per
+  PR*, after "Only the coordinator starts threads.": it links to the CFO
+  persona's
+  [Daily batch thread](/team/Management/personas/cfo.md#daily-batch-thread)
+  and doesn't restate the rule, per #97.
+- Left the hunks PR #114 changes (*Team folders*, board rule 4) alone.
+- No new decision: the Team Lead answered it on #102.
+
+## Review the CFO's daily batch thread (#116)
+
+- Shared-files review: **Recommend**. Ripple check found no other file
+  that gives the batch's timing; the rest say "in batches" or link to the
+  CFO persona.

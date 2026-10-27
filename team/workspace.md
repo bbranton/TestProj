@@ -179,7 +179,9 @@ costs about $1 to $2.
 - **Once the PR merges or closes, the thread is done.** It reports its
   cost with the `log-cost` skill and takes no new work.
 - **New work goes to a new thread.** Only the coordinator starts threads.
-  When the Team Lead asks a thread for work outside its PR, or follow-up
+  The coordinator also starts the CFO's daily batch thread, as
+  [Daily batch thread](/team/Management/personas/cfo.md#daily-batch-thread)
+  says. When the Team Lead asks a thread for work outside its PR, or follow-up
   work after its PR has merged, the thread asks the coordinator for a
   fresh thread of the persona that owns the work, attaching the Team
   Lead's message, and tells the Team Lead in one line. The new thread

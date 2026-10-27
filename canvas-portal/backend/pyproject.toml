@@ -29,5 +29,6 @@ target-version = "py312"
 
 [tool.ruff.lint]
 # The defaults (pyflakes and the pycodestyle errors), plus import sorting,
-# pyupgrade, and bugbear for likely bugs.
-extend-select = ["I", "UP", "B"]
+# pyupgrade, bugbear for likely bugs, and print (T20), since the backend
+# logs with logging, never print.
+extend-select = ["I", "UP", "B", "T20"]

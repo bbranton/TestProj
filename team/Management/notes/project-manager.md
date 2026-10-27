@@ -49,6 +49,10 @@ Lasting lessons for the Management persona. See the
 - Reviewers come from what a PR touches, not from the kind of doc: each
   persona whose area changes reviews it. The Team Lead found Team Lead
   confirmation of every PR's reviewers too slow once PRs were small.
+- Every PR has at least one reviewer: a fresh thread of the owner's own
+  persona as a peer, even for an own-area PR (2026-10-27, #82). When a
+  team thread owns a PR, Management is often the peer, since it owns most
+  shared process files. Budget one reviewer thread for every PR.
 - When a persona is split or renamed, relabel its open issues in the same
   pass. Setting a missing label on an issue creates it, grey and with no
   description, so give it a color and description afterward if they matter.

@@ -117,3 +117,35 @@
   deploy.
 - **Links:** #80, #76 (Team Lead's comment), `team/review-protocol.md#who-fixes-a-finding`,
   `docs/canvas-portal/01-roadmap.md#9-backlog`
+
+## Review the peer reviewer rule change (#82)
+
+- Reviewed #82 as Management, both as its peer (Management owns most of
+  the changed files) and as area reviewer. Read from `develop@b2b23fd`.
+- Checked it against the Team Lead's comment on #76: at least one
+  reviewer on every PR, a same-persona peer by default, as a precaution.
+- Found the glossary's *Reviewers* entry still says one reviewer per area
+  touched, which leaves none for an own-area PR. The glossary is the
+  Requirements engineer's, so it commits the fix to the PR.
+- Notes for the owner: say who the peer is when the owner is a team
+  thread in `CLAUDE.md`, the skill, and the PR template; the owner's own
+  pushes after the last verdict (the Close out log entry, merging
+  `develop`) still go in without a peer look; and each own-area PR now
+  costs one more thread.
+- #82's owner is a team thread with no persona log, so the decision is
+  recorded here, committed to the PR branch as *Fixes by another persona*
+  says.
+
+### Decision: Every PR has at least one reviewer, a same-persona peer by default
+
+- **Date:** 2026-10-27
+- **Decided by:** Team Lead
+- **Options:** no reviewers when a PR touches only the owner persona's
+  area (the rule from #79); always at least one reviewer, a fresh thread
+  of the owner's own persona as a peer
+- **Recommendation:** the Team Lead's own proposal, as a precaution
+- **Outcome:** as proposed. Area reviewers and the "always" rules apply on
+  top. When the owner is a team thread, the peer is the persona that owns
+  most of the changed files. "Every push" is read as every PR into
+  `develop`, with reviewers re-checking fixes.
+- **Links:** #82, #76 (Team Lead's comment), `team/review-protocol.md#who-reviews-what`

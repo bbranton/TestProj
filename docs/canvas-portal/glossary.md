@@ -103,7 +103,7 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 | Team Lead | The project owner. Has the final say on every decision, and is the only one who approves or merges the `develop` → `main` release PR. |
 | Persona | A role an agent takes on, such as UI/UX or Security, with its own area and review checklist. The list is in the [team README](../../team/README.md). |
 | Owner | The persona that writes a piece of work and answers its findings. |
-| Reviewers | The personas a PR's author picks, one for each area the PR touches, as the [review protocol](../../team/review-protocol.md#who-reviews-what) says. The Team Lead can change them. |
+| Reviewers | The personas a PR's author picks: a peer from the owner's own persona (for a team thread, the persona that owns most of the changed files), plus one for each other area the PR touches, as the [review protocol](../../team/review-protocol.md#who-reviews-what) says. Every PR has at least one. The Team Lead can change them. |
 | Decision request | A question for the Team Lead, with options, a recommendation, and the docs it changes, in Management's decision register or a `decision` issue. PRs only carry out answered requests; see the [review protocol](../../team/review-protocol.md#decisions-are-separate-from-merging). |
 | Cross-review | A review where each reviewer runs in its own fresh thread. |
 | Finding | One problem a reviewer raises, with an ID such as `F-1`, or `X-1` when the fix is in another doc. |

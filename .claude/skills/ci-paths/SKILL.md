@@ -15,6 +15,10 @@ python3 team/Development/scripts/ci_paths.py origin/x  # against another base
 It lists each workflow in `.github/workflows/` and whether it runs on the PR
 and on push to the branches each workflow names, with the first changed file that matched.
 
-When a PR changes app code but no workflow runs, that's a finding: either
+Canvas portal CI starts on every PR, since its `backend` and `frontend`
+jobs are required checks on `develop`, but those jobs skip unless the
+branch matches its push paths filter. The script says which.
+
+When a PR changes app code but its jobs skip, that's a finding: either
 the paths filter is wrong or the code is in the wrong place. A docs-only PR
-running only the docs check is expected.
+running only the docs check, with the portal jobs skipped, is expected.

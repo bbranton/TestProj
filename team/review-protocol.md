@@ -101,8 +101,10 @@ that changes a process rule finds and fixes every copy before review (Team Lead,
 1. Change the rule in its home. Search `team/`, `.claude/skills/`,
    `CLAUDE.md`, the PR template (`.github/pull_request_template.md`), and
    the [glossary](/docs/canvas-portal/glossary.md) for the rule's key
-   words and for links to its heading. Skip daily logs and retro notes:
-   they record what was true that day.
+   words and for links to its heading. Skip retro notes and the daily
+   logs in the Library: they record what was true that day. When a
+   persona's notes in the Library restate the rule, leave that persona a
+   board `[note]` to fix them.
 2. Fix every file that still states the old rule in the same PR, by
    replacing the copy with a link to the home, and fix any link the change
    breaks. The persona that owns each file fixes it, as
@@ -144,7 +146,7 @@ touches.** Every PR has at least the peer, as a precaution, even when it
 touches only the owner's area. The peer runs in a fresh thread, like every
 reviewer. When the author isn't a persona, the peer is the persona that
 owns most of the changed files. A persona's area is its own files in its
-team folder (its persona file, notes, and daily log) and the docs it owns
+team folder (its persona file) and the docs it owns
 in the table below. The author lists the reviewers in the PR description, with
 one line each on why. Any reviewer can ask for
 another persona in a finding, and the Team Lead can add or drop reviewers
@@ -163,7 +165,7 @@ at any time.
 | Shared files at the top of `team/`, or another team's folder | Each persona whose file changes, plus the project manager (a board note instead, for a [wording-only change](#wording-only-changes-notify-the-persona) to a persona file) | Project manager |
 | Another persona's files in your own team's folder | That persona (a board note instead, for a [wording-only change](#wording-only-changes-notify-the-persona) to a persona file) | That persona |
 | A team script or its skill (see [Team skills](/team/workspace.md#team-skills)) | The other personas who use it | The team whose `scripts/` folder holds it |
-| Only your own persona's area: its persona file, notes, and daily log, or a doc it owns in this table | The peer reviewer only | That persona |
+| Only your own persona's area: its persona file, or a doc it owns in this table | The peer reviewer only | That persona |
 
 A code PR always has the Test engineer as a reviewer, since every change
 needs a test. A PR that changes a phase or a priority always has
@@ -393,9 +395,9 @@ is written on the PR before anyone acts on it.
 ## Close out
 
 - **Before merging,** the owner adds a `### Decision:` entry for each
-  decision to its persona's daily log in the same PR, in the format in
-  [Daily notes](/team/workspace.md#daily-notes), and any lasting lesson to its
-  notes.
+  decision to the *Decisions* section of the PR description, in the format
+  in [Daily notes](/team/workspace.md#daily-notes), and any lasting lesson to
+  its [notes](/team/workspace.md#persona-notes).
 - **After the PR merges or closes,** the owner releases its claim on the
   [board](/team/workspace.md#the-board), and every thread that worked on the PR
   reports its cost and ends, as

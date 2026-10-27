@@ -7,7 +7,7 @@ There are five places, for five kinds of information:
 
 | What | Where | Why there |
 |------|-------|-----------|
-| Lasting knowledge, daily notes, and findings | `team/<Team>/notes/` | Versioned in PRs, owned by the team |
+| Each persona's lasting notes and daily logs | The [notes folder](#persona-notes), in the project's shared files | No PR; one file per writer |
 | Scripts a team runs often | `team/<Team>/scripts/`, called from a skill in `.claude/skills/` | The script lives with its team; every agent session loads skills automatically |
 | Who is working on what right now, and handoffs | The board, in the project's shared files | Instant, no PR needed |
 | What each thread cost | The cost log and row files, in the project's shared files | No PR; one file per row, as the [CFO persona](/team/Management/personas/cfo.md#role) says |
@@ -15,24 +15,38 @@ There are five places, for five kinds of information:
 
 ## Team folders
 
-Each team has a folder under `team/`, with three subfolders:
+Each team has a folder under `team/`, with two subfolders:
 
-- `notes/`: each persona's lasting notes (`<persona>.md`) and daily logs
-  (`YYYY-MM-DD-<persona>.md`).
 - `personas/`: one file for each persona that can work on the team, named
   after the job title, such as `architect.md`.
 - `scripts/`: reusable scripts for jobs the team repeats often.
+
+A file a team keeps as a record, such as the QA team's
+[security register](/team/QA/security-register.md), sits in the team's
+folder itself.
 
 Changes to these folders go through a PR like any other change, reviewed
 as [Who reviews what](/team/review-protocol.md#who-reviews-what) says.
 
 ## Persona notes
 
-Each persona has a lasting notes file in its team's `notes/` folder, named
-after its job title like its persona file, such as
-`QA/notes/test-engineer.md`. Before starting work as
-a persona, read its notes. When you learn something the next thread would
-otherwise have to rediscover, add it in the same PR as your work.
+Persona notes and daily logs live in `/mnt/project-files/notes/`, in the
+project's shared files, not in the repo (Team Lead, 2026-10-27,
+[#127](https://github.com/bbranton/TestProj/issues/127)). They need no PR.
+
+Each persona has a lasting notes file there, named after its job title
+like its persona file, such as `/mnt/project-files/notes/test-engineer.md`.
+Before starting work as a persona, read its notes. When you learn something
+the next thread would otherwise have to rediscover, add it while you work.
+Only threads of that persona change its notes file.
+
+The folder keeps no history, and the last write wins, so treat it like the
+[board](#the-board):
+
+- Read a file just before you change it, and change only your own lines.
+- Re-read it about ten seconds after writing, to check your change survived.
+- **No secrets:** never write a Canvas token, cookie, secret, or student
+  data in a notes file or daily log. Link to the evidence instead.
 
 A lasting note is one or two lines: the rule, then why. Notes that turn out wrong
 are deleted, not left with a correction. A note that every persona needs
@@ -40,26 +54,30 @@ belongs in [CLAUDE.md](/CLAUDE.md) instead.
 
 ## Daily notes
 
-Each persona keeps one daily log per day, in its team's `notes/` folder,
-named `YYYY-MM-DD-<persona>.md` with the persona's file name, such as
-`Development/notes/2026-10-27-devops-engineer.md`.
+Each thread keeps its own daily log for each day it works, in
+`/mnt/project-files/notes/daily/`, named
+`YYYY-MM-DD-<persona>-<pr>.md` with the persona's file name and the PR it
+works on, such as `2026-10-28-devops-engineer-pr130.md`. A thread with no
+PR uses its issue number or a short task name instead.
 
-- **One file per day per persona.** Every thread working as that persona
-  that day adds to the same file. Two DevOps engineer threads share
-  `2026-10-27-devops-engineer.md`; a Developer thread writes to
-  `2026-10-27-developer.md`, never to another persona's log.
-- **Only on days with work.** Don't create a log for a day the persona had
+- **One file per thread per day.** No two threads write the same file, so
+  nothing is lost when the last write wins. Two DevOps engineer threads on
+  PRs #130 and #131 write `2026-10-28-devops-engineer-pr130.md` and
+  `2026-10-28-devops-engineer-pr131.md`; a reviewer thread adds
+  `-review`, such as `2026-10-28-architect-pr130-review.md`.
+- **Only on days with work.** Don't create a log for a day the thread had
   no tasks.
-- **Add, don't rewrite.** Read the file just before you change it, add your
-  entries at the end, and leave other threads' entries as they are. Logs
-  go in through a PR like any other change; if two PRs add to the same log,
-  keep both sets of entries when you merge.
 - **Open to everyone.** Logs aren't private. Any persona, in any team, can
   read any other persona's logs when it helps.
 
 Start each entry with a heading naming the thread's task and its PR, then
-short bullets on what was done. Record each decision in this form, so a
-search for `Decision:` finds every one:
+short bullets on what was done.
+
+Decisions are recorded in the PR, where reviewers see them: the owner adds
+each one to the *Decisions* section of the PR description before merging,
+as [Close out](/team/review-protocol.md#close-out) says. A Team Lead
+decision also has its `decision` issue. Use this form, so a search for
+`Decision:` finds every one:
 
 ```markdown
 ### Decision: <one-line summary>
@@ -183,10 +201,9 @@ costs about $1 to $2.
   `external_metadata.usage.cost_usd`, ask after about four Team Lead
   rounds instead, and say the thread can't read its cost. On a yes, the
   thread:
-  1. adds a hand-off note to its persona's daily log and pushes it to the
-     PR branch: the PR and branch, what's done, what's left, open
-     findings, decisions waiting on the Team Lead, and the files to read
-     first;
+  1. adds a hand-off note to its daily log: the PR and branch, what's
+     done, what's left, open findings, decisions waiting on the Team
+     Lead, and the files to read first;
   2. leaves a board `[note]` for the next thread of its persona that
      points to that log entry, and hands over its board claim;
   3. reports its cost with the `log-cost` skill;

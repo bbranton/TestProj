@@ -16,17 +16,19 @@ Lasting lessons for the project manager persona. See the
 - Exit criteria name exact test steps that can run in that phase, such as
   "TP-14 steps 3 and 4". "The Phase 1 steps of TP-10" failed review
   because the test plan didn't mark its steps by phase.
-- Add Backlog items from merged PRs to the roadmap backlog before
-  planning the next piece of work, so reviewer follow-ups don't sit
-  unread. The Team Lead dropped GitHub issues for review follow-ups
-  (2026-10-27) because they left too many loose ends.
+- Before planning the next piece of work, add the deferred findings the
+  Team Lead sent to the backlog, so reviewer follow-ups don't sit unread.
+  Each finding outside the current phase or too big for its PR is its own
+  decision request: the Team Lead picks a GitHub issue or the backlog
+  (2026-10-27, #88). Issues alone had left too many loose ends, and the
+  backlog alone parked work without the Team Lead's say.
 - Price hosting per phase, not only for the final deploy. The Team Lead
   wants $0 until real users arrive, so test deploys use free tiers (D-3)
   and the paid host waits for Phase 4. Ask the DevOps engineer to research free options
   before offering a paid one.
 - Issues opened under the old follow-up rule stay open until done (Team
   Lead, 2026-10-27), so check open issues as well as the roadmap backlog
-  when planning; only new follow-ups go on the backlog.
+  when planning.
 - A potential data breach never goes on the backlog: it is fixed in the
   PR, or first in the current phase and before the next deploy, tracked in
   the cybersecurity engineer's register meanwhile. Check that register at every phase

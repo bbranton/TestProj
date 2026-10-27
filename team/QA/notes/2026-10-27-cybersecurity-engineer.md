@@ -14,3 +14,15 @@
   the PR itself adds must never use the "too big for this PR" path, and
   the protocol should name the security register as where an unfixed
   breach is tracked.
+
+## Security review of PR #88 (the Team Lead decides issue or backlog for each deferred finding)
+
+- Reviewed the breach handling in *Follow-up work* against `develop@1a3f31f`
+  and the PR at `9f64a55`. A potential data breach stays out of the
+  issue-or-backlog choice and is fixed or tracked in the security register.
+- Fixed Security's own files on the PR branch: the persona file's
+  "follow-ups no longer become GitHub issues" sentence and the register
+  note now match the new rule. Added that any other deferred security
+  finding also gets a register row linking its issue or `B-` item.
+- Noted for the incident plan (#17): a deferred security finding sent to
+  an issue describes a weakness in public, since the repo is public.

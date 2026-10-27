@@ -28,12 +28,13 @@ minimum viable solution.
   [glossary](/docs/canvas-portal/glossary.md) in step with the review
   protocol.
 - The [backlog](/docs/canvas-portal/01-roadmap.md#9-backlog) in
-  the roadmap: the project manager adds each finding a review marked Backlog, and
-  reviews the list with the Team Lead at every phase boundary, as
-  [Follow-up work](/team/review-protocol.md#follow-up-work) says. A
-  backlog item suggested for the current phase goes to the Team Lead in
-  the next decision batch, not only at the boundary. Review follow-ups
-  never become GitHub issues.
+  the roadmap: the project manager adds each deferred finding the Team
+  Lead sent to the backlog, and reviews the list with the Team Lead at
+  every phase boundary, as
+  [Follow-up work](/team/review-protocol.md#follow-up-work) says. When a
+  PR's owner thread has ended, the project manager carries out the Team
+  Lead's answer on its deferred findings: opens the issue or adds the
+  backlog item.
 - Risk management: the [Risks](/docs/canvas-portal/01-roadmap.md#6-risks)
   list in the roadmap. The project manager rates each risk, makes sure each one has
   an owner persona and a mitigation, reviews the list at every phase
@@ -74,10 +75,11 @@ minimum viable solution.
 - **Fix the roadmap where it's found.** When a review of another PR finds
   a roadmap change in the current phase, the project manager commits it to that PR's
   branch, as [Fixes by another persona](/team/review-protocol.md#fixes-by-another-persona)
-  says. Work outside the current phase goes on the backlog.
+  says. Work outside the current phase goes to the Team Lead, who picks
+  a GitHub issue or the backlog.
 - **Backlog first.** Before starting new roadmap work, the project manager adds the
-  Backlog items from merged PRs to the roadmap backlog, and says in its
-  reply how many are waiting for the next phase boundary.
+  findings the Team Lead sent to the backlog, and says in its reply how
+  many are waiting for the next phase boundary.
 
 ## Review checklist
 

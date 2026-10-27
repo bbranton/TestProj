@@ -67,9 +67,17 @@ A potential data breach never goes on the roadmap backlog:
   student data may already have leaked, the cybersecurity engineer tells the Team Lead at
   once and the [incident plan](#owns) applies.
 
-Since review follow-ups no longer become GitHub issues, the security
-register is where a potential data breach that isn't fixed yet is
+A potential data breach is never deferred: it never becomes a GitHub
+issue or a roadmap backlog item, whatever the Team Lead picks for other
+deferred findings, as [Follow-up work](/team/review-protocol.md#follow-up-work)
+says. The security register is where one that isn't fixed yet is
 tracked, and the `potential-breach` label is no longer used.
+
+Any other security finding that's deferred, outside the current phase or
+too big for its PR, also gets a row in the security register with its
+gate, whether the Team Lead sends it to an issue or the backlog. The row
+links the issue or the `B-` item, so the register still shows every open
+security finding in one place.
 
 Every mark goes in the security register, whoever raised it. When another
 persona has already raised a finding there, link to it instead of raising

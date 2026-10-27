@@ -35,12 +35,12 @@ Never "None": every PR has at least the peer.
 | # | Found by | Fix in | Finding | Status |
 |---|----------|--------|---------|--------|
 
-## Backlog items
+## Deferred findings
 
-<!-- Each finding marked Backlog (outside the current phase or too big for
-     this PR), with the persona that owns it, for the project manager to add to the
-     roadmap backlog. "None" when there are none. No GitHub issues; see
-     "Follow-up work" in the review protocol. -->
+<!-- Each finding outside the current phase or too big for this PR, with
+     the persona that owns it, the Team Lead's decision request, and the
+     answer: GitHub issue #n or roadmap backlog B-n. "None" when there are
+     none. See "Follow-up work" in the review protocol. -->
 - None
 
 ## Cost

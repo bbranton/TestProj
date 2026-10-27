@@ -505,8 +505,9 @@ The plan has grown quickly, so these rules keep each phase finishable:
   feature. A fix that a change needs in another document is made in the same
   pull request by the persona that owns that document, as the
   [review protocol](/team/review-protocol.md#who-fixes-a-finding) says.
-  Work outside the current phase, or too big for its pull request, goes on
-  the [backlog](#9-backlog).
+  Work outside the current phase, or too big for its pull request, goes to
+  the Team Lead, who decides whether it becomes a GitHub issue or a
+  [backlog](#9-backlog) item.
 - **Exit criteria decide "done".** A phase isn't done until its exit
   criteria pass, and nothing outside them is needed to call it done.
   The test engineer says whether they pass, and the Team Lead calls the phase
@@ -522,13 +523,12 @@ The plan has grown quickly, so these rules keep each phase finishable:
 ## 9. Backlog
 
 Work a review found that is outside the current phase or too big for its
-pull request, as the
+pull request, and that the Team Lead chose to put here instead of in a
+GitHub issue, as the
 [review protocol](/team/review-protocol.md#follow-up-work) says.
-The project manager adds each item from the merged PR's *Backlog items* section and
-reviews the list with the Team Lead at every phase boundary; an item
-suggested for the current phase goes to the Team Lead in the next decision
-batch instead. The Team Lead plans an item into a phase or drops it; nobody
-starts on one before then. A potential data breach never goes here: it is
+The project manager adds each item and reviews the list with the Team Lead
+at every phase boundary. The Team Lead plans an item into a phase or drops
+it; nobody starts on one before then. A potential data breach never goes here: it is
 tracked in the [security register](/team/QA/notes/cybersecurity-engineer.md#security-register).
 
 | ID | Item | Found in | Owner | Suggested phase | Status |
@@ -589,3 +589,4 @@ tracked in the [security register](/team/QA/notes/cybersecurity-engineer.md#secu
 | 2026-10-26 | Course label colors (FR-66), automatic and student-chosen, move to Phase 5, from the Team Lead's review of the UI specification. Phase 1 uses one neutral strip with the course code. |
 | 2026-10-27 | Section 8 matches the new review protocol, from the Team Lead: the Team Lead decides through decision requests, PR authors pick reviewers by what the PR touches, personas merge their own PRs into `develop`, and only the Team Lead reviews and merges the `develop` → `main` release. Added the CFO to the personas. |
 | 2026-10-27 | Review follow-ups go in the same pull request, fixed by the persona that owns the file, or on the new section 9 backlog when they're outside the current phase or too big for the pull request; no more follow-up GitHub issues. From the Team Lead. |
+| 2026-10-27 | A finding outside the current phase or too big for its pull request goes to the Team Lead as its own decision request, choosing a GitHub issue or the section 9 backlog, so nothing is parked without the Team Lead's say. From the Team Lead. |

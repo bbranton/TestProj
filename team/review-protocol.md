@@ -75,7 +75,8 @@ That is why a persona can merge into `develop` without the Team Lead.
   request and waits for the answer before going on. A finding that needs
   one is marked **Waiting on the Team Lead**. A deferred finding, asking
   where work outside the PR's scope goes, is the exception: it doesn't
-  stop the PR, as [Follow-up work](#follow-up-work) says.
+  stop the PR unless the owner recommends fixing it in this PR, as
+  [Follow-up work](#follow-up-work) says.
 
 ### Keeping the Team Lead informed
 
@@ -255,9 +256,11 @@ review uncovers goes one of two ways:
       for work that belongs in a later phase.
 
    The finding is **Waiting on the Team Lead** and is listed in the PR's
-   *Deferred findings* section. It doesn't block the PR or change the
-   verdict, so the PR may merge before the answer comes; if the Team Lead
-   then picks option 1, the fix goes in a separate PR, as in option 2. When the Team Lead answers,
+   *Deferred findings* section. It doesn't change the verdict. When the
+   owner recommends option 1, the PR waits for the answer. Otherwise it
+   doesn't block the PR, which may merge before the answer comes; if the
+   Team Lead then picks option 1 anyway, the fix goes in a separate PR, as
+   in option 2. When the Team Lead answers,
    the owner carries it out: fixes it here, asks for the new thread, opens
    the issue, or lists the item for the project manager, and updates the
    status. If the owner's thread has ended, the project manager does it.

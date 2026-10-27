@@ -87,7 +87,8 @@ requirements, commit it to that PR's branch, as
 says. If it's outside the current phase or too big for that PR, say so in
 the finding: the PR's owner asks the Team Lead where it goes, as
 [Follow-up work](/team/review-protocol.md#follow-up-work) says.
-Don't hand it to another thread to make.
+Don't hand it to another thread to make, unless the Team Lead picks a fix
+in a separate PR.
 
 ## Decisions
 

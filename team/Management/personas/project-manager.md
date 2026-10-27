@@ -76,7 +76,8 @@ minimum viable solution.
   a roadmap change in the current phase, the project manager commits it to that PR's
   branch, as [Fixes by another persona](/team/review-protocol.md#fixes-by-another-persona)
   says. Work outside the current phase goes to the Team Lead, who picks
-  a GitHub issue or the backlog.
+  where it goes, as [Follow-up work](/team/review-protocol.md#follow-up-work)
+  says.
 - **Backlog first.** Before starting new roadmap work, the project manager adds the
   findings the Team Lead sent to the backlog, and says in its reply how
   many are waiting for the next phase boundary.

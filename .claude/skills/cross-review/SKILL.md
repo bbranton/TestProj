@@ -34,8 +34,9 @@ reviewer.
    reviewer thread to re-review.
 6. Post the combined findings table, with anything that needs the Team
    Lead at the top. For each finding outside the current phase or too big
-   for this PR, send the Team Lead a decision request (GitHub issue or
-   roadmap backlog) and list it in the PR's *Deferred findings* section,
+   for this PR, send the Team Lead a decision request (fix it in this PR,
+   fix it now in a separate PR, a GitHub issue, or the roadmap backlog) and
+   list it in the PR's *Deferred findings* section,
    as [Follow-up work](/team/review-protocol.md#follow-up-work) says. Add
    your `### Decision:` log entries.
    When every verdict is Recommend or Recommend with notes, merge into

@@ -74,8 +74,8 @@ That is why a persona can merge into `develop` without the Team Lead.
 - **A PR that needs a new decision stops.** The owner raises a decision
   request and waits for the answer before going on. A finding that needs
   one is marked **Waiting on the Team Lead**. A deferred finding, asking
-  whether work goes in a GitHub issue or the backlog, is the exception: it
-  doesn't stop the PR, as [Follow-up work](#follow-up-work) says.
+  where work outside the PR's scope goes, is the exception: it doesn't
+  stop the PR, as [Follow-up work](#follow-up-work) says.
 
 ### Keeping the Team Lead informed
 
@@ -192,8 +192,7 @@ current phase, by whichever persona owns the file:
   same PR, as [Fixes by another persona](#fixes-by-another-persona) says.
   That persona joins the PR's reviewers if it wasn't one.
 - **Outside the current phase, or too big for this PR:** the Team Lead
-  decides whether it becomes a GitHub issue or a roadmap backlog item, as
-  [Follow-up work](#follow-up-work) says.
+  decides where it goes, as [Follow-up work](#follow-up-work) says.
 
 A fix that needs a new decision, such as moving a requirement between
 phases, goes to the Team Lead as a decision request first, and the finding
@@ -222,8 +221,9 @@ When a finding needs a change in another persona's files:
 - **#** is unique within the review (`F-1`, `F-2`, ...). Findings whose fix
   is in another doc use `X-` IDs.
 - **Status** is one of Open, Fixed in `<sha>` (with the persona when it
-  isn't the owner), Issue `#<n>`, Backlog `B-<n>`, Won't fix (with the
-  reason), or Waiting on the Team Lead.
+  isn't the owner), Fixing in `#<n>` (a separate PR), Issue `#<n>`,
+  Backlog `B-<n>`, Won't fix (with the reason), or Waiting on the Team
+  Lead.
 - A finding that could expose a token, a session, or a student's data
   starts with **Potential data breach:**, whichever persona finds it, as
   the [cybersecurity engineer persona](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
@@ -240,18 +240,26 @@ review uncovers goes one of two ways:
    for this PR.** The owner sends the Team Lead one decision request for
    that finding, in the
    [decision register](/docs/canvas-portal/01-roadmap.md#5-open-decisions)
-   with a link to the finding, giving two options and a recommendation:
-   - **A GitHub issue**, labeled with the owning persona's `persona:`
-     label, for work that should be picked up soon.
-   - **The [roadmap backlog](/docs/canvas-portal/01-roadmap.md#9-backlog)**,
-     for work that belongs in a later phase.
+   with a link to the finding, giving these four options and a
+   recommendation:
+   1. **Fix it now in this PR**, even though it's outside the phase or
+      bigger than the PR was meant to be. The persona that owns the file
+      fixes it here, and the status becomes Fixed in `<sha>`.
+   2. **Fix it now in a separate PR.** The owner asks the coordinator for a
+      new thread of the persona that owns the file, which starts right away
+      and fixes it in its own PR into `develop`. The status becomes Fixing
+      in `#<n>`.
+   3. **A GitHub issue**, labeled with the owning persona's `persona:`
+      label, for work that should be picked up soon but not right now.
+   4. **The [roadmap backlog](/docs/canvas-portal/01-roadmap.md#9-backlog)**,
+      for work that belongs in a later phase.
 
    The finding is **Waiting on the Team Lead** and is listed in the PR's
-   *Deferred findings* section. It doesn't block the PR or change the
-   verdict. When the Team Lead answers, the owner opens the issue or lists
-   the item for the project manager, and sets the status to Issue `#<n>`
-   or Backlog `B-<n>`. If the owner's thread has ended, the project manager
-   does it.
+   *Deferred findings* section. Unless the Team Lead picks option 1, it
+   doesn't block the PR or change the verdict. When the Team Lead answers,
+   the owner carries it out: fixes it here, asks for the new thread, opens
+   the issue, or lists the item for the project manager, and updates the
+   status. If the owner's thread has ended, the project manager does it.
 
 The project manager adds backlog items to the roadmap, in its next roadmap
 PR, with a `B-` ID, the PR it came from, and the persona that owns it. It

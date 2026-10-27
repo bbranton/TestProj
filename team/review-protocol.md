@@ -355,7 +355,7 @@ marks the finding **Waiting on the Team Lead**.
 
 - Each reviewer runs in **its own fresh thread**. It reads only its
   persona file, its own notes and recent daily logs (in
-  `/mnt/project-files/notes/`, as [Persona notes](/team/workspace.md#persona-notes)
+  Library: `notes/`, as [Persona notes](/team/workspace.md#persona-notes)
   says), this protocol, the
   PR, and the docs on `develop` that the PR changes or names. It doesn't
   see the owner's thread or other reviews before writing its own.

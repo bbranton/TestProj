@@ -57,9 +57,9 @@ Tell the agent which persona to act as, and on what. For example:
 An agent acting as a persona:
 
 1. Reads its persona file, its [lasting notes](/team/workspace.md#persona-notes)
-   (`/mnt/project-files/notes/<persona>.md`) and recent
+   (Library: `notes/<persona>.md`) and recent
    [daily logs](/team/workspace.md#daily-notes)
-   (`/mnt/project-files/notes/daily/`), and the
+   (Library: `notes/daily/`), and the
    [review protocol](/team/review-protocol.md) before starting, and checks the
    [team board](/team/workspace.md#the-board) for work another thread has
    claimed and for `[note]` lines addressed to it. It uses the words in the

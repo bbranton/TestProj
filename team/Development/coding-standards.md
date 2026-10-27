@@ -17,10 +17,9 @@ the design differ, the design wins and the Developer fixes this file.
 
 CI runs these on every PR that touches `canvas-portal/`, as
 [`canvas-portal-ci.yml`](/.github/workflows/canvas-portal-ci.yml) says.
-Don't merge a PR while any of them fails. GitHub doesn't block the merge,
-since no check is required yet, so the owner checks them before merging.
-Run the same commands locally before pushing, so CI only confirms what you
-already saw.
+Fix any failure before asking for review. GitHub doesn't block a merge on
+a failing check, since no check is required yet. Run the same commands
+locally before pushing, so CI only confirms what you already saw.
 
 | Part | Command | What it catches |
 |------|---------|-----------------|
@@ -53,6 +52,9 @@ Python:
   mistakes before the code runs.
 - **Give every module, public function, and class a docstring.** One line
   is enough when the name and hints already say most of it.
+- **Test files are exempt from the docstring and return-hint rules,**
+  except the requirement-ID docstring in [Tests](#tests). A test's name
+  already says what it checks.
 
 TypeScript and React:
 
@@ -93,12 +95,21 @@ Both:
   `{"error": "<code>", "message": "<text>"}`, with a code from the
   [Backend API](/docs/canvas-portal/03-design.md#4-backend-api) table. The
   frontend picks a screen by code, so a new code is a design change that
-  goes to the architect first.
+  goes to the architect first. When a case has no code yet, ask the
+  architect for one before building it.
+- **Raise the app's own error type with a design code, not
+  `HTTPException(detail=...)`.** FastAPI's defaults don't use the shape:
+  an unhandled exception returns a plain-text 500, and `HTTPException` and
+  a bad request body (422) return `{"detail": ...}`.
+- **Send every error through one app-level exception handler** for the
+  app's error type, `HTTPException`, `RequestValidationError`, and any
+  other `Exception`. It returns the shape, and logs unexpected errors with
+  their stack trace, so no error reaches the frontend in another form.
 - **Catch the narrowest exception you can handle, and only where you can
   handle it.** A bare `except:` or `catch {}` hides the bug and its stack
   trace.
-- **Never swallow an error.** Handle it, return it in the error shape, or
-  let it rise, so it's logged with its stack trace.
+- **Never swallow an error.** Handle it, or let it rise to the app-level
+  handler.
 - **Keep one course's failure to that course.** A Canvas error or timeout
   marks that course failed in the Refresh, as
   [Refresh progress](/docs/canvas-portal/03-design.md#refresh-progress-fr-16)
@@ -121,8 +132,10 @@ Both:
 - **Log each Canvas call's endpoint, page count, and time taken,** as
   [Making Canvas loads fast](/docs/canvas-portal/03-design.md#making-canvas-loads-fast-nfr-1-nfr-2-r-3)
   says. Those numbers are the TP-14 baseline.
-- **Frontend: no `console.log` in merged code.** The browser console is
-  visible to anyone at the screen, and leftover logs bury real errors.
+- **Frontend: no `console.*` calls in merged code,** including
+  `console.error` and `console.warn`. The browser console is visible to
+  anyone at the screen, a logged request could hold the Canvas token the
+  student is typing on S-2, and leftover logs bury real errors.
 
 ## Tests
 
@@ -137,7 +150,9 @@ writes:
 - **Write a test for every bug fix that fails before the fix.** It proves
   the fix and keeps the bug from coming back.
 - **Never use a real Canvas token in a test.** Use the recorded sample
-  data in `tests/fixtures/`, as NFR-41 says.
+  data in `canvas-portal/backend/tests/fixtures/`, as NFR-41 and the
+  [repository layout](/docs/canvas-portal/03-design.md#8-repository-layout)
+  say. The folder arrives in Phase 1.
 - **Test one behavior per test, and keep tests independent.** A failing
   test then names the broken behavior, and tests can run in any order.
 - **Find frontend elements by role and name,** such as

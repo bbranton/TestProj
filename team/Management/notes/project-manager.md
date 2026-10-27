@@ -25,8 +25,9 @@ Lasting lessons for the Management persona. See the
   and the paid host waits for Phase 4. Ask DevOps to research free options
   before offering a paid one.
 - A potential data breach never goes on the backlog: it is fixed in the
-  PR, or first in the current phase and before the next deploy. Only the
-  Team Lead can delay it.
+  PR, or first in the current phase and before the next deploy, tracked in
+  Security's register meanwhile. Check that register at every phase
+  boundary and before every deploy. Only the Team Lead can delay one.
 - Before any deploy that puts real tokens online, the roadmap lists its
   go-live conditions (incident plan, key handling, secret scanning, cookie
   safety on the host's domain, private secrets and backups). A shared

@@ -83,3 +83,37 @@
   summarizes what changed since `main`; no persona approves or merges into
   `main`.
 - **Links:** #76, #77, `team/review-protocol.md#two-levels-of-review`
+
+## Review the follow-up rule change (#80)
+
+- Reviewed #80 as Management: Changes needed, then Recommend after the
+  fixes in `1ac4e08`. Read from `develop@d5d0539`.
+- Found a potential data breach too big for its PR had nowhere to be
+  tracked (now the security register, which Management checks at every
+  phase boundary and before every deploy), current-phase backlog items
+  waited for the phase boundary (now in the next decision batch), and the
+  persona's "Fix the roadmap on its own PR" contradicted the new rule.
+- Raised a decision request to the Team Lead on what happens to the 23
+  issues still open from the old rule, including `potential-breach` #25
+  and #26. It doesn't block #80.
+- #80's owner is a team thread with no persona log, so the decision is
+  recorded here, committed to the PR branch as *Fixes by another persona*
+  says.
+
+### Decision: Review follow-ups are fixed in the same PR or go on the roadmap backlog, not GitHub issues
+
+- **Date:** 2026-10-27
+- **Decided by:** Team Lead
+- **Options:** keep opening a GitHub issue for each follow-up (the old
+  rule); fix each finding in the same PR, committed by the persona that
+  owns the file, and put only work outside the current phase or too big
+  for the PR on a roadmap backlog Management keeps
+- **Recommendation:** the Team Lead's own proposal, since follow-up issues
+  left too many loose ends
+- **Outcome:** as proposed. Other personas may commit their own files to
+  a PR's branch. A potential data breach never goes on the backlog: it is
+  fixed in the PR, or, when Security agrees it is too big, tracked in the
+  security register and fixed first in the current phase, before the next
+  deploy.
+- **Links:** #80, #76 (Team Lead's comment), `team/review-protocol.md#who-fixes-a-finding`,
+  `docs/canvas-portal/01-roadmap.md#9-backlog`

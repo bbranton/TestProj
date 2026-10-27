@@ -8,8 +8,8 @@ description: Show which GitHub Actions workflows the current branch's changes wi
 Mostly used by the DevOps persona. Run from the repo root:
 
 ```sh
-python3 team/DevOps/scripts/ci_paths.py            # against origin/develop
-python3 team/DevOps/scripts/ci_paths.py origin/x   # against another base
+python3 team/Development/scripts/ci_paths.py       # against origin/develop
+python3 team/Development/scripts/ci_paths.py origin/x  # against another base
 ```
 
 It lists each workflow in `.github/workflows/` and whether it runs on the PR

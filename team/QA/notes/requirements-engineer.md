@@ -26,3 +26,6 @@ Lasting lessons for the requirements engineer persona. See the
 - A ripple check covers every folder that might state the rule, `docs/`
   included. PR #113's check skipped the roadmap, which still restated the
   breach rule (DevOps X-1 on #113).
+- Removed requirements keep their rows, marked *(Removed: ...)*. Anything
+  that asks whether an ID exists, a script or a reviewer, treats those rows
+  as not defined outside `02-requirements.md` (F-1 on #115).

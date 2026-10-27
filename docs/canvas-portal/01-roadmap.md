@@ -102,7 +102,8 @@ The smallest thing that is useful: connect, then see everything that's due.
   Actions is a new place secrets live, so the Team Lead sets them (#26).
 
 **Before step 6 goes live**, because real tokens then sit on an
-internet-facing server (R-14). Each of these is a potential data breach
+internet-facing server (R-14). Each of these is a
+[potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
 if skipped, so none can be dropped or delayed without the Team Lead:
 
 - The incident plan for a leaked token is in place (#17).
@@ -462,9 +463,7 @@ carries out its mitigation (see the [team personas](/team/README.md)).
 The project manager keeps this list, rates each risk, assigns its owner, and reviews
 it with the Team Lead at every phase boundary. A risk that is a
 [potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
-is marked **Critical**: it is must-fix, its mitigations come first in the
-current phase and are done before the next deploy, and only the Team Lead
-can delay one. Accepting a risk instead of
+is marked **Critical** and handled as that section says. Accepting a risk instead of
 reducing it, or a mitigation that changes scope or timeline, needs the Team
 Lead.
 
@@ -529,8 +528,8 @@ it now or opening a GitHub issue, as the
 [review protocol](/team/review-protocol.md#follow-up-work) says.
 The project manager adds each item and reviews the list with the Team Lead
 at every phase boundary. The Team Lead plans an item into a phase or drops
-it; nobody starts on one before then. A potential data breach never goes here: it is
-tracked in the [security register](/team/QA/notes/cybersecurity-engineer.md#security-register).
+it; nobody starts on one before then. A [potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
+never goes here, as that section says.
 
 | ID | Item | Found in | Owner | Suggested phase | Status |
 |----|------|----------|-------|-----------------|--------|
@@ -592,3 +591,4 @@ tracked in the [security register](/team/QA/notes/cybersecurity-engineer.md#secu
 | 2026-10-27 | Review follow-ups go in the same pull request, fixed by the persona that owns the file, or on the new section 9 backlog when they're outside the current phase or too big for the pull request; no more follow-up GitHub issues. From the Team Lead. |
 | 2026-10-27 | A finding outside the current phase or too big for its pull request goes to the Team Lead as its own decision request, choosing a GitHub issue or the section 9 backlog, so nothing is parked without the Team Lead's say. From the Team Lead. |
 | 2026-10-27 | The Team Lead's options for such a finding are four: fix it now in the same pull request, fix it now in a separate pull request by a new thread, a GitHub issue, or the section 9 backlog. From the Team Lead. |
+| 2026-10-27 | The potential data breach rule is no longer restated in the step 6 gate list, the risk list, or the backlog: each links to its one home in the cybersecurity engineer persona. From the Team Lead's answer on #97. |

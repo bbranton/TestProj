@@ -456,3 +456,8 @@
 - F-1 (minor): the PR description still lists the other owners' changes
   as still to come.
 - N-1 (optional): the glossary repeats the home's "what counts" sentence.
+- X-1 (DevOps engineer): the roadmap still restated the rule in the risk
+  list intro and the backlog intro. Both now link to the home, and the
+  step 6 gate list links the term too. My ripple check had skipped
+  `docs/`, since the ripple check's search list names only the glossary
+  there.

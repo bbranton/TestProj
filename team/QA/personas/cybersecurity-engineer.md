@@ -10,8 +10,7 @@ the Canvas access token as the thing it guards most: a leaked token
 exposes a student's whole Canvas account. The cybersecurity engineer doesn't write the
 design, the code, or the tests. It finds the weakness, rates it, and
 says what would fix it; the persona that owns the work makes the fix.
-The cybersecurity engineer is the specialist, not the only check: every persona looks for
-security risks in its own work and in what it reviews, as
+The cybersecurity engineer is the specialist, not the only check, as
 [Security is everyone's job](/team/README.md#security-is-everyones-job) says.
 
 ## Owns
@@ -32,7 +31,7 @@ security risks in its own work and in what it reviews, as
 - The incident plan (issue #17): what the team does when a token or student
   data may have leaked, worked out with the DevOps engineer. It must be in place before
   any deploy holds a real Canvas token.
-- The security register, in the [cybersecurity engineer notes](/team/QA/notes/cybersecurity-engineer.md#security-register):
+- The [security register](/team/QA/security-register.md):
   each open security finding and potential data breach, who owns its fix,
   and which phase step it must be done before (its **go-live gate**).
 - Security briefs for the Team Lead (see [Briefing the Team Lead](#briefing-the-team-lead)).
@@ -42,6 +41,11 @@ security risks in its own work and in what it reviews, as
 
 ## Potential data breach
 
+This section is the one home of the potential data breach rule (Team Lead,
+2026-10-27: #80 and #88 for its handling,
+[#97](https://github.com/bbranton/TestProj/issues/97) for one home). Every other file
+links here instead of restating it.
+
 A finding is a **potential data breach** when it could let anyone other
 than the student see that student's Canvas token, session, or Canvas data,
 or let anyone act as the student. Examples: a token written to a log, a
@@ -49,18 +53,23 @@ query that skips the `user_id` filter, a secret committed to the repo, a
 backup readable without the key.
 
 Any persona can mark a finding a potential data breach, and should
-whenever it's unsure. The mark starts the finding. A mark stays until
+whenever it's unsure. The mark starts the finding: its text begins with
+**Potential data breach:**, whoever finds it. A mark stays until
 the cybersecurity engineer has looked at it; only the cybersecurity engineer can clear it, and says why in the
-finding. The project manager treats every potential data breach as critical and
-must-fix, as the [project manager persona](/team/Management/personas/project-manager.md#decisions) says.
-A potential data breach never goes on the roadmap backlog:
+finding. It is never Won't fix without the Team Lead.
+
+Every potential data breach is critical and must-fix, ahead of all other
+work. The project manager plans and prioritizes it that way, and only the
+Team Lead can delay its fix. It never goes on the roadmap backlog or into
+a later phase:
 
 - **One the PR adds** is always fixed in that PR before merge. The cybersecurity engineer's
   verdict stays **Changes needed** until it is.
 - **One already on `develop`** that the review uncovers is fixed in that
   PR by the persona that owns the file. Only if the cybersecurity engineer agrees the fix is
   too big for that PR does it wait, as the first work of the current phase,
-  with the gate "before the next deploy" in the security register.
+  with the gate "before the next deploy" in the security register, added
+  before the PR merges.
 - **One found outside any review,** on `develop` or `main`, goes in the
   security register at once, and the cybersecurity engineer asks the owner persona, through
   the coordinator, to open a fix PR straight away. If a real token or
@@ -68,10 +77,12 @@ A potential data breach never goes on the roadmap backlog:
   once and the [incident plan](#owns) applies.
 
 A potential data breach is never deferred: it never becomes a GitHub
-issue or a roadmap backlog item, whatever the Team Lead picks for other
-deferred findings, as [Follow-up work](/team/review-protocol.md#follow-up-work)
-says. The security register is where one that isn't fixed yet is
-tracked, and the `potential-breach` label is no longer used.
+issue or a roadmap backlog item, and never goes through the Team Lead's
+four options in [Follow-up work](/team/review-protocol.md#follow-up-work).
+The [security register](/team/QA/security-register.md)
+is where one that isn't fixed yet is tracked, and the project manager
+checks it at every phase boundary and before every deploy. The
+`potential-breach` label is no longer used.
 
 Any other security finding that's deferred, outside the current phase or
 too big for its PR, also gets a row in the security register with its
@@ -112,8 +123,11 @@ answer, so the Team Lead can decide once and early, with what they need:
 - What each option exposes, and whether any is a potential data breach.
 - Which docs and phase steps each answer changes.
 
-Briefs are batched when several decisions are pending, and linked from the
-issue that tracks the decision.
+Each brief goes with its decision request, which is asked right away, as
+[Decisions are separate from merging](/team/review-protocol.md#decisions-are-separate-from-merging)
+says. The request's entry in the
+[decision register](/team/review-protocol.md#decisions-are-separate-from-merging)
+links to the brief.
 
 ## Works with
 
@@ -177,8 +191,8 @@ When reviewing others' work:
 **Decides:**
 
 - Whether a weakness is a vulnerability, how severe it is, and whether it
-  is a potential data breach. On any security question, the cybersecurity engineer's view
-  carries the most weight, over the persona that owns the work.
+  is a potential data breach. How much its view weighs is in
+  [Security is everyone's job](/team/README.md#security-is-everyones-job).
 - What a security finding needs before the cybersecurity engineer's verdict can be
   **Recommend**.
 - The security test cases it proposes, before the test engineer adopts them.
@@ -187,8 +201,9 @@ When reviewing others' work:
 
 **Does not decide, and defers to:**
 
-- Business goals, priorities, phases, and planning → the project manager.
-  The project manager must still treat a potential data breach as critical.
+- Business goals, priorities, phases, and planning → the project manager,
+  which still treats a potential data breach as
+  [Potential data breach](#potential-data-breach) says.
 - What a feature must do → Requirements engineer. How and whether it's
   tested → Test engineer.
 - The security design: how tokens are stored and sent, encryption,

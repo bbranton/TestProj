@@ -1,21 +1,28 @@
 # Canvas portal CI: tests and builds the Canvas portal app in canvas-portal/.
 #
 # What it checks:
-#   - backend: installs the Python backend and runs its tests with pytest.
-#   - frontend: installs the frontend with npm ci, runs its tests, and
-#     builds it, so a change that breaks the build fails here.
+#   - backend: installs the Python backend, checks its format and lint
+#     with Ruff, and runs its tests with pytest.
+#   - frontend: installs the frontend with npm ci, checks its format and
+#     lint with Prettier and ESLint, runs its tests, and builds it, so a
+#     change that breaks the build fails here.
+#   Once Install succeeds, each later step runs even if an earlier one
+#   failed, so one CI run shows every problem.
 #
-# When it runs: on every pull request, and on pushes to main and develop,
-# but only when files under canvas-portal/ or this workflow change. Docs-only
-# PRs get no checks from it; the ci-paths skill says whether a branch
-# triggers it. It only tests and builds: it deploys nothing, uses no
-# secrets, and its automatic GitHub token can only read the repo.
+# When it runs: on pushes to main and develop when files under
+# canvas-portal/ or this workflow change. On a pull request it always
+# starts, because backend and frontend are required checks on develop and
+# a required check that never reports blocks the merge. Its changes job
+# then skips backend and frontend unless the PR touches those same paths,
+# and GitHub counts a skipped job as passing. The ci-paths skill says
+# whether a branch's jobs run. It only tests and builds: it deploys
+# nothing, uses no secrets, and its automatic GitHub token can only read
+# the repo.
 
 name: Canvas portal CI
 
 on:
   pull_request:
-    paths: ["canvas-portal/**", ".github/workflows/canvas-portal-ci.yml"]
   push:
     branches: [main, develop]
     paths: ["canvas-portal/**", ".github/workflows/canvas-portal-ci.yml"]
@@ -24,7 +31,31 @@ permissions:
   contents: read
 
 jobs:
+  # Says whether backend and frontend should run. The paths it checks must
+  # match the push paths filter above.
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      portal: ${{ steps.diff.outputs.portal }}
+    steps:
+      - uses: actions/checkout@v4
+        if: github.event_name == 'pull_request'
+        with:
+          fetch-depth: 2  # the PR's merge commit and the base it merges into
+          persist-credentials: false  # the job never pushes
+      - id: diff
+        run: |
+          if [ "$GITHUB_EVENT_NAME" != pull_request ]; then
+            echo "portal=true" >> "$GITHUB_OUTPUT"  # the push filter already matched
+          elif git diff --name-only HEAD^1 HEAD | grep -qE '^(canvas-portal/|\.github/workflows/canvas-portal-ci\.yml$)'; then
+            echo "portal=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "portal=false" >> "$GITHUB_OUTPUT"
+          fi
+
   backend:
+    needs: changes
+    if: needs.changes.outputs.portal == 'true'
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -35,11 +66,23 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install
+        id: install
         run: pip install -e ".[dev]"
+      # Ruff, pinned in pyproject.toml. `ruff format .` and
+      # `ruff check --fix .` fix most problems locally.
+      - name: Format
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: ruff format --check .
+      - name: Lint
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: ruff check .
       - name: Test
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: pytest
 
   frontend:
+    needs: changes
+    if: needs.changes.outputs.portal == 'true'
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -52,8 +95,19 @@ jobs:
           cache: npm
           cache-dependency-path: canvas-portal/frontend/package-lock.json
       - name: Install
+        id: install
         run: npm ci
+      # Prettier and ESLint, from package.json. `npm run format` fixes
+      # formatting locally; ESLint problems are fixed by hand.
+      - name: Format
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm run format:check
+      - name: Lint
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm run lint
       - name: Test
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npm test
       - name: Build
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npm run build

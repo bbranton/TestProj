@@ -83,6 +83,7 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 | Screen ID | An ID for each screen, such as `S-4` for the board. | [UI specification](/docs/canvas-portal/04-ui-specification.md) |
 | Button ID | A name for a button in capitals with underscores, such as `REFRESH`, used in logs, docs, code, and tests. The full list is in the [UI specification's conventions](/docs/canvas-portal/04-ui-specification.md#conventions-on-every-screen). | UI specification |
 | Label | A button's name in plain words, such as "Refresh from Canvas". Screen readers announce it, and icon buttons have no other name. | UI specification |
+| General error message | What a screen shows when the portal itself fails, not Canvas or the student. It never shows an error code. Its words on each screen are in the UI specification. | [UI specification](/docs/canvas-portal/04-ui-specification.md#general-error-message) |
 | Dialog (modal) | A box that opens over the page and must be closed before using the page behind it, like a QML `Dialog`. The card back *(Phase 5)* is one. | S-5 |
 
 ## Document terms
@@ -93,24 +94,26 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 | Future feature | A Phase 5 idea. The docs may sketch it, but nobody builds it until the Team Lead plans it into a phase. |
 | Requirement ID | `FR-` for a functional requirement (what the app does) and `NFR-` for a non-functional one (how well it does it), in the [requirements](/docs/canvas-portal/02-requirements.md). |
 | Must, Should, Could | A requirement's priority: required for its phase, expected but not blocking, or nice to have. |
-| Other IDs | `G-` a goal, `D-` a decision, and `B-` a backlog item (roadmap); `A-` an assumption, `C-` a constraint, and `Q-` an open question (requirements); `S-` a screen (UI specification); `TP-` a test procedure (test plan). |
+| Other IDs | `G-` a goal, `D-` a product decision, and `B-` a backlog item (roadmap); `A-` an assumption, `C-` a constraint, and `Q-` an open question (requirements); `S-` a screen (UI specification); `TP-` a test procedure (test plan); `TD-` a team decision ([team decision register](/team/decision-register.md)). |
 | Traceability | The chain from each requirement to the design part that builds it and the test that checks it, by requirement ID. |
 
 ## Team process
 
 | Term | Meaning |
 |------|---------|
-| Team Lead | The project owner. Has the final say on every decision, and is the only one who approves or merges the `develop` → `main` release PR. |
+| Team Lead | The project owner, who has the final say on decisions and on releases to `main`, as [Team personas](/CLAUDE.md#team-personas) and [Branches](/CLAUDE.md#branches) say. |
 | Persona | A role an agent takes on, such as the UI/UX designer or the cybersecurity engineer, with its own area and review checklist. The list is in the [team README](/team/README.md). |
 | Owner | The persona that writes a piece of work and answers its findings. |
-| Reviewers | The personas a PR's author picks: a peer from the owner's own persona (for a team thread, the persona that owns most of the changed files), plus one for each other area the PR touches, as the [review protocol](/team/review-protocol.md#who-reviews-what) says. Every PR has at least one. The Team Lead can change them. |
-| Decision request | A question for the Team Lead, with options, a recommendation, and the docs it changes, in the project manager's decision register or a `decision` issue. PRs only carry out answered requests; see the [review protocol](/team/review-protocol.md#decisions-are-separate-from-merging). |
-| Cross-review | A review where each reviewer runs in its own fresh thread. |
-| Finding | One problem a reviewer raises, with an ID such as `F-1`, or `X-1` when the fix is in another doc. |
-| Verdict | A reviewer's sign-off: Recommend, Recommend with notes, or Changes needed. |
-| Potential data breach | A finding that could expose a token, a session, or a student's data to anyone else. Always critical and must-fix. |
+| Reviewers | The personas that review a PR, picked as [Who reviews what](/team/review-protocol.md#who-reviews-what) says. |
+| Decision request | A question for the Team Lead, raised as [Decisions are separate from merging](/team/review-protocol.md#decisions-are-separate-from-merging) says. |
+| Cross-review | A review where each reviewer runs in its own fresh thread, as [One thread per reviewer](/team/review-protocol.md#one-thread-per-reviewer) says. |
+| Ripple check | A search, before review, for every file that states a process rule a PR changes, run as the [review protocol](/team/review-protocol.md#ripple-check-for-process-rules) says. Not the project manager's ripple list, which follows a phase or scope decision through the docs. |
+| Finding | One problem a reviewer raises, with an ID such as `F-1`, or `X-1` when the fix is in another doc, logged as the [findings table](/team/review-protocol.md#findings-table) says. |
+| Verdict | A reviewer's sign-off: Recommend, Recommend with notes, or Changes needed, as [How a review runs](/team/review-protocol.md#how-a-review-runs) says. |
+| Potential data breach | A finding that could let anyone other than the student see that student's Canvas token, session, or Canvas data, or let anyone act as the student. It is marked and handled as [Potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach) says. |
+| Retro | A team retrospective: a look back, called by the Team Lead, at how well the personas work together, run as the [`retro` skill](/.claude/skills/retro/SKILL.md) says. |
 | Team board | The shared file where threads claim work and leave handoff notes, as the [team workspace](/team/workspace.md#the-board) says. Not the portal's board. |
-| Roadmap backlog | The list in the [roadmap](/docs/canvas-portal/01-roadmap.md#9-backlog) of work a review found outside the current phase or too big for its PR, and that the Team Lead chose to put there instead of fixing it now or opening a GitHub issue, with `B-` IDs. The project manager keeps it and reviews it with the Team Lead at each phase boundary. Not the Backlog list. |
+| Roadmap backlog | The list in the [roadmap](/docs/canvas-portal/01-roadmap.md#9-backlog) of review findings the Team Lead parked for later, with `B-` IDs, as [Follow-up work](/team/review-protocol.md#follow-up-work) says. Not the Backlog list. |
 
 ## Web terms
 
@@ -138,3 +141,10 @@ These come up often in the docs. Each has a Qt comparison where one helps.
 | Date | Change |
 |------|--------|
 | 2026-10-26 | Created from the README's "Web terms used in these docs" table, from the Team Lead's review of PR #8. Added the board (including orphaned cards, from the Team Lead's review of PR #8), Refresh, card status, screen, document, and team process terms. |
+| 2026-10-27 | Added Retro to the team process terms, with the `retro` skill. |
+| 2026-10-27 | Added Ripple check to the team process terms, from the Team Lead's answer on #96. |
+| 2026-10-27 | Potential data breach now matches the rule's one home, including acting as the student, and links to it instead of restating the handling, from the Team Lead's answer on #97. |
+| 2026-10-27 | Team process terms define the term in one line and link to the rule's home instead of restating it: Team Lead, Reviewers, Decision request, Cross-review, Ripple check, Finding, Verdict, Retro, and Roadmap backlog (#97, PR 4). |
+| 2026-10-27 | Added General error message to the screen words, for the design's `invalid_request` and `internal_error` codes (PR #141, X-1). |
+| 2026-10-27 | General error message says what the term is and links the UI specification for its words, instead of restating them (PR #141, F-11). |
+| 2026-10-27 | Other IDs adds `TD-`, a team decision in the team decision register, and `D-` is now a product decision, from the Team Lead's split of the decision registers (TD-22). |

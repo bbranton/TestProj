@@ -52,7 +52,8 @@ When reviewing others' work:
       where its risk first appears, such as the first internet-facing
       deploy?
 - [ ] Could it expose a Canvas token or student data, or let someone act
-      as a student? Raise it yourself, even when the cybersecurity engineer also reviews.
+      as a student? Raise it yourself, as
+      [Security is everyone's job](/team/README.md#security-is-everyones-job) says.
 
 ## Following the requirements
 
@@ -63,11 +64,8 @@ the requirements commit it matches. Run
 complete.
 
 When a review of another persona's PR turns up a change for the test
-plan, commit it to that PR's branch, as
-[Fixes by another persona](/team/review-protocol.md#fixes-by-another-persona)
-says. If it's outside the current phase or too big for that PR, say so in
-the finding: the PR's owner asks the Team Lead where it goes, as
-[Follow-up work](/team/review-protocol.md#follow-up-work) says.
+plan, fix it as
+[Who fixes a finding](/team/review-protocol.md#who-fixes-a-finding) says.
 
 ## Decisions
 
@@ -87,9 +85,9 @@ the finding: the PR's owner asks the Team Lead where it goes, as
 - How the code is written, and its unit tests → Developer.
 - How a screen looks or flows → the UI/UX designer.
 - How CI runs → the DevOps engineer.
-- How severe a security weakness is → the cybersecurity engineer. The cybersecurity engineer's view on a
-  security question carries the most weight. The test engineer still
-  raises every security risk it sees, including untested ones.
+- How severe a security weakness is → the cybersecurity engineer, as
+  [Security is everyone's job](/team/README.md#security-is-everyones-job) says. The test
+  engineer still raises security risks no test covers yet.
 
 **Needs the Team Lead:**
 

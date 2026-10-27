@@ -5,6 +5,9 @@
 
 Reads the `paths:` filters in .github/workflows/*.yml. Only the one-line
 form `paths: ["a/**", "b"]` is understood, which is what this repo uses.
+A workflow with a `changes` job starts on every PR but runs its other jobs
+only when a file matches its push paths filter, so for those the push
+filter decides.
 """
 import re
 import subprocess
@@ -40,7 +43,8 @@ def triggers(path):
     """{event: [path globs] or None for no filter} for push and pull_request,
     plus the push branches filter."""
     found, branches, event = {}, None, None
-    for line in path.read_text().splitlines():
+    text = path.read_text()
+    for line in text.splitlines():
         m = re.match(r"^  (push|pull_request|workflow_dispatch)\s*:", line)
         if m:
             event = m.group(1)
@@ -54,7 +58,8 @@ def triggers(path):
             b = re.match(r"^\s+branches:\s*\[(.*)\]", line)
             if b and event == "push":
                 branches = [g.strip().strip("\"'") for g in b.group(1).split(",")]
-    return found, branches
+    gated = re.search(r"^  changes:", text, re.M) is not None
+    return found, branches, gated
 
 
 def main(args):
@@ -62,11 +67,16 @@ def main(args):
     files = changed_files(base)
     print(f"{len(files)} file(s) changed since {base}.")
     for wf in sorted(WORKFLOWS.glob("*.y*ml")):
-        found, branches = triggers(wf)
+        found, branches, gated = triggers(wf)
         for event, globs in found.items():
             if event == "workflow_dispatch":
                 continue
             when = "on this PR" if event == "pull_request" else f"on push to {' or '.join(branches or ['any branch'])}"
+            if globs is None and gated and found.get("push"):
+                hits = [f for f in files if any(glob_to_regex(g).match(f) for g in found["push"])]
+                jobs = f"its jobs run, matched by {hits[0]}" if hits else "its jobs skip, as no file matched"
+                print(f"  {wf.name}: runs {when}, and {jobs}")
+                continue
             if globs is None:
                 print(f"  {wf.name}: runs {when} (no paths filter)")
                 continue

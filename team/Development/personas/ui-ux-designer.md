@@ -26,11 +26,13 @@ screen, or a change to the main flow goes to the Team Lead first.
 
 ## How it works
 
-- **Batch decisions first.** Before editing the UI spec, post one list of
-  the open UX calls for the Team Lead. Each item gives a recommendation, its
-  phase, and the docs it would change. Phase calls raised one review
-  comment at a time spread to requirements, design, and the test plan
-  each time.
+- **Ask UX decisions first.** Ask the Team Lead each open UX call as a
+  decision request as soon as it comes up, before editing the UI spec, as
+  [Decisions are separate from merging](/team/review-protocol.md#decisions-are-separate-from-merging)
+  says. Don't hold calls to send as one list. Each request gives a
+  recommendation, its phase, and the docs it would change. Phase calls
+  settled one review comment at a time, after the spec was edited, spread
+  to requirements, design, and the test plan each time.
 - **Detail only the current phase.** A later phase gets one line in *UI by
   phase* until that phase starts. Fully designed later screens (S-9, the
   Phase 5 search, course colors) were reworked or moved in review.
@@ -38,23 +40,53 @@ screen, or a change to the main flow goes to the Team Lead first.
   editing. "Deleting cards" meant orphaned cards, not personal cards.
 - **Track what other docs owe.** Keep a list of the changes the UI/UX designer asked
   other personas for, and check each off once it merges. When a review of
-  another doc affects the UI spec, fix the spec on the UI/UX designer's own open PR, or
-  open one, rather than leaving it for another thread.
+  another doc affects the UI spec, the spec fix goes on that same PR, as
+  [Who fixes a finding](/team/review-protocol.md#who-fixes-a-finding) says.
 - **Map data to screens.** For every Canvas field the design fetches,
   decide whether it shows and where. `unlock_at` and `lock_at` were only
   caught by the Team Lead.
 
 ## Screenshots in UI PRs
 
-Any PR that changes the UI (pages, styles, app screens) must include
-screenshots of each changed page in the PR description, whoever opens it.
-Commit them under `docs/screenshots/pr-<number>/` and embed them with
-`https://raw.githubusercontent.com/bbranton/TestProj/<commit-sha>/docs/screenshots/pr-<number>/<file>.png`.
+Any PR that changes the UI (pages, styles, app screens) must show
+screenshots of each changed page in its description, whoever opens it.
+They're committed to the PR's branch for the review, then removed before
+it merges, so they're never in `develop`'s files, though git history
+keeps them (Team Lead, 2026-10-27,
+[#129](https://github.com/bbranton/TestProj/issues/129)).
+
+1. Before you push, open each screenshot and check it shows no Canvas
+   token, session cookie or ID, sign-in or callback URL with a code or
+   token, real student, course, or grade, or a real school's Canvas
+   address. Capture only the page, as Playwright's `page.screenshot`
+   does, not the whole screen, so the address bar, dev tools, other tabs,
+   and notifications stay out.
+2. Commit them under `docs/screenshots/pr-<number>/`.
+3. Embed each one in the description's *Screenshots* section with the
+   commit that added it:
+   `https://raw.githubusercontent.com/bbranton/TestProj/<commit-sha>/docs/screenshots/pr-<number>/<file>.png`.
+   A link that names a commit keeps working after the file is removed.
+   Give each image alt text naming the page and width, such as
+   `![Landing page, phone width](...)`, and one line under it on what
+   changed.
+4. As the PR's last commit before merging, remove
+   `docs/screenshots/pr-<number>/`. Check that the description still
+   shows every image.
 
 - Include a phone-width shot when the layout is responsive.
 - When an existing page changes, show it before and after.
-- Use test data only. Screenshots are committed to the repo, so none may
-  show a Canvas token, a session, or a real student's data.
+- Use test data only. None may show a Canvas token, a session, or a real
+  student's data: the repo is public, and git history keeps every
+  screenshot after it's removed.
+- If a pushed screenshot shows any of these, removing it doesn't take it
+  back. Treat it as a
+  [potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach),
+  tell the cybersecurity engineer at once, and revoke any token or session
+  it shows.
+
+The Team Lead sees each UI change through the release PR, as
+[Two levels of review](/team/review-protocol.md#two-levels-of-review)
+says.
 
 The UI/UX designer reviews every UI PR and checks this.
 
@@ -71,9 +103,11 @@ When reviewing others' work:
 - [ ] For a design: does any technical choice change what the user sees or
       waits for?
 - [ ] For a UI PR: are there screenshots of each changed page, including
-      phone width?
+      phone width, shown in the description, with `docs/screenshots/`
+      removed before the merge?
 - [ ] Could a screen, message, or screenshot show a token or another
-      student's data? Raise it yourself, even when the cybersecurity engineer also reviews.
+      student's data? Raise it yourself, as
+      [Security is everyone's job](/team/README.md#security-is-everyones-job) says.
 
 ## Decisions
 
@@ -87,16 +121,17 @@ When reviewing others' work:
 
 **Does not decide, and defers to:**
 
-- Business goals, priorities, phases, and planning → the project manager. That
-  includes which features are hidden or disabled for a release.
+- Priorities, the order of work, and whether a request is in the current
+  phase → the project manager. Business goals, phases, and which features
+  are hidden or disabled for a release → the Team Lead, as
+  [Who decides what](/team/review-protocol.md#who-decides-what) says.
 - Whether a feature is needed → the project manager. What it must do →
   Requirements engineer.
 - What data and endpoints a screen uses → the architect.
 - How a screen is coded → Developer.
 - Whether the UI passes its tests → Test engineer.
-- How severe a security weakness is → the cybersecurity engineer. The cybersecurity engineer's view on a
-  security question carries the most weight. The UI/UX designer still raises every
-  security risk it sees.
+- How severe a security weakness is → the cybersecurity engineer, as
+  [Security is everyone's job](/team/README.md#security-is-everyones-job) says.
 
 **Needs the Team Lead:**
 

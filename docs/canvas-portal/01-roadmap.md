@@ -102,7 +102,8 @@ The smallest thing that is useful: connect, then see everything that's due.
   Actions is a new place secrets live, so the Team Lead sets them (#26).
 
 **Before step 6 goes live**, because real tokens then sit on an
-internet-facing server (R-14). Each of these is a potential data breach
+internet-facing server (R-14). Each of these is a
+[potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
 if skipped, so none can be dropped or delayed without the Team Lead:
 
 - The incident plan for a leaked token is in place (#17).
@@ -437,11 +438,23 @@ database, and the domain) is decided, with its cost.
 | M4 | Fast loads and Canvas sync | 3 | Board stays current without waiting on Canvas | |
 | M5 | Published | 4 | Any student can sign in and use it in Chrome on a laptop or desktop | |
 
-## 5. Open decisions
+## 5. Product decisions
+
+This section is the project manager's register of the Canvas portal's
+decisions. Decisions about how the team works are in the
+[team decision register](/team/decision-register.md) instead. Which
+register a decision goes in is in
+[Decisions are separate from merging](/team/review-protocol.md#decisions-are-separate-from-merging). D-10 to D-12 were team decisions and moved there as TD-19 to TD-21;
+their IDs aren't reused here.
 
 Open decisions need the Team Lead's call; each has a recommendation, from
 the DevOps engineer for D-3 and from the architect for D-8. Settled decisions are struck
 through and kept for the record.
+
+The register records each decision and its answer; it isn't where the
+Team Lead is asked. A
+[decision request](/team/review-protocol.md#decisions-are-separate-from-merging)
+goes to the Team Lead right away, where it came up.
 
 | ID | Decision | Options | Recommendation | Needed by |
 |----|----------|---------|----------------|-----------|
@@ -453,6 +466,7 @@ through and kept for the record.
 | ~~D-6~~ | ~~Backend language~~ | **Python + FastAPI** (readable, quick to write, good for learning) or **Node.js** (same language as the frontend) | **Decided** (Team Lead, 2026-10-25): Python + FastAPI. | Done |
 | ~~D-7~~ | ~~How users sign in to the portal~~ | **Sign in with Google**, **email magic link**, **username and password**, or a **hosted auth service** (see [design](/docs/canvas-portal/03-design.md#5-signing-in-to-the-portal-d-7)) | **Decided** (Team Lead, 2026-10-25): Sign in with Google for the MVP. | Done |
 | D-8 | How other open devices learn about a move (NFR-22) | **Polling** (each device asks "anything new?" every 30 seconds and when its window comes back into focus; simple, works on any host) or **live push** (the server tells devices instantly over a WebSocket or server-sent events; faster, but more to build and host) | Polling for Phase 2; live push only if 30 seconds feels slow in practice. See [design](/docs/canvas-portal/03-design.md#keeping-devices-in-sync-nfr-22-d-8). | Start of Phase 2 |
+| ~~D-9~~ | ~~How Google sign-in is protected against login CSRF (NFR-12)~~ | **A server-side `state` list only** (the earlier design, which left login CSRF open because `state` wasn't tied to the browser) or **`state` in a short-lived signed `HttpOnly`, `Secure`, `SameSite=Lax` cookie**, checked on the callback (see [design section 5](/docs/canvas-portal/03-design.md#5-signing-in-to-the-portal-d-7) and its [security table](/docs/canvas-portal/03-design.md#7-security)) | **Decided** (Team Lead, 2026-10-27): the signed cookie, and sign-in redirects only to fixed paths on the portal. The cybersecurity engineer raised it as X-6 and proposed the fix, and the architect wrote it into the design, in [#141](https://github.com/bbranton/TestProj/pull/141); the Team Lead confirmed it in a project thread, recorded in [#154](https://github.com/bbranton/TestProj/pull/154)'s *Decisions*. | Done |
 
 ## 6. Risks
 
@@ -462,9 +476,7 @@ carries out its mitigation (see the [team personas](/team/README.md)).
 The project manager keeps this list, rates each risk, assigns its owner, and reviews
 it with the Team Lead at every phase boundary. A risk that is a
 [potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
-is marked **Critical**: it is must-fix, its mitigations come first in the
-current phase and are done before the next deploy, and only the Team Lead
-can delay one. Accepting a risk instead of
+is marked **Critical** and handled as that section says. Accepting a risk instead of
 reducing it, or a mitigation that changes scope or timeline, needs the Team
 Lead.
 
@@ -518,8 +530,8 @@ The plan has grown quickly, so these rules keep each phase finishable:
 
 | Who | Does |
 |-----|------|
-| Team Lead | Has the final say on every decision and disagreement; decides open decisions, questions, and every decision request; OKs each phase's test deploy; approves every roadmap and scope change; can change any pull request's reviewers; reviews and merges the `develop` → `main` release pull request; runs the manual test procedures that need real Canvas accounts or the teacher sandbox; sets up the Google and Canvas accounts in each phase's prerequisites; changes the current phase in CLAUDE.md. |
-| Team personas (Claude) | Project manager, Requirements engineer, Test engineer, Architect, UI/UX designer, Developer, DevOps engineer, Cybersecurity engineer, and CFO, as described in the [team README](/team/README.md) and the [review protocol](/team/review-protocol.md). Each one writes the documents and code it owns and reviews others' work when a pull request touches its area, in small pull requests limited to the current phase; merges its own pull requests into `develop` once their reviewers recommend them, but never approves or merges into `main`; lists the requirement IDs each pull request implements; brings anything outside the current phase to the Team Lead instead of building it. |
+| Team Lead | Has the final say, as [Team personas](/CLAUDE.md#team-personas) says, and answers the [product decisions](#5-product-decisions) and every [decision request](/team/review-protocol.md#decisions-are-separate-from-merging); OKs each phase's test deploy; approves every roadmap and scope change; merges the `develop` → `main` release pull request, as [Branches](/CLAUDE.md#branches) says; runs the manual test procedures that need real Canvas accounts or the teacher sandbox; sets up the Google and Canvas accounts in each phase's prerequisites; changes the current phase in CLAUDE.md. |
+| Team personas (Claude) | Project manager, Requirements engineer, Test engineer, Architect, UI/UX designer, Developer, DevOps engineer, Cybersecurity engineer, and CFO, as described in the [team README](/team/README.md) and the [review protocol](/team/review-protocol.md). Each one writes the documents and code it owns and reviews others' work when a pull request touches its area, in small pull requests limited to the current phase; merges its own pull requests into `develop` but never approves or merges into `main`, as [Branches](/CLAUDE.md#branches) says; lists the requirement IDs each pull request implements and brings anything outside the current phase to the Team Lead, as [Canvas portal phases](/CLAUDE.md#canvas-portal-phases) says. |
 
 ## 9. Backlog
 
@@ -529,8 +541,8 @@ it now or opening a GitHub issue, as the
 [review protocol](/team/review-protocol.md#follow-up-work) says.
 The project manager adds each item and reviews the list with the Team Lead
 at every phase boundary. The Team Lead plans an item into a phase or drops
-it; nobody starts on one before then. A potential data breach never goes here: it is
-tracked in the [security register](/team/QA/notes/cybersecurity-engineer.md#security-register).
+it; nobody starts on one before then. A [potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach)
+never goes here, as that section says.
 
 | ID | Item | Found in | Owner | Suggested phase | Status |
 |----|------|----------|-------|-----------------|--------|
@@ -592,3 +604,8 @@ tracked in the [security register](/team/QA/notes/cybersecurity-engineer.md#secu
 | 2026-10-27 | Review follow-ups go in the same pull request, fixed by the persona that owns the file, or on the new section 9 backlog when they're outside the current phase or too big for the pull request; no more follow-up GitHub issues. From the Team Lead. |
 | 2026-10-27 | A finding outside the current phase or too big for its pull request goes to the Team Lead as its own decision request, choosing a GitHub issue or the section 9 backlog, so nothing is parked without the Team Lead's say. From the Team Lead. |
 | 2026-10-27 | The Team Lead's options for such a finding are four: fix it now in the same pull request, fix it now in a separate pull request by a new thread, a GitHub issue, or the section 9 backlog. From the Team Lead. |
+| 2026-10-27 | The potential data breach rule is no longer restated in the step 6 gate list, the risk list, or the backlog: each links to its one home in the cybersecurity engineer persona. From the Team Lead's answer on #97. |
+| 2026-10-27 | The Team Lead and team personas rows in section 8 link to CLAUDE.md for the final say, branches, and phases instead of restating them. From the Team Lead's answer on #97. |
+| 2026-10-27 | Section 5 is a record of decisions and their answers, not where the Team Lead is asked: each decision request goes to the Team Lead right away, where it came up. From the Team Lead, on #132. |
+| 2026-10-27 | D-9 (sign-in `state` in a signed cookie, against login CSRF), D-10 (the ripple check's context check), D-11 (the ripple check searches every Markdown file), and D-12 (the PR's owner fixes files with no owner) added to section 5 as settled, from the Team Lead. |
+| 2026-10-27 | Section 5 is renamed *Product decisions* and holds only the Canvas portal's decisions. D-10 to D-12, about the team's process, moved to the new [team decision register](/team/decision-register.md) as TD-19 to TD-21, from the Team Lead. |

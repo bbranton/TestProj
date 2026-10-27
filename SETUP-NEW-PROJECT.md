@@ -25,7 +25,7 @@ in the two placeholders once step 5 is done.
 ```text
 Prefer Markdown for documents, lists, and write-ups. Only use HTML pages when something specifically needs it, such as interactivity, charts, or running an app in the browser.
 
-Any PR that changes the UI must include screenshots of the changed pages or screens in the PR description or a PR comment.
+Any PR that changes the UI must include screenshots of the changed pages or screens in the PR description.
 
 Never use the project owner's first name in the repo (files, docs, commits, code comments). Refer to them as "Team Lead".
 
@@ -45,12 +45,16 @@ github.com:
 1. **Branches:** create the repo with a README, so `main` has a first
    commit. Then create `develop` from `main`, and make `develop` the
    default branch (Settings > General).
-2. **Ruleset on `main`** (Settings > Rules > Rulesets > New branch
-   ruleset), with no bypass: *Restrict deletions*, *Block force pushes*,
-   *Require a pull request before merging*.
+2. **Rulesets** (Settings > Rules > Rulesets > New branch ruleset). One
+   on `main`, with no bypass: *Restrict deletions*, *Block force pushes*,
+   *Require a pull request before merging*. One on `develop` with
+   *Require status checks to pass* and the checks `docs`, `backend`, and
+   `frontend` from GitHub Actions, so a PR only merges once its CI
+   passes. Add the checks after each has run once, since GitHub only
+   offers check names it has seen.
 3. **Merge settings:** as the
-   [DevOps engineer notes](/team/Development/notes/devops-engineer.md)
-   record them.
+   DevOps engineer notes record them, in the project's shared files
+   (Library: `notes/devops-engineer/`).
 4. **Pages**, if the project has a website: Settings > Pages > Source:
    *GitHub Actions*. Then, since `develop` is the default branch, add
    `main` under Settings > Environments > github-pages > Deployment
@@ -66,8 +70,13 @@ github.com:
 ## 4. Create the board
 
 The [board](/team/workspace.md#the-board) is in the project's shared
-files, not the repo. Create `team/board.md` there with `## Claims` and
+files, not the repo. Create Library: `team/board.md` with `## Claims` and
 `## Notes` headings.
+
+Also create Library: `costs/`, holding `cost-log.md` with the header row from
+the CFO persona's [Columns](/team/Management/personas/cfo.md#columns) and
+an empty `logged/` folder. The
+[CFO persona](/team/Management/personas/cfo.md#role) says how it's used.
 
 ## 5. Set up the local clone
 
@@ -106,15 +115,16 @@ catches up on every merge.
 
 ## 6. Copy the team files
 
-Copy `CLAUDE.md`, `team/`, `.claude/skills/`, and
+Copy `CLAUDE.md`, `FACTORY.md`, `team/`, `.claude/skills/`, and
 `.github/pull_request_template.md` into the new repo in one PR into
-`develop`. Leave out the daily logs and cost-log rows, and start each
-persona's notes file empty, except for the
-[Security register](/team/QA/notes/cybersecurity-engineer.md#security-register)
-heading, intro, and empty table.
+`develop`. Rewrite `FACTORY.md`'s goal, layout, and stages for the new
+repo. The cost log, persona notes, and daily logs are in the Library,
+not the repo. Start the
+[security register](/team/QA/security-register.md) with its heading,
+intro, and an empty table.
 
 The process also lives in two docs under `docs/canvas-portal/`. Start a
-roadmap with empty *Open decisions*, *Risks*, *Backlog*, and *Change log*
+roadmap with empty *Product decisions*, *Risks*, *Backlog*, and *Change log*
 sections, as in [01-roadmap.md](/docs/canvas-portal/01-roadmap.md), copy
 the [glossary](/docs/canvas-portal/glossary.md)'s layout with no terms,
 and update the links that point at `docs/canvas-portal/`.

@@ -57,7 +57,7 @@ Tell the agent which persona to act as, and on what. For example:
 An agent acting as a persona:
 
 1. Reads its persona file, its [lasting notes](/team/workspace.md#persona-notes)
-   (Library: `notes/<persona>.md`) and recent
+   (Library: `notes/<persona>/`) and recent
    [daily logs](/team/workspace.md#daily-notes)
    (Library: `notes/daily/`), and the
    [review protocol](/team/review-protocol.md) before starting, and checks the
@@ -102,7 +102,7 @@ To add a persona:
 
 1. Copy an existing persona file into the `personas/` folder of the team it
    works on, name it after the job title (such as `architect.md`), and fill
-   in every section. Give it a notes file in the project's
+   in every section. Give it a notes folder in the project's
    [notes folder](/team/workspace.md#persona-notes). For a new team, create
    `team/<Team>/` with `personas/` and `scripts/` subfolders.
 2. Add a row to the tables above, and its name to the persona list in

@@ -74,6 +74,7 @@ both.
 | Token encryption | Fernet, from the `cryptography` Python library | Proposed; needs the Team Lead (new dependency, token storage) | Authenticated encryption in one call; `MultiFernet` lets the key be replaced later without losing stored tokens |
 | Background Refresh | An `asyncio` task inside the one server process | Proposed | Nothing extra to build; it needs a host that keeps one server process running, which the DevOps engineer weighs when choosing the host (roadmap D-3) |
 | Hosting | See roadmap D-3 | Open | |
+| Formatting and linting | Ruff for the backend; Prettier and ESLint for the frontend, with typescript-eslint, ESLint's `react-hooks` rules and `no-console`, and `eslint-config-prettier` so the two don't clash | **Decided (Team Lead, [#143](https://github.com/bbranton/TestProj/issues/143))** | Dev dependencies only, so nothing ships to the live app. CI runs all three, so reviewers stop checking style by hand. `react-hooks` catches real bugs, and `no-console` keeps the Canvas token out of the browser console. The commands are in [Coding standards](/team/Development/coding-standards.md), and CI is the DevOps engineer's |
 
 ## 3. Data model
 
@@ -914,3 +915,4 @@ the data side.
 | 2026-10-27 | A failed Google sign-in redirects to S-1 with `?signin=failed` instead of answering with the error shape, from the UI/UX designer on PR #141. |
 | 2026-10-27 | Error logs hold an exception's type and place, never its text, a request body, or the sign-in `code` and `state`, from the Requirements engineer on PR #141 (X-3, X-4). |
 | 2026-10-27 | Sign-in `state` kept in a short-lived signed cookie and checked on the callback (login CSRF), fixed redirect paths, and the fields each error and sign-in failure log may hold, from the cybersecurity engineer on PR #141. |
+| 2026-10-27 | Formatting and linting row in section 2: Ruff, Prettier, and ESLint as dev dependencies run in CI, from the Team Lead on [#143](https://github.com/bbranton/TestProj/issues/143). |

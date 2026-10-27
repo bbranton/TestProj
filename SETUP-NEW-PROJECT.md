@@ -54,7 +54,7 @@ github.com:
    offers check names it has seen.
 3. **Merge settings:** as the
    DevOps engineer notes record them, in the project's shared files
-   (Library: `notes/devops-engineer.md`).
+   (Library: `notes/devops-engineer/`).
 4. **Pages**, if the project has a website: Settings > Pages > Source:
    *GitHub Actions*. Then, since `develop` is the default branch, add
    `main` under Settings > Environments > github-pages > Deployment

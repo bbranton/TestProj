@@ -24,8 +24,12 @@ locally before pushing, so CI only confirms what you already saw.
 | Part | Command | What it catches |
 |------|---------|-----------------|
 | Backend | `pip install -e ".[dev]"`, then `pytest` in `canvas-portal/backend` | Failing backend tests |
+| Backend | `ruff format --check .` | Code Ruff would format differently |
+| Backend | `ruff check .` | Lint problems: the defaults, plus import order (`I`), old Python idioms (`UP`), likely bugs (`B`), and any `print` call (`T20`) |
 | Frontend | `npm ci`, then `npm test` in `canvas-portal/frontend` | Failing Vitest tests |
-| Frontend | `npm run build` | Type errors, through `tsc -b` with `strict` on, and a broken Vite build |
+| Frontend | `npm run format:check` | Code Prettier would format differently |
+| Frontend | `npm run lint` | ESLint problems: the JavaScript and typescript-eslint recommended rules, the React hooks rules, and any `console` call |
+| Frontend | `npm run build` | Type errors, through TypeScript 7's `tsc -b` with `strict` on, and a broken Vite build. Type-check only this way: a bare `tsc` or `npx tsc` runs TypeScript 6, which ESLint needs, not the compiler CI uses |
 
 CI uses Python 3.12 and Node 22; use the same locally.
 
@@ -33,12 +37,13 @@ The [docs check](/.github/workflows/docs-check.yml) also runs on every PR:
 `python3 team/Development/scripts/docs_check.py`. It fails on a broken
 repo link or an unknown requirement ID in any Markdown file.
 
-**No formatter or linter runs yet.** Tools such as Ruff for Python, or
-Prettier and ESLint for TypeScript, would be new dev dependencies, which
-the [architect](/team/Development/personas/architect.md#decisions) takes to
-the Team Lead before the DevOps engineer adds them to CI. Until then,
-follow the style rules below by hand, and reviewers check them. The rules
-match those tools' defaults, so adding a tool later changes little code.
+**Fix formatting with the tools, not by hand:** `ruff format .` and
+`ruff check --fix .` in `canvas-portal/backend`, and `npm run format` in
+`canvas-portal/frontend`. Fix ESLint problems by hand. The tools'
+settings are in `backend/pyproject.toml` and `frontend/eslint.config.js`.
+A new tool is a new dev dependency, which the
+[architect](/team/Development/personas/architect.md#decisions) takes to
+the Team Lead.
 
 ## Style and format
 

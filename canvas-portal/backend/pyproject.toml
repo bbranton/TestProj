@@ -12,6 +12,7 @@ dependencies = [
 dev = [
     "httpx>=0.27",
     "pytest>=8",
+    "ruff==0.17.3",
 ]
 
 [tool.setuptools]
@@ -20,3 +21,14 @@ packages = ["app"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+
+# Ruff formats and lints the backend: `ruff format .` and `ruff check .`.
+# Its defaults (88-column lines, double quotes) match the coding standards.
+[tool.ruff]
+target-version = "py312"
+
+[tool.ruff.lint]
+# The defaults (pyflakes and the pycodestyle errors), plus import sorting,
+# pyupgrade, bugbear for likely bugs, and print (T20), since the backend
+# logs with logging, never print.
+extend-select = ["I", "UP", "B", "T20"]

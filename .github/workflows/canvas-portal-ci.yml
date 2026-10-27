@@ -1,9 +1,13 @@
 # Canvas portal CI: tests and builds the Canvas portal app in canvas-portal/.
 #
 # What it checks:
-#   - backend: installs the Python backend and runs its tests with pytest.
-#   - frontend: installs the frontend with npm ci, runs its tests, and
-#     builds it, so a change that breaks the build fails here.
+#   - backend: installs the Python backend, checks its format and lint
+#     with Ruff, and runs its tests with pytest.
+#   - frontend: installs the frontend with npm ci, checks its format and
+#     lint with Prettier and ESLint, runs its tests, and builds it, so a
+#     change that breaks the build fails here.
+#   Once Install succeeds, each later step runs even if an earlier one
+#   failed, so one CI run shows every problem.
 #
 # When it runs: on pushes to main and develop when files under
 # canvas-portal/ or this workflow change. On a pull request it always
@@ -62,8 +66,18 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install
+        id: install
         run: pip install -e ".[dev]"
+      # Ruff, pinned in pyproject.toml. `ruff format .` and
+      # `ruff check --fix .` fix most problems locally.
+      - name: Format
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: ruff format --check .
+      - name: Lint
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: ruff check .
       - name: Test
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: pytest
 
   frontend:
@@ -81,8 +95,19 @@ jobs:
           cache: npm
           cache-dependency-path: canvas-portal/frontend/package-lock.json
       - name: Install
+        id: install
         run: npm ci
+      # Prettier and ESLint, from package.json. `npm run format` fixes
+      # formatting locally; ESLint problems are fixed by hand.
+      - name: Format
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm run format:check
+      - name: Lint
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm run lint
       - name: Test
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npm test
       - name: Build
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npm run build

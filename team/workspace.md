@@ -7,11 +7,11 @@ There are six places, for six kinds of information:
 
 | What | Where | Why there |
 |------|-------|-----------|
-| Each persona's lasting notes and daily logs | The [notes folder](#persona-notes), in the project's shared files | No PR; one file per writer |
+| Each persona's lasting notes and daily logs | The [notes folder](#persona-notes), in the project's shared files, one file per note or log entry | No PR; each writer makes a new file |
 | Scripts a team runs often | `team/<Team>/scripts/`, called from a skill in `.claude/skills/` | The script lives with its team; every agent session loads skills automatically |
 | Who is working on what right now, and handoffs | The board, in the project's shared files | Instant, no PR needed |
 | What each thread cost | The cost log and row files, in the project's shared files | No PR; one file per row, as the [CFO persona](/team/Management/personas/cfo.md#role) says |
-| Process ideas waiting for the next retro | The [ideas file](#process-ideas), in the project's shared files | No PR or review for a one-line idea |
+| Process ideas waiting for the next retro | The [ideas folder](#process-ideas), in the project's shared files, one file per idea | No PR or review for a one-line idea |
 | Each disagreement between an owner and a reviewer | Library: `disagreements/`, one file per disagreement, as [Logging a disagreement](/team/review-protocol.md#logging-a-disagreement) says | No PR; the retro reads them |
 
 ## Team folders
@@ -35,42 +35,52 @@ Persona notes and daily logs live in Library: `notes/`, in the
 project's shared files, not in the repo (Team Lead, 2026-10-27,
 [#127](https://github.com/bbranton/TestProj/issues/127)). They need no PR.
 
-Each persona has a lasting notes file there, named after its job title
-like its persona file, such as Library: `notes/test-engineer.md`.
-Before starting work as a persona, read its notes. When you learn something
+Each persona has a lasting notes folder there, named after its job title
+like its persona file, such as Library: `notes/test-engineer/`, with
+**one file per note** (Team Lead, 2026-10-27, on
+[#132](https://github.com/bbranton/TestProj/pull/132)). Before starting
+work as a persona, read every file in its folder. When you learn something
 the next thread would otherwise have to rediscover, add it while you work.
-Only threads of that persona change its notes file.
+Only threads of that persona add to or change its notes folder.
 
-The folder keeps no history, and the last write wins, so treat it like the
-[board](#the-board):
-
-- Read a file just before you change it, and change only your own lines.
-- Re-read it about ten seconds after writing, to check your change survived.
+- **Name** each note
+  `<YYYY-MM-DD>T<HHMMSS>-<slug>.md`, with the time in UTC and a few words
+  about the note, such as
+  Library: `notes/test-engineer/2026-10-27T163200-make-checks-fail-on-purpose.md`.
+  The time has no colons, since Windows and macOS Finder can't show them
+  in a file name.
+- **Each note is a new file,** so no two writers share one, and there's no
+  need to read the folder just before writing or re-read it after.
 - **No secrets:** never write a Canvas token, cookie, secret, or student
-  data in a notes file or daily log. Link to the evidence instead.
+  data in a note or daily log. Anyone in the project can read them and they
+  keep no history, so link to the evidence instead.
 
 A session outside this project, such as the Team Lead's local clone, can't
 see the notes folder. It works from the repo and says that it had no notes.
 
-A lasting note is one or two lines: the rule, then why. Notes that turn out wrong
-are deleted, not left with a correction. A note that every persona needs
-belongs in [CLAUDE.md](/CLAUDE.md) instead.
+A lasting note is one or two lines: the rule, then why. A note that turns
+out wrong is deleted, not left with a correction; to change one, delete its
+file and write a new one. A note that every persona needs belongs in
+[CLAUDE.md](/CLAUDE.md) instead.
 
 ## Daily notes
 
-Each thread keeps its own daily log for each day it works, in
-Library: `notes/daily/`, named
-`YYYY-MM-DD-<persona>-<pr>.md` with the persona's file name and the PR it
-works on, such as `2026-10-28-devops-engineer-pr130.md`. A thread with no
-PR uses its issue number or a short task name instead.
+Each thread keeps a daily log of its work, in Library: `notes/daily/`,
+in a folder for each day, with **one file per entry** (Team Lead,
+2026-10-27, on [#132](https://github.com/bbranton/TestProj/pull/132)).
+Name each entry
+`<YYYY-MM-DD>/<YYYY-MM-DD>T<HHMMSS>-<persona>-<pr>-<slug>.md`, with the
+time in UTC, the persona's file name (`none` for a thread with no
+persona), the PR it works on, and a few words about the entry, such as
+`2026-10-28/2026-10-28T091500-devops-engineer-pr130-ci-paths-filter.md`.
+A thread with no PR uses its issue number, such as `issue127`, or `none`.
+A reviewer thread starts its slug with `review`, such as
+`2026-10-28T140000-architect-pr130-review-first-round.md`.
 
-- **One file per thread per day.** No two threads write the same file, so
-  nothing is lost when the last write wins. Two DevOps engineer threads on
-  PRs #130 and #131 write `2026-10-28-devops-engineer-pr130.md` and
-  `2026-10-28-devops-engineer-pr131.md`; a reviewer thread adds
-  `-review`, such as `2026-10-28-architect-pr130-review.md`.
-- **Only on days with work.** Don't create a log for a day the thread had
-  no tasks.
+- **Each entry is a new file,** so nothing is lost when the last write
+  wins, and there's no need to read or re-read the folder around a write.
+- **Only on days with work.** Don't write an entry for a day the thread
+  had no tasks.
 - **Open to everyone.** Logs aren't private. Any persona, in any team, can
   read any other persona's logs when it helps.
 
@@ -97,7 +107,7 @@ and in its `decision` issue when there is one. Use this form, so a search for
 ```
 
 Lessons that will matter beyond the day go in the persona's lasting notes
-file, not only in the daily log.
+too, not only in the daily log.
 
 ## Team skills
 
@@ -162,7 +172,7 @@ Rules:
    picks up a persona next, or a
    [wording-only change](/team/review-protocol.md#wording-only-changes-notify-the-persona)
    to its persona file. The persona it's for deletes the note once
-   handled. Anything lasting moves into that persona's notes file.
+   handled. Anything lasting moves into that persona's notes folder.
 
 A session outside this project has no board. It should check open PRs for
 the same doc instead.
@@ -172,20 +182,28 @@ the same doc instead.
 Process changes wait for the next [retro](/.claude/skills/retro/SKILL.md),
 not a PR of their own (Team Lead, 2026-10-27,
 [#98](https://github.com/bbranton/TestProj/issues/98)). When an idea
-comes up, any thread adds it to Library: `retros/process-ideas.md`,
-in the project's shared files. It isn't in the repo, so it needs no PR,
-and the Team Lead can read it in the project's Library at any time.
+comes up, any thread adds it to Library: `retros/process-ideas/`, in
+the project's shared files. It isn't in the repo, so it needs no PR, and
+the Team Lead can read it in the project's Library at any time.
 
-- **One line per idea:** who, the date, the idea, and a link to what
-  prompted it, such as a PR, review, or log entry.
+- **One file per idea,** named
+  `<YYYY-MM-DD>T<HHMMSS>-<persona>-<slug>.md`, with the time in UTC, the
+  persona's file name (`team-lead` for the Team Lead, or `none` for a
+  thread with no persona), and a few words about the idea, such
+  as `2026-10-27T163200-test-engineer-shorter-review-checklists.md`
+  (Team Lead, 2026-10-27, on
+  [#132](https://github.com/bbranton/TestProj/pull/132#discussion_r4391369705)). The time has
+  no colons, since Windows and macOS Finder can't show them in a file
+  name. Each writer makes a new file, so there's no need to re-read it
+  after writing.
+- **What it holds:** who, the date, the idea, and a link to what prompted
+  it, such as a PR, review, or log entry.
 - **No secrets:** never write a Canvas token, cookie, secret, or student
   data in it. Anyone in the project can read it and it keeps no history,
   so link to the evidence instead.
-- **Same care as the board:** read the file just before you change it, add
-  only your own lines, and re-read it about ten seconds after writing.
-- **The retro uses it.** Each persona reads it when a retro starts, and
-  the project manager removes the ideas the retro note covered once the
-  note merges.
+- **The retro uses it.** Each persona reads the folder when a retro
+  starts, and the project manager deletes the files of the ideas the
+  retro note covered once the note merges.
 
 A change needed to unblock work right now is still a decision request to
 the Team Lead, not an idea for later.
@@ -207,7 +225,7 @@ costs about $1 to $2.
   `external_metadata.usage.cost_usd`, ask after about four Team Lead
   rounds instead, and say the thread can't read its cost. On a yes, the
   thread:
-  1. adds a hand-off note to its daily log: the PR and branch, what's
+  1. writes a hand-off entry in its daily log: the PR and branch, what's
      done, what's left, open findings, decisions waiting on the Team
      Lead, and the files to read first;
   2. leaves a board `[note]` for the next thread of its persona that

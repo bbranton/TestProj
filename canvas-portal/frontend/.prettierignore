@@ -1,0 +1,4 @@
+# Prettier only reads the .gitignore in the folder it runs from, and
+# canvas-portal/.gitignore is one level up, so list build output here too.
+dist
+package-lock.json

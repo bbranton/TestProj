@@ -161,7 +161,7 @@ at any time.
 | Any page, screen, style, on-screen wording, accessibility, or the UI specification (`04-ui-specification.md`) | UI/UX designer | UI/UX designer |
 | App code | Developer | Developer |
 | CI, build, install scripts, repo settings, or the top-level `README.md` | DevOps engineer | DevOps engineer |
-| Canvas tokens, sign-in, the session cookie, secrets, student data, hosting, or deploys; the client security document (`06-security-overview.md`) | Cybersecurity engineer, always | Cybersecurity engineer |
+| Canvas tokens, sign-in, the session cookie, secrets, student data, hosting, or deploys; the client security document (`06-security-overview.md`) or the security register (`team/QA/security-register.md`) | Cybersecurity engineer, always | Cybersecurity engineer |
 | Shared files at the top of `team/`, or another team's folder | Each persona whose file changes, plus the project manager (a board note instead, for a [wording-only change](#wording-only-changes-notify-the-persona) to a persona file) | Project manager |
 | Another persona's files in your own team's folder | That persona (a board note instead, for a [wording-only change](#wording-only-changes-notify-the-persona) to a persona file) | That persona |
 | A team script or its skill (see [Team skills](/team/workspace.md#team-skills)) | The other personas who use it | The team whose `scripts/` folder holds it |

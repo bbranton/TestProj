@@ -10,7 +10,7 @@ reviews someone else's work, and which decisions it can and cannot make.
 | Requirements engineer | Requirements, glossary meanings, traceability, impact notes | [requirements-engineer.md](QA/personas/requirements-engineer.md) |
 | Test engineer | Test plan, writing and running tests, test results | [test-engineer.md](QA/personas/test-engineer.md) |
 | Architecture | Design docs, transition plans, data, APIs | [architect.md](Architecture/personas/architect.md) |
-| UI/UX | UI specification, screens, accessibility | [ui-ux-designer.md](Ui-Ux/personas/ui-ux-designer.md) |
+| UI/UX | UI specification, screens, accessibility | [ui-ux-designer.md](Development/personas/ui-ux-designer.md) |
 | Developer | Code, coding standards, bug fixes | [developer.md](Development/personas/developer.md) |
 | DevOps | CI, build and install scripts, dependencies, deploys, hosting, top-level README | [devops-engineer.md](Development/personas/devops-engineer.md) |
 | Security | Security reviews, potential data breach ratings, client security document | [cybersecurity-engineer.md](QA/personas/cybersecurity-engineer.md) |
@@ -27,10 +27,9 @@ Each team may freely update its own folder.
 | Team | Persona files |
 |------|---------------|
 | Architecture | `architect.md` |
-| Development | `developer.md`, `devops-engineer.md` |
+| Development | `developer.md`, `devops-engineer.md`, `ui-ux-designer.md` |
 | Management | `project-manager.md`, `cfo.md` |
 | QA | `requirements-engineer.md`, `test-engineer.md`, `cybersecurity-engineer.md` |
-| Ui-Ux | `ui-ux-designer.md` |
 
 Files every team shares stay at the top of `team/`: this README, the
 [review protocol](review-protocol.md), and the [team workspace](workspace.md).

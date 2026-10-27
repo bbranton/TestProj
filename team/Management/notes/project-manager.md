@@ -84,6 +84,12 @@ Lasting lessons for the project manager persona. See the
   [ripple check](/team/review-protocol.md#ripple-check-for-process-rules)
   on every process PR, and bring the owners of the matching files in
   before review, not after (Team Lead, 2026-10-27, #96).
+- Each team rule has one home, listed in the
+  [ripple check](/team/review-protocol.md#ripple-check-for-process-rules),
+  and other files link to it (Team Lead, 2026-10-27, #97). When writing
+  any team file, link to the home instead of summarizing the rule: even a
+  one-line summary drifts, as the project manager's old "the CFO owns the
+  log" line did after #72.
 - A persona whose persona file changes only in wording or a link is
   notified with a board `[note]`, not made a reviewer, as
   [Wording-only changes](/team/review-protocol.md#wording-only-changes-notify-the-persona)

@@ -37,6 +37,10 @@ Lasting lessons for the project manager persona. See the
   [security register](/team/QA/notes/cybersecurity-engineer.md#security-register)
   at every phase boundary and before every deploy; breach handling is in
   [Potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach).
+- The roadmap applies team rules too (risk ratings, the backlog, step 6
+  gates), but the ripple check's search list leaves out `docs/` apart
+  from the glossary. When a ripple check covers a rule the project manager
+  uses, search `01-roadmap.md` as well (#113, X-1).
 - Before any deploy that puts real tokens online, the roadmap lists its
   go-live conditions (incident plan, key handling, secret scanning, cookie
   safety on the host's domain, private secrets and backups). A shared

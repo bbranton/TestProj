@@ -15,7 +15,7 @@
 
 Reviewers: each persona whose area this PR touches, from *Who reviews what*
 in [the review protocol](../blob/develop/team/review-protocol.md#who-reviews-what).
-"None" when it touches no other persona's area.
+"None" when it touches only the owner persona's own files.
 
 <!-- One line per reviewer, with why. Security always reviews anything
      touching tokens, sign-in, secrets, student data, hosting, or deploys;

@@ -21,7 +21,7 @@ Never "None": every PR has at least the peer.
 <!-- One line per reviewer, with why. Security always reviews anything
      touching tokens, sign-in, secrets, student data, hosting, or deploys;
      say which. Assign the Team Lead, but don't request their review. -->
-- Peer (owner's persona): precaution, every PR
+- Peer (owner's persona, or for a team thread the persona owning most changed files): precaution, every PR
 - Persona: reason
 
 ### Verdicts

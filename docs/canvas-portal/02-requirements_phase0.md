@@ -10,7 +10,7 @@ concept; the planning done in this repo comes before it, from the Team
 Lead's rescoping of Phase 0 in the
 [roadmap](/docs/canvas-portal/01-roadmap.md#3-phases-in-detail).
 
-The requirements are split by phase (Team Lead, 2026-11-02). Phase 1 and
+The requirements are split by phase. Phase 1 and
 later, and the parts every phase shares (goals, users, assumptions,
 constraints, and open questions), are in the
 [Phase 1 requirements](/docs/canvas-portal/02-requirements_phase1.md).

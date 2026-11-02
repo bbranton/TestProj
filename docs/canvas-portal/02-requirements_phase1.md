@@ -9,7 +9,7 @@ requirements*, `FR`) and how well it must do it (*non-functional
 requirements*, `NFR`). Each requirement has an ID that the design and test
 documents refer back to.
 
-The requirements are split by phase (Team Lead, 2026-11-02). This file
+The requirements are split by phase. This file
 holds Phase 1 and the phases after it, and the parts every phase shares:
 goals, users, the assumptions and constraints every phase shares (A-1 to A-3, C-1 to C-4), and open questions. Phase 0's
 local proof of concept is in the

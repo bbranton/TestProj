@@ -56,7 +56,7 @@ their own computer as the README says, then opens it in their browser at
 `localhost`. There is no sign-in, no connect screen, and no header bar:
 the Canvas address and token come from the `.env` file, set up by hand.
 The page is plain HTML and CSS: one column of simple cards, like Phase
-1's Backlog list, with only the fields below (Team Lead, 2026-11-02).
+1's Backlog list, with only the fields below.
 
 ```text
 +--------------------------------------------------------------------+

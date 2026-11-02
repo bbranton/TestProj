@@ -58,8 +58,8 @@ flowchart LR
   The PR description says what changed and why.
 - A pull request that changes anything a user sees must show screenshots
   of the changed screens in the PR description (before and after when an
-  existing screen changes), following the
-  [screenshot steps](/team/Development/personas/ui-ux-designer.md#screenshots-in-ui-prs).
+  existing screen changes), with no Canvas token, session, or real
+  student's data in any shot.
   The [test procedures](/docs/canvas-portal/05-test-plan.md) make this a
   review step.
 - The project owner is called "Team Lead" in the repo; no personal names.

@@ -27,7 +27,7 @@
   code comments, and commit messages. Refer to them as "Team Lead".
 - Name a repository when you mean a specific one: the "TestProj repo"
   or the "CanSync repo", as the glossary's
-  [team process terms](/docs/canvas-portal/glossary.md#team-process)
+  [people and repository terms](/docs/canvas-portal/glossary.md#people-and-repositories)
   define them. Never write "this repo", "the app repository", or "the
   new repo" for either.
 

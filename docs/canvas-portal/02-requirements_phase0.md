@@ -88,7 +88,7 @@ requirement is required for Phase 0 to be done.
 | NFR-13 | The portal calls only Canvas read (`GET`) endpoints. | 0 |
 | NFR-14 | Out of respect for student privacy rules such as FERPA (US student records law), the portal loads no analytics, advertising, or other third-party scripts. | 0 |
 | NFR-15 | The Canvas token is sent only to the student's Canvas host, over HTTPS with the server's certificate checked. The portal refuses a Canvas address that doesn't use HTTPS, and follows no redirect or paging link whose scheme, host, or port differs from the Canvas address's. A refused address or link sends no request with the token, and the page says why, as FR-17 does. | 0 |
-| NFR-40 | Frontend and backend each have automated tests that run in CI on every pull request. | 0 |
+| NFR-40 | Frontend and backend each have automated tests that run in CI on every pull request. For the proof of concept, the page holds no logic of its own: the backend sorts the list, words the messages, and formats the dates, and its tests cover them; the page only shows what the backend sends, and is checked by hand. | 0 |
 | NFR-41 | The backend can run against recorded sample Canvas data, so tests don't need a real account. | 0 |
 | NFR-42 | A new developer can run the app locally by following the README in under 15 minutes. | 0 |
 

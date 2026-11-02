@@ -60,7 +60,7 @@ there until Phase 4 publishes the app.
 
 ## 3. Phases in detail
 
-### Phase 0: App repository and local proof of concept
+### Phase 0: Setup and local proof of concept
 
 **Status:** not started. It starts when the Team Lead says the plan is
 ready.

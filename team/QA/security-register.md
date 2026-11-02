@@ -8,8 +8,16 @@ persona notes, so every change has history and review
 
 Update this when hosting, the repo, or where real tokens live changes.
 
-- The repo is public. Workflow artifacts and logs can be downloaded by any
-  GitHub user.
+- The TestProj repo is public. Workflow artifacts and logs can be
+  downloaded by any GitHub user.
+- The CanSync repo, set up in Phase 0, is private (D-17). On a private
+  repository, GitHub enforces branch rules and required checks only on a
+  paid plan. Actions environments and their branch limits need Pro,
+  Team, or Enterprise, and an environment's required reviewers need
+  Enterprise. Push protection needs paid GitHub Secret Protection.
+  Whatever the CanSync repo's plan doesn't give is a rule the team
+  follows, not a control GitHub enforces, so #20 and #26 below say what
+  replaces it.
 - From Phase 0's local proof of concept, a real Canvas token sits in a
   git-ignored `.env` on the Team Lead's computer, used by a server on
   `127.0.0.1` only. Keep that `.env` outside any folder a Claude session
@@ -42,10 +50,10 @@ it gets a row here too, linking its separate fix PR, issue, or `B-` item.
 | Item | Potential data breach | Owner | Gate | Status |
 |------|-----------------------|-------|------|--------|
 | #25 Session cookie and writes on Koyeb's shared domain | Yes | Architect | Phase 1 step 6 | Open |
-| #26 Deploy secrets and backups private on a public repo | Yes | DevOps engineer | Phase 1 step 6 | Open |
+| #26 Deploy secrets and backups private. On any plan short of Enterprise, the Team Lead decides the [Phase 1](/docs/canvas-portal/01-roadmap.md#phase-1-read-only-viewer-minimum-viable-product) deploy-secrets fallback with the cybersecurity engineer before step 6, such as the host deploying from the CanSync repo with automatic deploys off, the Team Lead starting each deploy, the host's GitHub app able only to read the CanSync repo, and backups made by the host or Neon | Yes | DevOps engineer | Phase 1 step 6 | Open |
 | #17 Incident plan | No | Cybersecurity engineer | Phase 1 step 6 | Open |
 | #19 Key and session secret storage and rotation | No | DevOps engineer | Phase 1 step 6 | Open |
-| #20 Secret scanning and dependency alerts | No | DevOps engineer | Phase 1 step 6 | Open |
+| #20 Secret scanning with push protection, and dependency alerts. If the CanSync repo's plan has no push protection, a CI secret scan runs from Phase 0 (D-17), and before step 6 the Team Lead either pays for push protection or accepts the CI scan in its place | No | DevOps engineer | Phase 1 step 6 | Open |
 | #46 Team Lead decisions on token storage and sending | No | Architect (cybersecurity engineer briefs) | Phase 1 step 2 | Open |
 | #18 Output escaping and a Content-Security-Policy | No | Architect | Proposed: Phase 1 step 6 | Open |
 | #22 Tests for reused session cookies and HTML in Canvas text | No | Test engineer | Proposed: Phase 1 exit | Open |

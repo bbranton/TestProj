@@ -106,6 +106,7 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 | Term | Meaning |
 |------|---------|
 | Team Lead | The project owner, who has the final say on decisions and on releases to `main`, as [Team personas](/CLAUDE.md#team-personas) and [Branches](/CLAUDE.md#branches) say. |
+| Phase Lead | The person who takes over from the Team Lead to run Phase 0: setting up the app repository and building the local proof of concept (TD-25 in the [team decision register](/team/decision-register.md)). |
 | Persona | A role an agent takes on, such as the UI/UX designer or the cybersecurity engineer, with its own area and review checklist. The list is in the [team README](/team/README.md). |
 | Owner | The persona that writes a piece of work and answers its findings. |
 | Reviewers | The personas that review a PR, picked as [Who reviews what](/team/review-protocol.md#who-reviews-what) says. |
@@ -158,3 +159,4 @@ These come up often in the docs. Each has a Qt comparison where one helps.
 | 2026-11-02 | Added .env file to the screen words, for the Phase 0 proof of concept's messages on S-0 (PR #163, F-4). |
 | 2026-11-02 | Links to the UI specification point at its Phase 0 and Phase 1 files, from the Team Lead's split of the UI specification by phase (PR #163). |
 | 2026-11-02 | Phase 0 in the *Phase* row is now *the app repository and a local proof of concept*, and the planning in this repo comes before it, from the Team Lead's reorder of Phase 0 in the roadmap (#169). |
+| 2026-11-02 | Added Phase Lead to the team process terms, from the Team Lead. |

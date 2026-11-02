@@ -81,8 +81,11 @@ student's own computer and shows everything due.
   the Team Lead has a student token and a parent (observer) token for testing.
 
 **App repository (first, before any proof-of-concept code).** The app's
-code isn't kept in this repo (Team Lead, 2026-11-02). Before development
-starts:
+code isn't kept in this repo (Team Lead, 2026-11-02). Once the project
+is ready to start development, the docs are copied to the new
+repository, and from then on all work on the app, docs included,
+continues there instead of here (Team Lead, 2026-11-02). Before
+development starts:
 
 1. **Ask the Team Lead for the repository details, then lead the Team
    Lead through setting it up.** Sessions can't create repositories, so
@@ -91,8 +94,6 @@ starts:
    - The name, and which GitHub account owns it.
    - Private or public. A private repository shares the account's free
      GitHub Actions minutes with this one.
-   - Whether the Canvas portal docs move to the new repository or are
-     copied, with this repo staying their source.
    - Which docs go: the product docs in `docs/canvas-portal/`, and
      whether any team files, such as the coding standards, go too.
    - Whether the `canvas-portal/` skeleton moves as it is or Phase 0
@@ -116,8 +117,9 @@ starts:
    `/team/...` and `/CLAUDE.md`, become full GitHub links to this repo,
    and the new repository gets its own docs check. Once CI has run there,
    the Team Lead adds its branch rules and required checks.
-3. This repo then removes what moved and fixes every link to it, in one
-   pull request here. First,
+3. This repo then removes the app's code and CI, marks its copy of the
+   docs as moved, and fixes every link to what moved, in one pull request
+   here. First,
    the Team Lead takes the `backend` and `frontend` checks off this
    repo's `develop` ruleset, keeping `docs`, or the removal can't merge;
    the DevOps engineer writes the steps for it then.
@@ -592,7 +594,7 @@ goes to the Team Lead right away, where it came up.
 | ~~D-14~~ | ~~What the Phase 0 proof of concept is built with~~ | **Python standard library and plain HTML, CSS, and JavaScript** (no third-party runtime dependencies and no frontend build step), **FastAPI with one plain HTML page** (the two backend dependencies the skeleton already has), **the existing skeleton, FastAPI and React with Vite** (D-1 and D-6 as they are), or leave it to the architect's recommendation in the design pull request | **Decided** (Team Lead, 2026-11-02): Python's standard library and plain HTML, CSS, and JavaScript, with no third-party runtime dependencies and no build step. Its tests use `unittest`, from the test engineer's recommendation, which the Team Lead left to the team (2026-11-02). CI-only tools, such as Ruff for linting, are allowed (Team Lead, 2026-11-02). Phase 1 moves it onto FastAPI and React, so D-1 and D-6 are unchanged from Phase 1 on. The project manager recommended it, as the simplest code with the fewest dependencies. | Done |
 | D-15 | Which requirements the Phase 0 proof of concept builds, and how NFR-40 applies to it | Approve the set, with the page tested in CI by a CI-only tool; **approve the set, with Phase 0 testing only the backend**; or use only the existing IDs | **Decided by the team, for the Team Lead's review** (2026-11-02): the set in the [Phase 0 requirements](/docs/canvas-portal/02-requirements_phase0.md), with only the backend tested in Phase 0 and a page that holds no logic. The requirements engineer first recommended a CI-only tool for the page; the project manager and the test engineer recommended backend-only tests. The Team Lead asked for the work to go into `develop` and reviews it on the `develop` → `main` release PR, where she can change it. Carried out in [#162](https://github.com/bbranton/TestProj/pull/162). | Team Lead's review on the release PR |
 | ~~D-16~~ | ~~How the Canvas portal docs are organized as phases are added~~ | One file per phase, `<doc>_phaseN.md`, for every doc but the roadmap | **Decided** (Team Lead, 2026-11-02, in a project thread): every doc but the roadmap is split into `<doc>_phaseN.md` files, and a later phase gets its file when its work starts. Who fixes the links is a team decision, [TD-24](/team/decision-register.md). Carried out in [#162](https://github.com/bbranton/TestProj/pull/162) (requirements) and [#163](https://github.com/bbranton/TestProj/pull/163) (UI specification). | Done |
-| D-17 | The app repository's details: name, visibility, whether the docs move or are copied, what goes, branches, security settings, access, and license | Asked as Phase 0's first step, each with the project manager's recommendation | **Decided in part** (Team Lead, 2026-11-02): the code goes in a new repository, not this one, set up at the start of Phase 0 with the necessary docs copied over. The details are asked for and answered at that step, not before. | Phase 0's first step |
+| D-17 | The app repository's details: name, visibility, what goes, branches, security settings, access, and license | Asked as Phase 0's first step, each with the project manager's recommendation | **Decided in part** (Team Lead, 2026-11-02): the code goes in a new repository, not this one, set up at the start of Phase 0. Once the project is ready to start development, the docs are copied there, and all work continues there instead of here. The other details are asked for and answered at that step, not before. | Phase 0's first step |
 
 ## 6. Risks
 

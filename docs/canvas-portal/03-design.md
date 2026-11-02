@@ -4,7 +4,9 @@
 
 This document describes how the portal is built: its parts, the data it
 stores, how those parts talk to each other, and how each part meets the
-[requirements](/docs/canvas-portal/02-requirements.md). The frontend framework (decision
+requirements ([Phase 0](/docs/canvas-portal/02-requirements_phase0.md),
+and [Phase 1 and later](/docs/canvas-portal/02-requirements_phase1.md)).
+The frontend framework (decision
 D-1) was chosen after the design: React.
 
 **Scope:** this design covers Phases 0 to 4 only. Phase 5 ideas in the

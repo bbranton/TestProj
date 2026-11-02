@@ -24,7 +24,7 @@ requirements index wins.
 
 | Phase | Screens and workflows |
 |-------|-----------------------|
-| 0 | S-0 only: the local proof of concept's one page, on `localhost`. No header, sign-in, board, or other screen |
+| 0 | S-0 only: the local proof of concept's one page, on `localhost`. No header, sign-in, board, Refresh button, or other screen |
 | 1 | Header, S-1, S-2, S-4 (read only), S-6 (disconnect and sign out), S-8 with its option that shows cards removed from Canvas, S-10; W-1, W-2, and W-5's complete-fetch check, new cards in Backlog, and showing removed cards |
 | 2 | On S-4: dragging cards, the To do, In progress, and Done lists side by side, and minimizing lists; W-3 |
 | 3 | W-5's archiving and returning cards (FR-45) |
@@ -126,7 +126,6 @@ planned.
 
 | ID | Label | Screen | Shown as |
 |----|-------|--------|----------|
-| `REFRESH` | Refresh from Canvas | S-0 (Phase 0) | [Refresh] |
 | `OPEN_IN_CANVAS` | *Assignment name*, opens in Canvas | S-0 (Phase 0) | The assignment name, as a link |
 | `SIGN_IN_GOOGLE` | Sign in with Google | S-1 | [G Sign in with Google] |
 | `SHOW_TOKEN` | Show token / Hide token | S-2 | [show] |
@@ -208,10 +207,10 @@ almost no styling (Team Lead, 2026-11-02).
 ```text
 +--------------------------------------------------------------------+
 |  Canvas Portal                                                     |
-|  Assignments for Sam Student                          [Refresh]    |
+|  Assignments for Sam Student                                       |
 |                                                                    |
 |  [!] Couldn't load the assignments for ART 105. The other courses  |
-|      are shown. Select Refresh to try again.                       |
+|      are shown. Reload the page to try again.                      |
 |                                                                    |
 |  Due                Course     Assignment (opens in Canvas)        |
 |  -----------------  ---------  ----------------------------------  |
@@ -224,10 +223,10 @@ almost no styling (Team Lead, 2026-11-02).
   "Canvas Portal" is the page's heading. "Assignments for *Name*" uses
   the student's Canvas name (FR-2), so a token for the wrong account is
   easy to spot.
-  [Refresh] (`REFRESH`, labeled "Refresh from Canvas") reloads the page,
-  which fetches everything from Canvas again. Nothing is saved between
-  loads, so there is no "Synced" time, no Refresh progress (S-10), and no
-  last copy to fall back on.
+  The page fetches everything from Canvas each time it loads. There is
+  no Refresh button: to fetch again, the student reloads the page with
+  the browser's own reload button. Refresh, the "Synced" time, Refresh
+  progress (S-10), and a saved copy to fall back on arrive in Phase 1.
   The table is a real HTML table with column headings, so screen readers
   read each row's due date, course, and assignment together. It has one
   row per assignment, from every active course. Rows are sorted by due
@@ -256,21 +255,21 @@ address, Canvas's own error text, or an error code.
 
 | When | The page shows |
 |------|----------------|
-| The page is fetching from Canvas | "Loading your assignments from Canvas..." in place of the table. [Refresh] stays. |
+| The page is fetching from Canvas | "Loading your assignments from Canvas..." in place of the table. |
 | `.env` has no Canvas address or no token | "The portal isn't set up yet. Add your Canvas address and token to the .env file, as the README says, then restart the portal." No table. |
 | Canvas rejects the token (FR-6) | "Canvas didn't accept the token in your .env file. Create a new token in Canvas, put it in .env, then restart the portal, as the README says." No table. |
-| The Canvas address can't be reached, or doesn't start with `https://` | "Couldn't reach the Canvas address in your .env file. Check that it starts with https:// and that you're online, then select Refresh." No table. |
-| Canvas doesn't answer in time | "Canvas didn't answer in time. Select Refresh to try again." No table. |
-| One or more courses' assignments couldn't be fetched, but others could | "Couldn't load the assignments for ART 105. The other courses are shown. Select Refresh to try again." With more than one, it names each: "Couldn't load the assignments for 2 courses: ART 105, SPAN 201. ..." The table shows every other course's assignments. |
+| The Canvas address can't be reached, or doesn't start with `https://` | "Couldn't reach the Canvas address in your .env file. Check that it starts with https:// and that you're online, then reload the page." No table. |
+| Canvas doesn't answer in time | "Canvas didn't answer in time. Reload the page to try again." No table. |
+| One or more courses' assignments couldn't be fetched, but others could | "Couldn't load the assignments for ART 105. The other courses are shown. Reload the page to try again." With more than one, it names each: "Couldn't load the assignments for 2 courses: ART 105, SPAN 201. ..." The table shows every other course's assignments. |
 | Canvas has no active courses for this account | "Canvas shows no active courses for this account." No table. |
 | Active courses, but none has assignments | "No assignments in your courses yet." No table. |
-| The portal itself fails, not Canvas | "Something went wrong in the portal, so your assignments didn't load. Select Refresh to try again." No table. |
+| The portal itself fails, not Canvas | "Something went wrong in the portal, so your assignments didn't load. Reload the page to try again." No table. |
 
 How long "in time" is, and which checks the portal makes before calling
 Canvas, are set in the [design](/docs/canvas-portal/03-design.md#design-by-phase).
 The setup and token messages say to restart the portal because `.env` is
 read when it starts; if the design reads it on every load instead, they
-say "then select Refresh".
+say "then reload the page".
 
 ### S-1 Sign in
 
@@ -1012,7 +1011,7 @@ flowchart TD
 
 | Date | Change |
 |------|--------|
-| 2026-11-02 | Added S-0, the Phase 0 local proof of concept's one page: a plain HTML table of every assignment sorted by due date, with the student's name, a [Refresh] button that reloads the page, links that open in Canvas, and a message for each error, including one course failing and Canvas not answering in time. *UI by phase*, the screen map, and the button IDs updated. From the Team Lead's Phase 0 rescope (roadmap PR #158, D-14) and the Team Lead's choice of a plain table. |
+| 2026-11-02 | Added S-0, the Phase 0 local proof of concept's one page: a plain HTML table of every assignment sorted by due date, with the student's name, links that open in Canvas, and a message for each error, including one course failing and Canvas not answering in time. It fetches from Canvas on each page load, with no Refresh button (Phase 1). *UI by phase*, the screen map, and the button IDs updated. From the Team Lead's Phase 0 rescope (roadmap PR #158, D-14) and the Team Lead's choice of a plain table. |
 | 2026-10-25 | First draft. |
 | 2026-10-25 | Trello goal (G-3): board is home; S-3 becomes Table view; S-4 and S-5 redrawn as Trello board and card back; added S-7 quick edit, S-8 filter, S-9 board menu; Trello-style phone layout; W-7 and W-8 added. |
 | 2026-10-25 | Added the course show/hide button row under the header on S-3, S-4, and the phone layout (FR-78), from the Team Lead's review. |

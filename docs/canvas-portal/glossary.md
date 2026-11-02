@@ -1,30 +1,30 @@
 # Glossary
 
-**Status:** Draft · **Owner:** Requirements engineer · **Last updated:** 2026-10-27
+**Status:** Draft · **Owner:** Requirements engineer · **Last updated:** 2026-11-02
 
 The words the team uses for the portal, the docs, and the way we work, each
 explained once. Other docs link here instead of defining a term again.
 
 A term marked with a later phase, such as *(Phase 5)*, is described so the
 docs read clearly. It is not in scope until its phase starts, as the
-[requirements by phase](/docs/canvas-portal/02-requirements.md#requirements-by-phase) say.
+[requirements by phase](/docs/canvas-portal/02-requirements_phase1.md#requirements-by-phase) say.
 
 ## Keeping it up to date
 
 - **The requirements engineer owns what each term means.** A meaning changes in the
   same PR as the requirement it comes from.
 - **The UI/UX designer keeps the screen words in step.** The exact words on screen
-  live in the [UI specification](/docs/canvas-portal/04-ui-specification.md). A PR that changes
+  live in the UI specification, in its
+  [Phase 0](/docs/canvas-portal/04-ui-specification_phase0.md) and
+  [Phase 1](/docs/canvas-portal/04-ui-specification_phase1.md) files. A PR that changes
   a screen word changes its entry here too.
-- **The project manager keeps the team process terms in step** with the
-  [review protocol](/team/review-protocol.md) and the
-  [team README](/team/README.md).
+- **The project manager keeps the people and repository terms in step**
+  with the roadmap.
 - **Every persona checks the glossary** before naming something new in a
   doc, and adds the term here in the same PR when it's missing.
 - **When a doc and the glossary disagree,** the requirements decide what a
   term means and the UI specification decides how it's written on screen.
-  The reviewer who spots it logs an `X-` finding, as the
-  [review protocol](/team/review-protocol.md#findings-table) says.
+  The reviewer who spots it raises it so both are fixed.
 
 ## The board
 
@@ -34,9 +34,9 @@ The portal follows [Trello](https://trello.com)'s words (goal G-3): a
 
 | Term | Meaning | Defined in |
 |------|---------|------------|
-| Board | The home screen, titled "My assignments": four lists of cards, one card per Canvas assignment. In Phase 1 it's read only. Not the [team board](#team-process). | FR-60, S-4 |
+| Board | The home screen, titled "My assignments": four lists of cards, one card per Canvas assignment. In Phase 1 it's read only. | FR-60, S-4 |
 | List | One of the board's four columns, always in this order: Backlog, To do, In progress, Done. Older requirements say "column"; it means the same. | FR-31 |
-| Backlog | The first list. New Canvas assignments land here until the student moves them. In Phase 1 every card is in Backlog. Not the [roadmap backlog](#team-process). | FR-31, FR-34 |
+| Backlog | The first list. New Canvas assignments land here until the student moves them. In Phase 1 every card is in Backlog. Not the [roadmap backlog](#people-and-repositories). | FR-31, FR-34 |
 | To do, In progress, Done | The other three lists. Cards only move into them when the student drags them *(Phase 2)*. | FR-31, FR-32 |
 | Card | One Canvas assignment on the board. Until Phase 5, selecting it opens the assignment in Canvas, in a new tab. | FR-26, FR-65 |
 | Card front | What a card shows on the board: the label strip, the title, the due badge, the points, the submission types, and the [card status](#card-status). | FR-65 |
@@ -74,46 +74,41 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 | Late, Excused | Tags shown when Canvas marks the submission late or the student excused. They can appear with Submitted and Graded. | FR-23 |
 | Due badge | The due date and time, in the device's time zone. Red when Missing, otherwise green with ✓ when Submitted or Graded, otherwise plain. | FR-22, FR-65 |
 | Points | The points the assignment is worth, such as "20 pts". | FR-22 |
-| Submission type | How the student hands the work in, such as a file upload or on paper, from Canvas's `submission_types`. How each type is written on a card is in the [UI specification's S-4](/docs/canvas-portal/04-ui-specification.md#s-4-board-home-screen). | FR-23 |
+| Submission type | How the student hands the work in, such as a file upload or on paper, from Canvas's `submission_types`. How each type is written on a card is in the [UI specification's S-4](/docs/canvas-portal/04-ui-specification_phase1.md#s-4-board-home-screen). | FR-23 |
 
 ## Screen words
 
 | Term | Meaning | Defined in |
 |------|---------|------------|
-| Screen ID | An ID for each screen, such as `S-4` for the board. | [UI specification](/docs/canvas-portal/04-ui-specification.md) |
-| Button ID | A name for a button in capitals with underscores, such as `REFRESH`, used in logs, docs, code, and tests. The full list is in the [UI specification's conventions](/docs/canvas-portal/04-ui-specification.md#conventions-on-every-screen). | UI specification |
+| Screen ID | An ID for each screen, such as `S-4` for the board. Each phase's UI specification file has its own screens, such as `S-0` in [Phase 0](/docs/canvas-portal/04-ui-specification_phase0.md). | [UI specification](/docs/canvas-portal/04-ui-specification_phase1.md) |
+| Button ID | A name for a button in capitals with underscores, such as `REFRESH`, used in logs, docs, code, and tests. Each phase's UI specification file lists its own: [Phase 0](/docs/canvas-portal/04-ui-specification_phase0.md#1-conventions) and [Phase 1](/docs/canvas-portal/04-ui-specification_phase1.md#conventions-on-every-screen). | UI specification |
 | Label | A button's name in plain words, such as "Refresh from Canvas". Screen readers announce it, and icon buttons have no other name. | UI specification |
-| General error message | What a screen shows when the portal itself fails, not Canvas or the student. It never shows an error code. Its words on each screen are in the UI specification. | [UI specification](/docs/canvas-portal/04-ui-specification.md#general-error-message) |
+| General error message | What a screen shows when the portal itself fails, not Canvas or the student. It never shows an error code. Its words on each screen are in the UI specification. | [UI specification](/docs/canvas-portal/04-ui-specification_phase1.md#general-error-message) |
+| .env file | The file on the student's own computer that holds the Canvas address and token for the Phase 0 [proof of concept](#document-terms). Git ignores it, so it never reaches the repo. The proof of concept's messages name it as "your .env file". | [S-0](/docs/canvas-portal/04-ui-specification_phase0.md#s-0-assignment-list-phase-0) |
 | Dialog (modal) | A box that opens over the page and must be closed before using the page behind it, like a QML `Dialog`. The card back *(Phase 5)* is one. | S-5 |
 
 ## Document terms
 
 | Term | Meaning |
 |------|---------|
-| Phase | A stage of the [roadmap](/docs/canvas-portal/01-roadmap.md), from Phase 0 (decisions and setup) to Phase 4 (polish and deploy). Phase 5 holds later ideas that aren't committed. The current phase is set in [CLAUDE.md](/CLAUDE.md). |
+| Phase | A stage of the [roadmap](/docs/canvas-portal/01-roadmap.md), from Phase 0 (the CanSync repo and a local proof of concept) to Phase 4 (polish and deploy). Phase 5 holds later ideas that aren't committed. The current phase is set in `CLAUDE.md`. |
+| Proof of concept | The last step of Phase 0: a first release that runs only on the student's own computer (`localhost`), with the least code, to prove the portal can read a student's Canvas data and show it in one list. Phase 1 replaces its code. What it covers is in the [Phase 0 requirements](/docs/canvas-portal/02-requirements_phase0.md). |
 | Future feature | A Phase 5 idea. The docs may sketch it, but nobody builds it until the Team Lead plans it into a phase. |
-| Requirement ID | `FR-` for a functional requirement (what the app does) and `NFR-` for a non-functional one (how well it does it), in the [requirements](/docs/canvas-portal/02-requirements.md). |
+| Requirement ID | `FR-` for a functional requirement (what the app does) and `NFR-` for a non-functional one (how well it does it), in the requirements, which are split by phase: [Phase 0](/docs/canvas-portal/02-requirements_phase0.md) and [Phase 1 and later](/docs/canvas-portal/02-requirements_phase1.md). An ID means the same requirement in every file. |
 | Must, Should, Could | A requirement's priority: required for its phase, expected but not blocking, or nice to have. |
-| Other IDs | `G-` a goal, `D-` a product decision, and `B-` a backlog item (roadmap); `A-` an assumption, `C-` a constraint, and `Q-` an open question (requirements); `S-` a screen (UI specification); `TP-` a test procedure (test plan); `TD-` a team decision ([team decision register](/team/decision-register.md)). |
+| Other IDs | `G-` a goal, `D-` a product decision, and `B-` a backlog item (roadmap); `A-` an assumption, `C-` a constraint, and `Q-` an open question (requirements); `S-` a screen (UI specification); and `TP-` a test procedure (test plan). |
 | Traceability | The chain from each requirement to the design part that builds it and the test that checks it, by requirement ID. |
 
-## Team process
+## People and repositories
 
 | Term | Meaning |
 |------|---------|
-| Team Lead | The project owner, who has the final say on decisions and on releases to `main`, as [Team personas](/CLAUDE.md#team-personas) and [Branches](/CLAUDE.md#branches) say. |
-| Persona | A role an agent takes on, such as the UI/UX designer or the cybersecurity engineer, with its own area and review checklist. The list is in the [team README](/team/README.md). |
-| Owner | The persona that writes a piece of work and answers its findings. |
-| Reviewers | The personas that review a PR, picked as [Who reviews what](/team/review-protocol.md#who-reviews-what) says. |
-| Decision request | A question for the Team Lead, raised as [Decisions are separate from merging](/team/review-protocol.md#decisions-are-separate-from-merging) says. |
-| Cross-review | A review where each reviewer runs in its own fresh thread, as [One thread per reviewer](/team/review-protocol.md#one-thread-per-reviewer) says. |
-| Ripple check | A search, before review, for every file that states a process rule a PR changes, run as the [review protocol](/team/review-protocol.md#ripple-check-for-process-rules) says. Not the project manager's ripple list, which follows a phase or scope decision through the docs. |
-| Finding | One problem a reviewer raises, with an ID such as `F-1`, or `X-1` when the fix is in another doc, logged as the [findings table](/team/review-protocol.md#findings-table) says. |
-| Verdict | A reviewer's sign-off: Recommend, Recommend with notes, or Changes needed, as [How a review runs](/team/review-protocol.md#how-a-review-runs) says. |
-| Potential data breach | A finding that could let anyone other than the student see that student's Canvas token, session, or Canvas data, or let anyone act as the student. It is marked and handled as [Potential data breach](/team/QA/personas/cybersecurity-engineer.md#potential-data-breach) says. |
-| Retro | A team retrospective: a look back, called by the Team Lead, at how well the personas work together, run as the [`retro` skill](/.claude/skills/retro/SKILL.md) says. |
-| Team board | The shared file where threads claim work and leave handoff notes, as the [team workspace](/team/workspace.md#the-board) says. Not the portal's board. |
-| Roadmap backlog | The list in the [roadmap](/docs/canvas-portal/01-roadmap.md#9-backlog) of review findings the Team Lead parked for later, with `B-` IDs, as [Follow-up work](/team/review-protocol.md#follow-up-work) says. Not the Backlog list. |
+| Team Lead | The project owner, who has the final say on decisions, as the roadmap's [Roles](/docs/canvas-portal/01-roadmap.md#8-roles) says. |
+| Phase Lead | The person who takes over from the Team Lead to run Phase 0: setting up the CanSync repo and building the local proof of concept. |
+| TestProj repo | The repository where the Canvas portal was planned, and where the team's process lives. Phase 0 copies its project docs to the CanSync repo. |
+| CanSync repo | The Canvas portal app's own private repository, set up in Phase 0 (D-17 in the [roadmap](/docs/canvas-portal/01-roadmap.md#5-product-decisions)), where work on the app continues, as [Phase 0](/docs/canvas-portal/01-roadmap.md#phase-0-setup-and-local-proof-of-concept) says. |
+| Potential data breach | A problem that could let anyone other than the student see that student's Canvas token, session, or Canvas data, or let anyone act as the student. It's critical and must be fixed: one a pull request adds is fixed before that pull request merges, and any other is fixed ahead of all other work. It never waits on the roadmap backlog, and only the Team Lead can delay its fix. If a real token or student data may already have leaked, the Team Lead is told at once. |
+| Roadmap backlog | The list in the [roadmap](/docs/canvas-portal/01-roadmap.md#9-backlog) of review findings the Team Lead parked for later, with `B-` IDs. Not the Backlog list. |
 
 ## Web terms
 
@@ -133,6 +128,7 @@ These come up often in the docs. Each has a Qt comparison where one helps.
 | Database | Structured storage on the server, shared across the user's devices. SQLite (one file) or Postgres (a database server). |
 | Kanban | A board of columns (such as To do, Doing, Done) with cards you drag between them. The portal's [board](#the-board) is one. |
 | Component | A reusable piece of UI, like a QML component file. React and Svelte are both built around components. |
+| Localhost | The computer you're using, reached at the address `localhost` or `127.0.0.1`. A server that listens only there can't be reached from other computers. The Phase 0 [proof of concept](#document-terms) runs this way. |
 | Deploy / hosting | Putting the app on a server on the internet so others can open it. |
 | CI | "Continuous integration": GitHub Actions running builds and tests on every push. |
 
@@ -148,3 +144,11 @@ These come up often in the docs. Each has a Qt comparison where one helps.
 | 2026-10-27 | Added General error message to the screen words, for the design's `invalid_request` and `internal_error` codes (PR #141, X-1). |
 | 2026-10-27 | General error message says what the term is and links the UI specification for its words, instead of restating them (PR #141, F-11). |
 | 2026-10-27 | Other IDs adds `TD-`, a team decision in the team decision register, and `D-` is now a product decision, from the Team Lead's split of the decision registers (TD-22). |
+| 2026-11-02 | Added Proof of concept to the document terms and Localhost to the web terms, and Phase 0 is now *setup and a local proof of concept*, from the Team Lead's rescoping of Phase 0 (#158). |
+| 2026-11-02 | Requirement ID and the links to the requirements follow the Team Lead's split of the requirements by phase. |
+| 2026-11-02 | Added .env file to the screen words, for the Phase 0 proof of concept's messages on S-0 (PR #163, F-4). |
+| 2026-11-02 | Links to the UI specification point at its Phase 0 and Phase 1 files, from the Team Lead's split of the UI specification by phase (PR #163). |
+| 2026-11-02 | Phase 0 in the *Phase* row is now *the app repository and a local proof of concept*, and the planning in the TestProj repo comes before it, from the Team Lead's reorder of Phase 0 in the roadmap (#169). |
+| 2026-11-02 | Added Phase Lead to the team process terms, from the Team Lead. |
+| 2026-11-02 | Added TestProj repo and CanSync repo to the team process terms, and the docs name each repository instead of saying "this repo" or "the app repository", from the Team Lead. |
+| 2026-11-02 | The project docs no longer link to the TestProj repo's team files, from the Team Lead: *Team process* becomes *People and repositories*, with the team-only terms (persona, owner, reviewers, decision request, cross-review, ripple check, finding, verdict, retro, team board) moved to the TestProj repo's `team/glossary.md`, and `TD-` dropped from *Other IDs*. |

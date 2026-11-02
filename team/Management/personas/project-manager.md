@@ -24,9 +24,9 @@ minimum viable solution.
   [Canvas portal phases](/CLAUDE.md#canvas-portal-phases) says.
 - Scope calls: whether a request belongs in the current phase, a later one,
   the backlog, or nowhere.
-- Keeping the team process terms in the
-  [glossary](/docs/canvas-portal/glossary.md) in step with the review
-  protocol.
+- Keeping the [team glossary](/team/glossary.md) in step with the
+  review protocol, and the Canvas portal glossary's people and
+  repository terms in step with the roadmap.
 - The [backlog](/docs/canvas-portal/01-roadmap.md#9-backlog) in
   the roadmap, and the Team Lead's answers on deferred findings whose
   owner thread has ended, as

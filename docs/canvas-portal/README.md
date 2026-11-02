@@ -6,15 +6,26 @@ Trello-style board that stays current with Canvas. Private notes on each
 assignment are planned as a future feature. The full list of
 project goals is in the [roadmap](/docs/canvas-portal/01-roadmap.md#1-project-goals).
 
+The portal is built in [phases](/docs/canvas-portal/01-roadmap.md#3-phases-in-detail).
+Phase 0 ends with a local proof of concept: it runs only on the student's
+own computer (`localhost`), reads their courses and assignments from Canvas
+with a personal access token kept in a local `.env` file, and shows
+everything due in one read-only list. It uses only Python's standard
+library and plain HTML, CSS, and JavaScript, with no third-party runtime
+dependencies, as decision D-14 in the roadmap's
+[Product decisions](/docs/canvas-portal/01-roadmap.md#5-product-decisions)
+says. Sign-in, the board, saved data, and a deploy come in Phase 1 and
+later.
+
 This folder is the project's formal documentation. Each document has a status
 and a change log at the bottom, so it can grow as the project does.
 
 | # | Document | What it answers | Status |
 |---|----------|-----------------|--------|
 | 1 | [Roadmap](/docs/canvas-portal/01-roadmap.md) | What gets built, in what order, and how we know a phase is done | Draft |
-| 2 | [Requirements](/docs/canvas-portal/02-requirements.md) | What the app must do, and how well | Draft |
+| 2 | Requirements: [Phase 0](/docs/canvas-portal/02-requirements_phase0.md), [Phase 1 and later](/docs/canvas-portal/02-requirements_phase1.md) | What the app must do, and how well | Draft |
 | 3 | [Design](/docs/canvas-portal/03-design.md) | How the parts fit together: frontend, backend, data, Canvas API | Draft |
-| 4 | [User Interface Specification](/docs/canvas-portal/04-ui-specification.md) | What each screen looks like and how a user moves through it | Draft |
+| 4 | User Interface Specification: [Phase 0](/docs/canvas-portal/04-ui-specification_phase0.md), [Phase 1](/docs/canvas-portal/04-ui-specification_phase1.md) | What each screen looks like and how a user moves through it | Draft |
 | 5 | [Test procedures](/docs/canvas-portal/05-test-plan.md) | How each requirement is checked, step by step | Draft |
 
 The [glossary](/docs/canvas-portal/glossary.md) explains the words these documents use: the
@@ -47,8 +58,8 @@ flowchart LR
   The PR description says what changed and why.
 - A pull request that changes anything a user sees must show screenshots
   of the changed screens in the PR description (before and after when an
-  existing screen changes), following the
-  [screenshot steps](/team/Development/personas/ui-ux-designer.md#screenshots-in-ui-prs).
+  existing screen changes), with no Canvas token, session, or real
+  student's data in any shot.
   The [test procedures](/docs/canvas-portal/05-test-plan.md) make this a
   review step.
 - The project owner is called "Team Lead" in the repo; no personal names.

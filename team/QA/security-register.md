@@ -8,8 +8,25 @@ persona notes, so every change has history and review
 
 Update this when hosting, the repo, or where real tokens live changes.
 
-- The repo is public. Workflow artifacts and logs can be downloaded by any
-  GitHub user.
+- The TestProj repo is public. Workflow artifacts and logs can be
+  downloaded by any GitHub user.
+- The CanSync repo, set up in Phase 0, is private (D-17). On a private
+  repository, GitHub enforces branch rules and required checks only on a
+  paid plan. Actions environments and their branch limits need Pro,
+  Team, or Enterprise, and an environment's required reviewers need
+  Enterprise. Secret scanning and push protection on a private repository
+  need GitHub Secret Protection, sold only to organizations on Team or
+  Enterprise; Dependabot alerts are free on every plan.
+  Whatever the CanSync repo's plan doesn't give is a rule the team
+  follows, not a control GitHub enforces, so #20 and #26 below say what
+  replaces it.
+- From Phase 0's local proof of concept, a real Canvas token sits in a
+  git-ignored `.env` on the Team Lead's computer, used by a server on
+  `127.0.0.1` only. Keep that `.env` outside any folder a Claude session
+  or the Remote Control pull below works in, so the token can't reach a
+  transcript, and readable only by the Team Lead's user. If the token is
+  ever committed, pasted, or shown, delete it in Canvas at once and make
+  a new one (#21); that is the incident plan until #17 is in place.
 - Phase 1 step 6 deploys to a free Koyeb app with a Neon free database,
   holding real Canvas tokens. `koyeb.app` isn't on the Public Suffix List.
 - Only the Team Lead's own accounts should connect until #16 is published
@@ -35,10 +52,10 @@ it gets a row here too, linking its separate fix PR, issue, or `B-` item.
 | Item | Potential data breach | Owner | Gate | Status |
 |------|-----------------------|-------|------|--------|
 | #25 Session cookie and writes on Koyeb's shared domain | Yes | Architect | Phase 1 step 6 | Open |
-| #26 Deploy secrets and backups private on a public repo | Yes | DevOps engineer | Phase 1 step 6 | Open |
+| #26 Deploy secrets and backups private. On any plan short of Enterprise, the Team Lead decides the [Phase 1](/docs/canvas-portal/01-roadmap.md#phase-1-read-only-viewer-minimum-viable-product) deploy-secrets fallback with the cybersecurity engineer before step 6, such as the host deploying from the CanSync repo with automatic deploys off, the Team Lead starting each deploy, the host's GitHub app installed on the CanSync repo only, with read access (if it asks for more at install, that goes in the Team Lead's decision), and backups made by the host or Neon, with a copy outside Neon, that still meet Phase 1's 30-day encrypted backup, or the Team Lead accepts less | Yes | DevOps engineer | Phase 1 step 6 | Open |
 | #17 Incident plan | No | Cybersecurity engineer | Phase 1 step 6 | Open |
 | #19 Key and session secret storage and rotation | No | DevOps engineer | Phase 1 step 6 | Open |
-| #20 Secret scanning and dependency alerts | No | DevOps engineer | Phase 1 step 6 | Open |
+| #20 Secret scanning with push protection, and dependency alerts. If the CanSync repo's plan has no push protection, a CI secret scan runs from Phase 0 (D-17), where a hit means rotating the secret (#21, #19), not only removing the commit, and before step 6 the Team Lead either pays for push protection (which may need the CanSync repo in an organization on Team) or accepts the CI scan in its place | No | DevOps engineer | Phase 1 step 6 | Open |
 | #46 Team Lead decisions on token storage and sending | No | Architect (cybersecurity engineer briefs) | Phase 1 step 2 | Open |
 | #18 Output escaping and a Content-Security-Policy | No | Architect | Proposed: Phase 1 step 6 | Open |
 | #22 Tests for reused session cookies and HTML in Canvas text | No | Test engineer | Proposed: Phase 1 exit | Open |

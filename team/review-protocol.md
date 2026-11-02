@@ -197,10 +197,10 @@ at any time.
 | If the PR touches | Reviewer | Owner of the area |
 |-------------------|----------|-------------------|
 | Phases, scope, priorities, risks, or the roadmap (`01-roadmap.md`) | Project manager | Project manager |
-| Requirement wording, IDs, or the glossary (`02-requirements.md`, `glossary.md`) | Requirements engineer | Requirements engineer |
+| Requirement wording, IDs, or the glossary (`02-requirements_phase0.md`, `02-requirements_phase1.md`, `glossary.md`) | Requirements engineer | Requirements engineer |
 | What needs testing, the test plan (`05-test-plan.md`), or test code | Test engineer | Test engineer |
 | Structure, data, APIs, new dependencies, or the design (`03-design.md`) | Architect | Architect |
-| Any page, screen, style, on-screen wording, accessibility, or the UI specification (`04-ui-specification.md`) | UI/UX designer | UI/UX designer |
+| Any page, screen, style, on-screen wording, accessibility, or the UI specification (`04-ui-specification_phase0.md`, `04-ui-specification_phase1.md`) | UI/UX designer | UI/UX designer |
 | App code | Developer | Developer |
 | CI, build, install scripts, repo settings, or the top-level `README.md` | DevOps engineer | DevOps engineer |
 | Canvas tokens, sign-in, the session cookie, secrets, student data, hosting, or deploys; the client security document (`06-security-overview.md`) or the security register (`team/QA/security-register.md`) | Cybersecurity engineer, always | Cybersecurity engineer |

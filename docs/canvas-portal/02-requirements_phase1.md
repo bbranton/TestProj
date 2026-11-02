@@ -1,6 +1,6 @@
-# Requirements
+# Requirements: Phase 1 and later
 
-**Status:** Draft · **Owner:** Team Lead · **Last updated:** 2026-10-25
+**Status:** Draft · **Owner:** Team Lead · **Last updated:** 2026-11-02
 
 ## 1. Purpose and scope
 
@@ -8,6 +8,15 @@ This document lists what the Canvas Assignments Portal must do (*functional
 requirements*, `FR`) and how well it must do it (*non-functional
 requirements*, `NFR`). Each requirement has an ID that the design and test
 documents refer back to.
+
+The requirements are split by phase. This file
+holds Phase 1 and the phases after it, and the parts every phase shares:
+goals, users, the assumptions and constraints every phase shares (A-1 to A-3, C-1 to C-4), and open questions. Phase 0's
+local proof of concept is in the
+[Phase 0 requirements](/docs/canvas-portal/02-requirements_phase0.md).
+A later phase gets its own file when its work starts. An ID means the
+same requirement in every file; a phase's file states the part that
+phase builds.
 
 **In scope:** reading a student's courses and assignments from Canvas,
 showing them, arranging them on a kanban board that looks and behaves like
@@ -37,9 +46,9 @@ requirements, which serve the developer.
 | G-2 Read only toward Canvas | C-3, FR-28, FR-44, NFR-13 |
 | G-3 Feels like Trello | FR-32, FR-36, FR-60 to FR-81, NFR-3, NFR-33 to NFR-36 |
 | G-4 Follows the student everywhere | FR-5, FR-33, FR-35, FR-50, FR-51, FR-53, NFR-22 |
-| G-5 Private and safe | FR-4, FR-54, NFR-10 to NFR-14, NFR-21 |
+| G-5 Private and safe | FR-4, FR-54, NFR-10 to NFR-15, NFR-21 |
 | G-6 Accessible in the main browsers: meets WCAG 2.2 AA and works in current Chrome, Firefox, Safari, and Edge (Phase 5 goal, from the Team Lead's Q-11 answer; the roadmap adds it in #36) | NFR-30, NFR-32, NFR-37 |
-| Developer | NFR-40 to NFR-42 |
+| Developer | NFR-41 (NFR-40 and NFR-42 are in the [Phase 0 requirements](/docs/canvas-portal/02-requirements_phase0.md)) |
 
 ### Priority and phase
 
@@ -57,15 +66,18 @@ The *Phase* column matches the [roadmap](/docs/canvas-portal/01-roadmap.md).
 
 This index lists every requirement by the phase that builds it, so it's
 clear what is in scope at any time. Build only the requirements listed for
-the current phase, which the repo's [CLAUDE.md](/CLAUDE.md) names.
+the current phase, which `CLAUDE.md` names.
 Anything listed for a later phase is out of scope, even where the design or
 the User Interface Specification already describes it. When a
 requirement's *Phase* column changes, update this index in the same PR.
 Removed requirements are not listed.
 
-**Phase 0: Decisions and setup**
-
-- Maintainability: NFR-40, NFR-42
+**Phase 0: Setup and local proof of concept** is listed in the
+[Phase 0 requirements](/docs/canvas-portal/02-requirements_phase0.md#requirements-by-phase).
+Phase 1 replaces the proof of concept's code, so the requirements below
+are built in full in Phase 1 even where Phase 0 built a part of them.
+When a requirement with a row in both files changes, check the other
+file's row in the same PR.
 
 **Phase 1: Read-only viewer**
 
@@ -75,7 +87,7 @@ Removed requirements are not listed.
 - Kanban board: FR-31 (Backlog), FR-34, FR-35, FR-38, FR-45 (keeping and showing cards of removed assignments)
 - Trello-style look and behavior: FR-60 (read only), FR-65, FR-72, FR-78
 - Accounts, sync, and data control: FR-50
-- Security and privacy: NFR-10, NFR-11, NFR-12, NFR-13, NFR-14
+- Security and privacy: NFR-10, NFR-11, NFR-12, NFR-13, NFR-14, NFR-15
 - Reliability: NFR-20
 - Usability and accessibility: NFR-30 (Chrome), NFR-34
 - Maintainability: NFR-41
@@ -260,11 +272,12 @@ Removed requirements are not listed.
 
 | ID | Requirement | Phase |
 |----|-------------|-------|
-| NFR-10 | The Canvas token is never written to logs, error messages, or the page's address (URL). | 1 |
+| NFR-10 | The Canvas token is never written to logs, error messages, the page, or the page's address (URL), and is never sent to the browser. | 1 |
 | NFR-11 | The token is stored encrypted on the server. Every deployed copy, including the Phase 1 test deploy, uses HTTPS only; plain HTTP is allowed only on a developer's own machine (`localhost`). | 1 |
-| NFR-12 | A user's Canvas connection, cached Canvas data, and board are visible only to that user. | 1 |
+| NFR-12 | A user's Canvas connection, Canvas data, and board are visible only to that user. | 1 |
 | NFR-13 | The portal calls only Canvas read (`GET`) endpoints. | 1 |
 | NFR-14 | Out of respect for student privacy rules such as FERPA (US student records law), the portal loads no analytics, advertising, or other third-party scripts, and sends course data only to the signed-in user's browser. Google sign-in (FR-50) sees only who the user is, never course data. | 1 |
+| NFR-15 | The Canvas token is sent only to the user's Canvas host, over HTTPS with the server's certificate checked. The portal refuses a Canvas address that doesn't use HTTPS, and follows no redirect or paging link whose scheme, host, or port differs from the Canvas address's. A refused address or link sends no request with the token. | 1 |
 
 ### 5.3 Reliability
 
@@ -304,11 +317,14 @@ security document must not claim full WCAG AA while this list has entries.
 
 ### 5.5 Maintainability
 
+NFR-40 and NFR-42 were first met by the hello world app in the planning
+before Phase 0, are met again in the CanSync repo in Phase 0, and still
+hold; they are in the
+[Phase 0 requirements](/docs/canvas-portal/02-requirements_phase0.md#4-non-functional-requirements).
+
 | ID | Requirement | Phase |
 |----|-------------|-------|
-| NFR-40 | Frontend and backend each have automated tests that run in CI on every pull request. | 0 |
 | NFR-41 | The backend can run against recorded sample Canvas data, so tests don't need a real account. | 1 |
-| NFR-42 | A new developer can run the app locally by following the README in under 15 minutes. | 0 |
 
 ## 6. Open questions
 
@@ -393,3 +409,8 @@ security document must not claim full WCAG AA while this list has entries.
 | 2026-10-26 | Team Lead: the course buttons (FR-78) are back in Phase 1, with the Filter button on their row, and are the only course control; the filter menu has no course checkboxes (FR-24, FR-72); FR-80 counts leave out hidden courses again. |
 | 2026-10-26 | Team Lead: the orphaned-card show/hide option (FR-45) and the Refresh summary's count of removed assignments (FR-16) move to Phase 1. |
 | 2026-10-26 | Team Lead: course label colors (FR-66) move to Phase 5; until then strips and course buttons use one neutral color and show the course code (FR-65, FR-78). |
+| 2026-11-02 | Split by phase, from the Team Lead: this file is renamed from `02-requirements.md` and holds Phase 1 and later; Phase 0's local proof of concept, from the Team Lead's rescoping of Phase 0 in the roadmap (#158), is in the new `02-requirements_phase0.md`. Added NFR-15 (the token goes only to the student's Canvas host, over HTTPS with the certificate checked); NFR-10 also keeps the token off the page and out of the browser; NFR-12 says "Canvas data" instead of "cached Canvas data". |
+| 2026-11-02 | NFR-15 adds Phase 0's sentence that a refused address or link sends no request with the token, from the cybersecurity engineer's re-check of #162. |
+| 2026-11-02 | Section 1 of the Phase 0 file and section 5.5 here say the planning in the TestProj repo comes before Phase 0, from the Team Lead's reorder of Phase 0 in the roadmap (#169). Section 5.5 says NFR-40 and NFR-42 were first met before Phase 0 and are met again in the CanSync repo in Phase 0. |
+| 2026-11-02 | Requirements by phase and section 5.5 name the TestProj repo and the CanSync repo instead of "the repo" or "the app repository", from the Team Lead (#174). |
+| 2026-11-02 | *Requirements by phase* names `CLAUDE.md` without linking it, since the project docs don't link to team files, from the Team Lead (#175). |

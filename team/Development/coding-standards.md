@@ -8,7 +8,9 @@ and decides what goes in it. Each rule is short and says why.
 
 These rules cover how code is written inside the design. What the code
 builds is in the [design](/docs/canvas-portal/03-design.md), what it must
-do is in the [requirements](/docs/canvas-portal/02-requirements.md), and
+do is in the requirements for
+[Phase 0](/docs/canvas-portal/02-requirements_phase0.md) and
+[Phase 1](/docs/canvas-portal/02-requirements_phase1.md), and
 which phase is in scope is in
 [Canvas portal phases](/CLAUDE.md#canvas-portal-phases). Where this file and
 the design differ, the design wins and the Developer fixes this file.
@@ -121,10 +123,10 @@ Both:
   says, and the rest carry on.
 - **In the frontend, handle every request's error state.** A component
   that fetches shows the
-  [UI specification](/docs/canvas-portal/04-ui-specification.md)'s words
+  [UI specification](/docs/canvas-portal/04-ui-specification_phase1.md)'s words
   for each error code, never a blank screen. For `invalid_request` and
   `internal_error`, that's the
-  [General error message](/docs/canvas-portal/04-ui-specification.md#general-error-message).
+  [General error message](/docs/canvas-portal/04-ui-specification_phase1.md#general-error-message).
 - **Never show the backend's `message` text or the error code on screen.**
   The frontend picks what to show by code, as the design says, so the
   backend's wording can change without changing a screen.

@@ -51,14 +51,13 @@ class DocsCheckTest(unittest.TestCase):
         self.root = Path(self.tmp.name)
         self.write("docs/canvas-portal/02-requirements.md", REQUIREMENTS)
         self.write("team/target.md", TARGET)
-        self.saved = docs_check.ROOT, docs_check.DOCS, docs_check.REQS
+        self.saved = docs_check.ROOT, docs_check.DOCS
         docs_check.ROOT = self.root
         docs_check.DOCS = self.root / "docs" / "canvas-portal"
-        docs_check.REQS = docs_check.DOCS / "02-requirements.md"
         docs_check._anchors.clear()
 
     def tearDown(self):
-        docs_check.ROOT, docs_check.DOCS, docs_check.REQS = self.saved
+        docs_check.ROOT, docs_check.DOCS = self.saved
         docs_check._anchors.clear()
         self.tmp.cleanup()
 
@@ -71,8 +70,8 @@ class DocsCheckTest(unittest.TestCase):
     def links(self, text, name="team/page.md"):
         return docs_check.check_links(self.write(name, text))
 
-    def ids(self, text):
-        self.write("docs/canvas-portal/03-design.md", text)
+    def ids(self, text, name="03-design.md"):
+        self.write(f"docs/canvas-portal/{name}", text)
         return docs_check.check_requirement_ids(*docs_check.requirement_rows())
 
     # Links that must pass
@@ -150,6 +149,65 @@ class DocsCheckTest(unittest.TestCase):
 
     def test_change_log_is_skipped(self):
         self.assertEqual(self.ids("Text.\n\n## Change log\n\nDropped FR-99.\n"), [])
+
+    # Docs split by phase (<doc>_phaseN.md)
+
+    def split_requirements(self):
+        (self.root / "docs/canvas-portal/02-requirements.md").unlink()
+        self.write("docs/canvas-portal/02-requirements_phase0.md", """\
+            | ID | Requirement | Phase |
+            |----|-------------|-------|
+            | FR-1 | Connect to Canvas, by hand. | 0 |
+            | FR-3 | *(Removed: no export.)* | n/a |
+
+            FR-3 is named here to explain its removal.
+            """)
+        self.write("docs/canvas-portal/02-requirements_phase1.md", REQUIREMENTS)
+
+    def test_doc_files_finds_phase_files_in_order(self):
+        self.split_requirements()
+        for name in ["02-requirements_phase10.md", "02-requirements_phase2.md",
+                     "02-requirements_phase1-notes.md", "02-requirements_phaseX.md"]:
+            self.write(f"docs/canvas-portal/{name}", "")
+        names = [p.name for p in docs_check.doc_files("02-requirements.md")]
+        self.assertEqual(names, [
+            "02-requirements_phase0.md", "02-requirements_phase1.md",
+            "02-requirements_phase2.md", "02-requirements_phase10.md"])
+
+    def test_doc_files_keeps_whole_file_during_a_split(self):
+        self.write("docs/canvas-portal/02-requirements_phase0.md", "")
+        names = [p.name for p in docs_check.doc_files("02-requirements.md")]
+        self.assertEqual(names, ["02-requirements.md", "02-requirements_phase0.md"])
+
+    def test_split_requirements_define_ids_from_every_file(self):
+        self.split_requirements()
+        self.assertEqual(self.ids("FR-1 and NFR-1.\n"), [])
+
+    def test_split_requirements_may_name_their_removed_ids(self):
+        self.split_requirements()
+        self.assertEqual(docs_check.check_requirement_ids(
+            *docs_check.requirement_rows()), [])
+
+    def test_split_requirements_still_report_problems(self):
+        self.split_requirements()
+        p1, p2 = self.ids("FR-3 and FR-9999.\n")
+        self.assertIn("FR-3 was removed in 02-requirements*.md", p1)
+        self.assertIn("FR-9999 isn't defined in 02-requirements*.md", p2)
+
+    def test_id_current_in_one_phase_file_counts(self):
+        self.split_requirements()
+        self.write("docs/canvas-portal/02-requirements_phase2.md",
+                   "| FR-3 | Export, back again. | 2 |\n")
+        self.assertEqual(self.ids("FR-3.\n"), [])
+
+    def test_other_split_docs_are_checked(self):
+        [p] = self.ids("See FR-9999.\n", "03-design_phase0.md")
+        self.assertIn("03-design_phase0.md:1: FR-9999", p)
+
+    def test_missing_requirements_doc_is_reported(self):
+        (self.root / "docs/canvas-portal/02-requirements.md").unlink()
+        [p] = self.ids("FR-1.\n")
+        self.assertIn("no requirements doc", p)
 
     # The whole run
 

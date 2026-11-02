@@ -4,7 +4,9 @@
 
 This document describes how the portal is built: its parts, the data it
 stores, how those parts talk to each other, and how each part meets the
-[requirements](/docs/canvas-portal/02-requirements.md). The frontend framework (decision
+requirements ([Phase 0](/docs/canvas-portal/02-requirements_phase0.md),
+and [Phase 1 and later](/docs/canvas-portal/02-requirements_phase1.md)).
+The frontend framework (decision
 D-1) was chosen after the design: React.
 
 **Scope:** this design covers Phases 0 to 4 only. Phase 5 ideas in the
@@ -14,8 +16,7 @@ few choices made now so those ideas stay possible.
 
 ### Design by phase
 
-Build only the parts listed for the current phase (see the repo's
-[CLAUDE.md](/CLAUDE.md)). Each phase adds to the ones before it.
+Build only the parts listed for the current phase (see `CLAUDE.md`). Each phase adds to the ones before it.
 
 | Phase | Builds |
 |-------|--------|
@@ -74,7 +75,7 @@ both.
 | Token encryption | Fernet, from the `cryptography` Python library | Proposed; needs the Team Lead (new dependency, token storage) | Authenticated encryption in one call; `MultiFernet` lets the key be replaced later without losing stored tokens |
 | Background Refresh | An `asyncio` task inside the one server process | Proposed | Nothing extra to build; it needs a host that keeps one server process running, which the DevOps engineer weighs when choosing the host (roadmap D-3) |
 | Hosting | See roadmap D-3 | Open | |
-| Formatting and linting | Ruff for the backend; Prettier and ESLint for the frontend, with typescript-eslint, ESLint's `react-hooks` rules and `no-console`, and `eslint-config-prettier` so the two don't clash | **Decided (Team Lead, [#143](https://github.com/bbranton/TestProj/issues/143))** | Dev dependencies only, so nothing ships to the live app. CI runs all three, so reviewers stop checking style by hand. `react-hooks` catches real bugs, and `no-console` keeps the Canvas token out of the browser console. The commands are in [Coding standards](/team/Development/coding-standards.md), and CI is the DevOps engineer's |
+| Formatting and linting | Ruff for the backend; Prettier and ESLint for the frontend, with typescript-eslint, ESLint's `react-hooks` rules and `no-console`, and `eslint-config-prettier` so the two don't clash | **Decided (Team Lead, [#143](https://github.com/bbranton/TestProj/issues/143))** | Dev dependencies only, so nothing ships to the live app. CI runs all three, so reviewers stop checking style by hand. `react-hooks` catches real bugs, and `no-console` keeps the Canvas token out of the browser console. The commands are in the team's coding standards, and CI is the DevOps engineer's |
 
 ## 3. Data model
 

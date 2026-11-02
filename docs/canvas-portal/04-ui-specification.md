@@ -193,9 +193,11 @@ messages, these are read out by screen readers when they appear.
 Requirements: as the requirements index marks them for Phase 0, from the
 [roadmap's Phase 0](/docs/canvas-portal/01-roadmap.md#phase-0-setup-and-local-proof-of-concept):
 the student's name (FR-2), every assignment from the active courses
-(FR-10 to FR-12, FR-21), sorted by due date (FR-38), each linking to
-Canvas (FR-26), and clear messages when there is nothing to show (FR-20)
-or Canvas fails. Decision D-14.
+(FR-10 to FR-12, FR-21) with its name, course, and due date (FR-22),
+sorted by due date (FR-38), each linking to Canvas (FR-26), a message
+when there is nothing to show (FR-20) or Canvas can't be used (FR-17),
+and no token anywhere on the page (NFR-10). Constraint C-5; decision
+D-14.
 
 The local proof of concept's only page. The student starts the portal on
 their own computer as the README says, then opens it in their browser at
@@ -278,7 +280,7 @@ address, Canvas's own error text, or an error code.
 |------|----------------|
 | The page is fetching from Canvas | "Loading your assignments from Canvas..." in place of the cards. |
 | `.env` has no Canvas address or no token | "The portal isn't set up yet. Add your Canvas address and token to the .env file, as the README says, then restart the portal." No cards. |
-| Canvas rejects the token (FR-6) | "Canvas didn't accept the token in your .env file. Create a new token in Canvas, put it in .env, then restart the portal, as the README says." No cards. |
+| Canvas rejects the token (FR-17) | "Canvas didn't accept the token in your .env file. Create a new token in Canvas, put it in .env, then restart the portal, as the README says." No cards. |
 | The Canvas address can't be reached, or doesn't start with `https://` | "Couldn't reach the Canvas address in your .env file. Check that it starts with https:// and that you're online, then reload the page." No cards. |
 | Canvas doesn't answer in time | "Canvas didn't answer in time. Reload the page to try again." No cards. |
 | One or more courses' assignments couldn't be fetched, but others could | "Couldn't load the assignments for ART 105. The other courses are shown. Reload the page to try again." With more than one, it names each: "Couldn't load the assignments for 2 courses: ART 105, SPAN 201. ..." The cards show every other course's assignments. |

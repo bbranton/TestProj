@@ -73,11 +73,30 @@ student's own computer and shows everything due.
 - Write the design document and the User Interface Specification, then
   choose the frontend framework (D-1). Done: React.
 - Create a `canvas-portal/` folder in this repo with a `frontend/` and a
-  `backend/` part, each with a "hello" page or endpoint. Done.
+  `backend/` part, each with a "hello" page or endpoint. Done. It moves to
+  the app repository below.
 - Add GitHub Actions CI that builds both parts and runs their tests on every
   pull request that changes the app. Done.
 - Confirm the Team Lead's school allows personal access tokens (risk R-1). Done:
   the Team Lead has a student token and a parent (observer) token for testing.
+
+**App repository (first, before any proof-of-concept code).** The app's
+code isn't kept in this repo (Team Lead, 2026-11-02). Before development
+starts:
+
+1. The Team Lead creates a new private repository, `bbranton/canvas-portal`
+   (D-15), and gives the project's Claude sessions access to it. Sessions
+   can't create repositories.
+2. The Canvas portal's docs (this folder, `docs/canvas-portal/`), the
+   `canvas-portal/` skeleton, and its CI workflow are copied into the new
+   repository in one pull request there, with a short `CLAUDE.md` that
+   links back to this repo's team rules.
+3. The docs and code are then edited only in the app repository (D-15).
+   This repo removes `canvas-portal/` and its CI job, and keeps a pointer
+   in place of `docs/canvas-portal/`, in one pull request here.
+4. Proof-of-concept development starts in the app repository after that.
+
+The team, its personas, and its process stay in this repo.
 
 **Local proof of concept.** A first release that runs only on `localhost`,
 with the simplest code and as few third-party dependencies as possible.
@@ -141,6 +160,8 @@ in the Phase 0 requirements file.
   app. The documents were reviewed in PR #3 and again in one pull request
   per document after it; they stay marked Draft until that second review
   is merged.
+- App repository: `bbranton/canvas-portal` exists with the docs, the
+  skeleton, and green CI, and this repo no longer holds the app's code.
 - Proof of concept: the Team Lead runs it on `localhost` from the README
   and sees the same assignments, for the same active courses, that Canvas
   shows for the student's account. CI is green, with the backend tests
@@ -541,6 +562,7 @@ goes to the Team Lead right away, where it came up.
 | D-8 | How other open devices learn about a move (NFR-22) | **Polling** (each device asks "anything new?" every 30 seconds and when its window comes back into focus; simple, works on any host) or **live push** (the server tells devices instantly over a WebSocket or server-sent events; faster, but more to build and host) | Polling for Phase 2; live push only if 30 seconds feels slow in practice. See [design](/docs/canvas-portal/03-design.md#keeping-devices-in-sync-nfr-22-d-8). | Start of Phase 2 |
 | ~~D-9~~ | ~~How Google sign-in is protected against login CSRF (NFR-12)~~ | **A server-side `state` list only** (the earlier design, which left login CSRF open because `state` wasn't tied to the browser) or **`state` in a short-lived signed `HttpOnly`, `Secure`, `SameSite=Lax` cookie**, checked on the callback (see [design section 5](/docs/canvas-portal/03-design.md#5-signing-in-to-the-portal-d-7) and its [security table](/docs/canvas-portal/03-design.md#7-security)) | **Decided** (Team Lead, 2026-10-27): the signed cookie, and sign-in redirects only to fixed paths on the portal. The cybersecurity engineer raised it as X-6 and proposed the fix, and the architect wrote it into the design, in [#141](https://github.com/bbranton/TestProj/pull/141); the Team Lead confirmed it in a project thread, recorded in [#154](https://github.com/bbranton/TestProj/pull/154)'s *Decisions*. | Done |
 | ~~D-14~~ | ~~What the Phase 0 proof of concept is built with~~ | **Python standard library and plain HTML, CSS, and JavaScript** (no third-party runtime dependencies and no frontend build step), **FastAPI with one plain HTML page** (the two backend dependencies the skeleton already has), **the existing skeleton, FastAPI and React with Vite** (D-1 and D-6 as they are), or leave it to the architect's recommendation in the design pull request | **Decided** (Team Lead, 2026-11-02): Python's standard library and plain HTML, CSS, and JavaScript, with no third-party runtime dependencies and no build step. Its tests use `unittest`, from the test engineer's recommendation, which the Team Lead left to the team (2026-11-02). CI-only tools, such as Ruff for linting, are allowed (Team Lead, 2026-11-02). Phase 1 moves it onto FastAPI and React, so D-1 and D-6 are unchanged from Phase 1 on. The project manager recommended it, as the simplest code with the fewest dependencies. | Done |
+| D-15 | Where the app's code and docs live | **A new app repository** that the docs and code move to (the team process stays here), or **a new app repository with a copy of the docs**, this repo staying their source | **Decided in part** (Team Lead, 2026-11-02): the code goes in a new repository, not this one, set up at the start of Phase 0 with the docs copied in. The project manager recommends `bbranton/canvas-portal`, private, and moving the docs so each has one home; the Team Lead's answer is pending. | Before Phase 0 development |
 | D-15 | Which requirements the Phase 0 proof of concept builds, and how NFR-40 applies to it | Approve the set, with the page tested in CI by a CI-only tool; **approve the set, with Phase 0 testing only the backend**; or use only the existing IDs | **Decided by the team, for the Team Lead's review** (2026-11-02): the set in the [Phase 0 requirements](/docs/canvas-portal/02-requirements_phase0.md), with only the backend tested in Phase 0 and a page that holds no logic. The requirements engineer first recommended a CI-only tool for the page; the project manager and the test engineer recommended backend-only tests. The Team Lead asked for the work to go into `develop` and reviews it on the `develop` → `main` release PR, where she can change it. Carried out in [#162](https://github.com/bbranton/TestProj/pull/162). | Team Lead's review on the release PR |
 | ~~D-16~~ | ~~How the Canvas portal docs are organized as phases are added~~ | One file per phase, `<doc>_phaseN.md`, for every doc but the roadmap | **Decided** (Team Lead, 2026-11-02, in a project thread): every doc but the roadmap is split into `<doc>_phaseN.md` files, and a later phase gets its file when its work starts. Who fixes the links is a team decision, [TD-24](/team/decision-register.md). Carried out in [#162](https://github.com/bbranton/TestProj/pull/162) (requirements) and [#163](https://github.com/bbranton/TestProj/pull/163) (UI specification). | Done |
 
@@ -691,3 +713,4 @@ never goes here, as that section says.
 | 2026-11-02 | Phase 0 reopened, from the Team Lead: it now ends with a local proof of concept, a release that runs only on `localhost` with the simplest code and fewest third-party dependencies, and shows every assignment from the student's active courses in one read-only list. No sign-in, database, hosting, or deploy in Phase 0; D-3 and D-7 are unchanged for Phase 1. Added the Phase 0 row in section 2, milestone M0b, D-14 (built with Python's standard library and plain HTML, no third-party dependencies, from the Team Lead), and R-16. The requirements index follows in its own pull request, since the Team Lead asked for one document at a time. |
 | 2026-11-02 | Phase 0's paragraph on requirements links the list in the Phase 0 requirements file instead of naming the likely IDs, now that the requirements are split by phase (Team Lead, 2026-11-02). |
 | 2026-11-02 | Recorded D-15 (the Phase 0 requirements set, decided by the team for the Team Lead's review on the release PR) and D-16 (docs split by phase, from the Team Lead), with TD-24 in the team decision register. |
+| 2026-11-02 | Phase 0 starts by setting up a new app repository and copying the docs and skeleton into it before development, from the Team Lead's review of the release pull request: the app's code isn't kept in this repo. Added D-15 and an exit criterion. |

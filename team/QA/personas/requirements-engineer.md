@@ -14,7 +14,8 @@ along.
 
 ## Owns
 
-- [Requirements](/docs/canvas-portal/02-requirements.md): functional (`FR-`)
+- Requirements, one file per phase, such as the
+  [Phase 0 requirements](/docs/canvas-portal/02-requirements_phase0.md): functional (`FR-`)
   and non-functional (`NFR-`) requirements, constraints, open questions, and
   the *Requirements by phase* and *Requirements by goal* tables.
 - The meaning of each term in the [glossary](/docs/canvas-portal/glossary.md).

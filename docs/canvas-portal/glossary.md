@@ -7,7 +7,7 @@ explained once. Other docs link here instead of defining a term again.
 
 A term marked with a later phase, such as *(Phase 5)*, is described so the
 docs read clearly. It is not in scope until its phase starts, as the
-[requirements by phase](/docs/canvas-portal/02-requirements.md#requirements-by-phase) say.
+[requirements by phase](/docs/canvas-portal/02-requirements_phase1.md#requirements-by-phase) say.
 
 ## Keeping it up to date
 
@@ -91,9 +91,9 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 | Term | Meaning |
 |------|---------|
 | Phase | A stage of the [roadmap](/docs/canvas-portal/01-roadmap.md), from Phase 0 (setup and a local proof of concept) to Phase 4 (polish and deploy). Phase 5 holds later ideas that aren't committed. The current phase is set in [CLAUDE.md](/CLAUDE.md). |
-| Proof of concept | The last step of Phase 0: a first release that runs only on the student's own computer (`localhost`), with the least code and no third-party libraries, to prove the portal can read a student's Canvas data and show it in one list. Phase 1 replaces its code. What it covers is in C-5 and the [requirements by phase](/docs/canvas-portal/02-requirements.md#requirements-by-phase). |
+| Proof of concept | The last step of Phase 0: a first release that runs only on the student's own computer (`localhost`), with the least code and no third-party libraries, to prove the portal can read a student's Canvas data and show it in one list. Phase 1 replaces its code. What it covers is in the [Phase 0 requirements](/docs/canvas-portal/02-requirements_phase0.md). |
 | Future feature | A Phase 5 idea. The docs may sketch it, but nobody builds it until the Team Lead plans it into a phase. |
-| Requirement ID | `FR-` for a functional requirement (what the app does) and `NFR-` for a non-functional one (how well it does it), in the [requirements](/docs/canvas-portal/02-requirements.md). |
+| Requirement ID | `FR-` for a functional requirement (what the app does) and `NFR-` for a non-functional one (how well it does it), in the requirements, which are split by phase: [Phase 0](/docs/canvas-portal/02-requirements_phase0.md) and [Phase 1 and later](/docs/canvas-portal/02-requirements_phase1.md). An ID means the same requirement in every file. |
 | Must, Should, Could | A requirement's priority: required for its phase, expected but not blocking, or nice to have. |
 | Other IDs | `G-` a goal, `D-` a product decision, and `B-` a backlog item (roadmap); `A-` an assumption, `C-` a constraint, and `Q-` an open question (requirements); `S-` a screen (UI specification); `TP-` a test procedure (test plan); `TD-` a team decision ([team decision register](/team/decision-register.md)). |
 | Traceability | The chain from each requirement to the design part that builds it and the test that checks it, by requirement ID. |
@@ -151,3 +151,4 @@ These come up often in the docs. Each has a Qt comparison where one helps.
 | 2026-10-27 | General error message says what the term is and links the UI specification for its words, instead of restating them (PR #141, F-11). |
 | 2026-10-27 | Other IDs adds `TD-`, a team decision in the team decision register, and `D-` is now a product decision, from the Team Lead's split of the decision registers (TD-22). |
 | 2026-11-02 | Added Proof of concept to the document terms and Localhost to the web terms, and Phase 0 is now *setup and a local proof of concept*, from the Team Lead's rescoping of Phase 0 (#158). |
+| 2026-11-02 | Requirement ID and the links to the requirements follow the Team Lead's split of the requirements by phase. |

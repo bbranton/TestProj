@@ -22,7 +22,8 @@ runs only on the student's own computer (`localhost`), for one student
 whose Canvas address and token are set by hand in the local file that git
 ignores (A-3). It has no sign-in, no connect screen, and no saved data:
 each page load fetches from Canvas again, and the data is held in memory
-only. It uses no third-party libraries (decision D-14). Phase 1 replaces
+only. It uses no third-party libraries when it runs or in its tests;
+tools that run only in CI, such as Ruff, are allowed (decision D-14). Phase 1 replaces
 its code, keeping its recorded Canvas responses and test cases, and
 builds each requirement below again, in full.
 
@@ -33,6 +34,8 @@ assumptions A-1 to A-3 and constraints C-1 to C-4 apply here too.
 
 Build only these in Phase 0. Anything else is out of scope, even where
 the design or the User Interface Specification already describes it.
+When a requirement with a row in both files changes, check the other
+file's row in the same PR.
 
 - Connecting to Canvas: FR-2
 - Fetching data from Canvas: FR-10, FR-11, FR-12, FR-17
@@ -57,7 +60,7 @@ requirement is required for Phase 0 to be done.
 
 - **C-5** Phase 0's proof of concept is as section 1 describes: one
   student on their own computer, set up by hand, nothing saved, and no
-  third-party libraries. Phase 1 replaces its code.
+  third-party libraries outside CI. Phase 1 replaces its code.
 
 ## 3. Functional requirements
 
@@ -67,7 +70,7 @@ requirement is required for Phase 0 to be done.
 | FR-10 | The portal fetches the courses in which the student's Canvas enrollment is active. Ended (concluded) courses are not fetched. | Must | 0 |
 | FR-11 | The portal fetches the assignments of each active course from Canvas's assignments list (the design names the endpoint). No other kinds of course item, such as ungraded discussions, pages, or announcements, are fetched. Graded quizzes and graded discussions that Canvas returns in this same list show as ordinary assignments. The student's submissions are not fetched in Phase 0. | Must | 0 |
 | FR-12 | The portal follows Canvas paging so no courses or assignments are missed. | Must | 0 |
-| FR-17 | When Canvas can't be used, the page says why instead of showing an empty list: Canvas rejects the token (wrong, expired, or revoked), the Canvas address can't be reached, or Canvas doesn't answer within the time limit the design sets. If some courses' assignments can't be fetched, the list still shows the other courses' assignments and names each course that failed. Phase 0 only: Phase 1 replaces it with FR-6, FR-16, and NFR-20, which keep the last complete copy. | Must | 0 |
+| FR-17 | When Canvas can't be used, the page says why instead of showing an empty list: Canvas rejects the token (wrong, expired, or revoked), the Canvas address can't be reached, or Canvas doesn't answer within the time limit the design sets. If the list of courses can't be fetched in full, the page says so instead of showing part of it. If some courses' assignments can't be fetched, the list still shows the other courses' assignments and names each course that failed. Phase 0 only: Phase 1 replaces it with FR-6, FR-16, and NFR-20, which keep the last complete copy. | Must | 0 |
 | FR-20 | If the student has no active courses, or no assignments, the page says so instead of showing an empty list. | Must | 0 |
 | FR-21 | The page shows the assignments of every active course together, in one read-only list, in the order FR-38 sets. | Must | 0 |
 | FR-22 | Each assignment shows its name, its course code, and its due date and time, shown in the time zone of the device being used. The due date is the one Canvas gives this student, including a date set just for them (a Canvas *override*). Every comparison of dates and times, such as sorting by due date, is made in UTC; only the display uses the device's time zone. | Must | 0 |

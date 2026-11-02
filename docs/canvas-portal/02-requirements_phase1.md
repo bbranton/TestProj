@@ -11,7 +11,7 @@ documents refer back to.
 
 The requirements are split by phase (Team Lead, 2026-11-02). This file
 holds Phase 1 and the phases after it, and the parts every phase shares:
-goals, users, assumptions, constraints, and open questions. Phase 0's
+goals, users, the assumptions and constraints every phase shares (A-1 to A-3, C-1 to C-4), and open questions. Phase 0's
 local proof of concept is in the
 [Phase 0 requirements](/docs/canvas-portal/02-requirements_phase0.md).
 A later phase gets its own file when its work starts. An ID means the
@@ -42,13 +42,13 @@ requirements, which serve the developer.
 
 | Goal | Requirements |
 |------|--------------|
-| G-1 One place for everything due | FR-1 to FR-3, FR-6, FR-10 to FR-17, FR-20 to FR-29, FR-31, FR-34, FR-38, FR-39, FR-45, FR-55, FR-79, NFR-1, NFR-2, NFR-4, NFR-20; notes FR-40 to FR-43, FR-46 |
+| G-1 One place for everything due | FR-1 to FR-3, FR-6, FR-10 to FR-16, FR-20 to FR-29, FR-31, FR-34, FR-38, FR-39, FR-45, FR-55, FR-79, NFR-1, NFR-2, NFR-4, NFR-20; notes FR-40 to FR-43, FR-46 |
 | G-2 Read only toward Canvas | C-3, FR-28, FR-44, NFR-13 |
 | G-3 Feels like Trello | FR-32, FR-36, FR-60 to FR-81, NFR-3, NFR-33 to NFR-36 |
 | G-4 Follows the student everywhere | FR-5, FR-33, FR-35, FR-50, FR-51, FR-53, NFR-22 |
 | G-5 Private and safe | FR-4, FR-54, NFR-10 to NFR-15, NFR-21 |
 | G-6 Accessible in the main browsers: meets WCAG 2.2 AA and works in current Chrome, Firefox, Safari, and Edge (Phase 5 goal, from the Team Lead's Q-11 answer; the roadmap adds it in #36) | NFR-30, NFR-32, NFR-37 |
-| Developer | NFR-40 to NFR-42 |
+| Developer | NFR-41 (NFR-40 and NFR-42 are in the [Phase 0 requirements](/docs/canvas-portal/02-requirements_phase0.md)) |
 
 ### Priority and phase
 
@@ -76,6 +76,8 @@ Removed requirements are not listed.
 [Phase 0 requirements](/docs/canvas-portal/02-requirements_phase0.md#requirements-by-phase).
 Phase 1 replaces the proof of concept's code, so the requirements below
 are built in full in Phase 1 even where Phase 0 built a part of them.
+When a requirement with a row in both files changes, check the other
+file's row in the same PR.
 
 **Phase 1: Read-only viewer**
 
@@ -275,7 +277,7 @@ are built in full in Phase 1 even where Phase 0 built a part of them.
 | NFR-12 | A user's Canvas connection, Canvas data, and board are visible only to that user. | 1 |
 | NFR-13 | The portal calls only Canvas read (`GET`) endpoints. | 1 |
 | NFR-14 | Out of respect for student privacy rules such as FERPA (US student records law), the portal loads no analytics, advertising, or other third-party scripts, and sends course data only to the signed-in user's browser. Google sign-in (FR-50) sees only who the user is, never course data. | 1 |
-| NFR-15 | The Canvas token is sent only to the student's Canvas host, over HTTPS with the server's certificate checked. The portal refuses a Canvas address that doesn't use HTTPS, and follows no redirect or paging link whose scheme, host, or port differs from the Canvas address's. | 1 |
+| NFR-15 | The Canvas token is sent only to the user's Canvas host, over HTTPS with the server's certificate checked. The portal refuses a Canvas address that doesn't use HTTPS, and follows no redirect or paging link whose scheme, host, or port differs from the Canvas address's. | 1 |
 
 ### 5.3 Reliability
 

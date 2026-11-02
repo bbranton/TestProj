@@ -122,15 +122,16 @@ personas, and its process stay in this repo.
 2. **The Team Lead reviews the planning docs** in the app repository and
    has them adjusted as needed, in pull requests there.
 3. **Copy or re-create the hello world app**, as chosen in D-17, with its
-   CI, and `.env.example` holding placeholders only. The CI keeps this
-   repo's pattern: it runs on every pull request, with a `changes` job
-   that skips jobs without dropping their report. Once the app's CI has
-   reported there, the Team Lead adds `backend` and `frontend` to the app
-   repository's `develop` ruleset. This repo then removes the app's code
-   and CI and fixes every link to what moved, in one pull request here.
-   First, the Team Lead takes the `backend` and `frontend` checks off this
-   repo's `develop` ruleset, keeping `docs`, or the removal can't merge.
-   The DevOps engineer writes the steps for both rulesets then.
+   CI, as files without this repo's git history, and `.env.example`
+   holding placeholders only. The CI keeps this repo's pattern: it runs on
+   every pull request, with a `changes` job that skips jobs without
+   dropping their report. Once the app's CI has reported there, the Team
+   Lead adds `backend` and `frontend` to the app repository's `develop`
+   ruleset. This repo then removes the app's code and CI and fixes every
+   link to what moved, in one pull request here. First, the Team Lead
+   takes the `backend` and `frontend` checks off this repo's `develop`
+   ruleset, keeping `docs`, or the removal can't merge. The DevOps
+   engineer writes the steps for both rulesets then.
 4. **Start work on the local proof of concept** below, in the app
    repository.
 

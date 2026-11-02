@@ -103,11 +103,11 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 
 | Term | Meaning |
 |------|---------|
-| Team Lead | The project owner, who has the final say on decisions and plans the project until Phase 0 starts. |
+| Team Lead | The project owner, who has the final say on decisions, as the roadmap's [Roles](/docs/canvas-portal/01-roadmap.md#8-roles) says. |
 | Phase Lead | The person who takes over from the Team Lead to run Phase 0: setting up the CanSync repo and building the local proof of concept. |
-| TestProj repo | The repository where the Canvas portal was planned. Phase 0 copies its project docs to the CanSync repo, and they're the only thing the two repositories share. |
+| TestProj repo | The repository where the Canvas portal was planned, and where the team's process lives. Phase 0 copies its project docs to the CanSync repo. |
 | CanSync repo | The Canvas portal app's own private repository, set up in Phase 0 (D-17 in the [roadmap](/docs/canvas-portal/01-roadmap.md#5-product-decisions)), where work on the app continues, as [Phase 0](/docs/canvas-portal/01-roadmap.md#phase-0-setup-and-local-proof-of-concept) says. |
-| Potential data breach | A problem that could let anyone other than the student see that student's Canvas token, session, or Canvas data, or let anyone act as the student. It goes to the Team Lead right away and blocks the work until it's fixed. |
+| Potential data breach | A problem that could let anyone other than the student see that student's Canvas token, session, or Canvas data, or let anyone act as the student. It's critical: it goes to the Team Lead right away, is fixed ahead of all other work, and never waits on the roadmap backlog; only the Team Lead can delay its fix. |
 | Roadmap backlog | The list in the [roadmap](/docs/canvas-portal/01-roadmap.md#9-backlog) of review findings the Team Lead parked for later, with `B-` IDs. Not the Backlog list. |
 
 ## Web terms
@@ -151,5 +151,4 @@ These come up often in the docs. Each has a Qt comparison where one helps.
 | 2026-11-02 | Phase 0 in the *Phase* row is now *the app repository and a local proof of concept*, and the planning in the TestProj repo comes before it, from the Team Lead's reorder of Phase 0 in the roadmap (#169). |
 | 2026-11-02 | Added Phase Lead to the team process terms, from the Team Lead. |
 | 2026-11-02 | Added TestProj repo and CanSync repo to the team process terms, and the docs name each repository instead of saying "this repo" or "the app repository", from the Team Lead. |
-| 2026-11-02 | The Team Lead row says releases in the TestProj repo, since the CanSync repo's branches are chosen in D-17, from the Team Lead. |
 | 2026-11-02 | The project docs no longer link to the TestProj repo's team files, from the Team Lead: *Team process* becomes *People and repositories*, with the team-only terms (persona, owner, reviewers, decision request, cross-review, ripple check, finding, verdict, retro, team board) moved to the TestProj repo's `team/glossary.md`, and `TD-` dropped from *Other IDs*. |

@@ -44,7 +44,11 @@ The cybersecurity engineer is the specialist, not the only check, as
 This section is the one home of the potential data breach rule (Team Lead,
 2026-10-27: #80 and #88 for its handling,
 [#97](https://github.com/bbranton/TestProj/issues/97) for one home). Every other file
-links here instead of restating it.
+links here instead of restating it, except the Canvas portal glossary's
+[Potential data breach](/docs/canvas-portal/glossary.md#people-and-repositories)
+row: the project docs don't link to team files, so that row states the
+rule for them, and the cybersecurity engineer keeps it in step with this
+section.
 
 A finding is a **potential data breach** when it could let anyone other
 than the student see that student's Canvas token, session, or Canvas data,

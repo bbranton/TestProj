@@ -413,3 +413,4 @@ hold; they are in the
 | 2026-11-02 | NFR-15 adds Phase 0's sentence that a refused address or link sends no request with the token, from the cybersecurity engineer's re-check of #162. |
 | 2026-11-02 | Section 1 of the Phase 0 file and section 5.5 here say the planning in the TestProj repo comes before Phase 0, from the Team Lead's reorder of Phase 0 in the roadmap (#169). Section 5.5 says NFR-40 and NFR-42 were first met before Phase 0 and are met again in the CanSync repo in Phase 0. |
 | 2026-11-02 | Requirements by phase and section 5.5 name the TestProj repo and the CanSync repo instead of "the repo" or "the app repository", from the Team Lead (#174). |
+| 2026-11-02 | *Requirements by phase* names `CLAUDE.md` without linking it, since the project docs don't link to team files, from the Team Lead (#175). |

@@ -66,16 +66,15 @@ there until Phase 4 publishes the app.
 ready.
 
 **Before Phase 0: planning in TestProj repo.** Preparing the plan isn't part
-of Phase 0 (Team Lead, 2026-11-02). That work is done in TestProj first:
+of Phase 0. That work is done in TestProj first:
 writing and reviewing the documents, settling the decisions in section 5
 that the plan needs, the `canvas-portal/` hello world skeleton
 with its CI (milestone M0), confirming that the Team Lead's school allows
-personal access tokens (R-1), and this rescoping of Phase 0.
+personal access tokens (R-1).
 
 **Who runs Phase 0.** A second, new Team Lead takes over to run
-Phase 0, and Phase 0 is about getting the new Team Lead set up to start
-the implementation (Team Lead, 2026-11-02, TD-25). Its primary
-deliverable is the local proof of concept (Team Lead, 2026-11-02). In this section, "the
+Phase 0. Its primary
+deliverable is the local proof of concept. In this section, "the
 new Team Lead" means that person; "the Team Lead" alone means the Team
 Lead who led the planning.
 

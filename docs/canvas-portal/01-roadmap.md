@@ -240,7 +240,7 @@ if skipped, so none can be dropped or delayed without the Team Lead:
 - The incident plan for a leaked token is in place (#17).
 - How the token encryption key and session secret are stored, rotated,
   and replaced after a leak is written down and set up (#19).
-- Secret scanning with push protection is on for the repo (#20).
+- Secret scanning with push protection is on for the CanSync repo (#20).
 - The session cookie and every write are protected on Koyeb's shared
   domain (#25). `koyeb.app` isn't on the Public Suffix List, so other
   Koyeb apps count as the same site and `SameSite=Lax` doesn't stop them.
@@ -478,7 +478,7 @@ database, and the domain) is decided, with its cost.
 - Accessibility pass for contrast, 200% zoom, and screen reader labels
   (NFR-32), and a final check that it still works in Chrome (NFR-30).
 - Move from the free test host to the production host chosen in D-3, on
-  the app's domain, and link it from the repo's landing page. The deploy
+  the app's domain, and link it from the CanSync repo's landing page. The deploy
   setup from Phase 1 carries over: HTTPS (NFR-11), secrets in the host's
   environment settings, CI deploys with rollback, and scheduled backups.
   NFR-1 is checked here without the test host's wake-up allowance.

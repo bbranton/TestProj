@@ -66,7 +66,7 @@ The *Phase* column matches the [roadmap](/docs/canvas-portal/01-roadmap.md).
 
 This index lists every requirement by the phase that builds it, so it's
 clear what is in scope at any time. Build only the requirements listed for
-the current phase, which the repo's [CLAUDE.md](/CLAUDE.md) names.
+the current phase, which the TestProj repo's [CLAUDE.md](/CLAUDE.md) names.
 Anything listed for a later phase is out of scope, even where the design or
 the User Interface Specification already describes it. When a
 requirement's *Phase* column changes, update this index in the same PR.

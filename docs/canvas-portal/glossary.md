@@ -108,7 +108,7 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 | Team Lead | The project owner, who has the final say on decisions and on releases to `main`, as [Team personas](/CLAUDE.md#team-personas) and [Branches](/CLAUDE.md#branches) say. |
 | Phase Lead | The person who takes over from the Team Lead to run Phase 0: setting up the CanSync repo and building the local proof of concept (TD-25 in the [team decision register](/team/decision-register.md)). |
 | TestProj repo | The repository that holds the team, its personas and process, and the Canvas portal's planning docs until Phase 0 copies them to the CanSync repo. |
-| CanSync repo | The Canvas portal app's own repository, set up in Phase 0 (D-17 in the [roadmap](/docs/canvas-portal/01-roadmap.md#5-product-decisions)). From Phase 0 on, all work on the app, docs included, happens there. |
+| CanSync repo | The Canvas portal app's own repository, set up in Phase 0 (D-17 in the [roadmap](/docs/canvas-portal/01-roadmap.md#5-product-decisions)), where work on the app continues, as [Phase 0](/docs/canvas-portal/01-roadmap.md#phase-0-setup-and-local-proof-of-concept) says. |
 | Persona | A role an agent takes on, such as the UI/UX designer or the cybersecurity engineer, with its own area and review checklist. The list is in the [team README](/team/README.md). |
 | Owner | The persona that writes a piece of work and answers its findings. |
 | Reviewers | The personas that review a PR, picked as [Who reviews what](/team/review-protocol.md#who-reviews-what) says. |

@@ -93,7 +93,7 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 
 | Term | Meaning |
 |------|---------|
-| Phase | A stage of the [roadmap](/docs/canvas-portal/01-roadmap.md), from Phase 0 (the app repository and a local proof of concept) to Phase 4 (polish and deploy). Phase 5 holds later ideas that aren't committed. The current phase is set in [CLAUDE.md](/CLAUDE.md). |
+| Phase | A stage of the [roadmap](/docs/canvas-portal/01-roadmap.md), from Phase 0 (the CanSync repo and a local proof of concept) to Phase 4 (polish and deploy). Phase 5 holds later ideas that aren't committed. The current phase is set in [CLAUDE.md](/CLAUDE.md). |
 | Proof of concept | The last step of Phase 0: a first release that runs only on the student's own computer (`localhost`), with the least code, to prove the portal can read a student's Canvas data and show it in one list. Phase 1 replaces its code. What it covers is in the [Phase 0 requirements](/docs/canvas-portal/02-requirements_phase0.md). |
 | Future feature | A Phase 5 idea. The docs may sketch it, but nobody builds it until the Team Lead plans it into a phase. |
 | Requirement ID | `FR-` for a functional requirement (what the app does) and `NFR-` for a non-functional one (how well it does it), in the requirements, which are split by phase: [Phase 0](/docs/canvas-portal/02-requirements_phase0.md) and [Phase 1 and later](/docs/canvas-portal/02-requirements_phase1.md). An ID means the same requirement in every file. |
@@ -106,7 +106,9 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 | Term | Meaning |
 |------|---------|
 | Team Lead | The project owner, who has the final say on decisions and on releases to `main`, as [Team personas](/CLAUDE.md#team-personas) and [Branches](/CLAUDE.md#branches) say. |
-| Phase Lead | The person who takes over from the Team Lead to run Phase 0: setting up the app repository and building the local proof of concept (TD-25 in the [team decision register](/team/decision-register.md)). |
+| Phase Lead | The person who takes over from the Team Lead to run Phase 0: setting up the CanSync repo and building the local proof of concept (TD-25 in the [team decision register](/team/decision-register.md)). |
+| TestProj repo | The repository that holds the team, its personas and process, and the Canvas portal's planning docs until Phase 0 copies them to the CanSync repo. |
+| CanSync repo | The Canvas portal app's own repository, set up in Phase 0 (D-17 in the [roadmap](/docs/canvas-portal/01-roadmap.md#5-product-decisions)), where work on the app continues, as [Phase 0](/docs/canvas-portal/01-roadmap.md#phase-0-setup-and-local-proof-of-concept) says. |
 | Persona | A role an agent takes on, such as the UI/UX designer or the cybersecurity engineer, with its own area and review checklist. The list is in the [team README](/team/README.md). |
 | Owner | The persona that writes a piece of work and answers its findings. |
 | Reviewers | The personas that review a PR, picked as [Who reviews what](/team/review-protocol.md#who-reviews-what) says. |
@@ -158,5 +160,6 @@ These come up often in the docs. Each has a Qt comparison where one helps.
 | 2026-11-02 | Requirement ID and the links to the requirements follow the Team Lead's split of the requirements by phase. |
 | 2026-11-02 | Added .env file to the screen words, for the Phase 0 proof of concept's messages on S-0 (PR #163, F-4). |
 | 2026-11-02 | Links to the UI specification point at its Phase 0 and Phase 1 files, from the Team Lead's split of the UI specification by phase (PR #163). |
-| 2026-11-02 | Phase 0 in the *Phase* row is now *the app repository and a local proof of concept*, and the planning in this repo comes before it, from the Team Lead's reorder of Phase 0 in the roadmap (#169). |
+| 2026-11-02 | Phase 0 in the *Phase* row is now *the app repository and a local proof of concept*, and the planning in the TestProj repo comes before it, from the Team Lead's reorder of Phase 0 in the roadmap (#169). |
 | 2026-11-02 | Added Phase Lead to the team process terms, from the Team Lead. |
+| 2026-11-02 | Added TestProj repo and CanSync repo to the team process terms, and the docs name each repository instead of saying "this repo" or "the app repository", from the Team Lead. |

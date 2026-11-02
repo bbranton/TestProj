@@ -103,8 +103,9 @@ The page is plain HTML and CSS: one column of simple cards, like Phase
   Card fronts, top to bottom, as on Phase 1's S-4 cards: the ▬▬ label
   strip with the course code, such as "BIO 101", in white on the neutral
   Slate strip color (`#455A64`, 7.2:1 contrast with white, from Phase
-  1's course label colors); the assignment name; and the due badge, plain, with the date and time written as on
-  every screen, "Oct 28, 11:59 PM", in the computer's time zone (FR-22).
+  1's course label colors); the assignment name; and the due badge,
+  plain, with the date and time written as on every screen, "Oct 28,
+  11:59 PM", in the computer's time zone (FR-22).
   Points, submission types, statuses, the Missing highlight, green or red
   badges, and the Opens and Closed lines aren't shown: they arrive with
   the board in Phase 1.

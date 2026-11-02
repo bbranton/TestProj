@@ -82,8 +82,8 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 
 | Term | Meaning | Defined in |
 |------|---------|------------|
-| Screen ID | An ID for each screen, such as `S-4` for the board. | [UI specification](/docs/canvas-portal/04-ui-specification_phase1.md) |
-| Button ID | A name for a button in capitals with underscores, such as `REFRESH`, used in logs, docs, code, and tests. The full list is in the [UI specification's conventions](/docs/canvas-portal/04-ui-specification_phase1.md#conventions-on-every-screen). | UI specification |
+| Screen ID | An ID for each screen, such as `S-4` for the board. Each phase's UI specification file has its own screens, such as `S-0` in [Phase 0](/docs/canvas-portal/04-ui-specification_phase0.md). | [UI specification](/docs/canvas-portal/04-ui-specification_phase1.md) |
+| Button ID | A name for a button in capitals with underscores, such as `REFRESH`, used in logs, docs, code, and tests. Each phase's UI specification file lists its own: [Phase 0](/docs/canvas-portal/04-ui-specification_phase0.md#1-conventions) and [Phase 1](/docs/canvas-portal/04-ui-specification_phase1.md#conventions-on-every-screen). | UI specification |
 | Label | A button's name in plain words, such as "Refresh from Canvas". Screen readers announce it, and icon buttons have no other name. | UI specification |
 | General error message | What a screen shows when the portal itself fails, not Canvas or the student. It never shows an error code. Its words on each screen are in the UI specification. | [UI specification](/docs/canvas-portal/04-ui-specification_phase1.md#general-error-message) |
 | .env file | The file on the student's own computer that holds the Canvas address and token for the Phase 0 [proof of concept](#document-terms). Git ignores it, so it never reaches the repo. The proof of concept's messages name it as "your .env file". | [S-0](/docs/canvas-portal/04-ui-specification_phase0.md#s-0-assignment-list-phase-0) |

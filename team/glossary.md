@@ -2,7 +2,7 @@
 
 The project manager's list of the team's process terms in the TestProj
 repo. They moved here from the Canvas portal's glossary so that the
-project docs don't depend on the team files (Team Lead, 2026-11-02).
+project docs don't depend on the team files.
 Product terms are in the
 [Canvas portal glossary](/docs/canvas-portal/glossary.md).
 

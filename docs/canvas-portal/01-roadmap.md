@@ -77,7 +77,7 @@ Phase 0. Its primary deliverable is the local proof of concept.
 **Phase 0 steps, in order.** The app's code isn't kept in the TestProj
 repo. From step 1 on, all work on the app, docs included, continues in
 the CanSync repo instead. The only thing the two repositories share is
-the project documentation (Team Lead, 2026-11-02): the team, its
+the project documentation: the team, its
 personas, and its process stay in the TestProj repo, and the CanSync
 repo has its own rules, set by the Phase Lead.
 

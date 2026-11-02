@@ -25,7 +25,9 @@ each page load fetches from Canvas again, and the data is held in memory
 only. It uses no third-party libraries when it runs or in its tests;
 tools that run only in CI, such as Ruff, are allowed (decision D-14). Phase 1 replaces
 its code, keeping its recorded Canvas responses and test cases, and
-builds each requirement below again, in full.
+builds each requirement below again, in full, except FR-17, which
+Phase 1 replaces with FR-6, FR-16, and NFR-20. NFR-40 and NFR-42 keep
+holding.
 
 The [Phase 1 requirements](/docs/canvas-portal/02-requirements_phase1.md)'
 assumptions A-1 to A-3 and constraints C-1 to C-4 apply here too.

@@ -3,9 +3,11 @@
 **Status:** Draft · **Owner:** Team Lead · **Last updated:** 2026-10-25
 
 This document says how we check that the portal meets its
-[requirements](/docs/canvas-portal/02-requirements.md). Automated tests run on every pull
-request. Manual procedures are run before a phase is called done, and their
-results are recorded in section 7.
+requirements, split by phase into
+[Phase 0](/docs/canvas-portal/02-requirements_phase0.md) and
+[Phase 1 and later](/docs/canvas-portal/02-requirements_phase1.md).
+Automated tests run on every pull request. Manual procedures are run
+before a phase is called done, and their results are recorded in section 7.
 
 Like the requirements, tests are built with their phase. Write the automated
 tests listed for the current phase (the repo's [CLAUDE.md](/CLAUDE.md)
@@ -90,8 +92,10 @@ teacher sandbox is the safest place to record from.
 Every pull request must meet these before merge:
 
 - [ ] The PR description lists the requirement IDs it implements, and each
-      one is in the current phase in
-      [Requirements by phase](/docs/canvas-portal/02-requirements.md#requirements-by-phase).
+      one is in the current phase in *Requirements by phase*, in the
+      [Phase 0](/docs/canvas-portal/02-requirements_phase0.md#requirements-by-phase) or
+      [Phase 1](/docs/canvas-portal/02-requirements_phase1.md#requirements-by-phase)
+      requirements.
       The repo's [CLAUDE.md](/CLAUDE.md) names the current phase.
 - [ ] CI is green: unit, API, and E2E tests pass, and from Phase 4 the
       accessibility tests too.

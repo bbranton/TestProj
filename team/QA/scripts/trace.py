@@ -10,12 +10,20 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 DOCS = ROOT / "docs" / "canvas-portal"
-REQS = DOCS / "02-requirements.md"
-TRACE_DOCS = ["03-design.md", "04-ui-specification.md", "05-test-plan.md"]
+# Each doc is one file, or split by phase into <doc>_phase0.md, <doc>_phase1.md, ...
+REQS = "02-requirements"
+TRACE_DOCS = ["03-design", "04-ui-specification", "05-test-plan"]
 CODE = ROOT / "canvas-portal"
 CODE_SUFFIXES = {".py", ".ts", ".tsx", ".js", ".jsx"}
 ROW = re.compile(r"^\|\s*((?:FR|NFR)-\d+)\s*\|(.*)\|\s*$")
 RANGE = re.compile(r"\b((?:FR|NFR))-(\d+) to (?:\1-)?(\d+)\b")
+
+
+def doc_files(doc):
+    """The doc's file, then its phase files in phase order."""
+    whole = [DOCS / f"{doc}.md"] if (DOCS / f"{doc}.md").exists() else []
+    split = DOCS.glob(f"{doc}_phase*.md")
+    return whole + sorted(split, key=lambda p: int(re.sub(r"\D", "", p.stem[len(doc):]) or 0))
 
 
 def body(path):
@@ -25,13 +33,18 @@ def body(path):
 
 
 def requirements():
-    """{id: (text, phase)} from the requirement tables."""
+    """{id: [(text, phase, file), ...]} from the requirement tables.
+
+    An ID can have a row in more than one phase file: a phase's file states
+    the part of the requirement that phase builds.
+    """
     found = {}
-    for line in body(REQS).splitlines():
-        m = ROW.match(line)
-        if m:
-            cells = [c.strip() for c in m.group(2).split("|")]
-            found[m.group(1)] = (cells[0], cells[-1])
+    for path in doc_files(REQS):
+        for line in body(path).splitlines():
+            m = ROW.match(line)
+            if m:
+                cells = [c.strip() for c in m.group(2).split("|")]
+                found.setdefault(m.group(1), []).append((cells[0], cells[-1], path.name))
     return found
 
 
@@ -54,11 +67,12 @@ def mentions(req_id, path):
 
 
 def trace(req_id, reqs):
-    text, phase = reqs.get(req_id, ("(not defined in 02-requirements.md)", "?"))
-    print(f"{req_id} (Phase {phase}): {text}")
-    for name in TRACE_DOCS:
-        hits = mentions(req_id, DOCS / name)
-        print(f"  {name}: {len(hits)} mention(s)")
+    rows = reqs.get(req_id, [(f"(not defined in {REQS}*.md)", "?", "")])
+    for text, phase, name in rows:
+        print(f"{req_id} (Phase {phase}{', ' + name if name else ''}): {text}")
+    for path in (p for doc in TRACE_DOCS for p in doc_files(doc)):
+        hits = mentions(req_id, path)
+        print(f"  {path.name}: {len(hits)} mention(s)")
         for n, line in hits[:5]:
             print(f"    {n}: {line[:110]}")
     code_hits = [
@@ -71,13 +85,15 @@ def trace(req_id, reqs):
 
 
 def untested(reqs, phase):
-    tested = ids_named(body(DOCS / "05-test-plan.md"))
+    tested = set()
+    for path in doc_files("05-test-plan"):
+        tested |= ids_named(body(path))
     missing = [
-        (i, p) for i, (_, p) in reqs.items()
+        (i, t, p) for i, rows in reqs.items() for t, p, _ in rows
         if i not in tested and (phase is None or p == phase)
     ]
-    for i, p in missing:
-        print(f"{i} (Phase {p}): {reqs[i][0][:100]}")
+    for i, t, p in missing:
+        print(f"{i} (Phase {p}): {t[:100]}")
     print(f"{len(missing)} requirement(s) with no test procedure.")
 
 

@@ -14,7 +14,7 @@
 
 G-3 shapes most of the screen and interaction design. It means copying
 Trello's *patterns* (layout and behaviors), not its name, logo, icons,
-or artwork; see constraint C-4 in the [requirements](/docs/canvas-portal/02-requirements.md).
+or artwork; see constraint C-4 in the [requirements](/docs/canvas-portal/02-requirements_phase1.md#3-assumptions-and-constraints).
 
 ## 2. Phases at a glance
 
@@ -505,8 +505,10 @@ The plan has grown quickly, so these rules keep each phase finishable:
 - **New ideas go to Phase 5.** The project manager makes the scope call for each
   new request: the current phase, a later one, or nowhere. An idea joins an
   earlier phase only when the Team Lead approves it, in a pull request that
-  updates this roadmap and the requirements'
-  [Requirements by phase](/docs/canvas-portal/02-requirements.md#requirements-by-phase)
+  updates this roadmap and the *Requirements by phase* list in that phase's
+  requirements file
+  ([Phase 0](/docs/canvas-portal/02-requirements_phase0.md#requirements-by-phase),
+  [Phase 1](/docs/canvas-portal/02-requirements_phase1.md#requirements-by-phase))
   together.
 - **A phase's scope is fixed once it starts.** If a requirement in the
   current phase turns out bigger than expected, the project manager recommends,

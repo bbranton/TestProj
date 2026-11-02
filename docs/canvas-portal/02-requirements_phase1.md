@@ -317,7 +317,7 @@ security document must not claim full WCAG AA while this list has entries.
 
 ### 5.5 Maintainability
 
-NFR-40 and NFR-42 were built in Phase 0's setup and still hold; they are
+NFR-40 and NFR-42 were built in the planning before Phase 0 and still hold; they are
 in the [Phase 0 requirements](/docs/canvas-portal/02-requirements_phase0.md#4-non-functional-requirements).
 
 | ID | Requirement | Phase |

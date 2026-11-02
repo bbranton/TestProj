@@ -93,7 +93,7 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 
 | Term | Meaning |
 |------|---------|
-| Phase | A stage of the [roadmap](/docs/canvas-portal/01-roadmap.md), from Phase 0 (setup and a local proof of concept) to Phase 4 (polish and deploy). Phase 5 holds later ideas that aren't committed. The current phase is set in [CLAUDE.md](/CLAUDE.md). |
+| Phase | A stage of the [roadmap](/docs/canvas-portal/01-roadmap.md), from Phase 0 (the app repository and a local proof of concept) to Phase 4 (polish and deploy). Phase 5 holds later ideas that aren't committed. The current phase is set in [CLAUDE.md](/CLAUDE.md). |
 | Proof of concept | The last step of Phase 0: a first release that runs only on the student's own computer (`localhost`), with the least code, to prove the portal can read a student's Canvas data and show it in one list. Phase 1 replaces its code. What it covers is in the [Phase 0 requirements](/docs/canvas-portal/02-requirements_phase0.md). |
 | Future feature | A Phase 5 idea. The docs may sketch it, but nobody builds it until the Team Lead plans it into a phase. |
 | Requirement ID | `FR-` for a functional requirement (what the app does) and `NFR-` for a non-functional one (how well it does it), in the requirements, which are split by phase: [Phase 0](/docs/canvas-portal/02-requirements_phase0.md) and [Phase 1 and later](/docs/canvas-portal/02-requirements_phase1.md). An ID means the same requirement in every file. |

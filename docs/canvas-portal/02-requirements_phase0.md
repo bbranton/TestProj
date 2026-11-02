@@ -5,8 +5,9 @@
 ## 1. Purpose and scope
 
 This file lists what Phase 0 of the Canvas Assignments Portal must do.
-Phase 0 is the setup, done on 2026-10-25, and then a local proof of
-concept, from the Team Lead's rescoping of Phase 0 in the
+Phase 0 sets up the app repository and then builds a local proof of
+concept; the planning done in this repo comes before it, from the Team
+Lead's rescoping of Phase 0 in the
 [roadmap](/docs/canvas-portal/01-roadmap.md#3-phases-in-detail).
 
 The requirements are split by phase (Team Lead, 2026-11-02). Phase 1 and

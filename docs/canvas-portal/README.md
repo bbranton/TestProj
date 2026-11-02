@@ -23,7 +23,7 @@ and a change log at the bottom, so it can grow as the project does.
 | # | Document | What it answers | Status |
 |---|----------|-----------------|--------|
 | 1 | [Roadmap](/docs/canvas-portal/01-roadmap.md) | What gets built, in what order, and how we know a phase is done | Draft |
-| 2 | [Requirements](/docs/canvas-portal/02-requirements.md) | What the app must do, and how well | Draft |
+| 2 | Requirements: [Phase 0](/docs/canvas-portal/02-requirements_phase0.md), [Phase 1 and later](/docs/canvas-portal/02-requirements_phase1.md) | What the app must do, and how well | Draft |
 | 3 | [Design](/docs/canvas-portal/03-design.md) | How the parts fit together: frontend, backend, data, Canvas API | Draft |
 | 4 | User Interface Specification: [Phase 0](/docs/canvas-portal/04-ui-specification_phase0.md), [Phase 1](/docs/canvas-portal/04-ui-specification_phase1.md) | What each screen looks like and how a user moves through it | Draft |
 | 5 | [Test procedures](/docs/canvas-portal/05-test-plan.md) | How each requirement is checked, step by step | Draft |

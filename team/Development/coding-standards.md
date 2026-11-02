@@ -8,7 +8,9 @@ and decides what goes in it. Each rule is short and says why.
 
 These rules cover how code is written inside the design. What the code
 builds is in the [design](/docs/canvas-portal/03-design.md), what it must
-do is in the [requirements](/docs/canvas-portal/02-requirements.md), and
+do is in the requirements for
+[Phase 0](/docs/canvas-portal/02-requirements_phase0.md) and
+[Phase 1](/docs/canvas-portal/02-requirements_phase1.md), and
 which phase is in scope is in
 [Canvas portal phases](/CLAUDE.md#canvas-portal-phases). Where this file and
 the design differ, the design wins and the Developer fixes this file.

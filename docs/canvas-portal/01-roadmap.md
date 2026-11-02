@@ -90,8 +90,9 @@ repo has its own rules, set by the Phase Lead.
   visibility, security settings, and access.
   - Which GitHub account owns it. Its name, CanSync, and that it's
     private are decided. A private repository's Actions runs use the
-    owning account's free minutes, which the TestProj repo also uses if
-    the same account owns both, and secret scanning with push protection
+    owning account's monthly free minutes. The TestProj repo is public,
+    so its runs are free and don't use them. Secret scanning with push
+    protection
     may not be free on a private repository, so the cybersecurity
     engineer recommends how to cover it.
   - Which of the product docs in `docs/canvas-portal/` go. No team
@@ -768,4 +769,4 @@ never goes here, as that section says.
 | 2026-11-02 | The app repository is named CanSync (D-17), and the roadmap names each repository, the TestProj repo or the CanSync repo, instead of "this repo" or "the app repository". From the Team Lead. |
 | 2026-11-02 | The CanSync repo's branches and protection are asked of the Phase Lead in D-17, and will differ from the TestProj repo's `develop` and `main`. Phase 0's setup, step 3, the release exit criterion, M0b, and Phase 1's deploy secrets no longer assume them. Section 8 limits the Team Lead's and personas' merging rules to the TestProj repo and adds the Phase Lead. From the Team Lead's review of the release pull request. |
 | 2026-11-02 | The only thing the TestProj repo and the CanSync repo share is the project documentation, from the Team Lead's review of the release pull request: no team files go, the CanSync repo's `CLAUDE.md` states its own rules without linking back, links to the TestProj repo are removed or repointed, and the copied CI's push branches change to the CanSync repo's. R-17 is reworded to match. |
-| 2026-11-02 | The CanSync repo is private, from the Team Lead's review of the release pull request. D-17's visibility question is answered; the Actions minutes and secret scanning notes are for a private repository, and Phase 1's secrets line no longer calls the repository public. |
+| 2026-11-02 | The CanSync repo is private, from the Team Lead's review of the release pull request. D-17's visibility question is answered; the Actions minutes and secret scanning notes are for a private repository (the public TestProj repo's runs use no minutes), and Phase 1's secrets line no longer calls the repository public. |

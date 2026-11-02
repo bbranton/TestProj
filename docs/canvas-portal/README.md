@@ -6,6 +6,17 @@ Trello-style board that stays current with Canvas. Private notes on each
 assignment are planned as a future feature. The full list of
 project goals is in the [roadmap](/docs/canvas-portal/01-roadmap.md#1-project-goals).
 
+The portal is built in [phases](/docs/canvas-portal/01-roadmap.md#3-phases-in-detail).
+Phase 0 ends with a local proof of concept: it runs only on the student's
+own computer (`localhost`), reads their courses and assignments from Canvas
+with a personal access token kept in a local `.env` file, and shows
+everything due in one read-only list. It uses only Python's standard
+library and plain HTML, CSS, and JavaScript, with no third-party
+dependencies, as decision D-14 in the roadmap's
+[Product decisions](/docs/canvas-portal/01-roadmap.md#5-product-decisions)
+says. Sign-in, the board, saved data, and a deploy come in Phase 1 and
+later.
+
 This folder is the project's formal documentation. Each document has a status
 and a change log at the bottom, so it can grow as the project does.
 

@@ -110,8 +110,9 @@ it in one place, before Phase 1 adds sign-in, a database, and a deploy.
   token is easy to spot. Nothing is saved between runs: the data is held
   in memory only.
 - **Clear errors** for a token Canvas rejects or a Canvas address that
-  can't be reached, or doesn't answer in time. If one course's assignments can't be fetched, the
-  other courses still show, and the failed course is named.
+  can't be reached, or doesn't answer in time. If one course's assignments
+  can't be fetched, the other courses still show, and the failed course is
+  named.
 - **Security still applies**, since a real token is used: the token never
   appears in logs, errors, the page, or its address, and never reaches the
   browser; the token goes only to the Canvas address in `.env`, over

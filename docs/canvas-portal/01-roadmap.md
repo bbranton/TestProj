@@ -265,7 +265,9 @@ The smallest thing that is useful: connect, then see everything that's due.
   Then automatic deploys are off and the Team Lead starts each deploy
   in Koyeb, the host's GitHub app can only read the CanSync repo, and
   the backups that #26 covers are made by the host or Neon instead,
-  still encrypted and kept for 30 days, as step 6's backup says.
+  still as step 6's backup says: encrypted, kept no longer than 30
+  days, readable only by the Team Lead and the backup job, with the key
+  kept apart from the dumps, and with a copy outside Neon (R-15).
 
 **Before step 6 goes live**, because real tokens then sit on an
 internet-facing server (R-14). Each of these is a

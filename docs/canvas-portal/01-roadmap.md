@@ -92,9 +92,8 @@ repo has its own rules, set by the Phase Lead.
     private are decided. A private repository's Actions runs use the
     owning account's monthly free minutes. The TestProj repo is public,
     so its runs are free and don't use them. Secret scanning with push
-    protection
-    may not be free on a private repository, so the cybersecurity
-    engineer recommends how to cover it.
+    protection may not be free on a private repository, so the
+    cybersecurity engineer recommends how to cover it.
   - Which of the product docs in `docs/canvas-portal/` go. No team
     files go, such as the personas, the review protocol, or the coding
     standards.

@@ -95,9 +95,11 @@ repo has its own rules, set by the Phase Lead.
     cybersecurity engineer recommends how to cover it.
   - Which GitHub plan the owning account is on. On a private repository,
     GitHub enforces branch rules and required checks only on a paid plan
-    (Pro for a personal account, Team for an organization), and some
-    Actions environment protections need more. On the free plan, the
-    branch rules are only rules the team follows. A paid plan is a cost,
+    (Pro for a personal account, Team for an organization). Actions
+    environments and their branch limits also need Pro, Team, or
+    Enterprise, and an environment's required reviewers need
+    Enterprise; the free plan has no environment secrets at all. On the
+    free plan, the branch rules are only rules the team follows. A paid plan is a cost,
     so the Team Lead decides it.
   - Which of the product docs in `docs/canvas-portal/` go. No team
     files go, such as the personas, the review protocol, or the coding
@@ -111,8 +113,11 @@ repo has its own rules, set by the Phase Lead.
   - Access, as little as works: the Claude GitHub app on selected
     repositories only, a read-only default `GITHUB_TOKEN` for Actions,
     and who gets write or admin.
-  - Where the real `.env` lives, relative to the CanSync clone and any
-    clone a Remote Control session pulls into.
+  - Where the real `.env` lives. The recommendation is outside the
+    CanSync clone and any clone a Remote Control session pulls into,
+    with `.env` in `.gitignore` as a second guard. If the plan has no
+    push protection, a secret scan runs in CI from Phase 0, as a CI-only
+    tool.
   - A license, or none.
 
   The Phase Lead then creates the repository with an initial commit,
@@ -248,11 +253,14 @@ The smallest thing that is useful: connect, then see everything that's due.
   with the Team Lead as its required reviewer. Plain repository secrets
   reach workflows on any branch, and every thread pushes branches to the
   CanSync repo. GitHub Actions is a new place secrets live, so the Team
-  Lead sets them (#26). If the CanSync repo's GitHub plan can't limit
-  the environment to that branch with the Team Lead as required
-  reviewer, the Team Lead decides another way before step 6, with the
-  cybersecurity engineer, such as the host deploying from the CanSync
-  repo itself so the deploy secrets never go into GitHub.
+  Lead sets them (#26). Unless the CanSync repo's GitHub plan gives both
+  the branch limit and the Team Lead as required reviewer, which only
+  Enterprise does, the Team Lead decides another way before step 6,
+  with the cybersecurity engineer. One way is the host deploying from
+  the CanSync repo itself, so the deploy secrets never go into GitHub.
+  Then automatic deploys are off and the Team Lead starts each deploy
+  in Koyeb, the host's GitHub app can only read the CanSync repo, and
+  the backups that #26 covers are made by the host or Neon instead.
 
 **Before step 6 goes live**, because real tokens then sit on an
 internet-facing server (R-14). Each of these is a
@@ -630,7 +638,7 @@ carries out its mitigation.
 The project manager keeps this list, rates each risk, assigns its owner, and reviews
 it with the Team Lead at every phase boundary. A risk that is a
 [potential data breach](/docs/canvas-portal/glossary.md#people-and-repositories)
-is marked **Critical** and goes to the Team Lead right away. Accepting a risk instead of
+is marked **Critical** and handled as the glossary says. Accepting a risk instead of
 reducing it, or a mitigation that changes scope or timeline, needs the Team
 Lead.
 
@@ -699,8 +707,7 @@ it now or opening a GitHub issue.
 The project manager adds each item and reviews the list with the Team Lead
 at every phase boundary. The Team Lead plans an item into a phase or drops
 it; nobody starts on one before then. A
-[potential data breach](/docs/canvas-portal/glossary.md#people-and-repositories) never goes here; it's fixed
-right away.
+[potential data breach](/docs/canvas-portal/glossary.md#people-and-repositories) never goes here.
 
 | ID | Item | Found in | Owner | Suggested phase | Status |
 |----|------|----------|-------|-----------------|--------|

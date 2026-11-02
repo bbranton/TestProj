@@ -107,7 +107,7 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 | Phase Lead | The person who takes over from the Team Lead to run Phase 0: setting up the CanSync repo and building the local proof of concept. |
 | TestProj repo | The repository where the Canvas portal was planned, and where the team's process lives. Phase 0 copies its project docs to the CanSync repo. |
 | CanSync repo | The Canvas portal app's own private repository, set up in Phase 0 (D-17 in the [roadmap](/docs/canvas-portal/01-roadmap.md#5-product-decisions)), where work on the app continues, as [Phase 0](/docs/canvas-portal/01-roadmap.md#phase-0-setup-and-local-proof-of-concept) says. |
-| Potential data breach | A problem that could let anyone other than the student see that student's Canvas token, session, or Canvas data, or let anyone act as the student. It's critical: it goes to the Team Lead right away, is fixed ahead of all other work, and never waits on the roadmap backlog; only the Team Lead can delay its fix. |
+| Potential data breach | A problem that could let anyone other than the student see that student's Canvas token, session, or Canvas data, or let anyone act as the student. It's critical and must be fixed: one a pull request adds is fixed before that pull request merges, and any other is fixed ahead of all other work. It never waits on the roadmap backlog, and only the Team Lead can delay its fix. If a real token or student data may already have leaked, the Team Lead is told at once. |
 | Roadmap backlog | The list in the [roadmap](/docs/canvas-portal/01-roadmap.md#9-backlog) of review findings the Team Lead parked for later, with `B-` IDs. Not the Backlog list. |
 
 ## Web terms

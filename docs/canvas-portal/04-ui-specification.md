@@ -286,10 +286,10 @@ spot (FR-2). The other messages show without it.
 | When | The page shows |
 |------|----------------|
 | The page is fetching from Canvas | "Loading your assignments from Canvas..." in place of the cards. |
-| `.env` has no Canvas address or no token | "The portal isn't set up yet. Add your Canvas address and token to the .env file, as the README says, then restart the portal." No cards. |
-| Canvas rejects the token (FR-17) | "Canvas didn't accept the token in your .env file. Create a new token in Canvas, put it in .env, then restart the portal, as the README says." No cards. |
-| The Canvas address in `.env` doesn't start with `https://`, so the portal refuses it before calling Canvas (NFR-15) | "The Canvas address in your .env file must start with https://. Fix it in .env, then restart the portal." No cards. |
-| The Canvas address can't be reached | "Couldn't reach Canvas at the address in your .env file. Check that you're online, then reload the page. If the address is wrong, fix it in .env and restart the portal." No cards. |
+| `.env` has no Canvas address or no token | "The portal isn't set up yet. Add your Canvas address and token to your .env file, as the README says, then restart the portal." No cards. |
+| Canvas rejects the token (FR-17) | "Canvas didn't accept the token in your .env file. Create a new token in Canvas, put it in your .env file, then restart the portal, as the README says." No cards. |
+| The Canvas address in `.env` doesn't start with `https://`, so the portal refuses it before calling Canvas (NFR-15) | "The Canvas address in your .env file must start with https://. Fix it in your .env file, then restart the portal." No cards. |
+| The Canvas address can't be reached | "Couldn't reach Canvas at the address in your .env file. Check that you're online, then reload the page. If the address is wrong, fix it in your .env file and restart the portal." No cards. |
 | Canvas redirects the portal, or gives it a paging link, to another address, which the portal refuses so the token stays safe (NFR-15) | "Canvas sent the portal to a different address, so it stopped to keep your token safe. Check the Canvas address in your .env file, then restart the portal." No cards. When this happens while fetching one course's assignments, that course counts as failed and the row for courses that couldn't be fetched applies instead. |
 | Canvas doesn't answer in time | "Canvas didn't answer in time. Reload the page to try again." No cards. |
 | One or more courses' assignments couldn't be fetched, but others could | "Couldn't load the assignments for ART 105. The other courses are shown. Reload the page to try again." With more than one, it names each: "Couldn't load the assignments for 2 courses: ART 105, SPAN 201. ..." The cards show every other course's assignments. |

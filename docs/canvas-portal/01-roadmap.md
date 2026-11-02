@@ -86,7 +86,9 @@ it in one place, before Phase 1 adds sign-in, a database, and a deploy.
 
 - **Runs only on `localhost`.** The server listens on `127.0.0.1` only,
   so no other computer can reach it, and nothing is posted to a public
-  website. There is no hosting, no Google sign-in, no database, and no
+  website. It answers only requests addressed to `127.0.0.1:<port>` or
+  `localhost:<port>` and sends no CORS headers, so a page from another
+  site open in the same browser can't read the student's data. There is no hosting, no Google sign-in, no database, and no
   deploy secrets in Phase 0: Koyeb, Neon, and the Google client (D-3,
   D-7) are still Phase 1.
 - **No third-party dependencies** (D-14): the backend uses only Python's
@@ -104,16 +106,20 @@ it in one place, before Phase 1 adds sign-in, a database, and a deploy.
   token is easy to spot. Nothing is saved between runs: the data is held
   in memory only.
 - **Clear errors** for a token Canvas rejects or a Canvas address that
-  can't be reached.
+  can't be reached. If one course's assignments can't be fetched, the
+  other courses still show, and the failed course is named.
 - **Security still applies**, since a real token is used: the token never
   appears in logs, errors, the page, or its address, and never reaches the
-  browser; the portal calls only Canvas `GET` endpoints and loads no
+  browser; the token goes only to the Canvas address in `.env`, over
+  `https`, and the portal follows no redirect or paging link to another
+  host; the portal calls only Canvas `GET` endpoints and loads no
   third-party scripts.
 - **Tested without a real token.** The backend's tests run in CI against
   recorded Canvas responses.
 - **Not in Phase 0:** the board's lists and Trello look, filters, orphaned
   cards, Refresh progress, saved data, and everything else in Phase 1.
-  Phase 1 moves the proof of concept onto FastAPI and React (D-14).
+  Phase 1 replaces the proof of concept's code with FastAPI and React,
+  keeping its recorded Canvas responses and test cases (D-14).
 
 The requirements engineer marks which requirements, in full or in part,
 Phase 0 now builds in the requirements'
@@ -133,8 +139,9 @@ FR-20, FR-21, FR-26, NFR-10, NFR-13, NFR-14, and NFR-41, with NFR-42's
   and sees the same assignments, for the same active courses, that Canvas
   shows for the student's account. CI is green, with the backend tests
   running on recorded Canvas responses. A check shows the token in no log,
-  error, page, or address, and the server can't be reached from another
-  computer.
+  error, page, or address, and sent to no host but the Canvas address
+  in `.env`; the server can't be reached from another computer, or read
+  by a page from another site.
 - Released: the Team Lead merges the `develop` → `main` release with the
   proof of concept (milestone M0b).
 

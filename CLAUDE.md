@@ -101,8 +101,10 @@ without a persona.
 
 - The current phase is **Phase 0** (setup and local proof of concept). The
   Team Lead changes this line when a new phase starts.
-- Build only the requirements listed for the current phase in
-  [Requirements by phase](/docs/canvas-portal/02-requirements.md#requirements-by-phase).
+- Build only the requirements listed under *Requirements by phase* in the
+  current phase's requirements file:
+  [Phase 0](/docs/canvas-portal/02-requirements_phase0.md#requirements-by-phase)
+  or [Phase 1](/docs/canvas-portal/02-requirements_phase1.md#requirements-by-phase).
   Anything marked a later phase in any doc under `docs/canvas-portal/` is out
   of scope, even when the design or UI specification already describes it.
   Ask the Team Lead before building it.

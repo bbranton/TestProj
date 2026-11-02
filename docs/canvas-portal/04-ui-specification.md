@@ -16,7 +16,7 @@ card, Refresh, and Missing are defined in the [glossary](/docs/canvas-portal/glo
 
 Build only what is listed for the current phase (see the repo's
 [CLAUDE.md](/CLAUDE.md) and
-[Requirements by phase](/docs/canvas-portal/02-requirements.md#requirements-by-phase)). The
+Requirements by phase for [Phase 0](/docs/canvas-portal/02-requirements_phase0.md#requirements-by-phase) and [Phase 1 and later](/docs/canvas-portal/02-requirements_phase1.md#requirements-by-phase)). The
 Phase 5 sketches are kept as a starting point for later; they are out of
 scope until the Team Lead plans them into a phase. This table only mirrors the
 requirements index, which the requirements engineer owns; where they differ, the

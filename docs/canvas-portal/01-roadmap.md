@@ -88,13 +88,14 @@ it in one place, before Phase 1 adds sign-in, a database, and a deploy.
   so no other computer can reach it, and nothing is posted to a public
   website. It answers only requests addressed to `127.0.0.1:<port>` or
   `localhost:<port>` and sends no CORS headers, so a page from another
-  site open in the same browser can't read the student's data. There is no hosting, no Google sign-in, no database, and no
-  deploy secrets in Phase 0: Koyeb, Neon, and the Google client (D-3,
-  D-7) are still Phase 1.
-- **No third-party dependencies** (D-14): the backend uses only Python's
-  standard library, and the page is plain HTML, CSS, and JavaScript with
-  no build step. The FastAPI and React skeleton (D-1, D-6) stays for
+  site open in the same browser can't read the student's data. There is
+  no hosting, no Google sign-in, no database, and no deploy secrets in
+  Phase 0: Koyeb, Neon, and the Google client (D-3, D-7) are still
   Phase 1.
+- **No third-party dependencies** (D-14): the backend and its tests use
+  only Python's standard library (tests use `unittest`), and the page is
+  plain HTML, CSS, and JavaScript with no build step. The FastAPI and
+  React skeleton (D-1, D-6) stays for Phase 1.
 - **One student, set up by hand.** The Canvas address and the student's
   personal access token go in the git-ignored local `.env`, never in the
   repo. There is no connect screen yet.
@@ -106,7 +107,7 @@ it in one place, before Phase 1 adds sign-in, a database, and a deploy.
   token is easy to spot. Nothing is saved between runs: the data is held
   in memory only.
 - **Clear errors** for a token Canvas rejects or a Canvas address that
-  can't be reached. If one course's assignments can't be fetched, the
+  can't be reached, or doesn't answer in time. If one course's assignments can't be fetched, the
   other courses still show, and the failed course is named.
 - **Security still applies**, since a real token is used: the token never
   appears in logs, errors, the page, or its address, and never reaches the
@@ -534,7 +535,7 @@ goes to the Team Lead right away, where it came up.
 | ~~D-7~~ | ~~How users sign in to the portal~~ | **Sign in with Google**, **email magic link**, **username and password**, or a **hosted auth service** (see [design](/docs/canvas-portal/03-design.md#5-signing-in-to-the-portal-d-7)) | **Decided** (Team Lead, 2026-10-25): Sign in with Google for the MVP. | Done |
 | D-8 | How other open devices learn about a move (NFR-22) | **Polling** (each device asks "anything new?" every 30 seconds and when its window comes back into focus; simple, works on any host) or **live push** (the server tells devices instantly over a WebSocket or server-sent events; faster, but more to build and host) | Polling for Phase 2; live push only if 30 seconds feels slow in practice. See [design](/docs/canvas-portal/03-design.md#keeping-devices-in-sync-nfr-22-d-8). | Start of Phase 2 |
 | ~~D-9~~ | ~~How Google sign-in is protected against login CSRF (NFR-12)~~ | **A server-side `state` list only** (the earlier design, which left login CSRF open because `state` wasn't tied to the browser) or **`state` in a short-lived signed `HttpOnly`, `Secure`, `SameSite=Lax` cookie**, checked on the callback (see [design section 5](/docs/canvas-portal/03-design.md#5-signing-in-to-the-portal-d-7) and its [security table](/docs/canvas-portal/03-design.md#7-security)) | **Decided** (Team Lead, 2026-10-27): the signed cookie, and sign-in redirects only to fixed paths on the portal. The cybersecurity engineer raised it as X-6 and proposed the fix, and the architect wrote it into the design, in [#141](https://github.com/bbranton/TestProj/pull/141); the Team Lead confirmed it in a project thread, recorded in [#154](https://github.com/bbranton/TestProj/pull/154)'s *Decisions*. | Done |
-| ~~D-14~~ | ~~What the Phase 0 proof of concept is built with~~ | **Python standard library and plain HTML, CSS, and JavaScript** (no third-party runtime dependencies and no frontend build step), **FastAPI with one plain HTML page** (the two backend dependencies the skeleton already has), **the existing skeleton, FastAPI and React with Vite** (D-1 and D-6 as they are), or leave it to the architect's recommendation in the design pull request | **Decided** (Team Lead, 2026-11-02): Python's standard library and plain HTML, CSS, and JavaScript, with no third-party runtime dependencies and no build step. Phase 1 moves it onto FastAPI and React, so D-1 and D-6 are unchanged from Phase 1 on. The project manager recommended it, as the simplest code with the fewest dependencies. | Done |
+| ~~D-14~~ | ~~What the Phase 0 proof of concept is built with~~ | **Python standard library and plain HTML, CSS, and JavaScript** (no third-party runtime dependencies and no frontend build step), **FastAPI with one plain HTML page** (the two backend dependencies the skeleton already has), **the existing skeleton, FastAPI and React with Vite** (D-1 and D-6 as they are), or leave it to the architect's recommendation in the design pull request | **Decided** (Team Lead, 2026-11-02): Python's standard library and plain HTML, CSS, and JavaScript, with no third-party runtime dependencies and no build step. Its tests use `unittest`, from the test engineer's recommendation, which the Team Lead left to the team (2026-11-02). Phase 1 moves it onto FastAPI and React, so D-1 and D-6 are unchanged from Phase 1 on. The project manager recommended it, as the simplest code with the fewest dependencies. | Done |
 
 ## 6. Risks
 

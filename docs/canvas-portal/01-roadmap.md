@@ -89,8 +89,10 @@ it in one place, before Phase 1 adds sign-in, a database, and a deploy.
   website. There is no hosting, no Google sign-in, no database, and no
   deploy secrets in Phase 0: Koyeb, Neon, and the Google client (D-3,
   D-7) are still Phase 1.
-- **Fewest dependencies.** Which language, libraries, and frontend it uses
-  is D-14, decided before the design is changed for it.
+- **No third-party dependencies** (D-14): the backend uses only Python's
+  standard library, and the page is plain HTML, CSS, and JavaScript with
+  no build step. The FastAPI and React skeleton (D-1, D-6) stays for
+  Phase 1.
 - **One student, set up by hand.** The Canvas address and the student's
   personal access token go in the git-ignored local `.env`, never in the
   repo. There is no connect screen yet.
@@ -111,8 +113,7 @@ it in one place, before Phase 1 adds sign-in, a database, and a deploy.
   recorded Canvas responses.
 - **Not in Phase 0:** the board's lists and Trello look, filters, orphaned
   cards, Refresh progress, saved data, and everything else in Phase 1.
-  Whether Phase 1 builds on the proof-of-concept code or replaces it is
-  part of D-14.
+  Phase 1 moves the proof of concept onto FastAPI and React (D-14).
 
 The requirements engineer marks which requirements, in full or in part,
 Phase 0 now builds in the requirements'
@@ -526,7 +527,7 @@ goes to the Team Lead right away, where it came up.
 | ~~D-7~~ | ~~How users sign in to the portal~~ | **Sign in with Google**, **email magic link**, **username and password**, or a **hosted auth service** (see [design](/docs/canvas-portal/03-design.md#5-signing-in-to-the-portal-d-7)) | **Decided** (Team Lead, 2026-10-25): Sign in with Google for the MVP. | Done |
 | D-8 | How other open devices learn about a move (NFR-22) | **Polling** (each device asks "anything new?" every 30 seconds and when its window comes back into focus; simple, works on any host) or **live push** (the server tells devices instantly over a WebSocket or server-sent events; faster, but more to build and host) | Polling for Phase 2; live push only if 30 seconds feels slow in practice. See [design](/docs/canvas-portal/03-design.md#keeping-devices-in-sync-nfr-22-d-8). | Start of Phase 2 |
 | ~~D-9~~ | ~~How Google sign-in is protected against login CSRF (NFR-12)~~ | **A server-side `state` list only** (the earlier design, which left login CSRF open because `state` wasn't tied to the browser) or **`state` in a short-lived signed `HttpOnly`, `Secure`, `SameSite=Lax` cookie**, checked on the callback (see [design section 5](/docs/canvas-portal/03-design.md#5-signing-in-to-the-portal-d-7) and its [security table](/docs/canvas-portal/03-design.md#7-security)) | **Decided** (Team Lead, 2026-10-27): the signed cookie, and sign-in redirects only to fixed paths on the portal. The cybersecurity engineer raised it as X-6 and proposed the fix, and the architect wrote it into the design, in [#141](https://github.com/bbranton/TestProj/pull/141); the Team Lead confirmed it in a project thread, recorded in [#154](https://github.com/bbranton/TestProj/pull/154)'s *Decisions*. | Done |
-| D-14 | What the Phase 0 proof of concept is built with | **Python standard library and plain HTML, CSS, and JavaScript** (no third-party runtime dependencies and no frontend build step; Phase 1 then moves to FastAPI and React, D-1 and D-6), **FastAPI with one plain HTML page** (the two backend dependencies the skeleton already has, and no frontend build step), or **the existing skeleton, FastAPI and React with Vite** (D-1 and D-6 as they are, with React's build tooling) | The architect recommends, in the design pull request, with what each option means for Phase 1. Until it's decided, D-1 and D-6 are unchanged. | Before the design is changed for Phase 0 |
+| ~~D-14~~ | ~~What the Phase 0 proof of concept is built with~~ | **Python standard library and plain HTML, CSS, and JavaScript** (no third-party runtime dependencies and no frontend build step), **FastAPI with one plain HTML page** (the two backend dependencies the skeleton already has), **the existing skeleton, FastAPI and React with Vite** (D-1 and D-6 as they are), or leave it to the architect's recommendation in the design pull request | **Decided** (Team Lead, 2026-11-02): Python's standard library and plain HTML, CSS, and JavaScript, with no third-party runtime dependencies and no build step. Phase 1 moves it onto FastAPI and React, so D-1 and D-6 are unchanged from Phase 1 on. The project manager recommended it, as the simplest code with the fewest dependencies. | Done |
 
 ## 6. Risks
 
@@ -670,4 +671,4 @@ never goes here, as that section says.
 | 2026-10-27 | Section 5 is a record of decisions and their answers, not where the Team Lead is asked: each decision request goes to the Team Lead right away, where it came up. From the Team Lead, on #132. |
 | 2026-10-27 | D-9 (sign-in `state` in a signed cookie, against login CSRF), D-10 (the ripple check's context check), D-11 (the ripple check searches every Markdown file), and D-12 (the PR's owner fixes files with no owner) added to section 5 as settled, from the Team Lead. |
 | 2026-10-27 | Section 5 is renamed *Product decisions* and holds only the Canvas portal's decisions. D-10 to D-12, about the team's process, moved to the new [team decision register](/team/decision-register.md) as TD-19 to TD-21, from the Team Lead. |
-| 2026-11-02 | Phase 0 reopened, from the Team Lead: it now ends with a local proof of concept, a release that runs only on `localhost` with the simplest code and fewest third-party dependencies, and shows every assignment from the student's active courses in one read-only list. No sign-in, database, hosting, or deploy in Phase 0; D-3 and D-7 are unchanged for Phase 1. Added the Phase 0 row in section 2, milestone M0b, open decision D-14 (what it's built with), and R-16. The requirements index follows in its own pull request, since the Team Lead asked for one document at a time. |
+| 2026-11-02 | Phase 0 reopened, from the Team Lead: it now ends with a local proof of concept, a release that runs only on `localhost` with the simplest code and fewest third-party dependencies, and shows every assignment from the student's active courses in one read-only list. No sign-in, database, hosting, or deploy in Phase 0; D-3 and D-7 are unchanged for Phase 1. Added the Phase 0 row in section 2, milestone M0b, D-14 (built with Python's standard library and plain HTML, no third-party dependencies, from the Team Lead), and R-16. The requirements index follows in its own pull request, since the Team Lead asked for one document at a time. |

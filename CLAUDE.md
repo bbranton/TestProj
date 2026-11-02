@@ -99,8 +99,11 @@ without a persona.
 
 ## Canvas portal phases
 
-- The current phase is **Phase 0** (setup and local proof of concept). The
-  Team Lead changes this line when a new phase starts.
+- The current phase is **Planning for Phase 0**: the docs are prepared
+  here, and no app code is built until Phase 0 starts in the app
+  repository, as the roadmap's
+  [Phase 0](/docs/canvas-portal/01-roadmap.md#phase-0-setup-and-local-proof-of-concept)
+  says. The Team Lead changes this line when a new phase starts.
 - Build only the requirements listed under *Requirements by phase* in the
   current phase's requirements file:
   [Phase 0](/docs/canvas-portal/02-requirements_phase0.md#requirements-by-phase)

@@ -24,7 +24,7 @@ gantt
     dateFormat  YYYY-MM-DD
     axisFormat  %b
     section Foundation
-    Phase 0 Setup and local proof of concept :p0, 2026-10-11, 35d
+    Phase 0 App repository and local proof of concept :p0, 2026-11-02, 21d
     section Viewer
     Phase 1 Read-only viewer         :p1, after p0, 28d
     section Organize
@@ -38,8 +38,9 @@ gantt
 ```
 
 The bars show order and rough size. There are no fixed dates; a phase is done
-when its exit criteria are met. Phase 0's setup is done, and Phase 0 now
-ends with a local proof of concept (Team Lead, 2026-11-02). The current
+when its exit criteria are met. The planning in this repo comes before
+Phase 0; Phase 0 sets up the app repository and builds a local proof of
+concept there (Team Lead, 2026-11-02). The current
 phase is named in the repo's [CLAUDE.md](/CLAUDE.md).
 
 Each phase ends with something a student can use, so the project is worth
@@ -61,81 +62,85 @@ there until Phase 4 publishes the app.
 
 ### Phase 0: Setup and local proof of concept
 
-**Status:** reopened (Team Lead, 2026-11-02). The setup below was done on
-2026-10-25; the local proof of concept is the work left.
+**Status:** not started. It starts when the Team Lead says the plan is
+ready.
 
-Settle the open decisions in section 5, set up the empty project, and then
-prove the core idea with the least code: a release that runs only on the
-student's own computer and shows everything due.
+**Before Phase 0: planning in this repo.** Preparing the plan isn't part
+of Phase 0 (Team Lead, 2026-11-02). That work is done here first:
+writing and reviewing the documents, settling the decisions in section 5
+that the plan needs, the `canvas-portal/` hello world skeleton
+with its CI (milestone M0), confirming that the Team Lead's school allows
+personal access tokens (R-1), and this rescoping of Phase 0.
 
-**Setup (done 2026-10-25):**
+**Who runs Phase 0.** A second, new Team Lead takes over to run
+Phase 0, and Phase 0 is about getting the new Team Lead set up to start
+the implementation (Team Lead, 2026-11-02, TD-25). Its primary
+deliverable is the local proof of concept (Team Lead, 2026-11-02). In this section, "the
+new Team Lead" means that person; "the Team Lead" alone means the Team
+Lead who led the planning.
 
-- Write the design document and the User Interface Specification, then
-  choose the frontend framework (D-1). Done: React.
-- Create a `canvas-portal/` folder in this repo with a `frontend/` and a
-  `backend/` part, each with a "hello" page or endpoint. Done. What
-  happens to it is decided at the app repository step below.
-- Add GitHub Actions CI that builds both parts and runs their tests on every
-  pull request that changes the app. Done.
-- Confirm the Team Lead's school allows personal access tokens (risk R-1). Done:
-  the Team Lead has a student token and a parent (observer) token for testing.
+**Phase 0 steps, in order** (Team Lead, 2026-11-02). The app's code
+isn't kept in this repo, and from step 1 on all work on the app, docs
+included, continues in the app repository instead of here. The team, its
+personas, and its process stay in this repo.
 
-**App repository (first, before any proof-of-concept code).** The app's
-code isn't kept in this repo (Team Lead, 2026-11-02). Once the project
-is ready to start development, the docs are copied to the new
-repository, and from then on all work on the app, docs included,
-continues there instead of here (Team Lead, 2026-11-02). Before
-development starts:
+- **First, set up the app repository**, since the docs need somewhere to
+  go. Sessions can't create repositories, so the project manager asks
+  the new Team Lead these questions, with a recommendation for each, and
+  walks the new Team Lead through each setting (D-17). The cybersecurity
+  engineer gives the security part of the recommendation for
+  visibility, security settings, and access.
+  - The name, and which GitHub account owns it.
+  - Private or public. A private repository keeps the code out of view
+    but shares the account's free GitHub Actions minutes with this one,
+    and secret scanning with push protection may not be free on it; a
+    public one gets those free, but its fork pull requests need approval
+    before CI runs.
+  - Which docs go: the product docs in `docs/canvas-portal/`, and
+    whether any team files, such as the coding standards, go too.
+  - Whether step 3 copies the hello world app or re-creates it.
+  - Branches and protection: `develop` and `main` as here, and the
+    rules on merging to them.
+  - Security settings: secret scanning with push protection, and
+    Dependabot alerts.
+  - Access, as little as works: the Claude GitHub app on selected
+    repositories only, a read-only default `GITHUB_TOKEN` for Actions,
+    and who gets write or admin.
+  - Where the real `.env` lives, relative to the new clone and any
+    clone a Remote Control session pulls into.
+  - A license, or none.
 
-1. **Ask the Team Lead for the repository details, then lead the Team
-   Lead through setting it up.** Sessions can't create repositories, so
-   the project manager asks these questions, with a recommendation for
-   each, and walks the Team Lead through each setting (D-17). The
-   cybersecurity engineer gives the security part of the recommendation
-   for visibility, security settings, and access.
-   - The name, and which GitHub account owns it.
-   - Private or public. A private repository keeps the code out of view
-     but shares the account's free GitHub Actions minutes with this one,
-     and secret scanning with push protection may not be free on it; a
-     public one gets those free, but its fork pull requests need approval
-     before CI runs.
-   - Which docs go: the product docs in `docs/canvas-portal/`, and
-     whether any team files, such as the coding standards, go too.
-   - Whether the `canvas-portal/` skeleton moves as it is or Phase 0
-     starts with only the proof of concept.
-   - Branches and protection: `develop` and `main` as here, and the
-     rules on merging to them.
-   - Security settings: secret scanning with push protection, and
-     Dependabot alerts.
-   - Access, as little as works: the Claude GitHub app on selected
-     repositories only, a read-only default `GITHUB_TOKEN` for Actions,
-     and who gets write or admin.
-   - Where the real `.env` lives, relative to the new clone and any
-     clone a Remote Control session pulls into.
-   - A license, or none.
+  The new Team Lead then creates the repository with an initial commit, a
+  `develop` branch, and `.env` in `.gitignore`; sets its visibility and
+  security settings; installs the Claude GitHub app on it; and adds it
+  to the project's repositories. Branch rules and required checks wait
+  until the repository's first CI run, since GitHub offers a check as
+  required only once it has reported.
 
-   Before step 2, the Team Lead creates the repository with an initial
-   commit, a `develop` branch, and `.env` in `.gitignore`; sets its
-   visibility and security settings; installs the Claude GitHub app on
-   it; and adds it to the project's repositories. Branch rules and
-   required checks wait until step 2's first CI run, since GitHub offers
-   a check as required only once it has reported.
-2. The chosen docs, code, and CI are copied into the new repository as
-   files, without this repo's git history, in one pull request there, with
-   `.env.example` holding placeholders only, with a short `CLAUDE.md` that
-   links back to this repo's team rules. Links in the docs to files that
-   stay here, such as `/team/...` and `/CLAUDE.md`, become full GitHub
-   links to this repo, and the new repository gets its own docs check.
-   Once CI has run there, the Team Lead adds its branch rules and required
-   checks.
-3. This repo then removes the app's code and CI, marks its copy of the
-   docs as moved, and fixes every link to what moved, in one pull request
-   here. First, the Team Lead takes the `backend` and `frontend` checks
-   off this repo's `develop` ruleset, keeping `docs`, or the removal can't
-   merge; the DevOps engineer writes the steps for it then.
-4. Proof-of-concept development starts in the app repository after that.
-
-The team, its personas, and its process stay in this repo.
+1. **Copy the completed project plan and documentation** from this repo
+   into the app repository, as files without this repo's git history, in
+   one pull request there, with a short `CLAUDE.md` that links back to
+   this repo's team rules. Links in the docs to files that stay here,
+   such as `/team/...` and `/CLAUDE.md`, become full GitHub links to this
+   repo, and the app repository gets its own docs check. Once CI has run
+   there, the new Team Lead adds its branch rules and the docs check as
+   required. This repo then marks its copy of the docs as moved, in one
+   pull request here, so nobody edits the old copy.
+2. **The new Team Lead reviews the planning docs** in the app repository
+   and has them adjusted as needed, in pull requests there.
+3. **Copy or re-create the hello world app**, as chosen in D-17, with its
+   CI, as files without this repo's git history, and `.env.example`
+   holding placeholders only. The CI keeps this repo's pattern: it runs on
+   every pull request, with a `changes` job that skips jobs without
+   dropping their report. Once the app's CI has reported there, the new
+   Team Lead adds `backend` and `frontend` to the app repository's `develop`
+   ruleset. This repo then removes the app's code and CI and fixes every
+   link to what moved, in one pull request here. First, the Team Lead
+   takes the `backend` and `frontend` checks off this repo's `develop`
+   ruleset, keeping `docs`, or the removal can't merge. The DevOps
+   engineer writes the steps for both rulesets then.
+4. **Start work on the local proof of concept** below, in the app
+   repository.
 
 **Local proof of concept.** A first release that runs only on `localhost`,
 with the simplest code and as few third-party dependencies as possible.
@@ -194,22 +199,17 @@ in the Phase 0 requirements file.
 
 **Exit criteria:**
 
-- Setup (done): design and User Interface Specification reviewed;
-  decisions D-1, D-4, D-5, and D-6 recorded; CI is green on the skeleton
-  app. The documents were reviewed in PR #3 and again in one pull request
-  per document after it; they stay marked Draft until that second review
-  is merged.
-- App repository: it exists with the chosen docs and green CI, set up
-  as the Team Lead decided in D-17, and this repo no longer holds the
-  app's code.
-- Proof of concept: the Team Lead runs it on `localhost` from the README
+- App repository: it exists with the docs and green CI, set up as the
+  new Team Lead decided in D-17; the new Team Lead has reviewed the
+  planning docs there; and this repo no longer holds the app's code.
+- Proof of concept: the new Team Lead runs it on `localhost` from the README
   and sees the same assignments, for the same active courses, that Canvas
   shows for the student's account. CI is green, with the backend tests
   running on recorded Canvas responses for made-up students. A check shows
   the token in no log, error, page, or address, and sent to no host but
   the Canvas address in `.env`; the server can't be reached from another
   computer, or read by a page from another site.
-- Released: the Team Lead merges the app repository's `develop` → `main`
+- Released: the new Team Lead merges the app repository's `develop` → `main`
   release with the proof of concept (milestone M0b).
 
 ### Phase 1: Read-only viewer (minimum viable product)
@@ -564,8 +564,8 @@ database, and the domain) is decided, with its cost.
 
 | ID | Milestone | Phase | Shows that | Status |
 |----|-----------|-------|------------|--------|
-| M0 | Empty app builds in CI | 0 | Tooling works end to end | Reached 2026-10-25 |
-| M0b | Local proof of concept released | 0 | The Team Lead's real assignments from every active course show in one list on `localhost`, released to the app repository's `main` | |
+| M0 | Empty app builds in CI | Planning | Tooling works end to end | Reached 2026-10-25 |
+| M0b | Local proof of concept released | 0 | A real student's assignments from every active course show in one list on `localhost`, released to the app repository's `main` by the new Team Lead (TD-25) | |
 | M1 | First real assignment list | 1 | Canvas connection works: after step 3 of Phase 1's order of work, the Team Lead's real courses and assignments come back from a Refresh | |
 | M2 | Viewer complete | 1 | MVP usable day to day on the private test deploy: Phase 1's exit criteria are met | |
 | M3 | Dragging saves and syncs | 2 | Core organizing feature works on every device | |
@@ -604,7 +604,7 @@ goes to the Team Lead right away, where it came up.
 | ~~D-14~~ | ~~What the Phase 0 proof of concept is built with~~ | **Python standard library and plain HTML, CSS, and JavaScript** (no third-party runtime dependencies and no frontend build step), **FastAPI with one plain HTML page** (the two backend dependencies the skeleton already has), **the existing skeleton, FastAPI and React with Vite** (D-1 and D-6 as they are), or leave it to the architect's recommendation in the design pull request | **Decided** (Team Lead, 2026-11-02): Python's standard library and plain HTML, CSS, and JavaScript, with no third-party runtime dependencies and no build step. Its tests use `unittest`, from the test engineer's recommendation, which the Team Lead left to the team (2026-11-02). CI-only tools, such as Ruff for linting, are allowed (Team Lead, 2026-11-02). Phase 1 moves it onto FastAPI and React, so D-1 and D-6 are unchanged from Phase 1 on. The project manager recommended it, as the simplest code with the fewest dependencies. | Done |
 | D-15 | Which requirements the Phase 0 proof of concept builds, and how NFR-40 applies to it | Approve the set, with the page tested in CI by a CI-only tool; **approve the set, with Phase 0 testing only the backend**; or use only the existing IDs | **Decided by the team, for the Team Lead's review** (2026-11-02): the set in the [Phase 0 requirements](/docs/canvas-portal/02-requirements_phase0.md), with only the backend tested in Phase 0 and a page that holds no logic. The requirements engineer first recommended a CI-only tool for the page; the project manager and the test engineer recommended backend-only tests. The Team Lead asked for the work to go into `develop` and reviews it on the `develop` → `main` release PR, where she can change it. Carried out in [#162](https://github.com/bbranton/TestProj/pull/162). | Team Lead's review on the release PR |
 | ~~D-16~~ | ~~How the Canvas portal docs are organized as phases are added~~ | One file per phase, `<doc>_phaseN.md`, for every doc but the roadmap | **Decided** (Team Lead, 2026-11-02, in a project thread): every doc but the roadmap is split into `<doc>_phaseN.md` files, and a later phase gets its file when its work starts. Who fixes the links is a team decision, [TD-24](/team/decision-register.md). Carried out in [#162](https://github.com/bbranton/TestProj/pull/162) (requirements) and [#163](https://github.com/bbranton/TestProj/pull/163) (UI specification). | Done |
-| D-17 | The app repository's details: name, visibility, what goes, branches, security settings, access, and license | Asked as Phase 0's first step, each with the project manager's recommendation | **Decided in part** (Team Lead, 2026-11-02): the code goes in a new repository, not this one, set up at the start of Phase 0. Once the project is ready to start development, the docs are copied there, and all work continues there instead of here. The other details are asked for and answered at that step, not before. | Phase 0's first step |
+| D-17 | The app repository's details: name, visibility, what goes, branches, security settings, access, and license | Asked as Phase 0's first step, each with the project manager's recommendation | **Decided in part** (Team Lead, 2026-11-02): the code goes in a new repository, not this one, set up at the start of Phase 0. Once the project is ready to start development, the docs are copied there, and all work continues there instead of here. The other details are asked of the new Team Lead who runs Phase 0 (TD-25) and answered at that step, not before. | Phase 0's first step |
 
 ## 6. Risks
 
@@ -755,3 +755,5 @@ never goes here, as that section says.
 | 2026-11-02 | Phase 0's paragraph on requirements links the list in the Phase 0 requirements file instead of naming the likely IDs, now that the requirements are split by phase (Team Lead, 2026-11-02). |
 | 2026-11-02 | Recorded D-15 (the Phase 0 requirements set, decided by the team for the Team Lead's review on the release PR) and D-16 (docs split by phase, from the Team Lead), with TD-24 in the team decision register. |
 | 2026-11-02 | Phase 0 starts by setting up a new app repository and copying the docs, and the skeleton if chosen, into it before development, from the Team Lead's review of the release pull request: the app's code isn't kept in this repo. The first step asks the Team Lead for the repository's details and leads the Team Lead through the setup; those details are D-17, answered then. Added R-17 (the two repositories drift apart). Added an exit criterion. |
+| 2026-11-02 | Phase 0 is reordered to the Team Lead's steps, from the Team Lead's review of the release pull request: after the app repository is set up, (1) copy the completed plan and docs there, (2) the Team Lead reviews and adjusts the planning docs, (3) copy or re-create the hello world app, (4) start the proof of concept. The planning work done in this repo, including the old *Setup* list and its exit criterion, is no longer part of Phase 0; M0 is marked as planning. |
+| 2026-11-02 | A second, new Team Lead takes over to run Phase 0, from the Team Lead's answer on the release pull request: Phase 0 gets the new Team Lead set up to start the implementation, so the new Team Lead answers D-17, sets up the app repository, and reviews the planning docs in step 2 (team decision TD-25). The local proof of concept stays Phase 0's primary deliverable; the new Team Lead runs it and merges its release. |

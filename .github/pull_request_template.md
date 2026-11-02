@@ -68,8 +68,7 @@ Estimate:
 
 ## Testing
 
-<!-- What you ran and what it showed. The ci-paths skill says whether CI
-     runs on this PR. -->
+<!-- What you ran and what it showed. -->
 
 ## Screenshots
 

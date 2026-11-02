@@ -48,9 +48,9 @@ github.com:
 2. **Rulesets** (Settings > Rules > Rulesets > New branch ruleset). One
    on `main`, with no bypass: *Restrict deletions*, *Block force pushes*,
    *Require a pull request before merging*. One on `develop` with
-   *Require status checks to pass* and the checks `docs`, `backend`, and
-   `frontend` from GitHub Actions, so a PR only merges once its CI
-   passes. Add the checks after each has run once, since GitHub only
+   *Require status checks to pass* and the `docs` check from GitHub
+   Actions, plus any check the project's own CI adds, so a PR only
+   merges once its CI passes. Add the checks after each has run once, since GitHub only
    offers check names it has seen.
 3. **Merge settings:** as the
    DevOps engineer notes record them, in the project's shared files

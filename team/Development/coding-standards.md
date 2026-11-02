@@ -1,8 +1,10 @@
 # Coding standards
 
 How code for the Canvas portal is written: the Python backend in
-`canvas-portal/backend/` and the TypeScript and React frontend in
-`canvas-portal/frontend/`. The
+`backend/` and the TypeScript and React frontend in `frontend/`, in the
+CanSync repo, if the Phase Lead keeps the
+[repository layout](/docs/canvas-portal/03-design.md#8-repository-layout)
+the design suggests. The
 [Developer persona](/team/Development/personas/developer.md) owns this file
 and decides what goes in it. Each rule is short and says why.
 
@@ -17,18 +19,20 @@ the design differ, the design wins and the Developer fixes this file.
 
 ## Tools CI enforces
 
-CI runs these on every PR that touches `canvas-portal/`, as
-[`canvas-portal-ci.yml`](/.github/workflows/canvas-portal-ci.yml) says.
-Fix any failure before asking for review. GitHub doesn't block a merge on
-a failing check, since no check is required yet. Run the same commands
+The app's CI lives in the CanSync repo, set up by the Phase Lead in
+Phase 0 step 3, as the
+[roadmap](/docs/canvas-portal/01-roadmap.md#phase-0-setup-and-local-proof-of-concept)
+says. The TestProj repo keeps no app code, so it runs only the docs
+check. These are the tools the Canvas portal's CI is expected to run.
+Fix any failure before asking for review. Run the same commands
 locally before pushing, so CI only confirms what you already saw.
 
 | Part | Command | What it catches |
 |------|---------|-----------------|
-| Backend | `pip install -e ".[dev]"`, then `pytest` in `canvas-portal/backend` | Failing backend tests |
+| Backend | `pip install -e ".[dev]"`, then `pytest` in `backend/` | Failing backend tests |
 | Backend | `ruff format --check .` | Code Ruff would format differently |
 | Backend | `ruff check .` | Lint problems: the defaults, plus import order (`I`), old Python idioms (`UP`), likely bugs (`B`), and any `print` call (`T20`) |
-| Frontend | `npm ci`, then `npm test` in `canvas-portal/frontend` | Failing Vitest tests |
+| Frontend | `npm ci`, then `npm test` in `frontend/` | Failing Vitest tests |
 | Frontend | `npm run format:check` | Code Prettier would format differently |
 | Frontend | `npm run lint` | ESLint problems: the JavaScript and typescript-eslint recommended rules, the React hooks rules, and any `console` call |
 | Frontend | `npm run build` | Type errors, through TypeScript 7's `tsc -b` with `strict` on, and a broken Vite build. Type-check only this way: a bare `tsc` or `npx tsc` runs TypeScript 6, which ESLint needs, not the compiler CI uses |
@@ -40,8 +44,8 @@ The [docs check](/.github/workflows/docs-check.yml) also runs on every PR:
 repo link or an unknown requirement ID in any Markdown file.
 
 **Fix formatting with the tools, not by hand:** `ruff format .` and
-`ruff check --fix .` in `canvas-portal/backend`, and `npm run format` in
-`canvas-portal/frontend`. Fix ESLint problems by hand. The tools'
+`ruff check --fix .` in `backend/`, and `npm run format` in
+`frontend/`. Fix ESLint problems by hand. The tools'
 settings are in `backend/pyproject.toml` and `frontend/eslint.config.js`.
 A new tool is a new dev dependency, which the
 [architect](/team/Development/personas/architect.md#decisions) takes to
@@ -180,7 +184,7 @@ writes:
 - **Write a test for every bug fix that fails before the fix.** It proves
   the fix and keeps the bug from coming back.
 - **Never use a real Canvas token in a test.** Use the recorded sample
-  data in `canvas-portal/backend/tests/fixtures/`, as NFR-41 and the
+  data in `backend/tests/fixtures/`, as NFR-41 and the
   [repository layout](/docs/canvas-portal/03-design.md#8-repository-layout)
   say. The folder arrives in Phase 1.
 - **Clean recorded sample data before committing it.** Drop the

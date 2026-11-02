@@ -74,7 +74,7 @@ Name each entry
 `<YYYY-MM-DD>/<YYYY-MM-DD>T<HHMMSS>-<persona>-<pr>-<slug>.md`, with the
 time in UTC, the persona's file name (`none` for a thread with no
 persona), the PR it works on, and a few words about the entry, such as
-`2026-10-28/2026-10-28T091500-devops-engineer-pr130-ci-paths-filter.md`.
+`2026-10-28/2026-10-28T091500-devops-engineer-pr130-paths-filter.md`.
 A thread with no PR uses its issue number, such as `issue127`, or `none`.
 A reviewer thread starts its slug with `review`, such as
 `2026-10-28T140000-architect-pr130-review-first-round.md`.
@@ -124,8 +124,7 @@ it, and the `SKILL.md` says how to run it.
 
 | Skill | What it does | Mostly used by |
 |-------|--------------|----------------|
-| `trace-requirement` | Finds a requirement ID in the design, UI spec, test plan, and code; lists requirements with no test. Script: [`QA/scripts/trace.py`](/team/QA/scripts/trace.py) | Requirements engineer, Test engineer, Developer |
-| `ci-paths` | Says which workflows a branch's changes will trigger. Script: [`Development/scripts/ci_paths.py`](/team/Development/scripts/ci_paths.py) | DevOps engineer |
+| `trace-requirement` | Finds a requirement ID in the design, UI spec, and test plan; lists requirements with no test. Script: [`QA/scripts/trace.py`](/team/QA/scripts/trace.py) | Requirements engineer, Test engineer, Developer |
 | `log-cost` | Writes a thread's real token use and cost to its own row file in the Library for the CFO's cost log, as the [CFO persona](/team/Management/personas/cfo.md#role) says | Every thread, when its work is done |
 | `cross-review` | Steps for the owner and for each fresh reviewer thread in a cross-review | Owner and reviewer threads |
 | `retro` | Steps for a team retro the Team Lead calls: each persona's feedback, and the project manager's note in `team/retros/` | Coordinator, every persona, project manager |

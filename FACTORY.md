@@ -26,7 +26,6 @@ side by side later.
 | Folder | What it holds |
 |--------|---------------|
 | [team/](/team/README.md) | The team: personas, review protocol, workspace rules, team decision register, retros |
-| [canvas-portal/](/canvas-portal/README.md) | The first product's code |
 | [docs/canvas-portal/](/docs/canvas-portal/README.md) | The first product's roadmap, requirements, design, UI specification, and test plan |
 | [qml-hello-wasm/](/qml-hello-wasm/) | The starting experiment: a QML hello world built to WebAssembly |
 | [site/](/site/index.html) | The GitHub Pages landing page |

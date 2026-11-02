@@ -116,16 +116,21 @@ personas, and its process stay in this repo.
    this repo's team rules. Links in the docs to files that stay here,
    such as `/team/...` and `/CLAUDE.md`, become full GitHub links to this
    repo, and the app repository gets its own docs check. Once CI has run
-   there, the Team Lead adds its branch rules and required checks.
+   there, the Team Lead adds its branch rules and the docs check as
+   required. This repo then marks its copy of the docs as moved, in one
+   pull request here, so nobody edits the old copy.
 2. **The Team Lead reviews the planning docs** in the app repository and
    has them adjusted as needed, in pull requests there.
 3. **Copy or re-create the hello world app**, as chosen in D-17, with its
-   CI, and `.env.example` holding placeholders only. This repo then
-   removes the app's code and CI, marks its copy of the docs as moved,
-   and fixes every link to what moved, in one pull request here. First,
-   the Team Lead takes the `backend` and `frontend` checks off this
-   repo's `develop` ruleset, keeping `docs`, or the removal can't merge;
-   the DevOps engineer writes the steps for it then.
+   CI, and `.env.example` holding placeholders only. The CI keeps this
+   repo's pattern: it runs on every pull request, with a `changes` job
+   that skips jobs without dropping their report. Once the app's CI has
+   reported there, the Team Lead adds `backend` and `frontend` to the app
+   repository's `develop` ruleset. This repo then removes the app's code
+   and CI and fixes every link to what moved, in one pull request here.
+   First, the Team Lead takes the `backend` and `frontend` checks off this
+   repo's `develop` ruleset, keeping `docs`, or the removal can't merge.
+   The DevOps engineer writes the steps for both rulesets then.
 4. **Start work on the local proof of concept** below, in the app
    repository.
 

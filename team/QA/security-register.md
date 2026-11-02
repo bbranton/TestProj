@@ -10,6 +10,13 @@ Update this when hosting, the repo, or where real tokens live changes.
 
 - The repo is public. Workflow artifacts and logs can be downloaded by any
   GitHub user.
+- From Phase 0's local proof of concept, a real Canvas token sits in a
+  git-ignored `.env` on the Team Lead's computer, used by a server on
+  `127.0.0.1` only. Keep that `.env` outside any folder a Claude session
+  or the Remote Control pull below works in, so the token can't reach a
+  transcript, and readable only by the Team Lead's user. If the token is
+  ever committed, pasted, or shown, delete it in Canvas at once and make
+  a new one (#21); that is the incident plan until #17 is in place.
 - Phase 1 step 6 deploys to a free Koyeb app with a Neon free database,
   holding real Canvas tokens. `koyeb.app` isn't on the Public Suffix List.
 - Only the Team Lead's own accounts should connect until #16 is published

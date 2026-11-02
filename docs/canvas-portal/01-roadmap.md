@@ -1,6 +1,6 @@
 # Roadmap
 
-**Status:** Draft · **Owner:** Team Lead · **Last updated:** 2026-10-25
+**Status:** Draft · **Owner:** Team Lead · **Last updated:** 2026-11-02
 
 ## 1. Project goals
 
@@ -24,7 +24,7 @@ gantt
     dateFormat  YYYY-MM-DD
     axisFormat  %b
     section Foundation
-    Phase 0 Decisions and setup      :done, p0, 2026-10-11, 14d
+    Phase 0 Setup and local proof of concept :p0, 2026-10-11, 35d
     section Viewer
     Phase 1 Read-only viewer         :p1, after p0, 28d
     section Organize
@@ -38,8 +38,9 @@ gantt
 ```
 
 The bars show order and rough size. There are no fixed dates; a phase is done
-when its exit criteria are met. Phase 0 is done. The current phase is named in
-the repo's [CLAUDE.md](/CLAUDE.md).
+when its exit criteria are met. Phase 0's setup is done, and Phase 0 now
+ends with a local proof of concept (Team Lead, 2026-11-02). The current
+phase is named in the repo's [CLAUDE.md](/CLAUDE.md).
 
 Each phase ends with something a student can use, so the project is worth
 having even if it stops after any phase. From Phase 1 on, each phase also
@@ -49,6 +50,7 @@ there until Phase 4 publishes the app.
 
 | Phase | What a student can do afterward | Goals |
 |-------|---------------------------------|-------|
+| 0 | On their own computer only (`localhost`), see everything due across all their courses in one read-only list, as a proof of concept | G-1, G-2, G-5 |
 | 1 | Sign in anywhere (as a listed test user on the private deploy) and see everything due across all courses on one board | G-1, G-2, G-5 |
 | 2 | Organize that board by dragging cards, and see the same board on every device | G-3, G-4 |
 | 3 | Trust that a Refresh is quick and that the board matches Canvas | G-1 |
@@ -57,12 +59,16 @@ there until Phase 4 publishes the app.
 
 ## 3. Phases in detail
 
-### Phase 0: Decisions and setup
+### Phase 0: Setup and local proof of concept
 
-**Status:** done (2026-10-25).
+**Status:** reopened (Team Lead, 2026-11-02). The setup below was done on
+2026-10-25; the local proof of concept is the work left.
 
-Settle the open decisions in section 5 and set up the empty project so later
-phases only add features.
+Settle the open decisions in section 5, set up the empty project, and then
+prove the core idea with the least code: a release that runs only on the
+student's own computer and shows everything due.
+
+**Setup (done 2026-10-25):**
 
 - Write the design document and the User Interface Specification, then
   choose the frontend framework (D-1). Done: React.
@@ -73,11 +79,80 @@ phases only add features.
 - Confirm the Team Lead's school allows personal access tokens (risk R-1). Done:
   the Team Lead has a student token and a parent (observer) token for testing.
 
-**Exit criteria:** design and User Interface Specification reviewed;
-decisions D-1, D-4, D-5, and D-6 recorded; CI is green on the skeleton app.
-The documents were reviewed in PR #3 and again in one pull request per
-document after it; they stay marked Draft until that second review is
-merged.
+**Local proof of concept.** A first release that runs only on `localhost`,
+with the simplest code and as few third-party dependencies as possible.
+It proves that the portal can read a real student's Canvas data and show
+it in one place, before Phase 1 adds sign-in, a database, and a deploy.
+
+- **Runs only on `localhost`.** The server listens on `127.0.0.1` only,
+  so no other computer can reach it, and nothing is posted to a public
+  website. It answers only requests addressed to `127.0.0.1:<port>` or
+  `localhost:<port>` and sends no CORS headers, so a page from another
+  site open in the same browser can't read the student's data. There is
+  no hosting, no Google sign-in, no database, and no deploy secrets in
+  Phase 0: Koyeb, Neon, and the Google client (D-3, D-7) are still
+  Phase 1.
+- **No third-party dependencies** (D-14): the backend and its tests use
+  only Python's standard library (tests use `unittest`), and the page is
+  plain HTML, CSS, and JavaScript with no build step. The FastAPI and
+  React skeleton (D-1, D-6) stays for Phase 1.
+  Tools that run only in CI and never with the app, such as Ruff for
+  linting, are allowed, and CI follows the usual good practice from
+  Phase 0 (Team Lead, 2026-11-02).
+- **One student, set up by hand.** The Canvas address and the student's
+  personal access token go in the git-ignored local `.env`, never in the
+  repo. There is no connect screen yet.
+- **What it shows.** Each time the page loads, including the browser's
+  reload, the portal fetches the active courses and their assignments from
+  Canvas, following Canvas's paging, and shows them all in one read-only
+  list sorted by due date, each with its course code, due date, and a link
+  that opens it in Canvas in a new tab. The student's Canvas name shows at
+  the top, so a wrong token is easy to spot. Nothing is saved between
+  runs: the data is held in memory only.
+- **Clear errors** for a token Canvas rejects or a Canvas address that
+  can't be reached, or doesn't answer in time. If one course's assignments
+  can't be fetched, the other courses still show, and the failed course is
+  named.
+- **Security still applies**, since a real token is used: the token never
+  appears in logs, errors, the page, or its address, and never reaches the
+  browser; the token goes only to the Canvas address in `.env`, over
+  `https`, and the portal follows no redirect or paging link to another
+  host; the portal calls only Canvas `GET` endpoints and loads no
+  third-party scripts.
+- **Tested without a real token.** The backend's tests run in CI against
+  recorded Canvas responses for made-up students, never the Team Lead's
+  real data (A-3). Screenshots of the page follow the
+  [screenshot rule](/team/Development/personas/ui-ux-designer.md#screenshots-in-ui-prs),
+  since the page shows the student's Canvas name.
+- **Not in Phase 0:** the board's lists and Trello look, filters, orphaned
+  cards, the Refresh button and its progress, saved data, and everything
+  else in Phase 1.
+  Phase 1 replaces the proof of concept's code with FastAPI and React,
+  keeping its recorded Canvas responses and test cases (D-14).
+
+The requirements engineer marks which requirements, in full or in part,
+Phase 0 now builds in the requirements'
+[Requirements by phase](/docs/canvas-portal/02-requirements.md#requirements-by-phase),
+in the next pull request. The likely ones are FR-2, FR-6, FR-10 to FR-12,
+FR-20, FR-21, FR-26, NFR-10, NFR-13, NFR-14, and NFR-41, with NFR-42's
+15-minute local setup.
+
+**Exit criteria:**
+
+- Setup (done): design and User Interface Specification reviewed;
+  decisions D-1, D-4, D-5, and D-6 recorded; CI is green on the skeleton
+  app. The documents were reviewed in PR #3 and again in one pull request
+  per document after it; they stay marked Draft until that second review
+  is merged.
+- Proof of concept: the Team Lead runs it on `localhost` from the README
+  and sees the same assignments, for the same active courses, that Canvas
+  shows for the student's account. CI is green, with the backend tests
+  running on recorded Canvas responses for made-up students. A check shows
+  the token in no log, error, page, or address, and sent to no host but
+  the Canvas address in `.env`; the server can't be reached from another
+  computer, or read by a page from another site.
+- Released: the Team Lead merges the `develop` → `main` release with the
+  proof of concept (milestone M0b).
 
 ### Phase 1: Read-only viewer (minimum viable product)
 
@@ -432,6 +507,7 @@ database, and the domain) is decided, with its cost.
 | ID | Milestone | Phase | Shows that | Status |
 |----|-----------|-------|------------|--------|
 | M0 | Empty app builds in CI | 0 | Tooling works end to end | Reached 2026-10-25 |
+| M0b | Local proof of concept released | 0 | The Team Lead's real assignments from every active course show in one list on `localhost`, released to `main` | |
 | M1 | First real assignment list | 1 | Canvas connection works: after step 3 of Phase 1's order of work, the Team Lead's real courses and assignments come back from a Refresh | |
 | M2 | Viewer complete | 1 | MVP usable day to day on the private test deploy: Phase 1's exit criteria are met | |
 | M3 | Dragging saves and syncs | 2 | Core organizing feature works on every device | |
@@ -467,6 +543,7 @@ goes to the Team Lead right away, where it came up.
 | ~~D-7~~ | ~~How users sign in to the portal~~ | **Sign in with Google**, **email magic link**, **username and password**, or a **hosted auth service** (see [design](/docs/canvas-portal/03-design.md#5-signing-in-to-the-portal-d-7)) | **Decided** (Team Lead, 2026-10-25): Sign in with Google for the MVP. | Done |
 | D-8 | How other open devices learn about a move (NFR-22) | **Polling** (each device asks "anything new?" every 30 seconds and when its window comes back into focus; simple, works on any host) or **live push** (the server tells devices instantly over a WebSocket or server-sent events; faster, but more to build and host) | Polling for Phase 2; live push only if 30 seconds feels slow in practice. See [design](/docs/canvas-portal/03-design.md#keeping-devices-in-sync-nfr-22-d-8). | Start of Phase 2 |
 | ~~D-9~~ | ~~How Google sign-in is protected against login CSRF (NFR-12)~~ | **A server-side `state` list only** (the earlier design, which left login CSRF open because `state` wasn't tied to the browser) or **`state` in a short-lived signed `HttpOnly`, `Secure`, `SameSite=Lax` cookie**, checked on the callback (see [design section 5](/docs/canvas-portal/03-design.md#5-signing-in-to-the-portal-d-7) and its [security table](/docs/canvas-portal/03-design.md#7-security)) | **Decided** (Team Lead, 2026-10-27): the signed cookie, and sign-in redirects only to fixed paths on the portal. The cybersecurity engineer raised it as X-6 and proposed the fix, and the architect wrote it into the design, in [#141](https://github.com/bbranton/TestProj/pull/141); the Team Lead confirmed it in a project thread, recorded in [#154](https://github.com/bbranton/TestProj/pull/154)'s *Decisions*. | Done |
+| ~~D-14~~ | ~~What the Phase 0 proof of concept is built with~~ | **Python standard library and plain HTML, CSS, and JavaScript** (no third-party runtime dependencies and no frontend build step), **FastAPI with one plain HTML page** (the two backend dependencies the skeleton already has), **the existing skeleton, FastAPI and React with Vite** (D-1 and D-6 as they are), or leave it to the architect's recommendation in the design pull request | **Decided** (Team Lead, 2026-11-02): Python's standard library and plain HTML, CSS, and JavaScript, with no third-party runtime dependencies and no build step. Its tests use `unittest`, from the test engineer's recommendation, which the Team Lead left to the team (2026-11-02). CI-only tools, such as Ruff for linting, are allowed (Team Lead, 2026-11-02). Phase 1 moves it onto FastAPI and React, so D-1 and D-6 are unchanged from Phase 1 on. The project manager recommended it, as the simplest code with the fewest dependencies. | Done |
 
 ## 6. Risks
 
@@ -497,6 +574,7 @@ Lead.
 | R-13 | Hosting costs money from Phase 4: production hosting and its database run about $13 to $14 a month, and a custom domain is paid | A monthly bill the Team Lead didn't plan for, or a Phase 4 delay | Medium | Low | DevOps engineer | Test deploys in Phases 1 to 3 are $0 (D-3). The DevOps engineer prices the production options in its D-3 recommendation, well before Phase 4, so the Team Lead can decide on the cost early. |
 | R-14 | Real Canvas tokens sit on an internet-facing server from Phase 1, not only on the Team Lead's computer | A break-in exposes testers' Canvas accounts | Medium | High, **Critical** | DevOps engineer, with the cybersecurity engineer | The test deploy goes live only after everything in Phase 1's *Before step 6 goes live* is done and its security checks pass, including the incident plan (#17), key handling (#19), secret scanning (#20), the shared-domain protections (#25), and private secrets and backups (#26). Only the Team Lead's own accounts connect until the client security document is published (#16) and the incident plan is in place; after that, a short list of Google test users. Until FR-54 ships in Phase 4, the Team Lead deletes a tester's data by hand on request. That doesn't reach the backups, which keep it for up to 30 days, and the tester also deletes their token in Canvas (#21). |
 | R-15 | A free tier changes or runs out: Koyeb ends or limits its free instance, or the database uses up Neon's monthly compute hours and is suspended until next month | The test deploy goes down until it moves or the month ends | Medium | Low | DevOps engineer | The backend ships as a container, with the database outside it, so moving to Render free (the fallback) means changing the deploy target and a few settings. Hidden tabs stop polling, nothing pings the app to keep it awake, and the database is capped at its smallest size. The nightly backup means Neon never holds the only copy. |
+| R-16 | The proof of concept grows past "simplest", or its shortcuts (token in `.env`, no sign-in, data in memory) reach a server people can visit | Phase 0 drags on, or a real token is exposed | Medium | High | Project manager, with the cybersecurity engineer | Phase 0's scope is the list in its section and is fixed; anything more goes to Phase 1 or later. The server listens on `127.0.0.1` only, and nothing is deployed until Phase 1's step 6 and its *Before step 6 goes live* list (R-14). |
 
 ## 7. Scope control
 
@@ -611,3 +689,4 @@ never goes here, as that section says.
 | 2026-10-27 | Section 5 is a record of decisions and their answers, not where the Team Lead is asked: each decision request goes to the Team Lead right away, where it came up. From the Team Lead, on #132. |
 | 2026-10-27 | D-9 (sign-in `state` in a signed cookie, against login CSRF), D-10 (the ripple check's context check), D-11 (the ripple check searches every Markdown file), and D-12 (the PR's owner fixes files with no owner) added to section 5 as settled, from the Team Lead. |
 | 2026-10-27 | Section 5 is renamed *Product decisions* and holds only the Canvas portal's decisions. D-10 to D-12, about the team's process, moved to the new [team decision register](/team/decision-register.md) as TD-19 to TD-21, from the Team Lead. |
+| 2026-11-02 | Phase 0 reopened, from the Team Lead: it now ends with a local proof of concept, a release that runs only on `localhost` with the simplest code and fewest third-party dependencies, and shows every assignment from the student's active courses in one read-only list. No sign-in, database, hosting, or deploy in Phase 0; D-3 and D-7 are unchanged for Phase 1. Added the Phase 0 row in section 2, milestone M0b, D-14 (built with Python's standard library and plain HTML, no third-party dependencies, from the Team Lead), and R-16. The requirements index follows in its own pull request, since the Team Lead asked for one document at a time. |

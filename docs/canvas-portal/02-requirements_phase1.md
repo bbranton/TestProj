@@ -277,7 +277,7 @@ file's row in the same PR.
 | NFR-12 | A user's Canvas connection, Canvas data, and board are visible only to that user. | 1 |
 | NFR-13 | The portal calls only Canvas read (`GET`) endpoints. | 1 |
 | NFR-14 | Out of respect for student privacy rules such as FERPA (US student records law), the portal loads no analytics, advertising, or other third-party scripts, and sends course data only to the signed-in user's browser. Google sign-in (FR-50) sees only who the user is, never course data. | 1 |
-| NFR-15 | The Canvas token is sent only to the user's Canvas host, over HTTPS with the server's certificate checked. The portal refuses a Canvas address that doesn't use HTTPS, and follows no redirect or paging link whose scheme, host, or port differs from the Canvas address's. | 1 |
+| NFR-15 | The Canvas token is sent only to the user's Canvas host, over HTTPS with the server's certificate checked. The portal refuses a Canvas address that doesn't use HTTPS, and follows no redirect or paging link whose scheme, host, or port differs from the Canvas address's. A refused address or link sends no request with the token. | 1 |
 
 ### 5.3 Reliability
 
@@ -408,3 +408,4 @@ in the [Phase 0 requirements](/docs/canvas-portal/02-requirements_phase0.md#4-no
 | 2026-10-26 | Team Lead: the orphaned-card show/hide option (FR-45) and the Refresh summary's count of removed assignments (FR-16) move to Phase 1. |
 | 2026-10-26 | Team Lead: course label colors (FR-66) move to Phase 5; until then strips and course buttons use one neutral color and show the course code (FR-65, FR-78). |
 | 2026-11-02 | Split by phase, from the Team Lead: this file is renamed from `02-requirements.md` and holds Phase 1 and later; Phase 0's local proof of concept, from the Team Lead's rescoping of Phase 0 in the roadmap (#158), is in the new `02-requirements_phase0.md`. Added NFR-15 (the token goes only to the student's Canvas host, over HTTPS with the certificate checked); NFR-10 also keeps the token off the page and out of the browser; NFR-12 says "Canvas data" instead of "cached Canvas data". |
+| 2026-11-02 | NFR-15 adds Phase 0's sentence that a refused address or link sends no request with the token, from the cybersecurity engineer's re-check of #162. |

@@ -99,8 +99,8 @@ without a persona.
 
 ## Canvas portal phases
 
-- The current phase is **Phase 1** (read-only viewer). The Team Lead
-  changes this line when a new phase starts.
+- The current phase is **Phase 0** (setup and local proof of concept). The
+  Team Lead changes this line when a new phase starts.
 - Build only the requirements listed under *Requirements by phase* in the
   current phase's requirements file:
   [Phase 0](/docs/canvas-portal/02-requirements_phase0.md#requirements-by-phase)

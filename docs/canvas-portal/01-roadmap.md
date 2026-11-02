@@ -197,8 +197,8 @@ in the Phase 0 requirements file.
   the token in no log, error, page, or address, and sent to no host but
   the Canvas address in `.env`; the server can't be reached from another
   computer, or read by a page from another site.
-- Released: the Team Lead merges the `develop` → `main` release with the
-  proof of concept (milestone M0b).
+- Released: the Team Lead merges the app repository's `develop` → `main`
+  release with the proof of concept (milestone M0b).
 
 ### Phase 1: Read-only viewer (minimum viable product)
 
@@ -553,7 +553,7 @@ database, and the domain) is decided, with its cost.
 | ID | Milestone | Phase | Shows that | Status |
 |----|-----------|-------|------------|--------|
 | M0 | Empty app builds in CI | 0 | Tooling works end to end | Reached 2026-10-25 |
-| M0b | Local proof of concept released | 0 | The Team Lead's real assignments from every active course show in one list on `localhost`, released to `main` | |
+| M0b | Local proof of concept released | 0 | The Team Lead's real assignments from every active course show in one list on `localhost`, released to the app repository's `main` | |
 | M1 | First real assignment list | 1 | Canvas connection works: after step 3 of Phase 1's order of work, the Team Lead's real courses and assignments come back from a Refresh | |
 | M2 | Viewer complete | 1 | MVP usable day to day on the private test deploy: Phase 1's exit criteria are met | |
 | M3 | Dragging saves and syncs | 2 | Core organizing feature works on every device | |

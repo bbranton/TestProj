@@ -8,8 +8,8 @@ colors or fonts. They are drawn here as text so they can be reviewed and
 changed in pull requests. Workflows show how a user moves between screens to
 get something done.
 
-The UI specification is split into one file per phase (Team Lead,
-2026-11-02). This file covers Phase 1, and keeps the sketches of later
+The UI specification is split into one file per phase.
+This file covers Phase 1, and keeps the sketches of later
 phases as a starting point until each later phase gets its own file.
 Phase 0's local proof of concept is in
 [UI specification: Phase 0](/docs/canvas-portal/04-ui-specification_phase0.md).

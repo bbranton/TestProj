@@ -4,8 +4,8 @@
 
 This file specifies the user interface of Phase 0's local proof of
 concept: one page, S-0, that runs only on the student's own computer.
-The UI specification is split into one file per phase (Team Lead,
-2026-11-02). Phase 1 and the sketches of later phases are in
+The UI specification is split into one file per phase.
+Phase 1 and the sketches of later phases are in
 [UI specification: Phase 1](/docs/canvas-portal/04-ui-specification_phase1.md),
 which replaces S-0 with sign-in and the board.
 

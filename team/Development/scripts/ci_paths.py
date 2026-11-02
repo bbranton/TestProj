@@ -4,7 +4,7 @@
   ci_paths.py [BASE]   compare HEAD with BASE (default origin/develop)
 
 Reads the `paths:` filters in .github/workflows/*.yml. Only the one-line
-form `paths: ["a/**", "b"]` is understood, which is what this repo uses.
+form `paths: ["a/**", "b"]` is understood, which is the form every workflow here uses.
 A workflow with a `changes` job starts on every PR but runs its other jobs
 only when a file matches its push paths filter, so for those the push
 filter decides.

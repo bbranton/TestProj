@@ -133,6 +133,6 @@ Don't copy `.github/workflows/`, since workflows depend on the product.
 Write new ones using the TestProj repo's as the pattern, and deploy only from
 `main`.
 
-Then search for `TestProj`,
+Then search for `TestProj`, `CanSync`,
 `bbranton`, `canvas`, `FR-`, and `student`, and change each hit for the
 new product.

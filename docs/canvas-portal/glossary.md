@@ -106,7 +106,7 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 | Term | Meaning |
 |------|---------|
 | Team Lead | The project owner, who has the final say on decisions and on releases to `main`, as [Team personas](/CLAUDE.md#team-personas) and [Branches](/CLAUDE.md#branches) say. |
-| Phase Lead | The person who takes over from the Team Lead to run a phase in the app repository, starting with Phase 0 (TD-25 in the [team decision register](/team/decision-register.md)). |
+| Phase Lead | The person who takes over from the Team Lead to run Phase 0 in the app repository (TD-25 in the [team decision register](/team/decision-register.md)). |
 | Persona | A role an agent takes on, such as the UI/UX designer or the cybersecurity engineer, with its own area and review checklist. The list is in the [team README](/team/README.md). |
 | Owner | The persona that writes a piece of work and answers its findings. |
 | Reviewers | The personas that review a PR, picked as [Who reviews what](/team/review-protocol.md#who-reviews-what) says. |

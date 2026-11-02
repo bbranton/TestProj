@@ -1,6 +1,6 @@
 # Design
 
-**Status:** Draft · **Owner:** Team Lead · **Last updated:** 2026-10-25
+**Status:** Draft · **Owner:** Team Lead · **Last updated:** 2026-11-02
 
 This document describes how the portal is built: its parts, the data it
 stores, how those parts talk to each other, and how each part meets the
@@ -19,7 +19,7 @@ Build only the parts listed for the current phase (see the repo's
 
 | Phase | Builds |
 |-------|--------|
-| 0 | Repository layout (section 8), empty frontend and backend, CI |
+| 0 | Repository layout (section 8), empty frontend and backend, CI; the local proof of concept (section 13), in its own folder, with none of the tables, endpoints, or components of later phases |
 | 1 | Tables `USER`, `SESSION`, `CANVAS_CONNECTION`, `BOARD`, `LIST`, `CARD`, `CANVAS_CACHE`, `REFRESH_RUN`, without the columns marked Phase 2 or 3, and with the unique card rule; the Phase 1 endpoints in section 4; sign-in (section 5); talking to Canvas, caching, *Built from the start*, *Refresh progress*, and *Saving a complete Refresh* (section 6); security (section 7); the board with only Backlog shown, course buttons, the filter menu with its orphaned-cards option, the removed count in the Refresh summary, visual style, the Refresh progress panel, and the Phase 1 interactions (section 9) |
 | 2 | Moving cards and *Keeping devices in sync* (section 4): the Phase 2 endpoints and `change_seq`; dragging, showing To do, In progress, and Done, sharing the width and scrolling sideways, and minimize and expand (section 9) |
 | 3 | *Phase 3 tuning*, *Bringing the backend in step with Canvas*, and *What can change in Canvas* (section 6); `CARD.archived` |
@@ -74,6 +74,7 @@ both.
 | Token encryption | Fernet, from the `cryptography` Python library | Proposed; needs the Team Lead (new dependency, token storage) | Authenticated encryption in one call; `MultiFernet` lets the key be replaced later without losing stored tokens |
 | Background Refresh | An `asyncio` task inside the one server process | Proposed | Nothing extra to build; it needs a host that keeps one server process running, which the DevOps engineer weighs when choosing the host (roadmap D-3) |
 | Hosting | See roadmap D-3 | Open | |
+| Phase 0 proof of concept | Python 3.12's standard library only (`http.server`, `urllib.request`, `json`, `unittest`), and one plain HTML page with one script and one stylesheet, no build step | **Decided (D-14)** | No third-party runtime or test dependencies, so it runs with only Python installed. Phase 1 replaces it with the choices above; see section 13 |
 | Formatting and linting | Ruff for the backend; Prettier and ESLint for the frontend, with typescript-eslint, ESLint's `react-hooks` rules and `no-console`, and `eslint-config-prettier` so the two don't clash | **Decided (Team Lead, [#143](https://github.com/bbranton/TestProj/issues/143))** | Dev dependencies only, so nothing ships to the live app. CI runs all three, so reviewers stop checking style by hand. `react-hooks` catches real bugs, and `no-console` keeps the Canvas token out of the browser console. The commands are in [Coding standards](/team/Development/coding-standards.md), and CI is the DevOps engineer's |
 
 ## 3. Data model
@@ -684,6 +685,10 @@ sequenceDiagram
 
 ## 7. Security
 
+The Phase 0 proof of concept applies only some of these rows, and adds a
+`Host` check of its own, as its
+[security table](#phase-0-security) says.
+
 | Concern | Design | Requirements |
 |---------|--------|--------------|
 | Token theft from the database | Tokens are encrypted with a key held only in the server's environment settings, not in the database or the repo | NFR-11 |
@@ -719,6 +724,8 @@ canvas-portal/
   .env.example      lists settings; the real .env is git-ignored. Phase 1
                     adds DATABASE_URL, SESSION_SECRET (signs the OAuth
                     "state"), and TOKEN_ENCRYPTION_KEY
+  poc/              the Phase 0 proof of concept (section 13); removed in
+                    Phase 1
 docs/canvas-portal/ these documents
 ```
 
@@ -810,6 +817,7 @@ designed here (section 12).
 | NFR-20, NFR-22 (reliability, sync) | Sections 3, 4 (keeping devices in sync), 6 |
 | NFR-30, NFR-32, NFR-34 (browsers, accessibility, Trello style) | Sections 2, 9, User Interface Specification |
 | NFR-40 to NFR-42 (maintainability) | Sections 4 (health check), 7, 8 |
+| Phase 0 proof of concept: FR-2, FR-6, FR-10 to FR-12, FR-20, FR-21, FR-26, FR-38, NFR-10, NFR-13, NFR-14, NFR-41, NFR-42, in full or in part | Section 13. The requirements' *Requirements by phase* sets which ones Phase 0 builds |
 
 ## 12. Leave room for later
 
@@ -836,6 +844,281 @@ possible without reworking what Phases 1 to 4 build:
 - **Keep every Canvas call inside the Canvas client.** Canvas GraphQL (a
   Phase 5 idea, Q-10) would then be a change to one module, if `POST`
   queries are ever allowed.
+
+## 13. Phase 0 proof of concept
+
+Phase 0, in the roadmap's
+[Phases in detail](/docs/canvas-portal/01-roadmap.md#3-phases-in-detail),
+ends with a proof of concept: one student's assignments from every active
+course, in one read-only list, on the student's own computer only. It is
+built with Python's standard library and a plain HTML page (D-14). This
+section is its whole design. Nothing else in this document applies to it
+unless this section says so, and none of it is built on in Phase 1.
+
+It assumes a computer used by one person, the student. Listening on
+`127.0.0.1` keeps other computers out, but not other user accounts on
+the same computer, which could call it and see the student's name and
+assignments, though never the token. Don't run it on a shared computer.
+
+### Parts
+
+```mermaid
+flowchart LR
+    subgraph PC["The student's computer"]
+        P["Page<br/>index.html, app.js"]
+        S["server.py<br/>127.0.0.1 only"]
+        L["assignments.py<br/>builds the list"]
+        C["canvas.py<br/>Canvas client"]
+        E[".env, outside the clone<br/>address, token"]
+    end
+    CV["Canvas"]
+
+    P -- "GET /api/assignments" --> S
+    S --> L
+    L --> C
+    E --> S
+    C -- "HTTPS, token, GET only" --> CV
+```
+
+| File in `canvas-portal/poc/` | What it does |
+|------------------------------|--------------|
+| `server.py` | Reads the settings, checks every request's `Host`, serves the page, and answers `GET /api/assignments`. Run with `python3 server.py`. |
+| `assignments.py` | Fetches everything for one load through the Canvas client and builds the answer: the fields the page shows, the sort order, the empty and error messages, and the failed courses. All the logic is here, so `unittest` tests cover it. |
+| `canvas.py` | The only code that talks to Canvas, with the rules under *Canvas client* below. |
+| `static/index.html`, `static/app.js`, `static/style.css` | The page. It only shows what the server sends. |
+| `tests/` | `unittest` tests, and `tests/fixtures/` with recorded Canvas responses for made-up students, never the Team Lead's real data, since the repo is public (A-3, NFR-41). |
+
+Nothing is saved: each load fetches from Canvas and keeps the result in
+memory only for that request. There is no database, sign-in, session
+cookie, cache, or background Refresh.
+
+### Settings
+
+The real token must never be in the repo clone: a Claude session or the
+Remote Control pull can work in that folder, and the token could reach a
+transcript, as the
+[security register](/team/QA/security-register.md)'s threat picture says.
+So `server.py` reads its settings file from the path in the `POC_ENV_FILE`
+environment variable, or from `~/.config/canvas-portal-poc/.env` if that
+isn't set. The file uses the same names as
+[`.env.example`](/canvas-portal/.env.example):
+
+- `CANVAS_BASE_URL`: must be `https://` and a host, with an optional
+  port, and nothing else: no path (a trailing `/` is fine), query,
+  fragment, or user name. An `http://` address is refused.
+- `CANVAS_TEST_TOKEN`: the student's personal access token. Must not be
+  empty.
+- `POC_PORT`: optional, the port to listen on, 8000 if missing.
+
+The file is simple `NAME=value` lines; blank lines and lines starting with
+`#` are skipped. The server doesn't start, and says why without showing
+any value from the file, if:
+
+- a setting is missing or wrong (it names the setting);
+- the file is inside the repo clone (the folder that holds `poc/`);
+- on macOS or Linux, other users can read the file: any group or other
+  permission bit is set. `chmod 600` fixes it. The address is
+typed by the student on their own computer, so the check in section 7
+that it resolves only to public addresses isn't needed in Phase 0.
+
+### Server
+
+- **Listens on `127.0.0.1` only.** The address is fixed in the code, not
+  a setting, so no other computer can reach it. It uses
+  `http.server.ThreadingHTTPServer`.
+- **One load at a time.** A lock lets only one
+  `GET /api/assignments` talk to Canvas at once; a second waits for the
+  first to end, then runs its own.
+- **Checks `Host` first.** Every request whose `Host` header isn't exactly
+  `127.0.0.1:<port>` or `localhost:<port>` (any case for `localhost`)
+  gets `400` with the error `invalid_host`, before anything else runs. A
+  missing `Host` gets the same. This stops a page from another site
+  reading the answers through DNS rebinding.
+- **Refuses requests started by other sites.** A request whose
+  `Sec-Fetch-Site` header is present and isn't `same-origin` or `none`
+  gets `403`, `cross_site`. Another site's page can't read the answer
+  anyway, but without this an `<img>` tag on it could still start loads,
+  each one using the token and Canvas's rate limit.
+- **Sends no CORS headers,** so the browser stops other sites' pages from
+  reading the answers.
+- **Routes:**
+
+| Method and path | Answer |
+|-----------------|--------|
+| `GET /` | `static/index.html` |
+| `GET /app.js`, `GET /style.css` | The script and stylesheet, from a fixed list; no other file is served |
+| `GET /api/assignments` | Fetches from Canvas now, and answers with the list below |
+| Any other path | `404`, `not_found` |
+| Any other method | `405`, `method_not_allowed` |
+
+- **Headers on every answer:** `Cache-Control: no-store`,
+  `X-Content-Type-Options: nosniff`, and `Referrer-Policy: no-referrer`.
+  The page also gets
+  `Content-Security-Policy: default-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`,
+  so it can load nothing from another site (NFR-14).
+- **Errors** use the shape in section 4,
+  `{"error": "<code>", "message": "<text>"}`.
+- **Logging:** the server replaces `http.server`'s request log with one
+  line per request: the method, the path without its query, and the
+  status. It never logs headers. An unexpected exception answers `500`,
+  `internal_error`, and is logged with only its type and the file, line,
+  and function of each stack frame, as section 4's *What the handler
+  logs* says.
+
+### `GET /api/assignments`
+
+```json
+{
+  "user_name": "Student's name in Canvas",
+  "fetched_at": "2026-11-02T18:00:00Z",
+  "message": null,
+  "assignments": [
+    {
+      "name": "Essay 2",
+      "course_code": "ENG 101",
+      "due_at": "2026-11-05T05:59:00Z",
+      "html_url": "https://school.instructure.com/courses/1/assignments/2"
+    }
+  ],
+  "failed_courses": [
+    {"course_code": "BIO 110", "message": "Couldn't load this course."}
+  ]
+}
+```
+
+- **Fields:** only these. The server copies them out of Canvas's
+  answers and passes nothing else through (NFR-10). `user_name` is the
+  student's Canvas name (FR-2). `html_url` is kept only if it is `https`
+  on the Canvas host; otherwise it is `null` and the page shows no link.
+- **Order (FR-38):** by `due_at`, compared in UTC, earliest first; then by
+  name; assignments with no due date last, in name order.
+- **`message`:** `null`, or the text to show instead of the list when the
+  student has no active courses or no assignments (FR-20).
+- **`failed_courses`:** each course whose assignments couldn't be fetched.
+  The other courses still show.
+- **Whole-load errors**, in the shape above:
+
+| Code | HTTP status | When |
+|------|-------------|------|
+| `canvas_token_rejected` | 409 | Canvas answers `401` when asked for the student's profile (FR-6) |
+| `canvas_unreachable` | 502 | The profile or the course list can't be fetched: no connection, a certificate or `https` failure, no answer within the time limit, a redirect, a paging link to another host, or a `5xx` |
+| `internal_error` | 500 | Anything else |
+
+Every `message`, for the whole load and each failed course, is the
+text the
+[UI specification](/docs/canvas-portal/04-ui-specification.md) sets for
+that case. It is written by the server, never copied from Canvas or from
+an exception, so it can never hold the token.
+
+### Canvas client
+
+`canvas.py` uses the three `GET` endpoints in
+[section 6](#endpoints-used-all-get-nfr-13), unchanged, so the recorded
+responses carry over to Phase 1. For each load it fetches the profile,
+then the active courses, then each course's assignments.
+
+- **One request at a time,** one course after another. That keeps well
+  under Canvas's rate limit (C-2) with no retry logic. A course that hits
+  the limit fails, and the others still show.
+- **`GET` only (NFR-13).** The client has no other method.
+- **The token goes only to the Canvas host, over `https`.** Before every
+  request, the client checks that the URL's scheme is `https` and its host
+  and port are exactly those of `CANVAS_BASE_URL`. If not, it sends
+  nothing, and that course, or the whole load, fails. The token goes in
+  the `Authorization: Bearer` header of each request, never in a URL,
+  added with `add_unredirected_header`, so `urllib` never copies it onto
+  a redirected request.
+- **No redirects.** `urllib.request` follows redirects by default and
+  copies headers added with `add_header` to the new host. The client
+  builds its opener with a redirect handler that follows none, so any
+  `3xx` answer is a failure. With the header above, that makes two
+  separate guards.
+- **Certificates are checked,** with the standard library's default
+  `https` settings, which are never turned off.
+- **Paging (FR-12):** the client follows the `Link` header's `rel="next"`
+  URL, after the host check above, until there is none, and stops with a
+  failure after 100 pages, so a loop in the links can't hang a load.
+- **Time limits:** every request has a 30-second timeout, the same as
+  Phase 1's. `urlopen` has none unless one is passed. A whole load also
+  has a 2-minute deadline: when it passes, no more requests are sent, and
+  each course not yet fetched fails, named. A timeout or the deadline
+  fails that course, or the whole load if it was the profile or the
+  course list.
+- **Logging:** the client logs each call's path and status, never its
+  headers or query.
+
+### Page
+
+`index.html` loads `app.js` and `style.css`, and nothing from any other
+site. `app.js` calls `GET /api/assignments` each time the page loads,
+including the browser's reload; there is no Refresh button in Phase 0.
+It then shows the student's name, the list, the
+failed courses, or the error message, as the server sent them. It builds
+the page with `textContent` and `createElement`, never `innerHTML`, so
+text from Canvas can't run as code. Each assignment links to its
+`html_url` in a new tab, with `rel="noopener noreferrer"` (FR-26). It
+shows due dates in the device's time zone; everything else is decided by
+the server. What the page looks like and says is the UI specification's.
+
+### Testing seams
+
+The tests use `unittest` and need no network and no real token. How they
+are written, and which cases they cover, is the
+[test plan](/docs/canvas-portal/05-test-plan.md)'s; the design keeps
+these seams so each case has a clear pass or fail:
+
+- **Canvas calls are replaceable.** `canvas.py` makes every request
+  through one `fetch(url, headers)` function, given to it when it is
+  created. Tests give a fake that answers from `tests/fixtures/` and
+  records each URL and header it was sent, so a test can check that the
+  token went to no other host.
+- **The opener is separate.** The function that builds the no-redirect
+  opener can be tested on its own against a local `http.server` that
+  answers with a redirect, to check it raises without a second request.
+- **The server runs in a test,** on `127.0.0.1` with port `0` and a fake
+  Canvas client, so tests can send a wrong `Host` (expecting `400`,
+  `invalid_host`), check that no `Access-Control-*` header is sent, and
+  check the token appears in no answer or log.
+- **Settings are a function** that takes the `.env` text, so a test can
+  check that an `http://` address, a path, or an empty token is refused.
+- **The file checks are a function** that takes a path, so a test can make
+  a temporary file and check that one inside the clone, or one other
+  users can read, is refused, and that the refusal shows nothing from
+  the file.
+- **The clock is replaceable,** so a test can pass the 2-minute deadline
+  without waiting.
+
+### Phase 0 security
+
+Which [section 7](#7-security) rows apply to the proof of concept, and
+what it adds:
+
+| Concern | In Phase 0 |
+|---------|------------|
+| Token leaking through logs | Applies: the server's own request log, and the client's, never hold headers; errors log only fixed fields (NFR-10) |
+| Token reaching the browser | Applies: no answer holds the token (NFR-10) |
+| Token in an address | Applies: the token is only ever in the `Authorization` header to Canvas (NFR-10) |
+| Writes to Canvas | Applies: `GET` only (NFR-13) |
+| Token sent to the wrong host | Applies: no redirects, and a host check on every URL, paging links included |
+| A Canvas address that points somewhere else | `https` is required; the public-address check isn't needed, since the student types the address on their own computer |
+| Trackers | Applies, with the `Content-Security-Policy` above (NFR-14) |
+| Test tokens | Applies: CI uses recorded responses (NFR-41) |
+| Other computers reaching the server | New: listens on `127.0.0.1` only |
+| Other websites reading the server | New: the `Host` check and no CORS headers (NFR-12) |
+| Other websites starting loads | New: `Sec-Fetch-Site` check, one load at a time, and the 2-minute deadline |
+| The token reaching a transcript | New: the settings file must be outside the repo clone and readable only by its owner; the server refuses to start otherwise |
+| Other user accounts on the same computer | Not covered: the proof of concept assumes a one-person computer, as this section's start says |
+| Canvas text running as code in the page | New: the page never uses `innerHTML`; links must be `https` on the Canvas host |
+| Token theft from the database; deleted accounts in backups | Don't apply: no database. The token stays in the settings file on the student's own computer, as the roadmap's Phase 0 says |
+| Other sites acting as the user; login CSRF; one user seeing another's data | Don't apply: no sign-in, no cookie, and one student |
+
+### What happens in Phase 1
+
+Phase 1 builds the design in sections 1 to 12 and deletes `poc/`. Its
+recorded Canvas responses, for made-up students only, move to
+`backend/tests/fixtures/`, and its test
+cases are carried into the pytest tests, which run `unittest` tests
+unchanged.
 
 ## Open decisions raised here
 
@@ -920,3 +1203,4 @@ the data side.
 | 2026-10-27 | Error logs hold an exception's type and place, never its text, a request body, or the sign-in `code` and `state`, from the Requirements engineer on PR #141 (X-3, X-4). |
 | 2026-10-27 | Sign-in `state` kept in a short-lived signed cookie and checked on the callback (login CSRF), fixed redirect paths, and the fields each error and sign-in failure log may hold, from the cybersecurity engineer on PR #141. The Team Lead confirmed the signed `state` cookie and fixed redirect paths the same day (D-9). |
 | 2026-10-27 | Formatting and linting row in section 2: Ruff, Prettier, and ESLint as dev dependencies run in CI, from the Team Lead on [#143](https://github.com/bbranton/TestProj/issues/143). |
+| 2026-11-02 | Phase 0 local proof of concept, from the Team Lead's rescope of Phase 0 (roadmap [#158](https://github.com/bbranton/TestProj/pull/158), D-14): new section 13 designs it with Python's standard library and a plain page, in `canvas-portal/poc/`, with a `Host` check, no redirects, a host check on every Canvas URL, 30-second timeouts, one course at a time, and seams for `unittest` tests (the architect's and test engineer's notes F-1, F-2, F-6, F-8, F-9 on #158); *Design by phase* Phase 0 row, section 2 row, section 7 pointer, section 8 folder, and section 11 row added. |

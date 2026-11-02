@@ -102,13 +102,13 @@ it in one place, before Phase 1 adds sign-in, a database, and a deploy.
 - **One student, set up by hand.** The Canvas address and the student's
   personal access token go in the git-ignored local `.env`, never in the
   repo. There is no connect screen yet.
-- **What it shows.** On each page load or Refresh the portal fetches the
-  active courses and their assignments from Canvas, following Canvas's
-  paging, and shows them all in one read-only list sorted by due date,
-  each with its course code, due date, and a link that opens it in Canvas
-  in a new tab. The student's Canvas name shows at the top, so a wrong
-  token is easy to spot. Nothing is saved between runs: the data is held
-  in memory only.
+- **What it shows.** Each time the page loads, including the browser's
+  reload, the portal fetches the active courses and their assignments from
+  Canvas, following Canvas's paging, and shows them all in one read-only
+  list sorted by due date, each with its course code, due date, and a link
+  that opens it in Canvas in a new tab. The student's Canvas name shows at
+  the top, so a wrong token is easy to spot. Nothing is saved between
+  runs: the data is held in memory only.
 - **Clear errors** for a token Canvas rejects or a Canvas address that
   can't be reached, or doesn't answer in time. If one course's assignments
   can't be fetched, the other courses still show, and the failed course is
@@ -122,7 +122,8 @@ it in one place, before Phase 1 adds sign-in, a database, and a deploy.
 - **Tested without a real token.** The backend's tests run in CI against
   recorded Canvas responses.
 - **Not in Phase 0:** the board's lists and Trello look, filters, orphaned
-  cards, Refresh progress, saved data, and everything else in Phase 1.
+  cards, the Refresh button and its progress, saved data, and everything
+  else in Phase 1.
   Phase 1 replaces the proof of concept's code with FastAPI and React,
   keeping its recorded Canvas responses and test cases (D-14).
 

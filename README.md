@@ -9,10 +9,10 @@ Starting a new project like this one? See
 
 ## Canvas Assignments Portal
 
-`canvas-portal/` holds the first product: a FastAPI backend and a React +
-TypeScript frontend, tested in CI on every pull request. It isn't deployed
-yet; `/canvas-portal/` on the site is a placeholder. To build, test, and run
-it locally, see the [Canvas portal README](/canvas-portal/README.md).
+The first product is planned here, in
+[docs/canvas-portal/](/docs/canvas-portal/README.md). Its code is built in
+the CanSync repo from Phase 0 on, and the TestProj repo keeps no app code.
+`/canvas-portal/` on the site is a placeholder.
 
 ## Site layout
 

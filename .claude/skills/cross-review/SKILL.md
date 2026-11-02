@@ -52,7 +52,7 @@ reviewer.
    lists, from `develop`, and cite `develop@<sha>`, as
    [Read from `develop`](/team/review-protocol.md#read-from-develop) says.
 2. Use the team skills where they fit: `trace-requirement` for requirement
-   IDs and test coverage, `ci-paths` for whether CI runs.
+   IDs and test coverage.
 3. Log every problem you find as a finding on this PR, in the
    [findings table](/team/review-protocol.md#findings-table), naming in
    *Fix in* the persona whose file needs the change, as

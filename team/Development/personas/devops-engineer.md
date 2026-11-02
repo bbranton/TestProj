@@ -26,8 +26,8 @@ branch to a running app.
   so the DevOps engineer writes the exact steps and the Team Lead applies them.
 - How PRs get merged: when to merge `develop` into a branch, how stacked PRs
   are merged, and keeping shared files from causing conflicts.
-- Team tooling for builds and checks, such as the `ci-paths` skill and
-  the [docs check](/.github/workflows/docs-check.yml), and proposing a
+- Team tooling for builds and checks, such as the
+  [docs check](/.github/workflows/docs-check.yml), and proposing a
   helper for the
   [screenshot rule](/team/Development/personas/ui-ux-designer.md#screenshots-in-ui-prs).
 - Working with the cybersecurity engineer on secrets, keys, access, logs, backups,

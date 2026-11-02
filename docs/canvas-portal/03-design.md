@@ -703,21 +703,25 @@ sequenceDiagram
 
 ## 8. Repository layout
 
+The app lives in the CanSync repo. The Phase Lead re-creates it there in
+Phase 0 and is asked how they want to set it up (D-17), so the layout
+below is a suggestion for Phase 1's FastAPI and React app, with paths
+from the CanSync repo's root.
+
 ```text
-canvas-portal/
-  README.md         how to run both parts locally (NFR-42)
-  backend/
-    app/            FastAPI app: routes, Canvas client, database models
-    migrations/     Alembic schema changes (from Phase 1)
-    tests/          pytest tests
-      fixtures/     recorded Canvas sample data (NFR-41)
-    pyproject.toml
-  frontend/
-    src/            screens and components, each with its Vitest test
+README.md           how to run both parts locally (NFR-42)
+backend/
+  app/              FastAPI app: routes, Canvas client, database models
+  migrations/       Alembic schema changes (from Phase 1)
+  tests/            pytest tests
+    fixtures/       recorded Canvas sample data (NFR-41)
+  pyproject.toml
+frontend/
+  src/              screens and components, each with its Vitest test
                     beside it (App.tsx and App.test.tsx)
-    e2e/            Playwright browser tests (from Phase 1)
-    package.json
-  .env.example      lists settings; the real .env is git-ignored. Phase 1
+  e2e/              Playwright browser tests (from Phase 1)
+  package.json
+.env.example        lists settings; the real .env is git-ignored. Phase 1
                     adds DATABASE_URL, SESSION_SECRET (signs the OAuth
                     "state"), and TOKEN_ENCRYPTION_KEY
 docs/canvas-portal/ these documents
@@ -921,3 +925,4 @@ the data side.
 | 2026-10-27 | Error logs hold an exception's type and place, never its text, a request body, or the sign-in `code` and `state`, from the Requirements engineer on PR #141 (X-3, X-4). |
 | 2026-10-27 | Sign-in `state` kept in a short-lived signed cookie and checked on the callback (login CSRF), fixed redirect paths, and the fields each error and sign-in failure log may hold, from the cybersecurity engineer on PR #141. The Team Lead confirmed the signed `state` cookie and fixed redirect paths the same day (D-9). |
 | 2026-10-27 | Formatting and linting row in section 2: Ruff, Prettier, and ESLint as dev dependencies run in CI, from the Team Lead on [#143](https://github.com/bbranton/TestProj/issues/143). |
+| 2026-11-02 | Section 8's layout is a suggestion for the CanSync repo, with paths from its root, since the app is re-created there and the Phase Lead is asked how to set it up (D-17), from the Team Lead's review of the release pull request. |

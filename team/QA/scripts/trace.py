@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Trace canvas portal requirement IDs through the docs and code.
+"""Trace canvas portal requirement IDs through the docs.
 
-  trace.py FR-12 [NFR-10 ...]   where each ID is defined, designed, specified, tested, and coded
+  trace.py FR-12 [NFR-10 ...]   where each ID is defined, designed, specified, and tested
   trace.py --untested [PHASE]   requirements (in PHASE, if given) that no test procedure names
 """
 import re
@@ -13,8 +13,6 @@ DOCS = ROOT / "docs" / "canvas-portal"
 # Each doc is one file, or split by phase into <doc>_phase0.md, <doc>_phase1.md, ...
 REQS = "02-requirements"
 TRACE_DOCS = ["03-design", "04-ui-specification", "05-test-plan"]
-CODE = ROOT / "canvas-portal"
-CODE_SUFFIXES = {".py", ".ts", ".tsx", ".js", ".jsx"}
 ROW = re.compile(r"^\|\s*((?:FR|NFR)-\d+)\s*\|(.*)\|\s*$")
 RANGE = re.compile(r"\b((?:FR|NFR))-(\d+) to (?:\1-)?(\d+)\b")
 
@@ -75,13 +73,6 @@ def trace(req_id, reqs):
         print(f"  {path.name}: {len(hits)} mention(s)")
         for n, line in hits[:5]:
             print(f"    {n}: {line[:110]}")
-    code_hits = [
-        p.relative_to(ROOT)
-        for p in CODE.rglob("*")
-        if p.suffix in CODE_SUFFIXES and "node_modules" not in p.parts
-        and re.search(rf"\b{req_id}\b", p.read_text(errors="ignore"))
-    ]
-    print(f"  code: {', '.join(map(str, code_hits)) or 'none'}")
 
 
 def untested(reqs, phase):

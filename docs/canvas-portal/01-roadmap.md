@@ -67,8 +67,8 @@ ready.
 **Before Phase 0: planning in the TestProj repo.** Preparing the plan
 isn't part of Phase 0. That work is done in the TestProj repo first:
 writing and reviewing the documents, settling the decisions in section 5
-that the plan needs, the `canvas-portal/` hello world skeleton with its
-CI (milestone M0), and confirming that the Team Lead's school allows
+that the plan needs, a hello world app with its CI (milestone M0),
+since removed, and confirming that the Team Lead's school allows
 personal access tokens (R-1).
 
 **Who runs Phase 0.** A Phase Lead takes over from the Team Lead to run
@@ -104,7 +104,8 @@ repo has its own rules, set by the Phase Lead.
   - Which of the product docs in `docs/canvas-portal/` go. No team
     files go, such as the personas, the review protocol, or the coding
     standards: the CanSync repo gets its own, in the next step.
-  - Whether step 3 copies the hello world app or re-creates it.
+  - How the Phase Lead wants to set up the app in step 3: its folders,
+    tools, and CI. The app is re-created there, not copied.
   - How the Phase Lead wants to run branches and protection: which
     branches, the rules on merging to them, and who merges into each. This is the Phase Lead's
     choice, and it will differ from the TestProj repo's.
@@ -145,19 +146,13 @@ repo has its own rules, set by the Phase Lead.
    the old copy.
 2. **The Phase Lead reviews the planning docs** in the CanSync repo and
    has them adjusted as needed, in pull requests there.
-3. **Copy or re-create the hello world app**, as chosen in D-17, with its
-   CI, as files without the TestProj repo's git history, and
-   `.env.example` holding placeholders only. The CI keeps the TestProj
-   repo's pattern: it runs on every pull request, with a `changes` job
-   that skips jobs without dropping their report. Its push trigger's
-   branches and paths change to the CanSync repo's. Once the app's CI
-   has reported in the CanSync repo, the Phase Lead makes the app's CI
-   checks required under the branch rules chosen in D-17. The TestProj
-   repo then removes the app's code and CI and fixes every link to what
-   moved, in one pull request. First, the Team Lead takes the `backend`
-   and `frontend` checks off the TestProj repo's `develop` ruleset,
-   keeping `docs`, or the removal can't merge. The DevOps engineer
-   writes the steps for both repositories then.
+3. **The Phase Lead re-creates the app** in the CanSync repo, with its
+   CI and `.env.example` holding placeholders only. Nothing is copied:
+   the TestProj repo keeps no app code. The project manager first asks
+   the Phase Lead how they want to set up the CanSync repo for it: its
+   folders, tools, and CI (D-17). Once the app's CI has reported there,
+   the Phase Lead makes its checks required under the branch rules
+   chosen in D-17. The DevOps engineer writes the steps.
 4. **Start work on the local proof of concept** below, in the CanSync
    repo.
 
@@ -176,8 +171,8 @@ it in one place, before Phase 1 adds sign-in, a database, and a deploy.
   Phase 1.
 - **No third-party dependencies** (D-14): the backend and its tests use
   only Python's standard library (tests use `unittest`), and the page is
-  plain HTML, CSS, and JavaScript with no build step. The FastAPI and
-  React skeleton (D-1, D-6) stays for Phase 1.
+  plain HTML, CSS, and JavaScript with no build step. FastAPI and
+  React (D-1, D-6) wait for Phase 1.
   Tools that run only in CI and never with the app, such as Ruff for
   linting, are allowed, and CI follows the usual good practice from
   Phase 0.
@@ -591,7 +586,7 @@ database, and the domain) is decided, with its cost.
 
 | ID | Milestone | Phase | Shows that | Status |
 |----|-----------|-------|------------|--------|
-| M0 | Empty app builds in CI | Planning | Tooling works end to end | Reached 2026-10-25 |
+| M0 | Empty app builds in CI | Planning | Tooling works end to end | Reached 2026-10-25; the app was then removed from the TestProj repo, and the Phase Lead re-creates it in Phase 0 step 3 |
 | M0b | Local proof of concept released | 0 | A real student's assignments from every active course show in one list on `localhost`, released in the CanSync repo by the Phase Lead | |
 | M1 | First real assignment list | 1 | Canvas connection works: after step 3 of Phase 1's order of work, the Team Lead's real courses and assignments come back from a Refresh | |
 | M2 | Viewer complete | 1 | MVP usable day to day on the private test deploy: Phase 1's exit criteria are met | |
@@ -628,7 +623,7 @@ right away, where it came up.
 | ~~D-14~~ | ~~What the Phase 0 proof of concept is built with~~ | **Python standard library and plain HTML, CSS, and JavaScript** (no third-party runtime dependencies and no frontend build step), **FastAPI with one plain HTML page** (the two backend dependencies the skeleton already has), **the existing skeleton, FastAPI and React with Vite** (D-1 and D-6 as they are), or leave it to the architect's recommendation in the design pull request | **Decided** (Team Lead, 2026-11-02): Python's standard library and plain HTML, CSS, and JavaScript, with no third-party runtime dependencies and no build step. Its tests use `unittest`, from the test engineer's recommendation, which the Team Lead left to the team (2026-11-02). CI-only tools, such as Ruff for linting, are allowed (Team Lead, 2026-11-02). Phase 1 moves it onto FastAPI and React, so D-1 and D-6 are unchanged from Phase 1 on. The project manager recommended it, as the simplest code with the fewest dependencies. | Done |
 | D-15 | Which requirements the Phase 0 proof of concept builds, and how NFR-40 applies to it | Approve the set, with the page tested in CI by a CI-only tool; **approve the set, with Phase 0 testing only the backend**; or use only the existing IDs | **Decided by the team, for the Team Lead's review** (2026-11-02): the set in the [Phase 0 requirements](/docs/canvas-portal/02-requirements_phase0.md), with only the backend tested in Phase 0 and a page that holds no logic. The requirements engineer first recommended a CI-only tool for the page; the project manager and the test engineer recommended backend-only tests. The Team Lead asked for the work to go into `develop` and reviews it on the `develop` → `main` release PR, where she can change it. Carried out in [#162](https://github.com/bbranton/TestProj/pull/162). | Team Lead's review on the release PR |
 | ~~D-16~~ | ~~How the Canvas portal docs are organized as phases are added~~ | One file per phase, `<doc>_phaseN.md`, for every doc but the roadmap | **Decided** (Team Lead, 2026-11-02, in a project thread): every doc but the roadmap is split into `<doc>_phaseN.md` files, and a later phase gets its file when its work starts. Who fixes the links is a team decision. Carried out in [#162](https://github.com/bbranton/TestProj/pull/162) (requirements) and [#163](https://github.com/bbranton/TestProj/pull/163) (UI specification). | Done |
-| D-17 | The CanSync repo's details: owner, name, visibility, what goes, branches and protection, security settings, access, and license | Asked as Phase 0's first step, each with the project manager's recommendation | **Decided in part** (Team Lead, 2026-11-02): the code goes in a new repository, not the TestProj repo, set up at the start of Phase 0. Once the project is ready to start development, the docs are copied there, and all work continues there instead of in the TestProj repo. The repository is named CanSync, and it's private. Only the project documentation is shared with the TestProj repo. Branches and protection are the Phase Lead's choice and will differ from the TestProj repo's. The other details are asked of the Phase Lead who runs Phase 0 and answered at that step, not before. | Phase 0's first step |
+| D-17 | The CanSync repo's details: owner, name, visibility, what goes, branches and protection, security settings, access, and license | Asked as Phase 0's first step, each with the project manager's recommendation | **Decided in part** (Team Lead, 2026-11-02): the code goes in a new repository, not the TestProj repo, set up at the start of Phase 0. Once the project is ready to start development, the docs are copied there, and all work continues there instead of in the TestProj repo. The repository is named CanSync, and it's private. The app is re-created there, not copied from the TestProj repo, and the Phase Lead is asked how to set it up. Only the project documentation is shared with the TestProj repo. Branches and protection are the Phase Lead's choice and will differ from the TestProj repo's. The other details are asked of the Phase Lead who runs Phase 0 and answered at that step, not before. | Phase 0's first step |
 
 ## 6. Risks
 
@@ -787,3 +782,4 @@ it; nobody starts on one before then. A
 | 2026-11-02 | The CanSync repo is private, from the Team Lead's review of the release pull request. D-17's visibility question is answered; the Actions minutes and secret scanning notes are for a private repository (the public TestProj repo's runs use no minutes), and Phase 1's secrets line no longer calls the repository public. |
 | 2026-11-02 | The CanSync repo gets its own `CLAUDE.md` and `team/`, set up with the Phase Lead in a new Phase 0 setup step, from the Team Lead. The project docs no longer link to the TestProj repo's team files or `CLAUDE.md`: section 3's screenshot and breach notes, sections 5 to 9, and the change log say what's needed in the doc itself. |
 | 2026-11-02 | D-17 asks which GitHub plan owns the private CanSync repo, since branch rules, required checks, and some environment protections are enforced there only on a paid plan; Phase 1's deploy secrets have a fallback if the plan can't protect them. From the DevOps engineer's review of #175. |
+| 2026-11-02 | Phase 0 step 3 re-creates the app in the CanSync repo instead of copying it, and the Phase Lead is asked how to set it up (D-17), from the Team Lead's review of the release pull request. The hello world app and its CI are removed from the TestProj repo now, so M0 notes the removal and step 3 no longer removes them later. |

@@ -7,7 +7,7 @@ code, and is the specialist in how code is written.
 
 ## Owns
 
-- All code under `canvas-portal/` and the other app folders.
+- All app code, which is kept in the CanSync repo, not the TestProj repo.
 - Unit tests for its own code. The test engineer writes and runs the
   tests the test plan calls for.
 - The [coding standards](/team/Development/coding-standards.md): style,

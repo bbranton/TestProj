@@ -105,7 +105,7 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 
 | Term | Meaning |
 |------|---------|
-| Team Lead | The project owner, who has the final say on decisions and on releases to `main`, as [Team personas](/CLAUDE.md#team-personas) and [Branches](/CLAUDE.md#branches) say. |
+| Team Lead | The project owner, who has the final say on decisions and on releases in the TestProj repo, as [Team personas](/CLAUDE.md#team-personas) and [Branches](/CLAUDE.md#branches) say. |
 | Phase Lead | The person who takes over from the Team Lead to run Phase 0: setting up the CanSync repo and building the local proof of concept (TD-25 in the [team decision register](/team/decision-register.md)). |
 | TestProj repo | The repository that holds the team, its personas and process, and the Canvas portal's planning docs until Phase 0 copies them to the CanSync repo. |
 | CanSync repo | The Canvas portal app's own repository, set up in Phase 0 (D-17 in the [roadmap](/docs/canvas-portal/01-roadmap.md#5-product-decisions)), where work on the app continues, as [Phase 0](/docs/canvas-portal/01-roadmap.md#phase-0-setup-and-local-proof-of-concept) says. |
@@ -163,3 +163,4 @@ These come up often in the docs. Each has a Qt comparison where one helps.
 | 2026-11-02 | Phase 0 in the *Phase* row is now *the app repository and a local proof of concept*, and the planning in the TestProj repo comes before it, from the Team Lead's reorder of Phase 0 in the roadmap (#169). |
 | 2026-11-02 | Added Phase Lead to the team process terms, from the Team Lead. |
 | 2026-11-02 | Added TestProj repo and CanSync repo to the team process terms, and the docs name each repository instead of saying "this repo" or "the app repository", from the Team Lead. |
+| 2026-11-02 | The Team Lead row says releases in the TestProj repo, since the CanSync repo's branches are chosen in D-17, from the Team Lead. |

@@ -74,7 +74,8 @@ personal access tokens (R-1), and this rescoping of Phase 0.
 
 **Who runs Phase 0.** A second, new Team Lead takes over to run
 Phase 0, and Phase 0 is about getting the new Team Lead set up to start
-the implementation (Team Lead, 2026-11-02, TD-25). In this section, "the
+the implementation (Team Lead, 2026-11-02, TD-25). Its primary
+deliverable is the local proof of concept (Team Lead, 2026-11-02). In this section, "the
 new Team Lead" means that person; "the Team Lead" alone means the Team
 Lead who led the planning.
 
@@ -201,14 +202,14 @@ in the Phase 0 requirements file.
 - App repository: it exists with the docs and green CI, set up as the
   new Team Lead decided in D-17; the new Team Lead has reviewed the
   planning docs there; and this repo no longer holds the app's code.
-- Proof of concept: the Team Lead runs it on `localhost` from the README
+- Proof of concept: the new Team Lead runs it on `localhost` from the README
   and sees the same assignments, for the same active courses, that Canvas
   shows for the student's account. CI is green, with the backend tests
   running on recorded Canvas responses for made-up students. A check shows
   the token in no log, error, page, or address, and sent to no host but
   the Canvas address in `.env`; the server can't be reached from another
   computer, or read by a page from another site.
-- Released: the Team Lead merges the app repository's `develop` → `main`
+- Released: the new Team Lead merges the app repository's `develop` → `main`
   release with the proof of concept (milestone M0b).
 
 ### Phase 1: Read-only viewer (minimum viable product)
@@ -564,7 +565,7 @@ database, and the domain) is decided, with its cost.
 | ID | Milestone | Phase | Shows that | Status |
 |----|-----------|-------|------------|--------|
 | M0 | Empty app builds in CI | Planning | Tooling works end to end | Reached 2026-10-25 |
-| M0b | Local proof of concept released | 0 | The Team Lead's real assignments from every active course show in one list on `localhost`, released to the app repository's `main` | |
+| M0b | Local proof of concept released | 0 | A real student's assignments from every active course show in one list on `localhost`, released to the app repository's `main` by the new Team Lead (TD-25) | |
 | M1 | First real assignment list | 1 | Canvas connection works: after step 3 of Phase 1's order of work, the Team Lead's real courses and assignments come back from a Refresh | |
 | M2 | Viewer complete | 1 | MVP usable day to day on the private test deploy: Phase 1's exit criteria are met | |
 | M3 | Dragging saves and syncs | 2 | Core organizing feature works on every device | |
@@ -755,4 +756,4 @@ never goes here, as that section says.
 | 2026-11-02 | Recorded D-15 (the Phase 0 requirements set, decided by the team for the Team Lead's review on the release PR) and D-16 (docs split by phase, from the Team Lead), with TD-24 in the team decision register. |
 | 2026-11-02 | Phase 0 starts by setting up a new app repository and copying the docs, and the skeleton if chosen, into it before development, from the Team Lead's review of the release pull request: the app's code isn't kept in this repo. The first step asks the Team Lead for the repository's details and leads the Team Lead through the setup; those details are D-17, answered then. Added R-17 (the two repositories drift apart). Added an exit criterion. |
 | 2026-11-02 | Phase 0 is reordered to the Team Lead's steps, from the Team Lead's review of the release pull request: after the app repository is set up, (1) copy the completed plan and docs there, (2) the Team Lead reviews and adjusts the planning docs, (3) copy or re-create the hello world app, (4) start the proof of concept. The planning work done in this repo, including the old *Setup* list and its exit criterion, is no longer part of Phase 0; M0 is marked as planning. |
-| 2026-11-02 | A second, new Team Lead takes over to run Phase 0, from the Team Lead's answer on the release pull request: Phase 0 gets the new Team Lead set up to start the implementation, so the new Team Lead answers D-17, sets up the app repository, and reviews the planning docs in step 2 (team decision TD-25). |
+| 2026-11-02 | A second, new Team Lead takes over to run Phase 0, from the Team Lead's answer on the release pull request: Phase 0 gets the new Team Lead set up to start the implementation, so the new Team Lead answers D-17, sets up the app repository, and reviews the planning docs in step 2 (team decision TD-25). The local proof of concept stays Phase 0's primary deliverable; the new Team Lead runs it and merges its release. |

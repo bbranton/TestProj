@@ -131,7 +131,10 @@ added with the phase that needs them. The fixtures cover:
   `<script>` tag, and an `onclick` attribute (FR-28)
 
 Fixtures contain no real names or data. When a fixture is recorded from a
-live account, names and IDs are replaced before it is committed. The Canvas
+live account, names and IDs are replaced before it is committed. This
+holds for the Phase 0 recordings too, which are likely to come from the
+Team Lead's own account, and a recording never keeps a token or an
+`Authorization` header. The Canvas
 teacher sandbox is the safest place to record from.
 
 ## 2. Pull request checklist
@@ -622,6 +625,19 @@ the real token. A slow Canvas, one failed course, and a redirect to another
 host can't be set up on real Canvas, so the Phase 0 rows of section 4
 check them.
 
+How it checks the roadmap's Phase 0 exit criteria for the proof of
+concept:
+
+| Exit criterion | Checked by |
+|----------------|------------|
+| Runs on `localhost` from the README | Steps 1 and 2 |
+| Same assignments, for the same active courses, as Canvas | Steps 3 to 5 |
+| CI green, with the backend tests on recorded Canvas responses | The Phase 0 rows of section 4 |
+| Token in no log, error, page, or address | Steps 7 and 10, and the NFR-10 row |
+| Token sent to no host but the Canvas address in `.env` | Step 11, and the NFR-10 row |
+| Can't be reached from another computer | Step 8, and the local only row |
+| Can't be read by a page from another site | Step 9, and the local only row |
+
 | Step | Action | Expected |
 |------|--------|----------|
 | 1 | Start a timer. Clone the repo and follow the README to set up and start the proof of concept, putting the Canvas address and student token in `.env` | It runs within 15 minutes (NFR-42), with nothing to install but what was already there: no `pip install`, `npm`, or build step (D-14). The terminal shows no token |
@@ -715,4 +731,4 @@ TP-14 timings go in their own table, one row per run:
 | 2026-10-25 | TP-07 (keyboard only), the NFR-31 and FR-73 automated tests, and the TP-13 shortcut step removed; TP-13 steps renumbered. From the Team Lead's review: keyboard actions are not a requirement. |
 | 2026-10-25 | FR-16 progress test; TP-05 step 2a checks the progress panel on failure; TP-14 reads times from the panel and uses the NFR-2 target. |
 | 2026-10-25 | In-depth QA review after PR #3: added *Procedures by phase* with entry and test exit criteria, a Phase column in the coverage table, and failure severity; added Phase 1 tests for FR-1 address checks, FR-4, FR-5, FR-13, FR-20, FR-22 (time zone, override, points and status on cards), FR-26, FR-50, FR-60, FR-66, NFR-10, NFR-11, NFR-14, and NFR-41, Phase 2 tests for NFR-3 and FR-80 drops, and an NFR-2 row of its own; FR-16 test covers rate-limit waits, joining a running Refresh, retry limits, and stuck runs; concurrency tests also run on Postgres; new fixtures; TP-01 signs in, disconnects, reconnects, and connects a different Canvas account (Q-8); FR-35 is Phase 1 (TP-03 step 9); NFR-30 is Chrome only until Phase 5; hidden courses and filtered-out cards don't count toward list counts; courses are chosen only with the course buttons; Course colors (FR-66) moved to Phase 5, with neutral strips until then; orphaned-card option and the Refresh summary's removed count are Phase 1 (TP-08 steps 5 and 6); Phase 1 scope cut: only Backlog is shown, the course buttons stay in Phase 1 as the only course control (FR-61, FR-80, and NFR-1 in Phase 2, Excused in Phase 5), and the orphan option resets on reload; Excused is its own label, beside Submitted and Graded; on-paper work stays Not submitted by design; NFR-11 HTTPS is checked on every deploy; date comparisons are checked in UTC (FR-22); `pending_review` fixture; NFR-37 full WCAG audit in Phase 5; NFR-32 checks name each WCAG criterion, with a grayscale step; the FR-65 test checks that red wins over green; TP-03 checks points and the override open check, and clicks the card instead of a missing ↗; TP-04 checks course buttons and the Phase 1 filter menu (FR-24, FR-72), including that a reload ends the filter; TP-05 uses Retry refresh and a rate-limit step; TP-08 no longer needs Phase 5 notes or the Archived view; TP-09 drops Ctrl+Enter; TP-10, TP-12, and TP-13 mark their phases correctly (NFR-30 is Phase 1); TP-14 uses Refresh and a timing table; FR-45 tests cover hidden cards in Phase 1 and the orphaned-card control and the Refresh summary's removed count in Phase 2 (TP-08 steps 5 and 6, also checked in TP-15 steps 7 and 8); TP-15 step 14 checks joining a running Refresh from a second device, and section 7 logs the Phase 3 week of daily Refreshes; added TP-16 (read-only board, Phase 1) and TP-17 (deployed app, Phase 4); accessibility tests start in Phase 4 and check only screens that exist; tests for board messages, S-2 messages, and an empty account (TP-16 step 6); manual checks for NFR-11 (TP-02), NFR-14 (TP-03), and NFR-41 (TP-05); fixture path matches the repo; availability date tests (*Opens* and *Closed*, TP-03 step 4, TP-15 step 5); status tests and fixtures follow the rewritten FR-23 rules (Submitted from `submitted_at`, Graded from four checks, submission types, no Pending review); "column" now "list". |
-| 2026-11-02 | Phase 0 local proof of concept (roadmap, #158; D-14): Phase 0 tests use `unittest` with Canvas stubbed at the network layer, no browser tests, and Ruff in CI; Phase 0 fixtures marked, with new ones for an empty account, a failing course, a Canvas that never answers, and links to another host; a local proof of concept environment; Phase 0 rows in section 4 for FR-2, FR-6, FR-10 to FR-12, FR-20, FR-21, FR-26, FR-38, NFR-10, NFR-13, NFR-14, NFR-40, NFR-41, clear errors, the token-only-to-Canvas rule, the `Host` check and no CORS headers, in memory only, and D-14; TP-18 (local proof of concept) is Phase 0's procedure; Chrome manual passes start in Phase 0. |
+| 2026-11-02 | Phase 0 local proof of concept (roadmap, #158; D-14): Phase 0 tests use `unittest` with Canvas stubbed at the network layer, no browser tests, and Ruff in CI; Phase 0 fixtures marked, with new ones for an empty account, a failing course, a Canvas that never answers, and links to another host; a local proof of concept environment; Phase 0 rows in section 4 for FR-2, FR-6, FR-10 to FR-12, FR-20, FR-21, FR-26, FR-38, NFR-10, NFR-13, NFR-14, NFR-40, NFR-41, clear errors, the token-only-to-Canvas rule, the `Host` check and no CORS headers, in memory only, and D-14; TP-18 (local proof of concept) is Phase 0's procedure, with a table of the roadmap exit criteria it checks; the scrubbing rule covers the Phase 0 recordings; Chrome manual passes start in Phase 0. |

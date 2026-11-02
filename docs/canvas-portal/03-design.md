@@ -1001,11 +1001,14 @@ then the active courses, then each course's assignments.
   request, the client checks that the URL's scheme is `https` and its host
   and port are exactly those of `CANVAS_BASE_URL`. If not, it sends
   nothing, and that course, or the whole load, fails. The token goes in
-  the `Authorization: Bearer` header of each request, never in a URL.
+  the `Authorization: Bearer` header of each request, never in a URL,
+  added with `add_unredirected_header`, so `urllib` never copies it onto
+  a redirected request.
 - **No redirects.** `urllib.request` follows redirects by default and
-  copies the `Authorization` header to the new host. The client builds
-  its opener with a redirect handler that follows none, so any `3xx`
-  answer is a failure.
+  copies headers added with `add_header` to the new host. The client
+  builds its opener with a redirect handler that follows none, so any
+  `3xx` answer is a failure. With the header above, that makes two
+  separate guards.
 - **Certificates are checked,** with the standard library's default
   `https` settings, which are never turned off.
 - **Paging (FR-12):** the client follows the `Link` header's `rel="next"`
@@ -1068,7 +1071,7 @@ what it adds:
 | Trackers | Applies, with the `Content-Security-Policy` above (NFR-14) |
 | Test tokens | Applies: CI uses recorded responses (NFR-41) |
 | Other computers reaching the server | New: listens on `127.0.0.1` only |
-| Other websites reading the server | New: the `Host` check and no CORS headers |
+| Other websites reading the server | New: the `Host` check and no CORS headers (NFR-12) |
 | Canvas text running as code in the page | New: the page never uses `innerHTML`; links must be `https` on the Canvas host |
 | Token theft from the database; deleted accounts in backups | Don't apply: no database. The token stays in the git-ignored `.env` on the student's own computer, as the roadmap's Phase 0 says |
 | Other sites acting as the user; login CSRF; one user seeing another's data | Don't apply: no sign-in, no cookie, and one student |

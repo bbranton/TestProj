@@ -65,8 +65,8 @@ there until Phase 4 publishes the app.
 **Status:** not started. It starts when the Team Lead says the plan is
 ready.
 
-**Before Phase 0: planning in this repo.** Preparing the plan isn't part
-of Phase 0 (Team Lead, 2026-11-02). That work is done here first:
+**Before Phase 0: planning in TestProj repo.** Preparing the plan isn't part
+of Phase 0 (Team Lead, 2026-11-02). That work is done in TestProj first:
 writing and reviewing the documents, settling the decisions in section 5
 that the plan needs, the `canvas-portal/` hello world skeleton
 with its CI (milestone M0), confirming that the Team Lead's school allows

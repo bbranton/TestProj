@@ -14,7 +14,9 @@ docs read clearly. It is not in scope until its phase starts, as the
 - **The requirements engineer owns what each term means.** A meaning changes in the
   same PR as the requirement it comes from.
 - **The UI/UX designer keeps the screen words in step.** The exact words on screen
-  live in the [UI specification](/docs/canvas-portal/04-ui-specification.md). A PR that changes
+  live in the UI specification, in its
+  [Phase 0](/docs/canvas-portal/04-ui-specification_phase0.md) and
+  [Phase 1](/docs/canvas-portal/04-ui-specification_phase1.md) files. A PR that changes
   a screen word changes its entry here too.
 - **The project manager keeps the team process terms in step** with the
   [review protocol](/team/review-protocol.md) and the
@@ -74,7 +76,7 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 | Late, Excused | Tags shown when Canvas marks the submission late or the student excused. They can appear with Submitted and Graded. | FR-23 |
 | Due badge | The due date and time, in the device's time zone. Red when Missing, otherwise green with ✓ when Submitted or Graded, otherwise plain. | FR-22, FR-65 |
 | Points | The points the assignment is worth, such as "20 pts". | FR-22 |
-| Submission type | How the student hands the work in, such as a file upload or on paper, from Canvas's `submission_types`. How each type is written on a card is in the [UI specification's S-4](/docs/canvas-portal/04-ui-specification.md#s-4-board-home-screen). | FR-23 |
+| Submission type | How the student hands the work in, such as a file upload or on paper, from Canvas's `submission_types`. How each type is written on a card is in the [UI specification's S-4](/docs/canvas-portal/04-ui-specification_phase1.md#s-4-board-home-screen). | FR-23 |
 
 ## Screen words
 
@@ -150,3 +152,4 @@ These come up often in the docs. Each has a Qt comparison where one helps.
 | 2026-10-27 | General error message says what the term is and links the UI specification for its words, instead of restating them (PR #141, F-11). |
 | 2026-10-27 | Other IDs adds `TD-`, a team decision in the team decision register, and `D-` is now a product decision, from the Team Lead's split of the decision registers (TD-22). |
 | 2026-11-02 | Added .env file to the screen words, for the Phase 0 proof of concept's messages on S-0 (PR #163, F-4). |
+| 2026-11-02 | Links to the UI specification point at its Phase 0 and Phase 1 files, from the Team Lead's split of the UI specification by phase (PR #163). |

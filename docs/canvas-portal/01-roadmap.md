@@ -120,7 +120,10 @@ it in one place, before Phase 1 adds sign-in, a database, and a deploy.
   host; the portal calls only Canvas `GET` endpoints and loads no
   third-party scripts.
 - **Tested without a real token.** The backend's tests run in CI against
-  recorded Canvas responses.
+  recorded Canvas responses for made-up students, never the Team Lead's
+  real data (A-3). Screenshots of the page follow the
+  [screenshot rule](/team/Development/personas/ui-ux-designer.md#screenshots-in-ui-prs),
+  since the page shows the student's Canvas name.
 - **Not in Phase 0:** the board's lists and Trello look, filters, orphaned
   cards, the Refresh button and its progress, saved data, and everything
   else in Phase 1.
@@ -144,10 +147,10 @@ FR-20, FR-21, FR-26, NFR-10, NFR-13, NFR-14, and NFR-41, with NFR-42's
 - Proof of concept: the Team Lead runs it on `localhost` from the README
   and sees the same assignments, for the same active courses, that Canvas
   shows for the student's account. CI is green, with the backend tests
-  running on recorded Canvas responses. A check shows the token in no log,
-  error, page, or address, and sent to no host but the Canvas address
-  in `.env`; the server can't be reached from another computer, or read
-  by a page from another site.
+  running on recorded Canvas responses for made-up students. A check shows
+  the token in no log, error, page, or address, and sent to no host but
+  the Canvas address in `.env`; the server can't be reached from another
+  computer, or read by a page from another site.
 - Released: the Team Lead merges the `develop` → `main` release with the
   proof of concept (milestone M0b).
 

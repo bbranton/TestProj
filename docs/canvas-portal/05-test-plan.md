@@ -110,13 +110,13 @@ added with the phase that needs them. The fixtures cover:
 - *(Phase 0)* A course with no assignments, and an account with no active
   courses (FR-20)
 - A `403 Rate Limit Exceeded` response followed by success (C-2, FR-16)
-- *(Phase 0)* A `401 Unauthorized` response (FR-6)
+- *(Phase 0)* A `401 Unauthorized` response (FR-6; in Phase 0, FR-17)
 - A course that answers slowly and one that times out (FR-16, NFR-20); in
   Phase 0, a Canvas that accepts the connection and never answers
 - *(Phase 0)* One course whose assignments fail, with a `403` or `500`,
-  while the others load
+  while the others load (FR-17)
 - *(Phase 0)* A redirect (`302`) to another host, and a paging `Link` URL
-  that points to another host (NFR-10)
+  that points to another host (NFR-15)
 - A larger account of 8 courses and 200 assignments, for timing tests
   (NFR-1, NFR-2)
 - A second student with different courses, for privacy tests (NFR-12)
@@ -196,18 +196,18 @@ checks more than one phase's behavior says which part comes later.
 | Phase | Requirement | Automated test (planned) | Level |
 |-------|-------------|--------------------------|-------|
 | 0 | FR-2 | The name from the profile fixture is in what the server sends the page | API |
-| 0 | FR-6 | A `401` from Canvas gives a clear message that Canvas rejected the token, and no list | API |
 | 0 | FR-10, FR-11, FR-20 | Only active courses, with their names and codes, and their assignments come back; the concluded course doesn't; the graded quiz and graded discussion come back as ordinary assignments; the stub sees no call to any other Canvas endpoint | API |
 | 0 | FR-12 | All 120+ assignments come back from the two-page fixture | API |
 | 0 | FR-20 | An account with no active courses, and a course with no assignments, each give a message saying so instead of an empty list | API |
-| 0 | FR-21, FR-38 | One list holds the assignments of every course together: soonest first, no due date last, ties and no-due-date items by name; each has its course code, due date, and Canvas link | Unit, API |
+| 0 | FR-21, FR-22, FR-38 | One list holds the assignments of every course together: soonest first, no due date last, ties and no-due-date items by name; each has its name, course code, due date, and Canvas link | Unit, API |
 | 0 | FR-26 | Each item's link is its assignment's Canvas address, on the Canvas host in `.env` | API |
-| 0 | Clear errors (roadmap Phase 0) | A Canvas address that can't be reached, and a Canvas that never answers, each give a clear message instead of a hang; every Canvas request is made with a time limit (the stub fails a request made without one), and the limit is the one the design sets; one course failing still shows the other courses and names the failed one | API |
-| 0 | NFR-10, FR-1 | With a made-up token such as `test-token-must-not-leak`: no log line, error message, response body, response header, or page address in the whole test run holds it; the stub sees the token only in the `Authorization` header, and only on `https` requests to the Canvas host in `.env`; an `http://` Canvas address in `.env` is refused before any request; a redirect to another host isn't followed, and that host never gets a request; a paging `Link` URL on another host isn't followed, and the fetch ends with a clear error | API |
+| 0 | FR-17 | A `401` from Canvas, a Canvas address that can't be reached, and a Canvas that never answers each give their own clear message instead of an empty list or a hang; every Canvas request is made with a time limit (the stub fails a request made without one), and the limit is the one the design sets; when one course's assignments fail, the other courses still show and the failed course is named | API |
+| 0 | NFR-10 | With a made-up token such as `test-token-must-not-leak`: no log line, error message, page, or page address in the whole test run holds it, and no response the server sends the browser holds it, in its body or its headers | API |
+| 0 | NFR-15 | The stub sees the token only in the `Authorization` header, and only on `https` requests to the Canvas address in `.env`; an `http://` Canvas address in `.env` is refused before any request; a redirect to another address isn't followed, and that host never gets a request; a paging `Link` URL to another address isn't followed, and the fetch ends with a clear message | API |
 | 0 | NFR-13 | Every request the stub receives is a `GET`; a test fails if any isn't | API |
 | 0 | NFR-14 | Every `src` and `href` in the page the server sends, and in the files it loads, points to the portal itself, so it loads no third-party scripts | API |
-| 0 | Local only (roadmap Phase 0) | The server's socket is bound to `127.0.0.1`; a request whose `Host` is `127.0.0.1:<port>` or `localhost:<port>` is answered, and one with any other `Host` (another name, such as `example.com` or `localhost.example.com`, another port, or none) gets the design's refusal, such as `400`, with no data; no response has an `Access-Control-Allow-` header, including the answer to an `OPTIONS` request and to a request with an `Origin` header | API |
-| 0 | In memory only (roadmap Phase 0) | Each page load fetches from Canvas again; after a full run, no file has been written in the server's folder, other than Python's own `__pycache__` | API |
+| 0 | NFR-12 | The server's socket is bound to `127.0.0.1`; a request whose `Host` is `127.0.0.1:<port>` or `localhost:<port>` is answered, and one with any other `Host` (another name, such as `example.com` or `localhost.example.com`, another port, or none) gets the design's refusal, such as `400`, with no data; no response has an `Access-Control-Allow-` header, including the answer to an `OPTIONS` request and to a request with an `Origin` header | API |
+| 0 | C-5 (in memory only) | Each page load fetches from Canvas again; after a full run, no file has been written in the server's folder, other than Python's own `__pycache__` | API |
 | 0 | D-14 | Every module the proof of concept's code and tests import is in Python's standard library (`sys.stdlib_module_names`) or the proof of concept itself | Unit |
 | 0 | NFR-40 | CI runs the proof of concept's tests on every pull request that changes it, and the skeleton's frontend and backend tests keep running. The proof of concept's page has no automated tests, since running its JavaScript would need a third-party tool (D-14); TP-18 checks it by hand | API |
 | 0 | NFR-41 | CI runs every proof of concept test with recorded data, with no Canvas token or `.env` in its environment, and with nothing installed for the tests | API |
@@ -615,9 +615,8 @@ also runs on every test deploy before Phase 4 (NFR-11).
 
 ### TP-18 Local proof of concept
 
-**Checks:** FR-2, FR-6, FR-10 to FR-12, FR-20, FR-21, FR-26, FR-38,
-NFR-10, NFR-13, NFR-14, NFR-42, D-14, and the roadmap's Phase 0 rules for
-local only, clear errors, and in memory only · **Phase:** 0
+**Checks:** FR-2, FR-10 to FR-12, FR-17, FR-20 to FR-22, FR-26, FR-38,
+NFR-10, NFR-12 to NFR-15, NFR-42, C-5, D-14 · **Phase:** 0
 **Needs:** a computer with only Python 3 and git installed, and the current
 Chrome; the Team Lead's student token; a second computer or a phone on the
 same network; a terminal with `curl`. The Team Lead runs it, since it uses
@@ -634,9 +633,9 @@ concept:
 | Same assignments, for the same active courses, as Canvas | Steps 3 to 5 |
 | CI green, with the backend tests on recorded Canvas responses | The Phase 0 rows of section 4 |
 | Token in no log, error, page, or address | Steps 7 and 10, and the NFR-10 row |
-| Token sent to no host but the Canvas address in `.env` | Step 11, and the NFR-10 row |
-| Can't be reached from another computer | Step 8, and the local only row |
-| Can't be read by a page from another site | Step 9, and the local only row |
+| Token sent to no host but the Canvas address in `.env` | Step 11, and the NFR-15 row |
+| Can't be reached from another computer | Step 8, and the NFR-12 row |
+| Can't be read by a page from another site | Step 9, and the NFR-12 row |
 
 | Step | Action | Expected |
 |------|--------|----------|
@@ -732,3 +731,4 @@ TP-14 timings go in their own table, one row per run:
 | 2026-10-25 | FR-16 progress test; TP-05 step 2a checks the progress panel on failure; TP-14 reads times from the panel and uses the NFR-2 target. |
 | 2026-10-25 | In-depth QA review after PR #3: added *Procedures by phase* with entry and test exit criteria, a Phase column in the coverage table, and failure severity; added Phase 1 tests for FR-1 address checks, FR-4, FR-5, FR-13, FR-20, FR-22 (time zone, override, points and status on cards), FR-26, FR-50, FR-60, FR-66, NFR-10, NFR-11, NFR-14, and NFR-41, Phase 2 tests for NFR-3 and FR-80 drops, and an NFR-2 row of its own; FR-16 test covers rate-limit waits, joining a running Refresh, retry limits, and stuck runs; concurrency tests also run on Postgres; new fixtures; TP-01 signs in, disconnects, reconnects, and connects a different Canvas account (Q-8); FR-35 is Phase 1 (TP-03 step 9); NFR-30 is Chrome only until Phase 5; hidden courses and filtered-out cards don't count toward list counts; courses are chosen only with the course buttons; Course colors (FR-66) moved to Phase 5, with neutral strips until then; orphaned-card option and the Refresh summary's removed count are Phase 1 (TP-08 steps 5 and 6); Phase 1 scope cut: only Backlog is shown, the course buttons stay in Phase 1 as the only course control (FR-61, FR-80, and NFR-1 in Phase 2, Excused in Phase 5), and the orphan option resets on reload; Excused is its own label, beside Submitted and Graded; on-paper work stays Not submitted by design; NFR-11 HTTPS is checked on every deploy; date comparisons are checked in UTC (FR-22); `pending_review` fixture; NFR-37 full WCAG audit in Phase 5; NFR-32 checks name each WCAG criterion, with a grayscale step; the FR-65 test checks that red wins over green; TP-03 checks points and the override open check, and clicks the card instead of a missing ↗; TP-04 checks course buttons and the Phase 1 filter menu (FR-24, FR-72), including that a reload ends the filter; TP-05 uses Retry refresh and a rate-limit step; TP-08 no longer needs Phase 5 notes or the Archived view; TP-09 drops Ctrl+Enter; TP-10, TP-12, and TP-13 mark their phases correctly (NFR-30 is Phase 1); TP-14 uses Refresh and a timing table; FR-45 tests cover hidden cards in Phase 1 and the orphaned-card control and the Refresh summary's removed count in Phase 2 (TP-08 steps 5 and 6, also checked in TP-15 steps 7 and 8); TP-15 step 14 checks joining a running Refresh from a second device, and section 7 logs the Phase 3 week of daily Refreshes; added TP-16 (read-only board, Phase 1) and TP-17 (deployed app, Phase 4); accessibility tests start in Phase 4 and check only screens that exist; tests for board messages, S-2 messages, and an empty account (TP-16 step 6); manual checks for NFR-11 (TP-02), NFR-14 (TP-03), and NFR-41 (TP-05); fixture path matches the repo; availability date tests (*Opens* and *Closed*, TP-03 step 4, TP-15 step 5); status tests and fixtures follow the rewritten FR-23 rules (Submitted from `submitted_at`, Graded from four checks, submission types, no Pending review); "column" now "list". |
 | 2026-11-02 | Phase 0 local proof of concept (roadmap, #158; D-14): Phase 0 tests use `unittest` with Canvas stubbed at the network layer, no browser tests, and Ruff in CI; Phase 0 fixtures marked, with new ones for an empty account, a failing course, a Canvas that never answers, and links to another host; a local proof of concept environment; Phase 0 rows in section 4 for FR-2, FR-6, FR-10 to FR-12, FR-20, FR-21, FR-26, FR-38, NFR-10, NFR-13, NFR-14, NFR-40, NFR-41, clear errors, the token-only-to-Canvas rule, the `Host` check and no CORS headers, in memory only, and D-14; TP-18 (local proof of concept) is Phase 0's procedure, with a table of the roadmap exit criteria it checks; the scrubbing rule covers the Phase 0 recordings; Chrome manual passes start in Phase 0. |
+| 2026-11-02 | Follows requirements PR #162: Phase 0 rows and TP-18 use FR-17 (the proof of concept's errors) instead of FR-6 and the roadmap's clear errors, NFR-15 (token only to the Canvas address, over HTTPS) for the host checks, NFR-12 for local only, C-5 for in memory only, and the reworded NFR-10 (not on the page or sent to the browser); FR-22's name, course, and due date are checked in one list. |

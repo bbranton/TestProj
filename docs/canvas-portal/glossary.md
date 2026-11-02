@@ -1,6 +1,6 @@
 # Glossary
 
-**Status:** Draft · **Owner:** Requirements engineer · **Last updated:** 2026-10-27
+**Status:** Draft · **Owner:** Requirements engineer · **Last updated:** 2026-11-02
 
 The words the team uses for the portal, the docs, and the way we work, each
 explained once. Other docs link here instead of defining a term again.
@@ -84,6 +84,7 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 | Button ID | A name for a button in capitals with underscores, such as `REFRESH`, used in logs, docs, code, and tests. The full list is in the [UI specification's conventions](/docs/canvas-portal/04-ui-specification.md#conventions-on-every-screen). | UI specification |
 | Label | A button's name in plain words, such as "Refresh from Canvas". Screen readers announce it, and icon buttons have no other name. | UI specification |
 | General error message | What a screen shows when the portal itself fails, not Canvas or the student. It never shows an error code. Its words on each screen are in the UI specification. | [UI specification](/docs/canvas-portal/04-ui-specification.md#general-error-message) |
+| .env file | The file on the student's own computer that holds the Canvas address and token for the Phase 0 [proof of concept](#document-terms). Git ignores it, so it never reaches the repo. The proof of concept's messages name it as "your .env file". | [S-0](/docs/canvas-portal/04-ui-specification.md#s-0-assignment-list-phase-0) |
 | Dialog (modal) | A box that opens over the page and must be closed before using the page behind it, like a QML `Dialog`. The card back *(Phase 5)* is one. | S-5 |
 
 ## Document terms
@@ -148,3 +149,4 @@ These come up often in the docs. Each has a Qt comparison where one helps.
 | 2026-10-27 | Added General error message to the screen words, for the design's `invalid_request` and `internal_error` codes (PR #141, X-1). |
 | 2026-10-27 | General error message says what the term is and links the UI specification for its words, instead of restating them (PR #141, F-11). |
 | 2026-10-27 | Other IDs adds `TD-`, a team decision in the team decision register, and `D-` is now a product decision, from the Team Lead's split of the decision registers (TD-22). |
+| 2026-11-02 | Added .env file to the screen words, for the Phase 0 proof of concept's messages on S-0 (PR #163, F-4). |

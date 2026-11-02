@@ -258,9 +258,12 @@ The page is plain HTML and CSS: one column of simple cards, like Phase
   the board in Phase 1.
   The whole card (`OPEN_IN_CANVAS`) is one link that opens the
   assignment in Canvas in a new tab (FR-26). Its name for screen readers
-  is the assignment name, then the course code and due date, so each card
-  is read as one item. The cards are a real HTML list, so screen readers
-  say how many there are.
+  is the assignment name, then the course code and due date, ending with
+  "opens in a new tab", so each card is read as one item and a student
+  who moves straight to a card still hears where it goes. The cards are a
+  real HTML list, so screen readers say how many there are. A card keeps
+  a visible focus outline when it's reached with Tab; the browser's own
+  outline is fine, as long as the card styling doesn't remove it.
   The card styling is kept to what makes them read as cards: a white
   card with a thin gray border and a little rounding, space inside and
   between cards, and the Slate strip. The page uses the browser's own
@@ -275,16 +278,22 @@ Messages on the page. Each shows above the cards, starts with [!] so the
 words are never only shown by color, is read out by screen readers when
 it appears, and says what to do next. None shows the token, the Canvas
 address, Canvas's own error text, or an error code.
+"Assignments for *Name*" shows above the message only when Canvas has
+accepted the token: with a course that failed, no active courses, or no
+assignments, which is when a token for the wrong account is easiest to
+spot (FR-2). The other messages show without it.
 
 | When | The page shows |
 |------|----------------|
 | The page is fetching from Canvas | "Loading your assignments from Canvas..." in place of the cards. |
 | `.env` has no Canvas address or no token | "The portal isn't set up yet. Add your Canvas address and token to the .env file, as the README says, then restart the portal." No cards. |
 | Canvas rejects the token (FR-17) | "Canvas didn't accept the token in your .env file. Create a new token in Canvas, put it in .env, then restart the portal, as the README says." No cards. |
-| The Canvas address can't be reached, or doesn't start with `https://` | "Couldn't reach the Canvas address in your .env file. Check that it starts with https:// and that you're online, then reload the page." No cards. |
+| The Canvas address in `.env` doesn't start with `https://`, so the portal refuses it before calling Canvas (NFR-15) | "The Canvas address in your .env file must start with https://. Fix it in .env, then restart the portal." No cards. |
+| The Canvas address can't be reached | "Couldn't reach Canvas at the address in your .env file. Check that you're online, then reload the page. If the address is wrong, fix it in .env and restart the portal." No cards. |
+| Canvas redirects the portal, or gives it a paging link, to another address, which the portal refuses so the token stays safe (NFR-15) | "Canvas sent the portal to a different address, so it stopped to keep your token safe. Check the Canvas address in your .env file, then restart the portal." No cards. When this happens while fetching one course's assignments, that course counts as failed and the row for courses that couldn't be fetched applies instead. |
 | Canvas doesn't answer in time | "Canvas didn't answer in time. Reload the page to try again." No cards. |
 | One or more courses' assignments couldn't be fetched, but others could | "Couldn't load the assignments for ART 105. The other courses are shown. Reload the page to try again." With more than one, it names each: "Couldn't load the assignments for 2 courses: ART 105, SPAN 201. ..." The cards show every other course's assignments. |
-| Canvas has no active courses for this account | "Canvas shows no active courses for this account." No cards. |
+| Canvas has no active courses for this account | "Canvas shows no active courses for this account. If that's not right, check that the token in your .env file is from your own Canvas account." No cards. |
 | Active courses, but none has assignments | "No assignments in your courses yet." No cards. |
 | The portal itself fails, not Canvas | "Something went wrong in the portal, so your assignments didn't load. Reload the page to try again." No cards. |
 
@@ -1034,7 +1043,7 @@ flowchart TD
 
 | Date | Change |
 |------|--------|
-| 2026-11-02 | Added S-0, the Phase 0 local proof of concept's one page: one column of simple cards (course code strip, name, due date) for every assignment, sorted by due date, with the student's name, links that open in Canvas, and a message for each error, including one course failing and Canvas not answering in time. It fetches from Canvas on each page load, with no Refresh button (Phase 1). *UI by phase*, the screen map, and the button IDs updated. From the Team Lead's Phase 0 rescope (roadmap PR #158, D-14) and the Team Lead's choice of simple cards like Phase 1's Backlog. |
+| 2026-11-02 | Added S-0, the Phase 0 local proof of concept's one page: one column of simple cards (course code strip, name, due date) for every assignment, sorted by due date, with the student's name, links that open in Canvas, and a message for each error, including one course failing, Canvas not answering in time, an `http` address, and a redirect to another address. It fetches from Canvas on each page load, with no Refresh button (Phase 1). *UI by phase*, the screen map, the button IDs, and the glossary's screen words (.env file) updated. From the Team Lead's Phase 0 rescope (roadmap PR #158, D-14) and the Team Lead's choice of simple cards like Phase 1's Backlog. |
 | 2026-10-25 | First draft. |
 | 2026-10-25 | Trello goal (G-3): board is home; S-3 becomes Table view; S-4 and S-5 redrawn as Trello board and card back; added S-7 quick edit, S-8 filter, S-9 board menu; Trello-style phone layout; W-7 and W-8 added. |
 | 2026-10-25 | Added the course show/hide button row under the header on S-3, S-4, and the phone layout (FR-78), from the Team Lead's review. |

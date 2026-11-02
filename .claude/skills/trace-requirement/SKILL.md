@@ -16,8 +16,11 @@ python3 team/QA/scripts/trace.py --untested 1
 ```
 
 - With IDs, it prints each requirement's text and phase, then where it is
-  named in `03-design.md`, `04-ui-specification.md`, `05-test-plan.md`, and
-  the code under `canvas-portal/`.
+  named in the design, UI specification, test plan, and the code under
+  `canvas-portal/`.
+- A doc split by phase is read as all its files, such as
+  `02-requirements_phase0.md` and `02-requirements_phase1.md`. An ID with a
+  row in more than one phase file prints each row, with its file name.
 - With `--untested [PHASE]`, it lists requirements that no test procedure
   names. Ranges such as "FR-10 to FR-12" count for every ID in them.
 - Change logs are skipped, since they mention IDs without tracing them.

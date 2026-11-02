@@ -11,7 +11,7 @@ Phase 0 ends with a local proof of concept: it runs only on the student's
 own computer (`localhost`), reads their courses and assignments from Canvas
 with a personal access token kept in a local `.env` file, and shows
 everything due in one read-only list. It uses only Python's standard
-library and plain HTML, CSS, and JavaScript, with no third-party
+library and plain HTML, CSS, and JavaScript, with no third-party runtime
 dependencies, as decision D-14 in the roadmap's
 [Product decisions](/docs/canvas-portal/01-roadmap.md#5-product-decisions)
 says. Sign-in, the board, saved data, and a deploy come in Phase 1 and

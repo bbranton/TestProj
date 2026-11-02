@@ -70,7 +70,7 @@ in full.
 
 **Phase 0: Setup and local proof of concept**
 
-- Connecting to Canvas: FR-2
+- Connecting to Canvas: FR-2 (showing the student's name)
 - Fetching data from Canvas: FR-10, FR-11 (without submissions), FR-12, FR-17
 - Viewing courses and assignments: FR-20 (saying there are no courses or no assignments), FR-21 (in one list), FR-22 (name, course, and due date), FR-26
 - Kanban board: FR-38 (in one list)
@@ -164,7 +164,7 @@ in full.
 | ID | Requirement | Priority | Phase |
 |----|-------------|----------|-------|
 | FR-1 | The user can enter their school's Canvas address and a personal access token. If the address can't be reached, the portal says so and keeps what the user typed. | Must | 1 |
-| FR-2 | The portal checks the token by fetching the user's Canvas profile and shows their name on success. | Must | 0 (proof of concept), 1 |
+| FR-2 | The portal checks the token by fetching the user's Canvas profile and shows their name on success. | Must | 0 (proof of concept, showing the student's name), 1 |
 | FR-3 | The connect screen explains, with steps, how to create a token in Canvas. | Should | 1 |
 | FR-4 | The user can disconnect, which removes the token from the portal. The board is kept, so reconnecting the same Canvas account brings it back. If the user then connects a different Canvas account or school, the old account's cards are kept but hidden, the new account's first load fetches its data (FR-15), and its cards start in Backlog (FR-34); reconnecting the old account shows its cards again in the lists they were in. | Must | 1 |
 | FR-5 | The portal remembers the connection between visits until the user disconnects. The connection is stored with the user's portal account, so it works on any device they sign in from. | Must | 1 |

@@ -90,10 +90,15 @@ development starts:
 1. **Ask the Team Lead for the repository details, then lead the Team
    Lead through setting it up.** Sessions can't create repositories, so
    the project manager asks these questions, with a recommendation for
-   each, and walks the Team Lead through each setting (D-17):
+   each, and walks the Team Lead through each setting (D-17). The
+   cybersecurity engineer gives the security part of the recommendation
+   for visibility, security settings, and access.
    - The name, and which GitHub account owns it.
-   - Private or public. A private repository shares the account's free
-     GitHub Actions minutes with this one.
+   - Private or public. A private repository keeps the code out of view
+     but shares the account's free GitHub Actions minutes with this one,
+     and secret scanning with push protection may not be free on it; a
+     public one gets those free, but its fork pull requests need approval
+     before CI runs.
    - Which docs go: the product docs in `docs/canvas-portal/`, and
      whether any team files, such as the coding standards, go too.
    - Whether the `canvas-portal/` skeleton moves as it is or Phase 0
@@ -102,7 +107,11 @@ development starts:
      rules on merging to them.
    - Security settings: secret scanning with push protection, and
      Dependabot alerts.
-   - Access: the Claude GitHub app and the project's sessions.
+   - Access, as little as works: the Claude GitHub app on selected
+     repositories only, a read-only default `GITHUB_TOKEN` for Actions,
+     and who gets write or admin.
+   - Where the real `.env` lives, relative to the new clone and any
+     clone a Remote Control session pulls into.
    - A license, or none.
 
    Before step 2, the Team Lead creates the repository with an initial
@@ -111,18 +120,19 @@ development starts:
    it; and adds it to the project's repositories. Branch rules and
    required checks wait until step 2's first CI run, since GitHub offers
    a check as required only once it has reported.
-2. The chosen docs, code, and CI are put into the new repository in one
-   pull request there, with a short `CLAUDE.md` that links back to this
-   repo's team rules. Links in the docs to files that stay here, such as
-   `/team/...` and `/CLAUDE.md`, become full GitHub links to this repo,
-   and the new repository gets its own docs check. Once CI has run there,
-   the Team Lead adds its branch rules and required checks.
+2. The chosen docs, code, and CI are copied into the new repository as
+   files, without this repo's git history, in one pull request there, with
+   `.env.example` holding placeholders only, with a short `CLAUDE.md` that
+   links back to this repo's team rules. Links in the docs to files that
+   stay here, such as `/team/...` and `/CLAUDE.md`, become full GitHub
+   links to this repo, and the new repository gets its own docs check.
+   Once CI has run there, the Team Lead adds its branch rules and required
+   checks.
 3. This repo then removes the app's code and CI, marks its copy of the
    docs as moved, and fixes every link to what moved, in one pull request
-   here. First,
-   the Team Lead takes the `backend` and `frontend` checks off this
-   repo's `develop` ruleset, keeping `docs`, or the removal can't merge;
-   the DevOps engineer writes the steps for it then.
+   here. First, the Team Lead takes the `backend` and `frontend` checks
+   off this repo's `develop` ruleset, keeping `docs`, or the removal can't
+   merge; the DevOps engineer writes the steps for it then.
 4. Proof-of-concept development starts in the app repository after that.
 
 The team, its personas, and its process stay in this repo.

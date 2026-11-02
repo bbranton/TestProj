@@ -130,12 +130,8 @@ it in one place, before Phase 1 adds sign-in, a database, and a deploy.
   Phase 1 replaces the proof of concept's code with FastAPI and React,
   keeping its recorded Canvas responses and test cases (D-14).
 
-The requirements engineer marks which requirements, in full or in part,
-Phase 0 now builds in the requirements'
-[Requirements by phase](/docs/canvas-portal/02-requirements.md#requirements-by-phase),
-in the next pull request. The likely ones are FR-2, FR-6, FR-10 to FR-12,
-FR-20, FR-21, FR-26, NFR-10, NFR-13, NFR-14, and NFR-41, with NFR-42's
-15-minute local setup.
+The requirements Phase 0 builds, in full or in part, are listed in the
+[Phase 0 requirements](/docs/canvas-portal/02-requirements_phase0.md#requirements-by-phase).
 
 **Exit criteria:**
 
@@ -690,3 +686,4 @@ never goes here, as that section says.
 | 2026-10-27 | D-9 (sign-in `state` in a signed cookie, against login CSRF), D-10 (the ripple check's context check), D-11 (the ripple check searches every Markdown file), and D-12 (the PR's owner fixes files with no owner) added to section 5 as settled, from the Team Lead. |
 | 2026-10-27 | Section 5 is renamed *Product decisions* and holds only the Canvas portal's decisions. D-10 to D-12, about the team's process, moved to the new [team decision register](/team/decision-register.md) as TD-19 to TD-21, from the Team Lead. |
 | 2026-11-02 | Phase 0 reopened, from the Team Lead: it now ends with a local proof of concept, a release that runs only on `localhost` with the simplest code and fewest third-party dependencies, and shows every assignment from the student's active courses in one read-only list. No sign-in, database, hosting, or deploy in Phase 0; D-3 and D-7 are unchanged for Phase 1. Added the Phase 0 row in section 2, milestone M0b, D-14 (built with Python's standard library and plain HTML, no third-party dependencies, from the Team Lead), and R-16. The requirements index follows in its own pull request, since the Team Lead asked for one document at a time. |
+| 2026-11-02 | Phase 0 links to the [Phase 0 requirements](/docs/canvas-portal/02-requirements_phase0.md#requirements-by-phase) for its list of requirements, instead of the likely list, after the requirements were split by phase (PM-7 on #158). |

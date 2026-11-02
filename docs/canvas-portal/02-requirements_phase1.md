@@ -318,7 +318,7 @@ security document must not claim full WCAG AA while this list has entries.
 ### 5.5 Maintainability
 
 NFR-40 and NFR-42 were first met by the hello world app in the planning
-before Phase 0, are met again in the app repository in Phase 0, and still
+before Phase 0, are met again in the CanSync repo in Phase 0, and still
 hold; they are in the
 [Phase 0 requirements](/docs/canvas-portal/02-requirements_phase0.md#4-non-functional-requirements).
 
@@ -411,4 +411,4 @@ hold; they are in the
 | 2026-10-26 | Team Lead: course label colors (FR-66) move to Phase 5; until then strips and course buttons use one neutral color and show the course code (FR-65, FR-78). |
 | 2026-11-02 | Split by phase, from the Team Lead: this file is renamed from `02-requirements.md` and holds Phase 1 and later; Phase 0's local proof of concept, from the Team Lead's rescoping of Phase 0 in the roadmap (#158), is in the new `02-requirements_phase0.md`. Added NFR-15 (the token goes only to the student's Canvas host, over HTTPS with the certificate checked); NFR-10 also keeps the token off the page and out of the browser; NFR-12 says "Canvas data" instead of "cached Canvas data". |
 | 2026-11-02 | NFR-15 adds Phase 0's sentence that a refused address or link sends no request with the token, from the cybersecurity engineer's re-check of #162. |
-| 2026-11-02 | Section 1 of the Phase 0 file and section 5.5 here say the planning in this repo comes before Phase 0, from the Team Lead's reorder of Phase 0 in the roadmap (#169). Section 5.5 says NFR-40 and NFR-42 were first met before Phase 0 and are met again in the app repository in Phase 0. |
+| 2026-11-02 | Section 1 of the Phase 0 file and section 5.5 here say the planning in the TestProj repo comes before Phase 0, from the Team Lead's reorder of Phase 0 in the roadmap (#169). Section 5.5 says NFR-40 and NFR-42 were first met before Phase 0 and are met again in the CanSync repo in Phase 0. |

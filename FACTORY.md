@@ -1,6 +1,6 @@
 # The Software Factory
 
-This repo is a Software Factory: a team of AI personas, and the products it
+The TestProj repo is a Software Factory: a team of AI personas, and the products it
 builds side by side. This file says what the factory is for and how we'll
 show it works. The team's rules are in [CLAUDE.md](/CLAUDE.md) and
 [team/](/team/README.md).

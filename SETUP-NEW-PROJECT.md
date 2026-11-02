@@ -130,7 +130,7 @@ the [glossary](/docs/canvas-portal/glossary.md)'s layout with no terms,
 and update the links that point at `docs/canvas-portal/`.
 
 Don't copy `.github/workflows/`, since workflows depend on the product.
-Write new ones using this repo's as the pattern, and deploy only from
+Write new ones using the TestProj repo's as the pattern, and deploy only from
 `main`.
 
 Then search for `TestProj`,

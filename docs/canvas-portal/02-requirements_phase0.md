@@ -5,8 +5,8 @@
 ## 1. Purpose and scope
 
 This file lists what Phase 0 of the Canvas Assignments Portal must do.
-Phase 0 sets up the app repository and then builds a local proof of
-concept; the planning done in this repo comes before it, from the Team
+Phase 0 sets up the CanSync repo and then builds a local proof of
+concept; the planning done in the TestProj repo comes before it, from the Team
 Lead's rescoping of Phase 0 in the
 [roadmap](/docs/canvas-portal/01-roadmap.md#3-phases-in-detail).
 
@@ -98,4 +98,4 @@ requirement is required for Phase 0 to be done.
 | Date | Change |
 |------|--------|
 | 2026-11-02 | First draft, from the Team Lead's split of the requirements by phase and rescoping of Phase 0 as a local proof of concept (#158). The setup's NFR-40 and NFR-42 come from the Phase 1 file; the proof of concept adds C-5, FR-17, and NFR-15, and the Phase 0 parts of FR-2, FR-10 to FR-12, FR-20 to FR-22, FR-26, FR-38, NFR-10, NFR-12 to NFR-14, and NFR-41. |
-| 2026-11-02 | Section 1 says Phase 0 sets up the app repository and then builds the local proof of concept, and the planning in this repo comes before it, from the Team Lead's reorder of Phase 0 in the roadmap (#169). |
+| 2026-11-02 | Section 1 says Phase 0 sets up the CanSync repo and then builds the local proof of concept, and the planning in the TestProj repo comes before it, from the Team Lead's reorder of Phase 0 in the roadmap (#169). |

@@ -25,6 +25,10 @@
 
 - Never use the project owner's first name anywhere in the repo: files, docs,
   code comments, and commit messages. Refer to them as "Team Lead".
+- Name a repository when you mean a specific one: the "TestProj repo"
+  (this project's team and planning repo) or the "CanSync repo" (the
+  Canvas portal app's repo, set up in Phase 0). Never write "this repo",
+  "the app repository", or "the new repo" for either.
 
 ## Team personas
 

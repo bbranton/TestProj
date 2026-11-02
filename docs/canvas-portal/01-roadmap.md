@@ -101,9 +101,12 @@ repo has its own rules, set by the Phase Lead.
     Enterprise; the free plan has no environment secrets at all. On the
     free plan, the branch rules are only rules the team follows. A paid plan is a cost,
     so the Team Lead decides it.
-  - Which of the product docs in `docs/canvas-portal/` go. No team
-    files go, such as the personas, the review protocol, or the coding
-    standards: the CanSync repo gets its own, in the next step.
+  - Whether the Phase Lead wants help creating the CanSync repo's
+    `CLAUDE.md` and new personas to use there. The suggested personas
+    are architect, software engineer, DevOps engineer, UI/UX engineer,
+    cybersecurity engineer, requirements engineer, and test engineer.
+  - Whether the Phase Lead wants help setting up a process for
+    reviewing code before changes are pushed to the CanSync repo.
   - Whether step 3 copies the hello world app or re-creates it.
   - How the Phase Lead wants to run branches and protection: which
     branches, the rules on merging to them, and who merges into each. This is the Phase Lead's
@@ -127,16 +130,17 @@ repo has its own rules, set by the Phase Lead.
   required checks wait until the repository's first CI run, since GitHub
   offers a check as required only once it has reported.
 
-- **Then set up the CanSync repo's own `CLAUDE.md` and `team/`**, with
-  the project manager's help: the team's personas, how work is reviewed
-  and decided, and the branch rules chosen in D-17, written for how the
-  Phase Lead wants to run the CanSync repo. They're the CanSync repo's
-  own files, in one pull request there, and don't link to the TestProj
-  repo's.
+- **Then the Phase Lead sets up the CanSync repo's own `CLAUDE.md`,
+  personas, and code review**, with help if they asked for it in D-17:
+  the personas, how code is reviewed before it's pushed, and the
+  branch rules chosen in D-17, written for how the Phase Lead wants to
+  run the CanSync repo. They're the CanSync repo's own files and don't
+  link to the TestProj repo's.
 
-1. **Copy the completed project plan and documentation** from the
-   TestProj repo into the CanSync repo, as files without the TestProj
-   repo's git history, in one pull request in the CanSync repo. The
+1. **Copy the completed project plan and documentation**, all of
+   `docs/canvas-portal/` and nothing else, from the TestProj repo into
+   the CanSync repo, as files without the TestProj repo's git history,
+   in one pull request in the CanSync repo. The
    docs don't link to the TestProj repo's files. The CanSync repo gets
    its own docs check, with its workflow's push branches set to the
    CanSync repo's. Once CI has run there, the Phase Lead adds its branch
@@ -260,7 +264,10 @@ The smallest thing that is useful: connect, then see everything that's due.
   the CanSync repo itself, so the deploy secrets never go into GitHub.
   Then automatic deploys are off and the Team Lead starts each deploy
   in Koyeb, the host's GitHub app can only read the CanSync repo, and
-  the backups that #26 covers are made by the host or Neon instead.
+  the backups that #26 covers are made by the host or Neon instead,
+  still as step 6's backup says: encrypted, kept no longer than 30
+  days, readable only by the Team Lead and the backup job, with the key
+  kept apart from the dumps, and with a copy outside Neon (R-15).
 
 **Before step 6 goes live**, because real tokens then sit on an
 internet-facing server (R-14). Each of these is a
@@ -628,7 +635,7 @@ right away, where it came up.
 | ~~D-14~~ | ~~What the Phase 0 proof of concept is built with~~ | **Python standard library and plain HTML, CSS, and JavaScript** (no third-party runtime dependencies and no frontend build step), **FastAPI with one plain HTML page** (the two backend dependencies the skeleton already has), **the existing skeleton, FastAPI and React with Vite** (D-1 and D-6 as they are), or leave it to the architect's recommendation in the design pull request | **Decided** (Team Lead, 2026-11-02): Python's standard library and plain HTML, CSS, and JavaScript, with no third-party runtime dependencies and no build step. Its tests use `unittest`, from the test engineer's recommendation, which the Team Lead left to the team (2026-11-02). CI-only tools, such as Ruff for linting, are allowed (Team Lead, 2026-11-02). Phase 1 moves it onto FastAPI and React, so D-1 and D-6 are unchanged from Phase 1 on. The project manager recommended it, as the simplest code with the fewest dependencies. | Done |
 | D-15 | Which requirements the Phase 0 proof of concept builds, and how NFR-40 applies to it | Approve the set, with the page tested in CI by a CI-only tool; **approve the set, with Phase 0 testing only the backend**; or use only the existing IDs | **Decided by the team, for the Team Lead's review** (2026-11-02): the set in the [Phase 0 requirements](/docs/canvas-portal/02-requirements_phase0.md), with only the backend tested in Phase 0 and a page that holds no logic. The requirements engineer first recommended a CI-only tool for the page; the project manager and the test engineer recommended backend-only tests. The Team Lead asked for the work to go into `develop` and reviews it on the `develop` → `main` release PR, where she can change it. Carried out in [#162](https://github.com/bbranton/TestProj/pull/162). | Team Lead's review on the release PR |
 | ~~D-16~~ | ~~How the Canvas portal docs are organized as phases are added~~ | One file per phase, `<doc>_phaseN.md`, for every doc but the roadmap | **Decided** (Team Lead, 2026-11-02, in a project thread): every doc but the roadmap is split into `<doc>_phaseN.md` files, and a later phase gets its file when its work starts. Who fixes the links is a team decision. Carried out in [#162](https://github.com/bbranton/TestProj/pull/162) (requirements) and [#163](https://github.com/bbranton/TestProj/pull/163) (UI specification). | Done |
-| D-17 | The CanSync repo's details: owner, name, visibility, what goes, branches and protection, security settings, access, and license | Asked as Phase 0's first step, each with the project manager's recommendation | **Decided in part** (Team Lead, 2026-11-02): the code goes in a new repository, not the TestProj repo, set up at the start of Phase 0. Once the project is ready to start development, the docs are copied there, and all work continues there instead of in the TestProj repo. The repository is named CanSync, and it's private. Only the project documentation is shared with the TestProj repo. Branches and protection are the Phase Lead's choice and will differ from the TestProj repo's. The other details are asked of the Phase Lead who runs Phase 0 and answered at that step, not before. | Phase 0's first step |
+| D-17 | The CanSync repo's details: owner, name, visibility, help with its team files and code review, branches and protection, security settings, access, and license | Asked as Phase 0's first step, each with the project manager's recommendation | **Decided in part** (Team Lead, 2026-11-02): the code goes in a new repository, not the TestProj repo, set up at the start of Phase 0. Once the project is ready to start development, the docs are copied there, and all work continues there instead of in the TestProj repo. The repository is named CanSync, and it's private. All of `docs/canvas-portal/` goes, and nothing else. Branches and protection are the Phase Lead's choice and will differ from the TestProj repo's. The other details are asked of the Phase Lead who runs Phase 0 and answered at that step, not before. | Phase 0's first step |
 
 ## 6. Risks
 
@@ -660,7 +667,7 @@ Lead.
 | R-14 | Real Canvas tokens sit on an internet-facing server from Phase 1, not only on the Team Lead's computer | A break-in exposes testers' Canvas accounts | Medium | High, **Critical** | DevOps engineer, with the cybersecurity engineer | The test deploy goes live only after everything in Phase 1's *Before step 6 goes live* is done and its security checks pass, including the incident plan (#17), key handling (#19), secret scanning (#20), the shared-domain protections (#25), and private secrets and backups (#26). Only the Team Lead's own accounts connect until the client security document is published (#16) and the incident plan is in place; after that, a short list of Google test users. Until FR-54 ships in Phase 4, the Team Lead deletes a tester's data by hand on request. That doesn't reach the backups, which keep it for up to 30 days, and the tester also deletes their token in Canvas (#21). |
 | R-15 | A free tier changes or runs out: Koyeb ends or limits its free instance, or the database uses up Neon's monthly compute hours and is suspended until next month | The test deploy goes down until it moves or the month ends | Medium | Low | DevOps engineer | The backend ships as a container, with the database outside it, so moving to Render free (the fallback) means changing the deploy target and a few settings. Hidden tabs stop polling, nothing pings the app to keep it awake, and the database is capped at its smallest size. The nightly backup means Neon never holds the only copy. |
 | R-16 | The proof of concept grows past "simplest", or its shortcuts (token in `.env`, no sign-in, data in memory) reach a server people can visit | Phase 0 drags on, or a real token is exposed | Medium | High | Project manager, with the cybersecurity engineer | Phase 0's scope is the list in its section and is fixed; anything more goes to Phase 1 or later. The server listens on `127.0.0.1` only, and nothing is deployed until Phase 1's step 6 and its *Before step 6 goes live* list (R-14). |
-| R-17 | The copied docs still depend on the TestProj repo: a link, rule, or setting in the CanSync repo's docs points at the TestProj repo, or assumes its branches or process | Broken links, sessions in the CanSync repo following the TestProj repo's rules, or the CanSync repo missing a security setting | Medium | Medium | Project manager, with the DevOps engineer | Only the project documentation is shared, and it doesn't link to the TestProj repo's files. The CanSync repo has its own `CLAUDE.md` and `team/`, set up in Phase 0 with the project manager's help, its docs check catches broken links, and its settings are chosen in D-17 with the cybersecurity engineer's recommendation. |
+| R-17 | The copied docs still depend on the TestProj repo: a link, rule, or setting in the CanSync repo's docs points at the TestProj repo, or assumes its branches or process | Broken links, sessions in the CanSync repo following the TestProj repo's rules, or the CanSync repo missing a security setting | Medium | Medium | Project manager, with the DevOps engineer | Only the project documentation is shared, and it doesn't link to the TestProj repo's files. The CanSync repo has its own `CLAUDE.md` and personas, set up by the Phase Lead in Phase 0, with help if wanted, its docs check catches broken links, and its settings are chosen in D-17 with the cybersecurity engineer's recommendation. |
 
 ## 7. Scope control
 
@@ -787,3 +794,4 @@ it; nobody starts on one before then. A
 | 2026-11-02 | The CanSync repo is private, from the Team Lead's review of the release pull request. D-17's visibility question is answered; the Actions minutes and secret scanning notes are for a private repository (the public TestProj repo's runs use no minutes), and Phase 1's secrets line no longer calls the repository public. |
 | 2026-11-02 | The CanSync repo gets its own `CLAUDE.md` and `team/`, set up with the Phase Lead in a new Phase 0 setup step, from the Team Lead. The project docs no longer link to the TestProj repo's team files or `CLAUDE.md`: section 3's screenshot and breach notes, sections 5 to 9, and the change log say what's needed in the doc itself. |
 | 2026-11-02 | D-17 asks which GitHub plan owns the private CanSync repo, since branch rules, required checks, and some environment protections are enforced there only on a paid plan; Phase 1's deploy secrets have a fallback if the plan can't protect them. From the DevOps engineer's review of #175. |
+| 2026-11-02 | All of `docs/canvas-portal/` goes to the CanSync repo, and nothing else, from the Team Lead's review of the release pull request. D-17 no longer asks which docs go. Instead it asks whether the Phase Lead wants help creating the CanSync repo's `CLAUDE.md` and personas (architect, software engineer, DevOps engineer, UI/UX engineer, cybersecurity engineer, requirements engineer, and test engineer suggested), and a code review process before pushing. The setup step is now that offer. |

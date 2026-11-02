@@ -157,3 +157,4 @@ These come up often in the docs. Each has a Qt comparison where one helps.
 | 2026-11-02 | Requirement ID and the links to the requirements follow the Team Lead's split of the requirements by phase. |
 | 2026-11-02 | Added .env file to the screen words, for the Phase 0 proof of concept's messages on S-0 (PR #163, F-4). |
 | 2026-11-02 | Links to the UI specification point at its Phase 0 and Phase 1 files, from the Team Lead's split of the UI specification by phase (PR #163). |
+| 2026-11-02 | Phase 0 in the *Phase* row is now *the app repository and a local proof of concept*, and the planning in this repo comes before it, from the Team Lead's reorder of Phase 0 in the roadmap (#169). |

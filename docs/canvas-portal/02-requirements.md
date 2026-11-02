@@ -1,6 +1,6 @@
 # Requirements
 
-**Status:** Draft · **Owner:** Team Lead · **Last updated:** 2026-10-25
+**Status:** Draft · **Owner:** Team Lead · **Last updated:** 2026-11-02
 
 ## 1. Purpose and scope
 
@@ -33,11 +33,11 @@ requirements, which serve the developer.
 
 | Goal | Requirements |
 |------|--------------|
-| G-1 One place for everything due | FR-1 to FR-3, FR-6, FR-10 to FR-16, FR-20 to FR-29, FR-31, FR-34, FR-38, FR-39, FR-45, FR-55, FR-79, NFR-1, NFR-2, NFR-4, NFR-20; notes FR-40 to FR-43, FR-46 |
+| G-1 One place for everything due | FR-1 to FR-3, FR-6, FR-10 to FR-17, FR-20 to FR-29, FR-31, FR-34, FR-38, FR-39, FR-45, FR-55, FR-79, NFR-1, NFR-2, NFR-4, NFR-20; notes FR-40 to FR-43, FR-46 |
 | G-2 Read only toward Canvas | C-3, FR-28, FR-44, NFR-13 |
 | G-3 Feels like Trello | FR-32, FR-36, FR-60 to FR-81, NFR-3, NFR-33 to NFR-36 |
 | G-4 Follows the student everywhere | FR-5, FR-33, FR-35, FR-50, FR-51, FR-53, NFR-22 |
-| G-5 Private and safe | FR-4, FR-54, NFR-10 to NFR-14, NFR-21 |
+| G-5 Private and safe | FR-4, FR-54, NFR-10 to NFR-15, NFR-21 |
 | G-6 Accessible in the main browsers: meets WCAG 2.2 AA and works in current Chrome, Firefox, Safari, and Edge (Phase 5 goal, from the Team Lead's Q-11 answer; the roadmap adds it in #36) | NFR-30, NFR-32, NFR-37 |
 | Developer | NFR-40 to NFR-42 |
 
@@ -63,9 +63,19 @@ the User Interface Specification already describes it. When a
 requirement's *Phase* column changes, update this index in the same PR.
 Removed requirements are not listed.
 
-**Phase 0: Decisions and setup**
+Phase 0 ends with a local proof of concept (C-5), which builds the
+requirements listed for it in the simplest way. Phase 1 replaces its code,
+so each of those requirements is listed under Phase 1 too, which builds it
+in full.
 
-- Maintainability: NFR-40, NFR-42
+**Phase 0: Setup and local proof of concept**
+
+- Connecting to Canvas: FR-2
+- Fetching data from Canvas: FR-10, FR-11 (without submissions), FR-12, FR-17
+- Viewing courses and assignments: FR-20 (saying there are no courses or no assignments), FR-21 (in one list), FR-22 (name, course, and due date), FR-26
+- Kanban board: FR-38 (in one list)
+- Security and privacy: NFR-10, NFR-12, NFR-13, NFR-14 (no third-party scripts), NFR-15
+- Maintainability: NFR-40, NFR-41, NFR-42
 
 **Phase 1: Read-only viewer**
 
@@ -75,7 +85,7 @@ Removed requirements are not listed.
 - Kanban board: FR-31 (Backlog), FR-34, FR-35, FR-38, FR-45 (keeping and showing cards of removed assignments)
 - Trello-style look and behavior: FR-60 (read only), FR-65, FR-72, FR-78
 - Accounts, sync, and data control: FR-50
-- Security and privacy: NFR-10, NFR-11, NFR-12, NFR-13, NFR-14
+- Security and privacy: NFR-10, NFR-11, NFR-12, NFR-13, NFR-14, NFR-15
 - Reliability: NFR-20
 - Usability and accessibility: NFR-30 (Chrome), NFR-34
 - Maintainability: NFR-41
@@ -139,6 +149,13 @@ Removed requirements are not listed.
   illustrations, or fonts, or copy Trello's stylesheets. Colors and icons are
   our own, chosen to give a similar feel. (Trello is a trademark of
   Atlassian.)
+- **C-5** Phase 0 ends with a local proof of concept (roadmap Phase 0,
+  decision D-14). It runs only on the student's own computer, for one
+  student whose Canvas address and token are set by hand in the local
+  file that git ignores (A-3). It has no sign-in, no connect screen, and
+  no saved data: each page load fetches from Canvas again, and the data
+  is held in memory only. It uses no third-party libraries. Phase 1
+  replaces its code, keeping its recorded Canvas responses and test cases.
 
 ## 4. Functional requirements
 
@@ -147,7 +164,7 @@ Removed requirements are not listed.
 | ID | Requirement | Priority | Phase |
 |----|-------------|----------|-------|
 | FR-1 | The user can enter their school's Canvas address and a personal access token. If the address can't be reached, the portal says so and keeps what the user typed. | Must | 1 |
-| FR-2 | The portal checks the token by fetching the user's Canvas profile and shows their name on success. | Must | 1 |
+| FR-2 | The portal checks the token by fetching the user's Canvas profile and shows their name on success. | Must | 0 (proof of concept), 1 |
 | FR-3 | The connect screen explains, with steps, how to create a token in Canvas. | Should | 1 |
 | FR-4 | The user can disconnect, which removes the token from the portal. The board is kept, so reconnecting the same Canvas account brings it back. If the user then connects a different Canvas account or school, the old account's cards are kept but hidden, the new account's first load fetches its data (FR-15), and its cards start in Backlog (FR-34); reconnecting the old account shows its cards again in the lists they were in. | Must | 1 |
 | FR-5 | The portal remembers the connection between visits until the user disconnects. The connection is stored with the user's portal account, so it works on any device they sign in from. | Must | 1 |
@@ -157,25 +174,26 @@ Removed requirements are not listed.
 
 | ID | Requirement | Priority | Phase |
 |----|-------------|----------|-------|
-| FR-10 | The portal fetches the courses in which the user's Canvas enrollment is active. Ended (concluded) courses are not fetched. | Must | 1 |
-| FR-11 | The portal fetches the assignments of each active course, with the user's own submission for each, from Canvas's assignments list (the design names the endpoint). No other kinds of course item, such as ungraded discussions, pages, or announcements, are fetched. Graded quizzes and graded discussions that Canvas returns in this same list show as ordinary assignments. | Must | 1 |
-| FR-12 | The portal follows Canvas paging so no courses or assignments are missed. | Must | 1 |
+| FR-10 | The portal fetches the courses in which the user's Canvas enrollment is active. Ended (concluded) courses are not fetched. | Must | 0 (proof of concept), 1 |
+| FR-11 | The portal fetches the assignments of each active course, with the user's own submission for each, from Canvas's assignments list (the design names the endpoint). No other kinds of course item, such as ungraded discussions, pages, or announcements, are fetched. Graded quizzes and graded discussions that Canvas returns in this same list show as ordinary assignments. | Must | 0 (proof of concept, without submissions), 1 |
+| FR-12 | The portal follows Canvas paging so no courses or assignments are missed. | Must | 0 (proof of concept), 1 |
 | FR-13 | The user can refresh data on demand. The header always shows the date and time of the last complete Refresh, such as "Synced Oct 25, 10:42 AM". | Must | 1 |
 | FR-14 | The portal keeps the last complete copy of the student's Canvas data and shows it on every load, so opening the board never waits on Canvas. | Must | 1 |
 | FR-15 | The portal fetches from Canvas only when the student selects Refresh, or on the very first load when there is no data yet. It never starts a fetch on its own. When the data is more than an hour old, the Refresh button is highlighted. | Must | 1 |
 | FR-16 | Every Refresh, including the first load, shows its progress: how many courses are done out of the total, and for each course whether it is not started, being fetched, waiting on a Canvas rate limit, done (with its number of assignments), or failed (with the reason, such as a timeout or an error from Canvas). When the Refresh ends, a summary says what was synced; if anything failed, it says the previous data was kept and offers Retry. The log of the last Refresh can be reopened until the next one starts. When a complete Refresh finds assignments gone from Canvas, the summary says how many and offers to show them (FR-45). Only one Refresh runs at a time for a student: selecting Refresh while one is running, on any device, joins it and shows its progress. | Must | 1 |
+| FR-17 | In the Phase 0 proof of concept only (C-5), when Canvas can't be used the page says why instead of showing an empty list: Canvas rejects the token (wrong, expired, or revoked), the Canvas address can't be reached, or Canvas doesn't answer within the time limit the design sets. If some courses' assignments can't be fetched, the list still shows the other courses' assignments and names each course that failed. Phase 1 replaces this with FR-6, FR-16, and NFR-20, which keep the last complete copy. | Must | 0 (proof of concept only) |
 
 ### 4.3 Viewing courses and assignments
 
 | ID | Requirement | Priority | Phase |
 |----|-------------|----------|-------|
-| FR-20 | The board lists the user's active courses by name and course code. If the user has no active courses, or no assignments, the board says so instead of showing empty lists. | Must | 1 |
-| FR-21 | The board shows the assignments of every active course together, in the order FR-38 sets. | Must | 1 |
-| FR-22 | Each assignment shows: name, course, due date and time shown in the time zone of the device being used, points possible, submission types, and status (FR-23). The due date is the one Canvas gives this student, including a date set just for them (a Canvas *override*). Each assignment also has Canvas's availability dates for this student, *Available from* (`unlock_at`) and *Until* (`lock_at`, after which the student can't submit), either of which can be empty. Every comparison of dates and times, such as sorting by due date, the due badge, and the *Opens* and *Closed* lines (FR-65), is made in UTC, so the result is the same whatever time zone the device or server is set to. Only the display uses the device's time zone. | Must | 1 |
+| FR-20 | The board lists the user's active courses by name and course code. If the user has no active courses, or no assignments, the board says so instead of showing empty lists. | Must | 0 (proof of concept, saying there are no courses or no assignments), 1 |
+| FR-21 | The board shows the assignments of every active course together, in the order FR-38 sets. | Must | 0 (proof of concept, in one list), 1 |
+| FR-22 | Each assignment shows: name, course, due date and time shown in the time zone of the device being used, points possible, submission types, and status (FR-23). The due date is the one Canvas gives this student, including a date set just for them (a Canvas *override*). Each assignment also has Canvas's availability dates for this student, *Available from* (`unlock_at`) and *Until* (`lock_at`, after which the student can't submit), either of which can be empty. Every comparison of dates and times, such as sorting by due date, the due badge, and the *Opens* and *Closed* lines (FR-65), is made in UTC, so the result is the same whatever time zone the device or server is set to. Only the display uses the device's time zone. | Must | 0 (proof of concept, name, course, and due date), 1 |
 | FR-23 | Each card's status is worked out by these rules from the student's own Canvas submission (`submission`) and the assignment, with nothing compared to the clock (clock-based statuses are FR-27). **Submitted** when `submission.submitted_at` has a date, otherwise *Not submitted*; Canvas's `has_submitted_submissions` is not used, because it says whether anyone in the class has submitted, not this student. **Graded** when all four hold: there is a submission, the assignment's `graded_submissions_exist` is true, `submission.grade_matches_current_submission` is true, and `submission.graded_at` has a date; otherwise *Not graded*, so a resubmission after grading shows *Not graded* until it is graded again. **Missing** when `submission.missing` is true. From Phase 5, **Excused** when `submission.excused` is true, shown as its own label alongside *Submitted* or *Not submitted* and *Graded* or *Not graded*; for the due badge and the Missing highlight it wins over *Missing* (FR-65). Until then an excused assignment shows the other statuses as Canvas gives them. **Late** tag when `submission.late` is true; it can appear together with Submitted and Graded. **Submission types**: every type in the assignment's `submission_types` list, in Canvas's order, such as `online_upload` and `online_text_entry`, or `on_paper`; the UI Specification sets how each is written. With no submission at all, the card shows *Not submitted* and *Not graded*. Work handed in on paper, or needing no submission, never gets a `submitted_at` date, so it shows *Not submitted* until it is graded and then *Not submitted* and *Graded*. This is expected: the submission types on the card tell the student it isn't submitted in Canvas, and from Phase 2 the student moves it to *Done* themselves. | Must | 1, 5 (Excused) |
 | FR-24 | The user can filter cards by the statuses in FR-23 and by a keyword that matches assignment names across the whole board, using the filter menu in FR-72. Courses are shown and hidden only with the course buttons (FR-78), not the filter. From Phase 5 a full search replaces the keyword (FR-81). | Must | 1 |
 | FR-25 | The user can hide assignments, for example those Canvas reports as *Graded* or *Excused*. | — | 5 |
-| FR-26 | Each assignment links to its page in Canvas, opening in a new tab. | Must | 1 |
+| FR-26 | Each assignment links to its page in Canvas, opening in a new tab. | Must | 0 (proof of concept), 1 |
 | FR-27 | Statuses the portal works out by comparing with the clock, beyond the FR-23 rules, such as *Upcoming*, *Due soon* (for example within 48 hours, with a yellow badge), and *Overdue*. They need clear rules for cases that overlap. | — | 5 |
 | FR-28 | The card back shows the assignment's description (its instructions) exactly as Canvas has it, with Canvas's formatting. It is read only: the portal never edits it, and it is not a note. | — | 5 |
 | FR-29 | Quizzes and discussions as their own kinds of item, such as ungraded discussions and quiz details, with their own badges. Until then, only assignments are fetched (FR-11). | — | 5 |
@@ -192,7 +210,7 @@ Removed requirements are not listed.
 | FR-35 | Cards are matched to assignments by Canvas assignment ID, so a renamed or rescheduled assignment keeps its place, and each assignment has exactly one card, even when Refresh is selected on two devices at the same moment. | Must | 1 |
 | FR-36 | The user can archive a list, as in Trello. Its cards go with it and can be restored together. | — | 5 |
 | FR-37 | *(Removed: no "Move to Done?" hint. The student drags cards to Done; the due badge turning green already shows the assignment is submitted, FR-65.)* | n/a | n/a |
-| FR-38 | Within every list, assignments are always sorted by due date, earliest at the top, and assignments with no due date come last. Cards with the same due date, and cards with no due date, are in name order. A changed due date in Canvas moves the card to its new place. From Phase 2, a card dropped into a list slots into its due date place. | Must | 1, 2 (dropping) |
+| FR-38 | Within every list, assignments are always sorted by due date, earliest at the top, and assignments with no due date come last. Cards with the same due date, and cards with no due date, are in name order. A changed due date in Canvas moves the card to its new place. From Phase 2, a card dropped into a list slots into its due date place. | Must | 0 (proof of concept, in one list), 1, 2 (dropping) |
 | FR-39 | When a field changes in Canvas, the card shows the new value after the next refresh, and never changes list because of it. This covers a field being added later (such as a due date set after the assignment was created), changed, or cleared (such as a due date removed: the card moves to the end of its list with no due date). It applies to the name, due date, availability dates (FR-22), points, submission types, every Canvas field the FR-23 rules use, and so the statuses worked out from them (and, once the card back shows it, the description, FR-28), including a status going backward (for example *Graded* back to *Not graded* after a resubmission). | Must | 3 |
 | FR-45 | If an assignment disappears from Canvas (deleted or unpublished by the teacher), its card is marked archived rather than deleted, and is hidden from the board unless the student shows it (below). Only a complete, successful refresh can archive a card; a failed or partial fetch changes nothing. If the assignment comes back (republished), the card returns to its old list. Orphaned cards are found only with the show/hide control below, never with the cards the student archived (FR-74). Until Phase 3, a card whose assignment is missing from the last complete copy of Canvas data (FR-14) is not shown, but it is kept, with the last Canvas details it had (every card-front field in FR-65), and never deleted. A show/hide option in the filter menu (FR-72) shows or hides these *orphaned* cards, with how many there are. They are hidden by default, and like the rest of the filter the choice resets when the page is reloaded. A shown orphaned card stays in its list, grayed out and marked as removed from Canvas. | Must | 1 (keeping and showing orphaned cards), 3 (archiving) |
 
@@ -260,11 +278,12 @@ Removed requirements are not listed.
 
 | ID | Requirement | Phase |
 |----|-------------|-------|
-| NFR-10 | The Canvas token is never written to logs, error messages, or the page's address (URL). | 1 |
+| NFR-10 | The Canvas token is never written to logs, error messages, the page, or the page's address (URL), and is never sent to the browser. | 0 (proof of concept), 1 |
 | NFR-11 | The token is stored encrypted on the server. Every deployed copy, including the Phase 1 test deploy, uses HTTPS only; plain HTTP is allowed only on a developer's own machine (`localhost`). | 1 |
-| NFR-12 | A user's Canvas connection, cached Canvas data, and board are visible only to that user. | 1 |
-| NFR-13 | The portal calls only Canvas read (`GET`) endpoints. | 1 |
-| NFR-14 | Out of respect for student privacy rules such as FERPA (US student records law), the portal loads no analytics, advertising, or other third-party scripts, and sends course data only to the signed-in user's browser. Google sign-in (FR-50) sees only who the user is, never course data. | 1 |
+| NFR-12 | A user's Canvas connection, Canvas data, and board are visible only to that user. In Phase 0, with no sign-in, this means no other computer, and no page from another site open in the same browser, can read what the portal shows (C-5). | 0 (proof of concept), 1 |
+| NFR-13 | The portal calls only Canvas read (`GET`) endpoints. | 0 (proof of concept), 1 |
+| NFR-14 | Out of respect for student privacy rules such as FERPA (US student records law), the portal loads no analytics, advertising, or other third-party scripts, and sends course data only to the signed-in user's browser. Google sign-in (FR-50) sees only who the user is, never course data. | 0 (proof of concept, no third-party scripts), 1 |
+| NFR-15 | The Canvas token is sent only to the student's Canvas address, and only over HTTPS. The portal refuses a Canvas address that doesn't use HTTPS, and follows no redirect or paging link that leads to another address. | 0 (proof of concept), 1 |
 
 ### 5.3 Reliability
 
@@ -307,7 +326,7 @@ security document must not claim full WCAG AA while this list has entries.
 | ID | Requirement | Phase |
 |----|-------------|-------|
 | NFR-40 | Frontend and backend each have automated tests that run in CI on every pull request. | 0 |
-| NFR-41 | The backend can run against recorded sample Canvas data, so tests don't need a real account. | 1 |
+| NFR-41 | The backend can run against recorded sample Canvas data, so tests don't need a real account. | 0 (proof of concept), 1 |
 | NFR-42 | A new developer can run the app locally by following the README in under 15 minutes. | 0 |
 
 ## 6. Open questions
@@ -393,3 +412,4 @@ security document must not claim full WCAG AA while this list has entries.
 | 2026-10-26 | Team Lead: the course buttons (FR-78) are back in Phase 1, with the Filter button on their row, and are the only course control; the filter menu has no course checkboxes (FR-24, FR-72); FR-80 counts leave out hidden courses again. |
 | 2026-10-26 | Team Lead: the orphaned-card show/hide option (FR-45) and the Refresh summary's count of removed assignments (FR-16) move to Phase 1. |
 | 2026-10-26 | Team Lead: course label colors (FR-66) move to Phase 5; until then strips and course buttons use one neutral color and show the course code (FR-65, FR-78). |
+| 2026-11-02 | Phase 0 ends with a local proof of concept, from the Team Lead's rescoping of Phase 0 in the roadmap (#158): added C-5 (what the proof of concept is), FR-17 (its error messages, Phase 0 only), and NFR-15 (the token goes only to the student's Canvas address, over HTTPS). FR-2, FR-10 to FR-12, FR-20 to FR-22, FR-26, FR-38, NFR-10, NFR-12 to NFR-15, and NFR-41 are built in Phase 0, in full or in part, and again in Phase 1, which replaces the proof of concept's code. NFR-10 also keeps the token off the page and out of the browser; NFR-12 says what it means with no sign-in. *Requirements by phase* and *Requirements by goal* follow. |

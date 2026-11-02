@@ -25,7 +25,7 @@ along.
   moved to another phase, a list of the IDs it pulls along, the docs and
   sections that change, the tests affected, and any security effect.
 - Working with the cybersecurity engineer on the wording of the security and privacy
-  requirements (NFR-10 to NFR-14). The cybersecurity engineer proposes them; the requirements
+  requirements (NFR-10 to NFR-15). The cybersecurity engineer proposes them; the requirements
   engineer decides their wording.
 
 ## Cares about

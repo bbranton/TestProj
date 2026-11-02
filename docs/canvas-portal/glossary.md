@@ -1,6 +1,6 @@
 # Glossary
 
-**Status:** Draft · **Owner:** Requirements engineer · **Last updated:** 2026-10-27
+**Status:** Draft · **Owner:** Requirements engineer · **Last updated:** 2026-11-02
 
 The words the team uses for the portal, the docs, and the way we work, each
 explained once. Other docs link here instead of defining a term again.
@@ -90,7 +90,8 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 
 | Term | Meaning |
 |------|---------|
-| Phase | A stage of the [roadmap](/docs/canvas-portal/01-roadmap.md), from Phase 0 (decisions and setup) to Phase 4 (polish and deploy). Phase 5 holds later ideas that aren't committed. The current phase is set in [CLAUDE.md](/CLAUDE.md). |
+| Phase | A stage of the [roadmap](/docs/canvas-portal/01-roadmap.md), from Phase 0 (setup and a local proof of concept) to Phase 4 (polish and deploy). Phase 5 holds later ideas that aren't committed. The current phase is set in [CLAUDE.md](/CLAUDE.md). |
+| Proof of concept | The last step of Phase 0: a first release that runs only on the student's own computer (`localhost`), with the least code and no third-party libraries, to prove the portal can read a student's Canvas data and show it in one list. Phase 1 replaces its code. What it covers is in C-5 and the [requirements by phase](/docs/canvas-portal/02-requirements.md#requirements-by-phase). |
 | Future feature | A Phase 5 idea. The docs may sketch it, but nobody builds it until the Team Lead plans it into a phase. |
 | Requirement ID | `FR-` for a functional requirement (what the app does) and `NFR-` for a non-functional one (how well it does it), in the [requirements](/docs/canvas-portal/02-requirements.md). |
 | Must, Should, Could | A requirement's priority: required for its phase, expected but not blocking, or nice to have. |
@@ -133,6 +134,7 @@ These come up often in the docs. Each has a Qt comparison where one helps.
 | Database | Structured storage on the server, shared across the user's devices. SQLite (one file) or Postgres (a database server). |
 | Kanban | A board of columns (such as To do, Doing, Done) with cards you drag between them. The portal's [board](#the-board) is one. |
 | Component | A reusable piece of UI, like a QML component file. React and Svelte are both built around components. |
+| Localhost | The computer you're using, reached at the address `localhost` or `127.0.0.1`. A server that listens only there can't be reached from other computers. The Phase 0 [proof of concept](#document-terms) runs this way. |
 | Deploy / hosting | Putting the app on a server on the internet so others can open it. |
 | CI | "Continuous integration": GitHub Actions running builds and tests on every push. |
 
@@ -148,3 +150,4 @@ These come up often in the docs. Each has a Qt comparison where one helps.
 | 2026-10-27 | Added General error message to the screen words, for the design's `invalid_request` and `internal_error` codes (PR #141, X-1). |
 | 2026-10-27 | General error message says what the term is and links the UI specification for its words, instead of restating them (PR #141, F-11). |
 | 2026-10-27 | Other IDs adds `TD-`, a team decision in the team decision register, and `D-` is now a product decision, from the Team Lead's split of the decision registers (TD-22). |
+| 2026-11-02 | Added Proof of concept to the document terms and Localhost to the web terms, and Phase 0 is now *setup and a local proof of concept*, from the Team Lead's rescoping of Phase 0 (#158). |

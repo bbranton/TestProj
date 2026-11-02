@@ -8,7 +8,8 @@ screen, or a change to the main flow goes to the Team Lead first.
 
 ## Owns
 
-- [UI specification](/docs/canvas-portal/04-ui-specification.md): screens,
+- UI specification, one file per phase, such as
+  [Phase 1](/docs/canvas-portal/04-ui-specification_phase1.md): screens,
   states (empty, loading, error), wording, and flows.
 - Keeping the screen words in the [glossary](/docs/canvas-portal/glossary.md)
   in step with the UI specification.

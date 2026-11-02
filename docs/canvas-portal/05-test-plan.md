@@ -30,8 +30,11 @@ tests are like Squish driving the whole app.
 ### Recorded Canvas data
 
 CI never uses a real token (A-3, NFR-41). Instead,
-`backend/tests/fixtures/` in the CanSync repo holds saved Canvas JSON responses
-for made-up students, covering:
+the CanSync repo holds saved Canvas JSON responses
+for made-up students, in `backend/tests/fixtures/` if the Phase Lead keeps
+the design's
+[repository layout](/docs/canvas-portal/03-design.md#8-repository-layout),
+covering:
 
 - 3 active courses, each with a name and course code, and 1 concluded
   course (must not appear)

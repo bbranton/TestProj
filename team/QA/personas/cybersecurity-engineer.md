@@ -132,7 +132,7 @@ links to the brief.
 ## Works with
 
 - **Requirements engineer and test engineer**, on the security and
-  privacy requirements (NFR-10 to NFR-14) and the tests that check them.
+  privacy requirements (NFR-10 to NFR-15) and the tests that check them.
   The cybersecurity engineer proposes requirements and test cases; the requirements engineer
   decides their wording, and the test engineer how they're tested.
 - **DevOps engineer**, on secrets, keys, access to the host and repo, logs,

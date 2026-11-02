@@ -93,6 +93,12 @@ repo has its own rules, set by the Phase Lead.
     so its runs are free and don't use them. Secret scanning with push
     protection may not be free on a private repository, so the
     cybersecurity engineer recommends how to cover it.
+  - Which GitHub plan the owning account is on. On a private repository,
+    GitHub enforces branch rules and required checks only on a paid plan
+    (Pro for a personal account, Team for an organization), and some
+    Actions environment protections need more. On the free plan, the
+    branch rules are only rules the team follows. A paid plan is a cost,
+    so the Team Lead decides it.
   - Which of the product docs in `docs/canvas-portal/` go. No team
     files go, such as the personas, the review protocol, or the coding
     standards: the CanSync repo gets its own, in the next step.
@@ -239,9 +245,14 @@ The smallest thing that is useful: connect, then see everything that's due.
   client, and add the deploy and backup secrets to a GitHub Actions
   environment that only the branch the CanSync repo deploys from can
   use, a branch its D-17 rules protect so only reviewed merges reach it,
-  with the Team Lead as its required reviewer. Plain repository secrets reach workflows on any
-  branch, and every thread pushes branches to the CanSync repo. GitHub
-  Actions is a new place secrets live, so the Team Lead sets them (#26).
+  with the Team Lead as its required reviewer. Plain repository secrets
+  reach workflows on any branch, and every thread pushes branches to the
+  CanSync repo. GitHub Actions is a new place secrets live, so the Team
+  Lead sets them (#26). If the CanSync repo's GitHub plan can't limit
+  the environment to that branch with the Team Lead as required
+  reviewer, the Team Lead decides another way before step 6, with the
+  cybersecurity engineer, such as the host deploying from the CanSync
+  repo itself so the deploy secrets never go into GitHub.
 
 **Before step 6 goes live**, because real tokens then sit on an
 internet-facing server (R-14). Each of these is a
@@ -768,3 +779,4 @@ right away.
 | 2026-11-02 | The only thing the TestProj repo and the CanSync repo share is the project documentation, from the Team Lead's review of the release pull request: no team files go, the CanSync repo's `CLAUDE.md` states its own rules without linking back, links to the TestProj repo are removed or repointed, and the copied CI's push branches change to the CanSync repo's. R-17 is reworded to match. |
 | 2026-11-02 | The CanSync repo is private, from the Team Lead's review of the release pull request. D-17's visibility question is answered; the Actions minutes and secret scanning notes are for a private repository (the public TestProj repo's runs use no minutes), and Phase 1's secrets line no longer calls the repository public. |
 | 2026-11-02 | The CanSync repo gets its own `CLAUDE.md` and `team/`, set up with the Phase Lead in a new Phase 0 setup step, from the Team Lead. The project docs no longer link to the TestProj repo's team files or `CLAUDE.md`: section 3's screenshot and breach notes, sections 5 to 9, and the change log say what's needed in the doc itself. |
+| 2026-11-02 | D-17 asks which GitHub plan owns the private CanSync repo, since branch rules, required checks, and some environment protections are enforced there only on a paid plan; Phase 1's deploy secrets have a fallback if the plan can't protect them. From the DevOps engineer's review of #175. |

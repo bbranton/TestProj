@@ -123,10 +123,10 @@ Both:
   says, and the rest carry on.
 - **In the frontend, handle every request's error state.** A component
   that fetches shows the
-  [UI specification](/docs/canvas-portal/04-ui-specification.md)'s words
+  [UI specification](/docs/canvas-portal/04-ui-specification_phase1.md)'s words
   for each error code, never a blank screen. For `invalid_request` and
   `internal_error`, that's the
-  [General error message](/docs/canvas-portal/04-ui-specification.md#general-error-message).
+  [General error message](/docs/canvas-portal/04-ui-specification_phase1.md#general-error-message).
 - **Never show the backend's `message` text or the error code on screen.**
   The frontend picks what to show by code, as the design says, so the
   backend's wording can change without changing a screen.

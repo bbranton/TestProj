@@ -1,12 +1,18 @@
-# User Interface Specification
+# User Interface Specification: Phase 1
 
-**Status:** Draft · **Owner:** Team Lead · **Last updated:** 2026-10-25
+**Status:** Draft · **Owner:** Team Lead · **Last updated:** 2026-11-02
 
 This document specifies the portal's user interface through wireframes and
 workflows. Wireframes are rough sketches of each screen: what is on it and where, not
 colors or fonts. They are drawn here as text so they can be reviewed and
 changed in pull requests. Workflows show how a user moves between screens to
 get something done.
+
+The UI specification is split into one file per phase (Team Lead,
+2026-11-02). This file covers Phase 1, and keeps the sketches of later
+phases as a starting point until each later phase gets its own file.
+Phase 0's local proof of concept is in
+[UI specification: Phase 0](/docs/canvas-portal/04-ui-specification_phase0.md).
 
 Screen IDs (`S-1`, `S-2`, ...) and workflow IDs (`W-1`, `W-2`, ...) are
 used by the design and the test procedures. Terms such as board, list,
@@ -24,6 +30,7 @@ requirements index wins.
 
 | Phase | Screens and workflows |
 |-------|-----------------------|
+| 0 | S-0 only, in [UI specification: Phase 0](/docs/canvas-portal/04-ui-specification_phase0.md) |
 | 1 | Header, S-1, S-2, S-4 (read only), S-6 (disconnect and sign out), S-8 with its option that shows cards removed from Canvas, S-10; W-1, W-2, and W-5's complete-fetch check, new cards in Backlog, and showing removed cards |
 | 2 | On S-4: dragging cards, the To do, In progress, and Done lists side by side, and minimizing lists; W-3 |
 | 3 | W-5's archiving and returning cards (FR-45) |
@@ -55,7 +62,12 @@ flowchart TD
 
 Dashed arrows lead to screens and actions from later phases.
 
-Every signed-in screen shares a header bar, like Trello's board header. It
+The Phase 0 proof of concept has only
+[S-0](/docs/canvas-portal/04-ui-specification_phase0.md#s-0-assignment-list-phase-0),
+which stands alone: it isn't on this map, and Phase 1 replaces it with S-1,
+S-2, and S-4.
+
+From Phase 1, every signed-in screen shares a header bar, like Trello's board header. It
 sits on the board's background color:
 
 ```text
@@ -117,7 +129,7 @@ even though the formal accessibility check (NFR-32) is Phase 4.
   orphaned card (S-4).
 
 Button IDs for Phases 1 to 4. Later phases add theirs when they are
-planned.
+planned. Phase 0's are in its own file.
 
 | ID | Label | Screen | Shown as |
 |----|-------|--------|----------|
@@ -922,6 +934,7 @@ flowchart TD
 
 | Date | Change |
 |------|--------|
+| 2026-11-02 | Split by phase, from the Team Lead: this file is renamed `04-ui-specification_phase1.md` and covers Phase 1 and the later-phase sketches; Phase 0's S-0 is in `04-ui-specification_phase0.md`. *UI by phase* and the screen map link to it. |
 | 2026-10-25 | First draft. |
 | 2026-10-25 | Trello goal (G-3): board is home; S-3 becomes Table view; S-4 and S-5 redrawn as Trello board and card back; added S-7 quick edit, S-8 filter, S-9 board menu; Trello-style phone layout; W-7 and W-8 added. |
 | 2026-10-25 | Added the course show/hide button row under the header on S-3, S-4, and the phone layout (FR-78), from the Team Lead's review. |

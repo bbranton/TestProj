@@ -14,7 +14,9 @@ docs read clearly. It is not in scope until its phase starts, as the
 - **The requirements engineer owns what each term means.** A meaning changes in the
   same PR as the requirement it comes from.
 - **The UI/UX designer keeps the screen words in step.** The exact words on screen
-  live in the [UI specification](/docs/canvas-portal/04-ui-specification.md). A PR that changes
+  live in the UI specification, in its
+  [Phase 0](/docs/canvas-portal/04-ui-specification_phase0.md) and
+  [Phase 1](/docs/canvas-portal/04-ui-specification_phase1.md) files. A PR that changes
   a screen word changes its entry here too.
 - **The project manager keeps the team process terms in step** with the
   [review protocol](/team/review-protocol.md) and the
@@ -74,16 +76,17 @@ on the clock, such as *Due soon*, are FR-27 *(Phase 5)*.
 | Late, Excused | Tags shown when Canvas marks the submission late or the student excused. They can appear with Submitted and Graded. | FR-23 |
 | Due badge | The due date and time, in the device's time zone. Red when Missing, otherwise green with ✓ when Submitted or Graded, otherwise plain. | FR-22, FR-65 |
 | Points | The points the assignment is worth, such as "20 pts". | FR-22 |
-| Submission type | How the student hands the work in, such as a file upload or on paper, from Canvas's `submission_types`. How each type is written on a card is in the [UI specification's S-4](/docs/canvas-portal/04-ui-specification.md#s-4-board-home-screen). | FR-23 |
+| Submission type | How the student hands the work in, such as a file upload or on paper, from Canvas's `submission_types`. How each type is written on a card is in the [UI specification's S-4](/docs/canvas-portal/04-ui-specification_phase1.md#s-4-board-home-screen). | FR-23 |
 
 ## Screen words
 
 | Term | Meaning | Defined in |
 |------|---------|------------|
-| Screen ID | An ID for each screen, such as `S-4` for the board. | [UI specification](/docs/canvas-portal/04-ui-specification.md) |
-| Button ID | A name for a button in capitals with underscores, such as `REFRESH`, used in logs, docs, code, and tests. The full list is in the [UI specification's conventions](/docs/canvas-portal/04-ui-specification.md#conventions-on-every-screen). | UI specification |
+| Screen ID | An ID for each screen, such as `S-4` for the board. Each phase's UI specification file has its own screens, such as `S-0` in [Phase 0](/docs/canvas-portal/04-ui-specification_phase0.md). | [UI specification](/docs/canvas-portal/04-ui-specification_phase1.md) |
+| Button ID | A name for a button in capitals with underscores, such as `REFRESH`, used in logs, docs, code, and tests. Each phase's UI specification file lists its own: [Phase 0](/docs/canvas-portal/04-ui-specification_phase0.md#1-conventions) and [Phase 1](/docs/canvas-portal/04-ui-specification_phase1.md#conventions-on-every-screen). | UI specification |
 | Label | A button's name in plain words, such as "Refresh from Canvas". Screen readers announce it, and icon buttons have no other name. | UI specification |
-| General error message | What a screen shows when the portal itself fails, not Canvas or the student. It never shows an error code. Its words on each screen are in the UI specification. | [UI specification](/docs/canvas-portal/04-ui-specification.md#general-error-message) |
+| General error message | What a screen shows when the portal itself fails, not Canvas or the student. It never shows an error code. Its words on each screen are in the UI specification. | [UI specification](/docs/canvas-portal/04-ui-specification_phase1.md#general-error-message) |
+| .env file | The file on the student's own computer that holds the Canvas address and token for the Phase 0 [proof of concept](#document-terms). Git ignores it, so it never reaches the repo. The proof of concept's messages name it as "your .env file". | [S-0](/docs/canvas-portal/04-ui-specification_phase0.md#s-0-assignment-list-phase-0) |
 | Dialog (modal) | A box that opens over the page and must be closed before using the page behind it, like a QML `Dialog`. The card back *(Phase 5)* is one. | S-5 |
 
 ## Document terms
@@ -152,3 +155,5 @@ These come up often in the docs. Each has a Qt comparison where one helps.
 | 2026-10-27 | Other IDs adds `TD-`, a team decision in the team decision register, and `D-` is now a product decision, from the Team Lead's split of the decision registers (TD-22). |
 | 2026-11-02 | Added Proof of concept to the document terms and Localhost to the web terms, and Phase 0 is now *setup and a local proof of concept*, from the Team Lead's rescoping of Phase 0 (#158). |
 | 2026-11-02 | Requirement ID and the links to the requirements follow the Team Lead's split of the requirements by phase. |
+| 2026-11-02 | Added .env file to the screen words, for the Phase 0 proof of concept's messages on S-0 (PR #163, F-4). |
+| 2026-11-02 | Links to the UI specification point at its Phase 0 and Phase 1 files, from the Team Lead's split of the UI specification by phase (PR #163). |

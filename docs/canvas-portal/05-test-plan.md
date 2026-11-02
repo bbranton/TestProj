@@ -218,9 +218,10 @@ checks more than one phase's behavior says which part comes later.
 
 Each procedure lists the requirements it checks, what's needed first, the
 steps, and the expected result. Screen IDs refer to the
-wireframes in the
-[User Interface Specification](/docs/canvas-portal/04-ui-specification.md). Steps marked with a
-later phase are skipped until that phase.
+wireframes in the User Interface Specification:
+[Phase 0](/docs/canvas-portal/04-ui-specification_phase0.md) has S-0, and
+[Phase 1](/docs/canvas-portal/04-ui-specification_phase1.md) has the rest.
+Steps marked with a later phase are skipped until that phase.
 
 ### Procedures by phase
 

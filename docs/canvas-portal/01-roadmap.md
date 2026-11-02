@@ -73,8 +73,8 @@ student's own computer and shows everything due.
 - Write the design document and the User Interface Specification, then
   choose the frontend framework (D-1). Done: React.
 - Create a `canvas-portal/` folder in this repo with a `frontend/` and a
-  `backend/` part, each with a "hello" page or endpoint. Done. It moves to
-  the app repository below.
+  `backend/` part, each with a "hello" page or endpoint. Done. What
+  happens to it is decided at the app repository step below.
 - Add GitHub Actions CI that builds both parts and runs their tests on every
   pull request that changes the app. Done.
 - Confirm the Team Lead's school allows personal access tokens (risk R-1). Done:
@@ -87,9 +87,10 @@ starts:
 1. **Ask the Team Lead for the repository details, then lead the Team
    Lead through setting it up.** Sessions can't create repositories, so
    the project manager asks these questions, with a recommendation for
-   each, and walks the Team Lead through each setting (D-15):
+   each, and walks the Team Lead through each setting (D-17):
    - The name, and which GitHub account owns it.
-   - Private or public.
+   - Private or public. A private repository shares the account's free
+     GitHub Actions minutes with this one.
    - Whether the Canvas portal docs move to the new repository or are
      copied, with this repo staying their source.
    - Which docs go: the product docs in `docs/canvas-portal/`, and
@@ -102,10 +103,24 @@ starts:
      Dependabot alerts.
    - Access: the Claude GitHub app and the project's sessions.
    - A license, or none.
+
+   Before step 2, the Team Lead creates the repository with an initial
+   commit, a `develop` branch, and `.env` in `.gitignore`; sets its
+   visibility and security settings; installs the Claude GitHub app on
+   it; and adds it to the project's repositories. Branch rules and
+   required checks wait until step 2's first CI run, since GitHub offers
+   a check as required only once it has reported.
 2. The chosen docs, code, and CI are put into the new repository in one
    pull request there, with a short `CLAUDE.md` that links back to this
-   repo's team rules.
-3. This repo then removes what moved, in one pull request here.
+   repo's team rules. Links in the docs to files that stay here, such as
+   `/team/...` and `/CLAUDE.md`, become full GitHub links to this repo,
+   and the new repository gets its own docs check. Once CI has run there,
+   the Team Lead adds its branch rules and required checks.
+3. This repo then removes what moved and fixes every link to it, in one
+   pull request here. First,
+   the Team Lead takes the `backend` and `frontend` checks off this
+   repo's `develop` ruleset, keeping `docs`, or the removal can't merge;
+   the DevOps engineer writes the steps for it then.
 4. Proof-of-concept development starts in the app repository after that.
 
 The team, its personas, and its process stay in this repo.
@@ -173,7 +188,7 @@ in the Phase 0 requirements file.
   per document after it; they stay marked Draft until that second review
   is merged.
 - App repository: it exists with the chosen docs and green CI, set up
-  as the Team Lead decided in D-15, and this repo no longer holds the
+  as the Team Lead decided in D-17, and this repo no longer holds the
   app's code.
 - Proof of concept: the Team Lead runs it on `localhost` from the README
   and sees the same assignments, for the same active courses, that Canvas
@@ -575,9 +590,9 @@ goes to the Team Lead right away, where it came up.
 | D-8 | How other open devices learn about a move (NFR-22) | **Polling** (each device asks "anything new?" every 30 seconds and when its window comes back into focus; simple, works on any host) or **live push** (the server tells devices instantly over a WebSocket or server-sent events; faster, but more to build and host) | Polling for Phase 2; live push only if 30 seconds feels slow in practice. See [design](/docs/canvas-portal/03-design.md#keeping-devices-in-sync-nfr-22-d-8). | Start of Phase 2 |
 | ~~D-9~~ | ~~How Google sign-in is protected against login CSRF (NFR-12)~~ | **A server-side `state` list only** (the earlier design, which left login CSRF open because `state` wasn't tied to the browser) or **`state` in a short-lived signed `HttpOnly`, `Secure`, `SameSite=Lax` cookie**, checked on the callback (see [design section 5](/docs/canvas-portal/03-design.md#5-signing-in-to-the-portal-d-7) and its [security table](/docs/canvas-portal/03-design.md#7-security)) | **Decided** (Team Lead, 2026-10-27): the signed cookie, and sign-in redirects only to fixed paths on the portal. The cybersecurity engineer raised it as X-6 and proposed the fix, and the architect wrote it into the design, in [#141](https://github.com/bbranton/TestProj/pull/141); the Team Lead confirmed it in a project thread, recorded in [#154](https://github.com/bbranton/TestProj/pull/154)'s *Decisions*. | Done |
 | ~~D-14~~ | ~~What the Phase 0 proof of concept is built with~~ | **Python standard library and plain HTML, CSS, and JavaScript** (no third-party runtime dependencies and no frontend build step), **FastAPI with one plain HTML page** (the two backend dependencies the skeleton already has), **the existing skeleton, FastAPI and React with Vite** (D-1 and D-6 as they are), or leave it to the architect's recommendation in the design pull request | **Decided** (Team Lead, 2026-11-02): Python's standard library and plain HTML, CSS, and JavaScript, with no third-party runtime dependencies and no build step. Its tests use `unittest`, from the test engineer's recommendation, which the Team Lead left to the team (2026-11-02). CI-only tools, such as Ruff for linting, are allowed (Team Lead, 2026-11-02). Phase 1 moves it onto FastAPI and React, so D-1 and D-6 are unchanged from Phase 1 on. The project manager recommended it, as the simplest code with the fewest dependencies. | Done |
-| D-15 | The app repository's details: name, visibility, whether the docs move or are copied, what goes, branches, security settings, access, and license | Asked as Phase 0's first step, each with the project manager's recommendation | **Decided in part** (Team Lead, 2026-11-02): the code goes in a new repository, not this one, set up at the start of Phase 0 with the docs copied in. The details are asked for and answered at that step, not before. | Phase 0's first step |
 | D-15 | Which requirements the Phase 0 proof of concept builds, and how NFR-40 applies to it | Approve the set, with the page tested in CI by a CI-only tool; **approve the set, with Phase 0 testing only the backend**; or use only the existing IDs | **Decided by the team, for the Team Lead's review** (2026-11-02): the set in the [Phase 0 requirements](/docs/canvas-portal/02-requirements_phase0.md), with only the backend tested in Phase 0 and a page that holds no logic. The requirements engineer first recommended a CI-only tool for the page; the project manager and the test engineer recommended backend-only tests. The Team Lead asked for the work to go into `develop` and reviews it on the `develop` → `main` release PR, where she can change it. Carried out in [#162](https://github.com/bbranton/TestProj/pull/162). | Team Lead's review on the release PR |
 | ~~D-16~~ | ~~How the Canvas portal docs are organized as phases are added~~ | One file per phase, `<doc>_phaseN.md`, for every doc but the roadmap | **Decided** (Team Lead, 2026-11-02, in a project thread): every doc but the roadmap is split into `<doc>_phaseN.md` files, and a later phase gets its file when its work starts. Who fixes the links is a team decision, [TD-24](/team/decision-register.md). Carried out in [#162](https://github.com/bbranton/TestProj/pull/162) (requirements) and [#163](https://github.com/bbranton/TestProj/pull/163) (UI specification). | Done |
+| D-17 | The app repository's details: name, visibility, whether the docs move or are copied, what goes, branches, security settings, access, and license | Asked as Phase 0's first step, each with the project manager's recommendation | **Decided in part** (Team Lead, 2026-11-02): the code goes in a new repository, not this one, set up at the start of Phase 0 with the necessary docs copied over. The details are asked for and answered at that step, not before. | Phase 0's first step |
 
 ## 6. Risks
 
@@ -726,4 +741,4 @@ never goes here, as that section says.
 | 2026-11-02 | Phase 0 reopened, from the Team Lead: it now ends with a local proof of concept, a release that runs only on `localhost` with the simplest code and fewest third-party dependencies, and shows every assignment from the student's active courses in one read-only list. No sign-in, database, hosting, or deploy in Phase 0; D-3 and D-7 are unchanged for Phase 1. Added the Phase 0 row in section 2, milestone M0b, D-14 (built with Python's standard library and plain HTML, no third-party dependencies, from the Team Lead), and R-16. The requirements index follows in its own pull request, since the Team Lead asked for one document at a time. |
 | 2026-11-02 | Phase 0's paragraph on requirements links the list in the Phase 0 requirements file instead of naming the likely IDs, now that the requirements are split by phase (Team Lead, 2026-11-02). |
 | 2026-11-02 | Recorded D-15 (the Phase 0 requirements set, decided by the team for the Team Lead's review on the release PR) and D-16 (docs split by phase, from the Team Lead), with TD-24 in the team decision register. |
-| 2026-11-02 | Phase 0 starts by setting up a new app repository and copying the docs and skeleton into it before development, from the Team Lead's review of the release pull request: the app's code isn't kept in this repo. The first step asks the Team Lead for the repository's details and leads the Team Lead through the setup; those details are D-15, answered then. Added an exit criterion. |
+| 2026-11-02 | Phase 0 starts by setting up a new app repository and copying the docs, and the skeleton if chosen, into it before development, from the Team Lead's review of the release pull request: the app's code isn't kept in this repo. The first step asks the Team Lead for the repository's details and leads the Team Lead through the setup; those details are D-17, answered then. Added an exit criterion. |
